@@ -58,7 +58,8 @@ canvas{display:block;width:100vw;height:100vh;height:100dvh;touch-action:none;-w
 <script>
 (()=>{
 const c=document.getElementById('game'),ctx=c.getContext('2d');
-const VIEW_H=540,GROUND=455,SCENE_W=760,SCENE_COUNT=31,WORLD=SCENE_W*SCENE_COUNT+120;
+const VIEW_H=540,GROUND=455,SCENE_W=2280,SCENE_COUNT=31,WORLD=SCENE_W*SCENE_COUNT+120;
+const BEAT_BOUNDS=[[180,675],[675,1170],[1170,1665],[1665,2160]],DOCK=[2160,2280];
 let W=960,H=VIEW_H,dpr=1,isPortrait=false,worldY=0;
 function resize(){const vv=window.visualViewport;const vw=Math.max(1,Math.round(vv?vv.width:innerWidth)),vh=Math.max(1,Math.round(vv?vv.height:innerHeight)),aspect=vw/vh;isPortrait=vh>=vw;if(isPortrait){W=Math.max(560,VIEW_H*aspect);H=W/aspect}else{H=VIEW_H;W=H*aspect}const coarse=((window.matchMedia&&matchMedia('(pointer:coarse)').matches)||navigator.maxTouchPoints>0||('ontouchstart' in window));const reserve=coarse?(isPortrait?102:78):18;worldY=H-VIEW_H-reserve;dpr=Math.min(devicePixelRatio||1,2);c.width=Math.round(W*dpr);c.height=Math.round(H*dpr);c.style.width=vw+'px';c.style.height=vh+'px';ctx.setTransform(dpr,0,0,dpr,0,0)}
 addEventListener('resize',resize,{passive:true});addEventListener('orientationchange',()=>setTimeout(resize,180),{passive:true});if(window.visualViewport)visualViewport.addEventListener('resize',resize,{passive:true});resize();
@@ -193,14 +194,11 @@ bindUpgradeButton(pickSpeed,'speed');
 
 function scene(){return SCENES[currentLevel-1]}
 function sceneStart(){return scene().start}
+function beat(i){const b=BEAT_BOUNDS[i];return{i,x0:b[0],x1:b[1],mid:(b[0]+b[1])/2,w:b[1]-b[0]}}
+function abs(localX){return sceneStart()+localX}
 function coinPos(sc=scene()){
-  const variants=[520,555,485,600,535,570,505];
-  let x=sc.start+variants[(sc.level-1)%variants.length],y=GROUND-74;
-  if(['chaser','safePlat','ghostPlat','delayedGhost','steamPipe','shadowPlat'].includes(sc.trap))y=GROUND-126;
-  if(sc.trap==='elevatorDrop')y=GROUND-154;
-  if(sc.trap==='finale')y=GROUND-105;
-  const geo=GEOMETRY[sc.level];if(geo&&geo.platforms.length){const local=x-sc.start,p=geo.platforms.reduce((best,item)=>Math.abs(item[0]+item[2]/2-local)<Math.abs(best[0]+best[2]/2-local)?item:best);x=sc.start+p[0]+p[2]/2-12;y=GROUND+p[1]-34}
-  return{x,y,w:24,h:24};
+  const g=buildScene(sc.level),x=sc.start+g.anchors.coin;
+  return{x,y:GROUND-34,w:24,h:24};
 }
 
 const RAGE_POOL=['coinBite','rearBite','floorPop','sweeper','exitDrop','hunter','lastStep'];
@@ -239,28 +237,60 @@ const GEOMETRY={
  29:{gaps:[[335,500]],platforms:[[355,-82,122]]},
  30:{gaps:[[250,565]],platforms:[[270,-50,84],[390,-80,82],[505,-52,48]]}
 };
-function sceneGeometry(){return GEOMETRY[currentLevel]||{gaps:[],platforms:[]}}
-function makeRuntime(){const sc=scene(),st=sc.start;return{t:0,armed:false,done:false,phase:0,warning:0,
- block:{x:st+445,y:72,w:104,h:70,vy:0},
- chaser:{x:st+610,y:GROUND-30,w:30,h:30,vx:0},
- wall:{x:st+700,y:GROUND-94,w:46,h:94,vx:0},
- mover:{x:st+420,y:GROUND-66,w:52,h:52,vx:0,vy:0},
-  platform:{x:st+410,y:GROUND-82,w:130,h:18,vy:0,active:true},steps:0,lastStepX:0,
- barrel:{x:st+680,y:GROUND-42,w:42,h:42,vx:0},
+const SCENE_CACHE=new Map();
+function buildScene(level){
+ if(SCENE_CACHE.has(level))return SCENE_CACHE.get(level);
+ const gaps=[],surfaces=[],platforms=[],roles=['intro','trial','betrayal','mastery'];
+ const tempo=[104,116,128][level%3],phase=(level*37)%53;
+ for(let bi=0;bi<4;bi++){
+  const b=beat(bi),g1=b.x0+112+(phase+bi*17)%34,g2=b.x0+322+(phase+bi*23)%38,w1=tempo+(bi===3?10:0),w2=tempo-8+(bi===3?12:0);
+  gaps.push([g1,g1+w1],[g2,g2+w2]);
+  const layers=1+(level+bi)%3;
+  for(let li=0;li<layers;li++){const rise=[72,162,252][li],px=b.x0+205+li*92+(level*11+bi*19)%24,pw=li===2&&bi===3?48:64+(level+li*7)%25;platforms.push([px,-rise,pw,bi]);surfaces.push({x:px,y:GROUND-rise,w:pw,h:18,beat:bi,kind:'platform'})}
+ }
+ // Legacy layouts remain explicit overrides, translated into the betrayal beat.
+ const legacy=GEOMETRY[level];if(legacy){const shift=beat(2).x0-180;for(const p of legacy.platforms)platforms.push([shift+p[0],p[1],Math.max(60,p[2]),2]);}
+ let cursor=0;for(const g of gaps){if(g[0]>cursor)surfaces.push({x:cursor,y:GROUND,w:g[0]-cursor,h:100,beat:Math.max(0,Math.min(3,Math.floor((g[0]-180)/495))),kind:'ground'});cursor=g[1]}if(cursor<SCENE_W)surfaces.push({x:cursor,y:GROUND,w:SCENE_W-cursor,h:100,beat:3,kind:'ground'});
+ const anchors={spawn:66,coin:beat(2).x1-28,dock:DOCK[0],intro:beat(0),trial:beat(1),betrayal:beat(2),mastery:beat(3),
+  trigger:beat(2).x0+120,hazard:beat(2).x0+245,hazardEnd:beat(2).x0+390,repeatTrigger:beat(3).x0+105,repeat:beat(3).x0+225,repeatEnd:beat(3).x0+420,lastStep:DOCK[0]-78};
+ const out={surfaces,gaps,platforms,anchors,roles};SCENE_CACHE.set(level,out);return out;
+}
+function sceneGeometry(level=currentLevel){return buildScene(level)}
+function validateScene(level){
+ const g=buildScene(level),errors=[],nodes=g.surfaces.map((s,i)=>({...s,id:i})),PW=player.w,VY0=560,GRAVITY=1450,MAXVX=255;
+ for(const s of nodes.filter(n=>n.kind==='platform')){const minW=s.beat===3?44:60;if(s.w<minW)errors.push(`platform_width:${s.w}<${minW}`);if(GROUND-s.y>290)errors.push(`layer_height:${GROUND-s.y}>290`)}
+ const edges=nodes.map(()=>[]),gapBetween=(a,b)=>b.x-(a.x+a.w),canJump=(a,b)=>{const rise=a.y-b.y;if(rise>100)return false;const gap=Math.max(0,gapBetween(a,b)-PW),flight=(VY0+Math.sqrt(Math.max(0,VY0*VY0-2*GRAVITY*rise)))/GRAVITY,physical=MAXVX*flight;let cap=rise>35?120:rise<-5?200:(a.beat===3?175:150);return gap<=Math.min(cap,physical)};
+ for(let i=0;i<nodes.length;i++)for(let j=0;j<nodes.length;j++)if(i!==j&&nodes[j].x>=nodes[i].x&&canJump(nodes[i],nodes[j]))edges[i].push(j);
+ const nodeAt=x=>nodes.findIndex(n=>x+PW>n.x&&x<n.x+n.w),start=nodeAt(66),coin=nodeAt(g.anchors.coin),dock=nodeAt(DOCK[0]);
+ const shortest=(from,to)=>{if(from<0||to<0)return Infinity;const q=[[from,0]],seen=new Set([from]);while(q.length){const [n,d]=q.shift();if(n===to)return d;for(const v of edges[n])if(!seen.has(v)){seen.add(v);q.push([v,d+1])}}return Infinity};
+ const toCoin=shortest(start,coin),coinToDock=shortest(coin,dock),minimumJumps=shortest(start,dock);
+ if(!Number.isFinite(toCoin))errors.push('spawn_to_coin:no_path');if(!Number.isFinite(coinToDock))errors.push('coin_to_dock:no_path');if(minimumJumps<6)errors.push(`minimum_jumps:${minimumJumps}<6`);
+ // Analytic constants are deliberately retained in the report for auditability.
+ return{level,errors,minimumJumps,toCoin,coinToDock,physics:{vy0:-VY0,g:GRAVITY,maxvx:MAXVX,playerWidth:PW}};
+}
+function validateAllScenes(){const reports=Array.from({length:SCENE_COUNT},(_,i)=>validateScene(i+1));for(const r of reports)for(const e of r.errors)console.error(`[v41 validator] level ${r.level}: ${e}`);console.table(reports.map(r=>({level:r.level,minimumJumps:r.minimumJumps,violations:r.errors.length})));return reports}
+const VALIDATION_REPORT=validateAllScenes();
+function makeRuntime(){const sc=scene(),st=sc.start,g=buildScene(sc.level),a=g.anchors,X=x=>st+x;return{t:0,armed:false,done:false,phase:0,warning:0,a,
+ block:{x:X(a.hazard),y:72,w:104,h:70,vy:0},
+ chaser:{x:X(a.hazardEnd),y:GROUND-30,w:30,h:30,vx:0},
+ wall:{x:X(a.hazardEnd),y:GROUND-94,w:46,h:94,vx:0},
+ mover:{x:X(a.hazard),y:GROUND-66,w:52,h:52,vx:0,vy:0},
+  platform:{x:X(a.hazard),y:GROUND-82,w:130,h:18,vy:0,active:true},steps:0,lastStepX:0,
+ barrel:{x:X(a.hazardEnd),y:GROUND-42,w:42,h:42,vx:0},
  strike:{x:0,y:0,w:34,h:GROUND,active:false},
- door:{x:st+620,y:GROUND-105,w:60,h:105,vx:0},
- oil:{x:st+340,y:GROUND-6,w:140,h:8},
+ door:{x:X(a.hazardEnd),y:GROUND-105,w:60,h:105,vx:0},
+ oil:{x:X(a.trigger),y:GROUND-6,w:a.hazardEnd-a.trigger,h:8},
  counterUsed:false,coinArmed:false,
  rage:{patterns:ragePatterns(sc.level),
   rear:{state:0,warn:0},
   coin:{state:0,warn:0,t:0},
-  pop:{state:0,warn:0,t:0,x:st+505},
-  sweep:{state:0,warn:0,x:st+705,y:GROUND-36,w:38,h:36,vx:0},
-  exit:{state:0,warn:0,block:{x:st+625,y:48,w:58,h:76,vy:0}},
-  hunter:{state:0,warn:0,x:st+175,y:GROUND-30,w:30,h:30,vx:0,t:0},
+  pop:{state:0,warn:0,t:0,x:X(a.hazard)},
+  sweep:{state:0,warn:0,x:X(a.repeatEnd),y:GROUND-36,w:38,h:36,vx:0},
+  exit:{state:0,warn:0,block:{x:X(a.repeat),y:48,w:58,h:76,vy:0}},
+  hunter:{state:0,warn:0,x:X(a.trial.x0+20),y:GROUND-30,w:30,h:30,vx:0,t:0},
   last:{state:0,warn:0,t:0}
  },
- pipes:[{x:st+280,y:GROUND-78,w:135,h:18,solid:sc.level%4===2||sc.trap==='steamPipe',trap:sc.trap==='steamPipe'}]
+ pipes:[{x:X(a.hazard),y:GROUND-78,w:135,h:18,solid:sc.level%4===2||sc.trap==='steamPipe',trap:sc.trap==='steamPipe'}]
 }}
 function clearInputs(){keys.left=keys.right=keys.jump=false;joystick.axis=0;joystick.active=false;joystick.pointerId=null;const knob=document.getElementById('joystickKnob');if(knob)knob.style.transform='translate(0px,0px)';const jb=document.querySelector('#jumpWrap button');if(jb)jb.classList.remove('pressed')}
 function resetScene(fromDeath=false){clearInputs();rt=makeRuntime();levelTimer=59;speedHold=0;speedHoldDir=0;player.x=sceneStart()+66;player.y=GROUND-player.h;player.vx=0;player.vy=0;player.onGround=false;spawnGrace=fromDeath?2:0;cam=Math.max(0,player.x-W*.28)}
@@ -269,9 +299,9 @@ resetScene(false);
 
 function hit(a,b){return a.x<b.x+b.w&&a.x+a.w>b.x&&a.y<b.y+b.h&&a.y+a.h>b.y}
 function kill(msg,type='slap'){if(dead||won||spawnGrace>0)return;dead=true;deaths++;deathTimer=0;shakeT=.28;toast=msg;toastT=1.05;sDeath(type)}
-function getGroundSegments(){const st=sceneStart(),sc=scene(),base=[];if(['safePlat','ghostPlat','delayedGhost','elevatorDrop','shadowPlat'].includes(sc.trap))base.push([385,575]);if(sc.trap==='crumble')base.push([360,540]);if(sc.trap==='finale')base.push([360,425]);const raw=base.concat(sceneGeometry().gaps).map(g=>[st+g[0],st+g[1]]).sort((a,b)=>a[0]-b[0]),gaps=[];for(const g of raw){const last=gaps[gaps.length-1];if(last&&g[0]<=last[1])last[1]=Math.max(last[1],g[1]);else gaps.push(g)}let cur=st,end=st+SCENE_W;const arr=[];for(const [a,b] of gaps){if(a>cur)arr.push({x:cur,y:GROUND,w:a-cur,h:100});cur=Math.max(cur,b)}if(cur<end)arr.push({x:cur,y:GROUND,w:end-cur,h:100});return arr}
-function staticPlatforms(){const st=sceneStart(),sc=scene(),arr=[];for(const p of sceneGeometry().platforms)arr.push({x:st+p[0],y:GROUND+p[1],w:p[2],h:18,oneway:true,geometry:true});if(sc.trap==='crumble'&&!rt.crumbleGone)arr.push({x:st+360,y:GROUND,w:180,h:10,oneway:true,dynamic:'crumble'});if(sc.trap==='chaser')arr.push({x:st+335,y:GROUND-92,w:135,h:18,oneway:true});if(['safePlat','ghostPlat','delayedGhost','shadowPlat'].includes(sc.trap))arr.push({x:st+405,y:GROUND-88,w:145,h:18,oneway:true,dynamic:'platform'});if(sc.trap==='elevatorDrop')arr.push({x:rt.platform.x,y:rt.platform.y,w:rt.platform.w,h:18,oneway:true,dynamic:'platform'});for(const p of rt.pipes)if(p.solid)arr.push({x:p.x,y:p.y,w:p.w,h:p.h,oneway:true,pipe:true});return arr}
-function solidRects(){const arr=getGroundSegments();const sc=scene(),st=sc.start;if(sc.trap==='fakeFinish'||sc.trap==='fakeFinish2')arr.push({x:st+430,y:GROUND-10,w:82,h:10,hazard:'finish'});return arr}
+function getGroundSegments(){const st=sceneStart();return sceneGeometry().surfaces.filter(s=>s.kind==='ground').map(s=>({x:st+s.x,y:s.y,w:s.w,h:s.h}))}
+function staticPlatforms(){const st=sceneStart(),sc=scene(),arr=sceneGeometry().platforms.map(p=>({x:st+p[0],y:GROUND+p[1],w:p[2],h:18,oneway:true,geometry:true,beat:p[3]}));if(['crumble','safePlat','ghostPlat','delayedGhost','shadowPlat'].includes(sc.trap)&&rt.platform.active)arr.push({...rt.platform,oneway:true,dynamic:'platform'});if(sc.trap==='elevatorDrop')arr.push({x:rt.platform.x,y:rt.platform.y,w:rt.platform.w,h:18,oneway:true,dynamic:'platform'});for(const p of rt.pipes)if(p.solid)arr.push({x:p.x,y:p.y,w:p.w,h:p.h,oneway:true,pipe:true});return arr}
+function solidRects(){const arr=getGroundSegments(),sc=scene();if(sc.trap==='fakeFinish'||sc.trap==='fakeFinish2')arr.push({x:sceneStart()+rt.a.hazard,y:GROUND-10,w:82,h:10,hazard:'finish'});return arr}
 function doPhysics(dt){if(dead||won||upgradePending)return;const kbDir=(keys.right?1:0)-(keys.left?1:0),joy=Math.abs(joystick.axis)>.08?joystick.axis:0,rawDir=joy||kbDir,dir=Math.sign(rawDir),inputStrength=joy?Math.min(1,Math.abs(joy)):Math.abs(kbDir);if(dir){player.facing=dir;if(speedLevel&&inputStrength>.55){if(speedHoldDir===dir)speedHold=Math.min(2.2,speedHold+dt*inputStrength);else{speedHold=.05;speedHoldDir=dir}}else if(speedLevel){speedHold=Math.max(0,speedHold-dt*.9)}}else{speedHold=Math.max(0,speedHold-dt*1.6);if(!speedHold)speedHoldDir=0}
  const ramp=speedLevel?Math.min(1,speedHold/2.2):0,max=255+(speedLevel?145*ramp:0),baseAcc=1450+(speedLevel?320*ramp:0),acc=(rt&&rt.slip)?Math.min(520,baseAcc):baseAcc,fric=(rt&&rt.slip)?.965:.82;
  if(dir)player.vx+=dir*acc*inputStrength*dt;else player.vx*=Math.pow(fric,dt*60);const inputMax=max*(joy?(.34+.66*inputStrength):1);player.vx=Math.max(-inputMax,Math.min(inputMax,player.vx));
@@ -288,18 +318,18 @@ function doPhysics(dt){if(dead||won||upgradePending)return;const kbDir=(keys.rig
 
 function collectCoin(){if(collected.has(currentLevel))return;const cp=coinPos();for(let i=0;i<12;i++){const a=i*Math.PI/6+(currentLevel%3)*.17,s=55+(i%4)*18;particles.push({x:cp.x+12,y:cp.y+12,vx:Math.cos(a)*s,vy:Math.sin(a)*s-45,t:.48+(i%3)*.08,r:2+(i%2),c:i%3?'#f8c93d':'#fff3a3'})}collected.add(currentLevel);coins++;sCoin();toast='COIN '+coins+' / '+SCENE_COUNT+' — pain retained.';toastT=.85;saveProgress();if(coins===5||coins===10)openUpgrade()}
 function updateJuice(dt){shakeT=Math.max(0,shakeT-dt);for(let i=particles.length-1;i>=0;i--){const p=particles[i];p.t-=dt;p.vy+=260*dt;p.x+=p.vx*dt;p.y+=p.vy*dt;if(p.t<=0)particles.splice(i,1)}}
-function updateCounterTraps(dt){if(currentLevel<=10)return;const sc=scene(),st=sc.start;
+function updateCounterTraps(dt){if(currentLevel<=10)return;const sc=scene(),a=rt.a;
  // speed liability: oil only steals grip, never reverses controls
  if((sc.counter==='speed'||sc.counter==='both')&&speedLevel){const oil=rt.oil;if(player.onGround&&hit(player,{x:oil.x,y:GROUND-12,w:oil.w,h:12})&&Math.abs(player.vx)>245){rt.slip=.85;rt.counterUsed=true;toast='SPEED BUILD DETECTED: grip revoked.';toastT=.7}if(rt.slip){rt.slip=Math.max(0,rt.slip-dt)}}
  // jump liability: high air route calls a cloud hand, but gives a visible beat
- if((sc.counter==='jump'||sc.counter==='both')&&jumpLevel&&!rt.cloudDone&&player.x>st+350&&player.x<st+600&&player.y<GROUND-125){if(!rt.cloudWarn){rt.cloudWarn=.38;rt.cloudX=player.x;toast='AIRSPACE VIOLATION.';toastT=.55}else{rt.cloudWarn-=dt;if(rt.cloudWarn<=0){const hand={x:rt.cloudX-8,y:GROUND-250,w:48,h:52};rt.hand=hand;rt.cloudVy=60;rt.cloudWarn=-999}}}
+ if((sc.counter==='jump'||sc.counter==='both')&&jumpLevel&&!rt.cloudDone&&player.x>sc.start+a.betrayal.x0&&player.x<sc.start+a.betrayal.x1&&player.y<GROUND-125){if(!rt.cloudWarn){rt.cloudWarn=.38;rt.cloudX=player.x;toast='AIRSPACE VIOLATION.';toastT=.55}else{rt.cloudWarn-=dt;if(rt.cloudWarn<=0){const hand={x:rt.cloudX-8,y:GROUND-250,w:48,h:52};rt.hand=hand;rt.cloudVy=60;rt.cloudWarn=-999}}}
  if(rt.hand){rt.cloudVy+=1800*dt;rt.hand.y+=rt.cloudVy*dt;if(hit(player,rt.hand))kill('Cloud moderation was immediate.','slap');if(rt.hand.y>GROUND+40){rt.hand=null;rt.cloudDone=true}}
 }
 
 
 function updateRageLayer(dt){
  if(dead||won||upgradePending||!rt||!rt.rage)return;
-  const sc=scene(),st=sc.start,cp=coinPos(sc),R=rt.rage,warnText=sc.level%2===1;
+  const sc=scene(),st=sc.start,a=rt.a,cp=coinPos(sc),R=rt.rage,warnText=sc.level%2===1;
  const warn=Math.max(.24,.43-sc.level*.0045);
  // Coin bait: the coin itself wakes the floor. Jumping in after the flash is always valid.
  if(rageHas('coinBite')&&!collected.has(currentLevel)){
@@ -310,42 +340,42 @@ function updateRageLayer(dt){
  }
  // Retreat tax: once you commit, the road behind becomes teeth. It never spawns under you.
  if(rageHas('rearBite')){
-   const B=R.rear;if(B.state===0&&player.x>st+455){B.state=1;B.warn=warn;if(warnText){toast='RETURN POLICY UPDATED.';toastT=.5}}
+   const B=R.rear;if(B.state===0&&player.x>st+a.repeatTrigger){B.state=1;B.warn=warn;if(warnText){toast='RETURN POLICY UPDATED.';toastT=.5}}
   if(B.state===1&&(B.warn-=dt)<=0)B.state=2;
-  if(B.state===2&&hit(player,{x:st+300,y:GROUND-28,w:125,h:28}))kill('Backing up was also a choice.','spike')
+  if(B.state===2&&hit(player,{x:st+a.trial.x0+90,y:GROUND-28,w:125,h:28}))kill('Backing up was also a choice.','spike')
  }
  // Pop-up floor teeth: one short burst; wait or jump.
  if(rageHas('floorPop')){
-   const P=R.pop;if(P.state===0&&player.x>st+445&&player.x<st+590){P.state=1;P.warn=warn;if(warnText){toast='FLOOR UPDATE AVAILABLE.';toastT=.48}}
+   const P=R.pop;if(P.state===0&&player.x>st+a.trigger&&player.x<st+a.hazardEnd){P.state=1;P.warn=warn;if(warnText){toast='FLOOR UPDATE AVAILABLE.';toastT=.48}}
   if(P.state===1&&(P.warn-=dt)<=0){P.state=2;P.t=.78}
   if(P.state===2){P.t-=dt;const hz={x:P.x,y:GROUND-30,w:86,h:30};if(hit(player,hz))kill('Floor update installed successfully.','spike');if(P.t<=0)P.state=3}
  }
  // Ground sweeper from ahead: visible warning, then one pass. Jumpable.
  if(rageHas('sweeper')){
-   const S=R.sweep;if(S.state===0&&player.x>st+315){S.state=1;S.warn=warn+.06;if(warnText){toast='CLEANUP CREW INBOUND.';toastT=.5}}
+   const S=R.sweep;if(S.state===0&&player.x>st+a.repeatTrigger){S.state=1;S.warn=warn+.06;if(warnText){toast='CLEANUP CREW INBOUND.';toastT=.5}}
   if(S.state===1&&(S.warn-=dt)<=0){S.state=2;S.vx=-(235+sc.level*3.2)}
-  if(S.state===2){S.x+=S.vx*dt;if(hit(player,S))kill('Warehouse cleanup included you.','crush');if(S.x<st+180)S.state=3}
+  if(S.state===2){S.x+=S.vx*dt;if(hit(player,S))kill('Warehouse cleanup included you.','crush');if(S.x<st+a.mastery.x0)S.state=3}
  }
  // Exit crusher: only after the coin, so it becomes a second punch right before safety.
  if(rageHas('exitDrop')&&collected.has(currentLevel)){
-   const E=R.exit;if(E.state===0&&player.x>st+535){E.state=1;E.warn=warn+.02;if(warnText){toast='EXIT SAFETY CHECK.';toastT=.5}}
+   const E=R.exit;if(E.state===0&&player.x>st+a.repeatTrigger){E.state=1;E.warn=warn+.02;if(warnText){toast='EXIT SAFETY CHECK.';toastT=.5}}
   if(E.state===1&&(E.warn-=dt)<=0)E.state=2;
   if(E.state===2){E.block.vy+=1280*dt;E.block.y+=E.block.vy*dt;if(hit(player,E.block))kill('The exit checked your head clearance.','crush');if(E.block.y>GROUND+55)E.state=3}
  }
  // Coin hunter: after collecting, a red complaint form chases for a short deterministic window.
  if(rageHas('hunter')&&collected.has(currentLevel)){
-   const H=R.hunter;if(H.state===0&&player.x>st+335){H.state=1;H.warn=warn;H.x=Math.max(st+165,player.x-165);H.t=0;if(warnText){toast='COIN OWNER FOUND YOU.';toastT=.52}}
+   const H=R.hunter;if(H.state===0&&player.x>st+a.repeatTrigger){H.state=1;H.warn=warn;H.x=Math.max(st+a.mastery.x0,player.x-165);H.t=0;if(warnText){toast='COIN OWNER FOUND YOU.';toastT=.52}}
   if(H.state===1&&(H.warn-=dt)<=0)H.state=2;
-  if(H.state===2){H.t+=dt;const d=Math.sign(player.x-H.x);H.vx+=d*920*dt;H.vx=Math.max(-315,Math.min(315,H.vx));H.x+=H.vx*dt;if(hit(player,H))kill('Refund department was faster.','spike');if(H.t>1.75||H.x>st+735)H.state=3}
+  if(H.state===2){H.t+=dt;const d=Math.sign(player.x-H.x);H.vx+=d*920*dt;H.vx=Math.max(-315,Math.min(315,H.vx));H.x+=H.vx*dt;if(hit(player,H))kill('Refund department was faster.','spike');if(H.t>1.75||H.x>st+a.repeatEnd)H.state=3}
  }
  // Last-step betrayal: the final safe-looking tile bites once. Jump or wait it out.
  if(rageHas('lastStep')&&collected.has(currentLevel)){
-   const L=R.last;if(L.state===0&&player.x>st+605){L.state=1;L.warn=warn;if(warnText){toast='EXIT LOOKS SAFE.';toastT=.45}}
+   const L=R.last;if(L.state===0&&player.x>st+a.lastStep-60){L.state=1;L.warn=warn;if(warnText){toast='EXIT LOOKS SAFE.';toastT=.45}}
   if(L.state===1&&(L.warn-=dt)<=0){L.state=2;L.t=.82}
-  if(L.state===2){L.t-=dt;const hz={x:st+665,y:GROUND-30,w:64,h:30};if(hit(player,hz))kill('You trusted the last tile.','spike');if(L.t<=0)L.state=3}
+  if(L.state===2){L.t-=dt;const hz={x:st+a.lastStep,y:GROUND-30,w:64,h:30};if(hit(player,hz))kill('You trusted the last tile.','spike');if(L.t<=0)L.state=3}
  }
 }
-function updateTrap(dt){if(dead||won||upgradePending)return;const sc=scene(),st=sc.start,warnText=sc.level%2===1;rt.t+=dt;const cp=coinPos(sc);
+function updateTrap(dt){if(dead||won||upgradePending)return;const sc=scene(),st=sc.start+rt.a.betrayal.x0-300,warnText=sc.level%2===1;rt.t+=dt;const cp=coinPos(sc);
  switch(sc.trap){
   case'signDrop':if(!rt.armed&&player.x>st+330){rt.armed=true;rt.warning=.28;toast='CHECKPOINT APPROVED.';toastT=.6}if(rt.armed&&!rt.done){if(rt.warning>0)rt.warning-=dt;else{rt.block.x=st+420;rt.block.vy+=1350*dt;rt.block.y+=rt.block.vy*dt;if(hit(player,rt.block))kill('Checkpoint checked you.','crush');if(rt.block.y>GROUND+40)rt.done=true}}break;
   case'crumble':if(!rt.armed&&player.x>st+350){rt.armed=true;rt.warning=.46}if(rt.armed&&!rt.done){rt.warning-=dt;if(rt.warning<=0)rt.crumbleGone=true}break;
@@ -410,8 +440,8 @@ function drawParticles(){for(const p of particles){ctx.save();ctx.globalAlpha=Ma
 function spikeRow(x,y,w,h){const g=ctx.createLinearGradient(0,y,0,y+h);g.addColorStop(0,'#fff0a8');g.addColorStop(.16,'#ff7a3d');g.addColorStop(1,'#9e1831');const n=Math.max(1,Math.floor(w/20)),sw=w/n;ctx.save();ctx.shadowColor='#ff3f32';ctx.shadowBlur=5;for(let i=0;i<n;i++){ctx.fillStyle=g;ctx.beginPath();ctx.moveTo(x+i*sw,y+h);ctx.lineTo(x+i*sw+sw/2,y);ctx.lineTo(x+(i+1)*sw,y+h);ctx.fill();ctx.shadowBlur=0;ctx.strokeStyle='#ffd59b';ctx.lineWidth=1.4;ctx.beginPath();ctx.moveTo(x+i*sw+2,y+h-2);ctx.lineTo(x+i*sw+sw/2,y+2);ctx.stroke()}ctx.restore()}
 function coinDraw(p){const pulse=1+Math.sin(performance.now()/150+currentLevel)*.08;ctx.save();ctx.translate(p.x+12,p.y+12);ctx.scale(pulse,pulse);ctx.shadowColor='#ffd95a';ctx.shadowBlur=16;ctx.fillStyle='#f8c93d';ctx.beginPath();ctx.arc(0,0,12,0,Math.PI*2);ctx.fill();ctx.shadowBlur=0;ctx.strokeStyle='#a66b12';ctx.lineWidth=2;ctx.stroke();ctx.fillStyle='#fff3a3';ctx.font='900 9px system-ui';ctx.textAlign='center';ctx.fillText('31',0,3);ctx.restore()}
 function board(x,y,title,sub){ctx.fillStyle='#0b1722e6';roundedRect(x,y,245,60,10);ctx.fill();ctx.strokeStyle='#ffffff20';ctx.stroke();ctx.fillStyle='#6cdbff';ctx.font='900 10px system-ui';ctx.fillText('SCENE '+String(currentLevel).padStart(2,'0')+' / 31',x+13,y+18);ctx.fillStyle='#fff';ctx.font='900 17px system-ui';ctx.fillText(title,x+13,y+38);ctx.fillStyle='#b9c8d1';ctx.font='700 9px system-ui';ctx.fillText(sub,x+13,y+52)}
-function drawTrap(){const sc=scene(),st=sc.start;
- if(rt.warning>0){ctx.save();ctx.globalAlpha=.25+.25*Math.sin(performance.now()/60);ctx.fillStyle='#ffdf5d';ctx.fillRect(st+380,GROUND-150,210,5);ctx.restore()}
+function drawTrap(){const sc=scene(),st=sc.start+rt.a.betrayal.x0-300;
+ if(rt.warning>0){ctx.save();ctx.globalAlpha=.25+.25*Math.sin(performance.now()/60);ctx.fillStyle='#ffdf5d';ctx.fillRect(sc.start+rt.a.trigger,GROUND-150,rt.a.hazardEnd-rt.a.trigger,5);ctx.restore()}
  switch(sc.trap){
   case'signDrop':case'ceiling':case'jumpBait':case'crateRain':case'checkpointBetrayal':case'finale':if(!rt.done){const b=rt.block,bg=ctx.createLinearGradient(b.x,b.y,b.x+b.w,b.y+b.h);bg.addColorStop(0,'#b7c2ca');bg.addColorStop(.28,'#687680');bg.addColorStop(1,'#252d34');ctx.save();ctx.shadowColor='#05090d';ctx.shadowBlur=10;ctx.shadowOffsetY=7;ctx.fillStyle=bg;ctx.fillRect(b.x,b.y,b.w,b.h);ctx.restore();ctx.fillStyle='#d9e1e6';ctx.fillRect(b.x+2,b.y+2,b.w-4,3);ctx.fillStyle='#f2cc4d';ctx.fillRect(b.x+8,b.y+10,b.w-16,9);ctx.fillStyle='#fff5a8';ctx.fillRect(b.x+8,b.y+10,b.w-16,2);ctx.fillStyle='#161a1e';ctx.font='900 12px system-ui';ctx.fillText(sc.trap==='finale'?'31':sc.trap==='signDrop'||sc.trap==='checkpointBetrayal'?'CHECKPOINT':'TOTALLY NORMAL',b.x+12,b.y+40)}break;
  case'crumble':if(!rt.crumbleGone){ctx.fillStyle=rt.armed?'#d08d44':'#606c78';ctx.fillRect(st+360,GROUND-7,180,7);if(rt.armed){ctx.fillStyle='#311f1d';for(let i=0;i<5;i++)ctx.fillRect(st+380+i*32,GROUND-7,3,7)}}break;
@@ -439,15 +469,15 @@ function drawTrap(){const sc=scene(),st=sc.start;
 }
 
 function drawRageLayer(){
- if(!rt||!rt.rage)return;const st=sceneStart(),cp=coinPos(),R=rt.rage;
+ if(!rt||!rt.rage)return;const st=sceneStart(),a=rt.a,cp=coinPos(),R=rt.rage;
  const flash=(x,w,label)=>{ctx.save();ctx.globalAlpha=.45+.25*Math.sin(performance.now()/65);ctx.fillStyle='#ffe36a';ctx.fillRect(x,GROUND-7,w,7);ctx.fillStyle='#1a1d20';ctx.font='900 8px system-ui';ctx.fillText(label,x+5,GROUND-12);ctx.restore()};
  if(rageHas('coinBite')){const C=R.coin;if(C.state===1)flash(cp.x-28,84,'NOPE');if(C.state===2)spikeRow(cp.x-28,GROUND-28,84,28)}
- if(rageHas('rearBite')){const B=R.rear;if(B.state===1)flash(st+300,125,'NO RETURNS');if(B.state===2)spikeRow(st+300,GROUND-28,125,28)}
+ if(rageHas('rearBite')){const B=R.rear,x=st+a.trial.x0+90;if(B.state===1)flash(x,125,'NO RETURNS');if(B.state===2)spikeRow(x,GROUND-28,125,28)}
  if(rageHas('floorPop')){const P=R.pop;if(P.state===1)flash(P.x,86,'WAIT');if(P.state===2)spikeRow(P.x,GROUND-30,86,30)}
- if(rageHas('sweeper')){const S=R.sweep;if(S.state===1)flash(st+610,95,'INCOMING');if(S.state===2){ctx.fillStyle='#d94150';roundedRect(S.x,S.y,S.w,S.h,7);ctx.fill();ctx.fillStyle='#fff';ctx.font='900 8px system-ui';ctx.fillText('31',S.x+12,S.y+22)}}
- if(rageHas('exitDrop')){const E=R.exit;if(E.state===1)flash(st+610,95,'HEADS UP');if(E.state===2){ctx.fillStyle='#59656f';ctx.fillRect(E.block.x,E.block.y,E.block.w,E.block.h);ctx.fillStyle='#f2cc4d';ctx.fillRect(E.block.x+6,E.block.y+9,E.block.w-12,8)}}
- if(rageHas('hunter')){const H=R.hunter;if(H.state===1)flash(Math.max(st+160,H.x),72,'RUN');if(H.state===2)spikeRow(H.x,H.y,H.w,H.h)}
- if(rageHas('lastStep')){const L=R.last;if(L.state===1)flash(st+665,64,'SAFE');if(L.state===2)spikeRow(st+665,GROUND-30,64,30)}
+ if(rageHas('sweeper')){const S=R.sweep;if(S.state===1)flash(st+a.repeat,95,'INCOMING');if(S.state===2){ctx.fillStyle='#d94150';roundedRect(S.x,S.y,S.w,S.h,7);ctx.fill();ctx.fillStyle='#fff';ctx.font='900 8px system-ui';ctx.fillText('31',S.x+12,S.y+22)}}
+ if(rageHas('exitDrop')){const E=R.exit;if(E.state===1)flash(st+a.repeat,95,'HEADS UP');if(E.state===2){ctx.fillStyle='#59656f';ctx.fillRect(E.block.x,E.block.y,E.block.w,E.block.h);ctx.fillStyle='#f2cc4d';ctx.fillRect(E.block.x+6,E.block.y+9,E.block.w-12,8)}}
+ if(rageHas('hunter')){const H=R.hunter;if(H.state===1)flash(Math.max(st+a.mastery.x0,H.x),72,'RUN');if(H.state===2)spikeRow(H.x,H.y,H.w,H.h)}
+ if(rageHas('lastStep')){const L=R.last;if(L.state===1)flash(st+a.lastStep,64,'SAFE');if(L.state===2)spikeRow(st+a.lastStep,GROUND-30,64,30)}
 }
 function drawSceneIdentity(){const sc=scene(),st=sc.start,th=theme(),L=sc.level;
  const sign=(x,y,w,h,txt,bg='#183040',fg='#fff')=>{const g=ctx.createLinearGradient(0,y,0,y+h);g.addColorStop(0,'#60798a');g.addColorStop(.18,bg);g.addColorStop(1,'#07121a');ctx.fillStyle=g;roundedRect(st+x,y,w,h,7);ctx.fill();ctx.strokeStyle='#d8edf566';ctx.lineWidth=1.5;ctx.stroke();ctx.fillStyle='#ffffff24';ctx.fillRect(st+x+8,y+3,w-16,2);ctx.fillStyle=fg;ctx.font='900 10px system-ui';ctx.fillText(txt,st+x+9,y+h/2+4)};
