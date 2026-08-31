@@ -246,9 +246,9 @@ function buildScene(level){
   const b=beat(bi),extra=(level+bi)%3===0,g1=b.x0+96+(phase+bi*17)%38;
   if(bi<2){const w1=tempo+(extra?12:0);gaps.push([g1,g1+w1]);if(extra)gaps.push([b.x0+330,b.x0+330+tempo-18])}
   else{
-   const wide=260+((level*17+bi*29)%71),gx=b.x0+108+((level+bi)%3)*18;gaps.push([gx,gx+wide]);
-   const rises=level%3===0?[88,180,88]:level%3===1?[94,188,94]:[82,172,82];
-   const xs=[gx+30,gx+Math.floor(wide*.40),gx+wide-92],ws=[74,68,74];
+    const wide=428+((level*17+bi*29)%13),gx=b.x0+27;gaps.push([gx,gx+wide]);
+    const rises=level%3===0?[88,180,88]:level%3===1?[94,188,94]:[82,172,82];
+    const xs=[gx+24,gx+126,gx+wide-114],ws=[64,60,64];
    for(let i=0;i<3;i++){platforms.push([xs[i],-rises[i],ws[i],bi,'route']);surfaces.push({x:xs[i],y:GROUND-rises[i],w:ws[i],h:18,beat:bi,kind:'platform',route:true})}
   }
   if(bi<2){const rise=72+((level+bi)%2)*18,px=b.x0+205+(level*11+bi*19)%24,pw=64+(level%25);platforms.push([px,-rise,pw,bi,'optional']);surfaces.push({x:px,y:GROUND-rise,w:pw,h:18,beat:bi,kind:'platform'})}
