@@ -198,7 +198,8 @@ function beat(i){const b=BEAT_BOUNDS[i];return{i,x0:b[0],x1:b[1],mid:(b[0]+b[1])
 function abs(localX){return sceneStart()+localX}
 function coinPos(sc=scene()){
   const g=buildScene(sc.level),x=sc.start+g.anchors.coin;
-  return{x,y:GROUND-34,w:24,h:24};
+  const w=24,localX=g.anchors.coin,onGround=g.surfaces.some(s=>s.kind==='ground'&&localX+w>s.x&&localX<s.x+s.w),platforms=g.surfaces.filter(s=>s.kind==='platform'&&localX+w>s.x&&localX<s.x+s.w).sort((a,b)=>b.y-a.y||a.x-b.x),surfaceY=onGround?GROUND:platforms[0]?.y??GROUND;
+  return{x,y:surfaceY-34,w,h:24};
 }
 
 const RAGE_POOL=['coinBite','rearBite','floorPop','sweeper','exitDrop','hunter','lastStep'];
@@ -269,11 +270,12 @@ function validateScene(level){
  for(const s of nodes.filter(n=>n.kind==='platform')){const minW=s.beat===3?44:60;if(s.w<minW)errors.push(`platform_width:${s.w}<${minW}`);if(GROUND-s.y>290)errors.push(`layer_height:${GROUND-s.y}>290`)}
  const edges=nodes.map(()=>[]),gapBetween=(a,b)=>b.x-(a.x+a.w),canJump=(a,b)=>{const rise=a.y-b.y;if(rise>100)return false;const gap=Math.max(0,gapBetween(a,b)-PW),flight=(VY0+Math.sqrt(Math.max(0,VY0*VY0-2*GRAVITY*rise)))/GRAVITY,physical=MAXVX*flight;let cap=rise>35?120:rise<-5?200:(a.beat===3?175:150);return gap<=Math.min(cap,physical)};
  for(let i=0;i<nodes.length;i++)for(let j=0;j<nodes.length;j++)if(i!==j&&nodes[j].x>=nodes[i].x&&canJump(nodes[i],nodes[j]))edges[i].push(j);
- const nodeAt=x=>nodes.findIndex(n=>x+PW>n.x&&x<n.x+n.w),start=nodeAt(66),coin=nodeAt(g.anchors.coin),dock=nodeAt(DOCK[0]);
+ const overlapsX=(n,x)=>x+PW>n.x&&x<n.x+n.w,nodeAt=(x,bottomY)=>nodes.findIndex(n=>overlapsX(n,x)&&Math.abs(bottomY-n.y)<=1),coinBox=coinPos(SCENES[level-1]),coinBottom=coinBox.y+coinBox.h,coinSurface=nodes.findIndex(n=>overlapsX(n,g.anchors.coin)&&n.y>=coinBottom&&n.y-coinBottom<=12),start=nodeAt(66,GROUND),coin=coinSurface,dock=nodeAt(DOCK[0],GROUND);
+ if(start<0)errors.push('spawn_not_on_surface');if(coin<0)errors.push('coin_not_on_surface');if(dock<0)errors.push('dock_not_on_surface');
  const shortestPath=(from,to,allowed=()=>true)=>{if(from<0||to<0||!allowed(nodes[from])||!allowed(nodes[to]))return null;const q=[from],seen=new Set([from]),prev=new Map;while(q.length){const n=q.shift();if(n===to){const path=[];for(let p=n;p!==undefined;p=prev.get(p))path.unshift(p);return path}for(const v of edges[n])if(allowed(nodes[v])&&!seen.has(v)){seen.add(v);prev.set(v,n);q.push(v)}}return null};
  const shortest=(a,b)=>shortestPath(a,b)?.length-1??Infinity;
  const toCoin=shortest(start,coin),coinToDock=shortest(coin,dock),minimumJumps=shortest(start,dock);
- if(!Number.isFinite(toCoin))errors.push('spawn_to_coin:no_path');if(!Number.isFinite(coinToDock))errors.push('coin_to_dock:no_path');if(minimumJumps<6)errors.push(`minimum_jumps:${minimumJumps}<6`);
+ if(start>=0&&coin>=0&&!Number.isFinite(toCoin))errors.push('spawn_to_coin:no_path');if(coin>=0&&dock>=0&&!Number.isFinite(coinToDock))errors.push('coin_to_dock:no_path');if(minimumJumps<6)errors.push(`minimum_jumps:${minimumJumps}<6`);
  const groundOnlyRoute=!!shortestPath(start,dock,n=>n.kind==='ground');if(groundOnlyRoute)errors.push('ground_only_route_exists');
  const route=shortestPath(start,dock)||[],verticalRequired=route.some(i=>nodes[i].kind==='platform'&&GROUND-nodes[i].y>=162);if(!verticalRequired)errors.push('no_vertical_requirement');
  const topRoutePlatforms=route.filter(i=>nodes[i].kind==='platform').length;if(TOP_ROUTE_LEVELS.includes(level)&&topRoutePlatforms<3)errors.push(`insufficient_top_route:${topRoutePlatforms}<3`);
