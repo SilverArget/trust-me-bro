@@ -338,57 +338,58 @@ function updateCounterTraps(dt){if(currentLevel<=10)return;const sc=scene(),a=rt
 
 function updateRageLayer(dt){
  if(dead||won||upgradePending||!rt||!rt.rage)return;
-  const sc=scene(),st=sc.start,X=x=>st+x,a=rt.a,cp=coinPos(sc),R=rt.rage,warnText=sc.level%2===1;
+  const sc=scene(),st=sc.start,X=x=>st+x,a=rt.a,cp=coinPos(sc),R=rt.rage;
  const warn=Math.max(.24,.43-sc.level*.0045);
+ const activate=(obj,msg,duration=.5)=>{if(obj.warnText){toast=msg;toastT=duration;obj.warnText=''}};
  // Coin bait: the coin itself wakes the floor. Jumping in after the flash is always valid.
  if(rageHas('coinBite')&&!collected.has(currentLevel)){
   const C=R.coin,near=Math.abs((player.x+player.w/2)-(cp.x+12))<125&&player.x>X(230);
-   if(C.state===0&&near){C.state=1;C.warn=warn;if(warnText){toast='COIN INSURANCE ACTIVATED.';toastT=.5}}
-  if(C.state===1&&(C.warn-=dt)<=0){C.state=2;C.t=.82}
+   if(C.state===0&&near){C.state=1;C.warn=warn;C.warnText='COIN INSURANCE ACTIVATED.'}
+  if(C.state===1&&(C.warn-=dt)<=0){C.state=2;C.t=.82;activate(C,'COIN INSURANCE ACTIVATED.')}
   if(C.state===2){C.t-=dt;const hz={x:cp.x-28,y:GROUND-28,w:84,h:28};if(hit(player,hz))kill('The coin had terms and conditions.','spike');if(C.t<=0)C.state=3}
  }
  // Retreat tax: once you commit, the road behind becomes teeth. It never spawns under you.
  if(rageHas('rearBite')){
-   const B=R.rear;if(B.state===0&&player.x>st+a.repeatTrigger){B.state=1;B.warn=warn;if(warnText){toast='RETURN POLICY UPDATED.';toastT=.5}}
-  if(B.state===1&&(B.warn-=dt)<=0)B.state=2;
+   const B=R.rear;if(B.state===0&&player.x>st+a.repeatTrigger){B.state=1;B.warn=warn;B.warnText='RETURN POLICY UPDATED.'}
+  if(B.state===1&&(B.warn-=dt)<=0){B.state=2;activate(B,'RETURN POLICY UPDATED.')}
   if(B.state===2&&hit(player,{x:st+a.trial.x0+90,y:GROUND-28,w:125,h:28}))kill('Backing up was also a choice.','spike')
  }
  // Pop-up floor teeth: one short burst; wait or jump.
  if(rageHas('floorPop')){
-   const P=R.pop;if(P.state===0&&player.x>st+a.trigger&&player.x<st+a.hazardEnd){P.state=1;P.warn=warn;if(warnText){toast='FLOOR UPDATE AVAILABLE.';toastT=.48}}
-  if(P.state===1&&(P.warn-=dt)<=0){P.state=2;P.t=.78}
+   const P=R.pop;if(P.state===0&&player.x>st+a.trigger&&player.x<st+a.hazardEnd){P.state=1;P.warn=warn;P.warnText='FLOOR UPDATE AVAILABLE.'}
+  if(P.state===1&&(P.warn-=dt)<=0){P.state=2;P.t=.78;activate(P,'FLOOR UPDATE AVAILABLE.',.48)}
   if(P.state===2){P.t-=dt;const hz={x:P.x,y:GROUND-30,w:86,h:30};if(hit(player,hz))kill('Floor update installed successfully.','spike');if(P.t<=0)P.state=3}
  }
  // Ground sweeper from ahead: visible warning, then one pass. Jumpable.
  if(rageHas('sweeper')){
-   const S=R.sweep;if(S.state===0&&player.x>st+a.repeatTrigger){S.state=1;S.warn=warn+.06;if(warnText){toast='CLEANUP CREW INBOUND.';toastT=.5}}
-  if(S.state===1&&(S.warn-=dt)<=0){S.state=2;S.vx=-(235+sc.level*3.2)}
+   const S=R.sweep;if(S.state===0&&player.x>st+a.repeatTrigger){S.state=1;S.warn=warn+.06;S.warnText='CLEANUP CREW INBOUND.'}
+  if(S.state===1&&(S.warn-=dt)<=0){S.state=2;S.vx=-(235+sc.level*3.2);activate(S,'CLEANUP CREW INBOUND.')}
   if(S.state===2){S.x+=S.vx*dt;if(hit(player,S))kill('Warehouse cleanup included you.','crush');if(S.x<st+a.mastery.x0)S.state=3}
  }
  // Exit crusher: only after the coin, so it becomes a second punch right before safety.
  if(rageHas('exitDrop')&&collected.has(currentLevel)){
-   const E=R.exit;if(E.state===0&&player.x>st+a.repeatTrigger){E.state=1;E.warn=warn+.02;if(warnText){toast='EXIT SAFETY CHECK.';toastT=.5}}
-  if(E.state===1&&(E.warn-=dt)<=0)E.state=2;
+   const E=R.exit;if(E.state===0&&player.x>st+a.repeatTrigger){E.state=1;E.warn=warn+.02;E.warnText='EXIT SAFETY CHECK.'}
+  if(E.state===1&&(E.warn-=dt)<=0){E.state=2;activate(E,'EXIT SAFETY CHECK.')}
   if(E.state===2){E.block.vy+=1280*dt;E.block.y+=E.block.vy*dt;if(hit(player,E.block))kill('The exit checked your head clearance.','crush');if(E.block.y>GROUND+55)E.state=3}
  }
  // Coin hunter: after collecting, a red complaint form chases for a short deterministic window.
  if(rageHas('hunter')&&collected.has(currentLevel)){
-   const H=R.hunter;if(H.state===0&&player.x>st+a.repeatTrigger){H.state=1;H.warn=warn;H.x=Math.max(st+a.mastery.x0,player.x-165);H.t=0;if(warnText){toast='COIN OWNER FOUND YOU.';toastT=.52}}
-  if(H.state===1&&(H.warn-=dt)<=0)H.state=2;
+   const H=R.hunter;if(H.state===0&&player.x>st+a.repeatTrigger){H.state=1;H.warn=warn;H.x=Math.max(st+a.mastery.x0,player.x-165);H.t=0;H.warnText='COIN OWNER FOUND YOU.'}
+  if(H.state===1&&(H.warn-=dt)<=0){H.state=2;activate(H,'COIN OWNER FOUND YOU.',.52)}
   if(H.state===2){H.t+=dt;const d=Math.sign(player.x-H.x);H.vx+=d*920*dt;H.vx=Math.max(-315,Math.min(315,H.vx));H.x+=H.vx*dt;if(hit(player,H))kill('Refund department was faster.','spike');if(H.t>1.75||H.x>st+a.repeatEnd)H.state=3}
  }
  // Last-step betrayal: the final safe-looking tile bites once. Jump or wait it out.
  if(rageHas('lastStep')&&collected.has(currentLevel)){
-   const L=R.last;if(L.state===0&&player.x>st+a.lastStep-60){L.state=1;L.warn=warn;if(warnText){toast='EXIT LOOKS SAFE.';toastT=.45}}
-  if(L.state===1&&(L.warn-=dt)<=0){L.state=2;L.t=.82}
+   const L=R.last;if(L.state===0&&player.x>st+a.lastStep-60){L.state=1;L.warn=warn;L.warnText='EXIT LOOKS SAFE.'}
+  if(L.state===1&&(L.warn-=dt)<=0){L.state=2;L.t=.82;activate(L,'EXIT LOOKS SAFE.',.45)}
   if(L.state===2){L.t-=dt;const hz={x:st+a.lastStep,y:GROUND-30,w:64,h:30};if(hit(player,hz))kill('You trusted the last tile.','spike');if(L.t<=0)L.state=3}
  }
 }
 function updateTrap(dt){
  if(dead||won||upgradePending)return;
  const sc=scene(),a=rt.a,t=a.trap,X=x=>sc.start+x,T={...t,body:{...t.body,x:X(t.body.x)},lane:{...t.lane,x:X(t.lane.x)},platform:{...t.platform,x:X(t.platform.x)},finish:{...t.finish,x:X(t.finish.x)},beam:{...t.beam,x:X(t.beam.x)},repeat:{...t.repeat,x:X(t.repeat.x)}};
- rt.t+=dt;const cp=coinPos(sc),warnText=sc.level%2===1,trigger=X(T.trigger),end=X(T.triggerEnd);
- const arm=(delay=.36,msg='')=>{if(!rt.armed&&player.x>trigger){rt.armed=true;rt.warning=delay;if(msg&&warnText){toast=msg;toastT=.6}}};
+ rt.t+=dt;const cp=coinPos(sc),trigger=X(T.trigger),end=X(T.triggerEnd);
+ const arm=(delay=.36,msg='')=>{if(!rt.armed&&player.x>trigger){rt.armed=true;rt.warning=delay;rt.warnText=msg}};
  const falling=(acc=1300,msg='Warehouse policy applied.')=>{rt.warning-=dt;if(rt.warning<=0){rt.block.x=T.body.x;rt.block.vy+=acc*dt;rt.block.y+=rt.block.vy*dt;if(hit(player,rt.block))kill(msg,'crush');if(rt.block.y>GROUND+40)rt.done=true}};
  switch(sc.trap){
   case'signDrop':arm(.28,'CHECKPOINT APPROVED.');if(rt.armed&&!rt.done)falling(1350,'Checkpoint checked you.');break;
@@ -403,8 +404,8 @@ function updateTrap(dt){
   case'speedWall':arm(.32,'SPEED CHECK.');if(rt.armed&&!rt.done&&(rt.warning-=dt)<=0){rt.wall.vx=Math.max(-360,rt.wall.vx-850*dt);rt.wall.x+=rt.wall.vx*dt;if(hit(player,rt.wall))kill('Brake pedal DLC unavailable.','crush');if(rt.wall.x<trigger)rt.done=true}break;
   case'rollingBarrel':arm(.31);if(rt.armed&&!rt.done&&(rt.warning-=dt)<=0){rt.barrel.vx=Math.max(-280,rt.barrel.vx-500*dt);rt.barrel.x+=rt.barrel.vx*dt;if(hit(player,rt.barrel))kill('Barrel won the lane.','crush');if(rt.barrel.x<trigger)rt.done=true}break;
   case'risingSpikes':arm(0);if(rt.armed&&!rt.done){if(!rt.spikeX)rt.spikeX=trigger;rt.spikeX+=125*dt;if(hit(player,{...T.lane,x:rt.spikeX,w:80}))kill('Forward was the correct answer.','spike');if(rt.spikeX>end)rt.done=true}break;
-  case'conveyor':if(player.onGround&&hit(player,{...T.lane,y:GROUND-4,h:8}))player.x+=(sc.level%2?1:-1)*75*dt;break;
-  case'pendulum':rt.mover.x=T.body.x+Math.sin(rt.t*2.5)*120;rt.mover.y=GROUND-145;if(hit(player,rt.mover))kill('Shift supervisor: physics.','crush');break;
+  case'conveyor':if(player.onGround&&hit(player,{...T.lane,y:GROUND-4,h:8}))rt.armed=true;if(rt.armed)player.x+=(sc.level%2?1:-1)*75*dt;break;
+  case'pendulum':arm(0);if(rt.armed){rt.mover.x=T.body.x+Math.sin(rt.t*2.5)*120;rt.mover.y=GROUND-145;if(hit(player,rt.mover))kill('Shift supervisor: physics.','crush')}break;
   case'fakeFinish':case'fakeFinish2':if(hit(player,T.finish))kill('FINISH* not legally binding.','slap');break;
   case'lowBeam':if(player.vy<0&&hit(player,T.beam))kill('Low clearance meant low clearance.','crush');break;
   case'oilLane':if(player.onGround&&hit(player,T.lane)&&Math.abs(player.vx)>220)rt.slip=.8;if(hit(player,T.repeat))kill('Momentum invoice due.','spike');if(rt.slip)rt.slip=Math.max(0,rt.slip-dt);break;
@@ -413,6 +414,7 @@ function updateTrap(dt){
   case'spring':if(player.onGround&&hit(player,{...T.lane,h:16,y:GROUND-16})&&!rt.armed){rt.armed=true;player.vy=-800;player.onGround=false}if(rt.armed&&player.y<GROUND-150&&player.x<end)kill('Ceiling accepted your application.','crush');break;
   case'doubleDoor':arm(.35);if(rt.armed&&!rt.done&&(rt.warning-=dt)<=0){rt.door.x-=250*dt;if(hit(player,rt.door))kill('Door one filed a complaint.','crush');if(rt.door.x<trigger)rt.done=true}break;
  }
+ if(rt.warnText&&rt.armed&&rt.warning<=0){toast=rt.warnText;toastT=.6;rt.warnText=''}
  if(!collected.has(currentLevel)&&hit(player,cp))collectCoin();updateCounterTraps(dt);updateRageLayer(dt);
 }
 
@@ -445,26 +447,27 @@ function spikeRow(x,y,w,h){const g=ctx.createLinearGradient(0,y,0,y+h);g.addColo
 function coinDraw(p){const pulse=1+Math.sin(performance.now()/150+currentLevel)*.08;ctx.save();ctx.translate(p.x+12,p.y+12);ctx.scale(pulse,pulse);ctx.shadowColor='#ffd95a';ctx.shadowBlur=16;ctx.fillStyle='#f8c93d';ctx.beginPath();ctx.arc(0,0,12,0,Math.PI*2);ctx.fill();ctx.shadowBlur=0;ctx.strokeStyle='#a66b12';ctx.lineWidth=2;ctx.stroke();ctx.fillStyle='#fff3a3';ctx.font='900 9px system-ui';ctx.textAlign='center';ctx.fillText('31',0,3);ctx.restore()}
 function board(x,y,title,sub){ctx.fillStyle='#0b1722e6';roundedRect(x,y,245,60,10);ctx.fill();ctx.strokeStyle='#ffffff20';ctx.stroke();ctx.fillStyle='#6cdbff';ctx.font='900 10px system-ui';ctx.fillText('SCENE '+String(currentLevel).padStart(2,'0')+' / 31',x+13,y+18);ctx.fillStyle='#fff';ctx.font='900 17px system-ui';ctx.fillText(title,x+13,y+38);ctx.fillStyle='#b9c8d1';ctx.font='700 9px system-ui';ctx.fillText(sub,x+13,y+52)}
 function drawTrap(){const sc=scene(),a=rt.a,t=a.trap,X=x=>sc.start+x,T={...t,body:{...t.body,x:X(t.body.x)},lane:{...t.lane,x:X(t.lane.x)},platform:{...t.platform,x:X(t.platform.x)},finish:{...t.finish,x:X(t.finish.x)},beam:{...t.beam,x:X(t.beam.x)},repeat:{...t.repeat,x:X(t.repeat.x)}};
- if(rt.warning>0){ctx.save();ctx.globalAlpha=.25+.25*Math.sin(performance.now()/60);ctx.fillStyle='#ffdf5d';ctx.fillRect(sc.start+rt.a.trigger,GROUND-150,rt.a.hazardEnd-rt.a.trigger,5);ctx.restore()}
+ if(rt.warning>0){ctx.save();ctx.globalAlpha=.65+.35*Math.sin(performance.now()/60);ctx.fillStyle='#ff4057';ctx.font='900 22px system-ui';ctx.textAlign='center';ctx.fillText('!',player.x+player.w/2,player.y-10);ctx.textAlign='left';ctx.restore()}
  switch(sc.trap){
-  case'signDrop':case'ceiling':case'jumpBait':case'crateRain':case'checkpointBetrayal':case'finale':if(!rt.done){const b=rt.block,bg=ctx.createLinearGradient(b.x,b.y,b.x+b.w,b.y+b.h);bg.addColorStop(0,'#b7c2ca');bg.addColorStop(.28,'#687680');bg.addColorStop(1,'#252d34');ctx.save();ctx.shadowColor='#05090d';ctx.shadowBlur=10;ctx.shadowOffsetY=7;ctx.fillStyle=bg;ctx.fillRect(b.x,b.y,b.w,b.h);ctx.restore();ctx.fillStyle='#d9e1e6';ctx.fillRect(b.x+2,b.y+2,b.w-4,3);ctx.fillStyle='#f2cc4d';ctx.fillRect(b.x+8,b.y+10,b.w-16,9);ctx.fillStyle='#fff5a8';ctx.fillRect(b.x+8,b.y+10,b.w-16,2);ctx.fillStyle='#161a1e';ctx.font='900 12px system-ui';ctx.fillText(sc.trap==='finale'?'31':sc.trap==='signDrop'||sc.trap==='checkpointBetrayal'?'CHECKPOINT':'TOTALLY NORMAL',b.x+12,b.y+40)}break;
+  case'signDrop':case'ceiling':case'jumpBait':case'crateRain':case'checkpointBetrayal':case'finale':if(rt.armed&&!rt.done){const b=rt.block,bg=ctx.createLinearGradient(b.x,b.y,b.x+b.w,b.y+b.h);bg.addColorStop(0,'#b7c2ca');bg.addColorStop(.28,'#687680');bg.addColorStop(1,'#252d34');ctx.save();ctx.shadowColor='#05090d';ctx.shadowBlur=10;ctx.shadowOffsetY=7;ctx.fillStyle=bg;ctx.fillRect(b.x,b.y,b.w,b.h);ctx.restore();ctx.fillStyle='#d9e1e6';ctx.fillRect(b.x+2,b.y+2,b.w-4,3);ctx.fillStyle='#f2cc4d';ctx.fillRect(b.x+8,b.y+10,b.w-16,9);ctx.fillStyle='#fff5a8';ctx.fillRect(b.x+8,b.y+10,b.w-16,2);ctx.fillStyle='#161a1e';ctx.font='900 12px system-ui';ctx.fillText(sc.trap==='finale'?'31':sc.trap==='signDrop'||sc.trap==='checkpointBetrayal'?'CHECKPOINT':'TOTALLY NORMAL',b.x+12,b.y+40)}break;
  case'crumble':if(!rt.crumbleGone){ctx.fillStyle=rt.armed?'#d08d44':'#606c78';ctx.fillRect(T.platform.x,T.platform.y,T.platform.w,T.platform.h);if(rt.armed){ctx.fillStyle='#311f1d';for(let i=0;i<5;i++)ctx.fillRect(T.platform.x+20+i*16,T.platform.y,3,T.platform.h)}}break;
- case'chaser':if(!rt.done)spikeRow(rt.chaser.x,rt.chaser.y,rt.chaser.w,rt.chaser.h);break;
+ case'chaser':if(!rt.done){ctx.save();if(!rt.armed){ctx.globalAlpha=.48;ctx.filter='grayscale(1)'}spikeRow(rt.chaser.x,rt.chaser.y,rt.chaser.w,rt.chaser.h);ctx.restore()}break;
  case'keyGate':if(rt.armed&&!rt.done){ctx.fillStyle='#626e78';ctx.fillRect(rt.wall.x,rt.wall.y,rt.wall.w,rt.wall.h)}break;
- case'runDoor':ctx.fillStyle='#24729a';roundedRect(rt.door.x,rt.door.y,rt.door.w,rt.door.h,5);ctx.fill();ctx.fillStyle='#fff';ctx.font='900 12px system-ui';ctx.fillText('EXIT',rt.door.x+14,rt.door.y+28);break;
+ case'runDoor':ctx.fillStyle=rt.armed?'#24729a':'#667078';roundedRect(rt.door.x,rt.door.y,rt.door.w,rt.door.h,5);ctx.fill();ctx.fillStyle=rt.armed?'#fff':'#aeb5ba';ctx.font='900 12px system-ui';ctx.fillText('EXIT',rt.door.x+14,rt.door.y+28);break;
  case'coinSpikes':if(rt.spikes)spikeRow(T.lane.x,T.lane.y,T.lane.w,T.lane.h);break;
  case'speedWall':if(rt.armed&&!rt.done){ctx.fillStyle='#973341';ctx.fillRect(rt.wall.x,rt.wall.y,rt.wall.w,rt.wall.h)}ctx.fillStyle='#f0ca45';ctx.fillRect(X(T.trigger),GROUND-82,8,82);break;
- case'rollingBarrel':if(rt.armed&&!rt.done){ctx.fillStyle='#9a633d';ctx.beginPath();ctx.arc(rt.barrel.x+21,rt.barrel.y+21,21,0,Math.PI*2);ctx.fill();ctx.strokeStyle='#5a3828';ctx.lineWidth=4;ctx.stroke()}break;
+ case'rollingBarrel':if(!rt.done){ctx.fillStyle=rt.armed?'#9a633d':'#687078';ctx.beginPath();ctx.arc(rt.barrel.x+21,rt.barrel.y+21,21,0,Math.PI*2);ctx.fill();ctx.strokeStyle=rt.armed?'#5a3828':'#454b50';ctx.lineWidth=4;ctx.stroke()}break;
  case'risingSpikes':if(rt.armed&&!rt.done)spikeRow(rt.spikeX,GROUND-28,80,28);break;
- case'pendulum':ctx.fillStyle='#923a4a';roundedRect(rt.mover.x,rt.mover.y,rt.mover.w,rt.mover.h,8);ctx.fill();ctx.strokeStyle='#4a5660';ctx.lineWidth=5;ctx.beginPath();ctx.moveTo(rt.mover.x+26,55);ctx.lineTo(rt.mover.x+26,rt.mover.y);ctx.stroke();break;
+ case'pendulum':ctx.fillStyle=rt.armed?'#923a4a':'#687078';roundedRect(rt.mover.x,rt.mover.y,rt.mover.w,rt.mover.h,8);ctx.fill();ctx.strokeStyle='#4a5660';ctx.lineWidth=5;ctx.beginPath();ctx.moveTo(rt.mover.x+26,55);ctx.lineTo(rt.mover.x+26,rt.mover.y);ctx.stroke();break;
   case'fakeFinish':case'fakeFinish2':ctx.fillStyle='#1e9658';roundedRect(T.finish.x-50,GROUND-120,190,56,9);ctx.fill();ctx.fillStyle='#fff';ctx.font='900 18px system-ui';ctx.fillText(sc.trap==='fakeFinish2'?'BONUS EXIT':'LEVEL COMPLETE',T.finish.x-31,GROUND-84);ctx.fillStyle='#24b96a';ctx.fillRect(T.finish.x,T.finish.y,T.finish.w,T.finish.h);break;
   case'fakeReward':if(!rt.done){ctx.save();ctx.shadowColor='#ff5f87';ctx.shadowBlur=14;ctx.fillStyle='#ff5f87';roundedRect(T.body.x,T.body.y,T.body.w,T.body.h,15);ctx.fill();ctx.fillStyle='#fff';ctx.font='900 16px system-ui';ctx.textAlign='center';ctx.fillText('♥',T.body.x+T.body.w/2,T.body.y+T.body.h/2+6);ctx.textAlign='left';ctx.restore()}break;
-  case'delayedGhost':if(rt.platform.active){ctx.save();ctx.globalAlpha=rt.armed?.72:.95;ctx.fillStyle='#71808d';ctx.fillRect(T.platform.x,T.platform.y,T.platform.w,T.platform.h);if(rt.steps>=2){ctx.strokeStyle='#222b32';for(let i=0;i<5;i++){ctx.beginPath();ctx.moveTo(T.platform.x+15+i*15,T.platform.y);ctx.lineTo(T.platform.x+25+i*15,T.platform.y+T.platform.h);ctx.stroke()}}ctx.restore()}break;
+  case'safePlat':case'ghostPlat':case'shadowPlat':case'delayedGhost':if(rt.armed&&rt.platform.active){ctx.save();ctx.globalAlpha=.72;ctx.fillStyle='#71808d';ctx.fillRect(T.platform.x,T.platform.y,T.platform.w,T.platform.h);if(rt.steps>=2){ctx.strokeStyle='#222b32';for(let i=0;i<5;i++){ctx.beginPath();ctx.moveTo(T.platform.x+15+i*15,T.platform.y);ctx.lineTo(T.platform.x+25+i*15,T.platform.y+T.platform.h);ctx.stroke()}}ctx.restore()}break;
+ case'conveyor':ctx.fillStyle=rt.armed?'#b06b3c':'#687078';ctx.fillRect(T.lane.x,T.lane.y,T.lane.w,T.lane.h);break;
  case'lowBeam':drawMetal(T.beam.x,T.beam.y,T.beam.w,T.beam.h);ctx.fillStyle='#fff';ctx.font='900 10px system-ui';ctx.fillText('LOW CLEARANCE',T.beam.x+50,T.beam.y+31);break;
  case'oilLane':ctx.fillStyle='#172329cc';ctx.fillRect(T.lane.x,T.lane.y,T.lane.w,T.lane.h);spikeRow(T.repeat.x,T.repeat.y,T.repeat.w,T.repeat.h);break;
  case'steamPipe':if(rt.steam){const p=rt.pipes[0];ctx.fillStyle='rgba(238,251,255,.82)';roundedRect(p.x+42,p.y-88,48,88,22);ctx.fill()}break;
  case'lightning':if(rt.armed&&!rt.done){ctx.strokeStyle='#ffef76';ctx.lineWidth=3;ctx.beginPath();ctx.arc(rt.strike.x,GROUND-2,30,0,Math.PI*2);ctx.stroke()}if(rt.strike.active){ctx.fillStyle='#fff28a';ctx.fillRect(rt.strike.x-12,60,24,GROUND-60)}break;
- case'spring':ctx.fillStyle='#35b779';ctx.fillRect(T.lane.x,GROUND-16,T.lane.w,16);ctx.fillStyle='#fff';ctx.font='900 9px system-ui';ctx.fillText('FREE',T.lane.x+22,GROUND-20);break;
+ case'spring':if(rt.armed){ctx.fillStyle='#35b779';ctx.fillRect(T.lane.x,GROUND-16,T.lane.w,16);ctx.fillStyle='#fff';ctx.font='900 9px system-ui';ctx.fillText('FREE',T.lane.x+22,GROUND-20)}break;
  case'doubleDoor':ctx.fillStyle='#6e3c80';ctx.fillRect(rt.door.x,rt.door.y,rt.door.w,rt.door.h);break;
  }
  // solid/decorative pipes: identical art, different physics
