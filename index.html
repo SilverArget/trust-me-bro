@@ -307,6 +307,8 @@ function hardRestart(){currentLevel=1;deaths=0;coins=0;jumpLevel=speedLevel=0;co
 resetScene(false);
 
 function hit(a,b){return a.x<b.x+b.w&&a.x+a.w>b.x&&a.y<b.y+b.h&&a.y+a.h>b.y}
+function hurtbox(){return{x:player.x+4,y:player.y+4,w:player.w-8,h:player.h-8}}
+function hitHurt(b){return hit(hurtbox(),b)}
 function kill(msg,type='slap'){if(dead||won||spawnGrace>0)return;dead=true;deaths++;deathTimer=0;shakeT=.28;toast=msg;toastT=1.05;sDeath(type)}
 function getGroundSegments(){const st=sceneStart();return sceneGeometry().surfaces.filter(s=>s.kind==='ground').map(s=>({x:st+s.x,y:s.y,w:s.w,h:s.h}))}
 function staticPlatforms(){const st=sceneStart(),sc=scene(),arr=sceneGeometry().platforms.map(p=>({x:st+p[0],y:GROUND+p[1],w:p[2],h:18,oneway:true,geometry:true,beat:p[3]}));if(['crumble','safePlat','ghostPlat','delayedGhost','shadowPlat'].includes(sc.trap)&&rt.platform.active)arr.push({...rt.platform,oneway:true,dynamic:'platform'});if(sc.trap==='elevatorDrop')arr.push({x:rt.platform.x,y:rt.platform.y,w:rt.platform.w,h:18,oneway:true,dynamic:'platform'});for(const p of rt.pipes)if(p.solid)arr.push({x:p.x,y:p.y,w:p.w,h:p.h,oneway:true,pipe:true});return arr}
@@ -332,7 +334,7 @@ function updateCounterTraps(dt){if(currentLevel<=10)return;const sc=scene(),a=rt
  if((sc.counter==='speed'||sc.counter==='both')&&speedLevel){const oil=rt.oil;if(player.onGround&&hit(player,{x:oil.x,y:GROUND-12,w:oil.w,h:12})&&Math.abs(player.vx)>245){rt.slip=.85;rt.counterUsed=true;toast='SPEED BUILD DETECTED: grip revoked.';toastT=.7}if(rt.slip){rt.slip=Math.max(0,rt.slip-dt)}}
  // jump liability: high air route calls a cloud hand, but gives a visible beat
  if((sc.counter==='jump'||sc.counter==='both')&&jumpLevel&&!rt.cloudDone&&player.x>sc.start+a.betrayal.x0&&player.x<sc.start+a.betrayal.x1&&player.y<GROUND-125){if(!rt.cloudWarn){rt.cloudWarn=.38;rt.cloudX=player.x;toast='AIRSPACE VIOLATION.';toastT=.55}else{rt.cloudWarn-=dt;if(rt.cloudWarn<=0){const hand={x:rt.cloudX-8,y:GROUND-250,w:48,h:52};rt.hand=hand;rt.cloudVy=60;rt.cloudWarn=-999}}}
- if(rt.hand){rt.cloudVy+=1800*dt;rt.hand.y+=rt.cloudVy*dt;if(hit(player,rt.hand))kill('Cloud moderation was immediate.','slap');if(rt.hand.y>GROUND+40){rt.hand=null;rt.cloudDone=true}}
+ if(rt.hand){rt.cloudVy+=1800*dt;rt.hand.y+=rt.cloudVy*dt;if(hitHurt(rt.hand))kill('Cloud moderation was immediate.','slap');if(rt.hand.y>GROUND+40){rt.hand=null;rt.cloudDone=true}}
 }
 
 
@@ -346,73 +348,74 @@ function updateRageLayer(dt){
   const C=R.coin,near=Math.abs((player.x+player.w/2)-(cp.x+12))<125&&player.x>X(230);
    if(C.state===0&&near){C.state=1;C.warn=warn;C.warnText='COIN INSURANCE ACTIVATED.'}
   if(C.state===1&&(C.warn-=dt)<=0){C.state=2;C.t=.82;activate(C,'COIN INSURANCE ACTIVATED.')}
-  if(C.state===2){C.t-=dt;const hz={x:cp.x-28,y:GROUND-28,w:84,h:28};if(hit(player,hz))kill('The coin had terms and conditions.','spike');if(C.t<=0)C.state=3}
+  if(C.state===2){C.t-=dt;const hz={x:cp.x-28,y:GROUND-28,w:84,h:28};if(hitHurt(hz))kill('The coin had terms and conditions.','spike');if(C.t<=0)C.state=3}
  }
  // Retreat tax: once you commit, the road behind becomes teeth. It never spawns under you.
  if(rageHas('rearBite')){
    const B=R.rear;if(B.state===0&&player.x>st+a.repeatTrigger){B.state=1;B.warn=warn;B.warnText='RETURN POLICY UPDATED.'}
   if(B.state===1&&(B.warn-=dt)<=0){B.state=2;activate(B,'RETURN POLICY UPDATED.')}
-  if(B.state===2&&hit(player,{x:st+a.trial.x0+90,y:GROUND-28,w:125,h:28}))kill('Backing up was also a choice.','spike')
+  if(B.state===2&&hitHurt({x:st+a.trial.x0+90,y:GROUND-28,w:125,h:28}))kill('Backing up was also a choice.','spike')
  }
  // Pop-up floor teeth: one short burst; wait or jump.
  if(rageHas('floorPop')){
    const P=R.pop;if(P.state===0&&player.x>st+a.trigger&&player.x<st+a.hazardEnd){P.state=1;P.warn=warn;P.warnText='FLOOR UPDATE AVAILABLE.'}
   if(P.state===1&&(P.warn-=dt)<=0){P.state=2;P.t=.78;activate(P,'FLOOR UPDATE AVAILABLE.',.48)}
-  if(P.state===2){P.t-=dt;const hz={x:P.x,y:GROUND-30,w:86,h:30};if(hit(player,hz))kill('Floor update installed successfully.','spike');if(P.t<=0)P.state=3}
+  if(P.state===2){P.t-=dt;const hz={x:P.x,y:GROUND-30,w:86,h:30};if(hitHurt(hz))kill('Floor update installed successfully.','spike');if(P.t<=0)P.state=3}
  }
  // Ground sweeper from ahead: visible warning, then one pass. Jumpable.
  if(rageHas('sweeper')){
    const S=R.sweep;if(S.state===0&&player.x>st+a.repeatTrigger){S.state=1;S.warn=warn+.06;S.warnText='CLEANUP CREW INBOUND.'}
   if(S.state===1&&(S.warn-=dt)<=0){S.state=2;S.vx=-(235+sc.level*3.2);activate(S,'CLEANUP CREW INBOUND.')}
-  if(S.state===2){S.x+=S.vx*dt;if(hit(player,S))kill('Warehouse cleanup included you.','crush');if(S.x<st+a.mastery.x0)S.state=3}
+  if(S.state===2){S.x+=S.vx*dt;if(hitHurt(S))kill('Warehouse cleanup included you.','crush');if(S.x<st+a.mastery.x0)S.state=3}
  }
  // Exit crusher: only after the coin, so it becomes a second punch right before safety.
  if(rageHas('exitDrop')&&collected.has(currentLevel)){
    const E=R.exit;if(E.state===0&&player.x>st+a.repeatTrigger){E.state=1;E.warn=warn+.02;E.warnText='EXIT SAFETY CHECK.'}
   if(E.state===1&&(E.warn-=dt)<=0){E.state=2;activate(E,'EXIT SAFETY CHECK.')}
-  if(E.state===2){E.block.vy+=1280*dt;E.block.y+=E.block.vy*dt;if(hit(player,E.block))kill('The exit checked your head clearance.','crush');if(E.block.y>GROUND+55)E.state=3}
+  if(E.state===2){E.block.vy+=1280*dt;E.block.y+=E.block.vy*dt;if(E.block.vy>0&&hitHurt(E.block)&&Math.abs(hurtbox().y-(E.block.y+E.block.h))<=15)kill('The exit checked your head clearance.','crush');if(E.block.y>GROUND+55)E.state=3}
  }
  // Coin hunter: after collecting, a red complaint form chases for a short deterministic window.
  if(rageHas('hunter')&&collected.has(currentLevel)){
    const H=R.hunter;if(H.state===0&&player.x>st+a.repeatTrigger){H.state=1;H.warn=warn;H.x=Math.max(st+a.mastery.x0,player.x-165);H.t=0;H.warnText='COIN OWNER FOUND YOU.'}
   if(H.state===1&&(H.warn-=dt)<=0){H.state=2;activate(H,'COIN OWNER FOUND YOU.',.52)}
-  if(H.state===2){H.t+=dt;const d=Math.sign(player.x-H.x);H.vx+=d*920*dt;H.vx=Math.max(-315,Math.min(315,H.vx));H.x+=H.vx*dt;if(hit(player,H))kill('Refund department was faster.','spike');if(H.t>1.75||H.x>st+a.repeatEnd)H.state=3}
+  if(H.state===2){H.t+=dt;const d=Math.sign(player.x-H.x);H.vx+=d*920*dt;H.vx=Math.max(-315,Math.min(315,H.vx));H.x+=H.vx*dt;if(hitHurt(H))kill('Refund department was faster.','spike');if(H.t>1.75||H.x>st+a.repeatEnd)H.state=3}
  }
  // Last-step betrayal: the final safe-looking tile bites once. Jump or wait it out.
  if(rageHas('lastStep')&&collected.has(currentLevel)){
    const L=R.last;if(L.state===0&&player.x>st+a.lastStep-60){L.state=1;L.warn=warn;L.warnText='EXIT LOOKS SAFE.'}
   if(L.state===1&&(L.warn-=dt)<=0){L.state=2;L.t=.82;activate(L,'EXIT LOOKS SAFE.',.45)}
-  if(L.state===2){L.t-=dt;const hz={x:st+a.lastStep,y:GROUND-30,w:64,h:30};if(hit(player,hz))kill('You trusted the last tile.','spike');if(L.t<=0)L.state=3}
+  if(L.state===2){L.t-=dt;const hz={x:st+a.lastStep,y:GROUND-30,w:64,h:30};if(hitHurt(hz))kill('You trusted the last tile.','spike');if(L.t<=0)L.state=3}
  }
 }
 function updateTrap(dt){
  if(dead||won||upgradePending)return;
  const sc=scene(),a=rt.a,t=a.trap,X=x=>sc.start+x,T={...t,body:{...t.body,x:X(t.body.x)},lane:{...t.lane,x:X(t.lane.x)},platform:{...t.platform,x:X(t.platform.x)},finish:{...t.finish,x:X(t.finish.x)},beam:{...t.beam,x:X(t.beam.x)},repeat:{...t.repeat,x:X(t.repeat.x)}};
  rt.t+=dt;const cp=coinPos(sc),trigger=X(T.trigger),end=X(T.triggerEnd);
- const arm=(delay=.36,msg='')=>{if(!rt.armed&&player.x>trigger){rt.armed=true;rt.warning=delay;rt.warnText=msg}};
- const falling=(acc=1300,msg='Warehouse policy applied.')=>{rt.warning-=dt;if(rt.warning<=0){rt.block.x=T.body.x;rt.block.vy+=acc*dt;rt.block.y+=rt.block.vy*dt;if(hit(player,rt.block))kill(msg,'crush');if(rt.block.y>GROUND+40)rt.done=true}};
+ const GROUND_ARM_Y=100,CEILING_ARM_Y=400,groundArmed=['rollingBarrel','speedWall','chaser','risingSpikes','runDoor'].includes(sc.trap),ceilingArmed=['signDrop','ceiling','jumpBait','crateRain','checkpointBetrayal','finale'].includes(sc.trap);
+ const arm=(delay=.36,msg='')=>{const groundInRange=Math.abs((player.y+player.h)-GROUND)<=GROUND_ARM_Y,belowBlock=player.y>=rt.block.y+rt.block.h&&player.y-(rt.block.y+rt.block.h)<=CEILING_ARM_Y,yInRange=groundArmed?groundInRange:ceilingArmed?belowBlock:true;if(!rt.armed&&player.x>trigger&&yInRange){rt.armed=true;rt.warning=delay;rt.warnText=msg}};
+ const falling=(acc=1300,msg='Warehouse policy applied.')=>{rt.warning-=dt;if(rt.warning<=0){rt.block.x=T.body.x;rt.block.vy+=acc*dt;rt.block.y+=rt.block.vy*dt;const hb=hurtbox();if(hit(hb,rt.block)){if(rt.block.vy>0&&Math.abs(hb.y-(rt.block.y+rt.block.h))<=15)kill(msg,'crush');else{if(hb.x+hb.w/2<rt.block.x+rt.block.w/2)player.x=rt.block.x-player.w;else player.x=rt.block.x+rt.block.w;player.vx=0}}if(rt.block.y>GROUND+40)rt.done=true}};
  switch(sc.trap){
   case'signDrop':arm(.28,'CHECKPOINT APPROVED.');if(rt.armed&&!rt.done)falling(1350,'Checkpoint checked you.');break;
   case'ceiling':case'jumpBait':case'checkpointBetrayal':case'crateRain':case'finale':arm(sc.trap==='finale'?.34:.4,sc.trap==='finale'?'SCENE 31. NO REFUNDS.':'OVERHEAD POLICY.');if(rt.armed&&!rt.done)falling(sc.trap==='finale'?1100:1420,'Trust had overhead costs.');break;
   case'crumble':arm(.46);if(rt.armed&&!rt.done&&(rt.warning-=dt)<=0)rt.crumbleGone=true;break;
-  case'chaser':arm(0,'RED OBJECT HAS LOCKED ON.');if(rt.armed&&!rt.done){const d=Math.sign(player.x-rt.chaser.x);rt.chaser.vx=Math.max(-300,Math.min(300,rt.chaser.vx+d*900*dt));rt.chaser.x+=rt.chaser.vx*dt;if(player.onGround&&player.y+player.h<GROUND-30&&player.x>trigger&&player.x<end)rt.done=true;if(!rt.done&&hit(player,rt.chaser))kill('High ground existed.','spike')}break;
-  case'keyGate':arm(.42,'FREE KEY. TOTALLY FREE.');if(rt.armed&&!rt.done){rt.warning-=dt;if(rt.warning<=0){rt.wall.vy=(rt.wall.vy||0)+900*dt;rt.wall.y+=rt.wall.vy*dt;if(hit(player,rt.wall))kill('The key unlocked gravity.','crush');if(rt.wall.y>GROUND)rt.done=true}}break;
+  case'chaser':arm(0,'RED OBJECT HAS LOCKED ON.');if(rt.armed&&!rt.done){const d=Math.sign(player.x-rt.chaser.x);rt.chaser.vx=Math.max(-300,Math.min(300,rt.chaser.vx+d*900*dt));rt.chaser.x+=rt.chaser.vx*dt;if(player.onGround&&player.y+player.h<GROUND-30&&player.x>trigger&&player.x<end)rt.done=true;if(!rt.done&&hitHurt(rt.chaser))kill('High ground existed.','spike')}break;
+  case'keyGate':arm(.42,'FREE KEY. TOTALLY FREE.');if(rt.armed&&!rt.done){rt.warning-=dt;if(rt.warning<=0){rt.wall.vy=(rt.wall.vy||0)+900*dt;rt.wall.y+=rt.wall.vy*dt;if(hitHurt(rt.wall))kill('The key unlocked gravity.','crush');if(rt.wall.y>GROUND)rt.done=true}}break;
   case'runDoor':arm(0,'DELIVERY POINT RELOCATING.');if(rt.armed&&!rt.done){rt.door.vx=Math.min(250,rt.door.vx+360*dt);rt.door.x+=rt.door.vx*dt;if(rt.door.x>end)rt.done=true}break;
-  case'coinSpikes':if(collected.has(currentLevel)&&!rt.coinArmed){rt.coinArmed=true;rt.warning=.32}if(rt.coinArmed&&(rt.warning-=dt)<=0){rt.spikes=true;if(hit(player,T.lane))kill('Coin receipt included spikes.','spike')}break;
+  case'coinSpikes':if(collected.has(currentLevel)&&!rt.coinArmed){rt.coinArmed=true;rt.warning=.32}if(rt.coinArmed&&(rt.warning-=dt)<=0){rt.spikes=true;if(hitHurt(T.lane))kill('Coin receipt included spikes.','spike')}break;
   case'safePlat':case'ghostPlat':case'shadowPlat':case'delayedGhost':if(rt.platform.active&&player.onGround&&hit(player,T.platform)){if(!rt.armed){rt.armed=true;rt.warning=sc.trap==='delayedGhost'?.95:.5}if((rt.warning-=dt)<=0)rt.platform.active=false}break;
-  case'fakeReward':if(!rt.done&&hit(player,T.body)){rt.done=true;kill('Complimentary benefits were terminal.','slap')}break;
-  case'speedWall':arm(.32,'SPEED CHECK.');if(rt.armed&&!rt.done&&(rt.warning-=dt)<=0){rt.wall.vx=Math.max(-360,rt.wall.vx-850*dt);rt.wall.x+=rt.wall.vx*dt;if(hit(player,rt.wall))kill('Brake pedal DLC unavailable.','crush');if(rt.wall.x<trigger)rt.done=true}break;
-  case'rollingBarrel':arm(.31);if(rt.armed&&!rt.done&&(rt.warning-=dt)<=0){rt.barrel.vx=Math.max(-280,rt.barrel.vx-500*dt);rt.barrel.x+=rt.barrel.vx*dt;if(hit(player,rt.barrel))kill('Barrel won the lane.','crush');if(rt.barrel.x<trigger)rt.done=true}break;
-  case'risingSpikes':arm(0);if(rt.armed&&!rt.done){if(!rt.spikeX)rt.spikeX=trigger;rt.spikeX+=125*dt;if(hit(player,{...T.lane,x:rt.spikeX,w:80}))kill('Forward was the correct answer.','spike');if(rt.spikeX>end)rt.done=true}break;
+  case'fakeReward':if(!rt.done&&hitHurt(T.body)){rt.done=true;kill('Complimentary benefits were terminal.','slap')}break;
+  case'speedWall':arm(.32,'SPEED CHECK.');if(rt.armed&&!rt.done&&(rt.warning-=dt)<=0){rt.wall.vx=Math.max(-360,rt.wall.vx-850*dt);rt.wall.x+=rt.wall.vx*dt;if(hitHurt(rt.wall))kill('Brake pedal DLC unavailable.','crush');if(rt.wall.x<trigger)rt.done=true}break;
+  case'rollingBarrel':arm(.31);if(rt.armed&&!rt.done&&(rt.warning-=dt)<=0){rt.barrel.vx=Math.max(-280,rt.barrel.vx-500*dt);rt.barrel.x+=rt.barrel.vx*dt;if(hitHurt(rt.barrel))kill('Barrel won the lane.','crush');if(rt.barrel.x<trigger)rt.done=true}break;
+  case'risingSpikes':arm(0);if(rt.armed&&!rt.done){if(!rt.spikeX)rt.spikeX=trigger;rt.spikeX+=125*dt;if(hitHurt({...T.lane,x:rt.spikeX,w:80}))kill('Forward was the correct answer.','spike');if(rt.spikeX>end)rt.done=true}break;
   case'conveyor':if(player.onGround&&hit(player,{...T.lane,y:GROUND-4,h:8}))rt.armed=true;if(rt.armed)player.x+=(sc.level%2?1:-1)*75*dt;break;
-  case'pendulum':arm(0);if(rt.armed){rt.mover.x=T.body.x+Math.sin(rt.t*2.5)*120;rt.mover.y=GROUND-145;if(hit(player,rt.mover))kill('Shift supervisor: physics.','crush')}break;
-  case'fakeFinish':case'fakeFinish2':if(hit(player,T.finish))kill('FINISH* not legally binding.','slap');break;
-  case'lowBeam':if(player.vy<0&&hit(player,T.beam))kill('Low clearance meant low clearance.','crush');break;
-  case'oilLane':if(player.onGround&&hit(player,T.lane)&&Math.abs(player.vx)>220)rt.slip=.8;if(hit(player,T.repeat))kill('Momentum invoice due.','spike');if(rt.slip)rt.slip=Math.max(0,rt.slip-dt);break;
-  case'steamPipe':{const p=rt.pipes[0];if(player.onGround&&hit(player,p)){if(!rt.armed){rt.armed=true;rt.warning=.45}if((rt.warning-=dt)<=0){rt.steam=true;if(hit(player,{x:p.x+42,y:p.y-88,w:48,h:88}))kill('Pipe was personal.','slap')}}}break;
-  case'lightning':arm(.48,'WEATHER ALERT.');if(rt.armed&&!rt.done&&(rt.warning-=dt)<=0){rt.strike.active=true;rt.strike.x=player.x;if(hit(player,{x:rt.strike.x-18,y:60,w:36,h:GROUND-60}))kill('Forecast accuracy: 100%.','slap');rt.done=true}break;
+  case'pendulum':arm(0);if(rt.armed){rt.mover.x=T.body.x+Math.sin(rt.t*2.5)*120;rt.mover.y=GROUND-145;if(hitHurt(rt.mover))kill('Shift supervisor: physics.','crush')}break;
+  case'fakeFinish':case'fakeFinish2':if(hitHurt(T.finish))kill('FINISH* not legally binding.','slap');break;
+  case'lowBeam':if(player.vy<0&&hitHurt(T.beam))kill('Low clearance meant low clearance.','crush');break;
+  case'oilLane':if(player.onGround&&hit(player,T.lane)&&Math.abs(player.vx)>220)rt.slip=.8;if(hitHurt(T.repeat))kill('Momentum invoice due.','spike');if(rt.slip)rt.slip=Math.max(0,rt.slip-dt);break;
+  case'steamPipe':{const p=rt.pipes[0];if(player.onGround&&hit(player,p)){if(!rt.armed){rt.armed=true;rt.warning=.45}if((rt.warning-=dt)<=0){rt.steam=true;if(hitHurt({x:p.x+42,y:p.y-88,w:48,h:88}))kill('Pipe was personal.','slap')}}}break;
+  case'lightning':arm(.48,'WEATHER ALERT.');if(rt.armed&&!rt.done&&(rt.warning-=dt)<=0){rt.strike.active=true;rt.strike.x=player.x;if(hitHurt({x:rt.strike.x-18,y:60,w:36,h:GROUND-60}))kill('Forecast accuracy: 100%.','slap');rt.done=true}break;
   case'spring':if(player.onGround&&hit(player,{...T.lane,h:16,y:GROUND-16})&&!rt.armed){rt.armed=true;player.vy=-800;player.onGround=false}if(rt.armed&&player.y<GROUND-150&&player.x<end)kill('Ceiling accepted your application.','crush');break;
-  case'doubleDoor':arm(.35);if(rt.armed&&!rt.done&&(rt.warning-=dt)<=0){rt.door.x-=250*dt;if(hit(player,rt.door))kill('Door one filed a complaint.','crush');if(rt.door.x<trigger)rt.done=true}break;
+  case'doubleDoor':arm(.35);if(rt.armed&&!rt.done&&(rt.warning-=dt)<=0){rt.door.x-=250*dt;if(hitHurt(rt.door))kill('Door one filed a complaint.','crush');if(rt.door.x<trigger)rt.done=true}break;
  }
  if(rt.warnText&&rt.armed&&rt.warning<=0){toast=rt.warnText;toastT=.6;rt.warnText=''}
  if(!collected.has(currentLevel)&&hit(player,cp))collectCoin();updateCounterTraps(dt);updateRageLayer(dt);
@@ -449,7 +452,7 @@ function board(x,y,title,sub){ctx.fillStyle='#0b1722e6';roundedRect(x,y,245,60,1
 function drawTrap(){const sc=scene(),a=rt.a,t=a.trap,X=x=>sc.start+x,T={...t,body:{...t.body,x:X(t.body.x)},lane:{...t.lane,x:X(t.lane.x)},platform:{...t.platform,x:X(t.platform.x)},finish:{...t.finish,x:X(t.finish.x)},beam:{...t.beam,x:X(t.beam.x)},repeat:{...t.repeat,x:X(t.repeat.x)}};
  if(rt.warning>0){ctx.save();ctx.globalAlpha=.65+.35*Math.sin(performance.now()/60);ctx.fillStyle='#ff4057';ctx.font='900 22px system-ui';ctx.textAlign='center';ctx.fillText('!',player.x+player.w/2,player.y-10);ctx.textAlign='left';ctx.restore()}
  switch(sc.trap){
-  case'signDrop':case'ceiling':case'jumpBait':case'crateRain':case'checkpointBetrayal':case'finale':if(rt.armed&&!rt.done){const b=rt.block,bg=ctx.createLinearGradient(b.x,b.y,b.x+b.w,b.y+b.h);bg.addColorStop(0,'#b7c2ca');bg.addColorStop(.28,'#687680');bg.addColorStop(1,'#252d34');ctx.save();ctx.shadowColor='#05090d';ctx.shadowBlur=10;ctx.shadowOffsetY=7;ctx.fillStyle=bg;ctx.fillRect(b.x,b.y,b.w,b.h);ctx.restore();ctx.fillStyle='#d9e1e6';ctx.fillRect(b.x+2,b.y+2,b.w-4,3);ctx.fillStyle='#f2cc4d';ctx.fillRect(b.x+8,b.y+10,b.w-16,9);ctx.fillStyle='#fff5a8';ctx.fillRect(b.x+8,b.y+10,b.w-16,2);ctx.fillStyle='#161a1e';ctx.font='900 12px system-ui';ctx.fillText(sc.trap==='finale'?'31':sc.trap==='signDrop'||sc.trap==='checkpointBetrayal'?'CHECKPOINT':'TOTALLY NORMAL',b.x+12,b.y+40)}break;
+  case'signDrop':case'ceiling':case'jumpBait':case'crateRain':case'checkpointBetrayal':case'finale':if(!rt.done){const b=rt.block,bg=ctx.createLinearGradient(b.x,b.y,b.x+b.w,b.y+b.h);bg.addColorStop(0,'#b7c2ca');bg.addColorStop(.28,'#687680');bg.addColorStop(1,'#252d34');ctx.save();if(!rt.armed){ctx.globalAlpha=.48;ctx.filter='grayscale(1)'}ctx.shadowColor='#05090d';ctx.shadowBlur=10;ctx.shadowOffsetY=7;ctx.fillStyle=bg;ctx.fillRect(b.x,b.y,b.w,b.h);ctx.fillStyle='#d9e1e6';ctx.fillRect(b.x+2,b.y+2,b.w-4,3);ctx.fillStyle='#f2cc4d';ctx.fillRect(b.x+8,b.y+10,b.w-16,9);ctx.fillStyle='#fff5a8';ctx.fillRect(b.x+8,b.y+10,b.w-16,2);ctx.fillStyle='#161a1e';ctx.font='900 12px system-ui';ctx.fillText(sc.trap==='finale'?'31':sc.trap==='signDrop'||sc.trap==='checkpointBetrayal'?'CHECKPOINT':'TOTALLY NORMAL',b.x+12,b.y+40);ctx.restore()}break;
  case'crumble':if(!rt.crumbleGone){ctx.fillStyle=rt.armed?'#d08d44':'#606c78';ctx.fillRect(T.platform.x,T.platform.y,T.platform.w,T.platform.h);if(rt.armed){ctx.fillStyle='#311f1d';for(let i=0;i<5;i++)ctx.fillRect(T.platform.x+20+i*16,T.platform.y,3,T.platform.h)}}break;
  case'chaser':if(!rt.done){ctx.save();if(!rt.armed){ctx.globalAlpha=.48;ctx.filter='grayscale(1)'}spikeRow(rt.chaser.x,rt.chaser.y,rt.chaser.w,rt.chaser.h);ctx.restore()}break;
  case'keyGate':if(rt.armed&&!rt.done){ctx.fillStyle='#626e78';ctx.fillRect(rt.wall.x,rt.wall.y,rt.wall.w,rt.wall.h)}break;
