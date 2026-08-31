@@ -218,25 +218,26 @@ const GEOMETRY={
  5:{gaps:[[315,535]],platforms:[[335,-72,86],[455,-46,62]]},
  6:{gaps:[[280,590]],platforms:[[300,-48,82],[415,-78,82],[530,-52,44]]},
  7:{gaps:[[350,490]],platforms:[[370,-66,98]]},
- 8:{gaps:[[245,545]],platforms:[[265,-42,80],[375,-78,78],[485,-50,44]]},
+ 8:{gaps:[[220,450],[560,790],[900,1130],[1240,1470],[1580,1810],[1920,2150]],platforms:[[150,-60,70],[260,-150,70],[360,-175,70],[490,-60,70],[600,-150,70],[700,-175,70],[830,-60,70],[940,-150,70],[1040,-175,70],[1170,-60,70],[1280,-150,70],[1380,-175,70],[1510,-60,70],[1620,-150,70],[1720,-175,70],[1850,-60,70],[1960,-150,70],[2060,-175,70]]},
  10:{gaps:[[300,435],[535,650]],platforms:[[320,-76,92],[555,-54,72]]},
  11:{gaps:[[265,575]],platforms:[[285,-60,88],[405,-88,82],[520,-58,42]]},
  12:{gaps:[[330,485]],platforms:[[350,-82,112]]},
  13:{gaps:[[240,365],[470,610]],platforms:[[260,-52,82],[490,-80,96]]},
  14:{gaps:[[285,585]],platforms:[[305,-44,78],[415,-76,78],[525,-48,48]]},
- 16:{gaps:[[310,455],[545,665]],platforms:[[330,-70,102],[565,-52,76]]},
+ 16:{gaps:[[230,460],[570,800],[910,1140],[1250,1480],[1590,1820],[1930,2160]],platforms:[[160,-60,70],[270,-150,70],[370,-175,70],[500,-60,70],[610,-150,70],[710,-175,70],[840,-60,70],[950,-150,70],[1050,-175,70],[1180,-60,70],[1290,-150,70],[1390,-175,70],[1520,-60,70],[1630,-150,70],[1730,-175,70],[1860,-60,70],[1970,-150,70],[2070,-175,70]]},
  18:{gaps:[[250,555]],platforms:[[270,-50,84],[390,-82,82],[505,-54,38]]},
  19:{gaps:[[345,505]],platforms:[[365,-80,118]]},
  20:{gaps:[[270,390],[500,635]],platforms:[[290,-58,78],[520,-74,92]]},
  21:{gaps:[[260,575]],platforms:[[280,-46,82],[395,-80,82],[510,-52,52]]},
  22:{gaps:[[320,540]],platforms:[[340,-72,82],[455,-44,66]]},
- 23:{gaps:[[245,555]],platforms:[[265,-54,86],[385,-84,82],[500,-56,43]]},
+ 23:{gaps:[[210,450],[550,790],[890,1130],[1230,1470],[1570,1810],[1910,2150]],platforms:[[140,-60,70],[250,-150,70],[350,-175,70],[480,-60,70],[590,-150,70],[690,-175,70],[820,-60,70],[930,-150,70],[1030,-175,70],[1160,-60,70],[1270,-150,70],[1370,-175,70],[1500,-60,70],[1610,-150,70],[1710,-175,70],[1840,-60,70],[1950,-150,70],[2050,-175,70]]},
  25:{gaps:[[290,440],[535,655]],platforms:[[310,-78,106],[555,-48,78]]},
  26:{gaps:[[260,575]],platforms:[[280,-48,80],[392,-82,80],[505,-54,58]]},
  28:{gaps:[[275,590]],platforms:[[295,-56,84],[415,-86,82],[530,-58,48]]},
  29:{gaps:[[335,500]],platforms:[[355,-82,122]]},
- 30:{gaps:[[250,565]],platforms:[[270,-50,84],[390,-80,82],[505,-52,48]]}
+ 30:{gaps:[[240,460],[580,800],[920,1140],[1260,1480],[1600,1820],[1940,2160]],platforms:[[170,-60,70],[280,-150,70],[380,-175,70],[510,-60,70],[620,-150,70],[720,-175,70],[850,-60,70],[960,-150,70],[1060,-175,70],[1190,-60,70],[1300,-150,70],[1400,-175,70],[1530,-60,70],[1640,-150,70],[1740,-175,70],[1870,-60,70],[1980,-150,70],[2080,-175,70]]}
 };
+const TOP_ROUTE_LEVELS=[8,16,23,30];
 const SCENE_CACHE=new Map();
 function buildScene(level){
  if(SCENE_CACHE.has(level))return SCENE_CACHE.get(level);
@@ -254,7 +255,8 @@ function buildScene(level){
   if(bi<2){const rise=72+((level+bi)%2)*18,px=b.x0+205+(level*11+bi*19)%24,pw=64+(level%25);platforms.push([px,-rise,pw,bi,'optional']);surfaces.push({x:px,y:GROUND-rise,w:pw,h:18,beat:bi,kind:'platform'})}
  }
  // A legacy override replaces optional generated content in its beat; route platforms remain authoritative.
- const legacy=GEOMETRY[level];if(legacy){for(let i=platforms.length-1;i>=0;i--)if(platforms[i][3]===2&&platforms[i][4]!=='route')platforms.splice(i,1);const shift=beat(2).x0-180;for(const p of legacy.platforms){const q=[shift+p[0],p[1],Math.max(60,p[2]),2,'override'];platforms.push(q);surfaces.push({x:q[0],y:GROUND+q[1],w:q[2],h:18,beat:2,kind:'platform',override:true})}}
+ const legacy=GEOMETRY[level];if(legacy&&TOP_ROUTE_LEVELS.includes(level)){gaps.length=0;platforms.length=0;surfaces.length=0;for(const gap of legacy.gaps)gaps.push([...gap]);for(const p of legacy.platforms){const bi=Math.max(0,Math.min(3,Math.floor((p[0]-180)/495))),q=[p[0],p[1],Math.max(60,p[2]),bi,'top-route'];platforms.push(q);surfaces.push({x:q[0],y:GROUND+q[1],w:q[2],h:18,beat:bi,kind:'platform',route:true})}}
+ else if(legacy){for(let i=platforms.length-1;i>=0;i--)if(platforms[i][3]===2&&platforms[i][4]!=='route')platforms.splice(i,1);const shift=beat(2).x0-180;for(const p of legacy.platforms){const q=[shift+p[0],p[1],Math.max(60,p[2]),2,'override'];platforms.push(q);surfaces.push({x:q[0],y:GROUND+q[1],w:q[2],h:18,beat:2,kind:'platform',override:true})}}
  let cursor=0;for(const g of gaps){if(g[0]>cursor)surfaces.push({x:cursor,y:GROUND,w:g[0]-cursor,h:100,beat:Math.max(0,Math.min(3,Math.floor((g[0]-180)/495))),kind:'ground'});cursor=g[1]}if(cursor<SCENE_W)surfaces.push({x:cursor,y:GROUND,w:SCENE_W-cursor,h:100,beat:3,kind:'ground'});
  const b2=beat(2),b3=beat(3),anchors={spawn:66,coin:b2.x1-32,dock:DOCK[0],intro:beat(0),trial:beat(1),betrayal:b2,mastery:b3,
   trigger:b2.x0+72,hazard:b2.x0+188,hazardEnd:b2.x1-38,repeatTrigger:b3.x0+58,repeat:b3.x0+196,repeatEnd:b3.x1-32,lastStep:DOCK[0]-78};
@@ -274,10 +276,11 @@ function validateScene(level){
  if(!Number.isFinite(toCoin))errors.push('spawn_to_coin:no_path');if(!Number.isFinite(coinToDock))errors.push('coin_to_dock:no_path');if(minimumJumps<6)errors.push(`minimum_jumps:${minimumJumps}<6`);
  const groundOnlyRoute=!!shortestPath(start,dock,n=>n.kind==='ground');if(groundOnlyRoute)errors.push('ground_only_route_exists');
  const route=shortestPath(start,dock)||[],verticalRequired=route.some(i=>nodes[i].kind==='platform'&&GROUND-nodes[i].y>=162);if(!verticalRequired)errors.push('no_vertical_requirement');
+ const topRoutePlatforms=route.filter(i=>nodes[i].kind==='platform').length;if(TOP_ROUTE_LEVELS.includes(level)&&topRoutePlatforms<3)errors.push(`insufficient_top_route:${topRoutePlatforms}<3`);
  // Analytic constants are deliberately retained in the report for auditability.
- return{level,errors,minimumJumps,toCoin,coinToDock,groundOnlyRoute,verticalRequired,physics:{vy0:-VY0,g:GRAVITY,maxvx:MAXVX,playerWidth:PW}};
+ return{level,errors,minimumJumps,toCoin,coinToDock,groundOnlyRoute,verticalRequired,topRoutePlatforms,physics:{vy0:-VY0,g:GRAVITY,maxvx:MAXVX,playerWidth:PW}};
 }
-function validateAllScenes(){const reports=Array.from({length:SCENE_COUNT},(_,i)=>validateScene(i+1)),values=new Set(reports.map(r=>r.minimumJumps));if(values.size===1){const e='minimum_jumps_constant_across_levels';console.error(`[v41 validator] ${e}`);for(const r of reports)r.errors.push(e)}for(const r of reports)for(const e of r.errors)console.error(`[v41 validator] level ${r.level}: ${e}`);console.table(reports.map(r=>({level:r.level,minimumJumps:r.minimumJumps,groundOnlyRoute:r.groundOnlyRoute,verticalRequired:r.verticalRequired,violations:r.errors.length})));return reports}
+function validateAllScenes(){const reports=Array.from({length:SCENE_COUNT},(_,i)=>validateScene(i+1)),values=new Set(reports.map(r=>r.minimumJumps));if(values.size===1){const e='minimum_jumps_constant_across_levels';console.error(`[v41 validator] ${e}`);for(const r of reports)r.errors.push(e)}for(const r of reports)for(const e of r.errors)console.error(`[v41 validator] level ${r.level}: ${e}`);console.table(reports.map(r=>({level:r.level,minimumJumps:r.minimumJumps,groundOnlyRoute:r.groundOnlyRoute,verticalRequired:r.verticalRequired,topRoutePlatforms:r.topRoutePlatforms,violations:r.errors.length})));return reports}
 const VALIDATION_REPORT=location.hash==='#validate'?validateAllScenes():null;
 function makeRuntime(){const sc=scene(),st=sc.start,g=buildScene(sc.level),a=g.anchors,X=x=>st+x;return{t:0,armed:false,done:false,phase:0,warning:0,a,
  block:{x:X(a.hazard),y:72,w:104,h:70,vy:0},
