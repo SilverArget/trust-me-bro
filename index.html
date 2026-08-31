@@ -172,7 +172,7 @@ function setupLifecycle(){
   setAudioAllowed(true);
  }
  // Outside YouTube only: Safari/iOS fallback. Playables certification forbids using Page Visibility inside Playables.
- if(!inPlayablesEnv){document.addEventListener('visibilitychange',()=>{if(document.hidden)pauseGame('visibility');else resumeGame('visibility')},{passive:true});window.addEventListener('pagehide',()=>pauseGame('pagehide'),{passive:true});window.addEventListener('pageshow',()=>resumeGame('pageshow'),{passive:true})}}
+ if(!inPlayablesEnv){const recoverFromInput=()=>{if(systemPaused&&!document.hidden)resumeGame('input')};document.addEventListener('visibilitychange',()=>{if(document.hidden)pauseGame('visibility');else resumeGame('visibility')},{passive:true});window.addEventListener('pagehide',()=>{if(document.hidden)pauseGame('pagehide')},{passive:true});window.addEventListener('pageshow',()=>resumeGame('pageshow'),{passive:true});window.addEventListener('pointerdown',recoverFromInput,{passive:true});window.addEventListener('touchstart',recoverFromInput,{passive:true});window.addEventListener('keydown',recoverFromInput,{passive:true});window.addEventListener('click',recoverFromInput,{passive:true})}}
 function notifyFirstFrame(){if(firstFrameSent||!ytReady())return;try{ytgame.game.firstFrameReady();firstFrameSent=true}catch(_){}}
 function notifyGameReady(){if(gameReadySent||!ytReady())return;try{ytgame.game.gameReady();gameReadySent=true}catch(_){}}
 function logGameError(){try{if(ytReady()&&ytgame.health)ytgame.health.logError()}catch(_){}}
