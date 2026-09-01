@@ -348,7 +348,7 @@ function doPhysics(dt){if(dead||won||upgradePending)return;const kbDir=(keys.rig
  if(player.vy>=0){for(const p of staticPlatforms())landPlatform(p,prevBottom);const sc=scene();if(['crumble','safePlat','ghostPlat','delayedGhost','shadowPlat'].includes(sc.trap)&&rt.platform.active)landPlatform(rt.platform,prevBottom);if(sc.trap==='elevatorDrop')landPlatform(rt.platform,prevBottom);for(const p of rt.pipes)if(p.solid)landPlatform(p,prevBottom)}
  player.x=Math.max(sceneStart()-6,Math.min(sceneStart()+SCENE_W-8,player.x));
  if(player.y>GROUND+60)kill('The floor was optional.','fall');
- const touchingFan=rt.fans.some(f=>hit(player,f));if(touchingFan&&!rt.fanTouch){player.vx=450;player.vy=-400;player.onGround=false;rt.boostT=.60}rt.fanTouch=touchingFan;
+ const touchingFan=rt.fans.some(f=>hit(player,f));if(touchingFan&&!rt.fanTouch&&player.vx>=-40&&rt.boostT<=0){player.vx=450;player.vy=-400;player.onGround=false;rt.boostT=.60}rt.fanTouch=touchingFan;
 }
 
 function collectCoin(){if(collected.has(currentLevel))return;const cp=coinPos();for(let i=0;i<12;i++){const a=i*Math.PI/6+(currentLevel%3)*.17,s=55+(i%4)*18;particles.push({x:cp.x+12,y:cp.y+12,vx:Math.cos(a)*s,vy:Math.sin(a)*s-45,t:.48+(i%3)*.08,r:2+(i%2),c:i%3?'#f8c93d':'#fff3a3'})}collected.add(currentLevel);coins++;sCoin();toast='COIN '+coins+' / '+SCENE_COUNT+' — pain retained.';toastT=.85;saveProgress();if(coins===5||coins===10)openUpgrade()}
