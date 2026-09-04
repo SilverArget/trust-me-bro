@@ -15,13 +15,13 @@ html,body{margin:0;width:100%;height:100%;min-height:100dvh;overflow:hidden;back
 #wrap{position:fixed;inset:0;background:#081018;display:flex;align-items:center;justify-content:center}
 canvas{display:block;width:100vw;height:100vh;height:100dvh;touch-action:none;-webkit-touch-callout:none}
 #hint{position:fixed;top:max(8px,env(safe-area-inset-top));left:50%;transform:translateX(-50%);z-index:8;color:#eaf6ff;background:#07121dcc;border:1px solid #ffffff1f;padding:8px 13px;border-radius:14px;font:700 12px/1 system-ui;backdrop-filter:blur(8px);pointer-events:none;white-space:nowrap}
-.touch{position:fixed;bottom:max(18px,calc(env(safe-area-inset-bottom) + 10px));z-index:10;pointer-events:auto}
-#joystick{left:max(10px,calc(env(safe-area-inset-left) + 8px));width:86px;height:86px;border-radius:50%;border:1.5px solid #ffffff66;background:radial-gradient(circle at 50% 50%,#173044a8 0 38%,#0a172392 39% 100%);box-shadow:0 6px 18px #0007,inset 0 0 0 1px #ffffff10;-webkit-backdrop-filter:blur(5px);backdrop-filter:blur(5px);touch-action:none;-webkit-user-select:none;user-select:none;opacity:.82}
+.touch{position:fixed;bottom:max(18px,calc(env(safe-area-inset-bottom) + 18px));z-index:10;pointer-events:auto}
+#joystick{left:max(22px,calc(env(safe-area-inset-left) + 22px));width:96px;height:96px;border-radius:50%;border:1.5px solid #ffffff66;background:radial-gradient(circle at 50% 50%,#173044a8 0 38%,#0a172392 39% 100%);box-shadow:0 6px 18px #0007,inset 0 0 0 1px #ffffff10;-webkit-backdrop-filter:blur(5px);backdrop-filter:blur(5px);touch-action:none;-webkit-user-select:none;user-select:none;opacity:.82}
 #joystick::before{content:'';position:absolute;left:50%;top:50%;width:34px;height:3px;transform:translate(-50%,-50%);background:#ffffff18;border-radius:4px}
 #joystickKnob{position:absolute;left:50%;top:50%;width:36px;height:36px;margin:-18px;border-radius:50%;background:linear-gradient(180deg,#4a7692d8,#24465cd8);border:1.5px solid #e9f7ffbf;box-shadow:0 3px 10px #0007,inset 0 1px 4px #ffffff22;transform:translate(0,0);pointer-events:none}
 #joystickLabel{display:none}
-#jumpWrap{right:max(10px,calc(env(safe-area-inset-right) + 8px))}
-#jumpWrap button{width:72px;height:72px;border-radius:50%;border:1.5px solid #ffffffa8;background:#0e1d2bbd;color:#fff;font-size:27px;font-weight:950;-webkit-user-select:none;user-select:none;box-shadow:0 5px 16px #0007;-webkit-backdrop-filter:blur(5px);backdrop-filter:blur(5px);touch-action:none;opacity:.86}
+#jumpWrap{right:max(22px,calc(env(safe-area-inset-right) + 22px))}
+#jumpWrap button{width:84px;height:84px;border-radius:50%;border:1.5px solid #ffffffa8;background:#0e1d2bbd;color:#fff;font-size:27px;font-weight:950;-webkit-user-select:none;user-select:none;box-shadow:0 5px 16px #0007;-webkit-backdrop-filter:blur(5px);backdrop-filter:blur(5px);touch-action:none;opacity:.86}
 #jumpWrap button:active,#jumpWrap button.pressed{transform:scale(.96);background:#27445ae8}
 #upgrade{position:fixed;inset:0;z-index:30;display:none;align-items:center;justify-content:center;background:#04101bd9;backdrop-filter:blur(8px);padding:20px}
 #upgrade.show{display:flex}
@@ -51,7 +51,7 @@ canvas{display:block;width:100vw;height:100vh;height:100dvh;touch-action:none;-w
 @keyframes bootMove{from{transform:translateX(0)}to{transform:translateX(38px)}}
 @media (hover:hover) and (pointer:fine){.touch{display:none}}
 @media (max-width:700px),(pointer:coarse){#hint{display:none}}
-@media (orientation:portrait) and (max-width:700px){#joystick{width:80px;height:80px;bottom:max(8px,calc(env(safe-area-inset-bottom) + 6px))}#joystickKnob{width:34px;height:34px;margin:-17px}#jumpWrap{bottom:max(8px,calc(env(safe-area-inset-bottom) + 6px))}#jumpWrap button{width:68px;height:68px;font-size:25px}}
+@media (orientation:portrait) and (max-width:700px){#joystick{width:112px;height:112px;bottom:max(8px,calc(env(safe-area-inset-bottom) + 18px))}#joystickKnob{width:46px;height:46px;margin:-23px}#jumpWrap{bottom:max(8px,calc(env(safe-area-inset-bottom) + 18px))}#jumpWrap button{width:96px;height:96px;font-size:36px}}
 .lb-container{margin:10px auto;max-height:110px;overflow-y:auto;background:#0004;border:1px solid #ffffff2b;border-radius:12px;padding:8px;font-size:12px;text-align:left;color:#fff;width:100%}.lb-entry{display:flex;justify-content:space-between;padding:4px;border-bottom:1px solid #ffffff10}.lb-entry.highlight{color:#73d5ff;font-weight:900;background:#ffffff10}
 </style>
 </head>
@@ -146,7 +146,7 @@ function theme(){const r=region(),variants=THEMES[r.name];return variants[(curre
 const keys={left:false,right:false,jump:false};
 const joystick={axis:0,active:false,pointerId:null};
 const player={x:70,y:GROUND-48,w:32,h:48,vx:0,vy:0,onGround:false,facing:1,walkPhase:0};
-let currentLevel=1,levelTimer=59,deaths=0,coins=0,lives=10,jumpLevel=0,speedLevel=0,speedHold=0,speedHoldDir=0,spawnGrace=0,hudUpgradeT=0,hudUpgradeText='',characterId=0,characterChosen=false,characterSelectOpen=false;
+let currentLevel=1,levelTimer=59,deaths=0,coins=0,lives=10,jumpLevel=0,speedLevel=0,speedHold=0,speedHoldDir=0,spawnGrace=0,hudUpgradeT=0,hudUpgradeText='',characterId=0,characterChosen=false,characterSelectOpen=false,jumpBufferT=0,coyoteT=0,jumpPointerId=null;
 let dead=false,won=false,deathDeadline=0,cam=0,last=0,toast='',toastT=0,upgradePending=false,livesPending=false,totalTime=0,shakeT=0;
 const particles=[];
 let breathT=.35,breathCycle=0;
@@ -384,8 +384,8 @@ function makeRuntime(){const sc=scene(),st=sc.start,g=buildScene(sc.level),a=g.a
  enemies:selectEnemies(sc.level).map(e=>({...e,x:X(e.x),surf:{...e.surf,x:X(e.surf.x)}})),fans:selectFans(sc.level).map(f=>({...f,x:X(f.x)})),launchPads:selectLaunchPads(sc.level).map(p=>({...p,box:{...p.box,x:X(p.box.x)},targetX:X(p.targetX),warn:0,used:false})),boostT:0,fanTouch:false,returnStairs:selectReturnStairs(sc.level).map(p=>({...p,x:X(p.x)})),returnStairsActive:false,
  pipes:[{x:X(a.hazard),y:GROUND-78,w:135,h:18,solid:sc.level%4===2||sc.trap==='steamPipe',trap:sc.trap==='steamPipe'}]
 }}
-function clearInputs(){keys.left=keys.right=keys.jump=false;joystick.axis=0;joystick.active=false;joystick.pointerId=null;const knob=document.getElementById('joystickKnob');if(knob)knob.style.transform='translate(0px,0px)';const jb=document.querySelector('#jumpWrap button');if(jb)jb.classList.remove('pressed')}
-function resetScene(fromDeath=false){clearInputs();if(fromDeath===false)lives=10;rt=makeRuntime();cacheSceneGeometry();levelTimer=59;speedHold=0;speedHoldDir=0;player.x=sceneStart()+66;player.y=GROUND-player.h;player.vx=0;player.vy=0;player.onGround=false;player.walkPhase=0;spawnGrace=fromDeath?2:0;cam=Math.max(sceneStart(),Math.min(sceneStart()+SCENE_W-W,player.x-W*.28))}
+function clearInputs(){keys.left=keys.right=keys.jump=false;joystick.axis=0;joystick.active=false;joystick.pointerId=null;jumpPointerId=null;const knob=document.getElementById('joystickKnob');if(knob)knob.style.transform='translate(0px,0px)';const jb=document.querySelector('#jumpWrap button');if(jb)jb.classList.remove('pressed')}
+function resetScene(fromDeath=false){clearInputs();if(fromDeath===false)lives=10;rt=makeRuntime();cacheSceneGeometry();levelTimer=59;speedHold=0;speedHoldDir=0;jumpBufferT=0;coyoteT=0;player.x=sceneStart()+66;player.y=GROUND-player.h;player.vx=0;player.vy=0;player.onGround=false;player.walkPhase=0;spawnGrace=fromDeath?2:0;cam=Math.max(sceneStart(),Math.min(sceneStart()+SCENE_W-W,player.x-W*.28))}
 function hardRestart(){currentLevel=1;deaths=0;coins=0;jumpLevel=speedLevel=0;collected.clear();dead=won=false;totalTime=0;upgradePending=false;upgradeEl.classList.remove('show');const wLb=document.getElementById('winLeaderboard');if(wLb)wLb.style.display='none';scoreSentForRun=false;resetScene(false);saveProgress()}
 resetScene(false);
 
@@ -401,7 +401,7 @@ function landPlatform(p,prevBottom){const nowBottom=player.y+player.h;if(prevBot
 function doPhysics(dt){if(dead||won||upgradePending)return;const kbDir=(keys.right?1:0)-(keys.left?1:0),joy=Math.abs(joystick.axis)>.08?joystick.axis:0,rawDir=joy||kbDir,dir=Math.sign(rawDir),inputStrength=joy?Math.min(1,Math.abs(joy)):Math.abs(kbDir);if(dir){player.facing=dir;if(speedLevel&&inputStrength>.55){if(speedHoldDir===dir)speedHold=Math.min(2.2,speedHold+dt*inputStrength);else{speedHold=.05;speedHoldDir=dir}}else if(speedLevel){speedHold=Math.max(0,speedHold-dt*.9)}}else{speedHold=Math.max(0,speedHold-dt*1.6);if(!speedHold)speedHoldDir=0}
  const ramp=speedLevel?Math.min(1,speedHold/2.2):0,max=255+(speedLevel?145*ramp:0),baseAcc=1450+(speedLevel?320*ramp:0),acc=(rt&&rt.slip)?Math.min(520,baseAcc):baseAcc,fric=(rt&&rt.slip)?.965:.82;
  if(dir)player.vx+=dir*acc*inputStrength*dt;else player.vx*=Math.pow(fric,dt*60);rt.boostT=Math.max(0,rt.boostT-dt);const inputMax=max*(joy?(.34+.66*inputStrength):1),boostVX=rt.boostVX||450,clampMax=rt.boostT>0?Math.abs(boostVX):inputMax;player.vx=Math.max(-clampMax,Math.min(clampMax,player.vx));if(rt.boostT>0)player.vx=boostVX<0?Math.min(boostVX,player.vx):Math.max(boostVX,player.vx);
- if(keys.jump&&player.onGround){player.vy=jumpLevel?-720:-560;player.onGround=false;keys.jump=false;sJump()}
+if(keys.jump){jumpBufferT=.11;keys.jump=false}else{jumpBufferT=Math.max(0,jumpBufferT-dt)}if(player.onGround){coyoteT=.1}else{coyoteT=Math.max(0,coyoteT-dt)}if(jumpBufferT>0&&coyoteT>0){player.vy=jumpLevel?-720:-560;player.onGround=false;jumpBufferT=0;coyoteT=0;sJump()}
  player.vy+=1450*dt;player.vy=Math.min(900,player.vy);
  const solids=solidRects();
  player.x+=player.vx*dt;for(const s of solids){if(s.hazard)continue;if(hit(player,s)){if(player.vx>0)player.x=s.x-player.w;else if(player.vx<0)player.x=s.x+s.w;player.vx=0}}
@@ -722,8 +722,8 @@ if(window.PointerEvent){
  joyEl.addEventListener('touchend',touchEnd,{passive:false});joyEl.addEventListener('touchcancel',touchEnd,{passive:false});
 }
 const jumpBtn=document.querySelector('#jumpWrap button');
-function jumpPress(e){if(e&&e.preventDefault)e.preventDefault();primeAudio();jumpBtn.classList.add('pressed');keys.jump=true;}
-function jumpRelease(e){if(e&&e.preventDefault)e.preventDefault();jumpBtn.classList.remove('pressed');keys.jump=false;}
+function jumpPress(e){if(e&&e.preventDefault)e.preventDefault();if(e&&e.pointerId!==undefined){if(jumpPointerId!==null)return;jumpPointerId=e.pointerId;try{jumpBtn.setPointerCapture(e.pointerId)}catch(_){}}else if(e&&e.changedTouches){if(jumpPointerId!==null)return;jumpPointerId=e.changedTouches[0].identifier}primeAudio();jumpBtn.classList.add('pressed');keys.jump=true;}
+function jumpRelease(e){if(e&&e.preventDefault)e.preventDefault();if(e&&e.pointerId!==undefined){if(jumpPointerId!==null&&e.pointerId!==jumpPointerId)return;jumpPointerId=null}else if(e&&e.changedTouches){let match=false;for(const t of e.changedTouches)if(t.identifier===jumpPointerId)match=true;if(!match)return;jumpPointerId=null}jumpBtn.classList.remove('pressed');keys.jump=false;}
 if(window.PointerEvent){jumpBtn.addEventListener('pointerdown',jumpPress,{passive:false});jumpBtn.addEventListener('pointerup',jumpRelease,{passive:false});jumpBtn.addEventListener('pointercancel',jumpRelease,{passive:false});jumpBtn.addEventListener('lostpointercapture',jumpRelease);}else{jumpBtn.addEventListener('touchstart',jumpPress,{passive:false});jumpBtn.addEventListener('touchend',jumpRelease,{passive:false});jumpBtn.addEventListener('touchcancel',jumpRelease,{passive:false});}
 // iOS Safari needs an actual user gesture before WebAudio is usable.
 document.addEventListener('touchstart',()=>{primeAudio();try{if(ac&&ac.state==='suspended')ac.resume()}catch(_){}},{once:true,passive:true});
