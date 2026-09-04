@@ -146,7 +146,7 @@ function theme(){const r=region(),variants=THEMES[r.name];return variants[(curre
 const keys={left:false,right:false,jump:false};
 const joystick={axis:0,active:false,pointerId:null};
 const player={x:70,y:GROUND-48,w:32,h:48,vx:0,vy:0,onGround:false,facing:1,walkPhase:0};
-let currentLevel=1,levelTimer=59,deaths=0,coins=0,lives=10,jumpLevel=0,speedLevel=0,speedHold=0,speedHoldDir=0,spawnGrace=0,hudUpgradeT=0,hudUpgradeText='',characterId=0,characterChosen=false,characterSelectOpen=false,jumpBufferT=0,coyoteT=0,jumpPointerId=null;
+let currentLevel=1,currentPart=1,levelTimer=59,deaths=0,coins=0,lives=10,jumpLevel=0,speedLevel=0,speedHold=0,speedHoldDir=0,spawnGrace=0,hudUpgradeT=0,hudUpgradeText='',characterId=0,characterChosen=false,characterSelectOpen=false,jumpBufferT=0,coyoteT=0,jumpPointerId=null;
 let dead=false,won=false,deathDeadline=0,cam=0,last=0,toast='',toastT=0,upgradePending=false,livesPending=false,totalTime=0,shakeT=0;
 const particles=[];
 let breathT=.35,breathCycle=0;
@@ -357,9 +357,9 @@ function validateScene(level,part=1){
 }
 function validateAllScenes(){const reports=[];for(let l=1;l<=SCENE_COUNT;l++){for(let p=1;p<=9;p++){const r=validateScene(l,p);r.part=p;reports.push(r)}}const p1=reports.filter(r=>r.part===1),values=new Set(p1.map(r=>r.minimumJumps));if(values.size===1){const e='minimum_jumps_constant_across_levels';console.error(`[v41 validator] ${e}`);for(const r of p1)r.errors.push(e)}for(const r of reports)for(const e of r.errors)console.error(`[v41 validator] level ${r.level} part ${r.part}: ${e}`);const errs=reports.filter(r=>r.errors.length>0);if(errs.length>0)console.table(errs.map(r=>({level:r.level,part:r.part,minimumJumps:r.minimumJumps,groundOnlyRoute:r.groundOnlyRoute,verticalRequired:r.verticalRequired,topRoutePlatforms:r.topRoutePlatforms,gapCount:r.gapCount,nonJumpableGapCount:r.nonJumpableGapCount,coinDockHeightDifference:r.coinDockHeightDifference,returnFromCoin:r.returnFromCoin,baselineEnemyCount:r.baselineEnemyCount,actualEnemyCount:r.actualEnemyCount,baselineCrates:r.baselineCrates,targetCrates:r.targetCrates,actualCrates:r.actualCrates,violations:r.errors.length})));else console.table([{summary:"No errors"}]);return reports}
 let VALIDATION_REPORT=null;
-function selectFishGap(level){
+function selectFishGap(level,part=1){
  if(level<5)return [];
- return sceneGeometry(level).gaps.filter(gap=>gap[1]-gap[0]>=140).map(gap=>({left:gap[0],right:gap[1],width:gap[1]-gap[0]}));
+ return sceneGeometry(level,part).gaps.filter(gap=>gap[1]-gap[0]>=140).map(gap=>({left:gap[0],right:gap[1],width:gap[1]-gap[0]}));
 }
 function selectFans(level,part=1){if(!TOP_ROUTE_LEVELS.includes(level))return[];const profiles=[{name:'A',vx:450,vy:-400,t:.46,dir:1},{name:'B',vx:390,vy:-460,t:.34,dir:1},{name:'C',vx:360,vy:-350,t:.28,dir:-1},{name:'A',vx:450,vy:-400,t:.46,dir:1},{name:'B',vx:390,vy:-460,t:.34,dir:1},{name:'A',vx:450,vy:-400,t:.46,dir:1}];return GEOMETRY[level].fans.map(([x,rise],i)=>({x,y:GROUND+rise-48,w:48,h:48,profile:profiles[i]}));}
 function launchSeed(level,index,part=1){let n=(level*2654435761+(index+1)*1013904223+(part-1)*198491317)>>>0;n^=n>>>16;n=Math.imul(n,2246822519)>>>0;n^=n>>>13;return n>>>0}
@@ -374,7 +374,7 @@ if(location.hash==='#geodumpall'){const f=s=>{let h=2166136261;for(let i=0;i<s.l
 if(location.hash==='#padstat'){let r=[],t=0,z=0,m=1/0,M=0;for(let l=1;l<=SCENE_COUNT;l++)for(let p=1;p<=9;p++){let c=selectLaunchPads(l,p).length;if(c>0)r.push(l+"."+p+":"+c);if(p===4||p===8){t+=c;if(c===0)z++;if(c<m)m=c;if(c>M)M=c;}}console.log("PADSTAT|toplam="+t+", pedsiz="+z+", min="+(m===1/0?0:m)+", max="+M+"|"+r.join("|"));}
 function selectReturnStairs(level,part=1){if(!TOP_ROUTE_LEVELS.includes(level))return[];const g=sceneGeometry(level,part),coin=g.surfaces.filter(s=>s.kind==='platform'&&g.anchors.coin+24>s.x&&g.anchors.coin<s.x+s.w).sort((a,b)=>b.y-a.y)[0],last=g.surfaces.filter(s=>s.route&&s.kind==='platform').sort((a,b)=>b.x-a.x)[0],dock=typeof g.anchors.dock==='object'?g.anchors.dock.x:g.anchors.dock;if(!coin||!last)return[];const w=Math.min(100,last.w+20),bottomY=GROUND+35,count=Math.max(3,Math.ceil((bottomY-coin.y)/50)+1),right=dock-30-w,left=coin.x+coin.w-w;return Array.from({length:count},(_,i)=>({x:right+(left-right)*(i/(count-1)),y:bottomY+(coin.y-bottomY)*(i/(count-1)),w,h:18,oneway:true}))}
 function anchorRageSpike(surfaces,st,x,w,h,maxShift=360){let best=null;for(const s of surfaces)if((s.kind==='ground'||s.kind==='platform')&&s.w>=w){const sx=st+s.x,nx=Math.max(sx,Math.min(sx+s.w-w,x)),d=Math.abs(nx-x);if(d<=maxShift&&(!best||d<best.d||d===best.d&&s.y>best.y))best={x:nx,y:s.y-h,w,h,enabled:true,d}}return best?{x:best.x,y:best.y,w,h,enabled:true}:{x,y:0,w,h,enabled:false}}
-function makeRuntime(){const sc=scene(),st=sc.start,g=buildScene(sc.level),a=g.anchors,X=x=>st+x,cp=coinPos(sc),spike=(x,w,h)=>anchorRageSpike(g.surfaces,st,x,w,h);return{t:0,armed:false,done:false,phase:0,warning:0,a,
+function makeRuntime(){const sc=scene(),st=sc.start,g=buildScene(sc.level,currentPart),a=g.anchors,X=x=>st+x,cp=coinPos(sc,currentPart),spike=(x,w,h)=>anchorRageSpike(g.surfaces,st,x,w,h);return{t:0,armed:false,done:false,phase:0,warning:0,a,
  block:{x:X(a.hazard),y:72,w:104,h:70,vy:0},
  chaser:{x:X(a.hazardEnd),y:GROUND-30,w:30,h:30,vx:0},
  wall:{x:X(a.hazardEnd),y:GROUND-94,w:46,h:94,vx:0},
@@ -394,8 +394,8 @@ function makeRuntime(){const sc=scene(),st=sc.start,g=buildScene(sc.level),a=g.a
   hunter:{state:0,warn:0,...spike(X(a.trial.x0+20),30,30),vx:0,t:0},
   last:{state:0,warn:0,t:0,box:spike(X(a.lastStep),64,30)}
  },
- fish:selectFishGap(sc.level).map(gap=>({state:0,warn:0,phase:(gap.left*.005)%3,x:X((gap.left+gap.right)/2),y:GROUND,vy:0,bounced:false,cycle:-1})),
- enemies:selectEnemies(sc.level).map(e=>({...e,x:X(e.x),surf:{...e.surf,x:X(e.surf.x)}})),fans:selectFans(sc.level).map(f=>({...f,x:X(f.x)})),launchPads:selectLaunchPads(sc.level).map(p=>({...p,box:{...p.box,x:X(p.box.x)},targetX:X(p.targetX),warn:0,used:false})),boostT:0,fanTouch:false,returnStairs:selectReturnStairs(sc.level).map(p=>({...p,x:X(p.x)})),returnStairsActive:false,
+ fish:selectFishGap(sc.level,currentPart).map(gap=>({state:0,warn:0,phase:(gap.left*.005)%3,x:X((gap.left+gap.right)/2),y:GROUND,vy:0,bounced:false,cycle:-1})),
+ enemies:selectEnemies(sc.level,currentPart).map(e=>({...e,x:X(e.x),surf:{...e.surf,x:X(e.surf.x)}})),fans:selectFans(sc.level,currentPart).map(f=>({...f,x:X(f.x)})),launchPads:selectLaunchPads(sc.level,currentPart).map(p=>({...p,box:{...p.box,x:X(p.box.x)},targetX:X(p.targetX),warn:0,used:false})),boostT:0,fanTouch:false,returnStairs:selectReturnStairs(sc.level,currentPart).map(p=>({...p,x:X(p.x)})),returnStairsActive:false,
  pipes:[{x:X(a.hazard),y:GROUND-78,w:135,h:18,solid:sc.level%4===2||sc.trap==='steamPipe',trap:sc.trap==='steamPipe'}]
 }}
 function clearInputs(){keys.left=keys.right=keys.jump=false;joystick.axis=0;joystick.active=false;joystick.pointerId=null;jumpPointerId=null;const knob=document.getElementById('joystickKnob');if(knob)knob.style.transform='translate(0px,0px)';const jb=document.querySelector('#jumpWrap button');if(jb)jb.classList.remove('pressed')}
@@ -407,7 +407,7 @@ function hit(a,b){return a.x<b.x+b.w&&a.x+a.w>b.x&&a.y<b.y+b.h&&a.y+a.h>b.y}
 function hurtbox(){return{x:player.x+4,y:player.y+4,w:player.w-8,h:player.h-8}}
 function hitHurt(b){return hit(hurtbox(),b)}
 function kill(msg,type='slap'){if(dead||won||spawnGrace>0)return;dead=true;deaths++;lives=Math.max(0,lives-1);deathDeadline=performance.now()+1000;shakeT=.28;sDeath(type)}
-function cacheSceneGeometry(){if(cachedGeometryLevel===currentLevel)return;const st=sceneStart(),geo=sceneGeometry(),sc=scene();cachedGroundSegments=geo.surfaces.filter(s=>s.kind==='ground').map(s=>({x:st+s.x,y:s.y,w:s.w,h:s.h}));cachedStaticPlatforms=geo.platforms.map(p=>({x:st+p[0],y:GROUND+p[1],w:p[2],h:18,oneway:true,geometry:true,beat:p[3]}));cachedSolidRects=cachedGroundSegments.slice();if(sc.trap==='fakeFinish'||sc.trap==='fakeFinish2')cachedSolidRects.push({x:st+rt.a.hazard,y:GROUND-10,w:82,h:10,hazard:'finish'});cachedGeometryLevel=currentLevel}
+function cacheSceneGeometry(){const cacheKey=currentLevel*16+currentPart;if(cachedGeometryLevel===cacheKey)return;const st=sceneStart(),geo=sceneGeometry(currentLevel,currentPart),sc=scene();cachedGroundSegments=geo.surfaces.filter(s=>s.kind==='ground').map(s=>({x:st+s.x,y:s.y,w:s.w,h:s.h}));cachedStaticPlatforms=geo.platforms.map(p=>({x:st+p[0],y:GROUND+p[1],w:p[2],h:18,oneway:true,geometry:true,beat:p[3]}));cachedSolidRects=cachedGroundSegments.slice();if(sc.trap==='fakeFinish'||sc.trap==='fakeFinish2')cachedSolidRects.push({x:st+rt.a.hazard,y:GROUND-10,w:82,h:10,hazard:'finish'});cachedGeometryLevel=cacheKey}
 function getGroundSegments(){return cachedGroundSegments}
 function staticPlatforms(){return cachedStaticPlatforms}
 function solidRects(){return cachedSolidRects}
@@ -706,8 +706,8 @@ async function boot(){
  try{loaded=await Promise.race([loadProgress(),new Promise(r=>setTimeout(()=>r(false),350))])}catch(_){loaded=false}
  // If the browser was closed during the finale card, never restore a completed/stuck run.
  if(won){hardRestart();loaded=false}
- const hMatch = location.hash.match(/^#s(\d+)$/);
- if(hMatch){const s=parseInt(hMatch[1],10);if(s>=1&&s<=31){currentLevel=s;saveProgress=async()=>{};}}
+ const hMatch = location.hash.match(/^#s(\d+)(?:p(\d+))?$/);
+ if(hMatch){const s=parseInt(hMatch[1],10);if(s>=1&&s<=31){currentLevel=s;if(hMatch[2]){let p=parseInt(hMatch[2],10);currentPart=Math.max(1,Math.min(9,p));}saveProgress=async()=>{};}}
  resetScene(false);
  if(!characterChosen)openCharacterSelect();
  if(dueUpgrade())openUpgrade();
