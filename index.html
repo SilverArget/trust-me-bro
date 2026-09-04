@@ -155,9 +155,9 @@ let cachedGeometryLevel=0,cachedGroundSegments=[],cachedStaticPlatforms=[],cache
 // Audio
 let ac=null,master=null,audioAllowed=true;
 let bgmMuted=false,bgmStarted=false;
-const bgm=new Audio('soundtrack.mp3');bgm.loop=true;bgm.volume=.35;bgm.preload='metadata';
+const bgm=new Audio('soundtrack.mp3');bgm.loop=true;bgm.volume=.35;bgm.preload='none';
 function applyMute(){bgm.muted=!audioAllowed||bgmMuted;const mb=document.getElementById('muteBtn');if(mb)mb.innerHTML=bgmMuted?'🔇':'🔊';}
-function initBgm(){if(bgmStarted)return;bgmStarted=true;const p=bgm.play();if(p!==undefined)p.catch(()=>{});['pointerdown','touchstart','keydown'].forEach(e=>window.removeEventListener(e,initBgm))}
+function initBgm(){if(bgmStarted)return;bgmStarted=true;if(ac&&ac.state==='suspended')ac.resume();bgm.load();const p=bgm.play();if(p!==undefined)p.catch(()=>{});['pointerdown','touchstart','keydown'].forEach(e=>window.removeEventListener(e,initBgm))}
 ['pointerdown','touchstart','keydown'].forEach(e=>window.addEventListener(e,initBgm,{once:true,passive:true}));
 let muteHandled=false;const handleMuteBtn=e=>{if(e&&e.preventDefault)e.preventDefault();if(muteHandled)return;muteHandled=true;bgmMuted=!bgmMuted;applyMute();saveProgress();setTimeout(()=>muteHandled=false,250)};
 const mBtn=document.getElementById('muteBtn');if(mBtn){mBtn.addEventListener('pointerdown',handleMuteBtn,{passive:false});mBtn.addEventListener('touchstart',handleMuteBtn,{passive:false});mBtn.addEventListener('click',handleMuteBtn,{passive:false});}
