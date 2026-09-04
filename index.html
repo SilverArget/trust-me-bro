@@ -55,6 +55,7 @@ canvas{display:block;width:100vw;height:100vh;height:100dvh;touch-action:none;-w
 </style>
 </head>
 <body>
+<div id="introOverlay" style="position:fixed;inset:0;z-index:99999;background:#000;display:flex;align-items:center;justify-content:center;touch-action:none"><video id="introVideo" src="intro.mp4" muted playsinline autoplay preload="auto" style="width:100%;height:100%;object-fit:contain;pointer-events:none"></video></div>
 <div id="bootOverlay"><div id="bootCard"><div class="boot31">31</div><div class="bootTitle">LOADING BAD DECISIONS</div><div class="bootSub">Preparing 31 traps, 31 coins and questionable life choices…</div><div id="bootDots"></div></div></div>
 <div id="wrap"><canvas id="game"></canvas></div>
 <div id="hint">A/D or ←/→ • SPACE/W/↑ • R restart</div>
@@ -67,6 +68,7 @@ canvas{display:block;width:100vw;height:100vh;height:100dvh;touch-action:none;-w
 <button id="muteBtn" aria-label="Toggle sound" title="Toggle sound">🔊</button>
 <script src="https://www.youtube.com/game_api/v1"></script>
 <script>
+(()=>{const o=document.getElementById('introOverlay'),v=document.getElementById('introVideo');let d=false,t;const c=()=>{if(d)return;d=true;clearTimeout(t);if(o)o.remove();['pointerdown','touchstart','keydown','click'].forEach(e=>window.removeEventListener(e,c))};if(v){t=setTimeout(c,3500);v.addEventListener('ended',c);v.addEventListener('error',c);const p=v.play();if(p!==undefined)p.catch(c);['pointerdown','touchstart','keydown','click'].forEach(e=>window.addEventListener(e,c,{once:true,passive:true}))}else c();})();
 (()=>{
 const c=document.getElementById('game');let ctx=c.getContext('2d');
 const VIEW_H=540,MAX_VIEW_W=1080,GROUND=455,SCENE_W=2280,SCENE_COUNT=31,WORLD=SCENE_W*SCENE_COUNT+120;
