@@ -686,6 +686,8 @@ async function boot(){
  try{loaded=await Promise.race([loadProgress(),new Promise(r=>setTimeout(()=>r(false),350))])}catch(_){loaded=false}
  // If the browser was closed during the finale card, never restore a completed/stuck run.
  if(won){hardRestart();loaded=false}
+ const hMatch = location.hash.match(/^#s(\d+)$/);
+ if(hMatch){const s=parseInt(hMatch[1],10);if(s>=1&&s<=31){currentLevel=s;saveProgress=async()=>{};}}
  resetScene(false);
  if(!characterChosen)openCharacterSelect();
  if(dueUpgrade())openUpgrade();
