@@ -323,8 +323,10 @@ function buildScene(level,part=1){
  else if(legacy){for(let i=platforms.length-1;i>=0;i--)if(platforms[i][3]===2&&platforms[i][4]!=='route')platforms.splice(i,1);const shift=beat(2).x0-180;for(const p of legacy.platforms){const q=[shift+p[0],p[1],Math.max(60,p[2]),2,'override'];platforms.push(q);surfaces.push({x:q[0],y:GROUND+q[1],w:q[2],h:18,beat:2,kind:'platform',override:true})}}
  let dual=(part===4||part===8)?null:DUAL_ROUTES[level];
  if(dual&&part>1){
-  const nd={};let i=0;
-  for(const k of Object.keys(dual)){const p=dual[k];const s=launchSeed(level,900+i,part)%61-30;const nx=Math.max(120,Math.min(2100,p[0]+s));nd[k]=[nx,p[1],p[2]];i++;}
+  let s=launchSeed(level,900,part)%61-30;
+  for(const k of Object.keys(dual)){const p=dual[k];s=Math.max(120-p[0],Math.min(2100-p[0],s));}
+  const nd={};
+  for(const k of Object.keys(dual)){const p=dual[k];nd[k]=[p[0]+s,p[1],p[2]];}
   dual=nd;
  }
  if(dual)for(const [role,p] of Object.entries(dual)){const bi=Math.max(0,Math.min(3,Math.floor((p[0]-180)/495))),q=[p[0],p[1],p[2],bi,`dual-${role}`];platforms.push(q);surfaces.push({x:q[0],y:GROUND+q[1],w:q[2],h:18,beat:bi,kind:'platform',route:true,dualRole:role})}
