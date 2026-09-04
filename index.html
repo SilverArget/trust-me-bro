@@ -188,13 +188,14 @@ function sDeath(type){
 }
 
 // YouTube Playables + iOS/Safari lifecycle bridge.
-const SAVE_KEY='trust_me_bro_full31_v34_rage_save';
+const SAVE_KEY='trust_me_bro_full31_v35_rage_save';
+try{localStorage.removeItem('trust_me_bro_full31_v34_rage_save')}catch(_){}
 let inPlayablesEnv=false,systemPaused=false,rafId=0,loopRunning=false,firstFrameSent=false,gameReadySent=false;
 function ytReady(){return typeof window.ytgame!=='undefined'&&ytgame&&ytgame.game&&ytgame.system}
 function adsReady(){return!!(ytReady()&&inPlayablesEnv&&ytgame.ads&&typeof ytgame.ads.requestRewardedAd==='function')}
 function setAudioAllowed(v){audioAllowed=!!v;if(master){try{master.gain.setValueAtTime(audioAllowed?.34:0,ac.currentTime)}catch(_){master.gain.value=audioAllowed?.34:0}}applyMute();}
-function snapshotSave(){return{v:33,currentLevel,deaths,jumpLevel,speedLevel,totalTime,won:!!won,collected:[...collected].sort((a,b)=>a-b),character:characterId,bgmMuted}}
-function applySave(s){if(!s||typeof s!=='object')return false;currentLevel=Math.max(1,Math.min(SCENE_COUNT,Number(s.currentLevel)||1));deaths=Math.max(0,Number(s.deaths)||0);jumpLevel=s.jumpLevel?1:0;speedLevel=s.speedLevel?1:0;totalTime=Math.max(0,Number(s.totalTime)||0);collected.clear();if(Array.isArray(s.collected))for(const n of s.collected){const k=Number(n);if(Number.isInteger(k)&&k>=1&&k<=SCENE_COUNT)collected.add(k)}coins=collected.size;won=!!s.won&&coins===SCENE_COUNT;characterChosen=Object.prototype.hasOwnProperty.call(s,'character');characterId=characterChosen?Math.max(0,Math.min(3,Number(s.character)||0)):0;dead=false;upgradePending=false;if(s.bgmMuted!==undefined){bgmMuted=!!s.bgmMuted;applyMute()}return true}
+function snapshotSave(){let m=new Array(31).fill(0);for(let k of collected){let l=Math.floor(k/16),p=k%16;if(l>=1&&l<=31&&p>=1&&p<=9)m[l-1]|=(1<<(p-1))}return{v:35,currentLevel,currentPart,deaths,jumpLevel,speedLevel,totalTime,won:!!won,collected:m,character:characterId,bgmMuted}}
+function applySave(s){if(!s||typeof s!=='object')return false;currentLevel=Math.max(1,Math.min(SCENE_COUNT,Number(s.currentLevel)||1));currentPart=Math.max(1,Math.min(9,Number(s.currentPart)||1));deaths=Math.max(0,Number(s.deaths)||0);jumpLevel=s.jumpLevel?1:0;speedLevel=s.speedLevel?1:0;totalTime=Math.max(0,Number(s.totalTime)||0);collected.clear();if(Array.isArray(s.collected)&&s.collected.length===31){for(let i=0;i<31;i++){let m=Number(s.collected[i]);if(Number.isInteger(m)){for(let p=1;p<=9;p++){if((m&(1<<(p-1)))!==0)collected.add((i+1)*16+p)}}}}coins=collected.size;won=!!s.won&&coins===(SCENE_COUNT*9);characterChosen=Object.prototype.hasOwnProperty.call(s,'character');characterId=characterChosen?Math.max(0,Math.min(3,Number(s.character)||0)):0;dead=false;upgradePending=false;if(s.bgmMuted!==undefined){bgmMuted=!!s.bgmMuted;applyMute()}return true}
 async function loadProgress(){let raw='';try{if(inPlayablesEnv&&ytReady())raw=await ytgame.game.loadData();else raw=localStorage.getItem(SAVE_KEY)||''}catch(_){try{raw=localStorage.getItem(SAVE_KEY)||''}catch(__){raw=''}}if(!raw)return false;try{return applySave(JSON.parse(raw))}catch(_){return false}}
 async function saveProgress(){const raw=JSON.stringify(snapshotSave());try{if(inPlayablesEnv&&ytReady()){await ytgame.game.saveData(raw)}else{localStorage.setItem(SAVE_KEY,raw)}}catch(_){try{localStorage.setItem(SAVE_KEY,raw)}catch(__){}}}
 const characterSelectEl=document.getElementById('characterSelect'),characterChangeEl=document.getElementById('characterChange');
