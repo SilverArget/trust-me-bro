@@ -296,13 +296,14 @@ const TOP_ROUTE_LEVELS=[8,16,23,30];
 const DUAL_ROUTE_LEVELS=[17,20,24,28],DUAL_ROUTES={17:{runway:[570,-52,880],catch:[1450,-52,274],landing:[1672,-227,260]},20:{runway:[570,-56,880],catch:[1450,-56,278],landing:[1676,-228,260]},24:{runway:[570,-48,880],catch:[1450,-48,270],landing:[1668,-213,260]},28:{runway:[570,-60,880],catch:[1450,-60,282],landing:[1680,-238,260]}};
 const SCENE_CACHE=new Map();
 const SCENE_ARCHETYPES={ground:new Set([1,2,3,4,5,7,9,12,14,19]),mixed:new Set([6,10,11,13,15,17,20,22,24,26,28]),air:new Set([8,16,18,21,23,25,27,29,30,31])};
-function buildScene(level){
- if(SCENE_CACHE.has(level))return SCENE_CACHE.get(level);
+function buildScene(level,part=1){
+ const cacheKey=level*16+part;
+ if(SCENE_CACHE.has(cacheKey))return SCENE_CACHE.get(cacheKey);
  const gaps=[],surfaces=[],platforms=[],roles=['intro','trial','betrayal','mastery'],archetype=SCENE_ARCHETYPES.air.has(level)?'air':SCENE_ARCHETYPES.mixed.has(level)?'mixed':'ground';
  const tempo=[104,116,128][level%3],phase=(level*37)%53;
  if(archetype!=='air')for(let bi=0;bi<4;bi++){
-  const b=beat(bi),extra=(level+bi)%3===0,g1=b.x0+50+launchSeed(level,bi)%311;
-  if(bi<2){if(archetype==='mixed'){const w1=260,gx=b.x0+50+launchSeed(level,bi)%311,px=gx+70,rise=84+bi*12;gaps.push([gx,gx+w1]);platforms.push([px,-rise,100,bi,'required']);surfaces.push({x:px,y:GROUND-rise,w:100,h:18,beat:bi,kind:'platform',route:true})}else{const w1=tempo+(extra?12:0);gaps.push([g1,g1+w1]);if(extra)gaps.push([b.x0+330,b.x0+330+tempo-18])}}
+  const b=beat(bi),extra=(level+bi)%3===0,g1=b.x0+50+launchSeed(level,bi,part)%311;
+  if(bi<2){if(archetype==='mixed'){const w1=260,gx=b.x0+50+launchSeed(level,bi,part)%311,px=gx+70,rise=84+bi*12;gaps.push([gx,gx+w1]);platforms.push([px,-rise,100,bi,'required']);surfaces.push({x:px,y:GROUND-rise,w:100,h:18,beat:bi,kind:'platform',route:true})}else{const w1=tempo+(extra?12:0);gaps.push([g1,g1+w1]);if(extra)gaps.push([b.x0+330,b.x0+330+tempo-18])}}
   else{
     const wide=428+((level*17+bi*29)%13),gx=b.x0+27;gaps.push([gx,gx+wide]);
     const rises=level%3===0?[88,180,88]:level%3===1?[94,188,94]:[82,172,82];
@@ -312,17 +313,27 @@ function buildScene(level){
   if(bi<2&&archetype==='ground'){const rise=72+((level+bi)%2)*18,px=b.x0+205+(level*11+bi*19)%24,pw=64+(level%25);platforms.push([px,-rise,pw,bi,'optional']);surfaces.push({x:px,y:GROUND-rise,w:pw,h:18,beat:bi,kind:'platform'})}
  }
  // A legacy override replaces optional generated content in its beat; route platforms remain authoritative.
- const legacy=GEOMETRY[level];if(archetype==='air'){gaps.push([180,2160]);if(legacy&&TOP_ROUTE_LEVELS.includes(level)){for(const p of legacy.platforms){const bi=Math.max(0,Math.min(3,Math.floor((p[0]-180)/495))),q=[p[0],p[1],Math.max(60,p[2]),bi,'top-route'];platforms.push(q);surfaces.push({x:q[0],y:GROUND+q[1],w:q[2],h:18,beat:bi,kind:'platform',route:true})}}else{const xs=[150,270,390,510,630,750,870,990,1110,1230,1350,1470,1590,1710,1830,1950,2070];for(let i=0;i<xs.length;i++){const x=xs[i],rise=[70,165,170][i%3],bi=Math.max(0,Math.min(3,Math.floor((x-180)/495))),q=[x,-rise,72,bi,'air-chain'];platforms.push(q);surfaces.push({x,y:GROUND-rise,w:72,h:18,beat:bi,kind:'platform',route:true})}}}
+ let legacy=GEOMETRY[level];
+ if(legacy&&part>1){
+  legacy={gaps:legacy.gaps?legacy.gaps.map((g,i)=>{const s=launchSeed(level,900+i,part)%61-30,nx=Math.max(120,Math.min(2100,g[0]+s));return[nx,nx+g[1]-g[0]]}):undefined,platforms:legacy.platforms?legacy.platforms.map((p,i)=>{const s=launchSeed(level,900+i,part)%61-30,nx=Math.max(120,Math.min(2100,p[0]+s));return[nx,p[1],p[2]]}):undefined,fans:legacy.fans?legacy.fans.map((f,i)=>{const s=launchSeed(level,900+i,part)%61-30,nx=Math.max(120,Math.min(2100,f[0]+s));return[nx,f[1]]}):undefined};
+ }
+ if(archetype==='air'){gaps.push([180,2160]);if(legacy&&TOP_ROUTE_LEVELS.includes(level)){for(const p of legacy.platforms){const bi=Math.max(0,Math.min(3,Math.floor((p[0]-180)/495))),q=[p[0],p[1],Math.max(60,p[2]),bi,'top-route'];platforms.push(q);surfaces.push({x:q[0],y:GROUND+q[1],w:q[2],h:18,beat:bi,kind:'platform',route:true})}}else{const xs=[150,270,390,510,630,750,870,990,1110,1230,1350,1470,1590,1710,1830,1950,2070];for(let i=0;i<xs.length;i++){const x=xs[i],rise=[70,165,170][i%3],bi=Math.max(0,Math.min(3,Math.floor((x-180)/495))),q=[x,-rise,72,bi,'air-chain'];platforms.push(q);surfaces.push({x,y:GROUND-rise,w:72,h:18,beat:bi,kind:'platform',route:true})}}}
  else if(legacy&&TOP_ROUTE_LEVELS.includes(level)){gaps.length=0;platforms.length=0;surfaces.length=0;for(const gap of legacy.gaps)gaps.push([...gap]);for(const p of legacy.platforms){const bi=Math.max(0,Math.min(3,Math.floor((p[0]-180)/495))),q=[p[0],p[1],Math.max(60,p[2]),bi,'top-route'];platforms.push(q);surfaces.push({x:q[0],y:GROUND+q[1],w:q[2],h:18,beat:bi,kind:'platform',route:true})}}
  else if(legacy){for(let i=platforms.length-1;i>=0;i--)if(platforms[i][3]===2&&platforms[i][4]!=='route')platforms.splice(i,1);const shift=beat(2).x0-180;for(const p of legacy.platforms){const q=[shift+p[0],p[1],Math.max(60,p[2]),2,'override'];platforms.push(q);surfaces.push({x:q[0],y:GROUND+q[1],w:q[2],h:18,beat:2,kind:'platform',override:true})}}
- const dual=DUAL_ROUTES[level];if(dual)for(const [role,p] of Object.entries(dual)){const bi=Math.max(0,Math.min(3,Math.floor((p[0]-180)/495))),q=[p[0],p[1],p[2],bi,`dual-${role}`];platforms.push(q);surfaces.push({x:q[0],y:GROUND+q[1],w:q[2],h:18,beat:bi,kind:'platform',route:true,dualRole:role})}
+ let dual=DUAL_ROUTES[level];
+ if(dual&&part>1){
+  const nd={};let i=0;
+  for(const k of Object.keys(dual)){const p=dual[k];const s=launchSeed(level,900+i,part)%61-30;const nx=Math.max(120,Math.min(2100,p[0]+s));nd[k]=[nx,p[1],p[2]];i++;}
+  dual=nd;
+ }
+ if(dual)for(const [role,p] of Object.entries(dual)){const bi=Math.max(0,Math.min(3,Math.floor((p[0]-180)/495))),q=[p[0],p[1],p[2],bi,`dual-${role}`];platforms.push(q);surfaces.push({x:q[0],y:GROUND+q[1],w:q[2],h:18,beat:bi,kind:'platform',route:true,dualRole:role})}
  let cursor=0;for(const g of gaps){if(g[0]>cursor)surfaces.push({x:cursor,y:GROUND,w:g[0]-cursor,h:100,beat:Math.max(0,Math.min(3,Math.floor((g[0]-180)/495))),kind:'ground'});cursor=g[1]}if(cursor<SCENE_W)surfaces.push({x:cursor,y:GROUND,w:SCENE_W-cursor,h:100,beat:3,kind:'ground'});
  const b2=beat(2),b3=beat(3),anchors={spawn:66,coin:b2.x1-32,dock:DOCK[0],intro:beat(0),trial:beat(1),betrayal:b2,mastery:b3,
   trigger:b2.x0+72,hazard:b2.x0+188,hazardEnd:b2.x1-38,repeatTrigger:b3.x0+58,repeat:b3.x0+196,repeatEnd:b3.x1-32,lastStep:DOCK[0]-78};
  anchors.trap={trigger:anchors.trigger,triggerEnd:anchors.hazardEnd,body:{x:anchors.hazard,y:GROUND-106,w:130,h:106},lane:{x:b2.x0+88,y:GROUND-28,w:260,h:28},platform:{x:b2.x0+150,y:GROUND-188,w:92,h:18},finish:{x:b2.x0+150,y:GROUND-12,w:82,h:12},beam:{x:b2.x0+90,y:GROUND-106,w:210,h:22},repeat:{x:anchors.repeat,y:GROUND-30,w:130,h:30}};
- const out={surfaces,gaps,platforms,anchors,roles};SCENE_CACHE.set(level,out);return out;
+ const out={surfaces,gaps,platforms,anchors,roles};SCENE_CACHE.set(cacheKey,out);return out;
 }
-function sceneGeometry(level=currentLevel){return buildScene(level)}
+function sceneGeometry(level=currentLevel,part=1){return buildScene(level,part)}
 function validateScene(level){
  const g=buildScene(level),errors=[],nodes=g.surfaces.slice().sort((a,b)=>a.x-b.x||a.y-b.y).map((s,i)=>({...s,id:i})),PW=player.w,VY0=560,GRAVITY=1450,MAXVX=255,profiles={base:{vy0:560,maxvx:255},dual:{vy0:720,maxvx:400}};
  for(const s of nodes.filter(n=>n.kind==='platform')){const minW=s.beat===3?44:60;if(s.w<minW)errors.push(`platform_width:${s.w}<${minW}`);if(GROUND-s.y>290)errors.push(`layer_height:${GROUND-s.y}>290`)}
@@ -351,7 +362,7 @@ function selectFishGap(level){
  return sceneGeometry(level).gaps.filter(gap=>gap[1]-gap[0]>=140).map(gap=>({left:gap[0],right:gap[1],width:gap[1]-gap[0]}));
 }
 function selectFans(level){if(!TOP_ROUTE_LEVELS.includes(level))return[];const profiles=[{name:'A',vx:450,vy:-400,t:.46,dir:1},{name:'B',vx:390,vy:-460,t:.34,dir:1},{name:'C',vx:360,vy:-350,t:.28,dir:-1},{name:'A',vx:450,vy:-400,t:.46,dir:1},{name:'B',vx:390,vy:-460,t:.34,dir:1},{name:'A',vx:450,vy:-400,t:.46,dir:1}];return GEOMETRY[level].fans.map(([x,rise],i)=>({x,y:GROUND+rise-48,w:48,h:48,profile:profiles[i]}));}
-function launchSeed(level,index){let n=(level*2654435761+(index+1)*1013904223)>>>0;n^=n>>>16;n=Math.imul(n,2246822519)>>>0;n^=n>>>13;return n>>>0}
+function launchSeed(level,index,part=1){let n=(level*2654435761+(index+1)*1013904223+(part-1)*198491317)>>>0;n^=n>>>16;n=Math.imul(n,2246822519)>>>0;n^=n>>>13;return n>>>0}
 function selectLaunchPads(level){if(![5,14,22].includes(level))return[];const g=sceneGeometry(level),hazards=g.anchors.trap,index=0,seed=launchSeed(level,index),surfaces=g.surfaces.slice().sort((a,b)=>a.x-b.x),candidate=source=>{if(source.kind!=='ground'||source.w<120)return null;const box={x:source.x+20,y:source.y-10,w:56,h:10},blocked=[hazards.body,hazards.lane,hazards.finish,hazards.repeat].some(h=>box.x+box.w>h.x-36&&box.x<h.x+h.w+36);return blocked||box.x+box.w>source.x+source.w-20?null:{source,box}},preferred=surfaces.map(candidate).filter(p=>p&&p.box.x>=400&&p.box.x<=1400),picked=preferred.length?preferred[seed%preferred.length]:surfaces.map(candidate).find(Boolean);if(!picked)return[];const{source,box}=picked,startX=box.x+box.w/2,distance=700+(seed%201),targetX=startX+distance;return[{box,targetX,targetY:source.y,source,seed,index,distance}]}
 const ENEMY_BASELINE=[null,[5,3],[5,2],[6,4],[6,1],[5,1],[5,2],[5,2],[5,1],[5,0],[5,2],[5,4],[6,3],[5,3],[5,1],[5,1],[5,1],[5,4],[5,2],[5,2],[5,3],[5,2],[5,2],[6,2],[5,2],[5,2],[5,3],[5,4],[5,4],[5,2],[5,2],[5,2]];
 function enemyTargets(level){const[baselineEnemyCount,baselineCrates]=ENEMY_BASELINE[level];return{baselineEnemyCount,baselineCrates,targetCrates:Math.ceil(baselineCrates/2)}}
