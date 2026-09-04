@@ -153,15 +153,16 @@ let rt=null;
 let cachedGeometryLevel=0,cachedGroundSegments=[],cachedStaticPlatforms=[],cachedSolidRects=[];
 
 // Audio
-let ac=null,master=null,audioAllowed=true;
+let ac=null,master=null,audioAllowed=true,bgmGain=null,bgmSourceConnected=false,bgmFallback=true,debugAudioErr='';
 let bgmMuted=false,bgmStarted=false;
 const bgm=new Audio('soundtrack.mp3');bgm.loop=true;bgm.volume=.35;bgm.preload='none';
-function applyMute(){bgm.muted=!audioAllowed||bgmMuted;const mb=document.getElementById('muteBtn');if(mb)mb.innerHTML=bgmMuted?'🔇':'🔊';}
-function initBgm(){if(bgmStarted)return;bgmStarted=true;if(ac&&ac.state==='suspended')ac.resume();bgm.load();const p=bgm.play();if(p!==undefined)p.catch(()=>{});['pointerdown','touchstart','keydown'].forEach(e=>window.removeEventListener(e,initBgm))}
+function applyMute(){const m=!audioAllowed||bgmMuted;if(bgmFallback)bgm.muted=m;else if(bgmGain)bgmGain.gain.value=m?0:0.35;const mb=document.getElementById('muteBtn');if(mb)mb.innerHTML=bgmMuted?'🔇':'🔊';}
+function initBgm(){if(bgmStarted)return;bgmStarted=true;try{ensureAudio()}catch(e){}if(ac&&ac.state==='suspended')ac.resume();bgm.load();const p=bgm.play();if(p!==undefined)p.catch(()=>{});['pointerdown','touchstart','keydown'].forEach(e=>window.removeEventListener(e,initBgm))}
 ['pointerdown','touchstart','keydown'].forEach(e=>window.addEventListener(e,initBgm,{once:true,passive:true}));
 let muteHandled=false;const handleMuteBtn=e=>{if(e&&e.preventDefault)e.preventDefault();if(muteHandled)return;muteHandled=true;bgmMuted=!bgmMuted;applyMute();saveProgress();setTimeout(()=>muteHandled=false,250)};
 const mBtn=document.getElementById('muteBtn');if(mBtn){mBtn.addEventListener('pointerdown',handleMuteBtn,{passive:false});mBtn.addEventListener('touchstart',handleMuteBtn,{passive:false});mBtn.addEventListener('click',handleMuteBtn,{passive:false});}
-function ensureAudio(){try{if(!ac){const A=window.AudioContext||window.webkitAudioContext;if(!A)return null;ac=new A();master=ac.createGain();master.gain.value=audioAllowed?.34:0;master.connect(ac.destination)}if(ac.state==='suspended')ac.resume();return ac}catch(_){return null}}
+function ensureAudio(){try{if(!ac){const A=window.AudioContext||window.webkitAudioContext;if(!A)return null;ac=new A();master=ac.createGain();master.gain.value=audioAllowed?.34:0;master.connect(ac.destination);bgmGain=ac.createGain();bgmGain.connect(master);try{if(!bgmSourceConnected){const s=ac.createMediaElementSource(bgm);s.connect(bgmGain);bgmSourceConnected=true;bgmFallback=false;applyMute();}}catch(e){bgmFallback=true;debugAudioErr=e.message||'err';applyMute();}}if(ac.state==='suspended')ac.resume();return ac}catch(_){return null}}
+if(location.hash==='#debugAudio'){const dbg=document.createElement('div');dbg.style.cssText='position:fixed;top:4px;left:4px;background:#000a;color:#0f0;font:10px monospace;z-index:9999;padding:4px;pointer-events:none';document.body.appendChild(dbg);setInterval(()=>{dbg.innerText=`AC:${ac?ac.state:'null'} BGM:${bgm.paused?'paused':'playing'} RDY:${bgm.readyState} FB:${bgmFallback} ERR:${debugAudioErr}`;},500);}
 function primeAudio(){ensureAudio()}
 function tone(f,d=.1,v=.13,type='sine',f2=null,delay=0){if(!ensureAudio())return;const t=ac.currentTime+delay,o=ac.createOscillator(),g=ac.createGain();o.type=type;o.frequency.setValueAtTime(f,t);if(f2)o.frequency.exponentialRampToValueAtTime(Math.max(20,f2),t+d);g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(v,t+.008);g.gain.exponentialRampToValueAtTime(.0001,t+d);o.connect(g);g.connect(master);o.start(t);o.stop(t+d+.03)}
 function noise(d=.08,v=.12,ff=1500,delay=0){if(!ensureAudio())return;const n=Math.max(1,Math.floor(ac.sampleRate*d)),b=ac.createBuffer(1,n,ac.sampleRate),a=b.getChannelData(0);for(let i=0;i<n;i++)a[i]=(Math.random()*2-1)*(1-i/n);const s=ac.createBufferSource(),f=ac.createBiquadFilter(),g=ac.createGain(),t=ac.currentTime+delay;s.buffer=b;f.type='bandpass';f.frequency.value=ff;g.gain.setValueAtTime(v,t);g.gain.exponentialRampToValueAtTime(.0001,t+d);s.connect(f);f.connect(g);g.connect(master);s.start(t)}
@@ -189,7 +190,7 @@ const SAVE_KEY='trust_me_bro_full31_v34_rage_save';
 let inPlayablesEnv=false,systemPaused=false,rafId=0,loopRunning=false,firstFrameSent=false,gameReadySent=false;
 function ytReady(){return typeof window.ytgame!=='undefined'&&ytgame&&ytgame.game&&ytgame.system}
 function adsReady(){return!!(ytReady()&&inPlayablesEnv&&ytgame.ads&&typeof ytgame.ads.requestRewardedAd==='function')}
-function setAudioAllowed(v){audioAllowed=!!v;if(master){try{master.gain.setValueAtTime(audioAllowed?.34:0,ac.currentTime)}catch(_){master.gain.value=audioAllowed?.34:0}}bgm.muted=!audioAllowed||bgmMuted;}
+function setAudioAllowed(v){audioAllowed=!!v;if(master){try{master.gain.setValueAtTime(audioAllowed?.34:0,ac.currentTime)}catch(_){master.gain.value=audioAllowed?.34:0}}applyMute();}
 function snapshotSave(){return{v:33,currentLevel,deaths,jumpLevel,speedLevel,totalTime,won:!!won,collected:[...collected].sort((a,b)=>a-b),character:characterId,bgmMuted}}
 function applySave(s){if(!s||typeof s!=='object')return false;currentLevel=Math.max(1,Math.min(SCENE_COUNT,Number(s.currentLevel)||1));deaths=Math.max(0,Number(s.deaths)||0);jumpLevel=s.jumpLevel?1:0;speedLevel=s.speedLevel?1:0;totalTime=Math.max(0,Number(s.totalTime)||0);collected.clear();if(Array.isArray(s.collected))for(const n of s.collected){const k=Number(n);if(Number.isInteger(k)&&k>=1&&k<=SCENE_COUNT)collected.add(k)}coins=collected.size;won=!!s.won&&coins===SCENE_COUNT;characterChosen=Object.prototype.hasOwnProperty.call(s,'character');characterId=characterChosen?Math.max(0,Math.min(3,Number(s.character)||0)):0;dead=false;upgradePending=false;if(s.bgmMuted!==undefined){bgmMuted=!!s.bgmMuted;applyMute()}return true}
 async function loadProgress(){let raw='';try{if(inPlayablesEnv&&ytReady())raw=await ytgame.game.loadData();else raw=localStorage.getItem(SAVE_KEY)||''}catch(_){try{raw=localStorage.getItem(SAVE_KEY)||''}catch(__){raw=''}}if(!raw)return false;try{return applySave(JSON.parse(raw))}catch(_){return false}}
@@ -247,7 +248,9 @@ function beat(i){const b=BEAT_BOUNDS[i];return{i,x0:b[0],x1:b[1],mid:(b[0]+b[1])
 function abs(localX){return sceneStart()+localX}
 function coinPos(sc=scene()){
   const g=buildScene(sc.level),x=sc.start+g.anchors.coin;
-  const w=24,localX=g.anchors.coin,onGround=g.surfaces.some(s=>s.kind==='ground'&&localX+w>s.x&&localX<s.x+s.w),platforms=g.surfaces.filter(s=>s.kind==='platform'&&localX+w>s.x&&localX<s.x+s.w).sort((a,b)=>b.y-a.y||a.x-b.x),surfaceY=onGround?GROUND:platforms[0]?.y??GROUND;
+  const w=24,localX=g.anchors.coin,onGround=g.surfaces.some(s=>s.kind==='ground'&&localX+w>s.x&&localX<s.x+s.w),platforms=g.surfaces.filter(s=>s.kind==='platform'&&localX+w>s.x&&localX<s.x+s.w).sort((a,b)=>b.y-a.y||a.x-b.x);
+  let surfaceY=onGround?GROUND:platforms[0]?.y??GROUND;
+  if(surfaceY===GROUND&&platforms.length>0&&surfaceY-(platforms[0].y+(platforms[0].h||18))<50)surfaceY=platforms[0].y;
   return{x,y:surfaceY-34,w,h:24};
 }
 
@@ -324,7 +327,7 @@ function validateScene(level){
  const edges=nodes.map(()=>[]),returnEdges=nodes.map(()=>[]),gapBetween=(a,b)=>b.x-(a.x+a.w),canJumpProfile=(a,b,profile,gap=gapBetween(a,b),useRouteCaps=true)=>{const rise=a.y-b.y,disc=profile.vy0*profile.vy0-2*GRAVITY*rise;if(disc<0)return false;gap=Math.max(0,gap-PW);const flight=(profile.vy0+Math.sqrt(disc))/GRAVITY,physical=profile.maxvx*flight;if(!useRouteCaps)return gap<=physical;let cap=rise>35?120:rise<-5?200:(a.beat===3?175:150);return gap<=Math.min(cap,physical)},canJump=(a,b,gap=gapBetween(a,b))=>canJumpProfile(a,b,profiles.base,gap);
  for(let i=0;i<nodes.length;i++)for(let j=0;j<nodes.length;j++)if(i!==j){if(nodes[j].x>=nodes[i].x&&canJump(nodes[i],nodes[j]))edges[i].push(j);if(nodes[j].x<=nodes[i].x&&canJump(nodes[i],nodes[j],nodes[i].x-(nodes[j].x+nodes[j].w)))returnEdges[i].push(j)}
  const overlapsX=(n,x)=>x+PW>n.x&&x<n.x+n.w,overlapsRange=(n,x0,x1)=>x1>n.x&&x0<n.x+n.w,nodeAt=(x,bottomY)=>nodes.findIndex(n=>overlapsX(n,x)&&Math.abs(bottomY-n.y)<=1),coinBox=coinPos(SCENES[level-1]),coinBottom=coinBox.y+coinBox.h,coinSurface=nodes.findIndex(n=>overlapsX(n,g.anchors.coin)&&n.y>=coinBottom&&n.y-coinBottom<=12),dockAnchor=g.anchors.dock,dockX=typeof dockAnchor==='object'?dockAnchor.x:dockAnchor,dockRight=typeof dockAnchor==='object'?dockX+(dockAnchor.w??DOCK[1]-DOCK[0]):DOCK[1],dockBottom=typeof dockAnchor==='object'?(dockAnchor.bottom??dockAnchor.y+(dockAnchor.h??0)):GROUND,start=nodeAt(66,GROUND),coin=coinSurface,dock=nodes.findIndex(n=>overlapsRange(n,dockX,dockRight)&&n.y>=dockBottom&&n.y-dockBottom<=12);
- if(start<0)errors.push('spawn_not_on_surface');if(coin<0)errors.push('coin_not_on_surface');if(dock<0)errors.push('dock_not_on_surface');
+ if(start<0)errors.push('spawn_not_on_surface');if(coin<0)errors.push('coin_not_on_surface');if(dock<0)errors.push('dock_not_on_surface');if(coin>=0){const cs=nodes[coin],above=nodes.filter(n=>n.kind==='platform'&&overlapsX(n,g.anchors.coin)&&n.y<cs.y).sort((a,b)=>b.y-a.y);if(above.length>0&&cs.y-(above[0].y+(above[0].h||18))<50)errors.push('insufficient_vertical_clearance');}
  const shortestPath=(from,to,allowed=()=>true,graph=edges)=>{if(from<0||to<0||!allowed(nodes[from])||!allowed(nodes[to]))return null;const q=[from],seen=new Set([from]),prev=new Map;while(q.length){const n=q.shift();if(n===to){const path=[];for(let p=n;p!==undefined;p=prev.get(p))path.unshift(p);return path}for(const v of graph[n])if(allowed(nodes[v])&&!seen.has(v)){seen.add(v);prev.set(v,n);q.push(v)}}return null};
  const shortest=(a,b)=>shortestPath(a,b)?.length-1??Infinity;
  const toCoin=shortest(start,coin),coinToDock=shortest(coin,dock),minimumJumps=shortest(start,dock),returnFromCoin=shortestPath(coin,start,()=>true,returnEdges);
