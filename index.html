@@ -156,11 +156,11 @@ let cachedGeometryLevel=0,cachedGroundSegments=[],cachedStaticPlatforms=[],cache
 
 // Audio
 let ac=null,master=null,audioAllowed=true,bgmGain=null,bgmSourceConnected=false,bgmFallback=true,debugAudioErr='';
-let bgmMuted=false,bgmStarted=false;
+let bgmMuted=false,bgmStarted=false,bgmStarting=false;
 const bgm=new Audio('soundtrack.mp3');bgm.loop=true;bgm.volume=.35;bgm.preload='none';
 function applyMute(){const m=!audioAllowed||bgmMuted;if(bgmFallback)bgm.muted=m;else if(bgmGain)bgmGain.gain.value=m?0:0.35;const mb=document.getElementById('muteBtn');if(mb)mb.innerHTML=bgmMuted?'🔇':'🔊';}
-function initBgm(){if(bgmStarted)return;bgmStarted=true;try{ensureAudio()}catch(e){}if(ac&&ac.state==='suspended')ac.resume();bgm.load();const p=bgm.play();if(p!==undefined)p.catch(()=>{});['pointerdown','touchstart','keydown'].forEach(e=>window.removeEventListener(e,initBgm))}
-['pointerdown','touchstart','keydown'].forEach(e=>window.addEventListener(e,initBgm,{once:true,passive:true}));
+function initBgm(){if(bgmStarted||bgmStarting)return;bgmStarting=true;try{ensureAudio()}catch(e){}if(ac&&ac.state==='suspended')ac.resume();const p=bgm.play();if(p!==undefined)p.then(()=>{bgmStarted=true;bgmStarting=false;debugAudioErr='';['pointerdown','touchstart','keydown'].forEach(e=>window.removeEventListener(e,initBgm))}).catch(err=>{bgmStarting=false;debugAudioErr=((err&&err.name?err.name:'err')+':'+(err&&err.message?err.message:'')).slice(0,60)});else{bgmStarted=true;bgmStarting=false;['pointerdown','touchstart','keydown'].forEach(e=>window.removeEventListener(e,initBgm))}}
+['pointerdown','touchstart','keydown'].forEach(e=>window.addEventListener(e,initBgm,{passive:true}));
 let muteHandled=false;const handleMuteBtn=e=>{if(e&&e.preventDefault)e.preventDefault();if(muteHandled)return;muteHandled=true;bgmMuted=!bgmMuted;applyMute();saveProgress();setTimeout(()=>muteHandled=false,250)};
 const mBtn=document.getElementById('muteBtn');if(mBtn){mBtn.addEventListener('pointerdown',handleMuteBtn,{passive:false});mBtn.addEventListener('touchstart',handleMuteBtn,{passive:false});mBtn.addEventListener('click',handleMuteBtn,{passive:false});}
 function ensureAudio(){try{if(!ac){const A=window.AudioContext||window.webkitAudioContext;if(!A)return null;ac=new A();master=ac.createGain();master.gain.value=audioAllowed?.34:0;master.connect(ac.destination);bgmGain=ac.createGain();bgmGain.connect(master);try{if(!bgmSourceConnected){const s=ac.createMediaElementSource(bgm);s.connect(bgmGain);bgmSourceConnected=true;bgmFallback=false;applyMute();}}catch(e){bgmFallback=true;debugAudioErr=e.message||'err';applyMute();}}if(ac.state==='suspended')ac.resume();return ac}catch(_){return null}}
@@ -250,8 +250,8 @@ function sceneStart(){return scene().start}
 function beat(i){const b=BEAT_BOUNDS[i];return{i,x0:b[0],x1:b[1],mid:(b[0]+b[1])/2,w:b[1]-b[0]}}
 function abs(localX){return sceneStart()+localX}
 function coinPos(sc=scene(),part=1){
-  const g=buildScene(sc.level,part),x=sc.start+g.anchors.coin;
-  const w=24,localX=g.anchors.coin,onGround=g.surfaces.some(s=>s.kind==='ground'&&localX+w>s.x&&localX<s.x+s.w),platforms=g.surfaces.filter(s=>s.kind==='platform'&&localX+w>s.x&&localX<s.x+s.w).sort((a,b)=>b.y-a.y||a.x-b.x);
+  const g=buildScene(sc.level,part),cX=g.anchors.coin,x=sc.start+cX;
+  const w=24,localX=cX,onGround=g.surfaces.some(s=>s.kind==='ground'&&localX+w>s.x&&localX<s.x+s.w),platforms=g.surfaces.filter(s=>s.kind==='platform'&&localX+w>s.x&&localX<s.x+s.w).sort((a,b)=>b.y-a.y||a.x-b.x);
   let surfaceY=onGround?GROUND:platforms[0]?.y??GROUND;
   if(surfaceY===GROUND&&platforms.length>0&&surfaceY-(platforms[0].y+(platforms[0].h||18))<50)surfaceY=platforms[0].y;
   return{x,y:surfaceY-34,w,h:24};
@@ -311,7 +311,7 @@ function buildScene(level,part=1){
     const xs=[gx+24,gx+126,gx+wide-114],ws=[64,60,64];
    for(let i=0;i<3;i++){platforms.push([xs[i],-rises[i],ws[i],bi,'route']);surfaces.push({x:xs[i],y:GROUND-rises[i],w:ws[i],h:18,beat:bi,kind:'platform',route:true})}
   }
-  if(bi<2&&archetype==='ground'){const rise=72+((level+bi)%2)*18,px=b.x0+205+(level*11+bi*19)%24,pw=64+(level%25);platforms.push([px,-rise,pw,bi,'optional']);surfaces.push({x:px,y:GROUND-rise,w:pw,h:18,beat:bi,kind:'platform'})}
+  if(bi<2&&archetype==='ground'){const rise=72+((level+bi)%2)*18,px=b.x0+205+(level*11+bi*19)%24+(level===5&&(part===2||part===5)&&bi===1?12:0),pw=64+(level%25);platforms.push([px,-rise,pw,bi,'optional']);surfaces.push({x:px,y:GROUND-rise,w:pw,h:18,beat:bi,kind:'platform'})}
  }
  // A legacy override replaces optional generated content in its beat; route platforms remain authoritative.
  let legacy=GEOMETRY[level];
@@ -335,7 +335,7 @@ function buildScene(level,part=1){
  }
  if(dual)for(const [role,p] of Object.entries(dual)){const bi=Math.max(0,Math.min(3,Math.floor((p[0]-180)/495))),q=[p[0],p[1],p[2],bi,`dual-${role}`];platforms.push(q);surfaces.push({x:q[0],y:GROUND+q[1],w:q[2],h:18,beat:bi,kind:'platform',route:true,dualRole:role})}
  let cursor=0;for(const g of gaps){if(g[0]>cursor)surfaces.push({x:cursor,y:GROUND,w:g[0]-cursor,h:100,beat:Math.max(0,Math.min(3,Math.floor((g[0]-180)/495))),kind:'ground'});cursor=g[1]}if(cursor<SCENE_W)surfaces.push({x:cursor,y:GROUND,w:SCENE_W-cursor,h:100,beat:3,kind:'ground'});
- const b2=beat(2),b3=beat(3),anchors={spawn:66,coin:b2.x1-32,dock:DOCK[0],intro:beat(0),trial:beat(1),betrayal:b2,mastery:b3,
+ const b2=beat(2),b3=beat(3),anchors={spawn:66,coin:level===30&&part===7?1688:b2.x1-32,dock:DOCK[0],intro:beat(0),trial:beat(1),betrayal:b2,mastery:b3,
   trigger:b2.x0+72,hazard:b2.x0+188,hazardEnd:b2.x1-38,repeatTrigger:b3.x0+58,repeat:b3.x0+196,repeatEnd:b3.x1-32,lastStep:DOCK[0]-78};
  anchors.trap={trigger:anchors.trigger,triggerEnd:anchors.hazardEnd,body:{x:anchors.hazard,y:GROUND-106,w:130,h:106},lane:{x:b2.x0+88,y:GROUND-28,w:260,h:28},platform:{x:b2.x0+150,y:GROUND-188,w:92,h:18},finish:{x:b2.x0+150,y:GROUND-12,w:82,h:12},beam:{x:b2.x0+90,y:GROUND-106,w:210,h:22},repeat:{x:anchors.repeat,y:GROUND-30,w:130,h:30}};
  const out={surfaces,gaps,platforms,anchors,roles};SCENE_CACHE.set(cacheKey,out);return out;
