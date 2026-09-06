@@ -731,6 +731,53 @@ async function boot(){
 }
 // Hard watchdog for quirky iOS in-app browsers: never leave the player trapped on loading.
 setTimeout(()=>{const ov=document.getElementById('bootOverlay');if(ov&&!ov.classList.contains('hidden')){ov.classList.add('hidden');if(!loopRunning&&!systemPaused)startLoop()}},1200)
+
+const DEBUG_HOOKS = /debug/i.test(location.hash);
+if(DEBUG_HOOKS){
+ const match=location.hash.match(/debugLives(?:=(\d+))?/i),requestedLives=match&&match[1]!==undefined?Number(match[1]):1;
+ const initialLives=Number.isSafeInteger(requestedLives)&&requestedLives>=1?requestedLives:1;
+ const observation={ctxAlphaAtCourier:null,courierDrawn:false,courierPath:null,courierRect:null};
+ const clearObservation=()=>{observation.ctxAlphaAtCourier=null;observation.courierDrawn=false;observation.courierPath=null;observation.courierRect=null};
+ const originalBoot=boot;
+ boot=async function(...args){const result=await originalBoot.apply(this,args);lives=initialLives;return result};
+ const originalDraw=draw,originalCourier=drawCourier;
+ draw=function(...args){clearObservation();return originalDraw.apply(this,args)};
+ drawCourier=function(...args){
+  clearObservation();
+  const originalDrawImage=ctx.drawImage,hadOwn=Object.prototype.hasOwnProperty.call(ctx,'drawImage');
+  ctx.drawImage=function(image,...a){
+   const m=this.getTransform(),[x,y,w,h]=a.length===8?a.slice(4):a.length===4?a:[a[0],a[1],image.width,image.height];
+   const points=[[x,y],[x+w,y],[x,y+h],[x+w,y+h]].map(([px,py])=>({x:(m.a*px+m.c*py+m.e)/dpr,y:(m.b*px+m.d*py+m.f)/dpr}));
+   observation.ctxAlphaAtCourier=this.globalAlpha;
+   observation.courierPath=PNG_SPRITES.some(s=>s.image===image)?'png':'fallback';
+   observation.courierRect={x:Math.min(...points.map(p=>p.x)),y:Math.min(...points.map(p=>p.y)),w:Math.max(...points.map(p=>p.x))-Math.min(...points.map(p=>p.x)),h:Math.max(...points.map(p=>p.y))-Math.min(...points.map(p=>p.y))};
+   const result=originalDrawImage.call(this,image,...a);observation.courierDrawn=true;return result;
+  };
+  try{return originalCourier.apply(this,args)}finally{if(hadOwn)ctx.drawImage=originalDrawImage;else delete ctx.drawImage}
+ };
+ Object.defineProperty(window,'__tmb',{value:Object.freeze({
+  get lives(){return lives},get dead(){return dead},get livesPending(){return livesPending},get spawnGrace(){return spawnGrace},
+  get characterId(){return characterId},get characterChosen(){return characterChosen},get characterSelectOpen(){return characterSelectOpen},get won(){return won},get deaths(){return deaths},
+  get player(){const{x,y,w,h,facing,onGround}=player;return Object.freeze({x,y,w,h,facing,onGround})},
+  get cam(){return cam},get currentLevel(){return currentLevel},get currentPart(){return currentPart},
+  get pngState(){return PNG_SPRITES.map(s=>({loaded:s.loaded,failed:s.failed,naturalWidth:s.image.naturalWidth}))},
+  get ctxAlphaAtCourier(){return observation.ctxAlphaAtCourier},get courierDrawn(){return observation.courierDrawn},get courierPath(){return observation.courierPath},
+  // Logical screen pixels: same coordinate space as W/H, with backing-store DPR removed.
+  get courierRect(){return observation.courierRect?Object.freeze({...observation.courierRect}):null}
+ })});
+ window.__tmbContinue=function(){
+  if(!livesPending)return Promise.resolve();
+  const originalAdsReady=adsReady;adsReady=()=>false;
+  try{return requestLivesAd()}finally{adsReady=originalAdsReady}
+ };
+ window.addEventListener('keydown',e=>{
+  if(e.code!=='KeyK'&&!['k','K'].includes(e.key))return;
+  e.preventDefault();e.stopImmediatePropagation();
+  if(e.repeat||dead||won||livesPending||characterSelectOpen||systemPaused)return;
+  const grace=spawnGrace;spawnGrace=0;
+  try{kill('debug','slap')}finally{spawnGrace=grace}
+ },{capture:true});
+}
 boot();
 addEventListener('keydown',e=>{if(systemPaused)return;primeAudio();if(e.key==='Escape'&&characterSelectOpen&&characterChosen){closeCharacterSelect();return}if(['ArrowLeft','a','A'].includes(e.key))keys.left=true;if(['ArrowRight','d','D'].includes(e.key))keys.right=true;if(['ArrowUp','w','W',' '].includes(e.key)){keys.jump=true;e.preventDefault()}if((e.key==='1'||e.key==='j'||e.key==='J')&&upgradePending)chooseUpgrade('jump');if((e.key==='2'||e.key==='k'||e.key==='K')&&upgradePending)chooseUpgrade('speed');if(e.key==='r'||e.key==='R')hardRestart()});
 addEventListener('keyup',e=>{if(['ArrowLeft','a','A'].includes(e.key))keys.left=false;if(['ArrowRight','d','D'].includes(e.key))keys.right=false;if(['ArrowUp','w','W',' '].includes(e.key))keys.jump=false});
