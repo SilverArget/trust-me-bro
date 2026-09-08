@@ -73,7 +73,7 @@ canvas{display:block;width:100vw;height:100vh;height:100dvh;touch-action:none;-w
 (()=>{const o=document.getElementById('introOverlay'),v=document.getElementById('introVideo');let d=false,t;const c=()=>{if(d)return;d=true;clearTimeout(t);if(o)o.remove();['pointerdown','touchstart','keydown','click'].forEach(e=>window.removeEventListener(e,c))};if(v){t=setTimeout(c,3500);v.addEventListener('ended',c);v.addEventListener('error',c);const p=v.play();if(p!==undefined)p.catch(c);setTimeout(()=>{if(!d)['pointerdown','touchstart','keydown','click'].forEach(e=>window.addEventListener(e,c,{once:true,passive:true}))},1500)}else c();})();
 (()=>{
 const c=document.getElementById('game');let ctx=c.getContext('2d');
-const VIEW_H=540,MAX_VIEW_W=1080,GROUND=455,SCENE_W=2280,SCENE_COUNT=31,PART_COUNT=9,WORLD=SCENE_W*SCENE_COUNT+120;
+const VIEW_H=540,MAX_VIEW_W=1080,GROUND=455,SCENE_W=2280,SCENE_COUNT=31,PART_COUNT=6,WORLD=SCENE_W*SCENE_COUNT+120;
 const BEAT_BOUNDS=[[180,675],[675,1170],[1170,1665],[1665,2160]],DOCK=[2160,2280];
 const UI_LAYOUT={portrait:{edge:8,hudH:32,hudFont:11,hudMaxW:246,timerW:52,timerH:36,timerFont:19,toastH:32,toastFont:11,toastMinFont:9,toastMargin:12,controlH:80,controlBottom:8},landscape:{edge:8,hudH:34,hudFont:12,hudMaxW:276,timerW:56,timerH:38,timerFont:20,toastH:34,toastFont:12,toastMinFont:10,toastMargin:14,controlH:86,controlBottom:18}};
 let W=960,H=VIEW_H,dpr=1,isPortrait=false,worldY=0,safeTop=0,safeRight=0,safeBottom=0,safeLeft=0,backdropKey='',sceneLayerKey='',anchorFrac=.31;
@@ -188,16 +188,28 @@ function sDeath(type){
 }
 
 // YouTube Playables + iOS/Safari lifecycle bridge.
-const SAVE_KEY='trust_me_bro_full31_v35_rage_save';
+const SAVE_KEY='trust_me_bro_full31_v36_rage_save',LEGACY_SAVE_KEY='trust_me_bro_full31_v35_rage_save';
+let legacyV35='',cloudSaveWritable=false;
 try{localStorage.removeItem('trust_me_bro_full31_v34_rage_save')}catch(_){}
 let inPlayablesEnv=false,systemPaused=false,rafId=0,loopRunning=false,firstFrameSent=false,gameReadySent=false;
 function ytReady(){return typeof window.ytgame!=='undefined'&&ytgame&&ytgame.game&&ytgame.system}
 function adsReady(){return!!(ytReady()&&inPlayablesEnv&&ytgame.ads&&typeof ytgame.ads.requestRewardedAd==='function')}
 function setAudioAllowed(v){audioAllowed=!!v;if(master){try{master.gain.setValueAtTime(audioAllowed?.34:0,ac.currentTime)}catch(_){master.gain.value=audioAllowed?.34:0}}applyMute();}
-function snapshotSave(){let m=new Array(31).fill(0);for(let k of collected){let l=Math.floor(k/16),p=k%16;if(l>=1&&l<=31&&p>=1&&p<=PART_COUNT)m[l-1]|=(1<<(p-1))}return{v:35,currentLevel,currentPart,deaths,jumpLevel,speedLevel,totalTime,won:!!won,collected:m,character:characterId,bgmMuted}}
+function snapshotSave(){let m=new Array(31).fill(0);for(let k of collected){let l=Math.floor(k/16),p=k%16;if(l>=1&&l<=31&&p>=1&&p<=PART_COUNT)m[l-1]|=(1<<(p-1))}return{v:36,partCount:PART_COUNT,currentLevel,currentPart,deaths,jumpLevel,speedLevel,totalTime,won:!!won,collected:m,character:characterId,bgmMuted}}
 function applySave(s){if(!s||typeof s!=='object')return false;currentLevel=Math.max(1,Math.min(SCENE_COUNT,Number(s.currentLevel)||1));currentPart=Math.max(1,Math.min(PART_COUNT,Number(s.currentPart)||1));deaths=Math.max(0,Number(s.deaths)||0);jumpLevel=s.jumpLevel?1:0;speedLevel=s.speedLevel?1:0;totalTime=Math.max(0,Number(s.totalTime)||0);collected.clear();if(Array.isArray(s.collected)&&s.collected.length===31){for(let i=0;i<31;i++){let m=Number(s.collected[i]);if(Number.isInteger(m)){for(let p=1;p<=PART_COUNT;p++){if((m&(1<<(p-1)))!==0)collected.add((i+1)*16+p)}}}}coins=collected.size;won=!!s.won&&coins===(SCENE_COUNT*PART_COUNT);characterChosen=Object.prototype.hasOwnProperty.call(s,'character');characterId=characterChosen?Math.max(0,Math.min(3,Number(s.character)||0)):0;dead=false;upgradePending=false;if(s.bgmMuted!==undefined){bgmMuted=!!s.bgmMuted;applyMute()}return true}
-async function loadProgress(){let raw='';try{if(inPlayablesEnv&&ytReady())raw=await ytgame.game.loadData();else raw=localStorage.getItem(SAVE_KEY)||''}catch(_){try{raw=localStorage.getItem(SAVE_KEY)||''}catch(__){raw=''}}if(!raw)return false;try{return applySave(JSON.parse(raw))}catch(_){return false}}
-async function saveProgress(){const raw=JSON.stringify(snapshotSave());try{if(inPlayablesEnv&&ytReady()){await ytgame.game.saveData(raw)}else{localStorage.setItem(SAVE_KEY,raw)}}catch(_){try{localStorage.setItem(SAVE_KEY,raw)}catch(__){}}}
+// The SDK has one slot: preserve the exact old payload under a separate envelope key.
+function validSave(s,v){return !!s&&typeof s==='object'&&s.v===v&&(v!==36||s.partCount===PART_COUNT)&&Number.isInteger(s.currentLevel)&&s.currentLevel>=1&&s.currentLevel<=SCENE_COUNT&&Number.isInteger(s.currentPart)&&s.currentPart>=1&&s.currentPart<=(v===35?9:PART_COUNT)&&Array.isArray(s.collected)&&s.collected.length===SCENE_COUNT&&s.collected.every(m=>Number.isInteger(m)&&m>=0&&m<=(v===35?511:63))&&['deaths','totalTime'].every(k=>Number.isFinite(s[k])&&s[k]>=0)&&[0,1].includes(s.jumpLevel)&&[0,1].includes(s.speedLevel)&&typeof s.won==='boolean'&&(s.character===undefined||Number.isInteger(s.character)&&s.character>=0&&s.character<=3)&&(s.bgmMuted===undefined||typeof s.bgmMuted==='boolean')}
+function parseSave(raw){try{return JSON.parse(raw)}catch(_){return null}}
+function migrateV35(s){if(!validSave(s,35))return null;const masks=s.collected.map(m=>{let n=0;for(let p=0;p<6;p++)if(m&(1<<p))n|=1<<p;for(let p=6;p<9;p++)if(m&(1<<p)){for(let q=0;q<6;q++)if(!(n&(1<<q))){n|=1<<q;break}}return n});const count=masks.reduce((n,m)=>n+m.toString(2).replace(/0/g,'').length,0);return {...s,v:36,partCount:PART_COUNT,currentPart:Math.min(s.currentPart,PART_COUNT),collected:masks,won:s.won&&count===SCENE_COUNT*PART_COUNT}}
+async function loadProgress(){
+ let cloudRaw='',localRaw='',oldRaw='';cloudSaveWritable=false;
+ if(inPlayablesEnv&&ytReady()){try{cloudRaw=await ytgame.game.loadData()||'';cloudSaveWritable=true}catch(_){}}
+ try{localRaw=localStorage.getItem(SAVE_KEY)||'';oldRaw=localStorage.getItem(LEGACY_SAVE_KEY)||''}catch(_){}
+ for(const raw of [cloudRaw,localRaw]){const e=parseSave(raw);if(e&&validSave(e.v36,36)){legacyV35=typeof e.legacyV35==='string'?e.legacyV35:'';return applySave(e.v36)}}
+ for(const raw of [cloudRaw,localRaw,oldRaw]){const e=parseSave(raw),old=validSave(e,35)?raw:e&&typeof e.legacyV35==='string'?e.legacyV35:'';const migrated=migrateV35(parseSave(old));if(migrated){legacyV35=old;applySave(migrated);void saveProgress();return true}}
+ return false;
+}
+async function saveProgress(){const raw=JSON.stringify({v36:snapshotSave(),legacyV35});try{localStorage.setItem(SAVE_KEY,raw)}catch(_){}if(inPlayablesEnv&&ytReady()&&cloudSaveWritable){try{await ytgame.game.saveData(raw)}catch(_){}}}
 const characterSelectEl=document.getElementById('characterSelect'),characterChangeEl=document.getElementById('characterChange');
 function openCharacterSelect(){characterSelectOpen=true;clearInputs();characterSelectEl.classList.add('show');characterSelectEl.setAttribute('aria-hidden','false')}
 function closeCharacterSelect(){characterSelectOpen=false;characterSelectEl.classList.remove('show');characterSelectEl.setAttribute('aria-hidden','true');last=performance.now()}
