@@ -123,5 +123,39 @@ if(after('typeof bindSurfaceModel')==='function'){
  })()`);
  result.surfaceFixtures='passed';
 }
+if(after('typeof PART_TEMPLATES')!=='undefined'){
+ assert.equal(after('JSON.stringify(validateAllScenes())'),before('JSON.stringify(validateAllScenes())'),'Legacy validator reports changed');
+ after(String.raw`(()=>{
+  for(let part=1;part<=6;part++){
+   const c=PART_TEMPLATES[part],g={templateMode:'target',surfaces:[{kind:'platform',route:true,y:GROUND-c.rise.min,solid:true}],gaps:Array.from({length:c.gaps.count[0]},(_,i)=>[i*700,i*700+c.gaps.width[0]])};
+   if(c.dualRoute)for(const role of ['runway','catch','landing'])g.surfaces.push({solid:true,dualRole:role});
+   const m={minimumJumps:c.minimumJumps,groundOnlyRoute:!c.forbidGroundOnly,verticalRequired:c.requiredRise>0,topRoutePlatforms:c.topRoutePlatforms};
+   const errors=()=>partDesignErrors(1,part,g,m);
+   assert.equal(errors().length,0,'Positive part '+part);
+   m.minimumJumps--;assert(errors().some(e=>e.startsWith('minimum_jumps:')));m.minimumJumps++;
+   if(c.forbidGroundOnly){m.groundOnlyRoute=true;assert(errors().includes('ground_only_route_exists'));m.groundOnlyRoute=false;}
+   if(c.requiredRise){m.verticalRequired=false;assert(errors().includes('no_vertical_requirement'));m.verticalRequired=true;}
+   if(c.topRoutePlatforms){m.topRoutePlatforms--;assert(errors().some(e=>e==='route_has_no_platform'||e.startsWith('insufficient_top_route:')));m.topRoutePlatforms++;}
+   g.surfaces[0].y=GROUND-c.rise.max-1;assert(errors().includes('part_rise_out_of_range'));g.surfaces[0].y=GROUND-c.rise.min;
+   g.gaps[0][1]=g.gaps[0][0]+c.gaps.width[1]+1;assert(errors().includes('part_gap_width'));
+   g.gaps=[];assert(errors().includes('part_gap_count'));
+   if(c.dualRoute)for(const role of ['runway','catch','landing']){
+    const surface=g.surfaces.find(s=>s.dualRole===role);surface.solid=false;assert(errors().includes('dual_route_missing_'+role));surface.solid=true;
+   }
+  }
+  // The target low route accepts 80px; legacy retains its vertical requirement.
+  const low={templateMode:'target',surfaces:[{kind:'platform',route:true,solid:true,y:GROUND-80}],gaps:[[200,300]]};
+  const lowMetrics={minimumJumps:2,groundOnlyRoute:true,verticalRequired:false,topRoutePlatforms:0};
+  assert.equal(partDesignErrors(1,1,low,lowMetrics).length,0);
+  low.templateMode='legacy';assert(partDesignErrors(1,1,low,lowMetrics).includes('no_vertical_requirement'));
+  // Safety still executes in either mode; an absent catch must not become a safe fall.
+  const key=17*16+1,original=buildScene(17,1),copy=JSON.parse(JSON.stringify(original));
+  const catcher=copy.surfaces.find(s=>s.dualRole==='catch');assert(catcher);catcher.solid=false;
+  SCENE_CACHE.set(key,copy);
+  for(const mode of ['legacy','target']){copy.templateMode=mode;assert(validateScene(17,1).errors.includes('dual_route_unsafe_fall'));}
+  SCENE_CACHE.set(key,original);
+ })()`);
+ result.partContractFixtures='6/6 positive and negative fixtures passed; legacy reports unchanged; safety active in both modes';
+}
 console.log(JSON.stringify(result,null,2));
 if(geometryDifferences.length||validatorErrors.length)process.exitCode=1;

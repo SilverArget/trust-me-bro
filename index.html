@@ -308,6 +308,32 @@ const GEOMETRY={
 };
 const TOP_ROUTE_LEVELS=[8,16,23,30];
 const DUAL_ROUTE_LEVELS=[17,20,24,28],DUAL_ROUTES={17:{runway:[570,-52,880],catch:[1450,-52,274],landing:[1672,-227,260]},20:{runway:[570,-56,880],catch:[1450,-56,278],landing:[1676,-228,260]},24:{runway:[570,-48,880],catch:[1450,-48,270],landing:[1668,-213,260]},28:{runway:[570,-60,880],catch:[1450,-60,282],landing:[1680,-238,260]}};
+// Target contracts are data only until Phase 4 opts a generated scene into 'target'.
+// Gap/rhythm budgets are initial template bounds; no current geometry consumes them.
+const PART_TEMPLATES=Object.freeze({
+ 1:{ground:'full',rise:{min:70,max:110,profile:'low'},gaps:{count:[1,2],width:[60,180]},dualRoute:false,minimumJumps:1,forbidGroundOnly:false,requiredRise:0,topRoutePlatforms:0},
+ 2:{ground:'medium-gaps',rise:{min:70,max:165,profile:'wave'},gaps:{count:[2,4],width:[100,240]},dualRoute:false,minimumJumps:3,forbidGroundOnly:true,requiredRise:140,topRoutePlatforms:2},
+ 3:{ground:'fragmented',rise:{min:165,max:200,profile:'high'},gaps:{count:[3,6],width:[180,360]},dualRoute:false,minimumJumps:6,forbidGroundOnly:true,requiredRise:165,topRoutePlatforms:3},
+ 4:{ground:'air',rise:{min:60,max:200,profile:'launch-chain'},gaps:{count:[1,1],width:[1920,1920]},dualRoute:false,minimumJumps:6,forbidGroundOnly:true,requiredRise:162,topRoutePlatforms:3},
+ 5:{ground:'deep-pit',rise:{min:70,max:200,profile:'ascending'},gaps:{count:[1,3],width:[240,600]},dualRoute:false,minimumJumps:4,forbidGroundOnly:true,requiredRise:150,topRoutePlatforms:2},
+ 6:{ground:'narrow-islands',rise:{min:70,max:200,profile:'mixed'},gaps:{count:[3,6],width:[140,360]},dualRoute:true,minimumJumps:6,forbidGroundOnly:true,requiredRise:162,topRoutePlatforms:3}
+});
+function sceneDesignContract(level,part,g){return g.templateMode==='target'?PART_TEMPLATES[part]:{minimumJumps:6,forbidGroundOnly:true,requiredRise:162,topRoutePlatforms:part!==4&&part!==8&&TOP_ROUTE_LEVELS.includes(level)?3:1,dualRoute:false}}
+function partDesignErrors(level,part,g,m){
+ const c=sceneDesignContract(level,part,g),errors=[];
+ if(m.minimumJumps<c.minimumJumps)errors.push(`minimum_jumps:${m.minimumJumps}<${c.minimumJumps}`);
+ if(c.forbidGroundOnly&&m.groundOnlyRoute)errors.push('ground_only_route_exists');
+ if(c.requiredRise>0&&!m.verticalRequired)errors.push('no_vertical_requirement');
+ if(m.topRoutePlatforms<c.topRoutePlatforms)errors.push(m.topRoutePlatforms<1?'route_has_no_platform':`insufficient_top_route:${m.topRoutePlatforms}<${c.topRoutePlatforms}`);
+ if(g.templateMode==='target'){
+  const surfaces=solidSurfaces(g.surfaces),route=surfaces.filter(s=>s.kind==='platform'&&s.route&&!s.dualRole);
+  if(route.some(s=>GROUND-s.y<c.rise.min||GROUND-s.y>c.rise.max))errors.push('part_rise_out_of_range');
+  if(g.gaps.length<c.gaps.count[0]||g.gaps.length>c.gaps.count[1])errors.push('part_gap_count');
+  if(g.gaps.some(([a,b])=>b-a<c.gaps.width[0]||b-a>c.gaps.width[1]))errors.push('part_gap_width');
+  if(c.dualRoute)for(const role of ['runway','catch','landing'])if(!surfaces.some(s=>s.dualRole===role))errors.push('dual_route_missing_'+role);
+ }
+ return errors;
+}
 // Surface flags are independent; tuple slot 5 survives JSON roundtrips.
 function solidSurfaces(surfaces){return surfaces.filter(s=>s.solid!==false)}
 function surfaceFlags(s){return{solid:s.solid!==false,visible:s.visible!==false,surfaceId:s.surfaceId}}
@@ -360,7 +386,7 @@ function buildScene(level,part=1){
   trigger:b2.x0+72,hazard:b2.x0+188,hazardEnd:b2.x1-38,repeatTrigger:b3.x0+58,repeat:b3.x0+196,repeatEnd:b3.x1-32,lastStep:DOCK[0]-78};
  anchors.trap={trigger:anchors.trigger,triggerEnd:anchors.hazardEnd,body:{x:anchors.hazard,y:GROUND-106,w:130,h:106},lane:{x:b2.x0+88,y:GROUND-28,w:260,h:28},platform:{x:b2.x0+150,y:GROUND-188,w:92,h:18},finish:{x:b2.x0+150,y:GROUND-12,w:82,h:12},beam:{x:b2.x0+90,y:GROUND-106,w:210,h:22},repeat:{x:anchors.repeat,y:GROUND-30,w:130,h:30}};
  bindSurfaceModel(surfaces,platforms);
- const out={surfaces,gaps,platforms,anchors,roles};SCENE_CACHE.set(cacheKey,out);return out;
+ const out={surfaces,gaps,platforms,anchors,roles,templatePart:part,templateMode:'legacy'};SCENE_CACHE.set(cacheKey,out);return out;
 }
 function sceneGeometry(level=currentLevel,part=1){return buildScene(level,part)}
 function validateScene(level,part=1){
@@ -373,13 +399,13 @@ function validateScene(level,part=1){
  const shortestPath=(from,to,allowed=()=>true,graph=edges)=>{if(from<0||to<0||!allowed(nodes[from])||!allowed(nodes[to]))return null;const q=[from],seen=new Set([from]),prev=new Map;while(q.length){const n=q.shift();if(n===to){const path=[];for(let p=n;p!==undefined;p=prev.get(p))path.unshift(p);return path}for(const v of graph[n])if(allowed(nodes[v])&&!seen.has(v)){seen.add(v);prev.set(v,n);q.push(v)}}return null};
  const shortest=(a,b)=>shortestPath(a,b)?.length-1??Infinity;
  const toCoin=shortest(start,coin),coinToDock=shortest(coin,dock),minimumJumps=shortest(start,dock),returnFromCoin=shortestPath(coin,start,()=>true,returnEdges);
- if(start>=0&&coin>=0&&!Number.isFinite(toCoin))errors.push('spawn_to_coin:no_path');if(coin>=0&&dock>=0&&!Number.isFinite(coinToDock))errors.push('coin_to_dock:no_path');if(coin>=0&&start>=0&&!returnFromCoin)errors.push('no_return_path_from_coin');if(minimumJumps<6)errors.push(`minimum_jumps:${minimumJumps}<6`);
- const groundOnlyRoute=!!shortestPath(start,dock,n=>n.kind==='ground');if(groundOnlyRoute)errors.push('ground_only_route_exists');
- const route=shortestPath(start,dock)||[],verticalRequired=route.some(i=>nodes[i].kind==='platform'&&GROUND-nodes[i].y>=162);if(!verticalRequired)errors.push('no_vertical_requirement');
- const topRoutePlatforms=route.filter(i=>nodes[i].kind==='platform').length;if(topRoutePlatforms<1)errors.push('route_has_no_platform');if(part!==4&&part!==8)if(TOP_ROUTE_LEVELS.includes(level)&&topRoutePlatforms<3)errors.push(`insufficient_top_route:${topRoutePlatforms}<3`);
+ if(start>=0&&coin>=0&&!Number.isFinite(toCoin))errors.push('spawn_to_coin:no_path');if(coin>=0&&dock>=0&&!Number.isFinite(coinToDock))errors.push('coin_to_dock:no_path');if(coin>=0&&start>=0&&!returnFromCoin)errors.push('no_return_path_from_coin');
+ const groundOnlyRoute=!!shortestPath(start,dock,n=>n.kind==='ground');
+ const design=sceneDesignContract(level,part,g),route=shortestPath(start,dock)||[],verticalRequired=route.some(i=>nodes[i].kind==='platform'&&GROUND-nodes[i].y>=design.requiredRise);
+ const topRoutePlatforms=route.filter(i=>nodes[i].kind==='platform').length;errors.push(...partDesignErrors(level,part,g,{minimumJumps,groundOnlyRoute,verticalRequired,topRoutePlatforms}));
  const groundNodes=nodes.filter(n=>n.kind==='ground'),gapCount=g.gaps.length,nonJumpableGapCount=g.gaps.filter(([x0,x1])=>{const left=groundNodes.find(n=>Math.abs(n.x+n.w-x0)<=1),right=groundNodes.find(n=>Math.abs(n.x-x1)<=1);return!left||!right||!canJump(left,right)}).length,coinDockHeightDifference=coin>=0&&dock>=0?Math.abs(nodes[coin].y-nodes[dock].y):null;
  const launchPads=selectLaunchPads(level,part),launchValidation=[],noPadRoute=Number.isFinite(toCoin)&&Number.isFinite(coinToDock);for(const pad of launchPads){const launchVX=pad.launchVX||900,vy=-520,boostT=pad.distance/launchVX+.12,ballisticFlight=-2*vy/GRAVITY,landingX=pad.box.x+pad.box.w/2+launchVX*ballisticFlight,sourceOk=nodes.some(n=>(n.kind==='ground'||((part===4||part===8)&&n.kind==='platform'))&&pad.box.x>=n.x&&pad.box.x+pad.box.w<=n.x+n.w),avoidable=pad.box.w<=197;if(!sourceOk)errors.push('launch_source_missing');if(!avoidable)errors.push('launch_pad_not_jumpable');if(!noPadRoute)errors.push('launch_pad_blocks_route');if(nodes.find(n=>pad.box.x>=n.x&&pad.box.x+pad.box.w<=n.x+n.w)?.kind==='platform'&&!nodes.some(n=>(n.kind==='ground'||n.kind==='platform')&&landingX>=n.x+12&&landingX<=n.x+n.w-12))errors.push('launch_pad_no_landing');const landingNode=nodes.find(n=>landingX-PW/2<n.x+n.w&&landingX+PW/2>n.x&&Math.abs(n.y-pad.source.y)<=1);launchValidation.push({seed:pad.seed,distance:pad.distance,launchVX,vy,boostT,ballisticFlight,landingX,landingKind:landingNode?.kind||'gap_or_hazard',sourceOk,avoidable,noPadRoute})}
- const dualRouteValidation=[];if(DUAL_ROUTE_LEVELS.includes(level)){const runway=nodes.find(n=>n.dualRole==='runway'),catchSurface=nodes.find(n=>n.dualRole==='catch'),landing=nodes.find(n=>n.dualRole==='landing');if(runway&&landing){const runwayIndex=nodes.indexOf(runway),landingIndex=nodes.indexOf(landing),rise=runway.y-landing.y,effectiveGap=Math.max(0,gapBetween(runway,landing)-PW),baseReachable=canJumpProfile(runway,landing,profiles.base,undefined,false),dualReachable=canJumpProfile(runway,landing,profiles.dual,undefined,false),baseAlternativeJumps=shortestPath(runwayIndex,dock)?.length-1??Infinity,dualShortcutJumps=1+(shortestPath(landingIndex,dock)?.length-1??Infinity),savedJumps=baseAlternativeJumps-dualShortcutJumps,rampSeconds=runway.w/profiles.dual.maxvx,fallSafe=!!catchSurface&&catchSurface.x<=runway.x+runway.w&&catchSurface.x+catchSurface.w>=landing.x+PW;if(baseReachable)errors.push('dual_route_base_reachable');if(!dualReachable)errors.push('dual_route_dual_unreachable');if(savedJumps<2||savedJumps>4)errors.push(`dual_route_savings:${savedJumps}`);if(rampSeconds<2.2)errors.push(`dual_route_runway:${rampSeconds.toFixed(2)}<2.20`);if(!fallSafe)errors.push('dual_route_unsafe_fall');dualRouteValidation.push({rise,effectiveGap,baseReachable,dualReachable,baseAlternativeJumps,dualShortcutJumps,savedJumps,runwayWidth:runway.w,rampSeconds,fallSafe})}}
+ const dualRouteValidation=[];if(DUAL_ROUTE_LEVELS.includes(level)||design.dualRoute||nodes.some(n=>n.dualRole)){const runway=nodes.find(n=>n.dualRole==='runway'),catchSurface=nodes.find(n=>n.dualRole==='catch'),landing=nodes.find(n=>n.dualRole==='landing');if(runway&&landing){const runwayIndex=nodes.indexOf(runway),landingIndex=nodes.indexOf(landing),rise=runway.y-landing.y,effectiveGap=Math.max(0,gapBetween(runway,landing)-PW),baseReachable=canJumpProfile(runway,landing,profiles.base,undefined,false),dualReachable=canJumpProfile(runway,landing,profiles.dual,undefined,false),baseAlternativeJumps=shortestPath(runwayIndex,dock)?.length-1??Infinity,dualShortcutJumps=1+(shortestPath(landingIndex,dock)?.length-1??Infinity),savedJumps=baseAlternativeJumps-dualShortcutJumps,rampSeconds=runway.w/profiles.dual.maxvx,fallSafe=!!catchSurface&&catchSurface.x<=runway.x+runway.w&&catchSurface.x+catchSurface.w>=landing.x+PW;if(baseReachable)errors.push('dual_route_base_reachable');if(!dualReachable)errors.push('dual_route_dual_unreachable');if(savedJumps<2||savedJumps>4)errors.push(`dual_route_savings:${savedJumps}`);if(rampSeconds<2.2)errors.push(`dual_route_runway:${rampSeconds.toFixed(2)}<2.20`);if(!fallSafe)errors.push('dual_route_unsafe_fall');dualRouteValidation.push({rise,effectiveGap,baseReachable,dualReachable,baseAlternativeJumps,dualShortcutJumps,savedJumps,runwayWidth:runway.w,rampSeconds,fallSafe})}}
  const enemies=selectEnemies(level,part),{baselineEnemyCount,baselineCrates,targetCrates}=enemyTargets(level),actualEnemyCount=enemies.length,actualCrates=enemies.filter(e=>e.type==='crate').length;errors.push(...enemyValidationErrors(level,enemies,g,part));if(part!==4&&part!==8)if(actualEnemyCount<2||actualEnemyCount>baselineEnemyCount||actualCrates>targetCrates)errors.push('enemy_crate_cap');if(enemies.selectionError)errors.push(enemies.selectionError);
  // Analytic constants are deliberately retained in the report for auditability.
  return{level,errors,minimumJumps,toCoin,coinToDock,returnFromCoin:!!returnFromCoin,groundOnlyRoute,verticalRequired,topRoutePlatforms,gapCount,nonJumpableGapCount,coinDockHeightDifference,baselineEnemyCount,actualEnemyCount,baselineCrates,targetCrates,actualCrates,launchPads:launchValidation,dualRoutes:dualRouteValidation,physics:{base:{vy0:-profiles.base.vy0,maxvx:profiles.base.maxvx},dual:{vy0:-profiles.dual.vy0,maxvx:profiles.dual.maxvx},g:GRAVITY,playerWidth:PW}};
