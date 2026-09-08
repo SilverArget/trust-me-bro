@@ -1,3 +1,7 @@
+// Usage: node 03-test/phase4-verify.cjs WORKTREE|git-ref [--summary]
+// Full JSON reports all 310 pairs. Pending pairs are measured, not gated.
+// Rise overlap = intersection / union; zero-width identical ranges = 1.
+// X distance pairs sorted solid-surface centers up to the shorter list; count difference is separate.
 ﻿const fs=require('node:fs'),assert=require('node:assert/strict');
 const {load,source,projection}=require('./phase3-verify.cjs');
 const ref=process.argv[2]||'WORKTREE',base=load(source('6124922')),game=load(source(ref));
@@ -8,6 +12,11 @@ function pairs(data){const out=[];for(let l=1;l<=31;l++){const a=data.filter(s=>
 const all=pairs(JSON.parse(game(stats))),required=all.filter(r=>r.status==='required'),errors=JSON.parse(game('JSON.stringify(validateAllScenes().filter(r=>r.errors.length).map(r=>({scene:r.level+"."+r.part,errors:r.errors})))'));
 const air=rows.filter(r=>r.scene.endsWith('.4')).filter(r=>JSON.stringify(r)!==JSON.stringify(old.find(o=>o.scene===r.scene)));
 const theme=`JSON.stringify({regions:REGIONS,scenes:SCENES,archetypes:Object.fromEntries(Object.entries(SCENE_ARCHETYPES).map(([k,v])=>[k,[...v]]))})`;
-const report={ref,active,measured:all.length,required:required.length,passed:required.filter(r=>r.pass).length,pending:all.length-required.length,validatorErrors:errors,part4Equal:31-air.length,themeEqual:game(theme)===base(theme),baseline12_13:pairs(JSON.parse(base(stats))).find(r=>r.scene===1&&r.parts.join()=='2,3'),current12_13:all.find(r=>r.scene===1&&r.parts.join()=='2,3'),fallbacks:[],pairs:all};
-console.log(JSON.stringify({...report,pairs:process.argv.includes('--details')?all:undefined},null,2));
+const protectedFunctions=['validateScene','enemyValidationErrors','updateRageLayer','kill','ragePatterns'];
+for(const f of protectedFunctions)assert.equal(game(f+'.toString()').replace(/\r\n/g,'\n'),base(f+'.toString()').replace(/\r\n/g,'\n'),'Protected function changed: '+f);
+for(let l=1;l<=31;l++)assert.equal(game('JSON.stringify(selectLaunchPads('+l+',4))'),base('JSON.stringify(selectLaunchPads('+l+',4))'),'Part4 pads changed: '+l);
+assert.deepEqual(active,[1,2,3,5,6].slice(0,active.length));
+for(const p of active)assert.equal(game('buildScene(1,'+p+').templateMode'),'target');
+const report={ref,active,protectedFunctions:'unchanged',part4PadsEqual:31,previousReportedBaselineMeanX:24,measured:all.length,required:required.length,passed:required.filter(r=>r.pass).length,pending:all.length-required.length,validatorErrors:errors,part4Equal:31-air.length,themeEqual:game(theme)===base(theme),baseline12_13:pairs(JSON.parse(base(stats))).find(r=>r.scene===1&&r.parts.join()=='2,3'),current12_13:all.find(r=>r.scene===1&&r.parts.join()=='2,3'),fallbacks:[],failedPairs:required.filter(r=>!r.pass).map(r=>r.scene+':'+r.parts.join('-')),pairs:all};
+console.log(JSON.stringify({...report,pairs:process.argv.includes('--summary')?undefined:all},null,2));
 assert.equal(all.length,310);assert.equal(report.passed,required.length);assert.equal(errors.length,0);assert.equal(air.length,0);assert(report.themeEqual);
