@@ -1,4 +1,5 @@
 // Usage: node 03-test/phase3-verify.cjs [baseline git ref] [candidate git ref|WORKTREE]
+// Add --geometry-only to skip Phase 3 fixtures in later phases.
 // No browser, network, real storage or media output. Exit 1 on any failed gate.
 const fs=require('node:fs'),path=require('node:path'),vm=require('node:vm');
 const {execFileSync}=require('node:child_process');
@@ -89,7 +90,7 @@ const reports=JSON.parse(after('JSON.stringify(validateAllScenes())'));
 const validatorErrors=reports.filter(r=>r.errors.length).map(r=>({scene:r.level+'.'+r.part,errors:r.errors}));
 const result={baseline,candidate,scenes:b.length,geometryEqual:b.length-geometryDifferences.length,geometryDifferences,validatorErrors,syntax:'passed'};
 
-if(after('typeof bindSurfaceModel')==='function'){
+if(!process.argv.includes('--geometry-only')&&after('typeof bindSurfaceModel')==='function'){
  after(String.raw`(()=>{
   // Four independent states, stable IDs after filtering, and JSON persistence.
   const surfaces=[0,1,2,3].map((i)=>({x:i*100,y:GROUND-80,w:70,h:18,kind:'platform',beat:0,solid:i>=2,visible:i%2===1}));
@@ -119,11 +120,14 @@ if(after('typeof bindSurfaceModel')==='function'){
   SCENE_CACHE.set(key,original);const enemies=selectEnemies(1,1),fixture=JSON.parse(JSON.stringify(original));
   const first=fixture.surfaces.slice().sort((a,b)=>a.surfaceId-b.surfaceId).find(s=>!enemies.some(e=>e.surf.surfaceId===s.surfaceId));first.solid=false;
   assert(!enemyValidationErrors(1,enemies,fixture,1).includes('enemy_surface_mismatch'));
+  const occupied=fixture.surfaces.find(s=>s.surfaceId===enemies[0].surf.surfaceId);occupied.solid=false;
+  const invalidEnemy={...enemies[0],fake:true};
+  assert(enemyValidationErrors(1,[invalidEnemy],fixture,1).includes('enemy_surface_mismatch'));
   SCENE_CACHE.set(key,original);cachedGeometryLevel=0;resetScene(false);
  })()`);
  result.surfaceFixtures='passed';
 }
-if(after('typeof PART_TEMPLATES')!=='undefined'){
+if(!process.argv.includes('--geometry-only')&&after('typeof PART_TEMPLATES')!=='undefined'){
  assert.equal(after('JSON.stringify(validateAllScenes())'),before('JSON.stringify(validateAllScenes())'),'Legacy validator reports changed');
  after(String.raw`(()=>{
   for(let part=1;part<=6;part++){
@@ -156,6 +160,34 @@ if(after('typeof PART_TEMPLATES')!=='undefined'){
   SCENE_CACHE.set(key,original);
  })()`);
  result.partContractFixtures='6/6 positive and negative fixtures passed; legacy reports unchanged; safety active in both modes';
+}
+if(!process.argv.includes('--geometry-only')&&after('updateRageLayer.toString().includes("buildScene(sc.level,currentPart)")')){
+ result.hunter=JSON.parse(after(String.raw`(()=>{
+  let tested=0,differentFromPart1=0;const examples=[];
+  const originalAnchor=anchorRageSpike;
+  for(let l=1;l<=SCENE_COUNT;l++)for(let p=1;p<=PART_COUNT;p++){
+   currentLevel=l;currentPart=p;dead=false;won=false;upgradePending=false;resetScene(false);spawnGrace=2;
+   const sc=scene(),st=sc.start,dt=.016,g=buildScene(l,p),p1=buildScene(l,1);
+   // Pick a location that exposes the old part1 lookup whenever geometry differs.
+   let x=900;
+   for(let probe=400;probe<=2000;probe+=25){
+    const a=originalAnchor(g.surfaces,st,st+probe,30,30),b=originalAnchor(p1.surfaces,st,st+probe,30,30);
+    if(JSON.stringify(a)!==JSON.stringify(b)){x=probe;break;}
+   }
+   const H=rt.rage.hunter;H.state=2;H.x=st+x-920*dt*dt;H.vx=0;H.t=0;rt.rage.patterns=['hunter'];
+   collected.add(l*16+p);player.x=H.x+200;player.y=0;
+   const expected=originalAnchor(g.surfaces,st,st+x,H.w,H.h),legacy=originalAnchor(p1.surfaces,st,st+x,H.w,H.h);
+   let calls=0;anchorRageSpike=(surfaces,...args)=>{assert.equal(surfaces,g.surfaces,'Wrong hunter surfaces '+l+'.'+p);calls++;return originalAnchor(surfaces,...args)};
+   updateRageLayer(dt);anchorRageSpike=originalAnchor;
+   assert.equal(calls,1);assert(Math.abs(H.x-expected.x)<1e-8);assert.equal(H.y,expected.y);assert.equal(H.enabled,expected.enabled);
+   if(JSON.stringify(expected)!==JSON.stringify(legacy)){differentFromPart1++;if(examples.length<4)examples.push(l+'.'+p);}
+   assert.equal(JSON.stringify(enemyValidationErrors(l,selectEnemies(l,p),undefined,p)),JSON.stringify(enemyValidationErrors(l,selectEnemies(l,p),g,p)));
+   assert.equal(JSON.stringify(coinPos()),JSON.stringify(coinPos(sc,p)));
+   tested++;
+  }
+  assert(differentFromPart1>0,'Hunter regression fixture does not expose old bug');
+  return JSON.stringify({tested,differentFromPart1,examples,defaultEnemyGeometry:'186/186 equal to explicit part'});
+ })()`));
 }
 console.log(JSON.stringify(result,null,2));
 if(geometryDifferences.length||validatorErrors.length)process.exitCode=1;
