@@ -344,9 +344,20 @@ function bindSurfaceModel(surfaces,platforms){
 }
 const SCENE_CACHE=new Map();
 const SCENE_ARCHETYPES={ground:new Set([1,2,3,4,5,7,9,12,14,19]),mixed:new Set([6,10,11,13,15,17,20,22,24,26,28]),air:new Set([8,16,18,21,23,25,27,29,30,31])};
+const ACTIVE_PART_TEMPLATES=[1];
+function buildPartTemplate(level,part){
+ const c=PART_TEMPLATES[part],gaps=[],surfaces=[],platforms=[];
+ const add=(x,rise,w,route=true,dualRole)=>{const bi=Math.max(0,Math.min(3,Math.floor((x-180)/495)));platforms.push([x,-rise,w,bi,'part-'+part]);surfaces.push({x,y:GROUND-rise,w,h:18,beat:bi,kind:'platform',route,...(dualRole?{dualRole}:{})})};
+ if(part===1){gaps.push([650,790]);if(level%2===0)gaps.push([1450,1590]);for(const x of [440,900,1200,1680,1930])add(x,70+(level%3)*20,100);}
+ let cursor=0;for(const [a,b] of gaps){if(a>cursor)surfaces.push({x:cursor,y:GROUND,w:a-cursor,h:100,beat:0,kind:'ground'});cursor=b}if(cursor<SCENE_W)surfaces.push({x:cursor,y:GROUND,w:SCENE_W-cursor,h:100,beat:3,kind:'ground'});
+ const b2=beat(2),b3=beat(3),anchors={spawn:66,coin:1660,dock:DOCK[0],intro:beat(0),trial:beat(1),betrayal:b2,mastery:b3,trigger:1242,hazard:1358,hazardEnd:1627,repeatTrigger:1723,repeat:1861,repeatEnd:2128,lastStep:DOCK[0]-78};
+ anchors.trap={trigger:anchors.trigger,triggerEnd:anchors.hazardEnd,body:{x:anchors.hazard,y:GROUND-106,w:130,h:106},lane:{x:1258,y:GROUND-28,w:260,h:28},platform:{x:1320,y:GROUND-188,w:92,h:18},finish:{x:1320,y:GROUND-12,w:82,h:12},beam:{x:1260,y:GROUND-106,w:210,h:22},repeat:{x:anchors.repeat,y:GROUND-30,w:130,h:30}};
+ bindSurfaceModel(surfaces,platforms);return{surfaces,gaps,platforms,anchors,roles:['intro','trial','betrayal','mastery'],templatePart:part,templateMode:'target'};
+}
 function buildScene(level,part=1){
  const cacheKey=level*16+part;
  if(SCENE_CACHE.has(cacheKey))return SCENE_CACHE.get(cacheKey);
+ if(ACTIVE_PART_TEMPLATES.includes(part)){const out=buildPartTemplate(level,part);SCENE_CACHE.set(cacheKey,out);return out;}
  const gaps=[],surfaces=[],platforms=[],roles=['intro','trial','betrayal','mastery'],archetype=(part===4||part===8)?'air':SCENE_ARCHETYPES.air.has(level)?'air':SCENE_ARCHETYPES.mixed.has(level)?'mixed':'ground';
  const tempo=[104,116,128][level%3],phase=(level*37)%53;
  if(archetype!=='air')for(let bi=0;bi<4;bi++){

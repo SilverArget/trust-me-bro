@@ -82,6 +82,8 @@ const projection=String.raw`(()=>{
  }
  return JSON.stringify(rows);
 })()`;
+module.exports={load,source,projection};
+if(require.main===module){
 const before=load(source(baseline)),after=load(source(candidate));
 const a=JSON.parse(before(projection)),b=JSON.parse(after(projection));
 assert.equal(a.length,b.length,'Scene count differs');
@@ -191,3 +193,5 @@ if(!process.argv.includes('--geometry-only')&&after('updateRageLayer.toString().
 }
 console.log(JSON.stringify(result,null,2));
 if(geometryDifferences.length||validatorErrors.length)process.exitCode=1;
+
+}
