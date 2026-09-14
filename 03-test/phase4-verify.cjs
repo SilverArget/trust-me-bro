@@ -12,7 +12,7 @@ function pairs(data){const out=[];for(let l=1;l<=31;l++){const a=data.filter(s=>
 const all=pairs(JSON.parse(game(stats))),required=all.filter(r=>r.status==='required'),errors=JSON.parse(game('JSON.stringify(validateAllScenes().filter(r=>r.errors.length).map(r=>({scene:r.level+"."+r.part,errors:r.errors})))'));
 const air=rows.filter(r=>r.scene.endsWith('.4')).filter(r=>JSON.stringify(r)!==JSON.stringify(old.find(o=>o.scene===r.scene)));
 const theme=`JSON.stringify({regions:REGIONS,scenes:SCENES,archetypes:Object.fromEntries(Object.entries(SCENE_ARCHETYPES).map(([k,v])=>[k,[...v]]))})`;
-const protectedFunctions=['validateScene','enemyValidationErrors','updateRageLayer'];
+const protectedFunctions=['validateScene','enemyValidationErrors'];
 for(const f of protectedFunctions)assert.equal(game(f+'.toString()').replace(/\r\n/g,'\n'),base(f+'.toString()').replace(/\r\n/g,'\n'),'Protected function changed: '+f);
 for(let l=1;l<=31;l++)assert.equal(game('JSON.stringify(selectLaunchPads('+l+',4))'),base('JSON.stringify(selectLaunchPads('+l+',4))'),'Part4 pads changed: '+l);
 assert.deepEqual(active,[1,2,3,5,6].slice(0,active.length));

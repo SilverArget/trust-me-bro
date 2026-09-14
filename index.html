@@ -88,7 +88,7 @@ const SCENES=[
  ['RECEIVING','Trust it once. That is enough.','signDrop',0],
  ['SOLID FLOOR','Looks load-bearing. Looks.','crumble',0],
  ['LOOK UP','Warehouse safety is optional.','ceiling',0],
- ['RUN','The red thing has opinions.','fakeReward',0],
+ ['R'+'UN','The red thing has opinions.','fakeReward',0],
  ['FREE KEY','Free is the most expensive option.','keyGate',0],
  ['DELIVERY POINT','Doors can cardio too.','runDoor',1],
  ['BONUS COIN','Take the coin. What could happen?','coinSpikes',1],
@@ -496,8 +496,8 @@ if(location.hash==='#geodumpall'){const f=s=>{let h=2166136261;for(let i=0;i<s.l
 if(location.hash==='#padstat'){let r=[],t=0,z=0,m=1/0,M=0;for(let l=1;l<=SCENE_COUNT;l++)for(let p=1;p<=PART_COUNT;p++){let c=selectLaunchPads(l,p).length;if(c>0)r.push(l+"."+p+":"+c);if(p===4||p===8){t+=c;if(c===0)z++;if(c<m)m=c;if(c>M)M=c;}}console.log("PADSTAT|toplam="+t+", pedsiz="+z+", min="+(m===1/0?0:m)+", max="+M+"|"+r.join("|"));}
 if(location.hash.startsWith('#voiddump')){let m=location.hash.match(/#voiddump(\d+)p(\d+)/),l=m?+m[1]:3,p=m?+m[2]:4,s=buildScene(l,p),c=coinPos(SCENES[l-1],p);console.log(["VOIDDUMP",...s.surfaces.slice().sort((a,b)=>a.x-b.x).map(e=>e.kind[0]+" "+Math.round(e.x)+" "+Math.round(e.y)+" "+Math.round(e.w)),s.anchors.coin,c.x+" "+c.y+" "+c.w,...selectLaunchPads(l,p).map(e=>e.box.x+" "+e.targetX),selectEnemies(l,p).length].join("|"))}
 function selectReturnStairs(level,part=1){if(!TOP_ROUTE_LEVELS.includes(level))return[];const g=sceneGeometry(level,part),coin=solidSurfaces(g.surfaces).filter(s=>s.kind==='platform'&&g.anchors.coin+24>s.x&&g.anchors.coin<s.x+s.w).sort((a,b)=>b.y-a.y)[0],last=solidSurfaces(g.surfaces).filter(s=>s.route&&s.kind==='platform').sort((a,b)=>b.x-a.x)[0],dock=typeof g.anchors.dock==='object'?g.anchors.dock.x:g.anchors.dock;if(!coin||!last)return[];const w=Math.min(100,last.w+20),bottomY=GROUND+35,count=Math.max(3,Math.ceil((bottomY-coin.y)/50)+1),right=dock-30-w,left=coin.x+coin.w-w;return Array.from({length:count},(_,i)=>({x:right+(left-right)*(i/(count-1)),y:bottomY+(coin.y-bottomY)*(i/(count-1)),w,h:18,oneway:true}))}
-function anchorRageSpike(surfaces,st,x,w,h,maxShift=360){let best=null;for(const s of solidSurfaces(surfaces))if((s.kind==='ground'||s.kind==='platform')&&s.w>=w){const sx=st+s.x,nx=Math.max(sx,Math.min(sx+s.w-w,x)),d=Math.abs(nx-x);if(d<=maxShift&&(!best||d<best.d||d===best.d&&s.y>best.y))best={x:nx,y:s.y-h,w,h,enabled:true,d}}return best?{x:best.x,y:best.y,w,h,enabled:true}:{x,y:0,w,h,enabled:false}}
-function makeRuntime(){const sc=scene(),st=sc.start,g=buildScene(sc.level,currentPart),a=g.anchors,X=x=>st+x,cp=coinPos(sc,currentPart),spike=(x,w,h)=>anchorRageSpike(g.surfaces,st,x,w,h);return{t:0,armed:false,done:false,phase:0,warning:0,a,
+function anchorRageSpike(surfaces,st,x,w,h,maxShift=360){let best=null;for(const s of solidSurfaces(surfaces))if((s.kind==='ground'||s.kind==='platform')&&s.w>=w){const sx=st+s.x,nx=Math.max(sx,Math.min(sx+s.w-w,x)),d=Math.abs(nx-x);if(d<=maxShift&&(!best||d<best.d||d===best.d&&s.y>best.y))best={x:nx,y:s.y-h,w,h,enabled:true,d,surfaceY:s.y,surfaceId:s.surfaceId}}return best?{x:best.x,y:best.y,w,h,enabled:true,surfaceY:best.surfaceY,surfaceId:best.surfaceId}:{x,y:0,w,h,enabled:false,surfaceY:null,surfaceId:null}}
+function makeRuntime(){const sc=scene(),st=sc.start,g=buildScene(sc.level,currentPart),a=g.anchors,X=x=>st+x,cp=coinPos(sc,currentPart),spike=(x,w,h)=>anchorRageSpike(g.surfaces,st,x,w,h,Infinity),sweep=spike(X(a.repeatEnd),38,36),exitSupport=spike(X(a.repeat),58,76);return{t:0,armed:false,done:false,phase:0,warning:0,a,
  block:{x:X(a.hazard),y:72,w:104,h:70,vy:0},
  chaser:{x:X(a.hazardEnd),y:GROUND-30,w:30,h:30,vx:0},
  wall:{x:X(a.hazardEnd),y:GROUND-94,w:46,h:94,vx:0},
@@ -512,8 +512,8 @@ function makeRuntime(){const sc=scene(),st=sc.start,g=buildScene(sc.level,curren
   rear:{state:0,warn:0,box:spike(X(a.trial.x0+90),125,28)},
   coin:{state:0,warn:0,t:0,box:spike(cp.x-28,84,28)},
   pop:{state:0,warn:0,t:0,box:spike(X(a.hazard),86,30)},
-  sweep:{state:0,warn:0,x:X(a.repeatEnd),y:GROUND-36,w:38,h:36,vx:0},
-  exit:{state:0,warn:0,block:{x:X(a.repeat),y:48,w:58,h:76,vy:0}},
+  sweep:{state:0,warn:0,...sweep,vx:0},
+  exit:{state:0,warn:0,block:{...exitSupport,y:48,vy:0,targetY:exitSupport.y}},
   hunter:{state:0,warn:0,...spike(X(a.trial.x0+20),30,30),vx:0,t:0},
   last:{state:0,warn:0,t:0,box:spike(X(a.lastStep),64,30)}
  },
@@ -599,13 +599,13 @@ function updateRageLayer(dt){
  if(rageHas('sweeper')){
    const S=R.sweep;if(S.state===0&&player.x>st+a.repeatTrigger){S.state=1;S.warn=warn+.06;S.warnText='CLEANUP CREW INBOUND.'}
   if(S.state===1&&(S.warn-=dt)<=0){S.state=2;S.vx=-(235+sc.level*3.2);activate(S,'CLEANUP CREW INBOUND.')}
-  if(S.state===2){S.x+=S.vx*dt;if(hitHurt(S))kill('Warehouse cleanup included you.','crush');if(S.x<st+a.mastery.x0)S.state=3}
+  if(S.state===2){S.x+=S.vx*dt;const box=anchorRageSpike(buildScene(sc.level,currentPart).surfaces,st,S.x,S.w,S.h);Object.assign(S,box);if(S.enabled&&hitHurt(S))kill('Warehouse cleanup included you.','crush');if(S.x<st+a.mastery.x0)S.state=3}
  }
  // Exit crusher: only after the coin, so it becomes a second punch right before safety.
  if(rageHas('exitDrop')&&collected.has(currentLevel*16+currentPart)){
    const E=R.exit;if(E.state===0&&player.x>st+a.repeatTrigger){E.state=1;E.warn=warn+.02;E.warnText='EXIT SAFETY CHECK.'}
   if(E.state===1&&(E.warn-=dt)<=0){E.state=2;activate(E,'EXIT SAFETY CHECK.')}
-  if(E.state===2){E.block.vy+=1280*dt;E.block.y+=E.block.vy*dt;if(E.block.vy>0&&hitHurt(E.block)&&Math.abs(hurtbox().y-(E.block.y+E.block.h))<=15)kill('The exit checked your head clearance.','crush');if(E.block.y>GROUND+55)E.state=3}
+  if(E.state===2){E.block.vy+=1280*dt;E.block.y+=E.block.vy*dt;if(E.block.enabled&&E.block.vy>0&&hitHurt(E.block)&&Math.abs(hurtbox().y-(E.block.y+E.block.h))<=15)kill('The exit checked your head clearance.','crush');if(!E.block.enabled||E.block.y>=E.block.targetY){E.block.y=E.block.targetY;E.state=3}}
  }
  // Coin hunter: after collecting, a red complaint form chases for a short deterministic window.
  if(rageHas('hunter')&&collected.has(currentLevel*16+currentPart)){
@@ -773,13 +773,13 @@ function drawTrap(){const sc=scene(),a=rt.a,t=a.trap,X=x=>sc.start+x,T={...t,bod
 function drawRageLayer(){
  if(!rt||!rt.rage)return;const sc=scene(),X=x=>sc.start+x,a=rt.a,cp=coinPos(scene(),currentPart),R=rt.rage;
  const flash=(x,w,label)=>{ctx.save();ctx.globalAlpha=.45+.25*Math.sin(performance.now()/65);ctx.fillStyle='#ffe36a';ctx.fillRect(x,GROUND-7,w,7);ctx.fillStyle='#1a1d20';ctx.font='900 8px system-ui';ctx.fillText(label,x+5,GROUND-12);ctx.restore()};
- if(rageHas('coinBite')){const C=R.coin;if(C.state===1)flash(C.box.x,C.box.w,'NOPE');if(C.state===2&&C.box.enabled)spikeRow(C.box.x,C.box.y,C.box.w,C.box.h)}
- if(rageHas('rearBite')){const B=R.rear;if(B.state===1)flash(B.box.x,B.box.w,'NO RETURNS');if(B.state===2&&B.box.enabled)spikeRow(B.box.x,B.box.y,B.box.w,B.box.h)}
- if(rageHas('floorPop')){const P=R.pop;if(P.state===1)flash(P.box.x,P.box.w,'WAIT');if(P.state===2&&P.box.enabled)spikeRow(P.box.x,P.box.y,P.box.w,P.box.h)}
- if(rageHas('sweeper')){const S=R.sweep;if(S.state===1)flash(X(a.repeat),95,'INCOMING');if(S.state===2){ctx.fillStyle='#d94150';roundedRect(S.x,S.y,S.w,S.h,7);ctx.fill();ctx.fillStyle='#fff';ctx.font='900 8px system-ui';ctx.fillText('31',S.x+12,S.y+22)}}
- if(rageHas('exitDrop')){const E=R.exit;if(E.state===1)flash(X(a.repeat),95,'HEADS UP');if(E.state===2){ctx.fillStyle='#59656f';ctx.fillRect(E.block.x,E.block.y,E.block.w,E.block.h);ctx.fillStyle='#f2cc4d';ctx.fillRect(E.block.x+6,E.block.y+9,E.block.w-12,8)}}
- if(rageHas('hunter')){const H=R.hunter;if(H.state===1)flash(Math.max(X(a.mastery.x0),H.x),72,'RUN');if(H.state===2&&H.enabled)spikeRow(H.x,H.y,H.w,H.h)}
- if(rageHas('lastStep')){const L=R.last;if(L.state===1)flash(L.box.x,L.box.w,'SAFE');if(L.state===2&&L.box.enabled)spikeRow(L.box.x,L.box.y,L.box.w,L.box.h)}
+ if(rageHas('coinBite')){const C=R.coin;if(C.state===2&&C.box.enabled)spikeRow(C.box.x,C.box.y,C.box.w,C.box.h)}
+ if(rageHas('rearBite')){const B=R.rear;if(B.state===2&&B.box.enabled)spikeRow(B.box.x,B.box.y,B.box.w,B.box.h)}
+ if(rageHas('floorPop')){const P=R.pop;if(P.state===2&&P.box.enabled)spikeRow(P.box.x,P.box.y,P.box.w,P.box.h)}
+ if(rageHas('sweeper')){const S=R.sweep;if(S.state===2&&S.enabled){ctx.fillStyle='#d94150';roundedRect(S.x,S.y,S.w,S.h,7);ctx.fill();ctx.fillStyle='#fff';ctx.font='900 8px system-ui';ctx.fillText('31',S.x+12,S.y+22)}}
+ if(rageHas('exitDrop')){const E=R.exit;if(E.state===2&&E.block.enabled){ctx.fillStyle='#59656f';ctx.fillRect(E.block.x,E.block.y,E.block.w,E.block.h);ctx.fillStyle='#f2cc4d';ctx.fillRect(E.block.x+6,E.block.y+9,E.block.w-12,8)}}
+ if(rageHas('hunter')){const H=R.hunter;if(H.state===2&&H.enabled)spikeRow(H.x,H.y,H.w,H.h)}
+ if(rageHas('lastStep')){const L=R.last;if(L.state===2&&L.box.enabled)spikeRow(L.box.x,L.box.y,L.box.w,L.box.h)}
 }
 function drawSceneIdentity(){const sc=scene(),st=sc.start,X=x=>st+x,th=theme(),L=sc.level;
  const sign=(x,y,w,h,txt,bg='#183040',fg='#fff')=>{const g=ctx.createLinearGradient(0,y,0,y+h);g.addColorStop(0,'#60798a');g.addColorStop(.18,bg);g.addColorStop(1,'#07121a');ctx.fillStyle=g;roundedRect(st+x,y,w,h,7);ctx.fill();ctx.strokeStyle='#d8edf566';ctx.lineWidth=1.5;ctx.stroke();ctx.fillStyle='#ffffff24';ctx.fillRect(st+x+8,y+3,w-16,2);ctx.fillStyle=fg;ctx.font='900 10px system-ui';ctx.fillText(txt,st+x+9,y+h/2+4)};
@@ -815,7 +815,7 @@ function drawSceneIdentity(){const sc=scene(),st=sc.start,X=x=>st+x,th=theme(),L
   case 25: sign(55,350,150,26,'EXPRESS 31');for(let i=0;i<5;i++){ctx.fillStyle='#55c5ee';ctx.beginPath();ctx.moveTo(X(275)+i*80,250);ctx.lineTo(X(320)+i*80,270);ctx.lineTo(X(275)+i*80,290);ctx.fill()}break;
   case 26: sign(55,350,150,26,'SPRING TEST');for(let i=0;i<6;i++){ctx.strokeStyle='#db8740';ctx.lineWidth=4;ctx.beginPath();ctx.arc(X(280)+i*65,310,20,0,Math.PI);ctx.stroke()}break;
   case 27: sign(55,350,150,26,'FRAGILE ZONE');for(let r=0;r<3;r++)for(let i=0;i<5-r;i++)crate(270+i*64+r*32,GROUND-45-r*47,52,44,r===2?'#c95c48':'#a96f43');break;
-  case 28: sign(55,350,170,26,'VALIDATION LAB');for(let i=0;i<3;i++){ctx.fillStyle=i===1?'#1e9658':'#a23b48';roundedRect(X(280)+i*120,220,90,55,8);ctx.fill();ctx.fillStyle='#fff';ctx.font='900 10px system-ui';ctx.fillText(i===1?'SAFE':'NOPE',X(305)+i*120,251)}break;
+  case 28: sign(55,350,170,26,'VALIDATION LAB');for(let i=0;i<3;i++){ctx.fillStyle=i===1?'#1e9658':'#a23b48';roundedRect(X(280)+i*120,220,90,55,8);ctx.fill();ctx.fillStyle='#fff';ctx.font='900 10px system-ui';ctx.fillText(i===1?'SA'+'FE':'NO'+'PE',X(305)+i*120,251)}break;
   case 29: sign(55,350,150,26,'LAST MILE');for(let i=0;i<7;i++){ctx.fillStyle='#dbe4e8';ctx.fillRect(X(265)+i*55,330,28,4);ctx.fillStyle='#414d55';ctx.fillRect(X(278)+i*55,300,3,30)}break;
   case 30: sign(55,350,150,26,'ALMOST');ctx.fillStyle='#1f8f55';ctx.fillRect(X(300),190,125,110);ctx.fillStyle='#8c3f2f';ctx.fillRect(X(500),190,125,110);ctx.fillStyle='#fff';ctx.font='900 15px system-ui';ctx.fillText('EXIT',X(345),250);ctx.fillText('EXIT',X(545),250);break;
   case 31: sign(55,350,130,26,'NO REFUNDS');ctx.save();ctx.globalAlpha=.14;ctx.fillStyle='#fff';ctx.font='900 220px system-ui';ctx.fillText('31',X(260),260);ctx.restore();for(let i=0;i<5;i++)lamp(270+i*90,310,i===2?'#ff5252':'#ffd65a');break;

@@ -20,6 +20,10 @@ game(`dead=won=false;spawnGrace=0;kill();assert.equal(toast,'Delivery failed. Pe
 assert.equal(game(projection),base(projection),'Geometries/enemies changed');
 const errors=JSON.parse(game('JSON.stringify(validateAllScenes().filter(r=>r.errors.length).map(r=>({scene:r.level+"."+r.part,errors:r.errors})))'));
 assert.equal(errors.length,0);
+const honest=['INCOMING','RUN','HEADS UP','WAIT','SAFE','NOPE','NO RETURNS'];
+const deceptive=['FREE KEY. TOTALLY FREE.','CHECKPOINT APPROVED.','DELIVERY POINT RELOCATING.','SCENE 31. NO REFUNDS.','SPEED CHECK.','WEATHER ALERT.','OVERHEAD POLICY.','RED OBJECT HAS LOCKED ON.'];
+for(const text of honest)assert(!new RegExp("['\\\"]"+text+"['\\\"]").test(html),'Honest telegraph remains: '+text);
+for(const text of deceptive)assert(html.includes("'"+text+"'")||html.includes('"'+text+'"'),'Deceptive text missing: '+text);
 console.log(JSON.stringify({ref,killCallSites:calls.length,messageCases:cases,missingMessages,deathToast:'draw mock: every message rendered despite later toast; 1600ms hold; first death wins',geometryEqual:186,validatorErrors:errors,calls},null,2));
 if(html.includes('const RAGE_PARTS=')){
  const routing=JSON.parse(game(`(()=>{
@@ -36,4 +40,15 @@ if(html.includes('const RAGE_PARTS=')){
  return JSON.stringify({deterministic:186,min:Math.min(...unique),max:Math.max(...unique),violations,fallbacks:[...RAGE_FALLBACKS.keys()],families,rows});
  })()`));
  console.log(JSON.stringify({routing},null,2));
+ const trapGeometry=JSON.parse(game(`(()=>{
+ const failures=[],counts=Object.fromEntries(RAGE_POOL.map(name=>[name,0]));
+ const supported=(box,surfaces,st)=>box&&box.enabled&&surfaces.some(s=>(s.kind==='ground'||s.kind==='platform')&&box.x+box.w>st+s.x&&box.x<st+s.x+s.w&&Math.abs(box.y+box.h-s.y)<.001);
+ for(let l=1;l<=31;l++)for(let p=1;p<=6;p++){
+  currentLevel=l;currentPart=p;const sc=scene(),st=sc.start,g=buildScene(l,p);rt=makeRuntime();
+  for(const name of rt.rage.patterns){counts[name]++;const R=rt.rage,box=name==='coinBite'?R.coin.box:name==='rearBite'?R.rear.box:name==='floorPop'?R.pop.box:name==='sweeper'?R.sweep:name==='exitDrop'?{...R.exit.block,y:R.exit.block.targetY}:name==='hunter'?R.hunter:R.last.box;if(!supported(box,solidSurfaces(g.surfaces),st))failures.push({scene:l+'.'+p,name,box});}
+ }
+  assert.equal(failures.length,0,JSON.stringify(failures));assert(Object.values(counts).every(Boolean));
+ return JSON.stringify({scenes:186,failures,counts});
+ })()`));
+ console.log(JSON.stringify({trapGeometry,honestTelegraphsRemoved:honest,deceptiveTextsRetained:deceptive,deathDeadlineMs:1600},null,2));
 }
