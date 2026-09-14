@@ -23,6 +23,8 @@ canvas{display:block;width:100vw;height:100vh;height:100dvh;touch-action:none;-w
 #jumpWrap{right:max(22px,calc(env(safe-area-inset-right) + 22px))}
 #jumpWrap button{width:112px;height:112px;border-radius:50%;border:1.5px solid #ffffffa8;background:#0e1d2bbd;color:#fff;font-size:36px;font-weight:950;-webkit-user-select:none;user-select:none;box-shadow:0 5px 16px #0007;-webkit-backdrop-filter:blur(5px);backdrop-filter:blur(5px);touch-action:none;opacity:.86}
 #jumpWrap button:active,#jumpWrap button.pressed{transform:scale(.96);background:#27445ae8}
+#controlHint{display:none;position:fixed;left:0;right:0;bottom:max(150px,calc(env(safe-area-inset-bottom) + 150px));z-index:11;pointer-events:none;opacity:0;transition:opacity 600ms ease;color:#eaf6ff;font:900 12px/1 system-ui;text-shadow:0 2px 5px #000}
+#controlHint.show{display:flex;opacity:1}#controlHint.fade{opacity:0}#controlHint span{position:absolute;transform:translateX(-50%);white-space:nowrap}#controlHint .move{left:max(84px,calc(env(safe-area-inset-left) + 84px))}#controlHint .jump{left:auto;right:max(66px,calc(env(safe-area-inset-right) + 66px));transform:translateX(50%)}
 #upgrade{position:fixed;inset:0;z-index:30;display:none;align-items:center;justify-content:center;background:#04101bd9;backdrop-filter:blur(8px);padding:20px}
 #upgrade.show{display:flex}
 #upgradeCard{width:min(540px,94vw);background:linear-gradient(180deg,#162839,#0f1b27);border:1px solid #ffffff2b;border-radius:24px;padding:23px;box-shadow:0 24px 70px #000c;text-align:center;color:#fff}
@@ -64,6 +66,7 @@ canvas{display:block;width:100vw;height:100vh;height:100dvh;touch-action:none;-w
 <div id="hint">A/D or ←/→ • SPACE/W/↑ • R restart</div>
 <div class="touch" id="joystick" aria-label="movement joystick"><div id="joystickKnob"></div><div id="joystickLabel">MOVE</div></div>
 <div class="touch" id="jumpWrap"><button data-k="jump">▲</button></div>
+<div id="controlHint" aria-hidden="true"><span class="move">DRAG = MOVE</span><span class="jump">TAP = JUMP</span></div>
 <div id="upgrade" aria-hidden="true"><div id="upgradeCard"><div class="eyebrow">10 COINS = ONE BAD DECISION</div><h2>UPGRADE UNLOCKED</h2><p>Coin 10 unlocks one upgrade. Coin 20 forces the other. After that, both become liabilities.</p><div id="upgradeChoices"><button id="pickJump"><b>↑</b>JUMP<small>Higher leap. Clouds will remember.</small></button><button id="pickSpeed"><b>»</b>SPEED<small>Hold direction to build momentum.</small></button></div></div></div>
 <div id="outOfLives" aria-hidden="true"><div id="outOfLivesCard"><div class="eyebrow">SHIFT TERMINATED</div><h2>OUT OF LIVES</h2><p>The warehouse offers one mercy.</p><div id="outOfLivesLb" class="lb-container"></div><button id="watchAdBtn">WATCH AD +10 LIVES</button></div></div>
 <div id="winLeaderboard" class="lb-container" style="display:none;position:fixed;top:60%;left:50%;transform:translateX(-50%);width:min(400px,90vw);z-index:60;"></div>
@@ -191,6 +194,7 @@ function sDeath(type){
 
 // YouTube Playables + iOS/Safari lifecycle bridge.
 const SAVE_KEY='trust_me_bro_full31_v36_rage_save',LEGACY_SAVE_KEY='trust_me_bro_full31_v35_rage_save';
+const CONTROL_HINT_KEY='trust_me_bro_control_hint_seen_v1';
 let legacyV35='',cloudSaveWritable=false;
 try{localStorage.removeItem('trust_me_bro_full31_v34_rage_save')}catch(_){}
 let inPlayablesEnv=false,systemPaused=false,rafId=0,loopRunning=false,firstFrameSent=false,gameReadySent=false;
@@ -215,7 +219,7 @@ async function saveProgress(){const raw=JSON.stringify({v36:snapshotSave(),legac
 const characterSelectEl=document.getElementById('characterSelect'),characterChangeEl=document.getElementById('characterChange');
 function openCharacterSelect(){characterSelectOpen=true;clearInputs();characterSelectEl.classList.add('show');characterSelectEl.setAttribute('aria-hidden','false')}
 function closeCharacterSelect(){characterSelectOpen=false;characterSelectEl.classList.remove('show');characterSelectEl.setAttribute('aria-hidden','true');last=performance.now()}
-function chooseCharacter(id){characterId=Math.max(0,Math.min(3,Number(id)||0));characterChosen=true;closeCharacterSelect();saveProgress()}
+function chooseCharacter(id){characterId=Math.max(0,Math.min(3,Number(id)||0));characterChosen=true;closeCharacterSelect();saveProgress();maybeShowControlHint()}
 function bindCharacterButton(el){let handled=false;const choose=e=>{if(e&&e.preventDefault)e.preventDefault();if(handled)return;handled=true;primeAudio();chooseCharacter(el.dataset.character);setTimeout(()=>handled=false,250)};el.addEventListener('pointerdown',choose,{passive:false});el.addEventListener('touchstart',choose,{passive:false});el.addEventListener('click',choose,{passive:false})}
 document.querySelectorAll('.characterChoice').forEach(bindCharacterButton);
 let changeHandled=false;const requestCharacterChange=e=>{if(e&&e.preventDefault)e.preventDefault();if(changeHandled)return;changeHandled=true;primeAudio();openCharacterSelect();setTimeout(()=>changeHandled=false,250)};characterChangeEl.addEventListener('pointerdown',requestCharacterChange,{passive:false});characterChangeEl.addEventListener('touchstart',requestCharacterChange,{passive:false});characterChangeEl.addEventListener('click',requestCharacterChange,{passive:false});
@@ -266,6 +270,15 @@ function openOutOfLives(){livesPending=true;clearInputs();watchAdBtn.innerText=a
 async function requestLivesAd(){if(watchAdBtn.disabled)return;watchAdBtn.disabled=true;let granted=false;if(adsReady()){try{granted=await ytgame.ads.requestRewardedAd('extra_lives')}catch(_){granted=false}}else{granted=true;}watchAdBtn.disabled=false;if(granted){lives=10;livesPending=false;outOfLivesEl.classList.remove('show');outOfLivesEl.setAttribute('aria-hidden','true');scoreSentForRun=false;last=performance.now();resetScene(true)}else{toast='Ad not available. Try again.';toastT=1.2}}
 function bindLivesAdButton(el){const request=(e)=>{if(e&&e.preventDefault)e.preventDefault();primeAudio();requestLivesAd();};el.addEventListener('click',request,{passive:false});el.addEventListener('touchend',request,{passive:false})}
 bindLivesAdButton(watchAdBtn);
+
+let controlHintActive=false,controlHintMoved=false,controlHintJumped=false,controlHintTimer=0;
+function finishControlHint(){if(!controlHintActive)return;controlHintActive=false;clearTimeout(controlHintTimer);try{localStorage.setItem(CONTROL_HINT_KEY,'1')}catch(_){}const el=document.getElementById('controlHint');if(!el)return;el.classList.add('fade');setTimeout(()=>{el.classList.remove('show','fade');el.setAttribute('aria-hidden','true')},600)}
+function maybeFinishControlHint(){if(controlHintActive&&controlHintMoved&&controlHintJumped)finishControlHint()}
+function maybeShowControlHint(){
+ if(controlHintActive||currentLevel!==1||currentPart!==1||characterSelectOpen||!(window.matchMedia&&matchMedia('(pointer:coarse)').matches))return;
+ try{if(localStorage.getItem(CONTROL_HINT_KEY))return}catch(_){}
+ const el=document.getElementById('controlHint');if(!el)return;controlHintActive=true;controlHintMoved=false;controlHintJumped=false;el.classList.remove('fade');el.classList.add('show');el.setAttribute('aria-hidden','false');controlHintTimer=setTimeout(finishControlHint,6000);
+}
 
 function scene(){return SCENES[currentLevel-1]}
 function sceneStart(){return scene().start}
@@ -545,10 +558,10 @@ function getGroundSegments(){return cachedGroundSegments}
 function staticPlatforms(){return cachedStaticPlatforms}
 function solidRects(){return solidSurfaces(cachedSolidRects)}
 function landPlatform(p,prevBottom){if(p.solid===false)return;const nowBottom=player.y+player.h;if(prevBottom<=p.y+4&&nowBottom>=p.y&&player.x+player.w>p.x&&player.x<p.x+p.w){player.y=p.y-player.h;player.vy=0;player.onGround=true}}
-function doPhysics(dt){if(dead||won||upgradePending)return;const kbDir=(keys.right?1:0)-(keys.left?1:0),joy=Math.abs(joystick.axis)>.08?joystick.axis:0,rawDir=joy||kbDir,dir=Math.sign(rawDir),inputStrength=joy?Math.min(1,Math.abs(joy)):Math.abs(kbDir);if(dir){player.facing=dir;if(speedLevel&&inputStrength>.55){if(speedHoldDir===dir)speedHold=Math.min(2.2,speedHold+dt*inputStrength);else{speedHold=.05;speedHoldDir=dir}}else if(speedLevel){speedHold=Math.max(0,speedHold-dt*.9)}}else{speedHold=Math.max(0,speedHold-dt*1.6);if(!speedHold)speedHoldDir=0}
+function doPhysics(dt){if(dead||won||upgradePending)return;const kbDir=(keys.right?1:0)-(keys.left?1:0),joy=Math.abs(joystick.axis)>.08?joystick.axis:0,rawDir=joy||kbDir,dir=Math.sign(rawDir),inputStrength=joy?Math.min(1,Math.abs(joy)):Math.abs(kbDir);if(dir){if(controlHintActive){controlHintMoved=true;maybeFinishControlHint()}player.facing=dir;if(speedLevel&&inputStrength>.55){if(speedHoldDir===dir)speedHold=Math.min(2.2,speedHold+dt*inputStrength);else{speedHold=.05;speedHoldDir=dir}}else if(speedLevel){speedHold=Math.max(0,speedHold-dt*.9)}}else{speedHold=Math.max(0,speedHold-dt*1.6);if(!speedHold)speedHoldDir=0}
  const ramp=speedLevel?Math.min(1,speedHold/2.2):0,max=255+(speedLevel?145*ramp:0),baseAcc=1450+(speedLevel?320*ramp:0),acc=(rt&&rt.slip)?Math.min(520,baseAcc):baseAcc,fric=(rt&&rt.slip)?.965:.82;
  if(dir)player.vx+=dir*acc*inputStrength*dt;else player.vx*=Math.pow(fric,dt*60);rt.boostT=Math.max(0,rt.boostT-dt);const inputMax=max*(joy?(.34+.66*inputStrength):1),boostVX=rt.boostVX||450,clampMax=rt.boostT>0?Math.abs(boostVX):inputMax;player.vx=Math.max(-clampMax,Math.min(clampMax,player.vx));if(rt.boostT>0)player.vx=boostVX<0?Math.min(boostVX,player.vx):Math.max(boostVX,player.vx);
-if(keys.jump){jumpBufferT=.17;keys.jump=false}else{jumpBufferT=Math.max(0,jumpBufferT-dt)}if(player.onGround){coyoteT=.15}else{coyoteT=Math.max(0,coyoteT-dt)}if(jumpBufferT>0&&coyoteT>0){player.vy=jumpLevel?-720:-560;player.onGround=false;jumpBufferT=0;coyoteT=0;sJump()}
+if(keys.jump){jumpBufferT=.17;keys.jump=false}else{jumpBufferT=Math.max(0,jumpBufferT-dt)}if(player.onGround){coyoteT=.15}else{coyoteT=Math.max(0,coyoteT-dt)}if(jumpBufferT>0&&coyoteT>0){player.vy=jumpLevel?-720:-560;player.onGround=false;jumpBufferT=0;coyoteT=0;if(controlHintActive){controlHintJumped=true;maybeFinishControlHint()}sJump()}
  player.vy+=1450*dt;player.vy=Math.min(900,player.vy);
  const solids=solidRects();
  player.x+=player.vx*dt;for(const s of solids){if(s.hazard)continue;if(hit(player,s)){if(player.vx>0)player.x=s.x-player.w;else if(player.vx<0)player.x=s.x+s.w;player.vx=0}}
@@ -857,6 +870,7 @@ async function boot(){
  if(hMatch){const s=parseInt(hMatch[1],10);if(s>=1&&s<=31){currentLevel=s;if(hMatch[2]){let p=parseInt(hMatch[2],10);currentPart=Math.max(1,Math.min(PART_COUNT,p));}saveProgress=async()=>{};}}
  resetScene(false);
  if(!characterChosen)openCharacterSelect();
+ else maybeShowControlHint();
  if(dueUpgrade())openUpgrade();
  draw();
  const ov=document.getElementById('bootOverlay');if(ov)ov.classList.add('hidden');
