@@ -271,13 +271,31 @@ function coinPos(sc=scene(),part=currentPart){
 }
 
 const RAGE_POOL=['coinBite','rearBite','floorPop','sweeper','exitDrop','hunter','lastStep'];
-function ragePatterns(level){
-  if(level===31)return [...RAGE_POOL];
-  const out=[RAGE_POOL[(level-1)%RAGE_POOL.length],RAGE_POOL[(level+2)%RAGE_POOL.length]];
-  if(level>=6)out.push(RAGE_POOL[(level+4)%RAGE_POOL.length]);
-  if(level>=16)out.push(RAGE_POOL[(level+5)%RAGE_POOL.length]);
-  if(level>=26)out.push(RAGE_POOL[(level+1)%RAGE_POOL.length]);
-  return [...new Set(out)];
+// Compatibility describes the final roster; only RAGE_POOL members are implemented.
+const RAGE_PARTS=Object.freeze(Object.fromEntries(Object.entries({
+ coinBite:[1,2,3,4,5,6],rearBite:[1,2,3,4,5,6],floorPop:[1,2,3,5,6],sweeper:[1,2,3,5],
+ exitDrop:[1,2,3,4,5,6],hunter:[1,2,3,4,5,6],lastStep:[1,2,3,4,5,6],
+ fakeFloor:[2,3,4,5,6],ghostShelf:[1,2,3,4,5,6],ceilingHook:[1,2,3,5,6],reverseTape:[1,2,3,5],
+ twinCoin:[1,2,3,4,5,6],springLie:[1,2,3,5,6],dockFake:[1,2,3,4,5,6],crateRain:[1,2,3,4,5,6]
+}).map(([name,parts])=>[name,Object.freeze(parts)])));
+const RAGE_FALLBACKS=new Map();
+function rageFamily(level){
+ const size=level===31?6:level>=26?5:level>=16?4:level>=6?3:2;
+ const family=Array.from({length:size},(_,i)=>RAGE_POOL[(level-1+i*3)%RAGE_POOL.length]);
+ // Keep at least one all-part member in the smallest families.
+ if(!family.some(name=>RAGE_PARTS[name].length===PART_COUNT))family[family.length-1]='coinBite';
+ return family;
+}
+function selectRageMembers(family,part){
+ const eligible=family.filter(name=>RAGE_POOL.includes(name)&&RAGE_PARTS[name].includes(part));
+ return eligible.length?[eligible[(part-1)%eligible.length]]:[];
+}
+function ragePatterns(level,part){
+ const selected=selectRageMembers(rageFamily(level),part);
+ if(selected.length)return selected;
+ const key=level+'.'+part;
+ if(!RAGE_FALLBACKS.has(key)){RAGE_FALLBACKS.set(key,{level,part,trap:'coinBite'});console.warn('RAGE_FALLBACK '+key+' -> coinBite')}
+ return ['coinBite'];
 }
 function rageHas(name){return !!(rt&&rt.rage&&rt.rage.patterns.includes(name))}
 const GEOMETRY={
@@ -490,7 +508,7 @@ function makeRuntime(){const sc=scene(),st=sc.start,g=buildScene(sc.level,curren
  door:{x:X(a.hazardEnd),y:GROUND-105,w:60,h:105,vx:0},
  oil:{x:X(a.trigger),y:GROUND-6,w:a.hazardEnd-a.trigger,h:8},
  counterUsed:false,coinArmed:false,
- rage:{patterns:ragePatterns(sc.level),
+ rage:{patterns:ragePatterns(sc.level,currentPart),
   rear:{state:0,warn:0,box:spike(X(a.trial.x0+90),125,28)},
   coin:{state:0,warn:0,t:0,box:spike(cp.x-28,84,28)},
   pop:{state:0,warn:0,t:0,box:spike(X(a.hazard),86,30)},
@@ -511,7 +529,7 @@ resetScene(false);
 function hit(a,b){return a.x<b.x+b.w&&a.x+a.w>b.x&&a.y<b.y+b.h&&a.y+a.h>b.y}
 function hurtbox(){return{x:player.x+4,y:player.y+4,w:player.w-8,h:player.h-8}}
 function hitHurt(b){return hit(hurtbox(),b)}
-function kill(msg,type='slap'){if(dead||won||spawnGrace>0)return;dead=true;deaths++;lives=Math.max(0,lives-1);deathToast=typeof msg==='string'&&msg.trim()?msg:'Delivery failed. Permanently.';toast=deathToast;toastT=2.5;deathDeadline=performance.now()+2500;shakeT=.28;sDeath(type)}
+function kill(msg,type='slap'){if(dead||won||spawnGrace>0)return;dead=true;deaths++;lives=Math.max(0,lives-1);deathToast=typeof msg==='string'&&msg.trim()?msg:'Delivery failed. Permanently.';toast=deathToast;toastT=2.5;deathDeadline=performance.now()+1600;shakeT=.28;sDeath(type)}
 function cacheSceneGeometry(){const cacheKey=currentLevel*16+currentPart;if(cachedGeometryLevel===cacheKey)return;const st=sceneStart(),geo=sceneGeometry(currentLevel,currentPart),sc=scene();cachedGroundSegments=geo.surfaces.filter(s=>s.kind==='ground').map(s=>({x:st+s.x,y:s.y,w:s.w,h:s.h,...surfaceFlags(s)}));cachedStaticPlatforms=geo.platforms.map(p=>({x:st+p[0],y:GROUND+p[1],w:p[2],h:18,oneway:true,geometry:true,beat:p[3],...surfaceFlags(p[5])}));cachedSolidRects=solidSurfaces(cachedGroundSegments);if(sc.trap==='fakeFinish'||sc.trap==='fakeFinish2')cachedSolidRects.push({x:st+rt.a.hazard,y:GROUND-10,w:82,h:10,hazard:'finish'});cachedGeometryLevel=cacheKey}
 function getGroundSegments(){return cachedGroundSegments}
 function staticPlatforms(){return cachedStaticPlatforms}
