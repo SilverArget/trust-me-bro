@@ -18,6 +18,7 @@ canvas{display:block;width:100vw;height:100vh;height:100dvh;touch-action:none;-w
 .touch{position:fixed;bottom:max(18px,calc(env(safe-area-inset-bottom) + 18px));z-index:10;pointer-events:auto}
 #joystick{left:max(22px,calc(env(safe-area-inset-left) + 22px));width:124px;height:124px;border-radius:50%;border:1.5px solid #ffffff66;background:radial-gradient(circle at 50% 50%,#173044a8 0 38%,#0a172392 39% 100%);box-shadow:0 6px 18px #0007,inset 0 0 0 1px #ffffff10;-webkit-backdrop-filter:blur(5px);backdrop-filter:blur(5px);touch-action:none;-webkit-user-select:none;user-select:none;opacity:.82}
 #joystick::before{content:'';position:absolute;left:50%;top:50%;width:34px;height:3px;transform:translate(-50%,-50%);background:#ffffff18;border-radius:4px}
+#joystick::after{content:'';position:absolute;inset:-24px;border-radius:50%}
 #joystickKnob{position:absolute;left:50%;top:50%;width:48px;height:48px;margin:-24px;border-radius:50%;background:linear-gradient(180deg,#4a7692d8,#24465cd8);border:1.5px solid #e9f7ffbf;box-shadow:0 3px 10px #0007,inset 0 1px 4px #ffffff22;transform:translate(0,0);pointer-events:none}
 #joystickLabel{display:none}
 #jumpWrap{right:max(22px,calc(env(safe-area-inset-right) + 22px))}
@@ -219,8 +220,8 @@ async function saveProgress(){const raw=JSON.stringify({v36:snapshotSave(),legac
 const characterSelectEl=document.getElementById('characterSelect'),characterChangeEl=document.getElementById('characterChange');
 function openCharacterSelect(){characterSelectOpen=true;clearInputs();characterSelectEl.classList.add('show');characterSelectEl.setAttribute('aria-hidden','false')}
 function closeCharacterSelect(){characterSelectOpen=false;characterSelectEl.classList.remove('show');characterSelectEl.setAttribute('aria-hidden','true');last=performance.now()}
-function chooseCharacter(id){characterId=Math.max(0,Math.min(3,Number(id)||0));characterChosen=true;closeCharacterSelect();saveProgress();maybeShowControlHint()}
-function bindCharacterButton(el){let handled=false;const choose=e=>{if(e&&e.preventDefault)e.preventDefault();if(handled)return;handled=true;primeAudio();chooseCharacter(el.dataset.character);setTimeout(()=>handled=false,250)};el.addEventListener('pointerdown',choose,{passive:false});el.addEventListener('touchstart',choose,{passive:false});el.addEventListener('click',choose,{passive:false})}
+function chooseCharacter(id){characterId=Math.max(0,Math.min(3,Number(id)||0));characterChosen=true;closeCharacterSelect();clearInputs();saveProgress();maybeShowControlHint()}
+function bindCharacterButton(el){const choose=e=>{e.preventDefault();e.stopPropagation();primeAudio();setTimeout(()=>chooseCharacter(el.dataset.character),50)};el.addEventListener('click',choose,{passive:false})}
 document.querySelectorAll('.characterChoice').forEach(bindCharacterButton);
 let changeHandled=false;const requestCharacterChange=e=>{if(e&&e.preventDefault)e.preventDefault();if(changeHandled)return;changeHandled=true;primeAudio();openCharacterSelect();setTimeout(()=>changeHandled=false,250)};characterChangeEl.addEventListener('pointerdown',requestCharacterChange,{passive:false});characterChangeEl.addEventListener('touchstart',requestCharacterChange,{passive:false});characterChangeEl.addEventListener('click',requestCharacterChange,{passive:false});
 function dueUpgrade(){const n=jumpLevel+speedLevel;return(coins>=10&&n===0)||(coins>=20&&n===1)}
@@ -485,7 +486,7 @@ function candidateFishGap(level,part=1){
  if(level<5)return [];
  return sceneGeometry(level,part).gaps.filter(gap=>gap[1]-gap[0]>=140).map(gap=>({left:gap[0],right:gap[1],width:gap[1]-gap[0]}));
 }
-function candidateFans(level,part=1){if(!TOP_ROUTE_LEVELS.includes(level))return[];const profiles=[{name:'A',vx:450,vy:-400,t:.46,dir:1},{name:'B',vx:390,vy:-460,t:.34,dir:1},{name:'C',vx:360,vy:-350,t:.28,dir:-1},{name:'A',vx:450,vy:-400,t:.46,dir:1},{name:'B',vx:390,vy:-460,t:.34,dir:1},{name:'A',vx:450,vy:-400,t:.46,dir:1}];return GEOMETRY[level].fans.map(([x,rise],i)=>({x,y:GROUND+rise-48,w:48,h:48,profile:profiles[i]}));}
+function candidateFans(level,part=1){if(!TOP_ROUTE_LEVELS.includes(level))return[];const profiles=[{name:'A',vx:450,vy:-400,t:.46,dir:1},{name:'B',vx:390,vy:-460,t:.34,dir:1},{name:'C',vx:360,vy:-350,t:.28,dir:-1},{name:'A',vx:450,vy:-400,t:.46,dir:1},{name:'B',vx:390,vy:-460,t:.34,dir:1},{name:'A',vx:450,vy:-400,t:.46,dir:1}],surfaces=sceneGeometry(level,part).surfaces;return GEOMETRY[level].fans.map(([x],i)=>({...anchorRageSpike(surfaces,0,x,48,48),profile:profiles[i]})).filter(f=>f.enabled);}
 function launchSeed(level,index,part=1){let n=(level*2654435761+(index+1)*1013904223+(part-1)*198491317)>>>0;n^=n>>>16;n=Math.imul(n,2246822519)>>>0;n^=n>>>13;return n>>>0}
 function candidateLaunchPads(level,part=1){if(part===4||part===8){const g=sceneGeometry(level,part);let validCandidates=[];const allPlats=solidSurfaces(g.surfaces).filter(s=>s.kind==='platform'&&s.x>300).sort((a,b)=>a.x-b.x);for(let i=0;i<allPlats.length;i++){const source=allPlats[i];const box={x:source.x+36,y:source.y-10,w:30,h:10},startX=box.x+box.w/2;const targetCands=[];for(let j=3;j<=5;j++){if(i+j<allPlats.length)targetCands.push(allPlats[i+j]);}if(targetCands.length===0)continue;const tSeed=launchSeed(level,890+i,part);const targetPlat=targetCands[tSeed%targetCands.length];const targetX=targetPlat.x+targetPlat.w/2;const launchVX=Math.round((targetX-startX)/0.717);if(launchVX>=650&&launchVX<=1250){validCandidates.push({source,box,startX,targetX,targetY:source.y,launchVX,distance:targetX-startX});}}const count=(launchSeed(level,860,part)%4)+3;const pads=[];if(validCandidates.length>0){const step=validCandidates.length/count;for(let i=0;i<count;i++){const cIndex=Math.floor(i*step);if(cIndex>=validCandidates.length)break;const cand=validCandidates[cIndex];if(pads.some(p=>Math.abs(allPlats.indexOf(p.source)-allPlats.indexOf(cand.source))<=1))continue;const seed=launchSeed(level,880+i,part);pads.push({box:cand.box,targetX:cand.targetX,targetY:cand.targetY,source:cand.source,seed,index:pads.length,distance:cand.distance,launchVX:cand.launchVX});}}return pads}if(![5,14,22].includes(level))return[];const g=sceneGeometry(level,part),hazards=g.anchors.trap,index=0,seed=launchSeed(level,index,part),surfaces=solidSurfaces(g.surfaces).slice().sort((a,b)=>a.x-b.x),candidate=source=>{if(source.kind!=='ground'||source.w<120)return null;const box={x:source.x+20,y:source.y-10,w:56,h:10},blocked=[hazards.body,hazards.lane,hazards.finish,hazards.repeat].some(h=>box.x+box.w>h.x-36&&box.x<h.x+h.w+36);return blocked||box.x+box.w>source.x+source.w-20?null:{source,box}},preferred=surfaces.map(candidate).filter(p=>p&&p.box.x>=400&&p.box.x<=1400),picked=preferred.length?preferred[seed%preferred.length]:surfaces.map(candidate).find(Boolean);if(!picked)return[];const{source,box}=picked,startX=box.x+box.w/2,distance=700+(seed%201),targetX=startX+distance;return[{box,targetX,targetY:source.y,source,seed,index,distance}]}
 // One shared budget across all nine parts; retries do not create new instances.
@@ -905,7 +906,8 @@ if(DEBUG_HOOKS){
  };
  Object.defineProperty(window,'__tmb',{value:Object.freeze({
   get lives(){return lives},get dead(){return dead},get livesPending(){return livesPending},get spawnGrace(){return spawnGrace},
-  get characterId(){return characterId},get characterChosen(){return characterChosen},get characterSelectOpen(){return characterSelectOpen},get won(){return won},get deaths(){return deaths},
+ get characterId(){return characterId},get characterChosen(){return characterChosen},get characterSelectOpen(){return characterSelectOpen},get won(){return won},get deaths(){return deaths},
+ get joystick(){return Object.freeze({axis:joystick.axis,active:joystick.active})},get keys(){return Object.freeze({...keys})},
   get player(){const{x,y,w,h,facing,onGround}=player;return Object.freeze({x,y,w,h,facing,onGround})},
   get cam(){return cam},get currentLevel(){return currentLevel},get currentPart(){return currentPart},
   get pngState(){return PNG_SPRITES.map(s=>({loaded:s.loaded,failed:s.failed,naturalWidth:s.image.naturalWidth}))},
@@ -936,7 +938,7 @@ if(window.PointerEvent){
  joyEl.addEventListener('pointerdown',e=>{e.preventDefault();primeAudio();joystick.active=true;joystick.pointerId=e.pointerId;try{joyEl.setPointerCapture(e.pointerId)}catch(_){}setJoystickXY(e.clientX,e.clientY)},{passive:false});
  joyEl.addEventListener('pointermove',e=>{if(!joystick.active||e.pointerId!==joystick.pointerId)return;e.preventDefault();setJoystickXY(e.clientX,e.clientY)},{passive:false});
  joyEl.addEventListener('pointerup',e=>{if(joystick.pointerId===null||e.pointerId===joystick.pointerId)releaseJoy()},{passive:false});
- joyEl.addEventListener('pointercancel',releaseJoy,{passive:false});joyEl.addEventListener('lostpointercapture',releaseJoy);
+ joyEl.addEventListener('pointercancel',releaseJoy,{passive:false});
 }else{
  joyEl.addEventListener('touchstart',e=>{if(!e.changedTouches.length)return;e.preventDefault();primeAudio();const t=e.changedTouches[0];joystick.active=true;joystick.pointerId=t.identifier;setJoystickXY(t.clientX,t.clientY)},{passive:false});
  joyEl.addEventListener('touchmove',e=>{if(!joystick.active)return;for(const t of e.changedTouches){if(t.identifier===joystick.pointerId){e.preventDefault();setJoystickXY(t.clientX,t.clientY);break}}},{passive:false});
