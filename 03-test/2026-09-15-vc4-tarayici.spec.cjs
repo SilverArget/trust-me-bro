@@ -56,12 +56,14 @@ async function ready(page) {
     document.querySelector("#bootOverlay")?.classList.contains("hidden"),
   );
 }
-async function boot(page, hash = "#debug") {
+async function boot(page, hash = "#debug", settle = 1000) {
   await page.goto(base + hash);
   await ready(page);
-  if (await page.locator("#characterSelect.show").count())
-    await page.locator(".characterChoice").first().tap();
-  await page.waitForTimeout(1000);
+  if (await page.locator("#characterSelect.show").count()) {
+    const choice=page.locator(".characterChoice").first();
+    if (await page.evaluate(() => navigator.maxTouchPoints > 0)) await choice.tap(); else await choice.click();
+  }
+  await page.waitForTimeout(settle);
 }
 async function visual(page) {
   return page.evaluate(() => {
@@ -97,6 +99,14 @@ async function visual(page) {
   });
 }
 const touchSessions = new WeakMap();
+async function checkedPage(browser, options) {
+  const page = await browser.newPage(options), errors = [];
+  page.on("pageerror", e => errors.push(`pageerror: ${e.message}`));
+  page.on("console", m => { if (m.type() === "error") errors.push(`console.error: ${m.text()}`); });
+  page.__errors = errors;
+  return page;
+}
+async function closeChecked(page) { expect(page.__errors, "JavaScript console errors").toEqual([]); await page.close(); }
 async function touch(page, type, points) {
   let cdp = touchSessions.get(page);
   if (!cdp) {
@@ -117,7 +127,7 @@ async function touch(page, type, points) {
 }
 
 test("S1 gerçek canvas: başlangıç, restart, ölüm", async ({ browser }) => {
-  const page = await browser.newPage(mobile);
+  const page = await checkedPage(browser, mobile);
   await boot(page);
   const initial = await visual(page);
   await page.keyboard.press("r");
@@ -135,11 +145,11 @@ test("S1 gerçek canvas: başlangıç, restart, ölüm", async ({ browser }) => 
     expect(sample.courierRect.x, `${name}: courier left of viewport`).toBeGreaterThanOrEqual(0);
     expect(sample.courierRect.x + sample.courierRect.w, `${name}: courier right of viewport`).toBeLessThanOrEqual(mobile.viewport.width);
   }
-  await page.close();
+  await closeChecked(page);
 });
 
 test("S2 gerçek media/audio ve event yayılımı", async ({ browser }) => {
-  const page = await browser.newPage(mobile);
+  const page = await checkedPage(browser, mobile);
   await page.addInitScript(() => {
     const A = window.Audio;
     window.__audios = [];
@@ -192,11 +202,11 @@ test("S2 gerçek media/audio ve event yayılımı", async ({ browser }) => {
   });
   console.log("S2", JSON.stringify(audio));
   expect(audio.seen.pointerdown + audio.seen.touchstart).toBeGreaterThan(0);
-  await page.close();
+  await closeChecked(page);
 });
 
 test("S3 joystick tek ve çoklu dokunma", async ({ browser }) => {
-  const page = await browser.newPage(mobile);
+  const page = await checkedPage(browser, mobile);
   await boot(page);
   await page.keyboard.press("r");
   await page.waitForTimeout(100);
@@ -243,12 +253,12 @@ test("S3 joystick tek ve çoklu dokunma", async ({ browser }) => {
   expect(steps.multi.axisFromKnob).toBe(steps.move.axisFromKnob);
   expect(steps.end.axisFromKnob).toBe(0);
   expect(steps.end.transform).toContain("0px");
-  await page.close();
+  await closeChecked(page);
 });
 
 test("S4 sahne 08 part 4 gerçek fizik tekrarları", async ({ browser }) => {
   test.setTimeout(60000);
-  const page = await browser.newPage(mobile);
+  const page = await checkedPage(browser, mobile);
   await boot(page, "#s8p4debugAudio");
   const attempts = [];
   for (let a = 1; a <= 2; a++) {
@@ -293,11 +303,11 @@ test("S4 sahne 08 part 4 gerçek fizik tekrarları", async ({ browser }) => {
   }
   console.log("S4", JSON.stringify(attempts));
   expect(attempts.length).toBe(2);
-  await page.close();
+  await closeChecked(page);
 });
 
 test("S5 character-select touch does not leak into gameplay", async ({ browser }) => {
-  const page = await browser.newPage(mobile);
+  const page = await checkedPage(browser, mobile);
   await page.goto(base + "#debug");
   await ready(page);
   await page.locator(".characterChoice").first().tap();
@@ -319,11 +329,11 @@ test("S5 character-select touch does not leak into gameplay", async ({ browser }
     expect(sample.dead, `dead at ${sample.t}ms`).toBe(false);
     expect(sample.characterChosen).toBe(true);
   }
-  await page.close();
+  await closeChecked(page);
 });
 
 test("S6 joystick capture edge, knob, rapid taps, and hint overlay", async ({ browser }) => {
-  const page = await browser.newPage(mobile);
+  const page = await checkedPage(browser, mobile);
   await boot(page);
   const box = await page.locator("#joystick").boundingBox();
   const cx = box.x + box.width / 2, cy = box.y + box.height / 2;
@@ -365,12 +375,11 @@ test("S6 joystick capture edge, knob, rapid taps, and hint overlay", async ({ br
     expect(Math.abs(sample.axis), `${name}: axis did not follow`).toBeGreaterThan(.2);
   }
   expect(cases.hint.tree.every(x => x.pointerEvents === "none")).toBe(true);
-  await page.close();
+  await closeChecked(page);
 });
 
 test("S7 Playgama Bridge init, ready, storage, pause/resume", async ({ browser }) => {
-  const page = await browser.newPage(mobile);
-  page.on("pageerror", e => console.log("S7 pageerror", e.message));
+  const page = await checkedPage(browser, mobile);
   await page.addInitScript(() => {
     window.__bridgeSpy = { initResolved: false, firstFrameAfterInit: false, messages: [], localGameSets: 0, events: {} };
     const data = new Map();
@@ -401,16 +410,56 @@ test("S7 Playgama Bridge init, ready, storage, pause/resume", async ({ browser }
   expect(before.spy.localGameSets).toBe(0); expect(JSON.parse(before.saved).v36.v).toBe(36);
   expect(paused.platform.systemPaused && !paused.platform.loopRunning && paused.audio.paused).toBe(true);
   expect(!resumed.systemPaused && resumed.loopRunning).toBe(true);
-  await page.close();
+  await closeChecked(page);
 });
 
 test("S8 B2 free continue and optional skip copy", async ({ browser }) => {
-  const page = await browser.newPage(mobile); await boot(page);
+  const page = await checkedPage(browser, mobile); await boot(page);
   await page.evaluate(() => __tmbOutOfLives());
   await expect(page.locator("#outOfLives")).toHaveClass(/show/);
   await expect(page.locator("#continueBtn")).toHaveText("CONTINUE");
   await expect(page.locator("#watchAdBtn")).toHaveText("SKIP THIS PART (WATCH AD)");
   expect(await page.locator("body").innerText()).not.toContain("+10 LIVES");
   console.log("S8", JSON.stringify({ continue: await page.locator("#continueBtn").innerText(), skip: await page.locator("#watchAdBtn").innerText() }));
-  await page.close();
+  await closeChecked(page);
+});
+
+test("S9 orientation matrix", async ({ browser }) => {
+  test.setTimeout(90000);
+  const viewports = [[360,800,1],[390,844,1],[412,915,1],[768,1024,0],[800,800,0],[1000,1000,0],[800,360,1],[844,390,1],[915,412,1],[1024,768,0],[1280,720,0],[1920,1080,0],[2560,1080,0]], table = [];
+  for (const [width,height,touchMode] of viewports) {
+    const page = await checkedPage(browser, { viewport:{width,height}, hasTouch:!!touchMode, isMobile:!!touchMode, deviceScaleFactor:1 });
+    await boot(page,"#debug",100); await page.evaluate(()=>{__tmbPause();__tmbSetProgress(1,1,0,0)}); await page.waitForFunction(()=>__tmb.courierRect,{timeout:1000});
+    const row = await page.evaluate(() => {
+      const v={w:innerWidth,h:innerHeight}, c=document.querySelector("#game").getBoundingClientRect(), l=__tmb.layout, p=__tmb.courierRect;
+      const css=r=>({x:l.viewOffsetX+r.x*l.viewScale,y:l.viewOffsetY+r.y*l.viewScale,w:r.w*l.viewScale,h:r.h*l.viewScale});
+      const inside=r=>r&&r.x>=-.5&&r.y>=-.5&&r.x+r.w<=v.w+.5&&r.y+r.h<=v.h+.5;
+      const overlap=(a,b)=>!!a&&!!b&&a.x<b.x+b.w&&a.x+a.w>b.x&&a.y<b.y+b.h&&a.y+a.h>b.y;
+      const box=id=>{const e=document.querySelector(id);if(!e||getComputedStyle(e).display==="none")return null;const r=e.getBoundingClientRect();return{x:r.x,y:r.y,w:r.width,h:r.height}};
+      const hud=css(l.hud),timer=css(l.timer),toast=css(l.toast),joy=box("#joystick"),jump=box("#jumpWrap button"),sprite=p,ps=__tmb.player,player=css({x:ps.x-__tmb.cam,y:l.worldY+ps.y,w:ps.w,h:ps.h});
+      const gameVisible=inside(l.gameRect),spriteAspect=sprite&&sprite.w/sprite.h;
+      return { viewport:`${v.w}x${v.h}`,branch:l.isPortrait?'portrait':'landscape',W:+l.W.toFixed(1),H:+l.H.toFixed(1),worldY:+l.worldY.toFixed(1),groundY:+(l.viewOffsetY+l.groundY*l.viewScale).toFixed(1),canvas:Math.abs(c.x)<.5&&Math.abs(c.y)<.5&&Math.abs(c.width-v.w)<.5&&Math.abs(c.height-v.h)<.5,scroll:document.documentElement.scrollWidth<=v.w&&document.documentElement.scrollHeight<=v.h,ui:[hud,timer,toast,joy,jump].filter(Boolean).every(inside),controls:!overlap(joy,jump)&&!overlap(joy,hud)&&!overlap(jump,hud),player:inside(player),aspect:l.W/l.H<=2.0001,gameVisible,spriteAspect,hasGutter:l.viewOffsetX>.5||l.viewOffsetY>.5,gameBox:l.gameRect,playerBox:player,spriteBox:sprite,dead:__tmb.dead,joy,jump,hud,edge:null};
+    });
+    if (row.hasGutter) {
+      row.edge = await page.evaluate(() => { const c=document.querySelector("#game"),g=c.getContext("2d"),x=1,ys=[.2,.5,.8].map(y=>Math.floor(c.height*y)),rgb=x=>ys.map(y=>Array.from(g.getImageData(x,y,1,1).data.slice(0,3)));return{left:rgb(x),right:rgb(c.width-1-x)}; });
+    }
+    if (row.hasGutter || width === height) await page.screenshot({path:path.resolve(root,`test-results/orientation/${width}x${height}.png`)});
+    row.texturedGutter=!row.hasGutter||[...row.edge.left,...row.edge.right].every(rgb=>rgb.some(channel=>channel!==0));
+    table.push(row); await closeChecked(page);
+  }
+  console.table(table.map(({joy,jump,hud,edge,playerBox,...r})=>r)); console.log("S9_DETAILS",JSON.stringify(table.map(x=>({viewport:x.viewport,playerBox:x.playerBox,dead:x.dead,edge:x.edge}))));
+  for(const r of table) {
+    for(const k of ["canvas","scroll","ui","controls","player","aspect"]) expect(r[k],`${r.viewport} ${k}`).toBe(true);
+    expect(r.gameVisible,`${r.viewport} game area fully visible`).toBe(true);
+    expect(r.spriteAspect,`${r.viewport} sprite aspect preserved`).toBeCloseTo(.552,2);
+    expect(r.texturedGutter,`${r.viewport} backdrop gutter non-black`).toBe(true);
+  }
+});
+
+test("S10 orientation change preserves progress", async ({ browser }) => {
+  const page = await checkedPage(browser,{viewport:{width:390,height:844},hasTouch:true,isMobile:true,deviceScaleFactor:1});
+  await boot(page,"#debug",100); await page.evaluate(()=>{__tmbPause();__tmbSetProgress(1,2,1,3)}); await page.waitForTimeout(50);
+  const snap=()=>page.evaluate(()=>({level:__tmb.currentLevel,part:__tmb.currentPart,coins:__tmb.coins,deaths:__tmb.deaths,dead:__tmb.dead,canvas:[game.getBoundingClientRect().width,game.getBoundingClientRect().height],layout:__tmb.layout}));
+  const series=[await snap()]; for(const viewport of [{width:844,height:390},{width:390,height:844}]){await page.setViewportSize(viewport);await page.evaluate(()=>{dispatchEvent(new Event("orientationchange"));dispatchEvent(new Event("resize"))});await page.waitForTimeout(250);series.push(await snap())}
+  console.log("S10",JSON.stringify(series)); for(const s of series){expect([s.level,s.part,s.coins,s.deaths]).toEqual([1,2,1,3]);expect(s.dead).toBe(false);expect(s.canvas).toEqual([s.layout.isPortrait?390:844,s.layout.isPortrait?844:390])} await closeChecked(page);
 });
