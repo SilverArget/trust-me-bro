@@ -1,0 +1,16 @@
+{
+  "advertisement": {
+    "minimumDelayBetweenInterstitial": 60,
+    "interstitial": {
+      "placements": [
+        { "id": "level_completed" },
+        { "id": "out_of_lives" }
+      ]
+    },
+    "rewarded": {
+      "placements": [
+        { "id": "skip_part" }
+      ]
+    }
+  }
+}

@@ -69,7 +69,8 @@ canvas{display:block;width:100vw;height:100vh;height:100dvh;touch-action:none;-w
 <div class="touch" id="jumpWrap"><button data-k="jump">▲</button></div>
 <div id="controlHint" aria-hidden="true"><span class="move">DRAG = MOVE</span><span class="jump">TAP = JUMP</span></div>
 <div id="upgrade" aria-hidden="true"><div id="upgradeCard"><div class="eyebrow">10 COINS = ONE BAD DECISION</div><h2>UPGRADE UNLOCKED</h2><p>Coin 10 unlocks one upgrade. Coin 20 forces the other. After that, both become liabilities.</p><div id="upgradeChoices"><button id="pickJump"><b>↑</b>JUMP<small>Higher leap. Clouds will remember.</small></button><button id="pickSpeed"><b>»</b>SPEED<small>Hold direction to build momentum.</small></button></div></div></div>
-<div id="outOfLives" aria-hidden="true"><div id="outOfLivesCard"><div class="eyebrow">SHIFT TERMINATED</div><h2>OUT OF LIVES</h2><p>The warehouse offers one mercy.</p><div id="outOfLivesLb" class="lb-container"></div><button id="watchAdBtn">WATCH AD +10 LIVES</button></div></div>
+<div id="outOfLives" aria-hidden="true"><div id="outOfLivesCard"><div class="eyebrow">SHIFT TERMINATED</div><h2>OUT OF LIVES</h2><p>The warehouse offers one mercy.</p><div id="outOfLivesLb" class="lb-container"></div><button id="continueBtn">CONTINUE</button><button id="watchAdBtn">SKIP THIS PART (WATCH AD)</button></div></div>
+<button id="deathSkipBtn" style="display:none;position:fixed;z-index:45;left:50%;bottom:18%;transform:translateX(-50%)">SKIP THIS PART (WATCH AD)</button>
 <div id="winLeaderboard" class="lb-container" style="display:none;position:fixed;top:60%;left:50%;transform:translateX(-50%);width:min(400px,90vw);z-index:60;"></div>
 <div id="characterSelect" aria-hidden="true"><div id="characterCard"><div class="eyebrow">PERSONNEL ASSIGNMENT / ROUTE 31</div><h2>CHOOSE YOUR LIABILITY</h2><p>Same shift. Different uniform. Benefits remain unavailable.</p><div id="characterChoices"><button class="characterChoice courier" data-character="0"><canvas class="portrait" width="106" height="192" aria-hidden="true"></canvas>COURIER</button><button class="characterChoice forklift" data-character="1"><canvas class="portrait" width="106" height="192" aria-hidden="true"></canvas>FORKLIFT OPERATOR</button><button class="characterChoice picker" data-character="2"><canvas class="portrait" width="106" height="192" aria-hidden="true"></canvas>WAREHOUSE PICKER</button><button class="characterChoice security" data-character="3"><canvas class="portrait" width="106" height="192" aria-hidden="true"></canvas>NIGHT SECURITY</button></div></div></div>
 <button id="characterChange" aria-label="Change character" title="Change character">ID</button>
@@ -152,8 +153,8 @@ function theme(){const r=region(),variants=THEMES[r.name];return variants[(curre
 const keys={left:false,right:false,jump:false};
 const joystick={axis:0,active:false,pointerId:null};
 const player={x:70,y:GROUND-48,w:32,h:48,vx:0,vy:0,onGround:false,facing:1,walkPhase:0};
-let currentLevel=1,currentPart=1,deaths=0,coins=0,lives=10,jumpLevel=0,speedLevel=0,speedHold=0,speedHoldDir=0,spawnGrace=0,hudUpgradeT=0,hudUpgradeText='',characterId=0,characterChosen=false,characterSelectOpen=false,jumpBufferT=0,coyoteT=0,jumpPointerId=null;
-let dead=false,won=false,deathDeadline=0,cam=0,last=0,toast='',deathToast='',toastT=0,upgradePending=false,livesPending=false,totalTime=0,shakeT=0;
+let currentLevel=1,currentPart=1,deaths=0,partDeaths=0,coins=0,lives=10,jumpLevel=0,speedLevel=0,speedHold=0,speedHoldDir=0,spawnGrace=0,hudUpgradeT=0,hudUpgradeText='',characterId=0,characterChosen=false,characterSelectOpen=false,jumpBufferT=0,coyoteT=0,jumpPointerId=null;
+let dead=false,won=false,deathDeadline=0,cam=0,last=0,toast='',deathToast='',toastT=0,upgradePending=false,livesPending=false,adPending=false,totalTime=0,shakeT=0;
 const particles=[];
 let breathT=.35,breathCycle=0;
 const collected=new Set();
@@ -193,14 +194,17 @@ function sDeath(type){
   if(type==='crush'||type==='spike')setTimeout(()=>{if(!systemPaused)sThud()},85);
 }
 
-// YouTube Playables + iOS/Safari lifecycle bridge.
+// Runtime platform adapter: Playgama Bridge, YouTube Playables, or standalone web.
 const SAVE_KEY='trust_me_bro_full31_v36_rage_save',LEGACY_SAVE_KEY='trust_me_bro_full31_v35_rage_save';
 const CONTROL_HINT_KEY='trust_me_bro_control_hint_seen_v1';
-let legacyV35='',cloudSaveWritable=false;
-try{localStorage.removeItem('trust_me_bro_full31_v34_rage_save')}catch(_){}
-let inPlayablesEnv=false,systemPaused=false,rafId=0,loopRunning=false,firstFrameSent=false,gameReadySent=false;
+let legacyV35='';
+let inPlayablesEnv=false,systemPaused=false,rafId=0,loopRunning=false,firstFrameSent=false,gameReadySent=false,platformInitComplete=false,platformLanguage='en';
 function ytReady(){return typeof window.ytgame!=='undefined'&&ytgame&&ytgame.game&&ytgame.system}
-function adsReady(){return!!(ytReady()&&inPlayablesEnv&&ytgame.ads&&typeof ytgame.ads.requestRewardedAd==='function')}
+const localTransport={init:async()=>{},loadData:async()=>{try{return localStorage.getItem(SAVE_KEY)||''}catch(_){return''}},saveData:async raw=>{try{localStorage.setItem(SAVE_KEY,raw)}catch(_){}},onPause:()=>{},onResume:()=>{},isAudioEnabled:()=>true,onAudioEnabledChange:()=>{},firstFrameReady:()=>{},gameReady:()=>{},logError:()=>{},sendScore:()=>{},language:()=>navigator.language||'en',showInterstitial:async()=>{},showRewarded:async()=>false,get hasInterstitial(){return false},get hasRewarded(){return false},isBridge:false};
+const ytAdapter={...localTransport,async init(){inPlayablesEnv=!!(ytReady()&&ytgame.IN_PLAYABLES_ENV)},async loadData(){if(inPlayablesEnv)try{return await ytgame.game.loadData()||await localTransport.loadData()}catch(_){}return localTransport.loadData()},async saveData(raw){await localTransport.saveData(raw);if(inPlayablesEnv)try{await ytgame.game.saveData(raw)}catch(_){}},onPause:cb=>{try{ytgame.system.onPause(cb)}catch(_){}},onResume:cb=>{try{ytgame.system.onResume(cb)}catch(_){}},isAudioEnabled:()=>{try{return ytgame.system.isAudioEnabled()}catch(_){return true}},onAudioEnabledChange:cb=>{try{ytgame.system.onAudioEnabledChange(cb)}catch(_){}},firstFrameReady:()=>{try{ytgame.game.firstFrameReady()}catch(_){}},gameReady:()=>{try{ytgame.game.gameReady()}catch(_){}},logError:()=>{try{if(ytgame.health)ytgame.health.logError()}catch(_){}},sendScore:value=>{try{if(ytgame.engagement&&ytgame.engagement.sendScore)ytgame.engagement.sendScore({value})}catch(_){}},language:()=>navigator.language||'en',async showRewarded(p){try{return!!(await ytgame.ads.requestRewardedAd(p))}catch(_){return false}},get hasRewarded(){return!!(inPlayablesEnv&&ytgame.ads&&typeof ytgame.ads.requestRewardedAd==='function')}};
+const bridgeAdapter={...localTransport,isBridge:true,async init(){await bridge.initialize()},async loadData(){const v=await bridge.storage.get([SAVE_KEY]);return v&&v[0]||''},async saveData(raw){await bridge.storage.set([SAVE_KEY],[raw])},onPause:cb=>bridge.platform.on(bridge.EVENT_NAME.PAUSE_STATE_CHANGED,v=>{if(v)cb()}),onResume:cb=>bridge.platform.on(bridge.EVENT_NAME.PAUSE_STATE_CHANGED,v=>{if(!v)cb()}),isAudioEnabled:()=>bridge.platform.isAudioEnabled,onAudioEnabledChange:cb=>bridge.platform.on(bridge.EVENT_NAME.AUDIO_STATE_CHANGED,cb),firstFrameReady:()=>{},gameReady:()=>bridge.platform.sendMessage('game_ready'),logError:()=>{},language:()=>bridge.platform.language||'en',showInterstitial:p=>new Promise(resolve=>{bridge.advertisement.on(bridge.EVENT_NAME.INTERSTITIAL_STATE_CHANGED,s=>{if(s==='closed'||s==='failed')resolve()});try{bridge.advertisement.showInterstitial(p)}catch(_){resolve()}}),showRewarded:p=>new Promise(resolve=>{let granted=false;bridge.advertisement.on(bridge.EVENT_NAME.REWARDED_STATE_CHANGED,s=>{if(s==='rewarded')granted=true;if(s==='closed'||s==='failed')resolve(granted)});try{bridge.advertisement.showRewarded(p)}catch(_){resolve(false)}}),get hasInterstitial(){return!!bridge.advertisement.isInterstitialSupported},get hasRewarded(){return!!bridge.advertisement.isRewardedSupported}};
+const platformAdapter=typeof window.bridge!=='undefined'?bridgeAdapter:ytReady()?ytAdapter:localTransport;
+if(!platformAdapter.isBridge)try{localStorage.removeItem('trust_me_bro_full31_v34_rage_save')}catch(_){}
 function setAudioAllowed(v){audioAllowed=!!v;if(master){try{master.gain.setValueAtTime(audioAllowed?.34:0,ac.currentTime)}catch(_){master.gain.value=audioAllowed?.34:0}}applyMute();}
 function snapshotSave(){let m=new Array(31).fill(0);for(let k of collected){let l=Math.floor(k/16),p=k%16;if(l>=1&&l<=31&&p>=1&&p<=PART_COUNT)m[l-1]|=(1<<(p-1))}return{v:36,partCount:PART_COUNT,currentLevel,currentPart,deaths,jumpLevel,speedLevel,totalTime,won:!!won,collected:m,character:characterId,bgmMuted}}
 function applySave(s){if(!s||typeof s!=='object')return false;currentLevel=Math.max(1,Math.min(SCENE_COUNT,Number(s.currentLevel)||1));currentPart=Math.max(1,Math.min(PART_COUNT,Number(s.currentPart)||1));deaths=Math.max(0,Number(s.deaths)||0);jumpLevel=s.jumpLevel?1:0;speedLevel=s.speedLevel?1:0;totalTime=Math.max(0,Number(s.totalTime)||0);collected.clear();if(Array.isArray(s.collected)&&s.collected.length===31){for(let i=0;i<31;i++){let m=Number(s.collected[i]);if(Number.isInteger(m)){for(let p=1;p<=PART_COUNT;p++){if((m&(1<<(p-1)))!==0)collected.add((i+1)*16+p)}}}}coins=collected.size;won=!!s.won&&coins===(SCENE_COUNT*PART_COUNT);characterChosen=Object.prototype.hasOwnProperty.call(s,'character');characterId=characterChosen?Math.max(0,Math.min(3,Number(s.character)||0)):0;dead=false;upgradePending=false;if(s.bgmMuted!==undefined){bgmMuted=!!s.bgmMuted;applyMute()}return true}
@@ -209,14 +213,14 @@ function validSave(s,v){return !!s&&typeof s==='object'&&s.v===v&&(v!==36||s.par
 function parseSave(raw){try{return JSON.parse(raw)}catch(_){return null}}
 function migrateV35(s){if(!validSave(s,35))return null;const masks=s.collected.map(m=>{let n=0;for(let p=0;p<6;p++)if(m&(1<<p))n|=1<<p;for(let p=6;p<9;p++)if(m&(1<<p)){for(let q=0;q<6;q++)if(!(n&(1<<q))){n|=1<<q;break}}return n});const count=masks.reduce((n,m)=>n+m.toString(2).replace(/0/g,'').length,0);return {...s,v:36,partCount:PART_COUNT,currentPart:Math.min(s.currentPart,PART_COUNT),collected:masks,won:s.won&&count===SCENE_COUNT*PART_COUNT}}
 async function loadProgress(){
- let cloudRaw='',localRaw='',oldRaw='';cloudSaveWritable=false;
- if(inPlayablesEnv&&ytReady()){try{cloudRaw=await ytgame.game.loadData()||'';cloudSaveWritable=true}catch(_){}}
- try{localRaw=localStorage.getItem(SAVE_KEY)||'';oldRaw=localStorage.getItem(LEGACY_SAVE_KEY)||''}catch(_){}
+ let cloudRaw='',localRaw='',oldRaw='';
+ try{cloudRaw=await platformAdapter.loadData()||''}catch(_){}
+ if(!platformAdapter.isBridge)try{localRaw=localStorage.getItem(SAVE_KEY)||'';oldRaw=localStorage.getItem(LEGACY_SAVE_KEY)||''}catch(_){}
  for(const raw of [cloudRaw,localRaw]){const e=parseSave(raw);if(e&&validSave(e.v36,36)){legacyV35=typeof e.legacyV35==='string'?e.legacyV35:'';return applySave(e.v36)}}
  for(const raw of [cloudRaw,localRaw,oldRaw]){const e=parseSave(raw),old=validSave(e,35)?raw:e&&typeof e.legacyV35==='string'?e.legacyV35:'';const migrated=migrateV35(parseSave(old));if(migrated){legacyV35=old;applySave(migrated);void saveProgress();return true}}
  return false;
 }
-async function saveProgress(){const raw=JSON.stringify({v36:snapshotSave(),legacyV35});try{localStorage.setItem(SAVE_KEY,raw)}catch(_){}if(inPlayablesEnv&&ytReady()&&cloudSaveWritable){try{await ytgame.game.saveData(raw)}catch(_){}}}
+async function saveProgress(){const raw=JSON.stringify({v36:snapshotSave(),legacyV35});try{await platformAdapter.saveData(raw)}catch(_){}}
 const characterSelectEl=document.getElementById('characterSelect'),characterChangeEl=document.getElementById('characterChange');
 function openCharacterSelect(){characterSelectOpen=true;clearInputs();characterSelectEl.classList.add('show');characterSelectEl.setAttribute('aria-hidden','false')}
 function closeCharacterSelect(){characterSelectOpen=false;characterSelectEl.classList.remove('show');characterSelectEl.setAttribute('aria-hidden','true');last=performance.now()}
@@ -225,19 +229,10 @@ function bindCharacterButton(el){const choose=e=>{e.preventDefault();e.stopPropa
 document.querySelectorAll('.characterChoice').forEach(bindCharacterButton);
 let changeHandled=false;const requestCharacterChange=e=>{if(e&&e.preventDefault)e.preventDefault();if(changeHandled)return;changeHandled=true;primeAudio();openCharacterSelect();setTimeout(()=>changeHandled=false,250)};characterChangeEl.addEventListener('pointerdown',requestCharacterChange,{passive:false});characterChangeEl.addEventListener('touchstart',requestCharacterChange,{passive:false});characterChangeEl.addEventListener('click',requestCharacterChange,{passive:false});
 function dueUpgrade(){const n=jumpLevel+speedLevel;return(coins>=10&&n===0)||(coins>=20&&n===1)}
-function pauseGame(source='system'){if(systemPaused)return;systemPaused=true;keys.left=keys.right=keys.jump=false;joystick.axis=0;joystick.active=false;try{if(typeof releaseJoy==='function')releaseJoy()}catch(_){}saveProgress();if(rafId)cancelAnimationFrame(rafId);rafId=0;loopRunning=false;try{if(ac&&ac.state==='running')ac.suspend()}catch(_){}}
-function resumeGame(source='system'){if(!systemPaused)return;systemPaused=false;last=performance.now();try{if(audioAllowed&&ac&&ac.state==='suspended')ac.resume()}catch(_){}startLoop()}
+function pauseGame(source='system'){if(systemPaused)return;systemPaused=true;keys.left=keys.right=keys.jump=false;joystick.axis=0;joystick.active=false;try{if(typeof releaseJoy==='function')releaseJoy()}catch(_){}saveProgress();if(rafId)cancelAnimationFrame(rafId);rafId=0;loopRunning=false;bgm.pause();try{if(ac&&ac.state==='running')ac.suspend()}catch(_){}}
+function resumeGame(source='system'){if(!systemPaused)return;systemPaused=false;last=performance.now();try{if(audioAllowed&&ac&&ac.state==='suspended')ac.resume();if(bgmStarted)bgm.play().catch(()=>{})}catch(_){}startLoop()}
 function setupLifecycle(){
- inPlayablesEnv=!!(ytReady()&&ytgame.IN_PLAYABLES_ENV);
- if(inPlayablesEnv&&ytReady()){
-  try{setAudioAllowed(ytgame.system.isAudioEnabled())}catch(_){setAudioAllowed(true)}
-  try{ytgame.system.onAudioEnabledChange(v=>setAudioAllowed(v))}catch(_){}
-  try{ytgame.system.onPause(()=>pauseGame('youtube'))}catch(_){}
-  try{ytgame.system.onResume(()=>resumeGame('youtube'))}catch(_){}
- }else{
-  // Browser/Safari test builds must not inherit a YouTube SDK mute state.
-  setAudioAllowed(true);
- }
+ setAudioAllowed(platformAdapter.isAudioEnabled());platformAdapter.onAudioEnabledChange(setAudioAllowed);platformAdapter.onPause(()=>pauseGame('platform'));platformAdapter.onResume(()=>resumeGame('platform'));
  // Outside YouTube only: Safari/iOS fallback. Playables certification forbids using Page Visibility inside Playables.
  if(!inPlayablesEnv){let visibilityPauseTimer=null;const recoverFromInput=()=>{if(visibilityPauseTimer!==null){clearTimeout(visibilityPauseTimer);visibilityPauseTimer=null}resumeGame('input')};document.addEventListener('visibilitychange',()=>{if(document.hidden){if(visibilityPauseTimer!==null)clearTimeout(visibilityPauseTimer);visibilityPauseTimer=setTimeout(()=>{visibilityPauseTimer=null;if(document.hidden)pauseGame('visibility')},200)}else{if(visibilityPauseTimer!==null){clearTimeout(visibilityPauseTimer);visibilityPauseTimer=null}resumeGame('visibility')}},{passive:true});window.addEventListener('pagehide',()=>{if(document.hidden)pauseGame('pagehide')},{passive:true});window.addEventListener('pageshow',()=>resumeGame('pageshow'),{passive:true});window.addEventListener('pointerdown',recoverFromInput,{passive:true});window.addEventListener('touchstart',recoverFromInput,{passive:true});window.addEventListener('keydown',recoverFromInput,{passive:true});window.addEventListener('click',recoverFromInput,{passive:true})}}
 function setupNativeRateButtons(){
@@ -248,13 +243,13 @@ function setupNativeRateButtons(){
  add(document.getElementById('outOfLivesCard'));
  add(document.getElementById('winLeaderboard'));
 }
-function notifyFirstFrame(){if(firstFrameSent||!ytReady())return;firstFrameSent=true;try{ytgame.game.firstFrameReady()}catch(_){}}
-function notifyGameReady(){if(gameReadySent||!ytReady())return;gameReadySent=true;try{ytgame.game.gameReady()}catch(_){}}
-function logGameError(){try{if(ytReady()&&ytgame.health)ytgame.health.logError()}catch(_){}}
+function notifyFirstFrame(){if(firstFrameSent)return;firstFrameSent=true;platformAdapter.firstFrameReady()}
+function notifyGameReady(){if(gameReadySent)return;gameReadySent=true;platformAdapter.gameReady()}
+function logGameError(){platformAdapter.logError()}
 window.addEventListener('error',logGameError);window.addEventListener('unhandledrejection',logGameError);
 
 const upgradeEl=document.getElementById('upgrade'),pickJump=document.getElementById('pickJump'),pickSpeed=document.getElementById('pickSpeed');
-const outOfLivesEl=document.getElementById('outOfLives'),watchAdBtn=document.getElementById('watchAdBtn');
+const outOfLivesEl=document.getElementById('outOfLives'),continueBtn=document.getElementById('continueBtn'),watchAdBtn=document.getElementById('watchAdBtn'),deathSkipBtn=document.getElementById('deathSkipBtn');
 // Upgrade buttons: real input bindings for mouse, trackpad and iOS Safari touch.
 function bindUpgradeButton(el,kind){
   const choose=(e)=>{if(e&&e.preventDefault)e.preventDefault();primeAudio();chooseUpgrade(kind);};
@@ -267,17 +262,19 @@ function openUpgrade(){if(upgradePending||jumpLevel+speedLevel>=2)return;upgrade
 function chooseUpgrade(k){if(!upgradePending)return;if(k==='jump'&&jumpLevel)return;if(k==='speed'&&speedLevel)return;if(k==='jump')jumpLevel=1;else speedLevel=1;hudUpgradeText=k==='jump'?'JUMP UP':'SPEED RAMP';hudUpgradeT=2;upgradePending=false;upgradeEl.classList.remove('show');upgradeEl.setAttribute('aria-hidden','true');sUpgrade();toast=k==='jump'?'JUMP upgraded. Airspace now hostile.':'SPEED upgraded. Friction took that personally.';toastT=1.2;saveProgress()}
 bindUpgradeButton(pickJump,'jump');
 bindUpgradeButton(pickSpeed,'speed');
-function openOutOfLives(){livesPending=true;clearInputs();watchAdBtn.innerText=adsReady()?'WATCH AD +10 LIVES':'CONTINUE';outOfLivesEl.classList.add('show');outOfLivesEl.setAttribute('aria-hidden','false')}
-async function requestLivesAd(){if(watchAdBtn.disabled)return;watchAdBtn.disabled=true;let granted=false;if(adsReady()){try{granted=await ytgame.ads.requestRewardedAd('extra_lives')}catch(_){granted=false}}else{granted=true;}watchAdBtn.disabled=false;if(granted){lives=10;livesPending=false;outOfLivesEl.classList.remove('show');outOfLivesEl.setAttribute('aria-hidden','true');scoreSentForRun=false;last=performance.now();resetScene(true)}else{toast='Ad not available. Try again.';toastT=1.2}}
-function bindLivesAdButton(el){const request=(e)=>{if(e&&e.preventDefault)e.preventDefault();primeAudio();requestLivesAd();};el.addEventListener('click',request,{passive:false});el.addEventListener('touchend',request,{passive:false})}
-bindLivesAdButton(watchAdBtn);
+async function showFullscreenAd(kind,placement){if(!platformAdapter[kind==='rewarded'?'hasRewarded':'hasInterstitial'])return false;const wasPaused=systemPaused,wasAudio=audioAllowed;adPending=true;pauseGame('ad');setAudioAllowed(false);try{return kind==='rewarded'?await platformAdapter.showRewarded(placement):(await platformAdapter.showInterstitial(placement),true)}catch(_){return false}finally{setAudioAllowed(wasAudio);adPending=false;if(!wasPaused)resumeGame('ad')}}
+async function openOutOfLives(){livesPending=true;clearInputs();await showFullscreenAd('interstitial','out_of_lives');watchAdBtn.style.display='';outOfLivesEl.classList.add('show');outOfLivesEl.setAttribute('aria-hidden','false')}
+function continueFree(){lives=10;livesPending=false;outOfLivesEl.classList.remove('show');outOfLivesEl.setAttribute('aria-hidden','true');scoreSentForRun=false;last=performance.now();resetScene(true)}
+async function skipPart(){if(adPending)return;watchAdBtn.disabled=deathSkipBtn.disabled=true;const granted=await showFullscreenAd('rewarded','skip_part');watchAdBtn.disabled=deathSkipBtn.disabled=false;if(!granted){toast='Ad not available. Try again.';toastT=1.2;return}dead=false;livesPending=false;outOfLivesEl.classList.remove('show');outOfLivesEl.setAttribute('aria-hidden','true');deathSkipBtn.style.display='none';if(currentPart<PART_COUNT)currentPart++;else{currentPart=1;currentLevel=Math.min(SCENE_COUNT,currentLevel+1)}partDeaths=0;resetScene(false);saveProgress()}
+function bindAdButton(el,fn){const request=e=>{if(e&&e.preventDefault)e.preventDefault();primeAudio();fn()};el.addEventListener('click',request,{passive:false});el.addEventListener('touchend',request,{passive:false})}
+bindAdButton(continueBtn,continueFree);bindAdButton(watchAdBtn,skipPart);bindAdButton(deathSkipBtn,skipPart);
 
 let controlHintActive=false,controlHintMoved=false,controlHintJumped=false,controlHintTimer=0;
-function finishControlHint(){if(!controlHintActive)return;controlHintActive=false;clearTimeout(controlHintTimer);try{localStorage.setItem(CONTROL_HINT_KEY,'1')}catch(_){}const el=document.getElementById('controlHint');if(!el)return;el.classList.add('fade');setTimeout(()=>{el.classList.remove('show','fade');el.setAttribute('aria-hidden','true')},600)}
+function finishControlHint(){if(!controlHintActive)return;controlHintActive=false;clearTimeout(controlHintTimer);if(!platformAdapter.isBridge)try{localStorage.setItem(CONTROL_HINT_KEY,'1')}catch(_){}const el=document.getElementById('controlHint');if(!el)return;el.classList.add('fade');setTimeout(()=>{el.classList.remove('show','fade');el.setAttribute('aria-hidden','true')},600)}
 function maybeFinishControlHint(){if(controlHintActive&&controlHintMoved&&controlHintJumped)finishControlHint()}
 function maybeShowControlHint(){
  if(controlHintActive||currentLevel!==1||currentPart!==1||characterSelectOpen||!(window.matchMedia&&matchMedia('(pointer:coarse)').matches))return;
- try{if(localStorage.getItem(CONTROL_HINT_KEY))return}catch(_){}
+ if(!platformAdapter.isBridge)try{if(localStorage.getItem(CONTROL_HINT_KEY))return}catch(_){}
  const el=document.getElementById('controlHint');if(!el)return;controlHintActive=true;controlHintMoved=false;controlHintJumped=false;el.classList.remove('fade');el.classList.add('show');el.setAttribute('aria-hidden','false');controlHintTimer=setTimeout(finishControlHint,6000);
 }
 
@@ -546,14 +543,14 @@ function makeRuntime(){const sc=scene(),st=sc.start,g=buildScene(sc.level,curren
  pipes:[{x:X(a.hazard),y:GROUND-78,w:135,h:18,solid:sc.level%4===2||sc.trap==='steamPipe',trap:sc.trap==='steamPipe'}]
 }}
 function clearInputs(){keys.left=keys.right=keys.jump=false;joystick.axis=0;joystick.active=false;joystick.pointerId=null;jumpPointerId=null;const knob=document.getElementById('joystickKnob');if(knob)knob.style.transform='translate(0px,0px)';const jb=document.querySelector('#jumpWrap button');if(jb)jb.classList.remove('pressed')}
-function resetScene(fromDeath=false){clearInputs();if(fromDeath===false)lives=10;rt=makeRuntime();cacheSceneGeometry();speedHold=0;speedHoldDir=0;jumpBufferT=0;coyoteT=0;player.x=sceneStart()+66;player.y=GROUND-player.h;player.vx=0;player.vy=0;player.onGround=false;player.walkPhase=0;spawnGrace=fromDeath?2:0;cam=Math.max(sceneStart(),Math.min(sceneStart()+SCENE_W-W,player.x-W*.28))}
-function hardRestart(){currentLevel=1;currentPart=1;deaths=0;coins=0;jumpLevel=speedLevel=0;collected.clear();dead=won=false;totalTime=0;upgradePending=false;upgradeEl.classList.remove('show');const wLb=document.getElementById('winLeaderboard');if(wLb)wLb.style.display='none';scoreSentForRun=false;resetScene(false);saveProgress()}
+function resetScene(fromDeath=false){clearInputs();deathSkipBtn.style.display='none';if(fromDeath===false)lives=10;rt=makeRuntime();cacheSceneGeometry();speedHold=0;speedHoldDir=0;jumpBufferT=0;coyoteT=0;player.x=sceneStart()+66;player.y=GROUND-player.h;player.vx=0;player.vy=0;player.onGround=false;player.walkPhase=0;spawnGrace=fromDeath?2:0;cam=Math.max(sceneStart(),Math.min(sceneStart()+SCENE_W-W,player.x-W*.28))}
+function hardRestart(){currentLevel=1;currentPart=1;deaths=partDeaths=0;coins=0;jumpLevel=speedLevel=0;collected.clear();dead=won=false;totalTime=0;upgradePending=false;upgradeEl.classList.remove('show');const wLb=document.getElementById('winLeaderboard');if(wLb)wLb.style.display='none';scoreSentForRun=false;resetScene(false);saveProgress()}
 resetScene(false);
 
 function hit(a,b){return a.x<b.x+b.w&&a.x+a.w>b.x&&a.y<b.y+b.h&&a.y+a.h>b.y}
 function hurtbox(){return{x:player.x+4,y:player.y+4,w:player.w-8,h:player.h-8}}
 function hitHurt(b){return hit(hurtbox(),b)}
-function kill(msg,type='slap'){if(dead||won||spawnGrace>0)return;dead=true;deaths++;lives=Math.max(0,lives-1);deathToast=typeof msg==='string'&&msg.trim()?msg:'Delivery failed. Permanently.';toast=deathToast;toastT=2.5;deathDeadline=performance.now()+1600;shakeT=.28;sDeath(type)}
+function kill(msg,type='slap'){if(dead||won||spawnGrace>0)return;dead=true;deaths++;partDeaths++;lives=Math.max(0,lives-1);deathSkipBtn.style.display=partDeaths>=5&&platformAdapter.hasRewarded?'block':'none';deathToast=typeof msg==='string'&&msg.trim()?msg:'Delivery failed. Permanently.';toast=deathToast;toastT=2.5;deathDeadline=performance.now()+1600;shakeT=.28;sDeath(type)}
 function cacheSceneGeometry(){const cacheKey=currentLevel*16+currentPart;if(cachedGeometryLevel===cacheKey)return;const st=sceneStart(),geo=sceneGeometry(currentLevel,currentPart),sc=scene();cachedGroundSegments=geo.surfaces.filter(s=>s.kind==='ground').map(s=>({x:st+s.x,y:s.y,w:s.w,h:s.h,...surfaceFlags(s)}));cachedStaticPlatforms=geo.platforms.map(p=>({x:st+p[0],y:GROUND+p[1],w:p[2],h:18,oneway:true,geometry:true,beat:p[3],...surfaceFlags(p[5])}));cachedSolidRects=solidSurfaces(cachedGroundSegments);if(sc.trap==='fakeFinish'||sc.trap==='fakeFinish2')cachedSolidRects.push({x:st+rt.a.hazard,y:GROUND-10,w:82,h:10,hazard:'finish'});cachedGeometryLevel=cacheKey}
 function getGroundSegments(){return cachedGroundSegments}
 function staticPlatforms(){return cachedStaticPlatforms}
@@ -679,10 +676,10 @@ function updateTrap(dt){
  if(!collected.has(currentLevel*16+currentPart)&&hit(player,cp))collectCoin();updateCounterTraps(dt);updateRageLayer(dt);
 }
 
-function submitScore(){try{const progress=(currentLevel-1)*PART_COUNT+currentPart;const score=Math.max(0,coins*1000+progress*500-deaths*50+(won?50000:0)-Math.floor(totalTime));if(window.ytgame&&window.ytgame.engagement&&window.ytgame.engagement.sendScore)window.ytgame.engagement.sendScore({value:Math.floor(score)})}catch(_){}}
-let scoreSentForRun=false;function handleRunEnd(){if(scoreSentForRun)return;scoreSentForRun=true;const progress=(currentLevel-1)*PART_COUNT+currentPart;const score=Math.max(0,coins*1000+progress*500-deaths*50+(won?50000:0)-Math.floor(totalTime));let top10=[];try{top10=JSON.parse(localStorage.getItem('trustmebro_top10')||'[]')}catch(_){}top10.push({score,date:new Date().toLocaleDateString()});top10.sort((a,b)=>b.score-a.score);top10=top10.slice(0,10);try{localStorage.setItem('trustmebro_top10',JSON.stringify(top10))}catch(_){}try{if(window.ytgame&&window.ytgame.engagement&&window.ytgame.engagement.sendScore)window.ytgame.engagement.sendScore({value: Math.floor(score)})}catch(_){}const html=top10.map(e=>'<div class="lb-entry'+(e.score===score?' highlight':'')+'"><span>'+e.score+' PTS</span><span>'+e.date+'</span></div>').join('');const oLb=document.getElementById('outOfLivesLb'),wLb=document.getElementById('winLeaderboard');if(oLb)oLb.innerHTML=html;if(wLb){const rate=wLb.querySelector('.rateBtn');wLb.innerHTML=html;if(rate)wLb.appendChild(rate);if(won)wLb.style.display='block'}}
-function passScene(){if(dead)return;const end=sceneStart()+SCENE_W-12;if(player.x+player.w<end)return;if(!collected.has(currentLevel*16+currentPart)){player.x=end-player.w;player.vx=0;toast='ONE COIN PER SCENE. NO COIN, NO EXIT.';toastT=.8;return}if(currentLevel===SCENE_COUNT&&currentPart===PART_COUNT){won=true;handleRunEnd();clearInputs();sApplause(true);toast=(SCENE_COUNT*PART_COUNT)+' / '+(SCENE_COUNT*PART_COUNT)+'. You survived the subliminal message. Resetting...';toastT=99;saveProgress();setTimeout(()=>{hardRestart();toast='SCENE 01 - PART 1 / '+PART_COUNT+' - '+scene().title;toastT=1.05},3200);return}if(currentPart<PART_COUNT){currentPart++}else{currentPart=1;currentLevel++}sApplause(false);resetScene(false);toast='SCENE '+String(currentLevel).padStart(2,'0')+' - PART '+currentPart+' / '+PART_COUNT+' - '+scene().title;toastT=1.05;saveProgress();submitScore()}
-function update(dt){updateJuice(dt);hudUpgradeT=Math.max(0,hudUpgradeT-dt);if(won||upgradePending||characterSelectOpen||livesPending)return;if(dead){if(performance.now()>=deathDeadline){dead=false;if(lives<=0){handleRunEnd();openOutOfLives();}else resetScene(true)}return}updateBreath(dt);totalTime+=dt;spawnGrace=Math.max(0,spawnGrace-dt);doPhysics(dt);if(player.onGround&&Math.abs(player.vx)>18)player.walkPhase+=Math.abs(player.vx)*dt;updateLaunchPads(dt);updateFish(dt);updateTrap(dt);updateEnemies(dt);if(!rt.returnStairsActive&&rt.returnStairs.length&&!collected.has(currentLevel*16+currentPart)&&player.x+player.w>=sceneStart()+DOCK[0]){rt.returnStairsActive=true;toast='MAINTENANCE STAIRS. THIS TIME THEY ARE REAL.';toastT=1.2}passScene();const lead=Math.max(-1,Math.min(1,player.vx/255)),targetAnchorFrac=(isPortrait?.30:.31)-lead*(isPortrait?.13:.069);anchorFrac+=(targetAnchorFrac-anchorFrac)*Math.min(1,dt*4);const anchor=W*anchorFrac;const target=Math.max(sceneStart(),Math.min(sceneStart()+SCENE_W-W,player.x-anchor));cam+=(target-cam)*Math.min(1,dt*6.5);if(toastT>0&&toastT!==99)toastT-=dt}
+function submitScore(){const progress=(currentLevel-1)*PART_COUNT+currentPart,score=Math.max(0,coins*1000+progress*500-deaths*50+(won?50000:0)-Math.floor(totalTime));platformAdapter.sendScore(Math.floor(score))}
+let scoreSentForRun=false;function handleRunEnd(){if(scoreSentForRun)return;scoreSentForRun=true;const progress=(currentLevel-1)*PART_COUNT+currentPart;const score=Math.max(0,coins*1000+progress*500-deaths*50+(won?50000:0)-Math.floor(totalTime));let top10=[];if(!platformAdapter.isBridge)try{top10=JSON.parse(localStorage.getItem('trustmebro_top10')||'[]')}catch(_){}top10.push({score,date:new Date().toLocaleDateString()});top10.sort((a,b)=>b.score-a.score);top10=top10.slice(0,10);if(!platformAdapter.isBridge)try{localStorage.setItem('trustmebro_top10',JSON.stringify(top10))}catch(_){}platformAdapter.sendScore(Math.floor(score));const html=top10.map(e=>'<div class="lb-entry'+(e.score===score?' highlight':'')+'"><span>'+e.score+' PTS</span><span>'+e.date+'</span></div>').join('');const oLb=document.getElementById('outOfLivesLb'),wLb=document.getElementById('winLeaderboard');if(oLb)oLb.innerHTML=html;if(wLb){const rate=wLb.querySelector('.rateBtn');wLb.innerHTML=html;if(rate)wLb.appendChild(rate);if(won)wLb.style.display='block'}}
+function passScene(){if(dead)return;const end=sceneStart()+SCENE_W-12;if(player.x+player.w<end)return;if(!collected.has(currentLevel*16+currentPart)){player.x=end-player.w;player.vx=0;toast='ONE COIN PER SCENE. NO COIN, NO EXIT.';toastT=.8;return}if(currentLevel===SCENE_COUNT&&currentPart===PART_COUNT){won=true;handleRunEnd();clearInputs();sApplause(true);toast=(SCENE_COUNT*PART_COUNT)+' / '+(SCENE_COUNT*PART_COUNT)+'. You survived the subliminal message. Resetting...';toastT=99;saveProgress();setTimeout(()=>{hardRestart();toast='SCENE 01 - PART 1 / '+PART_COUNT+' - '+scene().title;toastT=1.05},3200);return}const levelCompleted=currentPart===PART_COUNT;if(currentPart<PART_COUNT){currentPart++}else{currentPart=1;currentLevel++}partDeaths=0;sApplause(false);resetScene(false);toast='SCENE '+String(currentLevel).padStart(2,'0')+' - PART '+currentPart+' / '+PART_COUNT+' - '+scene().title;toastT=1.05;saveProgress();submitScore();if(levelCompleted)void showFullscreenAd('interstitial','level_completed')}
+function update(dt){updateJuice(dt);hudUpgradeT=Math.max(0,hudUpgradeT-dt);if(won||upgradePending||characterSelectOpen||livesPending||adPending)return;if(dead){if(performance.now()>=deathDeadline){dead=false;if(lives<=0){handleRunEnd();void openOutOfLives()}else resetScene(true)}return}updateBreath(dt);totalTime+=dt;spawnGrace=Math.max(0,spawnGrace-dt);doPhysics(dt);if(player.onGround&&Math.abs(player.vx)>18)player.walkPhase+=Math.abs(player.vx)*dt;updateLaunchPads(dt);updateFish(dt);updateTrap(dt);updateEnemies(dt);if(!rt.returnStairsActive&&rt.returnStairs.length&&!collected.has(currentLevel*16+currentPart)&&player.x+player.w>=sceneStart()+DOCK[0]){rt.returnStairsActive=true;toast='MAINTENANCE STAIRS. THIS TIME THEY ARE REAL.';toastT=1.2}passScene();const lead=Math.max(-1,Math.min(1,player.vx/255)),targetAnchorFrac=(isPortrait?.30:.31)-lead*(isPortrait?.13:.069);anchorFrac+=(targetAnchorFrac-anchorFrac)*Math.min(1,dt*4);const anchor=W*anchorFrac;const target=Math.max(sceneStart(),Math.min(sceneStart()+SCENE_W-W,player.x-anchor));cam+=(target-cam)*Math.min(1,dt*6.5);if(toastT>0&&toastT!==99)toastT-=dt}
 
 function roundedRect(x,y,w,h,r){const q=Math.min(r,w/2,h/2);ctx.beginPath();ctx.moveTo(x+q,y);ctx.arcTo(x+w,y,x+w,y+h,q);ctx.arcTo(x+w,y+h,x,y+h,q);ctx.arcTo(x,y+h,x,y,q);ctx.arcTo(x,y,x+w,y,q);ctx.closePath()}
 function drawEnemies(){for(const e of rt.enemies){if(e.dead||e.type==='forklift'&&!e.visible)continue;if(e.type==='crate'){let ex=e.fake?e.x+Math.round(Math.sin(rt.t*40)):e.x;ctx.fillStyle=e.betray>0?'#ff4057':e.fake?'#7a877d':'#9a6338';if(e.fake){ctx.fillRect(ex,e.y-3,e.w,4);ctx.fillRect(ex,e.y+3,e.w,e.h-3)}else ctx.fillRect(ex,e.y,e.w,e.h);ctx.strokeStyle=e.fake?'#2a332d':'#5a351f';ctx.lineWidth=2;if(e.fake){ctx.strokeRect(ex+1,e.y-2,e.w-2,2);ctx.strokeRect(ex+1,e.y+4,e.w-2,e.h-5)}else ctx.strokeRect(ex+1,e.y+1,e.w-2,e.h-2);ctx.beginPath();ctx.moveTo(ex+3,e.y+(e.fake?6:3));ctx.lineTo(ex+e.w-3,e.y+e.h-3);ctx.moveTo(ex+e.w-3,e.y+(e.fake?6:3));ctx.lineTo(ex+3,e.y+e.h-3);ctx.stroke();if(e.state==='awake'||e.betray>0){ctx.fillStyle='#fff';ctx.fillRect(ex+6,e.y+8,5,4);ctx.fillRect(ex+e.w-11,e.y+8,5,4)}}else if(e.type==='walker'){ctx.fillStyle='#303840';roundedRect(e.x,e.y+5,e.w,e.h-5,7);ctx.fill();ctx.fillStyle='#ff4057';ctx.fillRect(e.x+5,e.y+9,4,3);ctx.fillRect(e.x+e.w-9,e.y+9,4,3);ctx.fillStyle='#171b20';ctx.fillRect(e.x+3,e.y+e.h-5,7,5);ctx.fillRect(e.x+e.w-10,e.y+e.h-5,7,5)}else{ctx.fillStyle='#48535b';ctx.fillRect(e.x,e.y+8,e.w,e.h-8);ctx.fillStyle='#f2c230';ctx.fillRect(e.x+5,e.y+3,25,9);ctx.fillStyle='#1a2228';ctx.fillRect(e.x+31,e.y,18,18);ctx.fillStyle='#15191d';ctx.beginPath();ctx.arc(e.x+12,e.y+e.h,7,0,Math.PI*2);ctx.arc(e.x+43,e.y+e.h,7,0,Math.PI*2);ctx.fill()}}}
@@ -858,6 +855,7 @@ function draw(){ctx.setTransform(dpr,0,0,dpr,0,0);ctx.clearRect(0,0,W,H);drawBac
 function loop(t){if(systemPaused){loopRunning=false;rafId=0;return}const dt=Math.min(.033,(t-last)/1000||0);last=t;update(dt);draw();rafId=requestAnimationFrame(loop)}
 function startLoop(){if(loopRunning||systemPaused)return;loopRunning=true;last=performance.now();rafId=requestAnimationFrame(loop)}
 async function boot(){
+ await platformAdapter.init();platformInitComplete=true;platformLanguage=platformAdapter.language();
  setupLifecycle();
  setupNativeRateButtons();
  draw();
@@ -879,7 +877,7 @@ async function boot(){
  startLoop();
 }
 // Hard watchdog for quirky iOS in-app browsers: never leave the player trapped on loading.
-setTimeout(()=>{const ov=document.getElementById('bootOverlay');if(ov&&!ov.classList.contains('hidden')){ov.classList.add('hidden');if(!loopRunning&&!systemPaused)startLoop()}},1200)
+setTimeout(()=>{const ov=document.getElementById('bootOverlay');if(platformInitComplete&&ov&&!ov.classList.contains('hidden')){ov.classList.add('hidden');if(!loopRunning&&!systemPaused)startLoop()}},1200)
 
 const DEBUG_HOOKS = /debug/i.test(location.hash);
 if(DEBUG_HOOKS){
@@ -910,6 +908,8 @@ if(DEBUG_HOOKS){
  get joystick(){return Object.freeze({axis:joystick.axis,active:joystick.active})},get keys(){return Object.freeze({...keys})},
   get player(){const{x,y,w,h,facing,onGround}=player;return Object.freeze({x,y,w,h,facing,onGround})},
   get cam(){return cam},get currentLevel(){return currentLevel},get currentPart(){return currentPart},
+  get platform(){return Object.freeze({bridge:platformAdapter.isBridge,initialized:platformInitComplete,language:platformLanguage,loopRunning,systemPaused})},
+  get audio(){return Object.freeze({paused:bgm.paused,muted:bgm.muted,audioAllowed,acState:ac&&ac.state})},
   get pngState(){return PNG_SPRITES.map(s=>({loaded:s.loaded,failed:s.failed,naturalWidth:s.image.naturalWidth}))},
   get ctxAlphaAtCourier(){return observation.ctxAlphaAtCourier},get courierDrawn(){return observation.courierDrawn},get courierPath(){return observation.courierPath},
   // Logical screen pixels: same coordinate space as W/H, with backing-store DPR removed.
@@ -917,9 +917,9 @@ if(DEBUG_HOOKS){
  })});
  window.__tmbContinue=function(){
   if(!livesPending)return Promise.resolve();
-  const originalAdsReady=adsReady;adsReady=()=>false;
-  try{return requestLivesAd()}finally{adsReady=originalAdsReady}
+  continueFree();return Promise.resolve()
  };
+ window.__tmbOutOfLives=function(){lives=0;dead=false;handleRunEnd();return openOutOfLives()};
  window.addEventListener('keydown',e=>{
   if(e.code!=='KeyK'&&!['k','K'].includes(e.key))return;
   e.preventDefault();e.stopImmediatePropagation();

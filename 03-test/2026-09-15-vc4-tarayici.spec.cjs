@@ -3,6 +3,7 @@ const http = require("node:http"),
   fs = require("node:fs"),
   path = require("node:path");
 const root = path.resolve(__dirname, "..");
+const playgamaRoot = path.resolve(root, "../04-yayin/playgama/dist");
 let server, base;
 test.beforeAll(async () => {
   server = http.createServer((req, res) => {
@@ -11,8 +12,9 @@ test.beforeAll(async () => {
         /^\/+/,
         "",
       ) || "index.html";
-    const file = path.resolve(root, rel);
-    if (!file.startsWith(root)) {
+    const isPlaygama = rel.startsWith("playgama/");
+    const file = path.resolve(isPlaygama ? playgamaRoot : root, isPlaygama ? rel.slice(9) : rel);
+    if (!file.startsWith(isPlaygama ? playgamaRoot : root)) {
       res.writeHead(403).end();
       return;
     }
@@ -363,5 +365,52 @@ test("S6 joystick capture edge, knob, rapid taps, and hint overlay", async ({ br
     expect(Math.abs(sample.axis), `${name}: axis did not follow`).toBeGreaterThan(.2);
   }
   expect(cases.hint.tree.every(x => x.pointerEvents === "none")).toBe(true);
+  await page.close();
+});
+
+test("S7 Playgama Bridge init, ready, storage, pause/resume", async ({ browser }) => {
+  const page = await browser.newPage(mobile);
+  page.on("pageerror", e => console.log("S7 pageerror", e.message));
+  await page.addInitScript(() => {
+    window.__bridgeSpy = { initResolved: false, firstFrameAfterInit: false, messages: [], localGameSets: 0, events: {} };
+    const data = new Map();
+    const nativeSet = Storage.prototype.setItem;
+    Storage.prototype.setItem = function(k, v) { if (String(new Error().stack).includes("index.html")) __bridgeSpy.localGameSets++; return nativeSet.call(this, k, v); };
+    window.bridge = {
+      EVENT_NAME: { PAUSE_STATE_CHANGED: "pause", AUDIO_STATE_CHANGED: "audio", INTERSTITIAL_STATE_CHANGED: "interstitial", REWARDED_STATE_CHANGED: "rewarded" },
+      async initialize(){ await new Promise(r => setTimeout(r, 20)); __bridgeSpy.initResolved = true; },
+      storage: { async get(keys){ return keys.map(k => data.get(k) ?? null); }, async set(keys, values){ keys.forEach((k, i) => data.set(k, values[i])); } },
+      platform: { language: "en", isAudioEnabled: true, on(name, cb){ (__bridgeSpy.events[name] ||= []).push(cb); }, sendMessage(m){ __bridgeSpy.messages.push(m); __bridgeSpy.firstFrameAfterInit = __bridgeSpy.initResolved; } },
+      advertisement: { isInterstitialSupported: false, isRewardedSupported: false, on(){}, showInterstitial(){}, showRewarded(){} }
+    };
+  });
+  await page.goto(base.replace("/index.html", "/playgama/index.html") + "#debug");
+  await ready(page);
+  if (await page.locator("#characterSelect.show").count()) await page.locator(".characterChoice").first().tap();
+  await page.waitForTimeout(200);
+  const before = await page.evaluate(async () => ({ spy: __bridgeSpy, platform: __tmb.platform, saved: (await bridge.storage.get(["trust_me_bro_full31_v36_rage_save"]))[0] }));
+  await page.evaluate(() => __bridgeSpy.events[bridge.EVENT_NAME.PAUSE_STATE_CHANGED].forEach(cb => cb(true)));
+  await page.waitForTimeout(50);
+  const paused = await page.evaluate(() => ({ platform: __tmb.platform, audio: __tmb.audio }));
+  await page.evaluate(() => __bridgeSpy.events[bridge.EVENT_NAME.PAUSE_STATE_CHANGED].forEach(cb => cb(false)));
+  await page.waitForTimeout(50);
+  const resumed = await page.evaluate(() => __tmb.platform);
+  console.log("S7", JSON.stringify({ before, paused, resumed }));
+  expect(before.spy.initResolved && before.spy.firstFrameAfterInit).toBe(true);
+  expect(before.spy.messages.filter(x => x === "game_ready")).toHaveLength(1);
+  expect(before.spy.localGameSets).toBe(0); expect(JSON.parse(before.saved).v36.v).toBe(36);
+  expect(paused.platform.systemPaused && !paused.platform.loopRunning && paused.audio.paused).toBe(true);
+  expect(!resumed.systemPaused && resumed.loopRunning).toBe(true);
+  await page.close();
+});
+
+test("S8 B2 free continue and optional skip copy", async ({ browser }) => {
+  const page = await browser.newPage(mobile); await boot(page);
+  await page.evaluate(() => __tmbOutOfLives());
+  await expect(page.locator("#outOfLives")).toHaveClass(/show/);
+  await expect(page.locator("#continueBtn")).toHaveText("CONTINUE");
+  await expect(page.locator("#watchAdBtn")).toHaveText("SKIP THIS PART (WATCH AD)");
+  expect(await page.locator("body").innerText()).not.toContain("+10 LIVES");
+  console.log("S8", JSON.stringify({ continue: await page.locator("#continueBtn").innerText(), skip: await page.locator("#watchAdBtn").innerText() }));
   await page.close();
 });
