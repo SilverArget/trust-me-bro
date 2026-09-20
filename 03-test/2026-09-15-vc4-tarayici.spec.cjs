@@ -446,12 +446,13 @@ test("S9 orientation matrix", async ({ browser }) => {
       const box=id=>{const e=document.querySelector(id);if(!e||getComputedStyle(e).display==="none")return null;const r=e.getBoundingClientRect();return{x:r.x,y:r.y,w:r.width,h:r.height}};
       const hud=css(l.hud),timer=css(l.timer),toast=css(l.toast),hint=box("#hint"),joy=box("#joystick"),jump=box("#jumpWrap button"),sprite=p,ps=__tmb.player,player=css({x:ps.x-__tmb.cam,y:l.worldY+ps.y,w:ps.w,h:ps.h});
       const gameVisible=inside(l.gameRect),spriteAspect=sprite&&sprite.w/sprite.h;
-      return { viewport:`${v.w}x${v.h}`,branch:l.isPortrait?'portrait':'landscape',W:+l.W.toFixed(1),H:+l.H.toFixed(1),worldY:+l.worldY.toFixed(1),groundY:+(l.viewOffsetY+l.groundY*l.viewScale).toFixed(1),joyTop:joy&&+joy.y.toFixed(1),jumpTop:jump&&+jump.y.toFixed(1),joyW:+parseFloat(getComputedStyle(document.querySelector('#joystick')).width).toFixed(1),canvas:Math.abs(c.x)<.5&&Math.abs(c.y)<.5&&Math.abs(c.width-v.w)<.5&&Math.abs(c.height-v.h)<.5,scroll:document.documentElement.scrollWidth<=v.w&&document.documentElement.scrollHeight<=v.h,ui:[hud,timer,toast,joy,jump].filter(Boolean).every(inside),controls:!overlap(joy,jump)&&!overlap(joy,hud)&&!overlap(jump,hud),hintInside:!hint||inside(hint),hintClear:!hint||[hud,timer,toast].every(x=>!overlap(hint,x)),player:inside(player),aspect:l.W/l.H<=2.0001,gameVisible,spriteAspect,hasGutter:l.viewOffsetX>.5||l.viewOffsetY>.5,gameBox:l.gameRect,playerBox:player,spriteBox:sprite,dead:__tmb.dead,joy,jump,hud,hint,edge:null};
+      return { viewport:`${v.w}x${v.h}`,branch:l.isPortrait?'portrait':'landscape',W:+l.W.toFixed(1),H:+l.H.toFixed(1),worldY:+l.worldY.toFixed(1),groundY:+(l.viewOffsetY+l.groundY*l.viewScale).toFixed(1),joyTop:joy&&+joy.y.toFixed(1),jumpTop:jump&&+jump.y.toFixed(1),joyW:+parseFloat(getComputedStyle(document.querySelector('#joystick')).width).toFixed(1),jumpW:jump&&+jump.w.toFixed(1),canvas:Math.abs(c.x)<.5&&Math.abs(c.y)<.5&&Math.abs(c.width-v.w)<.5&&Math.abs(c.height-v.h)<.5,scroll:document.documentElement.scrollWidth<=v.w&&document.documentElement.scrollHeight<=v.h,ui:[hud,timer,toast,joy,jump].filter(Boolean).every(inside),controls:!overlap(joy,jump)&&!overlap(joy,hud)&&!overlap(jump,hud),hintInside:!hint||inside(hint),hintClear:!hint||[hud,timer,toast].every(x=>!overlap(hint,x)),player:inside(player),aspect:l.W/l.H<=2.0001,gameVisible,spriteAspect,hasGutter:l.viewOffsetX>.5||l.viewOffsetY>.5,gameBox:l.gameRect,playerBox:player,spriteBox:sprite,dead:__tmb.dead,joy,jump,hud,hint,edge:null};
     });
     if (row.hasGutter) {
       row.edge = await page.evaluate(() => { const c=document.querySelector("#game"),g=c.getContext("2d"),x=1,ys=[.2,.5,.8].map(y=>Math.floor(c.height*y)),rgb=x=>ys.map(y=>Array.from(g.getImageData(x,y,1,1).data.slice(0,3)));return{left:rgb(x),right:rgb(c.width-1-x)}; });
     }
     row.touchMode=!!touchMode;row.spawnSamples=spawnSamples;
+    if (width===390&&height===844) await page.screenshot({path:path.resolve(root,"03-test/2026-09-20-dikey/390x844-jump64.png")});
     if (row.hasGutter || width === height) await page.screenshot({path:path.resolve(root,`test-results/orientation/${width}x${height}.png`)});
     row.texturedGutter=!row.hasGutter||[...row.edge.left,...row.edge.right].every(rgb=>rgb.some(channel=>channel!==0));
     table.push(row); await closeChecked(page);
@@ -466,8 +467,8 @@ test("S9 orientation matrix", async ({ browser }) => {
       expect(r.playerBox.y+r.playerBox.h<=r.jump.y||r.playerBox.x+r.playerBox.w<=r.jump.x||r.playerBox.x>=r.jump.x+r.jump.w,`${r.viewport} player avoids jump`).toBe(true);
     }
     if(r.branch==='landscape'&&r.touchMode){expect(r.spawnSamples).toHaveLength(3);for(const s of r.spawnSamples)expect(s.clear,`${r.viewport} ${s.label} player avoids touch controls`).toBe(true)}
-    if(r.branch==='portrait') expect(r.joyW,`${r.viewport} portrait joystick width`).toBeCloseTo(parseInt(r.viewport)<=700?74:62,0);
-    else expect(r.joyW,`${r.viewport} landscape joystick width`).toBeCloseTo(124,0);
+    if(r.branch==='portrait') { expect(r.joyW,`${r.viewport} portrait joystick width`).toBeCloseTo(parseInt(r.viewport)<=700?74:62,0); if(r.jumpW) expect(r.jumpW,`${r.viewport} portrait jump width`).toBeCloseTo(parseInt(r.viewport)<=700?64:56,0); }
+    else { expect(r.joyW,`${r.viewport} landscape joystick width`).toBeCloseTo(124,0); if(r.jumpW) expect(r.jumpW,`${r.viewport} landscape jump width`).toBeCloseTo(112,0); }
     expect(r.gameVisible,`${r.viewport} game area fully visible`).toBe(true);
     expect(r.spriteAspect,`${r.viewport} sprite aspect preserved`).toBeCloseTo(.552,2);
     expect(r.texturedGutter,`${r.viewport} backdrop gutter non-black`).toBe(true);

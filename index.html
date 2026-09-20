@@ -22,7 +22,7 @@ canvas{display:block;width:100vw;height:100vh;height:100dvh;touch-action:none;-w
 #joystickKnob{position:absolute;left:50%;top:50%;width:48px;height:48px;margin:-24px;border-radius:50%;background:linear-gradient(180deg,#4a7692d8,#24465cd8);border:1.5px solid #e9f7ffbf;box-shadow:0 3px 10px #0007,inset 0 1px 4px #ffffff22;transform:translate(0,0);pointer-events:none}
 #joystickLabel{display:none}
 #jumpWrap{right:max(22px,calc(env(safe-area-inset-right) + 22px))}
-#jumpWrap button{width:112px;height:112px;border-radius:50%;border:1.5px solid #ffffffa8;background:#0e1d2bbd;color:#fff;font-size:36px;font-weight:950;-webkit-user-select:none;user-select:none;box-shadow:0 5px 16px #0007;-webkit-backdrop-filter:blur(5px);backdrop-filter:blur(5px);touch-action:none;opacity:.86}
+#jumpWrap button{position:relative;width:112px;height:112px;border-radius:50%;border:1.5px solid #ffffffa8;background:#0e1d2bbd;color:#fff;font-size:36px;font-weight:950;-webkit-user-select:none;user-select:none;box-shadow:0 5px 16px #0007;-webkit-backdrop-filter:blur(5px);backdrop-filter:blur(5px);touch-action:none;opacity:.86}
 #jumpWrap button:active,#jumpWrap button.pressed{transform:scale(.96);background:#27445ae8}
 #controlHint{display:none;position:fixed;left:0;right:0;bottom:max(150px,calc(env(safe-area-inset-bottom) + 150px));z-index:11;pointer-events:none;opacity:0;transition:opacity 600ms ease;color:#eaf6ff;font:900 12px/1 system-ui;text-shadow:0 2px 5px #000}
 #controlHint.show{display:flex;opacity:1}#controlHint.fade{opacity:0}#controlHint span{position:absolute;transform:translateX(-50%);white-space:nowrap}#controlHint .move{left:max(84px,calc(env(safe-area-inset-left) + 84px))}#controlHint .jump{left:auto;right:max(66px,calc(env(safe-area-inset-right) + 66px));transform:translateX(50%)}
@@ -58,8 +58,8 @@ canvas{display:block;width:100vw;height:100vh;height:100dvh;touch-action:none;-w
 @keyframes bootMove{from{transform:translateX(0)}to{transform:translateX(38px)}}
 @media (hover:hover) and (pointer:fine){.touch{display:none}}
 @media (max-width:700px),(pointer:coarse){#hint{display:none}}
-@media (orientation:portrait){#joystick{width:62px;height:62px}#joystickKnob{width:24px;height:24px;margin:-12px}}
-@media (orientation:portrait) and (max-width:700px){#joystick{width:74px;height:74px;bottom:max(8px,calc(env(safe-area-inset-bottom) + 18px))}#joystickKnob{width:30px;height:30px;margin:-15px}#jumpWrap{bottom:max(8px,calc(env(safe-area-inset-bottom) + 18px))}#jumpWrap button{width:128px;height:128px;font-size:46px}}
+@media (orientation:portrait){#joystick{width:62px;height:62px}#joystickKnob{width:24px;height:24px;margin:-12px}#jumpWrap button{width:56px;height:56px;font-size:18px}#jumpWrap button::after{content:'';position:absolute;inset:-20px;border-radius:50%}}
+@media (orientation:portrait) and (max-width:700px){#joystick{width:74px;height:74px;bottom:max(8px,calc(env(safe-area-inset-bottom) + 18px))}#joystickKnob{width:30px;height:30px;margin:-15px}#jumpWrap{bottom:max(8px,calc(env(safe-area-inset-bottom) + 18px))}#jumpWrap button{width:64px;height:64px;font-size:23px}#jumpWrap button::after{inset:-16px}}
 .lb-container{margin:10px auto;max-height:110px;overflow-y:auto;background:#0004;border:1px solid #ffffff2b;border-radius:12px;padding:8px;font-size:12px;text-align:left;color:#fff;width:100%}.lb-entry{display:flex;justify-content:space-between;padding:4px;border-bottom:1px solid #ffffff10}.lb-entry.highlight{color:#73d5ff;font-weight:900;background:#ffffff10}
 </style>
 </head>
