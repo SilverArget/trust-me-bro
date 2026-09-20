@@ -429,7 +429,15 @@ test("S9 orientation matrix", async ({ browser }) => {
   const viewports = [[360,800,1],[390,844,1],[412,915,1],[768,1024,0],[800,800,0],[908,908,0],[1000,1000,0],[800,360,1],[844,390,1],[915,412,1],[1024,768,0],[1280,720,0],[1920,1080,0],[2560,1080,0]], table = [];
   for (const [width,height,touchMode] of viewports) {
     const page = await checkedPage(browser, { viewport:{width,height}, hasTouch:!!touchMode, isMobile:!!touchMode, deviceScaleFactor:1 });
-    await boot(page,"#debug",100); await page.evaluate(()=>{__tmbPause();__tmbSetProgress(1,1,0,0)}); await page.waitForFunction(()=>__tmb.courierRect,{timeout:1000});
+    await boot(page,"#debug",100);
+    const landscapeTouch=touchMode&&width>height, spawnSamples=[];
+    if(landscapeTouch){
+      const spawnSnap=label=>page.evaluate(label=>{const l=__tmb.layout,p=__tmb.player,box=id=>{const e=document.querySelector(id),r=e&&getComputedStyle(e).display!=="none"&&e.getBoundingClientRect();return r?{x:r.x,y:r.y,w:r.width,h:r.height,right:r.right}:null},css=r=>({x:l.viewOffsetX+r.x*l.viewScale,y:l.viewOffsetY+r.y*l.viewScale,w:r.w*l.viewScale,h:r.h*l.viewScale}),player=css({x:p.x-__tmb.cam,y:l.worldY+p.y,w:p.w,h:p.h}),joy=box("#joystick"),jump=box("#jumpWrap button"),move=box("#controlHint .move"),overlap=(a,b)=>!!a&&!!b&&a.x<b.x+b.w&&a.x+a.w>b.x&&a.y<b.y+b.h&&a.y+a.h>b.y;return{label,player,joy,jump,move,padLeft:l.cameraPadLeft,clear:[joy,jump,move].every(x=>!overlap(player,x))}},label);
+      await page.evaluate(()=>__tmbSetProgress(1,1,0,0));await page.waitForTimeout(50);spawnSamples.push(await spawnSnap("boot50"));
+      if(width===844){await page.screenshot({path:path.resolve(root,"03-test/2026-09-20-yatay/844x390-spawn-after.png")});}
+      await page.keyboard.press("k");await page.waitForFunction(()=>__tmb.dead);await page.waitForFunction(()=>!__tmb.dead,{timeout:3000});await page.waitForTimeout(50);spawnSamples.push(await spawnSnap("respawn50"));await page.waitForTimeout(950);spawnSamples.push(await spawnSnap("respawn1000"));
+    }
+    await page.evaluate(()=>{__tmbPause();__tmbSetProgress(1,1,0,0)}); await page.waitForFunction(()=>__tmb.courierRect,{timeout:1000});
     const row = await page.evaluate(() => {
       const v={w:innerWidth,h:innerHeight}, c=document.querySelector("#game").getBoundingClientRect(), l=__tmb.layout, p=__tmb.courierRect;
       const css=r=>({x:l.viewOffsetX+r.x*l.viewScale,y:l.viewOffsetY+r.y*l.viewScale,w:r.w*l.viewScale,h:r.h*l.viewScale});
@@ -443,7 +451,7 @@ test("S9 orientation matrix", async ({ browser }) => {
     if (row.hasGutter) {
       row.edge = await page.evaluate(() => { const c=document.querySelector("#game"),g=c.getContext("2d"),x=1,ys=[.2,.5,.8].map(y=>Math.floor(c.height*y)),rgb=x=>ys.map(y=>Array.from(g.getImageData(x,y,1,1).data.slice(0,3)));return{left:rgb(x),right:rgb(c.width-1-x)}; });
     }
-    row.touchMode=!!touchMode;
+    row.touchMode=!!touchMode;row.spawnSamples=spawnSamples;
     if (row.hasGutter || width === height) await page.screenshot({path:path.resolve(root,`test-results/orientation/${width}x${height}.png`)});
     row.texturedGutter=!row.hasGutter||[...row.edge.left,...row.edge.right].every(rgb=>rgb.some(channel=>channel!==0));
     table.push(row); await closeChecked(page);
@@ -457,6 +465,7 @@ test("S9 orientation matrix", async ({ browser }) => {
       expect(r.playerBox.y+r.playerBox.h<=r.joy.y||r.playerBox.x+r.playerBox.w<=r.joy.x||r.playerBox.x>=r.joy.x+r.joy.w,`${r.viewport} player avoids joystick`).toBe(true);
       expect(r.playerBox.y+r.playerBox.h<=r.jump.y||r.playerBox.x+r.playerBox.w<=r.jump.x||r.playerBox.x>=r.jump.x+r.jump.w,`${r.viewport} player avoids jump`).toBe(true);
     }
+    if(r.branch==='landscape'&&r.touchMode){expect(r.spawnSamples).toHaveLength(3);for(const s of r.spawnSamples)expect(s.clear,`${r.viewport} ${s.label} player avoids touch controls`).toBe(true)}
     if(r.branch==='portrait') expect(r.joyW,`${r.viewport} portrait joystick width`).toBeCloseTo(parseInt(r.viewport)<=700?74:62,0);
     else expect(r.joyW,`${r.viewport} landscape joystick width`).toBeCloseTo(124,0);
     expect(r.gameVisible,`${r.viewport} game area fully visible`).toBe(true);
