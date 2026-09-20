@@ -311,18 +311,25 @@ function rageFamily(level){
  if(!family.some(name=>RAGE_PARTS[name].length===PART_COUNT))family[family.length-1]='coinBite';
  return family;
 }
-function selectRageMembers(family,part){
+function ragePatternCount(level){return level===31?3:level>=16?2:1}
+function selectRageMembers(family,part,count=1,offset=0){
  const eligible=family.filter(name=>RAGE_POOL.includes(name)&&RAGE_PARTS[name].includes(part));
- return eligible.length?[eligible[(part-1)%eligible.length]]:[];
+ if(!eligible.length)return[];
+ return Array.from({length:Math.min(count,eligible.length)},(_,i)=>eligible[(part-1+offset+i)%eligible.length]);
 }
-function ragePatterns(level,part){
- const selected=selectRageMembers(rageFamily(level),part);
+function ragePatternRange(name,level,part){const a=buildScene(level,part).anchors,c=coinPos(SCENES[level-1],part);return name==='coinBite'?[c.x-28,c.x+56]:name==='rearBite'?[a.trial.x0+90,a.trial.x0+215]:name==='floorPop'?[a.hazard,a.hazard+86]:name==='sweeper'?[a.repeatEnd,a.repeatEnd+38]:name==='exitDrop'?[a.repeat,a.repeat+58]:name==='hunter'?[a.trial.x0+20,a.trial.x0+50]:[a.lastStep,a.lastStep+64]}
+function ragePatterns(level,part,deathCount=partDeaths){
+ const family=rageFamily(level),eligible=family.filter(name=>RAGE_POOL.includes(name)&&RAGE_PARTS[name].includes(part)),wanted=ragePatternCount(level),start=part-1+(deathCount>=2?1:0),selected=[];
+ for(let i=0;i<eligible.length&&selected.length<wanted;i++){const name=eligible[(start+i)%eligible.length],range=ragePatternRange(name,level,part);if(selected.every(other=>{const r=ragePatternRange(other,level,part);return range[1]<=r[0]||r[1]<=range[0]}))selected.push(name)}
  if(selected.length)return selected;
  const key=level+'.'+part;
  if(!RAGE_FALLBACKS.has(key)){RAGE_FALLBACKS.set(key,{level,part,trap:'coinBite'});console.warn('RAGE_FALLBACK '+key+' -> coinBite')}
  return ['coinBite'];
 }
 function rageHas(name){return !!(rt&&rt.rage&&rt.rage.patterns.includes(name))}
+const WARNING_SCALE_END=.70,WARNING_MIN_ABS=.67;
+function warnScale(level){return 1-(Math.max(1,Math.min(SCENE_COUNT,level))-1)*(1-WARNING_SCALE_END)/(SCENE_COUNT-1)}
+function warningDelay(base,level=currentLevel,deathCount=partDeaths){return Math.max(WARNING_MIN_ABS,base*warnScale(level)*(deathCount>=4?.9:1))}
 const GEOMETRY={
  1:{gaps:[[300,420]],platforms:[[320,-58,82]]},
  3:{gaps:[[270,560]],platforms:[[290,-54,92],[430,-82,96]]},
@@ -581,19 +588,19 @@ function collectCoin(){if(collected.has(currentLevel*16+currentPart))return;cons
 function updateJuice(dt){shakeT=Math.max(0,shakeT-dt);for(let i=particles.length-1;i>=0;i--){const p=particles[i];p.t-=dt;if(p.bubble){p.phase+=dt*5;p.x+=(p.vx+Math.sin(p.phase)*8)*dt;p.y+=p.vy*dt}else{p.vy+=260*dt;p.x+=p.vx*dt;p.y+=p.vy*dt}if(p.t<=0)particles.splice(i,1)}}
 function updateBreath(dt){const underwater=['sea','underwater'].includes(region().name);if(!underwater){for(let i=particles.length-1;i>=0;i--)if(particles[i].bubble)particles.splice(i,1);breathT=.35;return}breathT-=dt;if(breathT>0)return;breathCycle++;breathT=.62+(breathCycle*7%5)*.08;let count=particles.reduce((n,p)=>n+(p.bubble?1:0),0);for(let i=0;i<2&&count<10;i++,count++){const life=1.05+i*.16;particles.push({bubble:true,x:player.x+player.w/2+player.facing*(10+i*3),y:player.y+9-i*3,vx:player.facing*(3+i*2),vy:-34-i*7,t:life,life,r:2+i*.7,c:'#c9f7ff',phase:(breathCycle+i)*1.7})}}
 function updateFish(dt){
- const FISH_PERIOD=3.0,FISH_TELEGRAPH=.40;
+ const FISH_PERIOD=3.0,FISH_TELEGRAPH=warningDelay(.40);
  for(const fish of rt.fish){const clock=rt.t+fish.phase,cycle=Math.floor(clock/FISH_PERIOD),local=clock-cycle*FISH_PERIOD;if(cycle!==fish.cycle){fish.cycle=cycle;fish.bounced=false}fish.warn=Math.max(0,FISH_TELEGRAPH-local);fish.state=local<FISH_TELEGRAPH?1:local<1.40?2:0;
   if(fish.x<cam-500||fish.x>cam+W+500)continue;if(fish.state===2){const flight=local-FISH_TELEGRAPH;fish.vy=-620+1450*flight;fish.y=GROUND-620*flight+725*flight*flight}else fish.y=GROUND;
   if(fish.state===2&&rt.boostT<=0&&!fish.bounced&&hitHurt({x:fish.x-22,y:fish.y-13,w:44,h:26})){player.vy=-260;player.onGround=false;fish.bounced=true;}
  }
 }
-function updateLaunchPads(dt){for(const pad of rt.launchPads){const p=pad.box,cx=player.x+player.w/2,near=Math.abs(cx-(p.x+p.w/2))<=120&&Math.abs(player.y+player.h-(p.y+p.h))<=70;if(near&&!pad.used)pad.warn=.45;else pad.warn=Math.max(0,pad.warn-dt);const stepped=!pad.used&&player.vy>=0&&player.x+player.w>p.x&&player.x<p.x+p.w&&Math.abs(player.y+player.h-p.y)<=3;if(stepped){const distance=pad.targetX-cx;const lvx=pad.launchVX||900;pad.used=true;pad.warn=0;player.vx=lvx;player.vy=-520;player.onGround=false;rt.boostVX=lvx;rt.boostT=distance/lvx+.12}}}
-function updateEnemies(dt){const hb=hurtbox(),pc=player.x+player.w/2,pb=player.y+player.h;for(const e of rt.enemies){if(e.dead)continue;if(e.betray>0){e.betray=Math.max(0,e.betray-dt);if(e.betray===0&&e.fake)e.dead=true;}if(e.type==='forklift'){const{left,right}=enemyPatrolRange(e,sceneStart()),phase=(rt.t+e.offset)%e.period;if(phase<e.crossT){e.visible=true;e.x=e.dir>0?Math.min(right,left+260*phase):Math.max(left,right-260*phase)}else e.visible=false;if(e.visible&&pb<=e.surf.y+2&&hitHurt(e))kill('Forklift priority was absolute.','crush');continue}if(e.type==='walker'){const{left,span}=enemyPatrolRange(e,sceneStart()),travel=span/110;if(travel>0){const phase=(rt.t+e.offset)%(travel*2);e.x=left+(phase<travel?phase:travel*2-phase)*110}else e.x=left}const near=Math.abs(pc-(e.x+e.w/2))<(e.type==='crate'?260:300)&&Math.abs(pb-e.surf.y)<120;if(e.type==='crate'){if(e.state==='sleep'&&near){e.state='warn';e.warnT=.45}else if(e.state==='warn'&&(e.warnT-=dt)<=0)e.state='awake';if(e.state==='awake'&&e.surf.w>=100){e.dir=pc<e.x+e.w/2?-1:1;const{left,right}=enemyPatrolRange(e,sceneStart());e.x=Math.max(left,Math.min(right,e.x+e.dir*150*dt))}}const stomp=player.vy>0&&hb.x+hb.w>e.x&&hb.x<e.x+e.w&&pb>=e.y&&pb<=e.y+14;if(stomp){if(e.type==='walker'||!e.fake){e.dead=true;player.vy=-380;player.onGround=false}else{e.betray=.18;player.vy=-620;player.onGround=false}continue}if(pb<=e.surf.y+2&&hitHurt(e))kill(e.type==='crate'?'The crate filed a hostile claim.':'The walker owned the aisle.','slap')}}
+function updateLaunchPads(dt){for(const pad of rt.launchPads){const p=pad.box,cx=player.x+player.w/2,near=Math.abs(cx-(p.x+p.w/2))<=120&&Math.abs(player.y+player.h-(p.y+p.h))<=70;if(near&&!pad.used)pad.warn=warningDelay(.45);else pad.warn=Math.max(0,pad.warn-dt);const stepped=!pad.used&&player.vy>=0&&player.x+player.w>p.x&&player.x<p.x+p.w&&Math.abs(player.y+player.h-p.y)<=3;if(stepped){const distance=pad.targetX-cx;const lvx=pad.launchVX||900;pad.used=true;pad.warn=0;player.vx=lvx;player.vy=-520;player.onGround=false;rt.boostVX=lvx;rt.boostT=distance/lvx+.12}}}
+function updateEnemies(dt){const hb=hurtbox(),pc=player.x+player.w/2,pb=player.y+player.h;for(const e of rt.enemies){if(e.dead)continue;if(e.betray>0){e.betray=Math.max(0,e.betray-dt);if(e.betray===0&&e.fake)e.dead=true;}if(e.type==='forklift'){const{left,right}=enemyPatrolRange(e,sceneStart()),phase=(rt.t+e.offset)%e.period;if(phase<e.crossT){e.visible=true;e.x=e.dir>0?Math.min(right,left+260*phase):Math.max(left,right-260*phase)}else e.visible=false;if(e.visible&&pb<=e.surf.y+2&&hitHurt(e))kill('Forklift priority was absolute.','crush');continue}if(e.type==='walker'){const{left,span}=enemyPatrolRange(e,sceneStart()),travel=span/110;if(travel>0){const phase=(rt.t+e.offset)%(travel*2);e.x=left+(phase<travel?phase:travel*2-phase)*110}else e.x=left}const near=Math.abs(pc-(e.x+e.w/2))<(e.type==='crate'?260:300)&&Math.abs(pb-e.surf.y)<120;if(e.type==='crate'){if(e.state==='sleep'&&near){e.state='warn';e.warnT=warningDelay(.45)}else if(e.state==='warn'&&(e.warnT-=dt)<=0)e.state='awake';if(e.state==='awake'&&e.surf.w>=100){e.dir=pc<e.x+e.w/2?-1:1;const{left,right}=enemyPatrolRange(e,sceneStart());e.x=Math.max(left,Math.min(right,e.x+e.dir*150*dt))}}const stomp=player.vy>0&&hb.x+hb.w>e.x&&hb.x<e.x+e.w&&pb>=e.y&&pb<=e.y+14;if(stomp){if(e.type==='walker'||!e.fake){e.dead=true;player.vy=-380;player.onGround=false}else{e.betray=.18;player.vy=-620;player.onGround=false}continue}if(pb<=e.surf.y+2&&hitHurt(e))kill(e.type==='crate'?'The crate filed a hostile claim.':'The walker owned the aisle.','slap')}}
 function updateCounterTraps(dt){if(currentLevel<=10)return;const sc=scene(),a=rt.a;
  // speed liability: oil only steals grip, never reverses controls
  if((sc.counter==='speed'||sc.counter==='both')&&speedLevel){const oil=rt.oil;if(player.onGround&&hit(player,{x:oil.x,y:GROUND-12,w:oil.w,h:12})&&Math.abs(player.vx)>245){rt.slip=.85;rt.counterUsed=true;toast='SPEED BUILD DETECTED: grip revoked.';toastT=.7}if(rt.slip){rt.slip=Math.max(0,rt.slip-dt)}}
  // jump liability: high air route calls a cloud hand, but gives a visible beat
- if((sc.counter==='jump'||sc.counter==='both')&&jumpLevel&&!rt.cloudDone&&player.x>sc.start+a.betrayal.x0&&player.x<sc.start+a.betrayal.x1&&player.y<GROUND-125){if(!rt.cloudWarn){rt.cloudWarn=.38;rt.cloudX=player.x;toast='AIRSPACE VIOLATION.';toastT=.55}else{rt.cloudWarn-=dt;if(rt.cloudWarn<=0){const hand={x:rt.cloudX-8,y:GROUND-250,w:48,h:52};rt.hand=hand;rt.cloudVy=60;rt.cloudWarn=-999}}}
+ if((sc.counter==='jump'||sc.counter==='both')&&jumpLevel&&!rt.cloudDone&&player.x>sc.start+a.betrayal.x0&&player.x<sc.start+a.betrayal.x1&&player.y<GROUND-125){if(!rt.cloudWarn){rt.cloudWarn=warningDelay(.38,sc.level);rt.cloudX=player.x;toast='AIRSPACE VIOLATION.';toastT=.55}else{rt.cloudWarn-=dt;if(rt.cloudWarn<=0){const hand={x:rt.cloudX-8,y:GROUND-250,w:48,h:52};rt.hand=hand;rt.cloudVy=60;rt.cloudWarn=-999}}}
  if(rt.hand){rt.cloudVy+=1800*dt;rt.hand.y+=rt.cloudVy*dt;if(hitHurt(rt.hand))kill('Cloud moderation was immediate.','slap');if(rt.hand.y>GROUND+40){rt.hand=null;rt.cloudDone=true}}
 }
 
@@ -601,7 +608,7 @@ function updateCounterTraps(dt){if(currentLevel<=10)return;const sc=scene(),a=rt
 function updateRageLayer(dt){
  if(dead||won||upgradePending||!rt||!rt.rage)return;
   const sc=scene(),st=sc.start,X=x=>st+x,a=rt.a,cp=coinPos(sc,currentPart),R=rt.rage;
- const warn=Math.max(.24,.43-sc.level*.0045);
+ const warn=warningDelay(Math.max(.24,.43-sc.level*.0045),sc.level);
  const activate=(obj,msg,duration=.5)=>{if(obj.warnText){toast=msg;toastT=duration;obj.warnText=''}};
  // Coin bait: the coin itself wakes the floor. Jumping in after the flash is always valid.
  if(rageHas('coinBite')&&!collected.has(currentLevel*16+currentPart)){
@@ -624,13 +631,13 @@ function updateRageLayer(dt){
  }
  // Ground sweeper from ahead: visible warning, then one pass. Jumpable.
  if(rageHas('sweeper')){
-   const S=R.sweep;if(S.state===0&&player.x>st+a.repeatTrigger){S.state=1;S.warn=warn+.06;S.warnText='CLEANUP CREW INBOUND.'}
+   const S=R.sweep;if(S.state===0&&player.x>st+a.repeatTrigger){S.state=1;S.warn=warningDelay(Math.max(.24,.43-sc.level*.0045)+.06,sc.level);S.warnText='CLEANUP CREW INBOUND.'}
   if(S.state===1&&(S.warn-=dt)<=0){S.state=2;S.vx=-(235+sc.level*3.2);activate(S,'CLEANUP CREW INBOUND.')}
   if(S.state===2){S.x+=S.vx*dt;const box=anchorRageSpike(buildScene(sc.level,currentPart).surfaces,st,S.x,S.w,S.h);Object.assign(S,box);if(S.enabled&&hitHurt(S))kill('Warehouse cleanup included you.','crush');if(S.x<st+a.mastery.x0)S.state=3}
  }
  // Exit crusher: only after the coin, so it becomes a second punch right before safety.
  if(rageHas('exitDrop')&&collected.has(currentLevel*16+currentPart)){
-   const E=R.exit;if(E.state===0&&player.x>st+a.repeatTrigger){E.state=1;E.warn=Math.max(.50,warn+.02);E.warnText='EXIT SAFETY CHECK.'}
+   const E=R.exit;if(E.state===0&&player.x>st+a.repeatTrigger){E.state=1;E.warn=warningDelay(Math.max(.50,Math.max(.24,.43-sc.level*.0045)+.02),sc.level);E.warnText='EXIT SAFETY CHECK.'}
   if(E.state===1&&(E.warn-=dt)<=0){E.state=2;activate(E,'EXIT SAFETY CHECK.')}
   if(E.state===2){E.block.vy+=1280*dt;E.block.y+=E.block.vy*dt;if(E.block.enabled&&E.block.vy>0&&hitHurt(E.block)&&Math.abs(hurtbox().y-(E.block.y+E.block.h))<=15)kill('The exit checked your head clearance.','crush');if(!E.block.enabled||E.block.y>=E.block.targetY){E.block.y=E.block.targetY;E.state=3}}
  }
@@ -653,7 +660,7 @@ function updateTrap(dt){
  const sc=scene(),a=rt.a,t=a.trap,X=x=>sc.start+x,T={...t,body:{...t.body,x:X(t.body.x)},lane:{...t.lane,x:X(t.lane.x)},platform:{...t.platform,x:X(t.platform.x)},finish:{...t.finish,x:X(t.finish.x)},beam:{...t.beam,x:X(t.beam.x)},repeat:{...t.repeat,x:X(t.repeat.x)}};
  rt.t+=dt;const cp=coinPos(sc,currentPart),trigger=X(T.trigger),end=X(T.triggerEnd);
  const GROUND_ARM_Y=100,CEILING_ARM_Y=400,TOP_BLOCK_WARNING_MIN=.8,groundArmed=['rollingBarrel','speedWall','chaser','risingSpikes','runDoor'].includes(sc.trap),ceilingArmed=['signDrop','ceiling','jumpBait','crateRain','checkpointBetrayal','finale'].includes(sc.trap);
- const arm=(delay=.36,msg='')=>{const groundInRange=Math.abs((player.y+player.h)-GROUND)<=GROUND_ARM_Y,belowBlock=player.y>=rt.block.y+rt.block.h&&player.y-(rt.block.y+rt.block.h)<=CEILING_ARM_Y,yInRange=groundArmed?groundInRange:ceilingArmed?belowBlock:true;if(!rt.armed&&player.x>trigger&&yInRange){rt.armed=true;rt.warning=delay;rt.warnText=msg}};
+ const arm=(delay=.36,msg='')=>{const groundInRange=Math.abs((player.y+player.h)-GROUND)<=GROUND_ARM_Y,belowBlock=player.y>=rt.block.y+rt.block.h&&player.y-(rt.block.y+rt.block.h)<=CEILING_ARM_Y,yInRange=groundArmed?groundInRange:ceilingArmed?belowBlock:true;if(!rt.armed&&player.x>trigger&&yInRange){rt.armed=true;rt.warning=warningDelay(delay,sc.level);rt.warnText=msg}};
  const falling=(acc=1300,msg='Warehouse policy applied.')=>{rt.warning-=dt;if(rt.warning<=0){rt.block.x=T.body.x;rt.block.vy+=acc*dt;rt.block.y+=rt.block.vy*dt;const hb=hurtbox();if(hit(hb,rt.block)){if(rt.block.vy>0&&Math.abs(hb.y-(rt.block.y+rt.block.h))<=15)kill(msg,'crush');else{if(hb.x+hb.w/2<rt.block.x+rt.block.w/2)player.x=rt.block.x-player.w;else player.x=rt.block.x+rt.block.w;player.vx=0}}if(rt.block.y>GROUND+40)rt.done=true}};
  switch(sc.trap){
   case'signDrop':arm(Math.max(TOP_BLOCK_WARNING_MIN,.28),'CHECKPOINT APPROVED.');if(rt.armed&&!rt.done)falling(1350,'Checkpoint checked you.');break;
@@ -662,8 +669,8 @@ function updateTrap(dt){
   case'chaser':arm(0,'RED OBJECT HAS LOCKED ON.');if(rt.armed&&!rt.done){const d=Math.sign(player.x-rt.chaser.x);rt.chaser.vx=Math.max(-300,Math.min(300,rt.chaser.vx+d*900*dt));rt.chaser.x+=rt.chaser.vx*dt;if(player.onGround&&player.y+player.h<GROUND-30&&player.x>trigger&&player.x<end)rt.done=true;if(!rt.done&&hitHurt(rt.chaser))kill('High ground existed.','spike')}break;
   case'keyGate':arm(.42,'FREE KEY. TOTALLY FREE.');if(rt.armed&&!rt.done){rt.warning-=dt;if(rt.warning<=0){rt.wall.vy=(rt.wall.vy||0)+900*dt;rt.wall.y+=rt.wall.vy*dt;if(hitHurt(rt.wall))kill('The key unlocked gravity.','crush');if(rt.wall.y>GROUND)rt.done=true}}break;
   case'runDoor':arm(0,'DELIVERY POINT RELOCATING.');if(rt.armed&&!rt.done){rt.door.vx=Math.min(250,rt.door.vx+360*dt);rt.door.x+=rt.door.vx*dt;if(rt.door.x>end)rt.done=true}break;
-  case'coinSpikes':if(collected.has(currentLevel*16+currentPart)&&!rt.coinArmed){rt.coinArmed=true;rt.warning=.32}if(rt.coinArmed&&(rt.warning-=dt)<=0){rt.spikes=true;if(hitHurt(T.lane))kill('Coin receipt included spikes.','spike')}break;
-  case'safePlat':case'ghostPlat':case'shadowPlat':case'delayedGhost':{const p=rt.platform,onSurface=player.onGround&&player.x+player.w>p.x&&player.x<p.x+p.w&&Math.abs(player.y+player.h-p.y)<=2;if(p.active&&onSurface){if(!rt.armed){rt.armed=true;rt.warning=sc.trap==='delayedGhost'?.80:.45}if((rt.warning-=dt)<=0){p.active=false;player.onGround=false}}break}
+  case'coinSpikes':if(collected.has(currentLevel*16+currentPart)&&!rt.coinArmed){rt.coinArmed=true;rt.warning=warningDelay(.32,sc.level)}if(rt.coinArmed&&(rt.warning-=dt)<=0){rt.spikes=true;if(hitHurt(T.lane))kill('Coin receipt included spikes.','spike')}break;
+  case'safePlat':case'ghostPlat':case'shadowPlat':case'delayedGhost':{const p=rt.platform,onSurface=player.onGround&&player.x+player.w>p.x&&player.x<p.x+p.w&&Math.abs(player.y+player.h-p.y)<=2;if(p.active&&onSurface){if(!rt.armed){rt.armed=true;rt.warning=warningDelay(sc.trap==='delayedGhost'?.80:.45,sc.level)}if((rt.warning-=dt)<=0){p.active=false;player.onGround=false}}break}
   case'fakeReward':{const R=fakeRewardBox(T);if(!rt.done&&hitHurt(R)){rt.done=true;kill('Complimentary benefits were terminal.','slap')}break;}
   case'speedWall':arm(.32,'SPEED CHECK.');if(rt.armed&&!rt.done&&(rt.warning-=dt)<=0){rt.wall.vx=Math.max(-360,rt.wall.vx-850*dt);rt.wall.x+=rt.wall.vx*dt;if(hitHurt(rt.wall))kill('Brake pedal DLC unavailable.','crush');if(rt.wall.x<trigger)rt.done=true}break;
   case'rollingBarrel':arm(.31);if(rt.armed&&!rt.done&&(rt.warning-=dt)<=0){rt.barrel.vx=Math.max(-280,rt.barrel.vx-500*dt);rt.barrel.x+=rt.barrel.vx*dt;if(hitHurt(rt.barrel))kill('Barrel won the lane.','crush');if(rt.barrel.x<trigger)rt.done=true}break;
@@ -673,7 +680,7 @@ function updateTrap(dt){
   case'fakeFinish':case'fakeFinish2':if(hitHurt(T.finish))kill('FINISH* not legally binding.','slap');break;
   case'lowBeam':if(player.vy<0&&hitHurt(T.beam))kill('Low clearance meant low clearance.','crush');break;
   case'oilLane':if(player.onGround&&hit(player,T.lane)&&Math.abs(player.vx)>220)rt.slip=.8;if(hitHurt(T.repeat))kill('Momentum invoice due.','spike');if(rt.slip)rt.slip=Math.max(0,rt.slip-dt);break;
-  case'steamPipe':{const p=rt.pipes[0];if(player.onGround&&hit(player,p)){if(!rt.armed){rt.armed=true;rt.warning=.45}if((rt.warning-=dt)<=0){rt.steam=true;if(hitHurt({x:p.x+42,y:p.y-88,w:48,h:88}))kill('Pipe was personal.','slap')}}}break;
+  case'steamPipe':{const p=rt.pipes[0];if(player.onGround&&hit(player,p)){if(!rt.armed){rt.armed=true;rt.warning=warningDelay(.45,sc.level)}if((rt.warning-=dt)<=0){rt.steam=true;if(hitHurt({x:p.x+42,y:p.y-88,w:48,h:88}))kill('Pipe was personal.','slap')}}}break;
   case'lightning':arm(.48,'WEATHER ALERT.');if(rt.armed&&!rt.done&&(rt.warning-=dt)<=0){rt.strike.active=true;rt.strike.x=player.x;if(hitHurt({x:rt.strike.x-18,y:60,w:36,h:GROUND-60}))kill('Forecast accuracy: 100%.','slap');rt.done=true}break;
   case'spring':if(player.onGround&&hit(player,{...T.lane,h:16,y:GROUND-16})&&!rt.armed){rt.armed=true;player.vy=-800;player.onGround=false}if(rt.armed&&player.y<GROUND-150&&player.x<end)kill('Ceiling accepted your application.','crush');break;
   case'doubleDoor':arm(.35);if(rt.armed&&!rt.done&&(rt.warning-=dt)<=0){rt.door.x-=250*dt;if(hitHurt(rt.door))kill('Door one filed a complaint.','crush');if(rt.door.x<trigger)rt.done=true}break;
@@ -756,7 +763,7 @@ function drawCharacterPortraits(){document.querySelectorAll('.characterChoice').
   g.drawImage(spriteCanvas(SPRITE_NAMES[id],'idle'),0,0,16,24,(p.width-w)/2,(p.height-h)/2,w,h);
  }
 })}
-function drawCourier(){const p=player,id=Math.max(0,Math.min(3,characterId|0)),name=SPRITE_NAMES[id],run=p.onGround&&Math.abs(p.vx)>18,frame=!p.onGround&&!dead?'jump':run?['step','idle','step2','idle'][Math.floor(p.walkPhase/26)%4]:'idle',frameIndex={idle:0,step:1,step2:2,jump:3}[frame],cx=p.x+p.w/2,bottom=p.y+p.h;ctx.save();if(spawnGrace>0&&Math.floor(performance.now()/90)%2===0)ctx.globalAlpha=.35;if(dead)ctx.globalAlpha=.68;const surfaces=[...cachedGroundSegments,...cachedStaticPlatforms,...(rt.platform.active?[rt.platform]:[]),...(rt.returnStairsActive?rt.returnStairs:[]),...rt.pipes.filter(p=>p.solid)],surface=solidSurfaces(surfaces).filter(s=>s.visible!==false&&s.x<=cx&&cx<=s.x+s.w&&s.y>=bottom).sort((a,b)=>a.y-b.y)[0];if(surface){const h=surface.y-bottom;if(h<=260){const k=1-h/260;ctx.fillStyle=`rgba(5,9,13,${.10+.43*k})`;ctx.beginPath();ctx.ellipse(cx,surface.y,8+11*k,2.5+2.5*k,0,0,Math.PI*2);ctx.fill()}}ctx.translate(cx,p.y+p.h/2);if(dead){ctx.rotate(p.facing*.9);ctx.translate(4,8)}if(id===3){ctx.save();ctx.globalAlpha*=.3;const handX=12,handY=2,fg=ctx.createLinearGradient(handX,handY,handX+p.facing*30,handY);fg.addColorStop(0,'rgba(255,243,176,1)');fg.addColorStop(1,'rgba(255,243,176,0)');ctx.fillStyle=fg;ctx.beginPath();ctx.moveTo(handX+p.facing*3,handY-3);ctx.lineTo(handX+p.facing*30,handY-10);ctx.lineTo(handX+p.facing*30,handY+10);ctx.lineTo(handX+p.facing*3,handY+3);ctx.closePath();ctx.fill();ctx.restore()}ctx.scale(p.facing,1);ctx.imageSmoothingEnabled=false;const png=PNG_SPRITES[id],image=png.image;if(png.loaded&&!png.failed&&image.complete&&image.naturalWidth>0){const scale=PNG_SPRITE_SCALE[id],drawW=PNG_SPRITE_CELL_W*scale,drawH=PNG_SPRITE_CELL_H*scale;ctx.drawImage(image,frameIndex*PNG_SPRITE_CELL_W,0,PNG_SPRITE_CELL_W,PNG_SPRITE_CELL_H,-drawW/2,p.h/2-drawH,drawW,drawH)}else ctx.drawImage(spriteCanvas(name,frame),0,0,16,24,-p.w/2,-p.h/2,p.w,p.h);ctx.restore()}
+function drawCourier(){const p=player,id=Math.max(0,Math.min(3,characterId|0)),name=SPRITE_NAMES[id],run=p.onGround&&Math.abs(p.vx)>18,frame=!p.onGround&&!dead?'jump':run?['step','idle','step2','idle'][Math.floor(p.walkPhase/26)%4]:'idle',frameIndex={idle:0,step:1,step2:2,jump:3}[frame],cx=p.x+p.w/2,bottom=p.y+p.h;ctx.save();if(spawnGrace>0&&Math.floor(performance.now()/90)%2===0)ctx.globalAlpha=.35;if(dead)ctx.globalAlpha=.68;const surfaces=[...cachedGroundSegments,...cachedStaticPlatforms,...(rt.platform.active?[rt.platform]:[]),...(rt.returnStairsActive?rt.returnStairs:[]),...rt.pipes.filter(p=>p.solid)],surface=solidSurfaces(surfaces).filter(s=>s.visible!==false&&s.x<=cx&&cx<=s.x+s.w&&s.y>=bottom).sort((a,b)=>a.y-b.y)[0];if(surface){const h=surface.y-bottom;if(h<=260){const k=1-h/260;ctx.fillStyle=`rgba(5,9,13,${.10+.43*k})`;ctx.beginPath();ctx.ellipse(cx,surface.y,8+11*k,2.5+2.5*k,0,0,Math.PI*2);ctx.fill()}}ctx.translate(cx,p.y+p.h/2);if(dead){ctx.rotate(p.facing*.9);ctx.translate(4,8)}ctx.scale(p.facing,1);ctx.imageSmoothingEnabled=false;const png=PNG_SPRITES[id],image=png.image;if(png.loaded&&!png.failed&&image.complete&&image.naturalWidth>0){const scale=PNG_SPRITE_SCALE[id],drawW=PNG_SPRITE_CELL_W*scale,drawH=PNG_SPRITE_CELL_H*scale;ctx.drawImage(image,frameIndex*PNG_SPRITE_CELL_W,0,PNG_SPRITE_CELL_W,PNG_SPRITE_CELL_H,-drawW/2,p.h/2-drawH,drawW,drawH)}else ctx.drawImage(spriteCanvas(name,frame),0,0,16,24,-p.w/2,-p.h/2,p.w,p.h);ctx.restore()}
 primeSpriteCache();drawCharacterPortraits();
 function drawParticles(){for(const p of particles){ctx.save();ctx.globalAlpha=p.bubble?Math.min(.85,p.t/p.life):Math.min(1,p.t*3);ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);if(p.bubble){ctx.strokeStyle=p.c;ctx.lineWidth=1.2;ctx.stroke()}else{ctx.fillStyle=p.c;ctx.fill()}ctx.restore()}}
 function drawFish(){
@@ -930,7 +937,7 @@ if(DEBUG_HOOKS){
  };
  window.__tmbOutOfLives=function(){lives=0;dead=false;handleRunEnd();return openOutOfLives()};
  window.__tmbPause=()=>pauseGame('debug');
- window.__tmbSetProgress=function(level,part,coinCount,deathCount){currentLevel=level;currentPart=part;deaths=deathCount;collected.clear();for(let p=1;p<=coinCount;p++)collected.add(16+p);coins=collected.size;dead=false;resetScene(false);draw()};
+ window.__tmbSetProgress=function(level,part,coinCount,deathCount){currentLevel=level;currentPart=part;deaths=deathCount;partDeaths=0;collected.clear();for(let p=1;p<=coinCount;p++)collected.add(16+p);coins=collected.size;dead=false;resetScene(false);draw()};
  window.__tmbExitTestSetup=function(mode){partDeaths=8;collected.add(currentLevel*16+currentPart);spawnGrace=0;lives=10;const st=sceneStart();if(mode==='full'){player.x=st+1803+5;player.y=275-player.h;player.vx=255;player.vy=0;player.onGround=true}if(mode==='landing'){player.x=st+1803+5;player.y=275-player.h-70;player.vx=255;player.vy=430;player.onGround=false}if(mode==='crumble'){player.x=rt.platform.x+18;player.y=rt.platform.y-player.h;player.vx=0;player.vy=0;player.onGround=true}window.__exitProbe={mode,clearAt:null,clearY:null,reachAt:null,triggerAt:null,done:false,samples:[],crumbleSeen:false};requestAnimationFrame(function tick(ts){const p=window.__exitProbe;if(!p||p.done)return;const E=rt.rage.exit,hb=hurtbox();if(rt.done)p.crumbleSeen=true;if(E.state>0&&p.triggerAt===null)p.triggerAt=ts;if(E.state>0&&p.clearAt===null&&hb.x>=E.block.x+E.block.w){p.clearAt=ts;p.clearY=hb.y}if(E.state===2&&p.clearY!==null&&p.reachAt===null&&E.block.y+E.block.h>=p.clearY)p.reachAt=ts;if(p.samples.length<400)p.samples.push([ts,E.state,E.block.y,hb.x,hb.y,player.vx]);if(p.clearAt!==null&&p.reachAt!==null){p.windowMs=p.reachAt-p.clearAt;p.done=true;return}requestAnimationFrame(tick)})};
  window.__tmbExitTestRuntime=()=>({trapDone:rt.done});window.__tmbExitTestAfterCrumble=function(){player.x=sceneStart()+1803+5;player.y=275-player.h;player.vx=255;player.vy=0;player.onGround=true};window.__tmbExitTestStabilize=function(){player.x=sceneStart()+1975+5;player.y=365-player.h;player.vx=0;player.vy=0;player.onGround=true};window.__tmbExitTestStopped=function(){partDeaths=8;collected.add(36);spawnGrace=0;player.x=sceneStart()+1825;player.y=275-player.h;player.vx=0;player.vy=0;player.onGround=true};
  window.addEventListener('keydown',e=>{

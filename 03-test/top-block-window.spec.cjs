@@ -6,7 +6,7 @@ const sampleTimes = [200, 500, 800, 1100, 1400];
 const warningMin = Number(process.env.TOP_BLOCK_WARNING_OVERRIDE || .8);
 let server, base;
 const inClosureHarness = `
-window.topBlockTestRun=(level,part,moving,sampleTimes)=>{if(!systemPaused)pauseGame('top-block-test');__tmbSetProgress(level,part,0,0);upgradePending=false;upgradeEl.classList.remove('show');spawnGrace=0;lives=10;partDeaths=0;rt.enemies=[];rt.fish=[];rt.fans=[];rt.launchPads=[];rt.rage.patterns=[];const g=buildScene(level,part),trigger=sceneStart()+g.anchors.trap.trigger,hazard=sceneStart()+g.anchors.hazard,solids=solidSurfaces(g.surfaces),probeX=g.anchors.trap.trigger,candidates=solids.filter(s=>probeX+player.w>s.x&&probeX<s.x+s.w),support=candidates.sort((a,b)=>a.y-b.y)[0]||solids.filter(s=>s.x<=probeX).sort((a,b)=>b.x-a.x)[0],setup={trap:scene().trap,trigger,hazard,playerY:moving?(support?.y??GROUND)-player.h:GROUND-player.h};player.x=moving?trigger+.01:hazard+(104-player.w)/2;player.y=setup.playerY;player.vx=moving?255:0;player.vy=0;player.onGround=true;const targetY=setup.playerY+4,samples=[],startDeaths=deaths,step=1000/60;let triggerAt=null,clearAt=null,reachAt=null,next=0,now=0;keys.right=moving;keys.jump=moving;for(let frame=0;frame<180;frame++){update(1/60);now+=step;if(triggerAt===null&&rt.armed)triggerAt=now;const elapsed=triggerAt===null?0:now-triggerAt,hb=hurtbox();if(triggerAt!==null&&clearAt===null&&hb.x>=hazard+104){clearAt=now;keys.right=false;keys.jump=false;player.x=sceneStart()+66;player.y=GROUND-player.h;player.vx=0;player.vy=0;player.onGround=true}if(triggerAt!==null&&reachAt===null&&rt.block.y+rt.block.h>=targetY)reachAt=now;while(triggerAt!==null&&next<sampleTimes.length&&elapsed+1e-6>=sampleTimes[next])samples.push({t:sampleTimes[next++],dead,deaths,x:player.x,blockY:rt.block.y,armed:rt.armed,done:rt.done})}keys.right=false;keys.left=false;keys.jump=false;return{...setup,triggerAt,clearAt,reachAt,windowMs:clearAt!==null&&reachAt!==null?reachAt-clearAt:null,dead,extraDeaths:deaths-startDeaths,samples}};
+window.topBlockTestRun=(level,part,moving,sampleTimes)=>{if(!systemPaused)pauseGame('top-block-test');__tmbSetProgress(level,part,0,0);upgradePending=false;upgradeEl.classList.remove('show');spawnGrace=0;lives=10;partDeaths=0;rt.enemies=[];rt.fish=[];rt.fans=[];rt.launchPads=[];rt.rage.patterns=[];const g=buildScene(level,part),trigger=sceneStart()+g.anchors.trap.trigger,hazard=sceneStart()+g.anchors.hazard,solids=solidSurfaces(g.surfaces),probeX=g.anchors.trap.trigger,candidates=solids.filter(s=>probeX+player.w>s.x&&probeX<s.x+s.w),support=candidates.sort((a,b)=>a.y-b.y)[0]||solids.filter(s=>s.x<=probeX).sort((a,b)=>b.x-a.x)[0],setup={level,trap:scene().trap,trigger,hazard,playerY:moving?(support?.y??GROUND)-player.h:GROUND-player.h};player.x=moving?trigger+.01:hazard+(104-player.w)/2;player.y=setup.playerY;player.vx=moving?255:0;player.vy=0;player.onGround=true;const targetY=setup.playerY+4,samples=[],startDeaths=deaths,step=1000/60;let triggerAt=null,clearAt=null,reachAt=null,next=0,now=0;keys.right=moving;keys.jump=moving;for(let frame=0;frame<180;frame++){update(1/60);now+=step;if(triggerAt===null&&rt.armed)triggerAt=now;const elapsed=triggerAt===null?0:now-triggerAt,hb=hurtbox();if(triggerAt!==null&&clearAt===null&&hb.x>=hazard+104){clearAt=now;keys.right=false;keys.jump=false;player.x=sceneStart()+66;player.y=GROUND-player.h;player.vx=0;player.vy=0;player.onGround=true}if(triggerAt!==null&&reachAt===null&&rt.block.y+rt.block.h>=targetY)reachAt=now;while(triggerAt!==null&&next<sampleTimes.length&&elapsed+1e-6>=sampleTimes[next])samples.push({t:sampleTimes[next++],dead,deaths,x:player.x,blockY:rt.block.y,armed:rt.armed,done:rt.done})}keys.right=false;keys.left=false;keys.jump=false;return{...setup,triggerAt,clearAt,reachAt,windowMs:clearAt!==null&&reachAt!==null?reachAt-clearAt:null,dead,extraDeaths:deaths-startDeaths,samples}};
 `;
 
 test.beforeAll(async () => {
@@ -38,7 +38,9 @@ async function run(page, level, part, moving) {
 }
 
 function model(row, minimum = 0) {
-  const warning = Math.max(minimum, row.trap === 'signDrop' ? .28 : row.trap === 'finale' ? .34 : .4);
+  const scale = 1 - (row.level - 1) * .3 / 30;
+  const base = Math.max(minimum, row.trap === 'signDrop' ? .28 : row.trap === 'finale' ? .34 : .4);
+  const warning = minimum ? Math.max(.67, base * scale) : base;
   const acc = row.trap === 'signDrop' ? 1350 : row.trap === 'finale' ? 1100 : 1420;
   const fall = Math.sqrt(2 * Math.max(0, (row.playerY + 4) - (72 + 70)) / acc);
   const clear = (row.hazard + 104 - row.trigger) / 255;
@@ -72,7 +74,7 @@ test('top-block family: 36 real windows, informed 5/5, stopped dies', async ({ b
   const values = rows.map(r => r.windowMs).sort((a, b) => a - b), median = (values[17] + values[18]) / 2;
   const lines = [
     '# Tepeden blok kaçış penceresi — 2026-09-20', '',
-    `Alt sınır: ${warningMin.toFixed(1)} sn. Gerçek pencere, bloğun tetik anındaki hurtbox yüksekliğine erişmesi ile botun bloğu temizlemesi arasındaki süredir.`, '',
+    `Tepe-blok tabanı: ${warningMin.toFixed(1)} sn; sahne ölçeği mutlak alt sınırı: 0.67 sn. Gerçek pencere, bloğun tetik anındaki hurtbox yüksekliğine erişmesi ile botun bloğu temizlemesi arasındaki süredir.`, '',
     '| Part | Tuzak | Eski model (ms) | Yeni model (ms) | Gerçek (ms) | Kaçış | Duran |',
     '|---|---|---:|---:|---:|---:|---|',
     ...rows.map(r => `| L${r.level} P${r.part} | ${r.trap} | ${r.oldModelMs} | ${r.newModelMs} | ${r.windowMs} | ${r.informed.filter(x => !x.dead && x.extraDeaths === 0).length}/5 | ${r.stopped.dead ? 'öldü' : 'yaşadı'} |`),
