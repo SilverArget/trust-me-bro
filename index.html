@@ -947,6 +947,8 @@ async function boot(){
  if(dueUpgrade())openUpgrade();
  draw();
  const ov=document.getElementById('bootOverlay');if(ov)ov.classList.add('hidden');
+ // Ready means input is reachable: the intro overlay must no longer cover character selection.
+ const intro=document.getElementById('introOverlay');if(intro)await new Promise(resolve=>{const observer=new MutationObserver(()=>{if(!intro.isConnected){observer.disconnect();resolve()}});observer.observe(document.body,{childList:true})});
  notifyGameReady();
  startLoop();
 }
