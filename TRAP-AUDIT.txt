@@ -1,0 +1,63 @@
+TRUST ME BRO: LAST DELIVERY — TRAP & FLOW AUDIT
+Build: v2.0
+
+CORE ROUTE
+- 31 sectors, 1 playable route segment per sector.
+- Goal: carry one final package to DOCK 31, scan one clearance stamp per sector, clock out.
+- All sectors use the warehouse/depot visual family; unrelated sea/moon/mars backdrops are removed from the route.
+
+REMOVED AS UNRELATED / PROCEDURAL NOISE
+- coinBite procedural spike
+- rearBite procedural spike
+- floorPop procedural spike
+- sweeper red moving hazard
+- exitDrop procedural ceiling block
+- hunter red chase spike
+- lastStep procedural spike
+- upgrade-reactive counter traps (oil/cloud hand)
+- fish gap hazards
+- procedural fan hazards
+- procedural launch pads
+
+WHY REMOVED
+These systems could activate because of a procedural pattern rather than because the room/route visually communicated them. That created deaths that looked random: hazards appearing above, behind, or beside a normal walking line. Last Delivery now uses scene-authored traps only.
+
+SECTOR-BY-SECTOR AUTHORED TRAPS
+01 RECEIVING       — Trust/Don't Jump lie; floor hazard is on the travel lane.
+02 SORTING         — Memory test; jumping into the clearly visible overhead beam is punished.
+03 SCAN BAY        — Clearance-stamp bait; floor bite is attached to the stamp zone.
+04 SECURITY CHECK  — Fake checkpoint; checkpoint block drops in the checkpoint lane.
+05 BRO TRAINING    — Combines learned rules; fake finish is on the exit route.
+06 LOADING AISLE   — Moving delivery door; hazard is the route objective itself.
+07 RETURNS         — Stamp-triggered floor spikes; tied directly to the stamp lane.
+08 TRAINING FLOOR  — Jump-bait overhead block; triggered only in its marked lane.
+09 SAFETY LAB      — Delayed disappearing platform; trap is the platform being used.
+10 SPEED CONTROL   — Moving wall; enters the travel lane after a warning.
+11 MAINTENANCE     — Rolling barrel; moves through the marked aisle.
+12 SERVER AISLE    — Low beam; only punishes jumping into the visible beam.
+13 INNER DOCK      — Rising spikes; advance along the floor lane.
+14 CONVEYOR HALL   — Falling checkpoint/overhead policy block in the marked trap zone.
+15 COLD STORAGE    — Ghost platform; only activates while stood on it.
+16 SWING BAY       — Pendulum/weight moves through its visible hazard area.
+17 LIFT SHAFT      — Elevator-drop platform mechanic.
+18 FALSE EXIT      — Fake finish is the trap; no unrelated spike spawn.
+19 LOW CLEARANCE   — Visible low beam; only jump collision is lethal.
+20 EXPRESS LANE    — Oil/momentum lane with a visible end hazard.
+21 BARREL RACK     — Rolling barrel in aisle.
+22 BOILER ROOM     — Steam tied to the visible pipe.
+23 POWER TEST      — Fake reward box; collision with the visible reward is the trap.
+24 BLACKOUT        — Shadow/disappearing platform tied to the platform.
+25 EXPRESS 31      — Conveyor movement tied to the visible belt.
+26 SPRING TEST     — Spring pad launches from the visible floor strip.
+27 FRAGILE ZONE    — Delayed disappearing platform.
+28 VALIDATION LAB  — Green fake-finish tile itself is the trap.
+29 LAST MILE       — Oil/momentum lane with visible end hazard.
+30 EXIT CONTROL    — Marked checkpoint/overhead trap zone.
+31 DOCK 31         — Finale overhead block at the final delivery lane.
+
+QA
+- JavaScript syntax check: PASS.
+- Geometry/path validator for playable sector 1 of all 31 scenes: 31/31 PASS, 0 path errors.
+- Mission overlay display/hide: PASS in Chromium test harness.
+- Original soundtrack file hash matches the original Playgama build exactly.
+- Music playback path: PASS in Chromium test harness after user character-selection gesture (playing, unmuted, AudioContext running).
