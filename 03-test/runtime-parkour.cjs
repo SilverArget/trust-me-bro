@@ -69,7 +69,7 @@ function run(ref='WORKTREE'){
   if(mode==='stun'&&!['roll','slide'].includes(info.move)){rows.push({...row,status:'N/A',reason:'This movement has no stun penalty'});continue;}
   let plan=variants.find(r=>r.level===base.level&&r.part===base.part&&r.mode===mode)||base;
   let first=trial(plan,mode,0);
-  if(!first.safe&&mode!=='correct'){
+  if(!first.safe){
    for(const width of [48,160,320]){const result=JSON.parse(p(`JSON.stringify(planVariant(${JSON.stringify(base)},${JSON.stringify(mode)},${width}))`));if(result.clear&&!result.dead&&result.plan){plan={level:base.level,part:base.part,mode,plan:result.plan};first=trial(plan,mode,0);if(first.safe){variants.push(plan);if(process.env.TMB_RECORD_WINDOW_PLANS)fs.writeFileSync(variantsFile,JSON.stringify(variants));break;}}}
   }
   if(!first.safe){rows.push({...row,status:'FAIL-UNMEASURED',windowMs:null,sample:first});continue;}

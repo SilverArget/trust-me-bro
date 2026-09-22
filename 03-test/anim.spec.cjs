@@ -34,7 +34,7 @@ test('real sheets: 160 frame/flip/feet checks and 17 evidence crops',async({page
  }
  expect(hzChecks).toBe(96);
  await page.evaluate(()=>animProbe('rt.chief={active:true,x:player.x-70};drawChief();'));
- await page.waitForFunction(()=>animProbe("ACTION_SHEETS.get('chief').loaded"));
+ await page.waitForFunction(()=>animProbe("ACTION_SHEETS.get('chief').loaded"),{},{polling:10});
  expect((await render(page,true)).last.src).toMatch(/\/real\/sprites\/chief.png$/);
  await page.evaluate(()=>animProbe("player.x=sceneStart()+160;player.y=GROUND-player.h;rt.chief.x=player.x-70;draw();"));
  fs.writeFileSync(path.join(__dirname,'evidence/chief-50.png'),Buffer.from(await evidence(page,true),'base64'));expect(errors).toEqual([]);

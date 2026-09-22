@@ -1,0 +1,92 @@
+[
+  {
+    "file": "04-yayin\\playgama\\kapaklar\\cover-square-800x800.png",
+    "source": "cover-square.png",
+    "size": [
+      800,
+      800
+    ],
+    "KB": 726.75,
+    "operation": "Lanczos"
+  },
+  {
+    "file": "04-yayin\\playgama\\kapaklar\\cover-portrait-1080x1920.png",
+    "source": "cover-portrait.png",
+    "size": [
+      1080,
+      1920
+    ],
+    "KB": 2122.61,
+    "operation": "Lanczos + mild unsharp; no crop; <=1px edge extension"
+  },
+  {
+    "file": "04-yayin\\playgama\\kapaklar\\cover-landscape-1920x1080.png",
+    "source": "cover-landscape.png",
+    "size": [
+      1920,
+      1080
+    ],
+    "KB": 2007.04,
+    "operation": "Lanczos + mild unsharp; no crop; <=1px edge extension"
+  },
+  {
+    "file": "04-yayin\\platform_ready\\cover_512x384.png",
+    "source": "cover-landscape.png",
+    "size": [
+      512,
+      384
+    ],
+    "KB": 285.43,
+    "operation": "center crop + Lanczos"
+  },
+  {
+    "file": "04-yayin\\platform_ready\\itch_cover_630x500.png",
+    "source": "cover-landscape.png",
+    "size": [
+      630,
+      500
+    ],
+    "KB": 418.94,
+    "operation": "center crop + Lanczos"
+  },
+  {
+    "file": "04-yayin\\platform_ready\\promo_1280x720.png",
+    "source": "cover-landscape.png",
+    "size": [
+      1280,
+      720
+    ],
+    "KB": 1048.67,
+    "operation": "center crop + Lanczos"
+  },
+  {
+    "file": "04-yayin\\platform_ready\\promo_1280x550.png",
+    "source": "cover-landscape.png",
+    "size": [
+      1280,
+      550
+    ],
+    "KB": 833.5,
+    "operation": "center crop + Lanczos"
+  },
+  {
+    "file": "04-yayin\\platform_ready\\gd_200x120_no_logo.png",
+    "source": "cover-landscape.png",
+    "size": [
+      200,
+      120
+    ],
+    "KB": 44.99,
+    "operation": "courier-side candidate crop (1002, 539, 1672, 941); visual approval pending"
+  },
+  {
+    "file": "04-yayin/platform_ready/logo_1024w.png",
+    "source": "v67 logo",
+    "size": [
+      1024,
+      512
+    ],
+    "KB": 192.39,
+    "operation": "unchanged copy"
+  }
+]

@@ -1,0 +1,34 @@
+[
+  {
+    "ref": "HEAD",
+    "gap": 0,
+    "state": "normal",
+    "vy": 0,
+    "onGround": true,
+    "chief": true
+  },
+  {
+    "ref": "HEAD",
+    "gap": 40,
+    "state": "normal",
+    "vy": -535.8333333333334,
+    "onGround": false,
+    "chief": true
+  },
+  {
+    "ref": "WORKTREE",
+    "gap": 0,
+    "state": "vault",
+    "vy": -238.09523809523853,
+    "onGround": false,
+    "chief": false
+  },
+  {
+    "ref": "WORKTREE",
+    "gap": 40,
+    "state": "vault",
+    "vy": -238.09523809523853,
+    "onGround": false,
+    "chief": false
+  }
+]

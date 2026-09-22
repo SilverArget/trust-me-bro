@@ -1,0 +1,118 @@
+{
+  "bridge": "2.2.0",
+  "zip": "E:\\youtubeJarvis\\playables\\TrustMeBro\\04-yayin\\playgama\\trust-me-bro-v68.zip",
+  "files": [
+    {
+      "file": "index.html",
+      "bytes": 216531
+    },
+    {
+      "file": "playgama-bridge.js",
+      "bytes": 298430
+    },
+    {
+      "file": "playgama-bridge-config.json",
+      "bytes": 711
+    },
+    {
+      "file": "soundtrack.mp3",
+      "bytes": 2606255
+    },
+    {
+      "file": "trust-me-bro-logo.png",
+      "bytes": 86857
+    },
+    {
+      "file": "game-icon.png",
+      "bytes": 9157
+    },
+    {
+      "file": "sprites/chief.png",
+      "bytes": 29744
+    },
+    {
+      "file": "sprites/courier-roll.png",
+      "bytes": 38361
+    },
+    {
+      "file": "sprites/courier-slide.png",
+      "bytes": 37337
+    },
+    {
+      "file": "sprites/courier-vault.png",
+      "bytes": 41735
+    },
+    {
+      "file": "sprites/courier-wallrun.png",
+      "bytes": 32368
+    },
+    {
+      "file": "sprites/courier.png",
+      "bytes": 101885
+    },
+    {
+      "file": "sprites/forklift-roll.png",
+      "bytes": 32228
+    },
+    {
+      "file": "sprites/forklift-slide.png",
+      "bytes": 32985
+    },
+    {
+      "file": "sprites/forklift-vault.png",
+      "bytes": 28199
+    },
+    {
+      "file": "sprites/forklift-wallrun.png",
+      "bytes": 28663
+    },
+    {
+      "file": "sprites/forklift.png",
+      "bytes": 83833
+    },
+    {
+      "file": "sprites/guard-roll.png",
+      "bytes": 43291
+    },
+    {
+      "file": "sprites/guard-slide.png",
+      "bytes": 45076
+    },
+    {
+      "file": "sprites/guard-vault.png",
+      "bytes": 42760
+    },
+    {
+      "file": "sprites/guard-wallrun.png",
+      "bytes": 32948
+    },
+    {
+      "file": "sprites/guard.png",
+      "bytes": 100344
+    },
+    {
+      "file": "sprites/picker-roll.png",
+      "bytes": 38937
+    },
+    {
+      "file": "sprites/picker-slide.png",
+      "bytes": 32017
+    },
+    {
+      "file": "sprites/picker-vault.png",
+      "bytes": 36115
+    },
+    {
+      "file": "sprites/picker-wallrun.png",
+      "bytes": 31444
+    },
+    {
+      "file": "sprites/picker.png",
+      "bytes": 101913
+    }
+  ],
+  "totalBytes": 4210124,
+  "zipBytes": 3767437,
+  "sha256": "55b7b8f6188f425a3c20ec2191a0ea1830aa0b702580a4a476bebe195e55bfac",
+  "sourceIdentical": true
+}

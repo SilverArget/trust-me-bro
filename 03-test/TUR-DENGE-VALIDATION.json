@@ -1,0 +1,131 @@
+{
+  "locks": [
+    {
+      "name": "warnScale",
+      "same": true
+    },
+    {
+      "name": "warningDelay",
+      "same": true
+    },
+    {
+      "name": "ragePatterns",
+      "same": true
+    },
+    {
+      "name": "rageFamily",
+      "same": true
+    },
+    {
+      "name": "selectRageMembers",
+      "same": true
+    },
+    {
+      "name": "snapshotSave",
+      "same": true
+    },
+    {
+      "name": "validSave",
+      "same": true
+    },
+    {
+      "name": "applySave",
+      "same": true
+    }
+  ],
+  "constants": [
+    {
+      "name": "ROUTE_PARTS",
+      "same": true
+    },
+    {
+      "name": "PART_COUNT",
+      "same": true
+    },
+    {
+      "name": "SCENE_COUNT",
+      "same": true
+    },
+    {
+      "name": "WARNING_MIN_ABS",
+      "same": true
+    },
+    {
+      "name": "WARNING_SCALE_END",
+      "same": true
+    }
+  ],
+  "geometrySame": 186,
+  "runtimeHashMatches": true,
+  "activeRuntime": {
+    "PASS": 1044,
+    "N/A": 5652,
+    "FAIL-UNMEASURED": 0,
+    "FAIL-DEATH": 0,
+    "FAIL-WINDOW": 0
+  },
+  "runtimeMovement": {
+    "N/A": 156,
+    "PASS": 30
+  },
+  "runtimeWorst": [
+    {
+      "level": 14,
+      "part": 1,
+      "active": true,
+      "route": "AKTIF ROTA",
+      "deaths": 4,
+      "upgrade": 0,
+      "hz": 60,
+      "mode": "normal",
+      "status": "PASS",
+      "windowMs": 253,
+      "firstUnsafeMs": 254,
+      "warningMs": 670
+    },
+    {
+      "level": 8,
+      "part": 1,
+      "active": true,
+      "route": "AKTIF ROTA",
+      "deaths": 4,
+      "upgrade": 0,
+      "hz": 60,
+      "mode": "normal",
+      "status": "PASS",
+      "windowMs": 353,
+      "firstUnsafeMs": 354,
+      "warningMs": 670
+    },
+    {
+      "level": 8,
+      "part": 2,
+      "active": true,
+      "route": "AKTIF ROTA",
+      "deaths": 4,
+      "upgrade": 0,
+      "hz": 60,
+      "mode": "normal",
+      "status": "PASS",
+      "windowMs": 353,
+      "firstUnsafeMs": 354,
+      "warningMs": 670
+    }
+  ],
+  "packagedSourceIdentical": true,
+  "zipSha256": "55b7b8f6188f425a3c20ec2191a0ea1830aa0b702580a4a476bebe195e55bfac",
+  "zipBytes": 3767437,
+  "sourceHash": "15f983bf6459570113b0a0612af7e7f239e45addf6abd83a196601d222e25852",
+  "specs": {
+    "passed": 124,
+    "failed": 0,
+    "anim": 26,
+    "chief": 10,
+    "padFlight": 34,
+    "parkourTur1": 25,
+    "readiness": 3,
+    "botReplays": 310,
+    "blindReplays": 93,
+    "matrix": 96
+  }
+}
