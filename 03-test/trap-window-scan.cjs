@@ -21,8 +21,14 @@ const result = probe(String.raw`JSON.stringify((()=>{
     const clearDistance=hazard+104-trigger;
     const clear=clearDistance/255;
     const window=warning+fall-clear;
-    rows.push({level,part,trap:sc.trap,trigger,worldTrigger:sc.start+trigger,hazard,block:{x:hazard,y:72,w:104,h:70},support:support&&{x:support.x,y:support.y,w:support.w,kind:support.kind},playerY,warningMs:Math.round(warning*1000),fallMs:Math.round(fall*1000),clearMs:Math.round(clear*1000),windowMs:Math.round(window*1000)});
+    rows.push({level,part,trap:sc.trap,trigger,worldTrigger:sc.start+trigger,hazard,block:{x:hazard,y:72,w:104,h:70},support:support&&{x:support.x,y:support.y,w:support.w,kind:support.kind},playerY,warningMs:Math.round(warning*1000),fallMs:Math.round(fall*1000),clearMs:Math.round(clear*1000),windowMs:window*1000,route:part<=activePartCount(level)?"AKTIF ROTA":"PASIF ROTA"});
   }
   return {count:rows.length,unsafe:rows.filter(r=>r.windowMs<250),rows};
 })())`);
-console.log(result);
+// Passive parts remain visible, including violations; reassess before opening part 3+.
+const report=JSON.parse(result);
+report.activeUnsafe=report.unsafe.filter(r=>r.route==='AKTIF ROTA');
+report.passiveUnsafe=report.unsafe.filter(r=>r.route==='PASIF ROTA');
+report.activeMinimumMs=Math.min(...report.rows.filter(r=>r.route==='AKTIF ROTA').map(r=>r.windowMs));
+console.log(JSON.stringify(report,(k,v)=>typeof v==='number'&&k.endsWith('Ms')?Number(v.toFixed(3)):v));
+if(report.activeUnsafe.length)process.exitCode=1;
