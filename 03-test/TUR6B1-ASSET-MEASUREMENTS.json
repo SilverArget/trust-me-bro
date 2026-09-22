@@ -1,0 +1,87 @@
+{
+  "proofDir": "C:\\Users\\Arget\\AppData\\Local\\Temp\\tmb-6b1-art-20doydt0",
+  "rows": [
+    {
+      "file": "trust-me-bro-logo.png",
+      "before": 2144707,
+      "after": 250755,
+      "original": [
+        1774,
+        887
+      ],
+      "result": [
+        1520,
+        760
+      ],
+      "meanChannelError": [
+        2.313569944598338,
+        1.737257617728532,
+        1.9557513850415513,
+        0.43359072022160666
+      ]
+    },
+    {
+      "file": "game-icon.png",
+      "before": 2351006,
+      "after": 4238,
+      "original": [
+        1254,
+        1254
+      ],
+      "result": [
+        64,
+        64
+      ],
+      "meanChannelError": [
+        3.119140625,
+        1.734375,
+        2.6357421875,
+        0
+      ]
+    }
+  ],
+  "before390": {
+    "x": 35.09375,
+    "y": 342.046875,
+    "width": 319.796875,
+    "height": 159.890625
+  },
+  "after390": {
+    "x": 35.09375,
+    "y": 342.046875,
+    "width": 319.796875,
+    "height": 159.890625
+  },
+  "before1280": {
+    "x": 260,
+    "y": 170,
+    "width": 760,
+    "height": 380
+  },
+  "after1280": {
+    "x": 260,
+    "y": 170,
+    "width": 760,
+    "height": 380
+  },
+  "screenshots": [
+    {
+      "viewportWidth": 390,
+      "sameRect": true,
+      "meanChannelError": [
+        0.7275914448900231,
+        0.5930337829626929,
+        0.5006501397496658
+      ]
+    },
+    {
+      "viewportWidth": 1280,
+      "sameRect": true,
+      "meanChannelError": [
+        1.061921657986111,
+        0.8742296006944444,
+        0.8033713107638889
+      ]
+    }
+  ]
+}

@@ -25,7 +25,7 @@ function run(ref='WORKTREE'){
    if(globalThis.windowMode==='cancel'&&!rt._cancelSeen&&['vault','slide','roll','wallRun'].includes(parkour.state)){rt._cancelSeen=parkourCancel();}
    if(!test)return;
    test.elapsed+=dt;
-   if(dead){test.done=true;test.safe=false;test.reason=lastDebugDeath?.msg||deathToast;return;}
+   if(dead){test.done=true;test.safe=false;test.reason=rt.chief?.caught?'Chief catch (not death)':lastDebugDeath?.msg||deathToast;return;}
    const mind=test.level===2||test.level===4;
    const clear=()=>hurtbox().x>sceneStart()+rt.a.hazard+(test.level===2?138:test.level===4?122:104);
    if(!test.warned&&(mind?rt.mind.stage===1:rt.armed)){
@@ -39,16 +39,17 @@ function run(ref='WORKTREE'){
      routeUpdate(step);waited+=step;
      const body=hurtbox(),obstacle=mind?(test.level===2?rt.mind.memoryBeam:rt.mind.uiBlock):null;
      if(!brake&&clear()){safe=true;break;}
-     if(mind&&waited>=2&&player.onGround&&(body.x+body.w<obstacle.x||body.x>obstacle.x+obstacle.w)){safe=true;break;}
+     // S4 ends when its falling block is spent, not after an unrelated fixed two-second idle.
+     if(mind&&(test.level===4?rt.mind.stage===3:waited>=2)&&player.onGround&&(body.x+body.w<obstacle.x||body.x>obstacle.x+obstacle.w)){safe=true;break;}
     }
-    test.done=true;test.safe=safe&&!dead;if(!test.safe)test.reason=dead?(lastDebugDeath?.msg||deathToast):'Delayed escape did not clear hazard';return;
+    test.done=true;test.safe=safe&&!dead;if(!test.safe)test.reason=dead?(rt.chief?.caught?'Chief catch (not death)':lastDebugDeath?.msg||deathToast):'Delayed escape did not clear hazard';return;
    }
    if(test.warned&&clear()){test.done=true;test.safe=true;}
   };
   globalThis.routeTrial=(row,mode,delay,policy=0)=>{
    windowMode=mode;location.hash='#debug';routeProbe={level:row.level,part:row.part,delay,policy,elapsed:0,warned:false,done:false,safe:false};
    parkourBot(row.level,row.part,60,false,48,row.plan);
-   const result={...routeProbe};routeProbe=null;
+   const result={...routeProbe,deaths,catches:chiefCatches,chiefGap:player.x-rt.chief.x};routeProbe=null;
    if(!result.warned)result.reason=result.reason||'Route did not reach its timed warning';
    if(mode==='cancel'&&!result.cancelSeen){result.safe=false;result.reason='Cancellation not observed before warning';}
    if(mode==='stun'&&!result.stunSeen){result.safe=false;result.reason='Stun not observed before warning';}

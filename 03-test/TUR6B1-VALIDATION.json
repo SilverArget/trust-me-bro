@@ -1,0 +1,135 @@
+{
+  "checks": [
+    {
+      "symbol": "warnScale",
+      "equal": true
+    },
+    {
+      "symbol": "warningDelay",
+      "equal": true
+    },
+    {
+      "symbol": "ragePatterns",
+      "equal": true
+    },
+    {
+      "symbol": "rageFamily",
+      "equal": true
+    },
+    {
+      "symbol": "selectRageMembers",
+      "equal": true
+    },
+    {
+      "symbol": "snapshotSave",
+      "equal": true
+    },
+    {
+      "symbol": "validSave",
+      "equal": true
+    },
+    {
+      "symbol": "applySave",
+      "equal": true
+    },
+    {
+      "symbol": "parkourLayout",
+      "equal": true
+    },
+    {
+      "symbol": "parkourSignLies",
+      "equal": true
+    }
+  ],
+  "media": [
+    {
+      "file": "sprites/courier.png",
+      "equal": true
+    },
+    {
+      "file": "sprites/forklift.png",
+      "equal": true
+    },
+    {
+      "file": "sprites/picker.png",
+      "equal": true
+    },
+    {
+      "file": "sprites/guard.png",
+      "equal": true
+    },
+    {
+      "file": "soundtrack.mp3",
+      "equal": true
+    },
+    {
+      "file": "cover-art.png",
+      "equal": true
+    }
+  ],
+  "archived": true,
+  "sourceHash": "c267c3ed9861739fbecf8849acec7e63b414825f66b1110a1150d6d2edaeba01",
+  "packageEqual": true,
+  "runtime": {
+    "sourceHash": "c267c3ed9861739fbecf8849acec7e63b414825f66b1110a1150d6d2edaeba01",
+    "activeFailures": 0,
+    "debugFailures": 0,
+    "movementCounts": {
+      "N/A": 156,
+      "PASS": 30
+    },
+    "activeCounts": {
+      "N/A": 5652,
+      "PASS": 1044
+    },
+    "worst": [
+      {
+        "level": 14,
+        "part": 1,
+        "active": true,
+        "route": "AKTIF ROTA",
+        "deaths": 4,
+        "upgrade": 0,
+        "hz": 60,
+        "mode": "normal",
+        "status": "PASS",
+        "windowMs": 253,
+        "firstUnsafeMs": 254,
+        "warningMs": 670
+      },
+      {
+        "level": 8,
+        "part": 1,
+        "active": true,
+        "route": "AKTIF ROTA",
+        "deaths": 4,
+        "upgrade": 0,
+        "hz": 60,
+        "mode": "normal",
+        "status": "PASS",
+        "windowMs": 353,
+        "firstUnsafeMs": 354,
+        "warningMs": 670
+      },
+      {
+        "level": 8,
+        "part": 2,
+        "active": true,
+        "route": "AKTIF ROTA",
+        "deaths": 4,
+        "upgrade": 0,
+        "hz": 60,
+        "mode": "normal",
+        "status": "PASS",
+        "windowMs": 353,
+        "firstUnsafeMs": 354,
+        "warningMs": 670
+      }
+    ],
+    "sourceMatches": true
+  },
+  "fullSpecs": {
+    "passed": 118,
+    "failed": 0
+  }
+}

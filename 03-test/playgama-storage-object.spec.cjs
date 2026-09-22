@@ -61,7 +61,7 @@ for (const mode of ["object", "string"]) {
       characterChosen: true,
       characterSelectOpen: false,
       currentLevel: envelope.v36.currentLevel,
-      currentPart: envelope.v36.currentPart,
+      currentPart: 2, // legacy part 4 is retained in schema, clamped to the active route
       collected,
     });
   });
