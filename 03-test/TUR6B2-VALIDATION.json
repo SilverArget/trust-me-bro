@@ -1,0 +1,971 @@
+{
+  "protectedFiles": [
+    {
+      "file": "index.html",
+      "identical": false,
+      "sha256": "c267c3ed9861739fbecf8849acec7e63b414825f66b1110a1150d6d2edaeba01",
+      "textIdenticalIgnoringCRLF": true,
+      "note": "Git blob LF, worktree CRLF; git diff index.html empty."
+    },
+    {
+      "file": "sprites/courier.png",
+      "identical": true,
+      "sha256": "ffee754143cdcef9549e046c86967da53baad646b24b226928fe0198ff44b81a"
+    },
+    {
+      "file": "sprites/forklift.png",
+      "identical": true,
+      "sha256": "27697a6d41721ce03d47491b4d6c44354172294f70eea12e41c752704a125e49"
+    },
+    {
+      "file": "sprites/picker.png",
+      "identical": true,
+      "sha256": "6986b6965069b22066c3d4a6370289d79fbe72f7c08743c76a46c9981514c7a5"
+    },
+    {
+      "file": "sprites/guard.png",
+      "identical": true,
+      "sha256": "f0966e94d9cb0d354f212d1a1940a4bf16c5e9575225555e2492192b989f36aa"
+    },
+    {
+      "file": "soundtrack.mp3",
+      "identical": true,
+      "sha256": "dadf30f25ee08b17d71e9a80c2c008b72e915cd48d3ae880f4977948fe0c9acf"
+    },
+    {
+      "file": "trust-me-bro-logo.png",
+      "identical": true,
+      "sha256": "13491ca1888782227d6722f5875608ae5ff7f980c0c0c263dc22f7948a806dfd"
+    },
+    {
+      "file": "game-icon.png",
+      "identical": true,
+      "sha256": "066e9b0b38b9f009b3fa618d609ba43c74a6ac4b266d2f034f501c3eecf91e06"
+    }
+  ],
+  "runtimeHashMatches": true,
+  "normalizationPass": 17,
+  "frames": 68,
+  "alphaCleanup": 784865,
+  "protectedContourLoss": 0,
+  "build": {
+    "bridge": "2.2.0",
+    "zip": "E:\\youtubeJarvis\\playables\\TrustMeBro\\04-yayin\\playgama\\trust-me-bro-v66.zip",
+    "files": [
+      {
+        "file": "index.html",
+        "bytes": 214484
+      },
+      {
+        "file": "playgama-bridge.js",
+        "bytes": 298430
+      },
+      {
+        "file": "playgama-bridge-config.json",
+        "bytes": 711
+      },
+      {
+        "file": "soundtrack.mp3",
+        "bytes": 2606255
+      },
+      {
+        "file": "trust-me-bro-logo.png",
+        "bytes": 250755
+      },
+      {
+        "file": "game-icon.png",
+        "bytes": 4238
+      },
+      {
+        "file": "sprites/chief.png",
+        "bytes": 21634
+      },
+      {
+        "file": "sprites/courier-roll.png",
+        "bytes": 15768
+      },
+      {
+        "file": "sprites/courier-slide.png",
+        "bytes": 14651
+      },
+      {
+        "file": "sprites/courier-vault.png",
+        "bytes": 17639
+      },
+      {
+        "file": "sprites/courier-wallrun.png",
+        "bytes": 22303
+      },
+      {
+        "file": "sprites/courier.png",
+        "bytes": 101885
+      },
+      {
+        "file": "sprites/forklift-roll.png",
+        "bytes": 13821
+      },
+      {
+        "file": "sprites/forklift-slide.png",
+        "bytes": 12421
+      },
+      {
+        "file": "sprites/forklift-vault.png",
+        "bytes": 18297
+      },
+      {
+        "file": "sprites/forklift-wallrun.png",
+        "bytes": 17403
+      },
+      {
+        "file": "sprites/forklift.png",
+        "bytes": 83833
+      },
+      {
+        "file": "sprites/guard-roll.png",
+        "bytes": 18607
+      },
+      {
+        "file": "sprites/guard-slide.png",
+        "bytes": 15684
+      },
+      {
+        "file": "sprites/guard-vault.png",
+        "bytes": 19349
+      },
+      {
+        "file": "sprites/guard-wallrun.png",
+        "bytes": 17245
+      },
+      {
+        "file": "sprites/guard.png",
+        "bytes": 100344
+      },
+      {
+        "file": "sprites/picker-roll.png",
+        "bytes": 20099
+      },
+      {
+        "file": "sprites/picker-slide.png",
+        "bytes": 11105
+      },
+      {
+        "file": "sprites/picker-vault.png",
+        "bytes": 17750
+      },
+      {
+        "file": "sprites/picker-wallrun.png",
+        "bytes": 16260
+      },
+      {
+        "file": "sprites/picker.png",
+        "bytes": 101913
+      }
+    ],
+    "totalBytes": 4052884,
+    "zipBytes": 3614956,
+    "sha256": "0f8de247d9204697be71e25c183ff924efd6a55c5d6cc8b85188065dd1c4816f",
+    "sourceIdentical": true
+  },
+  "trap": {
+    "count": 36,
+    "min": 306.482,
+    "unsafe": 0
+  },
+  "evidence": [
+    "chief-50.png",
+    "courier-roll-50.png",
+    "courier-slide-50.png",
+    "courier-vault-50.png",
+    "courier-wallrun-50.png",
+    "forklift-roll-50.png",
+    "forklift-slide-50.png",
+    "forklift-vault-50.png",
+    "forklift-wallrun-50.png",
+    "guard-roll-50.png",
+    "guard-slide-50.png",
+    "guard-vault-50.png",
+    "guard-wallrun-50.png",
+    "picker-roll-50.png",
+    "picker-slide-50.png",
+    "picker-vault-50.png",
+    "picker-wallrun-50.png"
+  ],
+  "fullSuite": {
+    "passed": 119,
+    "failed": 0,
+    "verified": true
+  },
+  "readiness": [
+    {
+      "zero": false,
+      "firstMovementMs": 1607.9000000059605,
+      "ready": {
+        "name": "game_ready",
+        "ms": 984.2000000029802,
+        "intro": false,
+        "loading": false
+      }
+    },
+    {
+      "zero": true,
+      "firstMovementMs": 1573.3999999910593,
+      "ready": {
+        "name": "game_ready",
+        "ms": 970.5999999940395,
+        "intro": false,
+        "loading": false
+      }
+    }
+  ],
+  "worst": [
+    {
+      "level": 14,
+      "part": 1,
+      "windowMs": 253,
+      "firstUnsafeMs": 254
+    },
+    {
+      "level": 8,
+      "part": 1,
+      "windowMs": 353,
+      "firstUnsafeMs": 354
+    },
+    {
+      "level": 8,
+      "part": 2,
+      "windowMs": 353,
+      "firstUnsafeMs": 354
+    }
+  ],
+  "outlineThickness": [
+    {
+      "file": "chief.png",
+      "samples": 277,
+      "median": 22,
+      "p90": 51,
+      "method": "horizontal dark(<100 all RGB) inward runs from silhouette edge; proxy, not semantic outline thickness"
+    },
+    {
+      "file": "courier-roll.png",
+      "samples": 192,
+      "median": 4,
+      "p90": 16,
+      "method": "horizontal dark(<100 all RGB) inward runs from silhouette edge; proxy, not semantic outline thickness"
+    },
+    {
+      "file": "courier-slide.png",
+      "samples": 188,
+      "median": 3,
+      "p90": 10,
+      "method": "horizontal dark(<100 all RGB) inward runs from silhouette edge; proxy, not semantic outline thickness"
+    },
+    {
+      "file": "courier-vault.png",
+      "samples": 198,
+      "median": 3,
+      "p90": 6,
+      "method": "horizontal dark(<100 all RGB) inward runs from silhouette edge; proxy, not semantic outline thickness"
+    },
+    {
+      "file": "courier-wallrun.png",
+      "samples": 278,
+      "median": 3,
+      "p90": 7,
+      "method": "horizontal dark(<100 all RGB) inward runs from silhouette edge; proxy, not semantic outline thickness"
+    },
+    {
+      "file": "courier.png",
+      "samples": 354,
+      "median": 2,
+      "p90": 4,
+      "method": "horizontal dark(<100 all RGB) inward runs from silhouette edge; proxy, not semantic outline thickness"
+    },
+    {
+      "file": "forklift-roll.png",
+      "samples": 181,
+      "median": 4,
+      "p90": 17,
+      "method": "horizontal dark(<100 all RGB) inward runs from silhouette edge; proxy, not semantic outline thickness"
+    },
+    {
+      "file": "forklift-slide.png",
+      "samples": 150,
+      "median": 4,
+      "p90": 17,
+      "method": "horizontal dark(<100 all RGB) inward runs from silhouette edge; proxy, not semantic outline thickness"
+    },
+    {
+      "file": "forklift-vault.png",
+      "samples": 246,
+      "median": 4,
+      "p90": 19,
+      "method": "horizontal dark(<100 all RGB) inward runs from silhouette edge; proxy, not semantic outline thickness"
+    },
+    {
+      "file": "forklift-wallrun.png",
+      "samples": 220,
+      "median": 4,
+      "p90": 16,
+      "method": "horizontal dark(<100 all RGB) inward runs from silhouette edge; proxy, not semantic outline thickness"
+    },
+    {
+      "file": "forklift.png",
+      "samples": 296,
+      "median": 2,
+      "p90": 22,
+      "method": "horizontal dark(<100 all RGB) inward runs from silhouette edge; proxy, not semantic outline thickness"
+    },
+    {
+      "file": "guard-roll.png",
+      "samples": 205,
+      "median": 5,
+      "p90": 31,
+      "method": "horizontal dark(<100 all RGB) inward runs from silhouette edge; proxy, not semantic outline thickness"
+    },
+    {
+      "file": "guard-slide.png",
+      "samples": 179,
+      "median": 5,
+      "p90": 30,
+      "method": "horizontal dark(<100 all RGB) inward runs from silhouette edge; proxy, not semantic outline thickness"
+    },
+    {
+      "file": "guard-vault.png",
+      "samples": 218,
+      "median": 7,
+      "p90": 36,
+      "method": "horizontal dark(<100 all RGB) inward runs from silhouette edge; proxy, not semantic outline thickness"
+    },
+    {
+      "file": "guard-wallrun.png",
+      "samples": 228,
+      "median": 16,
+      "p90": 36,
+      "method": "horizontal dark(<100 all RGB) inward runs from silhouette edge; proxy, not semantic outline thickness"
+    },
+    {
+      "file": "guard.png",
+      "samples": 321,
+      "median": 4,
+      "p90": 36,
+      "method": "horizontal dark(<100 all RGB) inward runs from silhouette edge; proxy, not semantic outline thickness"
+    },
+    {
+      "file": "picker-roll.png",
+      "samples": 222,
+      "median": 3,
+      "p90": 23,
+      "method": "horizontal dark(<100 all RGB) inward runs from silhouette edge; proxy, not semantic outline thickness"
+    },
+    {
+      "file": "picker-slide.png",
+      "samples": 150,
+      "median": 4,
+      "p90": 16,
+      "method": "horizontal dark(<100 all RGB) inward runs from silhouette edge; proxy, not semantic outline thickness"
+    },
+    {
+      "file": "picker-vault.png",
+      "samples": 230,
+      "median": 4,
+      "p90": 30,
+      "method": "horizontal dark(<100 all RGB) inward runs from silhouette edge; proxy, not semantic outline thickness"
+    },
+    {
+      "file": "picker-wallrun.png",
+      "samples": 222,
+      "median": 4,
+      "p90": 25,
+      "method": "horizontal dark(<100 all RGB) inward runs from silhouette edge; proxy, not semantic outline thickness"
+    },
+    {
+      "file": "picker.png",
+      "samples": 315,
+      "median": 2,
+      "p90": 14,
+      "method": "horizontal dark(<100 all RGB) inward runs from silhouette edge; proxy, not semantic outline thickness"
+    }
+  ],
+  "outputGeometry": [
+    {
+      "file": "chief.png",
+      "frame": 0,
+      "center": 52.5,
+      "bottom": 191
+    },
+    {
+      "file": "chief.png",
+      "frame": 1,
+      "center": 53,
+      "bottom": 191
+    },
+    {
+      "file": "chief.png",
+      "frame": 2,
+      "center": 52.5,
+      "bottom": 191
+    },
+    {
+      "file": "chief.png",
+      "frame": 3,
+      "center": 52.5,
+      "bottom": 191
+    },
+    {
+      "file": "courier-roll.png",
+      "frame": 0,
+      "center": 53,
+      "bottom": 191
+    },
+    {
+      "file": "courier-roll.png",
+      "frame": 1,
+      "center": 53,
+      "bottom": 191
+    },
+    {
+      "file": "courier-roll.png",
+      "frame": 2,
+      "center": 52.5,
+      "bottom": 191
+    },
+    {
+      "file": "courier-roll.png",
+      "frame": 3,
+      "center": 53,
+      "bottom": 191
+    },
+    {
+      "file": "courier-slide.png",
+      "frame": 0,
+      "center": 52.5,
+      "bottom": 191
+    },
+    {
+      "file": "courier-slide.png",
+      "frame": 1,
+      "center": 52.5,
+      "bottom": 191
+    },
+    {
+      "file": "courier-slide.png",
+      "frame": 2,
+      "center": 53,
+      "bottom": 191
+    },
+    {
+      "file": "courier-slide.png",
+      "frame": 3,
+      "center": 53,
+      "bottom": 191
+    },
+    {
+      "file": "courier-vault.png",
+      "frame": 0,
+      "center": 53,
+      "bottom": 191
+    },
+    {
+      "file": "courier-vault.png",
+      "frame": 1,
+      "center": 52.5,
+      "bottom": 191
+    },
+    {
+      "file": "courier-vault.png",
+      "frame": 2,
+      "center": 53,
+      "bottom": 191
+    },
+    {
+      "file": "courier-vault.png",
+      "frame": 3,
+      "center": 53,
+      "bottom": 191
+    },
+    {
+      "file": "courier-wallrun.png",
+      "frame": 0,
+      "center": 53,
+      "bottom": 191
+    },
+    {
+      "file": "courier-wallrun.png",
+      "frame": 1,
+      "center": 53,
+      "bottom": 191
+    },
+    {
+      "file": "courier-wallrun.png",
+      "frame": 2,
+      "center": 53,
+      "bottom": 191
+    },
+    {
+      "file": "courier-wallrun.png",
+      "frame": 3,
+      "center": 53,
+      "bottom": 191
+    },
+    {
+      "file": "forklift-roll.png",
+      "frame": 0,
+      "center": 53,
+      "bottom": 191
+    },
+    {
+      "file": "forklift-roll.png",
+      "frame": 1,
+      "center": 53,
+      "bottom": 191
+    },
+    {
+      "file": "forklift-roll.png",
+      "frame": 2,
+      "center": 53,
+      "bottom": 191
+    },
+    {
+      "file": "forklift-roll.png",
+      "frame": 3,
+      "center": 53,
+      "bottom": 191
+    },
+    {
+      "file": "forklift-slide.png",
+      "frame": 0,
+      "center": 53,
+      "bottom": 191
+    },
+    {
+      "file": "forklift-slide.png",
+      "frame": 1,
+      "center": 52.5,
+      "bottom": 191
+    },
+    {
+      "file": "forklift-slide.png",
+      "frame": 2,
+      "center": 53,
+      "bottom": 191
+    },
+    {
+      "file": "forklift-slide.png",
+      "frame": 3,
+      "center": 53,
+      "bottom": 191
+    },
+    {
+      "file": "forklift-vault.png",
+      "frame": 0,
+      "center": 52.5,
+      "bottom": 191
+    },
+    {
+      "file": "forklift-vault.png",
+      "frame": 1,
+      "center": 53,
+      "bottom": 191
+    },
+    {
+      "file": "forklift-vault.png",
+      "frame": 2,
+      "center": 53,
+      "bottom": 191
+    },
+    {
+      "file": "forklift-vault.png",
+      "frame": 3,
+      "center": 52.5,
+      "bottom": 191
+    },
+    {
+      "file": "forklift-wallrun.png",
+      "frame": 0,
+      "center": 53,
+      "bottom": 191
+    },
+    {
+      "file": "forklift-wallrun.png",
+      "frame": 1,
+      "center": 53,
+      "bottom": 191
+    },
+    {
+      "file": "forklift-wallrun.png",
+      "frame": 2,
+      "center": 53,
+      "bottom": 191
+    },
+    {
+      "file": "forklift-wallrun.png",
+      "frame": 3,
+      "center": 52.5,
+      "bottom": 191
+    },
+    {
+      "file": "guard-roll.png",
+      "frame": 0,
+      "center": 53,
+      "bottom": 191
+    },
+    {
+      "file": "guard-roll.png",
+      "frame": 1,
+      "center": 53,
+      "bottom": 191
+    },
+    {
+      "file": "guard-roll.png",
+      "frame": 2,
+      "center": 53,
+      "bottom": 191
+    },
+    {
+      "file": "guard-roll.png",
+      "frame": 3,
+      "center": 53,
+      "bottom": 191
+    },
+    {
+      "file": "guard-slide.png",
+      "frame": 0,
+      "center": 52.5,
+      "bottom": 191
+    },
+    {
+      "file": "guard-slide.png",
+      "frame": 1,
+      "center": 53,
+      "bottom": 191
+    },
+    {
+      "file": "guard-slide.png",
+      "frame": 2,
+      "center": 53,
+      "bottom": 191
+    },
+    {
+      "file": "guard-slide.png",
+      "frame": 3,
+      "center": 53,
+      "bottom": 191
+    },
+    {
+      "file": "guard-vault.png",
+      "frame": 0,
+      "center": 53,
+      "bottom": 191
+    },
+    {
+      "file": "guard-vault.png",
+      "frame": 1,
+      "center": 52.5,
+      "bottom": 191
+    },
+    {
+      "file": "guard-vault.png",
+      "frame": 2,
+      "center": 53,
+      "bottom": 191
+    },
+    {
+      "file": "guard-vault.png",
+      "frame": 3,
+      "center": 53,
+      "bottom": 191
+    },
+    {
+      "file": "guard-wallrun.png",
+      "frame": 0,
+      "center": 52.5,
+      "bottom": 191
+    },
+    {
+      "file": "guard-wallrun.png",
+      "frame": 1,
+      "center": 53,
+      "bottom": 191
+    },
+    {
+      "file": "guard-wallrun.png",
+      "frame": 2,
+      "center": 53,
+      "bottom": 191
+    },
+    {
+      "file": "guard-wallrun.png",
+      "frame": 3,
+      "center": 52.5,
+      "bottom": 191
+    },
+    {
+      "file": "picker-roll.png",
+      "frame": 0,
+      "center": 52.5,
+      "bottom": 191
+    },
+    {
+      "file": "picker-roll.png",
+      "frame": 1,
+      "center": 53,
+      "bottom": 191
+    },
+    {
+      "file": "picker-roll.png",
+      "frame": 2,
+      "center": 52.5,
+      "bottom": 191
+    },
+    {
+      "file": "picker-roll.png",
+      "frame": 3,
+      "center": 52.5,
+      "bottom": 191
+    },
+    {
+      "file": "picker-slide.png",
+      "frame": 0,
+      "center": 53,
+      "bottom": 191
+    },
+    {
+      "file": "picker-slide.png",
+      "frame": 1,
+      "center": 53,
+      "bottom": 191
+    },
+    {
+      "file": "picker-slide.png",
+      "frame": 2,
+      "center": 53,
+      "bottom": 191
+    },
+    {
+      "file": "picker-slide.png",
+      "frame": 3,
+      "center": 53,
+      "bottom": 191
+    },
+    {
+      "file": "picker-vault.png",
+      "frame": 0,
+      "center": 52.5,
+      "bottom": 191
+    },
+    {
+      "file": "picker-vault.png",
+      "frame": 1,
+      "center": 52.5,
+      "bottom": 191
+    },
+    {
+      "file": "picker-vault.png",
+      "frame": 2,
+      "center": 53,
+      "bottom": 191
+    },
+    {
+      "file": "picker-vault.png",
+      "frame": 3,
+      "center": 52.5,
+      "bottom": 191
+    },
+    {
+      "file": "picker-wallrun.png",
+      "frame": 0,
+      "center": 53,
+      "bottom": 191
+    },
+    {
+      "file": "picker-wallrun.png",
+      "frame": 1,
+      "center": 52.5,
+      "bottom": 191
+    },
+    {
+      "file": "picker-wallrun.png",
+      "frame": 2,
+      "center": 53,
+      "bottom": 191
+    },
+    {
+      "file": "picker-wallrun.png",
+      "frame": 3,
+      "center": 53,
+      "bottom": 191
+    }
+  ],
+  "evidenceStats": [
+    {
+      "file": "chief-50.png",
+      "width": 360,
+      "height": 360,
+      "stdev": [
+        45.86511828736191,
+        37.28185544004309,
+        39.491963306657205
+      ]
+    },
+    {
+      "file": "courier-roll-50.png",
+      "width": 360,
+      "height": 360,
+      "stdev": [
+        41.376035715292126,
+        33.07474924677219,
+        37.30391330197904
+      ]
+    },
+    {
+      "file": "courier-slide-50.png",
+      "width": 360,
+      "height": 360,
+      "stdev": [
+        41.415550355345516,
+        32.88142648762017,
+        37.19032752358949
+      ]
+    },
+    {
+      "file": "courier-vault-50.png",
+      "width": 360,
+      "height": 360,
+      "stdev": [
+        41.8382661166827,
+        33.23614661785451,
+        37.24815658746106
+      ]
+    },
+    {
+      "file": "courier-wallrun-50.png",
+      "width": 360,
+      "height": 360,
+      "stdev": [
+        41.89976123851426,
+        32.97819836881955,
+        37.189420087220775
+      ]
+    },
+    {
+      "file": "forklift-roll-50.png",
+      "width": 360,
+      "height": 360,
+      "stdev": [
+        41.27081027004384,
+        33.222854786938406,
+        37.34618704907992
+      ]
+    },
+    {
+      "file": "forklift-slide-50.png",
+      "width": 360,
+      "height": 360,
+      "stdev": [
+        41.144605092952894,
+        33.036746862714544,
+        37.22073089866347
+      ]
+    },
+    {
+      "file": "forklift-vault-50.png",
+      "width": 360,
+      "height": 360,
+      "stdev": [
+        42.846695984408626,
+        33.95043954354423,
+        37.70294033579813
+      ]
+    },
+    {
+      "file": "forklift-wallrun-50.png",
+      "width": 360,
+      "height": 360,
+      "stdev": [
+        41.881647080997254,
+        33.55861425313888,
+        37.6521973737274
+      ]
+    },
+    {
+      "file": "guard-roll-50.png",
+      "width": 360,
+      "height": 360,
+      "stdev": [
+        40.82180271426818,
+        33.123682541224575,
+        36.92073547480634
+      ]
+    },
+    {
+      "file": "guard-slide-50.png",
+      "width": 360,
+      "height": 360,
+      "stdev": [
+        40.833030945719614,
+        33.01163979722243,
+        36.97748074075405
+      ]
+    },
+    {
+      "file": "guard-vault-50.png",
+      "width": 360,
+      "height": 360,
+      "stdev": [
+        40.979591909098325,
+        33.04563733692315,
+        36.76706378362112
+      ]
+    },
+    {
+      "file": "guard-wallrun-50.png",
+      "width": 360,
+      "height": 360,
+      "stdev": [
+        41.06921012961654,
+        33.31876103512124,
+        37.118385112097855
+      ]
+    },
+    {
+      "file": "picker-roll-50.png",
+      "width": 360,
+      "height": 360,
+      "stdev": [
+        41.15857570532581,
+        32.930757565892925,
+        36.869187811977284
+      ]
+    },
+    {
+      "file": "picker-slide-50.png",
+      "width": 360,
+      "height": 360,
+      "stdev": [
+        40.82086771600681,
+        32.791539593969915,
+        36.98658167307728
+      ]
+    },
+    {
+      "file": "picker-vault-50.png",
+      "width": 360,
+      "height": 360,
+      "stdev": [
+        41.52601387389685,
+        33.135212390426496,
+        36.97528299053762
+      ]
+    },
+    {
+      "file": "picker-wallrun-50.png",
+      "width": 360,
+      "height": 360,
+      "stdev": [
+        41.098923288178476,
+        32.921522235041024,
+        36.91687071488412
+      ]
+    }
+  ]
+}

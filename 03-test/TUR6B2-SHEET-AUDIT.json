@@ -1,0 +1,2461 @@
+{
+  "refs": {
+    "guard": {
+      "n": 1,
+      "palette": [
+        "131732",
+        "2f3452",
+        "3d547f",
+        "160018",
+        "263360",
+        "f7b692",
+        "1f2442",
+        "415885",
+        "1b203e",
+        "272b37",
+        "3e5581",
+        "45608c",
+        "db856b",
+        "e08a71",
+        "200024",
+        "4c5579",
+        "b05d49",
+        "b16d5d",
+        "39405d",
+        "c56450",
+        "643c2a",
+        "151e44",
+        "c67b67",
+        "433938",
+        "8e3a31",
+        "44475b",
+        "4e2c1d",
+        "9a4c43",
+        "bc7e6b",
+        "5c92b9",
+        "61002c",
+        "eeb727"
+      ],
+      "runs": {
+        "1": 32922,
+        "2": 299,
+        "3": 19,
+        "4": 2
+      },
+      "outline": {
+        "boundary": 2030,
+        "dark": 1833,
+        "darkRatio": 0.9029556650246305
+      }
+    },
+    "courier": {
+      "n": 1,
+      "palette": [
+        "f5b68b",
+        "2e589c",
+        "622f1b",
+        "3465a8",
+        "804728",
+        "5d311d",
+        "df9071",
+        "e69771",
+        "673721",
+        "99390e",
+        "478cd2",
+        "c9735b",
+        "c02621",
+        "be6e58",
+        "7d4426",
+        "240024",
+        "200019",
+        "ae4c15",
+        "eda37c",
+        "b65f4c",
+        "182e68",
+        "4d1f0f",
+        "1c001c",
+        "4b2b27",
+        "d47f65",
+        "bd2227",
+        "d86d22",
+        "407cbe",
+        "b51e2a",
+        "e77e29",
+        "912130",
+        "a05f38"
+      ],
+      "runs": {
+        "1": 31631,
+        "2": 214,
+        "3": 10
+      },
+      "outline": {
+        "boundary": 2036,
+        "dark": 2000,
+        "darkRatio": 0.9823182711198428
+      }
+    },
+    "forklift": {
+      "n": 1,
+      "palette": [
+        "212339",
+        "2f3148",
+        "4a4e5a",
+        "ce9778",
+        "ffffff",
+        "636773",
+        "f7bc93",
+        "505460",
+        "d6dbde",
+        "1c1e1d",
+        "eeb932",
+        "da5304",
+        "200020",
+        "ac725b",
+        "777f89",
+        "808891",
+        "fd7902",
+        "c18623",
+        "acb4bc",
+        "bc7d1e",
+        "7b828c",
+        "5e626e",
+        "452a1b",
+        "ff8a06",
+        "6d3e0e",
+        "1e1f34",
+        "aa7020",
+        "e29873",
+        "1f2120",
+        "603d26",
+        "25170f",
+        "845d3d"
+      ],
+      "runs": {
+        "1": 25558,
+        "2": 254,
+        "3": 17,
+        "4": 2
+      },
+      "outline": {
+        "boundary": 1783,
+        "dark": 1572,
+        "darkRatio": 0.8816601233875491
+      }
+    },
+    "picker": {
+      "n": 1,
+      "palette": [
+        "f4b28f",
+        "37384a",
+        "4d515d",
+        "2a2d36",
+        "4ea45b",
+        "216146",
+        "479856",
+        "535763",
+        "3f8f51",
+        "d4816b",
+        "696f7b",
+        "d27f6b",
+        "e79b7c",
+        "3f414f",
+        "28002d",
+        "513430",
+        "b86658",
+        "5c606c",
+        "949aae",
+        "161820",
+        "fac9a6",
+        "5cb460",
+        "737b86",
+        "14151c",
+        "6a493e",
+        "a3a9bb",
+        "805a4a",
+        "7a5646",
+        "b4b8c4",
+        "8d6352",
+        "828891",
+        "d1d7dd"
+      ],
+      "runs": {
+        "1": 32056,
+        "2": 254,
+        "3": 15
+      },
+      "outline": {
+        "boundary": 2219,
+        "dark": 1601,
+        "darkRatio": 0.7214961694456963
+      }
+    }
+  },
+  "rows": [
+    {
+      "file": "chief.png",
+      "cleanedPixels": 57385,
+      "contourPixelsLost": 0,
+      "initialRegions": [
+        {
+          "x": 44,
+          "right": 484,
+          "top": 138,
+          "bottom": 778
+        },
+        {
+          "x": 525,
+          "right": 976,
+          "top": 160,
+          "bottom": 778
+        },
+        {
+          "x": 1023,
+          "right": 1436,
+          "top": 144,
+          "bottom": 778
+        },
+        {
+          "x": 1489,
+          "right": 1885,
+          "top": 133,
+          "bottom": 778
+        }
+      ],
+      "regions": [
+        {
+          "x": 44,
+          "right": 484,
+          "top": 138,
+          "bottom": 778
+        },
+        {
+          "x": 525,
+          "right": 976,
+          "top": 160,
+          "bottom": 778
+        },
+        {
+          "x": 1023,
+          "right": 1436,
+          "top": 144,
+          "bottom": 778
+        },
+        {
+          "x": 1489,
+          "right": 1885,
+          "top": 133,
+          "bottom": 778
+        }
+      ],
+      "reference": "guard (provisional chief scale)",
+      "baseScale": 0.2739938080495356,
+      "scale": 0.2345132743362832,
+      "widthReduction": 0.855907204639768,
+      "snapN": 1,
+      "outlineBefore": {
+        "boundary": 9882,
+        "dark": 8646,
+        "darkRatio": 0.8749241044323012
+      },
+      "snapDimensions": [
+        {
+          "w": 103,
+          "h": 150,
+          "snappedW": 72,
+          "snappedH": 117
+        },
+        {
+          "w": 106,
+          "h": 145,
+          "snappedW": 79,
+          "snappedH": 113
+        },
+        {
+          "w": 97,
+          "h": 148,
+          "snappedW": 72,
+          "snappedH": 117
+        },
+        {
+          "w": 93,
+          "h": 151,
+          "snappedW": 70,
+          "snappedH": 121
+        }
+      ],
+      "snapOrder": {
+        "selected": "snap then resize",
+        "rgbaL1After": 6666063,
+        "rgbaL1Before": 5770882,
+        "reason": "N=1 reference grid; before-resize lower RGBA L1 on 16/17 measured sheets; snap output restored to intended geometry; alpha coverage restored"
+      },
+      "outlineAfter": {
+        "boundary": 2008,
+        "dark": 1787,
+        "darkRatio": 0.8899402390438247
+      },
+      "outputFrames": [
+        {
+          "x": 0,
+          "right": 105,
+          "top": 42,
+          "bottom": 191
+        },
+        {
+          "x": 106,
+          "right": 211,
+          "top": 47,
+          "bottom": 191
+        },
+        {
+          "x": 212,
+          "right": 317,
+          "top": 44,
+          "bottom": 191
+        },
+        {
+          "x": 318,
+          "right": 423,
+          "top": 41,
+          "bottom": 191
+        }
+      ],
+      "bytes": 21634,
+      "sha256": "e2d35026c55c4858e41c8801b774c0276ccb026ab5a1ae5e2969648c0e656edd",
+      "status": "PASS"
+    },
+    {
+      "file": "courier-roll.png",
+      "cleanedPixels": 26336,
+      "contourPixelsLost": 0,
+      "initialRegions": [
+        {
+          "x": 56,
+          "right": 429,
+          "top": 296,
+          "bottom": 690
+        },
+        {
+          "x": 551,
+          "right": 962,
+          "top": 408,
+          "bottom": 690
+        },
+        {
+          "x": 1074,
+          "right": 1415,
+          "top": 423,
+          "bottom": 688
+        },
+        {
+          "x": 1517,
+          "right": 1884,
+          "top": 300,
+          "bottom": 688
+        }
+      ],
+      "regions": [
+        {
+          "x": 56,
+          "right": 429,
+          "top": 296,
+          "bottom": 690
+        },
+        {
+          "x": 551,
+          "right": 962,
+          "top": 408,
+          "bottom": 690
+        },
+        {
+          "x": 1074,
+          "right": 1415,
+          "top": 423,
+          "bottom": 688
+        },
+        {
+          "x": 1517,
+          "right": 1884,
+          "top": 300,
+          "bottom": 688
+        }
+      ],
+      "reference": "courier",
+      "baseScale": 0.4481012658227848,
+      "scale": 0.25728155339805825,
+      "widthReduction": 0.5741593988261752,
+      "snapN": 1,
+      "outlineBefore": {
+        "boundary": 5961,
+        "dark": 4986,
+        "darkRatio": 0.8364368394564671
+      },
+      "snapDimensions": [
+        {
+          "w": 96,
+          "h": 101,
+          "snappedW": 69,
+          "snappedH": 70
+        },
+        {
+          "w": 106,
+          "h": 72,
+          "snappedW": 76,
+          "snappedH": 51
+        },
+        {
+          "w": 87,
+          "h": 68,
+          "snappedW": 63,
+          "snappedH": 49
+        },
+        {
+          "w": 94,
+          "h": 100,
+          "snappedW": 65,
+          "snappedH": 70
+        }
+      ],
+      "snapOrder": {
+        "selected": "snap then resize",
+        "rgbaL1After": 2904050,
+        "rgbaL1Before": 2483122,
+        "reason": "N=1 reference grid; before-resize lower RGBA L1 on 16/17 measured sheets; snap output restored to intended geometry; alpha coverage restored"
+      },
+      "outlineAfter": {
+        "boundary": 1368,
+        "dark": 1284,
+        "darkRatio": 0.9385964912280702
+      },
+      "outputFrames": [
+        {
+          "x": 0,
+          "right": 105,
+          "top": 91,
+          "bottom": 191
+        },
+        {
+          "x": 106,
+          "right": 211,
+          "top": 120,
+          "bottom": 191
+        },
+        {
+          "x": 212,
+          "right": 317,
+          "top": 124,
+          "bottom": 191
+        },
+        {
+          "x": 318,
+          "right": 423,
+          "top": 92,
+          "bottom": 191
+        }
+      ],
+      "bytes": 15768,
+      "sha256": "5d3951ba0020110af43b750057238d2021d40e94feeb2bdd4b0f86ae38664ca0",
+      "status": "PASS"
+    },
+    {
+      "file": "courier-slide.png",
+      "cleanedPixels": 39840,
+      "contourPixelsLost": 0,
+      "initialRegions": [
+        {
+          "x": 21,
+          "right": 435,
+          "top": 283,
+          "bottom": 699
+        },
+        {
+          "x": 493,
+          "right": 944,
+          "top": 354,
+          "bottom": 699
+        },
+        {
+          "x": 1029,
+          "right": 1508,
+          "top": 485,
+          "bottom": 699
+        },
+        {
+          "x": 1574,
+          "right": 1903,
+          "top": 266,
+          "bottom": 699
+        }
+      ],
+      "regions": [
+        {
+          "x": 21,
+          "right": 435,
+          "top": 283,
+          "bottom": 699
+        },
+        {
+          "x": 493,
+          "right": 944,
+          "top": 354,
+          "bottom": 699
+        },
+        {
+          "x": 1029,
+          "right": 1508,
+          "top": 485,
+          "bottom": 699
+        },
+        {
+          "x": 1574,
+          "right": 1903,
+          "top": 266,
+          "bottom": 699
+        }
+      ],
+      "reference": "courier",
+      "baseScale": 0.4078341013824885,
+      "scale": 0.22083333333333333,
+      "widthReduction": 0.5414783427495291,
+      "snapN": 1,
+      "outlineBefore": {
+        "boundary": 7403,
+        "dark": 5728,
+        "darkRatio": 0.7737403755234364
+      },
+      "snapDimensions": [
+        {
+          "w": 91,
+          "h": 92,
+          "snappedW": 66,
+          "snappedH": 64
+        },
+        {
+          "w": 99,
+          "h": 76,
+          "snappedW": 66,
+          "snappedH": 55
+        },
+        {
+          "w": 106,
+          "h": 47,
+          "snappedW": 70,
+          "snappedH": 33
+        },
+        {
+          "w": 72,
+          "h": 95,
+          "snappedW": 53,
+          "snappedH": 67
+        }
+      ],
+      "snapOrder": {
+        "selected": "snap then resize",
+        "rgbaL1After": 2321331,
+        "rgbaL1Before": 1800056,
+        "reason": "N=1 reference grid; before-resize lower RGBA L1 on 16/17 measured sheets; snap output restored to intended geometry; alpha coverage restored"
+      },
+      "outlineAfter": {
+        "boundary": 1399,
+        "dark": 1318,
+        "darkRatio": 0.9421015010721944
+      },
+      "outputFrames": [
+        {
+          "x": 0,
+          "right": 105,
+          "top": 100,
+          "bottom": 191
+        },
+        {
+          "x": 106,
+          "right": 211,
+          "top": 116,
+          "bottom": 191
+        },
+        {
+          "x": 212,
+          "right": 317,
+          "top": 145,
+          "bottom": 191
+        },
+        {
+          "x": 318,
+          "right": 423,
+          "top": 97,
+          "bottom": 191
+        }
+      ],
+      "bytes": 14651,
+      "sha256": "24b2145a3044f8cc1b6abdefe0a26aef2a7a4ead30f5503f2cfa28c982ad1c1c",
+      "status": "PASS"
+    },
+    {
+      "file": "courier-vault.png",
+      "cleanedPixels": 40565,
+      "contourPixelsLost": 0,
+      "initialRegions": [
+        {
+          "x": 27,
+          "right": 458,
+          "top": 282,
+          "bottom": 706
+        },
+        {
+          "x": 513,
+          "right": 957,
+          "top": 355,
+          "bottom": 706
+        },
+        {
+          "x": 1039,
+          "right": 1485,
+          "top": 292,
+          "bottom": 706
+        },
+        {
+          "x": 1538,
+          "right": 1894,
+          "top": 276,
+          "bottom": 706
+        }
+      ],
+      "regions": [
+        {
+          "x": 27,
+          "right": 458,
+          "top": 282,
+          "bottom": 706
+        },
+        {
+          "x": 513,
+          "right": 957,
+          "top": 355,
+          "bottom": 706
+        },
+        {
+          "x": 1039,
+          "right": 1485,
+          "top": 292,
+          "bottom": 706
+        },
+        {
+          "x": 1538,
+          "right": 1894,
+          "top": 276,
+          "bottom": 706
+        }
+      ],
+      "reference": "courier",
+      "baseScale": 0.41067285382830626,
+      "scale": 0.2371364653243848,
+      "widthReduction": 0.5774339918350838,
+      "snapN": 1,
+      "outlineBefore": {
+        "boundary": 7503,
+        "dark": 5313,
+        "darkRatio": 0.7081167532986805
+      },
+      "snapDimensions": [
+        {
+          "w": 102,
+          "h": 100,
+          "snappedW": 72,
+          "snappedH": 70
+        },
+        {
+          "w": 105,
+          "h": 83,
+          "snappedW": 85,
+          "snappedH": 61
+        },
+        {
+          "w": 106,
+          "h": 98,
+          "snappedW": 77,
+          "snappedH": 74
+        },
+        {
+          "w": 84,
+          "h": 102,
+          "snappedW": 56,
+          "snappedH": 71
+        }
+      ],
+      "snapOrder": {
+        "selected": "snap then resize",
+        "rgbaL1After": 3343243,
+        "rgbaL1Before": 2577908,
+        "reason": "N=1 reference grid; before-resize lower RGBA L1 on 16/17 measured sheets; snap output restored to intended geometry; alpha coverage restored"
+      },
+      "outlineAfter": {
+        "boundary": 1574,
+        "dark": 1403,
+        "darkRatio": 0.8913595933926303
+      },
+      "outputFrames": [
+        {
+          "x": 0,
+          "right": 105,
+          "top": 92,
+          "bottom": 191
+        },
+        {
+          "x": 106,
+          "right": 211,
+          "top": 109,
+          "bottom": 191
+        },
+        {
+          "x": 212,
+          "right": 317,
+          "top": 94,
+          "bottom": 191
+        },
+        {
+          "x": 318,
+          "right": 423,
+          "top": 90,
+          "bottom": 191
+        }
+      ],
+      "bytes": 17639,
+      "sha256": "6679ae2b01bf05f4db64befed9e3c0f8f84156e9f44e69726dc7a9e588982fd4",
+      "status": "PASS"
+    },
+    {
+      "file": "courier-wallrun.png",
+      "cleanedPixels": 62289,
+      "contourPixelsLost": 0,
+      "initialRegions": [
+        {
+          "x": 57,
+          "right": 473,
+          "top": 173,
+          "bottom": 747
+        },
+        {
+          "x": 572,
+          "right": 889,
+          "top": 107,
+          "bottom": 695
+        },
+        {
+          "x": 1006,
+          "right": 1446,
+          "top": 101,
+          "bottom": 700
+        },
+        {
+          "x": 1554,
+          "right": 1878,
+          "top": 111,
+          "bottom": 645
+        }
+      ],
+      "regions": [
+        {
+          "x": 57,
+          "right": 473,
+          "top": 173,
+          "bottom": 747
+        },
+        {
+          "x": 572,
+          "right": 889,
+          "top": 107,
+          "bottom": 695
+        },
+        {
+          "x": 1006,
+          "right": 1446,
+          "top": 101,
+          "bottom": 700
+        },
+        {
+          "x": 1554,
+          "right": 1878,
+          "top": 111,
+          "bottom": 645
+        }
+      ],
+      "reference": "courier",
+      "baseScale": 0.295,
+      "scale": 0.24036281179138322,
+      "widthReduction": 0.8147891925131635,
+      "snapN": 1,
+      "outlineBefore": {
+        "boundary": 10040,
+        "dark": 7590,
+        "darkRatio": 0.7559760956175299
+      },
+      "snapDimensions": [
+        {
+          "w": 100,
+          "h": 138,
+          "snappedW": 74,
+          "snappedH": 101
+        },
+        {
+          "w": 76,
+          "h": 141,
+          "snappedW": 56,
+          "snappedH": 98
+        },
+        {
+          "w": 106,
+          "h": 144,
+          "snappedW": 76,
+          "snappedH": 105
+        },
+        {
+          "w": 78,
+          "h": 128,
+          "snappedW": 56,
+          "snappedH": 91
+        }
+      ],
+      "snapOrder": {
+        "selected": "snap then resize",
+        "rgbaL1After": 3083412,
+        "rgbaL1Before": 2727434,
+        "reason": "N=1 reference grid; before-resize lower RGBA L1 on 16/17 measured sheets; snap output restored to intended geometry; alpha coverage restored"
+      },
+      "outlineAfter": {
+        "boundary": 2143,
+        "dark": 1936,
+        "darkRatio": 0.9034064395706953
+      },
+      "outputFrames": [
+        {
+          "x": 0,
+          "right": 105,
+          "top": 54,
+          "bottom": 191
+        },
+        {
+          "x": 106,
+          "right": 211,
+          "top": 51,
+          "bottom": 191
+        },
+        {
+          "x": 212,
+          "right": 317,
+          "top": 48,
+          "bottom": 191
+        },
+        {
+          "x": 318,
+          "right": 423,
+          "top": 64,
+          "bottom": 191
+        }
+      ],
+      "bytes": 22303,
+      "sha256": "32eb38f4ddfff8a4764a5fb485ed3b106ce38409e409d00b319b1212b7f9d9fe",
+      "status": "PASS"
+    },
+    {
+      "file": "forklift-roll.png",
+      "cleanedPixels": 28362,
+      "contourPixelsLost": 0,
+      "initialRegions": [
+        {
+          "x": 68,
+          "right": 397,
+          "top": 353,
+          "bottom": 705
+        },
+        {
+          "x": 540,
+          "right": 961,
+          "top": 450,
+          "bottom": 705
+        },
+        {
+          "x": 1069,
+          "right": 1374,
+          "top": 466,
+          "bottom": 705
+        },
+        {
+          "x": 1515,
+          "right": 1857,
+          "top": 337,
+          "bottom": 705
+        }
+      ],
+      "regions": [
+        {
+          "x": 68,
+          "right": 397,
+          "top": 353,
+          "bottom": 705
+        },
+        {
+          "x": 540,
+          "right": 961,
+          "top": 450,
+          "bottom": 705
+        },
+        {
+          "x": 1069,
+          "right": 1374,
+          "top": 466,
+          "bottom": 705
+        },
+        {
+          "x": 1515,
+          "right": 1857,
+          "top": 337,
+          "bottom": 705
+        }
+      ],
+      "reference": "forklift",
+      "baseScale": 0.43089430894308944,
+      "scale": 0.25118483412322273,
+      "widthReduction": 0.5829383886255923,
+      "snapN": 1,
+      "outlineBefore": {
+        "boundary": 5580,
+        "dark": 5111,
+        "darkRatio": 0.9159498207885305
+      },
+      "snapDimensions": [
+        {
+          "w": 82,
+          "h": 88,
+          "snappedW": 61,
+          "snappedH": 66
+        },
+        {
+          "w": 106,
+          "h": 64,
+          "snappedW": 84,
+          "snappedH": 43
+        },
+        {
+          "w": 76,
+          "h": 60,
+          "snappedW": 50,
+          "snappedH": 47
+        },
+        {
+          "w": 86,
+          "h": 92,
+          "snappedW": 63,
+          "snappedH": 67
+        }
+      ],
+      "snapOrder": {
+        "selected": "snap then resize",
+        "rgbaL1After": 2737871,
+        "rgbaL1Before": 2178795,
+        "reason": "N=1 reference grid; before-resize lower RGBA L1 on 16/17 measured sheets; snap output restored to intended geometry; alpha coverage restored"
+      },
+      "outlineAfter": {
+        "boundary": 1221,
+        "dark": 1190,
+        "darkRatio": 0.9746109746109746
+      },
+      "outputFrames": [
+        {
+          "x": 0,
+          "right": 105,
+          "top": 104,
+          "bottom": 191
+        },
+        {
+          "x": 106,
+          "right": 211,
+          "top": 128,
+          "bottom": 191
+        },
+        {
+          "x": 212,
+          "right": 317,
+          "top": 132,
+          "bottom": 191
+        },
+        {
+          "x": 318,
+          "right": 423,
+          "top": 100,
+          "bottom": 191
+        }
+      ],
+      "bytes": 13821,
+      "sha256": "5a7768c8f980fa5ce98d24f5b2e48705496969470d94b13777772a77c29eb86c",
+      "status": "PASS"
+    },
+    {
+      "file": "forklift-slide.png",
+      "cleanedPixels": 20507,
+      "contourPixelsLost": 0,
+      "initialRegions": [
+        {
+          "x": 65,
+          "right": 391,
+          "top": 350,
+          "bottom": 687
+        },
+        {
+          "x": 512,
+          "right": 927,
+          "top": 421,
+          "bottom": 687
+        },
+        {
+          "x": 1014,
+          "right": 1457,
+          "top": 526,
+          "bottom": 687
+        },
+        {
+          "x": 1568,
+          "right": 1853,
+          "top": 332,
+          "bottom": 687
+        }
+      ],
+      "regions": [
+        {
+          "x": 65,
+          "right": 391,
+          "top": 350,
+          "bottom": 687
+        },
+        {
+          "x": 512,
+          "right": 927,
+          "top": 421,
+          "bottom": 687
+        },
+        {
+          "x": 1014,
+          "right": 1457,
+          "top": 526,
+          "bottom": 687
+        },
+        {
+          "x": 1568,
+          "right": 1853,
+          "top": 332,
+          "bottom": 687
+        }
+      ],
+      "reference": "forklift",
+      "baseScale": 0.44662921348314605,
+      "scale": 0.23873873873873874,
+      "widthReduction": 0.5345345345345346,
+      "snapN": 1,
+      "outlineBefore": {
+        "boundary": 5375,
+        "dark": 4875,
+        "darkRatio": 0.9069767441860465
+      },
+      "snapDimensions": [
+        {
+          "w": 78,
+          "h": 80,
+          "snappedW": 60,
+          "snappedH": 61
+        },
+        {
+          "w": 99,
+          "h": 63,
+          "snappedW": 76,
+          "snappedH": 48
+        },
+        {
+          "w": 106,
+          "h": 38,
+          "snappedW": 77,
+          "snappedH": 28
+        },
+        {
+          "w": 68,
+          "h": 84,
+          "snappedW": 52,
+          "snappedH": 65
+        }
+      ],
+      "snapOrder": {
+        "selected": "snap then resize",
+        "rgbaL1After": 2545960,
+        "rgbaL1Before": 2047840,
+        "reason": "N=1 reference grid; before-resize lower RGBA L1 on 16/17 measured sheets; snap output restored to intended geometry; alpha coverage restored"
+      },
+      "outlineAfter": {
+        "boundary": 1190,
+        "dark": 1120,
+        "darkRatio": 0.9411764705882353
+      },
+      "outputFrames": [
+        {
+          "x": 0,
+          "right": 105,
+          "top": 112,
+          "bottom": 191
+        },
+        {
+          "x": 106,
+          "right": 211,
+          "top": 129,
+          "bottom": 191
+        },
+        {
+          "x": 212,
+          "right": 317,
+          "top": 154,
+          "bottom": 191
+        },
+        {
+          "x": 318,
+          "right": 423,
+          "top": 108,
+          "bottom": 191
+        }
+      ],
+      "bytes": 12421,
+      "sha256": "585758d25b4bea459a9967f97d7c07cf25288f5c7476d1f85382f1e40f740dc6",
+      "status": "PASS"
+    },
+    {
+      "file": "forklift-vault.png",
+      "cleanedPixels": 48682,
+      "contourPixelsLost": 0,
+      "initialRegions": [
+        {
+          "x": 41,
+          "right": 461,
+          "top": 202,
+          "bottom": 723
+        },
+        {
+          "x": 515,
+          "right": 949,
+          "top": 297,
+          "bottom": 723
+        },
+        {
+          "x": 1035,
+          "right": 1483,
+          "top": 256,
+          "bottom": 723
+        },
+        {
+          "x": 1528,
+          "right": 1880,
+          "top": 202,
+          "bottom": 723
+        }
+      ],
+      "regions": [
+        {
+          "x": 41,
+          "right": 461,
+          "top": 202,
+          "bottom": 723
+        },
+        {
+          "x": 515,
+          "right": 949,
+          "top": 297,
+          "bottom": 723
+        },
+        {
+          "x": 1035,
+          "right": 1483,
+          "top": 256,
+          "bottom": 723
+        },
+        {
+          "x": 1528,
+          "right": 1880,
+          "top": 202,
+          "bottom": 723
+        }
+      ],
+      "reference": "forklift",
+      "baseScale": 0.3045977011494253,
+      "scale": 0.23608017817371937,
+      "widthReduction": 0.7750556792873051,
+      "snapN": 1,
+      "outlineBefore": {
+        "boundary": 8673,
+        "dark": 7652,
+        "darkRatio": 0.8822783350628387
+      },
+      "snapDimensions": [
+        {
+          "w": 99,
+          "h": 123,
+          "snappedW": 73,
+          "snappedH": 90
+        },
+        {
+          "w": 102,
+          "h": 100,
+          "snappedW": 82,
+          "snappedH": 76
+        },
+        {
+          "w": 106,
+          "h": 110,
+          "snappedW": 86,
+          "snappedH": 86
+        },
+        {
+          "w": 83,
+          "h": 123,
+          "snappedW": 59,
+          "snappedH": 90
+        }
+      ],
+      "snapOrder": {
+        "selected": "snap then resize",
+        "rgbaL1After": 3277446,
+        "rgbaL1Before": 2632659,
+        "reason": "N=1 reference grid; before-resize lower RGBA L1 on 16/17 measured sheets; snap output restored to intended geometry; alpha coverage restored"
+      },
+      "outlineAfter": {
+        "boundary": 1772,
+        "dark": 1730,
+        "darkRatio": 0.9762979683972912
+      },
+      "outputFrames": [
+        {
+          "x": 0,
+          "right": 105,
+          "top": 69,
+          "bottom": 191
+        },
+        {
+          "x": 106,
+          "right": 211,
+          "top": 92,
+          "bottom": 191
+        },
+        {
+          "x": 212,
+          "right": 317,
+          "top": 82,
+          "bottom": 191
+        },
+        {
+          "x": 318,
+          "right": 423,
+          "top": 69,
+          "bottom": 191
+        }
+      ],
+      "bytes": 18297,
+      "sha256": "0cc79dd9141814d5120dd1b416ad41e7372e36f3cf0d51dfd9e455e01d1bcf95",
+      "status": "PASS"
+    },
+    {
+      "file": "forklift-wallrun.png",
+      "cleanedPixels": 76106,
+      "contourPixelsLost": 0,
+      "initialRegions": [
+        {
+          "x": 72,
+          "right": 465,
+          "top": 186,
+          "bottom": 779
+        },
+        {
+          "x": 559,
+          "right": 911,
+          "top": 120,
+          "bottom": 713
+        },
+        {
+          "x": 958,
+          "right": 1486,
+          "top": 74,
+          "bottom": 656
+        },
+        {
+          "x": 1520,
+          "right": 1865,
+          "top": 170,
+          "bottom": 733
+        }
+      ],
+      "regions": [
+        {
+          "x": 72,
+          "right": 465,
+          "top": 186,
+          "bottom": 779
+        },
+        {
+          "x": 559,
+          "right": 911,
+          "top": 120,
+          "bottom": 713
+        },
+        {
+          "x": 958,
+          "right": 1486,
+          "top": 74,
+          "bottom": 656
+        },
+        {
+          "x": 1520,
+          "right": 1865,
+          "top": 170,
+          "bottom": 733
+        }
+      ],
+      "reference": "forklift",
+      "baseScale": 0.2676767676767677,
+      "scale": 0.2003780718336484,
+      "widthReduction": 0.7485822306238185,
+      "snapN": 1,
+      "outlineBefore": {
+        "boundary": 9835,
+        "dark": 7605,
+        "darkRatio": 0.7732587697000508
+      },
+      "snapDimensions": [
+        {
+          "w": 78,
+          "h": 119,
+          "snappedW": 54,
+          "snappedH": 93
+        },
+        {
+          "w": 70,
+          "h": 119,
+          "snappedW": 51,
+          "snappedH": 94
+        },
+        {
+          "w": 106,
+          "h": 116,
+          "snappedW": 76,
+          "snappedH": 92
+        },
+        {
+          "w": 69,
+          "h": 113,
+          "snappedW": 51,
+          "snappedH": 84
+        }
+      ],
+      "snapOrder": {
+        "selected": "snap then resize",
+        "rgbaL1After": 4483907,
+        "rgbaL1Before": 3503349,
+        "reason": "N=1 reference grid; before-resize lower RGBA L1 on 16/17 measured sheets; snap output restored to intended geometry; alpha coverage restored"
+      },
+      "outlineAfter": {
+        "boundary": 1742,
+        "dark": 1501,
+        "darkRatio": 0.8616532721010333
+      },
+      "outputFrames": [
+        {
+          "x": 0,
+          "right": 105,
+          "top": 73,
+          "bottom": 191
+        },
+        {
+          "x": 106,
+          "right": 211,
+          "top": 73,
+          "bottom": 191
+        },
+        {
+          "x": 212,
+          "right": 317,
+          "top": 76,
+          "bottom": 191
+        },
+        {
+          "x": 318,
+          "right": 423,
+          "top": 79,
+          "bottom": 191
+        }
+      ],
+      "bytes": 17403,
+      "sha256": "96e369feb0bdb0a088ff57b97dcb3c05af36dfe9957b41153678b59e831197fe",
+      "status": "PASS"
+    },
+    {
+      "file": "guard-roll.png",
+      "cleanedPixels": 37078,
+      "contourPixelsLost": 0,
+      "initialRegions": [
+        {
+          "x": 57,
+          "right": 458,
+          "top": 248,
+          "bottom": 674
+        },
+        {
+          "x": 521,
+          "right": 971,
+          "top": 338,
+          "bottom": 664
+        },
+        {
+          "x": 1018,
+          "right": 1385,
+          "top": 329,
+          "bottom": 677
+        },
+        {
+          "x": 1487,
+          "right": 1862,
+          "top": 234,
+          "bottom": 677
+        }
+      ],
+      "regions": [
+        {
+          "x": 57,
+          "right": 458,
+          "top": 248,
+          "bottom": 674
+        },
+        {
+          "x": 521,
+          "right": 971,
+          "top": 338,
+          "bottom": 664
+        },
+        {
+          "x": 1018,
+          "right": 1385,
+          "top": 329,
+          "bottom": 677
+        },
+        {
+          "x": 1487,
+          "right": 1862,
+          "top": 234,
+          "bottom": 677
+        }
+      ],
+      "reference": "guard",
+      "baseScale": 0.39864864864864863,
+      "scale": 0.23503325942350334,
+      "widthReduction": 0.5895749558420084,
+      "snapN": 1,
+      "outlineBefore": {
+        "boundary": 7299,
+        "dark": 7108,
+        "darkRatio": 0.9738320317851761
+      },
+      "snapDimensions": [
+        {
+          "w": 94,
+          "h": 100,
+          "snappedW": 67,
+          "snappedH": 73
+        },
+        {
+          "w": 106,
+          "h": 76,
+          "snappedW": 80,
+          "snappedH": 53
+        },
+        {
+          "w": 86,
+          "h": 82,
+          "snappedW": 61,
+          "snappedH": 62
+        },
+        {
+          "w": 88,
+          "h": 104,
+          "snappedW": 68,
+          "snappedH": 72
+        }
+      ],
+      "snapOrder": {
+        "selected": "snap then resize",
+        "rgbaL1After": 1822365,
+        "rgbaL1Before": 1637318,
+        "reason": "N=1 reference grid; before-resize lower RGBA L1 on 16/17 measured sheets; snap output restored to intended geometry; alpha coverage restored"
+      },
+      "outlineAfter": {
+        "boundary": 1463,
+        "dark": 1434,
+        "darkRatio": 0.9801777170198223
+      },
+      "outputFrames": [
+        {
+          "x": 0,
+          "right": 105,
+          "top": 92,
+          "bottom": 191
+        },
+        {
+          "x": 106,
+          "right": 211,
+          "top": 116,
+          "bottom": 191
+        },
+        {
+          "x": 212,
+          "right": 317,
+          "top": 110,
+          "bottom": 191
+        },
+        {
+          "x": 318,
+          "right": 423,
+          "top": 88,
+          "bottom": 191
+        }
+      ],
+      "bytes": 18607,
+      "sha256": "9e0e3e46b27bec599e8b8612e0e415ff9e2ae7d43e30f54e34a3461a5b3c16b0",
+      "status": "PASS"
+    },
+    {
+      "file": "guard-slide.png",
+      "cleanedPixels": 45024,
+      "contourPixelsLost": 0,
+      "initialRegions": [
+        {
+          "x": 16,
+          "right": 431,
+          "top": 272,
+          "bottom": 681
+        },
+        {
+          "x": 483,
+          "right": 955,
+          "top": 373,
+          "bottom": 681
+        },
+        {
+          "x": 981,
+          "right": 1462,
+          "top": 473,
+          "bottom": 682
+        },
+        {
+          "x": 1527,
+          "right": 1890,
+          "top": 265,
+          "bottom": 681
+        }
+      ],
+      "regions": [
+        {
+          "x": 16,
+          "right": 431,
+          "top": 272,
+          "bottom": 681
+        },
+        {
+          "x": 483,
+          "right": 955,
+          "top": 373,
+          "bottom": 681
+        },
+        {
+          "x": 981,
+          "right": 1462,
+          "top": 473,
+          "bottom": 682
+        },
+        {
+          "x": 1527,
+          "right": 1890,
+          "top": 265,
+          "bottom": 681
+        }
+      ],
+      "reference": "guard",
+      "baseScale": 0.4244604316546763,
+      "scale": 0.21991701244813278,
+      "widthReduction": 0.5181095716998382,
+      "snapN": 1,
+      "outlineBefore": {
+        "boundary": 6867,
+        "dark": 5550,
+        "darkRatio": 0.8082131935342944
+      },
+      "snapDimensions": [
+        {
+          "w": 91,
+          "h": 90,
+          "snappedW": 65,
+          "snappedH": 61
+        },
+        {
+          "w": 104,
+          "h": 67,
+          "snappedW": 73,
+          "snappedH": 47
+        },
+        {
+          "w": 106,
+          "h": 46,
+          "snappedW": 76,
+          "snappedH": 30
+        },
+        {
+          "w": 80,
+          "h": 91,
+          "snappedW": 51,
+          "snappedH": 63
+        }
+      ],
+      "snapOrder": {
+        "selected": "snap then resize",
+        "rgbaL1After": 2054061,
+        "rgbaL1Before": 1495089,
+        "reason": "N=1 reference grid; before-resize lower RGBA L1 on 16/17 measured sheets; snap output restored to intended geometry; alpha coverage restored"
+      },
+      "outlineAfter": {
+        "boundary": 1348,
+        "dark": 1314,
+        "darkRatio": 0.9747774480712166
+      },
+      "outputFrames": [
+        {
+          "x": 0,
+          "right": 105,
+          "top": 102,
+          "bottom": 191
+        },
+        {
+          "x": 106,
+          "right": 211,
+          "top": 125,
+          "bottom": 191
+        },
+        {
+          "x": 212,
+          "right": 317,
+          "top": 146,
+          "bottom": 191
+        },
+        {
+          "x": 318,
+          "right": 423,
+          "top": 101,
+          "bottom": 191
+        }
+      ],
+      "bytes": 15684,
+      "sha256": "700ffc780d27f0255cb312b559cc9a6f1e3de20496d0d6f3528db54eea497d2d",
+      "status": "PASS"
+    },
+    {
+      "file": "guard-vault.png",
+      "cleanedPixels": 59476,
+      "contourPixelsLost": 0,
+      "initialRegions": [
+        {
+          "x": 35,
+          "right": 486,
+          "top": 235,
+          "bottom": 697
+        },
+        {
+          "x": 530,
+          "right": 961,
+          "top": 342,
+          "bottom": 695
+        },
+        {
+          "x": 1012,
+          "right": 1441,
+          "top": 315,
+          "bottom": 695
+        },
+        {
+          "x": 1543,
+          "right": 1875,
+          "top": 232,
+          "bottom": 697
+        }
+      ],
+      "regions": [
+        {
+          "x": 35,
+          "right": 486,
+          "top": 235,
+          "bottom": 697
+        },
+        {
+          "x": 530,
+          "right": 961,
+          "top": 342,
+          "bottom": 695
+        },
+        {
+          "x": 1012,
+          "right": 1441,
+          "top": 315,
+          "bottom": 695
+        },
+        {
+          "x": 1543,
+          "right": 1875,
+          "top": 232,
+          "bottom": 697
+        }
+      ],
+      "reference": "guard",
+      "baseScale": 0.3798283261802575,
+      "scale": 0.2345132743362832,
+      "widthReduction": 0.6174191290435478,
+      "snapN": 1,
+      "outlineBefore": {
+        "boundary": 7513,
+        "dark": 5031,
+        "darkRatio": 0.6696392918940504
+      },
+      "snapDimensions": [
+        {
+          "w": 106,
+          "h": 108,
+          "snappedW": 72,
+          "snappedH": 74
+        },
+        {
+          "w": 101,
+          "h": 83,
+          "snappedW": 75,
+          "snappedH": 57
+        },
+        {
+          "w": 100,
+          "h": 89,
+          "snappedW": 76,
+          "snappedH": 63
+        },
+        {
+          "w": 78,
+          "h": 109,
+          "snappedW": 55,
+          "snappedH": 75
+        }
+      ],
+      "snapOrder": {
+        "selected": "snap then resize",
+        "rgbaL1After": 2310052,
+        "rgbaL1Before": 1848323,
+        "reason": "N=1 reference grid; before-resize lower RGBA L1 on 16/17 measured sheets; snap output restored to intended geometry; alpha coverage restored"
+      },
+      "outlineAfter": {
+        "boundary": 1601,
+        "dark": 1549,
+        "darkRatio": 0.9675202998126171
+      },
+      "outputFrames": [
+        {
+          "x": 0,
+          "right": 105,
+          "top": 84,
+          "bottom": 191
+        },
+        {
+          "x": 106,
+          "right": 211,
+          "top": 109,
+          "bottom": 191
+        },
+        {
+          "x": 212,
+          "right": 317,
+          "top": 103,
+          "bottom": 191
+        },
+        {
+          "x": 318,
+          "right": 423,
+          "top": 83,
+          "bottom": 191
+        }
+      ],
+      "bytes": 19349,
+      "sha256": "92c95d3e61b49a3cb60825b08fefa5313ae58c4961336de11f8a352e45951d05",
+      "status": "PASS"
+    },
+    {
+      "file": "guard-wallrun.png",
+      "cleanedPixels": 48606,
+      "contourPixelsLost": 0,
+      "initialRegions": [
+        {
+          "x": 46,
+          "right": 486,
+          "top": 234,
+          "bottom": 746
+        },
+        {
+          "x": 541,
+          "right": 910,
+          "top": 128,
+          "bottom": 712
+        },
+        {
+          "x": 958,
+          "right": 1470,
+          "top": 142,
+          "bottom": 635
+        },
+        {
+          "x": 1524,
+          "right": 1868,
+          "top": 181,
+          "bottom": 706
+        }
+      ],
+      "regions": [
+        {
+          "x": 46,
+          "right": 486,
+          "top": 234,
+          "bottom": 746
+        },
+        {
+          "x": 541,
+          "right": 910,
+          "top": 128,
+          "bottom": 712
+        },
+        {
+          "x": 958,
+          "right": 1470,
+          "top": 142,
+          "bottom": 635
+        },
+        {
+          "x": 1524,
+          "right": 1868,
+          "top": 181,
+          "bottom": 706
+        }
+      ],
+      "reference": "guard",
+      "baseScale": 0.30256410256410254,
+      "scale": 0.20662768031189083,
+      "widthReduction": 0.6829219942511646,
+      "snapN": 1,
+      "outlineBefore": {
+        "boundary": 8928,
+        "dark": 8610,
+        "darkRatio": 0.9643817204301075
+      },
+      "snapDimensions": [
+        {
+          "w": 91,
+          "h": 106,
+          "snappedW": 65,
+          "snappedH": 78
+        },
+        {
+          "w": 76,
+          "h": 120,
+          "snappedW": 56,
+          "snappedH": 93
+        },
+        {
+          "w": 106,
+          "h": 102,
+          "snappedW": 78,
+          "snappedH": 76
+        },
+        {
+          "w": 71,
+          "h": 108,
+          "snappedW": 51,
+          "snappedH": 83
+        }
+      ],
+      "snapOrder": {
+        "selected": "snap then resize",
+        "rgbaL1After": 3148033,
+        "rgbaL1Before": 2516622,
+        "reason": "N=1 reference grid; before-resize lower RGBA L1 on 16/17 measured sheets; snap output restored to intended geometry; alpha coverage restored"
+      },
+      "outlineAfter": {
+        "boundary": 1565,
+        "dark": 1487,
+        "darkRatio": 0.9501597444089457
+      },
+      "outputFrames": [
+        {
+          "x": 0,
+          "right": 105,
+          "top": 87,
+          "bottom": 191
+        },
+        {
+          "x": 106,
+          "right": 211,
+          "top": 72,
+          "bottom": 191
+        },
+        {
+          "x": 212,
+          "right": 317,
+          "top": 90,
+          "bottom": 191
+        },
+        {
+          "x": 318,
+          "right": 423,
+          "top": 84,
+          "bottom": 191
+        }
+      ],
+      "bytes": 17245,
+      "sha256": "d0c138161428ef8e3cf38a7a8d6f709c4f47747ec3888596b5bf2699d1f404ea",
+      "status": "PASS"
+    },
+    {
+      "file": "picker-roll.png",
+      "cleanedPixels": 53295,
+      "contourPixelsLost": 0,
+      "initialRegions": [
+        {
+          "x": 49,
+          "right": 478,
+          "top": 187,
+          "bottom": 695
+        },
+        {
+          "x": 513,
+          "right": 959,
+          "top": 317,
+          "bottom": 696
+        },
+        {
+          "x": 983,
+          "right": 1383,
+          "top": 367,
+          "bottom": 697
+        },
+        {
+          "x": 1458,
+          "right": 1883,
+          "top": 211,
+          "bottom": 695
+        }
+      ],
+      "regions": [
+        {
+          "x": 49,
+          "right": 478,
+          "top": 187,
+          "bottom": 695
+        },
+        {
+          "x": 513,
+          "right": 959,
+          "top": 317,
+          "bottom": 696
+        },
+        {
+          "x": 983,
+          "right": 1383,
+          "top": 367,
+          "bottom": 697
+        },
+        {
+          "x": 1458,
+          "right": 1883,
+          "top": 211,
+          "bottom": 695
+        }
+      ],
+      "reference": "picker",
+      "baseScale": 0.3555992141453831,
+      "scale": 0.2371364653243848,
+      "widthReduction": 0.6668644245862534,
+      "snapN": 1,
+      "outlineBefore": {
+        "boundary": 7495,
+        "dark": 5310,
+        "darkRatio": 0.7084723148765844
+      },
+      "snapDimensions": [
+        {
+          "w": 101,
+          "h": 120,
+          "snappedW": 73,
+          "snappedH": 86
+        },
+        {
+          "w": 106,
+          "h": 90,
+          "snappedW": 70,
+          "snappedH": 62
+        },
+        {
+          "w": 95,
+          "h": 78,
+          "snappedW": 64,
+          "snappedH": 55
+        },
+        {
+          "w": 101,
+          "h": 115,
+          "snappedW": 75,
+          "snappedH": 82
+        }
+      ],
+      "snapOrder": {
+        "selected": "snap then resize",
+        "rgbaL1After": 3036893,
+        "rgbaL1Before": 2082324,
+        "reason": "N=1 reference grid; before-resize lower RGBA L1 on 16/17 measured sheets; snap output restored to intended geometry; alpha coverage restored"
+      },
+      "outlineAfter": {
+        "boundary": 1571,
+        "dark": 1531,
+        "darkRatio": 0.9745385105028644
+      },
+      "outputFrames": [
+        {
+          "x": 0,
+          "right": 105,
+          "top": 72,
+          "bottom": 191
+        },
+        {
+          "x": 106,
+          "right": 211,
+          "top": 102,
+          "bottom": 191
+        },
+        {
+          "x": 212,
+          "right": 317,
+          "top": 114,
+          "bottom": 191
+        },
+        {
+          "x": 318,
+          "right": 423,
+          "top": 77,
+          "bottom": 191
+        }
+      ],
+      "bytes": 20099,
+      "sha256": "c517aac809e045f9480dc52425de756a4072f935eb157f58ecb2a7bbb4ef8188",
+      "status": "PASS"
+    },
+    {
+      "file": "picker-slide.png",
+      "cleanedPixels": 28022,
+      "contourPixelsLost": 0,
+      "initialRegions": [
+        {
+          "x": 60,
+          "right": 949,
+          "top": 289,
+          "bottom": 662
+        },
+        {
+          "x": 978,
+          "right": 1509,
+          "top": 497,
+          "bottom": 659
+        },
+        {
+          "x": 1550,
+          "right": 1871,
+          "top": 267,
+          "bottom": 662
+        }
+      ],
+      "split": {
+        "column": 435,
+        "alphaSum": 4486,
+        "widths": [
+          375,
+          515
+        ],
+        "note": "minimum strictly inside region; boundary columns excluded"
+      },
+      "regions": [
+        {
+          "x": 60,
+          "right": 434,
+          "top": 289,
+          "bottom": 662
+        },
+        {
+          "x": 435,
+          "right": 949,
+          "top": 369,
+          "bottom": 659
+        },
+        {
+          "x": 978,
+          "right": 1509,
+          "top": 497,
+          "bottom": 659
+        },
+        {
+          "x": 1550,
+          "right": 1871,
+          "top": 267,
+          "bottom": 662
+        }
+      ],
+      "reference": "picker",
+      "baseScale": 0.45707070707070707,
+      "scale": 0.19924812030075187,
+      "widthReduction": 0.4359240643044074,
+      "snapN": 1,
+      "outlineBefore": {
+        "boundary": 6301,
+        "dark": 5878,
+        "darkRatio": 0.9328677987621012
+      },
+      "snapDimensions": [
+        {
+          "w": 74,
+          "h": 74,
+          "snappedW": 53,
+          "snappedH": 54
+        },
+        {
+          "w": 102,
+          "h": 57,
+          "snappedW": 73,
+          "snappedH": 42
+        },
+        {
+          "w": 106,
+          "h": 32,
+          "snappedW": 77,
+          "snappedH": 24
+        },
+        {
+          "w": 64,
+          "h": 78,
+          "snappedW": 46,
+          "snappedH": 57
+        }
+      ],
+      "snapOrder": {
+        "selected": "snap then resize",
+        "rgbaL1After": 1322497,
+        "rgbaL1Before": 1429458,
+        "reason": "N=1 reference grid; before-resize lower RGBA L1 on 16/17 measured sheets; snap output restored to intended geometry; alpha coverage restored"
+      },
+      "outlineAfter": {
+        "boundary": 1125,
+        "dark": 1074,
+        "darkRatio": 0.9546666666666667
+      },
+      "outputFrames": [
+        {
+          "x": 0,
+          "right": 105,
+          "top": 118,
+          "bottom": 191
+        },
+        {
+          "x": 106,
+          "right": 211,
+          "top": 135,
+          "bottom": 191
+        },
+        {
+          "x": 212,
+          "right": 317,
+          "top": 160,
+          "bottom": 191
+        },
+        {
+          "x": 318,
+          "right": 423,
+          "top": 114,
+          "bottom": 191
+        }
+      ],
+      "bytes": 11105,
+      "sha256": "8912e01b18183e59b4dddba6dd6a6f6f7b9e80ec276fe4d44c27a1b29fc26717",
+      "status": "PASS"
+    },
+    {
+      "file": "picker-vault.png",
+      "cleanedPixels": 52582,
+      "contourPixelsLost": 0,
+      "initialRegions": [
+        {
+          "x": 29,
+          "right": 498,
+          "top": 243,
+          "bottom": 723
+        },
+        {
+          "x": 544,
+          "right": 949,
+          "top": 337,
+          "bottom": 723
+        },
+        {
+          "x": 1030,
+          "right": 1512,
+          "top": 336,
+          "bottom": 723
+        },
+        {
+          "x": 1546,
+          "right": 1899,
+          "top": 188,
+          "bottom": 723
+        }
+      ],
+      "regions": [
+        {
+          "x": 29,
+          "right": 498,
+          "top": 243,
+          "bottom": 723
+        },
+        {
+          "x": 544,
+          "right": 949,
+          "top": 337,
+          "bottom": 723
+        },
+        {
+          "x": 1030,
+          "right": 1512,
+          "top": 336,
+          "bottom": 723
+        },
+        {
+          "x": 1546,
+          "right": 1899,
+          "top": 188,
+          "bottom": 723
+        }
+      ],
+      "reference": "picker",
+      "baseScale": 0.3376865671641791,
+      "scale": 0.2194616977225673,
+      "widthReduction": 0.6498976241950059,
+      "snapN": 1,
+      "outlineBefore": {
+        "boundary": 8617,
+        "dark": 7618,
+        "darkRatio": 0.8840663804108159
+      },
+      "snapDimensions": [
+        {
+          "w": 103,
+          "h": 105,
+          "snappedW": 72,
+          "snappedH": 74
+        },
+        {
+          "w": 89,
+          "h": 84,
+          "snappedW": 66,
+          "snappedH": 62
+        },
+        {
+          "w": 106,
+          "h": 85,
+          "snappedW": 80,
+          "snappedH": 65
+        },
+        {
+          "w": 77,
+          "h": 117,
+          "snappedW": 55,
+          "snappedH": 83
+        }
+      ],
+      "snapOrder": {
+        "selected": "snap then resize",
+        "rgbaL1After": 2737747,
+        "rgbaL1Before": 2381722,
+        "reason": "N=1 reference grid; before-resize lower RGBA L1 on 16/17 measured sheets; snap output restored to intended geometry; alpha coverage restored"
+      },
+      "outlineAfter": {
+        "boundary": 1635,
+        "dark": 1481,
+        "darkRatio": 0.9058103975535168
+      },
+      "outputFrames": [
+        {
+          "x": 0,
+          "right": 105,
+          "top": 87,
+          "bottom": 191
+        },
+        {
+          "x": 106,
+          "right": 211,
+          "top": 108,
+          "bottom": 191
+        },
+        {
+          "x": 212,
+          "right": 317,
+          "top": 107,
+          "bottom": 191
+        },
+        {
+          "x": 318,
+          "right": 423,
+          "top": 75,
+          "bottom": 191
+        }
+      ],
+      "bytes": 17750,
+      "sha256": "d06730b8352e1e41540830e4989fe838ab17af37079d1b4a2461821966472886",
+      "status": "PASS"
+    },
+    {
+      "file": "picker-wallrun.png",
+      "cleanedPixels": 60710,
+      "contourPixelsLost": 0,
+      "initialRegions": [
+        {
+          "x": 42,
+          "right": 463,
+          "top": 176,
+          "bottom": 795
+        },
+        {
+          "x": 567,
+          "right": 898,
+          "top": 45,
+          "bottom": 706
+        },
+        {
+          "x": 924,
+          "right": 1492,
+          "top": 87,
+          "bottom": 661
+        },
+        {
+          "x": 1533,
+          "right": 1887,
+          "top": 121,
+          "bottom": 745
+        }
+      ],
+      "regions": [
+        {
+          "x": 42,
+          "right": 463,
+          "top": 176,
+          "bottom": 795
+        },
+        {
+          "x": 567,
+          "right": 898,
+          "top": 45,
+          "bottom": 706
+        },
+        {
+          "x": 924,
+          "right": 1492,
+          "top": 87,
+          "bottom": 661
+        },
+        {
+          "x": 1533,
+          "right": 1887,
+          "top": 121,
+          "bottom": 745
+        }
+      ],
+      "reference": "picker",
+      "baseScale": 0.27341389728096677,
+      "scale": 0.18629173989455183,
+      "widthReduction": 0.6813543193933332,
+      "snapN": 1,
+      "outlineBefore": {
+        "boundary": 10209,
+        "dark": 8712,
+        "darkRatio": 0.8533646782250955
+      },
+      "snapDimensions": [
+        {
+          "w": 78,
+          "h": 115,
+          "snappedW": 54,
+          "snappedH": 80
+        },
+        {
+          "w": 61,
+          "h": 123,
+          "snappedW": 44,
+          "snappedH": 93
+        },
+        {
+          "w": 106,
+          "h": 107,
+          "snappedW": 76,
+          "snappedH": 72
+        },
+        {
+          "w": 66,
+          "h": 116,
+          "snappedW": 47,
+          "snappedH": 83
+        }
+      ],
+      "snapOrder": {
+        "selected": "snap then resize",
+        "rgbaL1After": 2547774,
+        "rgbaL1Before": 1816798,
+        "reason": "N=1 reference grid; before-resize lower RGBA L1 on 16/17 measured sheets; snap output restored to intended geometry; alpha coverage restored"
+      },
+      "outlineAfter": {
+        "boundary": 1592,
+        "dark": 1410,
+        "darkRatio": 0.885678391959799
+      },
+      "outputFrames": [
+        {
+          "x": 0,
+          "right": 105,
+          "top": 77,
+          "bottom": 191
+        },
+        {
+          "x": 106,
+          "right": 211,
+          "top": 69,
+          "bottom": 191
+        },
+        {
+          "x": 212,
+          "right": 317,
+          "top": 85,
+          "bottom": 191
+        },
+        {
+          "x": 318,
+          "right": 423,
+          "top": 76,
+          "bottom": 191
+        }
+      ],
+      "bytes": 16260,
+      "sha256": "cf778d74a3d3d39e2b7857fd11d73c1c083c84408e59f43461c6d3c7ba743888",
+      "status": "PASS"
+    }
+  ],
+  "tmp": "C:\\Users\\Arget\\AppData\\Local\\Temp\\tmb-normalize-iDIHLz"
+}

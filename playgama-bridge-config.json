@@ -1,16 +1,40 @@
 {
-  "optionalSprites": [],
+  "optionalSprites": [
+    "chief",
+    "courier-roll",
+    "courier-slide",
+    "courier-vault",
+    "courier-wallrun",
+    "forklift-roll",
+    "forklift-slide",
+    "forklift-vault",
+    "forklift-wallrun",
+    "guard-roll",
+    "guard-slide",
+    "guard-vault",
+    "guard-wallrun",
+    "picker-roll",
+    "picker-slide",
+    "picker-vault",
+    "picker-wallrun"
+  ],
   "advertisement": {
     "minimumDelayBetweenInterstitial": 60,
     "interstitial": {
       "placements": [
-        { "id": "level_completed" },
-        { "id": "out_of_lives" }
+        {
+          "id": "level_completed"
+        },
+        {
+          "id": "out_of_lives"
+        }
       ]
     },
     "rewarded": {
       "placements": [
-        { "id": "skip_part" }
+        {
+          "id": "skip_part"
+        }
       ]
     }
   }

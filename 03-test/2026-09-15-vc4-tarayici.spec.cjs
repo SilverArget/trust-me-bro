@@ -4,6 +4,7 @@ const http = require("node:http"),
   path = require("node:path");
 const root = path.resolve(__dirname, "..");
 const playgamaRoot = path.resolve(root, "../04-yayin/playgama/dist");
+const artifactDir=fs.mkdtempSync(path.join(require('node:os').tmpdir(),'tmb-vc4-'));
 let server, base;
 test.beforeAll(async () => {
   server = http.createServer((req, res) => {
@@ -397,7 +398,7 @@ test("S7 Playgama Bridge init, ready, storage, pause/resume", async ({ browser }
   await ready(page);
   if (await page.locator("#characterSelect.show").count()) await page.locator(".characterChoice").first().tap();
   await page.waitForTimeout(200);
-  const before = await page.evaluate(async () => ({ spy: __bridgeSpy, platform: __tmb.platform, saved: (await bridge.storage.get(["trust_me_bro_full31_v36_rage_save"]))[0] }));
+  const before = await page.evaluate(async () => ({ spy: __bridgeSpy, platform: __tmb.platform, saved: (await bridge.storage.get(["trust_me_bro_last_delivery_v2_save"]))[0] }));
   await page.evaluate(() => __bridgeSpy.events[bridge.EVENT_NAME.PAUSE_STATE_CHANGED].forEach(cb => cb(true)));
   await page.waitForTimeout(50);
   const paused = await page.evaluate(() => ({ platform: __tmb.platform, audio: __tmb.audio }));
@@ -418,7 +419,7 @@ test("S8 B2 free continue and optional skip copy", async ({ browser }) => {
   await page.evaluate(() => __tmbOutOfLives());
   await expect(page.locator("#outOfLives")).toHaveClass(/show/);
   await expect(page.locator("#continueBtn")).toHaveText("CONTINUE");
-  await expect(page.locator("#watchAdBtn")).toHaveText("SKIP THIS PART (WATCH AD)");
+  await expect(page.locator("#watchAdBtn")).toHaveText("SKIP THIS SECTOR (WATCH AD)");
   expect(await page.locator("body").innerText()).not.toContain("+10 LIVES");
   console.log("S8", JSON.stringify({ continue: await page.locator("#continueBtn").innerText(), skip: await page.locator("#watchAdBtn").innerText() }));
   await closeChecked(page);
@@ -434,7 +435,7 @@ test("S9 orientation matrix", async ({ browser }) => {
     if(landscapeTouch){
       const spawnSnap=label=>page.evaluate(label=>{const l=__tmb.layout,p=__tmb.player,box=id=>{const e=document.querySelector(id),r=e&&getComputedStyle(e).display!=="none"&&e.getBoundingClientRect();return r?{x:r.x,y:r.y,w:r.width,h:r.height,right:r.right}:null},css=r=>({x:l.viewOffsetX+r.x*l.viewScale,y:l.viewOffsetY+r.y*l.viewScale,w:r.w*l.viewScale,h:r.h*l.viewScale}),player=css({x:p.x-__tmb.cam,y:l.worldY+p.y,w:p.w,h:p.h}),joy=box("#joystick"),jump=box("#jumpWrap button"),move=box("#controlHint .move"),overlap=(a,b)=>!!a&&!!b&&a.x<b.x+b.w&&a.x+a.w>b.x&&a.y<b.y+b.h&&a.y+a.h>b.y;return{label,player,joy,jump,move,padLeft:l.cameraPadLeft,clear:[joy,jump,move].every(x=>!overlap(player,x))}},label);
       await page.evaluate(()=>__tmbSetProgress(1,1,0,0));await page.waitForTimeout(50);spawnSamples.push(await spawnSnap("boot50"));
-      if(width===844){await page.screenshot({path:path.resolve(root,"03-test/2026-09-20-yatay/844x390-spawn-after.png")});}
+      if(width===844){await page.screenshot({path:path.join(artifactDir,"844x390-spawn-after.png")});}
       await page.keyboard.press("k");await page.waitForFunction(()=>__tmb.dead);await page.waitForFunction(()=>!__tmb.dead,{timeout:3000});await page.waitForTimeout(50);spawnSamples.push(await spawnSnap("respawn50"));await page.waitForTimeout(950);spawnSamples.push(await spawnSnap("respawn1000"));
     }
     await page.evaluate(()=>{__tmbPause();__tmbSetProgress(1,1,0,0)}); await page.waitForFunction(()=>__tmb.courierRect,{timeout:1000});
@@ -452,8 +453,8 @@ test("S9 orientation matrix", async ({ browser }) => {
       row.edge = await page.evaluate(() => { const c=document.querySelector("#game"),g=c.getContext("2d"),x=1,ys=[.2,.5,.8].map(y=>Math.floor(c.height*y)),rgb=x=>ys.map(y=>Array.from(g.getImageData(x,y,1,1).data.slice(0,3)));return{left:rgb(x),right:rgb(c.width-1-x)}; });
     }
     row.touchMode=!!touchMode;row.spawnSamples=spawnSamples;
-    if (width===390&&height===844) await page.screenshot({path:path.resolve(root,"03-test/2026-09-20-dikey/390x844-jump64.png")});
-    if (row.hasGutter || width === height) await page.screenshot({path:path.resolve(root,`test-results/orientation/${width}x${height}.png`)});
+    if (width===390&&height===844) await page.screenshot({path:path.join(artifactDir,"390x844-jump64.png")});
+    if (row.hasGutter || width === height) await page.screenshot({path:path.join(artifactDir,`${width}x${height}.png`)});
     row.texturedGutter=!row.hasGutter||[...row.edge.left,...row.edge.right].every(rgb=>rgb.some(channel=>channel!==0));
     table.push(row); await closeChecked(page);
   }
