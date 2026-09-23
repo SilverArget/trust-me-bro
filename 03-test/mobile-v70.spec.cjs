@@ -1,0 +1,15 @@
+const {test,expect}=require('playwright/test');
+const fs=require('fs'),http=require('http'),path=require('path');
+let server,base;
+test.beforeAll(async()=>{server=http.createServer((req,res)=>{const rel=new URL(req.url,'http://local').pathname.slice(1)||'index.html';fs.readFile(path.join(__dirname,'..',rel),(e,b)=>{res.statusCode=e?404:200;res.end(e?'missing':b)})});await new Promise(r=>server.listen(0,'127.0.0.1',r));base=`http://127.0.0.1:${server.address().port}`});
+test.afterAll(async()=>{await new Promise(r=>server.close(r))});
+const stub=playables=>{window.fullscreenCalls=0;Object.defineProperty(Document.prototype,'fullscreenEnabled',{configurable:true,get:()=>true});Object.defineProperty(HTMLElement.prototype,'requestFullscreen',{configurable:true,value:()=>{window.fullscreenCalls++;return Promise.resolve()}});if(playables)window.ytgame={IN_PLAYABLES_ENV:true,game:{loadData:async()=>'',saveData:async()=>{},firstFrameReady(){},gameReady(){}},system:{onPause(){},onResume(){},isAudioEnabled(){return true},onAudioEnabledChange(){}},engagement:{sendScore(){}}}};
+
+for(const viewport of [{width:393,height:852},{width:852,height:393},{width:360,height:640}])test(`mobil fullscreen ve kontrol görünürlüğü ${viewport.width}x${viewport.height}`,async({browser})=>{
+ const context=await browser.newContext({viewport,isMobile:true,hasTouch:true});const page=await context.newPage();await page.addInitScript(stub,false);await page.goto(base+'/#mobileV70');await page.locator('#characterSelect.show').waitFor();await page.locator('.characterChoice').first().tap();await page.waitForTimeout(80);
+ const r=await page.evaluate(()=>{const read=sel=>{const e=document.querySelector(sel),b=e.getBoundingClientRect(),hit=document.elementFromPoint(b.x+b.width/2,b.y+b.height/2);return{bottom:b.bottom,width:b.width,hit:hit===e}};return{calls:window.fullscreenCalls,h:innerHeight,joy:read('#joystick'),jump:read('#jumpWrap button')}});
+ expect(r.calls).toBe(1);for(const c of [r.joy,r.jump]){expect(c.bottom).toBeLessThanOrEqual(r.h*.89+.5);expect(c.hit).toBe(true)}expect(r.joy.width).toBe(viewport.width>viewport.height?124:74);expect(r.jump.width).toBe(viewport.width>viewport.height?112:64);await context.close();
+});
+
+test('desktop pointer:fine fullscreen istemez',async({browser})=>{const context=await browser.newContext({viewport:{width:900,height:600}}),page=await context.newPage();await page.addInitScript(stub,false);await page.goto(base+'/#mobileV70');await page.locator('#characterSelect.show').waitFor();await page.mouse.click(450,300);expect(await page.evaluate(()=>window.fullscreenCalls)).toBe(0);await context.close()});
+test('Playables ortamı mobilde fullscreen istemez',async({browser})=>{const context=await browser.newContext({viewport:{width:393,height:852},isMobile:true,hasTouch:true}),page=await context.newPage();await page.addInitScript(stub,true);await page.goto(base+'/#mobileV70');await page.locator('#characterSelect.show').waitFor();await page.locator('.characterChoice').first().tap();expect(await page.evaluate(()=>window.fullscreenCalls)).toBe(0);await context.close()});
