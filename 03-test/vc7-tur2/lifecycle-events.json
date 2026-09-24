@@ -1,0 +1,42 @@
+{
+  "sessionRuns": [
+    {
+      "suppress": false,
+      "count": 1,
+      "consoleTexts": [
+        {
+          "type": "debug",
+          "text": "GAME_EVENT {\"event\":\"session_end\",\"ts_ms\":256,\"session_id\":\"93ff52dd-9c6b-40e8-aa24-518d04bd311a\",\"build\":\"vc7\",\"platform\":\"bridge\",\"level_id\":\"1.1\",\"run_id\":\"ww5kndmz4\",\"device_class\":\"mobile\",\"variant\":{},\"params\":{\"reason\":\"pagehide\"}}"
+        }
+      ],
+      "method": "iframe real navigation pagehide + parent console GAME_EVENT"
+    },
+    {
+      "suppress": true,
+      "count": 0,
+      "consoleTexts": [],
+      "method": "iframe real navigation pagehide + parent console GAME_EVENT"
+    }
+  ],
+  "sessionEnd": "PASS",
+  "attempts": [
+    {
+      "method": "Browser.setWindowBounds minimized",
+      "state": "visible"
+    },
+    {
+      "method": "second page bringToFront",
+      "state": "visible"
+    },
+    {
+      "method": "Page.setWebLifecycleState frozen",
+      "state": "visible"
+    },
+    {
+      "method": "headed Browser.setWindowBounds minimized",
+      "state": "visible"
+    }
+  ],
+  "appHidden": "ARAÇ YETERSİZ",
+  "recommendation": "#0383: headed browser/OS lifecycle integration runner"
+}

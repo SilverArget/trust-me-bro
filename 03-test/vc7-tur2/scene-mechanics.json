@@ -1,0 +1,783 @@
+[
+  {
+    "id": "onboarding",
+    "hashLevel": "1.1",
+    "methodLevel": "1.1",
+    "required": [
+      "first_input"
+    ],
+    "evidence": [
+      "first_input"
+    ],
+    "detail": {}
+  },
+  {
+    "id": "movement-vault-slide",
+    "hashLevel": "1.1",
+    "methodLevel": "1.1",
+    "required": [
+      "movement_used"
+    ],
+    "evidence": [
+      "movement_used",
+      "checkpoint",
+      "level_complete",
+      "level_start"
+    ],
+    "detail": {
+      "dead": false,
+      "pass": true,
+      "cleared": true,
+      "death": null,
+      "chiefX": -254,
+      "state": "fall",
+      "events": [
+        {
+          "event": "level_start",
+          "ts_ms": 916,
+          "session_id": "28b505eb-67ab-4a91-9d60-ec0fad81234d",
+          "build": "vc7",
+          "platform": "bridge",
+          "level_id": "1.1",
+          "run_id": "xx234jkddfi",
+          "device_class": "desktop",
+          "variant": {},
+          "params": {}
+        },
+        {
+          "event": "game_ready",
+          "ts_ms": 919,
+          "session_id": "28b505eb-67ab-4a91-9d60-ec0fad81234d",
+          "build": "vc7",
+          "platform": "bridge",
+          "level_id": "1.1",
+          "run_id": "xx234jkddfi",
+          "device_class": "desktop",
+          "variant": {},
+          "params": {}
+        },
+        {
+          "event": "movement_used",
+          "ts_ms": 2234,
+          "session_id": "28b505eb-67ab-4a91-9d60-ec0fad81234d",
+          "build": "vc7",
+          "platform": "bridge",
+          "level_id": "1.1",
+          "run_id": "xx234jkddfi",
+          "device_class": "desktop",
+          "variant": {},
+          "params": {
+            "kind": "vault"
+          }
+        },
+        {
+          "event": "checkpoint",
+          "ts_ms": 2264,
+          "session_id": "28b505eb-67ab-4a91-9d60-ec0fad81234d",
+          "build": "vc7",
+          "platform": "bridge",
+          "level_id": "1.1",
+          "run_id": "xx234jkddfi",
+          "device_class": "desktop",
+          "variant": {},
+          "params": {
+            "x": 1660
+          }
+        },
+        {
+          "event": "level_complete",
+          "ts_ms": 2270,
+          "session_id": "28b505eb-67ab-4a91-9d60-ec0fad81234d",
+          "build": "vc7",
+          "platform": "bridge",
+          "level_id": "1.1",
+          "run_id": "xx234jkddfi",
+          "device_class": "desktop",
+          "variant": {},
+          "params": {}
+        },
+        {
+          "event": "level_start",
+          "ts_ms": 2309,
+          "session_id": "28b505eb-67ab-4a91-9d60-ec0fad81234d",
+          "build": "vc7",
+          "platform": "bridge",
+          "level_id": "1.2",
+          "run_id": "xx234jkddfi",
+          "device_class": "desktop",
+          "variant": {},
+          "params": {}
+        }
+      ]
+    }
+  },
+  {
+    "id": "wallrun-chain",
+    "hashLevel": "3.1",
+    "methodLevel": "3.1",
+    "required": [
+      "movement_used"
+    ],
+    "evidence": [
+      "movement_used",
+      "checkpoint",
+      "level_complete",
+      "level_start"
+    ],
+    "detail": {
+      "dead": false,
+      "pass": true,
+      "cleared": true,
+      "death": null,
+      "chiefX": 4306,
+      "state": "fall",
+      "events": [
+        {
+          "event": "level_start",
+          "ts_ms": 923,
+          "session_id": "ff92ca60-6360-4f1e-a2b9-defcec89a204",
+          "build": "vc7",
+          "platform": "bridge",
+          "level_id": "1.2",
+          "run_id": "casxxovls8",
+          "device_class": "desktop",
+          "variant": {},
+          "params": {}
+        },
+        {
+          "event": "game_ready",
+          "ts_ms": 934,
+          "session_id": "ff92ca60-6360-4f1e-a2b9-defcec89a204",
+          "build": "vc7",
+          "platform": "bridge",
+          "level_id": "3.1",
+          "run_id": "casxxovls8",
+          "device_class": "desktop",
+          "variant": {},
+          "params": {}
+        },
+        {
+          "event": "movement_used",
+          "ts_ms": 2295,
+          "session_id": "ff92ca60-6360-4f1e-a2b9-defcec89a204",
+          "build": "vc7",
+          "platform": "bridge",
+          "level_id": "3.1",
+          "run_id": "casxxovls8",
+          "device_class": "desktop",
+          "variant": {},
+          "params": {
+            "kind": "wallRun"
+          }
+        },
+        {
+          "event": "checkpoint",
+          "ts_ms": 2305,
+          "session_id": "ff92ca60-6360-4f1e-a2b9-defcec89a204",
+          "build": "vc7",
+          "platform": "bridge",
+          "level_id": "3.1",
+          "run_id": "casxxovls8",
+          "device_class": "desktop",
+          "variant": {},
+          "params": {
+            "x": 6220
+          }
+        },
+        {
+          "event": "level_complete",
+          "ts_ms": 2309,
+          "session_id": "ff92ca60-6360-4f1e-a2b9-defcec89a204",
+          "build": "vc7",
+          "platform": "bridge",
+          "level_id": "3.1",
+          "run_id": "casxxovls8",
+          "device_class": "desktop",
+          "variant": {},
+          "params": {}
+        },
+        {
+          "event": "level_start",
+          "ts_ms": 2328,
+          "session_id": "ff92ca60-6360-4f1e-a2b9-defcec89a204",
+          "build": "vc7",
+          "platform": "bridge",
+          "level_id": "3.2",
+          "run_id": "casxxovls8",
+          "device_class": "desktop",
+          "variant": {},
+          "params": {}
+        }
+      ]
+    }
+  },
+  {
+    "id": "fake-exit",
+    "hashLevel": "6.1",
+    "methodLevel": "6.1",
+    "required": [
+      "deception_triggered"
+    ],
+    "evidence": [
+      "movement_used",
+      "deception_triggered",
+      "telegraph_exposed",
+      "checkpoint",
+      "level_complete",
+      "level_start"
+    ],
+    "detail": {
+      "dead": false,
+      "pass": true,
+      "cleared": true,
+      "death": null,
+      "chiefX": 11146,
+      "state": "fall",
+      "events": [
+        {
+          "event": "level_start",
+          "ts_ms": 890,
+          "session_id": "c868263c-7c19-4c61-b98f-395f55e175de",
+          "build": "vc7",
+          "platform": "bridge",
+          "level_id": "3.2",
+          "run_id": "r31cb42thee",
+          "device_class": "desktop",
+          "variant": {},
+          "params": {}
+        },
+        {
+          "event": "game_ready",
+          "ts_ms": 901,
+          "session_id": "c868263c-7c19-4c61-b98f-395f55e175de",
+          "build": "vc7",
+          "platform": "bridge",
+          "level_id": "6.1",
+          "run_id": "r31cb42thee",
+          "device_class": "desktop",
+          "variant": {},
+          "params": {}
+        },
+        {
+          "event": "movement_used",
+          "ts_ms": 2239,
+          "session_id": "c868263c-7c19-4c61-b98f-395f55e175de",
+          "build": "vc7",
+          "platform": "bridge",
+          "level_id": "6.1",
+          "run_id": "r31cb42thee",
+          "device_class": "desktop",
+          "variant": {},
+          "params": {
+            "kind": "slide"
+          }
+        },
+        {
+          "event": "deception_triggered",
+          "ts_ms": 2266,
+          "session_id": "c868263c-7c19-4c61-b98f-395f55e175de",
+          "build": "vc7",
+          "platform": "bridge",
+          "level_id": "6.1",
+          "run_id": "r31cb42thee",
+          "device_class": "desktop",
+          "variant": {},
+          "params": {
+            "trap_type": "runDoor",
+            "trap_id": "6.1"
+          }
+        },
+        {
+          "event": "telegraph_exposed",
+          "ts_ms": 2268,
+          "session_id": "c868263c-7c19-4c61-b98f-395f55e175de",
+          "build": "vc7",
+          "platform": "bridge",
+          "level_id": "6.1",
+          "run_id": "r31cb42thee",
+          "device_class": "desktop",
+          "variant": {},
+          "params": {
+            "trap_type": "runDoor",
+            "duration_ms": 670
+          }
+        },
+        {
+          "event": "checkpoint",
+          "ts_ms": 2269,
+          "session_id": "c868263c-7c19-4c61-b98f-395f55e175de",
+          "build": "vc7",
+          "platform": "bridge",
+          "level_id": "6.1",
+          "run_id": "r31cb42thee",
+          "device_class": "desktop",
+          "variant": {},
+          "params": {
+            "x": 13060
+          }
+        },
+        {
+          "event": "level_complete",
+          "ts_ms": 2274,
+          "session_id": "c868263c-7c19-4c61-b98f-395f55e175de",
+          "build": "vc7",
+          "platform": "bridge",
+          "level_id": "6.1",
+          "run_id": "r31cb42thee",
+          "device_class": "desktop",
+          "variant": {},
+          "params": {}
+        },
+        {
+          "event": "level_start",
+          "ts_ms": 2298,
+          "session_id": "c868263c-7c19-4c61-b98f-395f55e175de",
+          "build": "vc7",
+          "platform": "bridge",
+          "level_id": "6.2",
+          "run_id": "r31cb42thee",
+          "device_class": "desktop",
+          "variant": {},
+          "params": {}
+        }
+      ]
+    }
+  },
+  {
+    "id": "supervisor-chase",
+    "hashLevel": "6.1",
+    "methodLevel": "6.1",
+    "required": [
+      "deception_triggered"
+    ],
+    "evidence": [
+      "movement_used",
+      "deception_triggered",
+      "telegraph_exposed",
+      "checkpoint",
+      "level_complete",
+      "level_start"
+    ],
+    "detail": {
+      "dead": false,
+      "pass": true,
+      "cleared": true,
+      "death": null,
+      "chiefX": 11146,
+      "state": "fall",
+      "events": [
+        {
+          "event": "level_start",
+          "ts_ms": 892,
+          "session_id": "12707e58-11b8-4bc8-b993-5bad5e8a9fbe",
+          "build": "vc7",
+          "platform": "bridge",
+          "level_id": "6.2",
+          "run_id": "18xosdoxoaf",
+          "device_class": "desktop",
+          "variant": {},
+          "params": {}
+        },
+        {
+          "event": "game_ready",
+          "ts_ms": 900,
+          "session_id": "12707e58-11b8-4bc8-b993-5bad5e8a9fbe",
+          "build": "vc7",
+          "platform": "bridge",
+          "level_id": "6.1",
+          "run_id": "18xosdoxoaf",
+          "device_class": "desktop",
+          "variant": {},
+          "params": {}
+        },
+        {
+          "event": "movement_used",
+          "ts_ms": 2300,
+          "session_id": "12707e58-11b8-4bc8-b993-5bad5e8a9fbe",
+          "build": "vc7",
+          "platform": "bridge",
+          "level_id": "6.1",
+          "run_id": "18xosdoxoaf",
+          "device_class": "desktop",
+          "variant": {},
+          "params": {
+            "kind": "slide"
+          }
+        },
+        {
+          "event": "deception_triggered",
+          "ts_ms": 2330,
+          "session_id": "12707e58-11b8-4bc8-b993-5bad5e8a9fbe",
+          "build": "vc7",
+          "platform": "bridge",
+          "level_id": "6.1",
+          "run_id": "18xosdoxoaf",
+          "device_class": "desktop",
+          "variant": {},
+          "params": {
+            "trap_type": "runDoor",
+            "trap_id": "6.1"
+          }
+        },
+        {
+          "event": "telegraph_exposed",
+          "ts_ms": 2331,
+          "session_id": "12707e58-11b8-4bc8-b993-5bad5e8a9fbe",
+          "build": "vc7",
+          "platform": "bridge",
+          "level_id": "6.1",
+          "run_id": "18xosdoxoaf",
+          "device_class": "desktop",
+          "variant": {},
+          "params": {
+            "trap_type": "runDoor",
+            "duration_ms": 670
+          }
+        },
+        {
+          "event": "checkpoint",
+          "ts_ms": 2335,
+          "session_id": "12707e58-11b8-4bc8-b993-5bad5e8a9fbe",
+          "build": "vc7",
+          "platform": "bridge",
+          "level_id": "6.1",
+          "run_id": "18xosdoxoaf",
+          "device_class": "desktop",
+          "variant": {},
+          "params": {
+            "x": 13060
+          }
+        },
+        {
+          "event": "level_complete",
+          "ts_ms": 2339,
+          "session_id": "12707e58-11b8-4bc8-b993-5bad5e8a9fbe",
+          "build": "vc7",
+          "platform": "bridge",
+          "level_id": "6.1",
+          "run_id": "18xosdoxoaf",
+          "device_class": "desktop",
+          "variant": {},
+          "params": {}
+        },
+        {
+          "event": "level_start",
+          "ts_ms": 2343,
+          "session_id": "12707e58-11b8-4bc8-b993-5bad5e8a9fbe",
+          "build": "vc7",
+          "platform": "bridge",
+          "level_id": "6.2",
+          "run_id": "18xosdoxoaf",
+          "device_class": "desktop",
+          "variant": {},
+          "params": {}
+        }
+      ]
+    }
+  },
+  {
+    "id": "interstitial-pause",
+    "hashLevel": "6.1",
+    "methodLevel": "6.1",
+    "required": [
+      "interstitial_show",
+      "interstitial_return"
+    ],
+    "evidence": [
+      "level_start",
+      "game_ready",
+      "player_fail",
+      "interstitial_show",
+      "interstitial_return"
+    ],
+    "detail": {}
+  },
+  {
+    "id": "save-restore",
+    "hashLevel": "7.1",
+    "methodLevel": "7.1",
+    "required": [
+      "checkpoint"
+    ],
+    "evidence": [
+      "checkpoint",
+      "level_complete",
+      "level_start"
+    ],
+    "detail": {
+      "dead": false,
+      "pass": true,
+      "cleared": true,
+      "death": null,
+      "chiefX": 13426,
+      "state": "fall",
+      "events": [
+        {
+          "event": "level_start",
+          "ts_ms": 898,
+          "session_id": "9733b164-bb37-402b-94cb-c2650e7acdbe",
+          "build": "vc7",
+          "platform": "bridge",
+          "level_id": "9.2",
+          "run_id": "gsieuoaicpa",
+          "device_class": "desktop",
+          "variant": {},
+          "params": {}
+        },
+        {
+          "event": "game_ready",
+          "ts_ms": 906,
+          "session_id": "9733b164-bb37-402b-94cb-c2650e7acdbe",
+          "build": "vc7",
+          "platform": "bridge",
+          "level_id": "7.1",
+          "run_id": "gsieuoaicpa",
+          "device_class": "desktop",
+          "variant": {},
+          "params": {}
+        },
+        {
+          "event": "checkpoint",
+          "ts_ms": 2334,
+          "session_id": "9733b164-bb37-402b-94cb-c2650e7acdbe",
+          "build": "vc7",
+          "platform": "bridge",
+          "level_id": "7.1",
+          "run_id": "gsieuoaicpa",
+          "device_class": "desktop",
+          "variant": {},
+          "params": {
+            "x": 15340
+          }
+        },
+        {
+          "event": "level_complete",
+          "ts_ms": 2338,
+          "session_id": "9733b164-bb37-402b-94cb-c2650e7acdbe",
+          "build": "vc7",
+          "platform": "bridge",
+          "level_id": "7.1",
+          "run_id": "gsieuoaicpa",
+          "device_class": "desktop",
+          "variant": {},
+          "params": {}
+        },
+        {
+          "event": "level_start",
+          "ts_ms": 2361,
+          "session_id": "9733b164-bb37-402b-94cb-c2650e7acdbe",
+          "build": "vc7",
+          "platform": "bridge",
+          "level_id": "7.2",
+          "run_id": "gsieuoaicpa",
+          "device_class": "desktop",
+          "variant": {},
+          "params": {}
+        }
+      ],
+      "save_equal": true
+    }
+  },
+  {
+    "id": "mobile-portrait",
+    "hashLevel": "1.1",
+    "methodLevel": "1.1",
+    "required": [],
+    "evidence": [],
+    "detail": {
+      "canvas": {
+        "x": 0,
+        "y": 0,
+        "w": 540,
+        "h": 960
+      },
+      "hud": {
+        "x": 450,
+        "y": 30,
+        "w": 36,
+        "h": 36
+      },
+      "viewport": {
+        "w": 540,
+        "h": 960
+      }
+    }
+  },
+  {
+    "id": "square-viewport",
+    "hashLevel": "1.1",
+    "methodLevel": "1.1",
+    "required": [],
+    "evidence": [],
+    "detail": {
+      "canvas": {
+        "x": 90,
+        "y": -120,
+        "w": 540,
+        "h": 960
+      },
+      "hud": {
+        "x": 630,
+        "y": 30,
+        "w": 36,
+        "h": 36
+      },
+      "viewport": {
+        "w": 720,
+        "h": 720
+      }
+    }
+  },
+  {
+    "id": "final-run",
+    "hashLevel": "31.2",
+    "methodLevel": "31.2",
+    "required": [
+      "level_complete",
+      "run_complete"
+    ],
+    "evidence": [
+      "movement_used",
+      "movement_used",
+      "deception_triggered",
+      "telegraph_exposed",
+      "checkpoint",
+      "level_complete",
+      "run_complete"
+    ],
+    "detail": {
+      "dead": false,
+      "pass": true,
+      "cleared": true,
+      "death": null,
+      "chiefX": 69545.44000000274,
+      "state": "run",
+      "events": [
+        {
+          "event": "level_start",
+          "ts_ms": 926,
+          "session_id": "e7a3cb2e-9597-468e-bd12-d5d0aea2b2d3",
+          "build": "vc7",
+          "platform": "bridge",
+          "level_id": "1.1",
+          "run_id": "fbxb14iobqs",
+          "device_class": "desktop",
+          "variant": {},
+          "params": {}
+        },
+        {
+          "event": "game_ready",
+          "ts_ms": 968,
+          "session_id": "e7a3cb2e-9597-468e-bd12-d5d0aea2b2d3",
+          "build": "vc7",
+          "platform": "bridge",
+          "level_id": "31.2",
+          "run_id": "fbxb14iobqs",
+          "device_class": "desktop",
+          "variant": {},
+          "params": {}
+        },
+        {
+          "event": "movement_used",
+          "ts_ms": 2426,
+          "session_id": "e7a3cb2e-9597-468e-bd12-d5d0aea2b2d3",
+          "build": "vc7",
+          "platform": "bridge",
+          "level_id": "31.2",
+          "run_id": "fbxb14iobqs",
+          "device_class": "desktop",
+          "variant": {},
+          "params": {
+            "kind": "wallRun"
+          }
+        },
+        {
+          "event": "movement_used",
+          "ts_ms": 2427,
+          "session_id": "e7a3cb2e-9597-468e-bd12-d5d0aea2b2d3",
+          "build": "vc7",
+          "platform": "bridge",
+          "level_id": "31.2",
+          "run_id": "fbxb14iobqs",
+          "device_class": "desktop",
+          "variant": {},
+          "params": {
+            "kind": "wallRun"
+          }
+        },
+        {
+          "event": "deception_triggered",
+          "ts_ms": 2432,
+          "session_id": "e7a3cb2e-9597-468e-bd12-d5d0aea2b2d3",
+          "build": "vc7",
+          "platform": "bridge",
+          "level_id": "31.2",
+          "run_id": "fbxb14iobqs",
+          "device_class": "desktop",
+          "variant": {},
+          "params": {
+            "trap_type": "finale",
+            "trap_id": "31.2"
+          }
+        },
+        {
+          "event": "telegraph_exposed",
+          "ts_ms": 2433,
+          "session_id": "e7a3cb2e-9597-468e-bd12-d5d0aea2b2d3",
+          "build": "vc7",
+          "platform": "bridge",
+          "level_id": "31.2",
+          "run_id": "fbxb14iobqs",
+          "device_class": "desktop",
+          "variant": {},
+          "params": {
+            "trap_type": "finale",
+            "duration_ms": 653
+          }
+        },
+        {
+          "event": "checkpoint",
+          "ts_ms": 2436,
+          "session_id": "e7a3cb2e-9597-468e-bd12-d5d0aea2b2d3",
+          "build": "vc7",
+          "platform": "bridge",
+          "level_id": "31.2",
+          "run_id": "fbxb14iobqs",
+          "device_class": "desktop",
+          "variant": {},
+          "params": {
+            "x": 69960
+          }
+        },
+        {
+          "event": "level_complete",
+          "ts_ms": 2442,
+          "session_id": "e7a3cb2e-9597-468e-bd12-d5d0aea2b2d3",
+          "build": "vc7",
+          "platform": "bridge",
+          "level_id": "31.2",
+          "run_id": "fbxb14iobqs",
+          "device_class": "desktop",
+          "variant": {},
+          "params": {}
+        },
+        {
+          "event": "run_complete",
+          "ts_ms": 2443,
+          "session_id": "e7a3cb2e-9597-468e-bd12-d5d0aea2b2d3",
+          "build": "vc7",
+          "platform": "bridge",
+          "level_id": "31.2",
+          "run_id": "fbxb14iobqs",
+          "device_class": "desktop",
+          "variant": {},
+          "params": {
+            "time_s": 8,
+            "deaths": 0,
+            "stamps": 1
+          }
+        }
+      ]
+    }
+  }
+]

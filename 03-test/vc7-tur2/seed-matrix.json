@@ -1,0 +1,110 @@
+[
+  {
+    "seed": 1,
+    "run": 1,
+    "exitCode": 0,
+    "ratio": 0.23366666666666666,
+    "orange": 27,
+    "mode": "BAD",
+    "randomCalls": 41
+  },
+  {
+    "seed": 1,
+    "run": 2,
+    "exitCode": 0,
+    "ratio": 0.23366666666666666,
+    "orange": 27,
+    "mode": "BAD",
+    "randomCalls": 41
+  },
+  {
+    "seed": 1,
+    "run": 3,
+    "exitCode": 0,
+    "ratio": 0.23366666666666666,
+    "orange": 27,
+    "mode": "BAD",
+    "randomCalls": 41
+  },
+  {
+    "seed": 2,
+    "run": 1,
+    "exitCode": 0,
+    "ratio": 0.597,
+    "orange": 844,
+    "mode": "GOOD",
+    "randomCalls": 41
+  },
+  {
+    "seed": 2,
+    "run": 2,
+    "exitCode": 0,
+    "ratio": 0.597,
+    "orange": 844,
+    "mode": "GOOD",
+    "randomCalls": 41
+  },
+  {
+    "seed": 2,
+    "run": 3,
+    "exitCode": 0,
+    "ratio": 0.597,
+    "orange": 844,
+    "mode": "GOOD",
+    "randomCalls": 41
+  },
+  {
+    "seed": 3,
+    "run": 1,
+    "exitCode": 0,
+    "ratio": 0.597,
+    "orange": 844,
+    "mode": "GOOD",
+    "randomCalls": 41
+  },
+  {
+    "seed": 3,
+    "run": 2,
+    "exitCode": 0,
+    "ratio": 0.23366666666666666,
+    "orange": 27,
+    "mode": "BAD",
+    "randomCalls": 41
+  },
+  {
+    "seed": 3,
+    "run": 3,
+    "exitCode": 0,
+    "ratio": 0.597,
+    "orange": 844,
+    "mode": "GOOD",
+    "randomCalls": 41
+  },
+  {
+    "seed": 4,
+    "run": 1,
+    "exitCode": 0,
+    "ratio": 0.597,
+    "orange": 844,
+    "mode": "GOOD",
+    "randomCalls": 41
+  },
+  {
+    "seed": 4,
+    "run": 2,
+    "exitCode": 0,
+    "ratio": 0.597,
+    "orange": 844,
+    "mode": "GOOD",
+    "randomCalls": 41
+  },
+  {
+    "seed": 4,
+    "run": 3,
+    "exitCode": 0,
+    "ratio": 0.597,
+    "orange": 844,
+    "mode": "GOOD",
+    "randomCalls": 41
+  }
+]

@@ -1,0 +1,302 @@
+[
+  {
+    "file": "33984.json",
+    "orange": 844,
+    "ratio": 0.597,
+    "cam": 28379.6,
+    "target": 28383.45960089557,
+    "screen": {
+      "left": 222.40000000000146,
+      "right": 302.40000000000146
+    },
+    "visible": {
+      "left": 0,
+      "right": 540
+    },
+    "playerX": 28547,
+    "spikeX": 28602,
+    "triggerX": 28602,
+    "rafId": 0,
+    "raf": {
+      "requested": 212,
+      "fired": 211,
+      "lastFiredAt": 4552
+    },
+    "loop": false
+  },
+  {
+    "file": "31000.json",
+    "orange": 844,
+    "ratio": 0.597,
+    "cam": 28379.6,
+    "target": 28383.45960089557,
+    "screen": {
+      "left": 222.40000000000146,
+      "right": 302.40000000000146
+    },
+    "visible": {
+      "left": 0,
+      "right": 540
+    },
+    "playerX": 28547,
+    "spikeX": 28602,
+    "triggerX": 28602,
+    "rafId": 0,
+    "raf": {
+      "requested": 211,
+      "fired": 210,
+      "lastFiredAt": 4470.828
+    },
+    "loop": false
+  },
+  {
+    "file": "32920.json",
+    "orange": 27,
+    "ratio": 0.23366666666666666,
+    "cam": 28379.6,
+    "target": 28383.460688404866,
+    "screen": {
+      "left": 222.40000000000146,
+      "right": 302.40000000000146
+    },
+    "visible": {
+      "left": 0,
+      "right": 540
+    },
+    "playerX": 28547,
+    "spikeX": 28602,
+    "triggerX": 28602,
+    "rafId": 0,
+    "raf": {
+      "requested": 205,
+      "fired": 204,
+      "lastFiredAt": 4473.2
+    },
+    "loop": false
+  },
+  {
+    "file": "19616.json",
+    "orange": 844,
+    "ratio": 0.597,
+    "cam": 28379.6,
+    "target": 28383.45960089557,
+    "screen": {
+      "left": 222.40000000000146,
+      "right": 302.40000000000146
+    },
+    "visible": {
+      "left": 0,
+      "right": 540
+    },
+    "playerX": 28547,
+    "spikeX": 28602,
+    "triggerX": 28602,
+    "rafId": 0,
+    "raf": {
+      "requested": 204,
+      "fired": 203,
+      "lastFiredAt": 4532.16
+    },
+    "loop": false
+  },
+  {
+    "file": "28360.json",
+    "orange": 844,
+    "ratio": 0.597,
+    "cam": 28379.6,
+    "target": 28383.45960089557,
+    "screen": {
+      "left": 222.40000000000146,
+      "right": 302.40000000000146
+    },
+    "visible": {
+      "left": 0,
+      "right": 540
+    },
+    "playerX": 28547,
+    "spikeX": 28602,
+    "triggerX": 28602,
+    "rafId": 0,
+    "raf": {
+      "requested": 208,
+      "fired": 207,
+      "lastFiredAt": 4445.128
+    },
+    "loop": false
+  },
+  {
+    "file": "29768.json",
+    "orange": 844,
+    "ratio": 0.597,
+    "cam": 28379.6,
+    "target": 28383.45960089557,
+    "screen": {
+      "left": 222.40000000000146,
+      "right": 302.40000000000146
+    },
+    "visible": {
+      "left": 0,
+      "right": 540
+    },
+    "playerX": 28547,
+    "spikeX": 28602,
+    "triggerX": 28602,
+    "rafId": 0,
+    "raf": {
+      "requested": 209,
+      "fired": 208,
+      "lastFiredAt": 4422.8
+    },
+    "loop": false
+  },
+  {
+    "file": "35028.json",
+    "orange": 844,
+    "ratio": 0.597,
+    "cam": 28379.6,
+    "target": 28383.45960089557,
+    "screen": {
+      "left": 222.40000000000146,
+      "right": 302.40000000000146
+    },
+    "visible": {
+      "left": 0,
+      "right": 540
+    },
+    "playerX": 28547,
+    "spikeX": 28602,
+    "triggerX": 28602,
+    "rafId": 0,
+    "raf": {
+      "requested": 205,
+      "fired": 204,
+      "lastFiredAt": 4440.8
+    },
+    "loop": false
+  },
+  {
+    "file": "17740.json",
+    "orange": 844,
+    "ratio": 0.597,
+    "cam": 28379.6,
+    "target": 28383.45960089557,
+    "screen": {
+      "left": 222.40000000000146,
+      "right": 302.40000000000146
+    },
+    "visible": {
+      "left": 0,
+      "right": 540
+    },
+    "playerX": 28547,
+    "spikeX": 28602,
+    "triggerX": 28602,
+    "rafId": 0,
+    "raf": {
+      "requested": 210,
+      "fired": 209,
+      "lastFiredAt": 4542.894
+    },
+    "loop": false
+  },
+  {
+    "file": "32812.json",
+    "orange": 27,
+    "ratio": 0.23366666666666666,
+    "cam": 28379.6,
+    "target": 28383.46076733793,
+    "screen": {
+      "left": 222.40000000000146,
+      "right": 302.40000000000146
+    },
+    "visible": {
+      "left": 0,
+      "right": 540
+    },
+    "playerX": 28547,
+    "spikeX": 28602,
+    "triggerX": 28602,
+    "rafId": 0,
+    "raf": {
+      "requested": 208,
+      "fired": 207,
+      "lastFiredAt": 4425.028
+    },
+    "loop": false
+  },
+  {
+    "file": "9480.json",
+    "orange": 844,
+    "ratio": 0.597,
+    "cam": 28379.6,
+    "target": 28383.45960089557,
+    "screen": {
+      "left": 222.40000000000146,
+      "right": 302.40000000000146
+    },
+    "visible": {
+      "left": 0,
+      "right": 540
+    },
+    "playerX": 28547,
+    "spikeX": 28602,
+    "triggerX": 28602,
+    "rafId": 0,
+    "raf": {
+      "requested": 208,
+      "fired": 207,
+      "lastFiredAt": 4448.094
+    },
+    "loop": false
+  },
+  {
+    "file": "33932.json",
+    "orange": 844,
+    "ratio": 0.597,
+    "cam": 28379.6,
+    "target": 28383.45960089557,
+    "screen": {
+      "left": 222.40000000000146,
+      "right": 302.40000000000146
+    },
+    "visible": {
+      "left": 0,
+      "right": 540
+    },
+    "playerX": 28547,
+    "spikeX": 28602,
+    "triggerX": 28602,
+    "rafId": 0,
+    "raf": {
+      "requested": 201,
+      "fired": 200,
+      "lastFiredAt": 4460.2
+    },
+    "loop": false
+  },
+  {
+    "file": "13032.json",
+    "orange": 844,
+    "ratio": 0.597,
+    "cam": 28379.6,
+    "target": 28383.45960089557,
+    "screen": {
+      "left": 222.40000000000146,
+      "right": 302.40000000000146
+    },
+    "visible": {
+      "left": 0,
+      "right": 540
+    },
+    "playerX": 28547,
+    "spikeX": 28602,
+    "triggerX": 28602,
+    "rafId": 0,
+    "raf": {
+      "requested": 201,
+      "fired": 200,
+      "lastFiredAt": 4578.628
+    },
+    "loop": false
+  }
+]

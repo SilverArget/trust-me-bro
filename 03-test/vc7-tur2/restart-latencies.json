@@ -1,0 +1,122 @@
+[
+  {
+    "part": "1.1",
+    "trap": "crumble",
+    "delta_ms": -16.666666666666668,
+    "latency_ms": 835,
+    "kill": {
+      "trap_type": "crumble",
+      "kill_type": "fall",
+      "message": "FIRST LESSON: SIGNS LIE.",
+      "x": 758
+    }
+  },
+  {
+    "part": "1.2",
+    "trap": "crumble",
+    "delta_ms": -8.333333333333334,
+    "latency_ms": 833,
+    "kill": {
+      "trap_type": "crumble",
+      "kill_type": "fall",
+      "message": "FIRST LESSON: SIGNS LIE.",
+      "x": 1083
+    }
+  },
+  {
+    "part": "2.2",
+    "trap": "jumpBait",
+    "delta_ms": -58.333333333333336,
+    "latency_ms": 850,
+    "kill": {
+      "trap_type": "jumpBait",
+      "kill_type": "crush",
+      "message": "FIRST LESSON: SIGNS LIE.",
+      "x": 3682
+    }
+  },
+  {
+    "part": "1.1",
+    "trap": "crumble",
+    "delta_ms": -16.666666666666668,
+    "latency_ms": 825,
+    "kill": {
+      "trap_type": "crumble",
+      "kill_type": "fall",
+      "message": "FIRST LESSON: SIGNS LIE.",
+      "x": 758
+    }
+  },
+  {
+    "part": "1.2",
+    "trap": "crumble",
+    "delta_ms": -8.333333333333334,
+    "latency_ms": 835,
+    "kill": {
+      "trap_type": "crumble",
+      "kill_type": "fall",
+      "message": "FIRST LESSON: SIGNS LIE.",
+      "x": 1083
+    }
+  },
+  {
+    "part": "2.2",
+    "trap": "jumpBait",
+    "delta_ms": -58.333333333333336,
+    "latency_ms": 864,
+    "kill": {
+      "trap_type": "jumpBait",
+      "kill_type": "crush",
+      "message": "FIRST LESSON: SIGNS LIE.",
+      "x": 3682
+    }
+  },
+  {
+    "part": "1.1",
+    "trap": "crumble",
+    "delta_ms": -16.666666666666668,
+    "latency_ms": 824,
+    "kill": {
+      "trap_type": "crumble",
+      "kill_type": "fall",
+      "message": "FIRST LESSON: SIGNS LIE.",
+      "x": 758
+    }
+  },
+  {
+    "part": "1.2",
+    "trap": "crumble",
+    "delta_ms": -8.333333333333334,
+    "latency_ms": 835,
+    "kill": {
+      "trap_type": "crumble",
+      "kill_type": "fall",
+      "message": "FIRST LESSON: SIGNS LIE.",
+      "x": 1083
+    }
+  },
+  {
+    "part": "2.2",
+    "trap": "jumpBait",
+    "delta_ms": -58.333333333333336,
+    "latency_ms": 824,
+    "kill": {
+      "trap_type": "jumpBait",
+      "kill_type": "crush",
+      "message": "FIRST LESSON: SIGNS LIE.",
+      "x": 3682
+    }
+  },
+  {
+    "part": "1.1",
+    "trap": "crumble",
+    "delta_ms": -16.666666666666668,
+    "latency_ms": 828,
+    "kill": {
+      "trap_type": "crumble",
+      "kill_type": "fall",
+      "message": "FIRST LESSON: SIGNS LIE.",
+      "x": 758
+    }
+  }
+]

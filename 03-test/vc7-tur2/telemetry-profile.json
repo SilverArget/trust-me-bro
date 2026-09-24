@@ -1,0 +1,48 @@
+{
+  "current": {
+    "suppressed": false,
+    "elapsed_ms": 10006.29999999702,
+    "frames": 540,
+    "emit_count": 0,
+    "update": {
+      "n": 540,
+      "avg_ms": 0.06944444438925496,
+      "p95_ms": 0.19999999552965164
+    },
+    "draw": {
+      "n": 540,
+      "avg_ms": 0.6307407408814739,
+      "p95_ms": 0.9000000059604645
+    },
+    "emit_per_s": 0,
+    "events": {
+      "game_ready": 1,
+      "first_input": 1,
+      "retry": 1,
+      "level_start": 1
+    }
+  },
+  "telemetry_suppressed": {
+    "suppressed": true,
+    "elapsed_ms": 10016.30000000447,
+    "frames": 601,
+    "emit_count": 0,
+    "update": {
+      "n": 601,
+      "avg_ms": 0.03477537446033935,
+      "p95_ms": 0.10000000149011612
+    },
+    "draw": {
+      "n": 601,
+      "avg_ms": 0.555241264588821,
+      "p95_ms": 0.8000000044703484
+    },
+    "emit_per_s": 0,
+    "events": {
+      "game_ready": 1,
+      "first_input": 1,
+      "retry": 1,
+      "level_start": 1
+    }
+  }
+}

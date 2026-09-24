@@ -1,0 +1,146 @@
+[
+  {
+    "event": "game_ready",
+    "flow": "game_ready",
+    "positive_delta": 1,
+    "suppressed_delta": 0,
+    "expected_red": true,
+    "red_message": "game_ready expected-red measured delta=0"
+  },
+  {
+    "event": "first_input",
+    "flow": "first_input",
+    "positive_delta": 1,
+    "suppressed_delta": 0,
+    "expected_red": true,
+    "red_message": "first_input expected-red measured delta=0"
+  },
+  {
+    "event": "level_start",
+    "flow": "level_start",
+    "positive_delta": 1,
+    "suppressed_delta": 0,
+    "expected_red": true,
+    "red_message": "level_start expected-red measured delta=0"
+  },
+  {
+    "event": "movement_used",
+    "flow": "movement_used",
+    "positive_delta": 1,
+    "suppressed_delta": 0,
+    "expected_red": true,
+    "red_message": "movement_used expected-red measured delta=0"
+  },
+  {
+    "event": "deception_triggered",
+    "flow": "deception_triggered",
+    "positive_delta": 1,
+    "suppressed_delta": 0,
+    "expected_red": true,
+    "red_message": "deception_triggered expected-red measured delta=0"
+  },
+  {
+    "event": "telegraph_exposed",
+    "flow": "telegraph_exposed",
+    "positive_delta": 1,
+    "suppressed_delta": 0,
+    "expected_red": true,
+    "red_message": "telegraph_exposed expected-red measured delta=0"
+  },
+  {
+    "event": "player_fail",
+    "flow": "player_fail",
+    "positive_delta": 1,
+    "suppressed_delta": 0,
+    "expected_red": true,
+    "red_message": "player_fail expected-red measured delta=0"
+  },
+  {
+    "event": "retry",
+    "flow": "retry",
+    "positive_delta": 1,
+    "suppressed_delta": 0,
+    "expected_red": true,
+    "red_message": "retry expected-red measured delta=0"
+  },
+  {
+    "event": "checkpoint",
+    "flow": "checkpoint",
+    "positive_delta": 1,
+    "suppressed_delta": 0,
+    "expected_red": true,
+    "red_message": "checkpoint expected-red measured delta=0"
+  },
+  {
+    "event": "level_complete",
+    "flow": "level_complete",
+    "positive_delta": 1,
+    "suppressed_delta": 0,
+    "expected_red": true,
+    "red_message": "level_complete expected-red measured delta=0"
+  },
+  {
+    "event": "run_complete",
+    "flow": "run_complete",
+    "positive_delta": 1,
+    "suppressed_delta": 0,
+    "expected_red": true,
+    "red_message": "run_complete expected-red measured delta=0"
+  },
+  {
+    "event": "rewarded_offer",
+    "flow": "rewarded_offer",
+    "positive_delta": 1,
+    "suppressed_delta": 0,
+    "expected_red": true,
+    "red_message": "rewarded_offer expected-red measured delta=0"
+  },
+  {
+    "event": "rewarded_start",
+    "flow": "rewarded_start",
+    "positive_delta": 1,
+    "suppressed_delta": 0,
+    "expected_red": true,
+    "red_message": "rewarded_start expected-red measured delta=0"
+  },
+  {
+    "event": "rewarded_complete",
+    "flow": "rewarded_complete",
+    "positive_delta": 1,
+    "suppressed_delta": 0,
+    "expected_red": true,
+    "red_message": "rewarded_complete expected-red measured delta=0"
+  },
+  {
+    "event": "reward_granted",
+    "flow": "reward_granted",
+    "positive_delta": 1,
+    "suppressed_delta": 0,
+    "expected_red": true,
+    "red_message": "reward_granted expected-red measured delta=0"
+  },
+  {
+    "event": "interstitial_show",
+    "flow": "interstitial_show",
+    "positive_delta": 1,
+    "suppressed_delta": 0,
+    "expected_red": true,
+    "red_message": "interstitial_show expected-red measured delta=0"
+  },
+  {
+    "event": "interstitial_return",
+    "flow": "interstitial_return",
+    "positive_delta": 1,
+    "suppressed_delta": 0,
+    "expected_red": true,
+    "red_message": "interstitial_return expected-red measured delta=0"
+  },
+  {
+    "event": "build_error",
+    "flow": "build_error",
+    "positive_delta": 1,
+    "suppressed_delta": 0,
+    "expected_red": true,
+    "red_message": "build_error expected-red measured delta=0"
+  }
+]

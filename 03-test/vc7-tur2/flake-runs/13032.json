@@ -1,0 +1,1266 @@
+{
+  "16x9": {
+    "telegraphPhaseTick": 35,
+    "telegraphWarning": 0.3783333333333336,
+    "fixedVisualMs": 25,
+    "padChangedPixels": 4694,
+    "spikeChangedRatio": 0.5971666666666666,
+    "telegraphOrangePixels": 787,
+    "captureDiag": {
+      "pad-uyarisiz": {
+        "contextBefore": {
+          "alpha": 1,
+          "composite": "source-over",
+          "filter": "none",
+          "shadowBlur": 0,
+          "shadowColor": "#000000",
+          "lineWidth": 1,
+          "lineCap": "butt",
+          "fillStyle": "#ffffff",
+          "strokeStyle": "rgba(255, 255, 255, 0.125)",
+          "transform": [
+            1,
+            0,
+            0,
+            1,
+            0,
+            0
+          ]
+        },
+        "contextAfter": {
+          "alpha": 1,
+          "composite": "source-over",
+          "filter": "none",
+          "shadowBlur": 0,
+          "shadowColor": "#000000",
+          "lineWidth": 1,
+          "lineCap": "butt",
+          "fillStyle": "#ffffff",
+          "strokeStyle": "rgba(255, 255, 255, 0.125)",
+          "transform": [
+            1,
+            0,
+            0,
+            1,
+            0,
+            0
+          ]
+        },
+        "contextTrack": {
+          "depth": 0,
+          "clips": 0,
+          "underflow": 0
+        },
+        "pngState": [
+          {
+            "loaded": true,
+            "failed": false,
+            "naturalWidth": 424
+          },
+          {
+            "loaded": true,
+            "failed": false,
+            "naturalWidth": 424
+          },
+          {
+            "loaded": true,
+            "failed": false,
+            "naturalWidth": 424
+          },
+          {
+            "loaded": true,
+            "failed": false,
+            "naturalWidth": 424
+          }
+        ],
+        "trapImagePath": "procedural-canvas-no-Image",
+        "canvas": {
+          "width": 960,
+          "height": 540,
+          "cssWidth": 960,
+          "cssHeight": 540
+        },
+        "devicePixelRatio": 1,
+        "viewScale": 1,
+        "viewOffsetX": 0,
+        "viewOffsetY": 0,
+        "isPortrait": false,
+        "W": 960,
+        "H": 540,
+        "viewportW": 960,
+        "viewportH": 540,
+        "worldY": -18,
+        "regionCss": null,
+        "regionPixels": null,
+        "orangeRegion": null,
+        "orangeFull": 38,
+        "fonts": "loaded",
+        "loopRunning": false,
+        "systemPaused": false,
+        "rafId": 0,
+        "rafDiag": {
+          "requested": 200,
+          "fired": 199,
+          "lastFiredAt": 3278.7
+        },
+        "cam": 0,
+        "cameraTarget": 0,
+        "anchorFrac": 0.31,
+        "playerX": 84,
+        "triggerX": 1242,
+        "telegraphScreen": {
+          "left": 1242,
+          "right": 1322
+        },
+        "visibleHorizontal": {
+          "left": 0,
+          "right": 960
+        },
+        "armed": false,
+        "warning": 0,
+        "spikeHeight": "lethal-28px",
+        "done": false,
+        "t": 0.008333333333333333
+      },
+      "pad-uyari": {
+        "contextBefore": {
+          "alpha": 1,
+          "composite": "source-over",
+          "filter": "none",
+          "shadowBlur": 0,
+          "shadowColor": "#000000",
+          "lineWidth": 1,
+          "lineCap": "butt",
+          "fillStyle": "#ffffff",
+          "strokeStyle": "rgba(255, 255, 255, 0.125)",
+          "transform": [
+            1,
+            0,
+            0,
+            1,
+            0,
+            0
+          ]
+        },
+        "contextAfter": {
+          "alpha": 1,
+          "composite": "source-over",
+          "filter": "none",
+          "shadowBlur": 0,
+          "shadowColor": "#000000",
+          "lineWidth": 1,
+          "lineCap": "butt",
+          "fillStyle": "#ffffff",
+          "strokeStyle": "rgba(255, 255, 255, 0.125)",
+          "transform": [
+            1,
+            0,
+            0,
+            1,
+            0,
+            0
+          ]
+        },
+        "contextTrack": {
+          "depth": 0,
+          "clips": 0,
+          "underflow": 0
+        },
+        "pngState": [
+          {
+            "loaded": true,
+            "failed": false,
+            "naturalWidth": 424
+          },
+          {
+            "loaded": true,
+            "failed": false,
+            "naturalWidth": 424
+          },
+          {
+            "loaded": true,
+            "failed": false,
+            "naturalWidth": 424
+          },
+          {
+            "loaded": true,
+            "failed": false,
+            "naturalWidth": 424
+          }
+        ],
+        "trapImagePath": "procedural-canvas-no-Image",
+        "canvas": {
+          "width": 960,
+          "height": 540,
+          "cssWidth": 960,
+          "cssHeight": 540
+        },
+        "devicePixelRatio": 1,
+        "viewScale": 1,
+        "viewOffsetX": 0,
+        "viewOffsetY": 0,
+        "isPortrait": false,
+        "W": 960,
+        "H": 540,
+        "viewportW": 960,
+        "viewportH": 540,
+        "worldY": -18,
+        "regionCss": null,
+        "regionPixels": null,
+        "orangeRegion": null,
+        "orangeFull": 38,
+        "fonts": "loaded",
+        "loopRunning": false,
+        "systemPaused": false,
+        "rafId": 0,
+        "rafDiag": {
+          "requested": 200,
+          "fired": 199,
+          "lastFiredAt": 3278.7
+        },
+        "cam": 0,
+        "cameraTarget": 0,
+        "anchorFrac": 0.31,
+        "playerX": 234,
+        "triggerX": 1242,
+        "telegraphScreen": {
+          "left": 1242,
+          "right": 1322
+        },
+        "visibleHorizontal": {
+          "left": 0,
+          "right": 960
+        },
+        "armed": false,
+        "warning": 0,
+        "spikeHeight": "lethal-28px",
+        "done": false,
+        "t": 0.008333333333333333
+      },
+      "diken-oncesi": {
+        "contextBefore": {
+          "alpha": 1,
+          "composite": "source-over",
+          "filter": "none",
+          "shadowBlur": 0,
+          "shadowColor": "#000000",
+          "lineWidth": 1,
+          "lineCap": "butt",
+          "fillStyle": "#18dc18",
+          "strokeStyle": "rgba(255, 255, 255, 0.125)",
+          "transform": [
+            1,
+            0,
+            0,
+            1,
+            0,
+            0
+          ]
+        },
+        "contextAfter": {
+          "alpha": 1,
+          "composite": "source-over",
+          "filter": "none",
+          "shadowBlur": 0,
+          "shadowColor": "#000000",
+          "lineWidth": 1,
+          "lineCap": "butt",
+          "fillStyle": "#18dc18",
+          "strokeStyle": "rgba(255, 255, 255, 0.125)",
+          "transform": [
+            1,
+            0,
+            0,
+            1,
+            0,
+            0
+          ]
+        },
+        "contextTrack": {
+          "depth": 0,
+          "clips": 0,
+          "underflow": 0
+        },
+        "pngState": [
+          {
+            "loaded": true,
+            "failed": false,
+            "naturalWidth": 424
+          },
+          {
+            "loaded": true,
+            "failed": false,
+            "naturalWidth": 424
+          },
+          {
+            "loaded": true,
+            "failed": false,
+            "naturalWidth": 424
+          },
+          {
+            "loaded": true,
+            "failed": false,
+            "naturalWidth": 424
+          }
+        ],
+        "trapImagePath": "procedural-canvas-no-Image",
+        "canvas": {
+          "width": 960,
+          "height": 540,
+          "cssWidth": 960,
+          "cssHeight": 540
+        },
+        "devicePixelRatio": 1,
+        "viewScale": 1,
+        "viewOffsetX": 0,
+        "viewOffsetY": 0,
+        "isPortrait": false,
+        "W": 960,
+        "H": 540,
+        "viewportW": 960,
+        "viewportH": 540,
+        "worldY": -18,
+        "regionCss": {
+          "x": 332,
+          "y": 389,
+          "w": 150,
+          "h": 48
+        },
+        "regionPixels": {
+          "x": 332,
+          "y": 389,
+          "w": 150,
+          "h": 48
+        },
+        "orangeRegion": 0,
+        "orangeFull": 12,
+        "fonts": "loaded",
+        "loopRunning": false,
+        "systemPaused": false,
+        "rafId": 0,
+        "rafDiag": {
+          "requested": 200,
+          "fired": 199,
+          "lastFiredAt": 3278.7
+        },
+        "cam": 28249.4,
+        "cameraTarget": 28249.4,
+        "anchorFrac": 0.31,
+        "playerX": 28547,
+        "triggerX": 28602,
+        "telegraphScreen": {
+          "left": 352.59999999999854,
+          "right": 432.59999999999854
+        },
+        "visibleHorizontal": {
+          "left": 0,
+          "right": 960
+        },
+        "armed": false,
+        "warning": 0,
+        "spikeHeight": "lethal-28px",
+        "done": false,
+        "t": 0
+      },
+      "diken-telegraph": {
+        "contextBefore": {
+          "alpha": 1,
+          "composite": "source-over",
+          "filter": "none",
+          "shadowBlur": 0,
+          "shadowColor": "#000000",
+          "lineWidth": 1,
+          "lineCap": "butt",
+          "fillStyle": "#18dc18",
+          "strokeStyle": "rgba(255, 255, 255, 0.125)",
+          "transform": [
+            1,
+            0,
+            0,
+            1,
+            0,
+            0
+          ]
+        },
+        "contextAfter": {
+          "alpha": 1,
+          "composite": "source-over",
+          "filter": "none",
+          "shadowBlur": 0,
+          "shadowColor": "#000000",
+          "lineWidth": 1,
+          "lineCap": "butt",
+          "fillStyle": "#18dc18",
+          "strokeStyle": "rgba(255, 255, 255, 0.125)",
+          "transform": [
+            1,
+            0,
+            0,
+            1,
+            0,
+            0
+          ]
+        },
+        "contextTrack": {
+          "depth": 0,
+          "clips": 0,
+          "underflow": 0
+        },
+        "pngState": [
+          {
+            "loaded": true,
+            "failed": false,
+            "naturalWidth": 424
+          },
+          {
+            "loaded": true,
+            "failed": false,
+            "naturalWidth": 424
+          },
+          {
+            "loaded": true,
+            "failed": false,
+            "naturalWidth": 424
+          },
+          {
+            "loaded": true,
+            "failed": false,
+            "naturalWidth": 424
+          }
+        ],
+        "trapImagePath": "procedural-canvas-no-Image",
+        "canvas": {
+          "width": 960,
+          "height": 540,
+          "cssWidth": 960,
+          "cssHeight": 540
+        },
+        "devicePixelRatio": 1,
+        "viewScale": 1,
+        "viewOffsetX": 0,
+        "viewOffsetY": 0,
+        "isPortrait": false,
+        "W": 960,
+        "H": 540,
+        "viewportW": 960,
+        "viewportH": 540,
+        "worldY": -18,
+        "regionCss": {
+          "x": 332,
+          "y": 389,
+          "w": 150,
+          "h": 48
+        },
+        "regionPixels": {
+          "x": 332,
+          "y": 389,
+          "w": 150,
+          "h": 48
+        },
+        "orangeRegion": 705,
+        "orangeFull": 881,
+        "fonts": "loaded",
+        "loopRunning": false,
+        "systemPaused": false,
+        "rafId": 0,
+        "rafDiag": {
+          "requested": 200,
+          "fired": 199,
+          "lastFiredAt": 3278.7
+        },
+        "cam": 28249.4,
+        "cameraTarget": 28249.4,
+        "anchorFrac": 0.31,
+        "playerX": 28547,
+        "triggerX": 28602,
+        "spikeX": 28602,
+        "telegraphScreen": {
+          "left": 352.59999999999854,
+          "right": 432.59999999999854
+        },
+        "visibleHorizontal": {
+          "left": 0,
+          "right": 960
+        },
+        "armed": true,
+        "warning": 0.3783333333333336,
+        "spikeHeight": "telegraph-tips-6-10px",
+        "done": false,
+        "t": 0.29166666666666674
+      },
+      "diken-olumcul": {
+        "contextBefore": {
+          "alpha": 1,
+          "composite": "source-over",
+          "filter": "none",
+          "shadowBlur": 0,
+          "shadowColor": "#000000",
+          "lineWidth": 1,
+          "lineCap": "butt",
+          "fillStyle": "#18dc18",
+          "strokeStyle": "rgba(255, 255, 255, 0.125)",
+          "transform": [
+            1,
+            0,
+            0,
+            1,
+            0,
+            0
+          ]
+        },
+        "contextAfter": {
+          "alpha": 1,
+          "composite": "source-over",
+          "filter": "none",
+          "shadowBlur": 0,
+          "shadowColor": "#000000",
+          "lineWidth": 1,
+          "lineCap": "butt",
+          "fillStyle": "#18dc18",
+          "strokeStyle": "rgba(255, 255, 255, 0.125)",
+          "transform": [
+            1,
+            0,
+            0,
+            1,
+            0,
+            0
+          ]
+        },
+        "contextTrack": {
+          "depth": 0,
+          "clips": 0,
+          "underflow": 0
+        },
+        "pngState": [
+          {
+            "loaded": true,
+            "failed": false,
+            "naturalWidth": 424
+          },
+          {
+            "loaded": true,
+            "failed": false,
+            "naturalWidth": 424
+          },
+          {
+            "loaded": true,
+            "failed": false,
+            "naturalWidth": 424
+          },
+          {
+            "loaded": true,
+            "failed": false,
+            "naturalWidth": 424
+          }
+        ],
+        "trapImagePath": "procedural-canvas-no-Image",
+        "canvas": {
+          "width": 960,
+          "height": 540,
+          "cssWidth": 960,
+          "cssHeight": 540
+        },
+        "devicePixelRatio": 1,
+        "viewScale": 1,
+        "viewOffsetX": 0,
+        "viewOffsetY": 0,
+        "isPortrait": false,
+        "W": 960,
+        "H": 540,
+        "viewportW": 960,
+        "viewportH": 540,
+        "worldY": -18,
+        "regionCss": {
+          "x": 348,
+          "y": 389,
+          "w": 150,
+          "h": 48
+        },
+        "regionPixels": {
+          "x": 348,
+          "y": 389,
+          "w": 150,
+          "h": 48
+        },
+        "orangeRegion": 361,
+        "orangeFull": 373,
+        "fonts": "loaded",
+        "loopRunning": false,
+        "systemPaused": false,
+        "rafId": 0,
+        "rafDiag": {
+          "requested": 200,
+          "fired": 199,
+          "lastFiredAt": 3278.7
+        },
+        "cam": 28249.4,
+        "cameraTarget": 28249.4,
+        "anchorFrac": 0.31,
+        "playerX": 28547,
+        "triggerX": 28602,
+        "spikeX": 28617.62500000002,
+        "telegraphScreen": {
+          "left": 368.22500000001673,
+          "right": 448.22500000001673
+        },
+        "visibleHorizontal": {
+          "left": 0,
+          "right": 960
+        },
+        "armed": true,
+        "warning": 0,
+        "spikeHeight": "lethal-28px",
+        "done": false,
+        "t": 0.7916666666666663
+      }
+    },
+    "randomTrace": [],
+    "playerContrast": {
+      "pad-uyarisiz": 10.844045928028933,
+      "pad-uyari": 3.0029987373745826,
+      "diken-oncesi": 10.590830176766715,
+      "diken-telegraph": 8.315696022726243,
+      "diken-olumcul": 10.590830176766715
+    },
+    "files": {
+      "pad-uyarisiz": "E:\\oyunlar\\TrustMeBro\\02-kod\\03-test\\vc7-tur1b\\pad-uyarisiz-16x9.png",
+      "pad-uyari": "E:\\oyunlar\\TrustMeBro\\02-kod\\03-test\\vc7-tur1b\\pad-uyari-16x9.png",
+      "diken-oncesi": "E:\\oyunlar\\TrustMeBro\\02-kod\\03-test\\vc7-tur1b\\diken-oncesi-16x9.png",
+      "diken-telegraph": "E:\\oyunlar\\TrustMeBro\\02-kod\\03-test\\vc7-tur1b\\diken-telegraph-16x9.png",
+      "diken-olumcul": "E:\\oyunlar\\TrustMeBro\\02-kod\\03-test\\vc7-tur1b\\diken-olumcul-16x9.png"
+    }
+  },
+  "9x16": {
+    "telegraphPhaseTick": 35,
+    "telegraphWarning": 0.3783333333333336,
+    "fixedVisualMs": 25,
+    "padChangedPixels": 2369,
+    "spikeChangedRatio": 0.597,
+    "telegraphOrangePixels": 844,
+    "captureDiag": {
+      "pad-uyarisiz": {
+        "contextBefore": {
+          "alpha": 1,
+          "composite": "source-over",
+          "filter": "none",
+          "shadowBlur": 0,
+          "shadowColor": "#000000",
+          "lineWidth": 1,
+          "lineCap": "butt",
+          "fillStyle": "#ffffff",
+          "strokeStyle": "rgba(255, 255, 255, 0.125)",
+          "transform": [
+            1,
+            0,
+            0,
+            1,
+            0,
+            0
+          ]
+        },
+        "contextAfter": {
+          "alpha": 1,
+          "composite": "source-over",
+          "filter": "none",
+          "shadowBlur": 0,
+          "shadowColor": "#000000",
+          "lineWidth": 1,
+          "lineCap": "butt",
+          "fillStyle": "#ffffff",
+          "strokeStyle": "rgba(255, 255, 255, 0.125)",
+          "transform": [
+            1,
+            0,
+            0,
+            1,
+            0,
+            0
+          ]
+        },
+        "contextTrack": {
+          "depth": 0,
+          "clips": 0,
+          "underflow": 0
+        },
+        "pngState": [
+          {
+            "loaded": true,
+            "failed": false,
+            "naturalWidth": 424
+          },
+          {
+            "loaded": true,
+            "failed": false,
+            "naturalWidth": 424
+          },
+          {
+            "loaded": true,
+            "failed": false,
+            "naturalWidth": 424
+          },
+          {
+            "loaded": true,
+            "failed": false,
+            "naturalWidth": 424
+          }
+        ],
+        "trapImagePath": "procedural-canvas-no-Image",
+        "canvas": {
+          "width": 540,
+          "height": 960,
+          "cssWidth": 540,
+          "cssHeight": 960
+        },
+        "devicePixelRatio": 1,
+        "viewScale": 1,
+        "viewOffsetX": 0,
+        "viewOffsetY": 0,
+        "isPortrait": true,
+        "W": 540,
+        "H": 960,
+        "viewportW": 540,
+        "viewportH": 960,
+        "worldY": 402,
+        "regionCss": null,
+        "regionPixels": null,
+        "orangeRegion": null,
+        "orangeFull": 38,
+        "fonts": "loaded",
+        "loopRunning": false,
+        "systemPaused": false,
+        "rafId": 0,
+        "rafDiag": {
+          "requested": 201,
+          "fired": 200,
+          "lastFiredAt": 4578.628
+        },
+        "cam": 0,
+        "cameraTarget": 0,
+        "anchorFrac": 0.30966666666666665,
+        "playerX": 84,
+        "triggerX": 1242,
+        "telegraphScreen": {
+          "left": 1242,
+          "right": 1322
+        },
+        "visibleHorizontal": {
+          "left": 0,
+          "right": 540
+        },
+        "armed": false,
+        "warning": 0,
+        "spikeHeight": "lethal-28px",
+        "done": false,
+        "t": 0.008333333333333333
+      },
+      "pad-uyari": {
+        "contextBefore": {
+          "alpha": 1,
+          "composite": "source-over",
+          "filter": "none",
+          "shadowBlur": 0,
+          "shadowColor": "#000000",
+          "lineWidth": 1,
+          "lineCap": "butt",
+          "fillStyle": "#ffffff",
+          "strokeStyle": "rgba(255, 255, 255, 0.125)",
+          "transform": [
+            1,
+            0,
+            0,
+            1,
+            0,
+            0
+          ]
+        },
+        "contextAfter": {
+          "alpha": 1,
+          "composite": "source-over",
+          "filter": "none",
+          "shadowBlur": 0,
+          "shadowColor": "#000000",
+          "lineWidth": 1,
+          "lineCap": "butt",
+          "fillStyle": "#ffffff",
+          "strokeStyle": "rgba(255, 255, 255, 0.125)",
+          "transform": [
+            1,
+            0,
+            0,
+            1,
+            0,
+            0
+          ]
+        },
+        "contextTrack": {
+          "depth": 0,
+          "clips": 0,
+          "underflow": 0
+        },
+        "pngState": [
+          {
+            "loaded": true,
+            "failed": false,
+            "naturalWidth": 424
+          },
+          {
+            "loaded": true,
+            "failed": false,
+            "naturalWidth": 424
+          },
+          {
+            "loaded": true,
+            "failed": false,
+            "naturalWidth": 424
+          },
+          {
+            "loaded": true,
+            "failed": false,
+            "naturalWidth": 424
+          }
+        ],
+        "trapImagePath": "procedural-canvas-no-Image",
+        "canvas": {
+          "width": 540,
+          "height": 960,
+          "cssWidth": 540,
+          "cssHeight": 960
+        },
+        "devicePixelRatio": 1,
+        "viewScale": 1,
+        "viewOffsetX": 0,
+        "viewOffsetY": 0,
+        "isPortrait": true,
+        "W": 540,
+        "H": 960,
+        "viewportW": 540,
+        "viewportH": 960,
+        "worldY": 402,
+        "regionCss": null,
+        "regionPixels": null,
+        "orangeRegion": null,
+        "orangeFull": 31,
+        "fonts": "loaded",
+        "loopRunning": false,
+        "systemPaused": false,
+        "rafId": 0,
+        "rafDiag": {
+          "requested": 201,
+          "fired": 200,
+          "lastFiredAt": 4578.628
+        },
+        "cam": 66.6,
+        "cameraTarget": 66.95400000000001,
+        "anchorFrac": 0.3093444444444444,
+        "playerX": 234,
+        "triggerX": 1242,
+        "telegraphScreen": {
+          "left": 1175.4,
+          "right": 1255.4
+        },
+        "visibleHorizontal": {
+          "left": 0,
+          "right": 540
+        },
+        "armed": false,
+        "warning": 0,
+        "spikeHeight": "lethal-28px",
+        "done": false,
+        "t": 0.008333333333333333
+      },
+      "diken-oncesi": {
+        "contextBefore": {
+          "alpha": 1,
+          "composite": "source-over",
+          "filter": "none",
+          "shadowBlur": 0,
+          "shadowColor": "#000000",
+          "lineWidth": 1,
+          "lineCap": "butt",
+          "fillStyle": "#18dc18",
+          "strokeStyle": "rgba(255, 255, 255, 0.125)",
+          "transform": [
+            1,
+            0,
+            0,
+            1,
+            0,
+            0
+          ]
+        },
+        "contextAfter": {
+          "alpha": 1,
+          "composite": "source-over",
+          "filter": "none",
+          "shadowBlur": 0,
+          "shadowColor": "#000000",
+          "lineWidth": 1,
+          "lineCap": "butt",
+          "fillStyle": "#18dc18",
+          "strokeStyle": "rgba(255, 255, 255, 0.125)",
+          "transform": [
+            1,
+            0,
+            0,
+            1,
+            0,
+            0
+          ]
+        },
+        "contextTrack": {
+          "depth": 0,
+          "clips": 0,
+          "underflow": 0
+        },
+        "pngState": [
+          {
+            "loaded": true,
+            "failed": false,
+            "naturalWidth": 424
+          },
+          {
+            "loaded": true,
+            "failed": false,
+            "naturalWidth": 424
+          },
+          {
+            "loaded": true,
+            "failed": false,
+            "naturalWidth": 424
+          },
+          {
+            "loaded": true,
+            "failed": false,
+            "naturalWidth": 424
+          }
+        ],
+        "trapImagePath": "procedural-canvas-no-Image",
+        "canvas": {
+          "width": 540,
+          "height": 960,
+          "cssWidth": 540,
+          "cssHeight": 960
+        },
+        "devicePixelRatio": 1,
+        "viewScale": 1,
+        "viewOffsetX": 0,
+        "viewOffsetY": 0,
+        "isPortrait": true,
+        "W": 540,
+        "H": 960,
+        "viewportW": 540,
+        "viewportH": 960,
+        "worldY": 402,
+        "regionCss": {
+          "x": 202,
+          "y": 809,
+          "w": 150,
+          "h": 48
+        },
+        "regionPixels": {
+          "x": 202,
+          "y": 809,
+          "w": 150,
+          "h": 48
+        },
+        "orangeRegion": 0,
+        "orangeFull": 7,
+        "fonts": "loaded",
+        "loopRunning": false,
+        "systemPaused": false,
+        "rafId": 0,
+        "rafDiag": {
+          "requested": 201,
+          "fired": 200,
+          "lastFiredAt": 4578.628
+        },
+        "cam": 28379.6,
+        "cameraTarget": 28379.954,
+        "anchorFrac": 0.3093444444444444,
+        "playerX": 28547,
+        "triggerX": 28602,
+        "telegraphScreen": {
+          "left": 222.40000000000146,
+          "right": 302.40000000000146
+        },
+        "visibleHorizontal": {
+          "left": 0,
+          "right": 540
+        },
+        "armed": false,
+        "warning": 0,
+        "spikeHeight": "lethal-28px",
+        "done": false,
+        "t": 0
+      },
+      "diken-telegraph": {
+        "contextBefore": {
+          "alpha": 1,
+          "composite": "source-over",
+          "filter": "none",
+          "shadowBlur": 0,
+          "shadowColor": "#000000",
+          "lineWidth": 1,
+          "lineCap": "butt",
+          "fillStyle": "#18dc18",
+          "strokeStyle": "rgba(255, 255, 255, 0.125)",
+          "transform": [
+            1,
+            0,
+            0,
+            1,
+            0,
+            0
+          ]
+        },
+        "contextAfter": {
+          "alpha": 1,
+          "composite": "source-over",
+          "filter": "none",
+          "shadowBlur": 0,
+          "shadowColor": "#000000",
+          "lineWidth": 1,
+          "lineCap": "butt",
+          "fillStyle": "#18dc18",
+          "strokeStyle": "rgba(255, 255, 255, 0.125)",
+          "transform": [
+            1,
+            0,
+            0,
+            1,
+            0,
+            0
+          ]
+        },
+        "contextTrack": {
+          "depth": 0,
+          "clips": 0,
+          "underflow": 0
+        },
+        "pngState": [
+          {
+            "loaded": true,
+            "failed": false,
+            "naturalWidth": 424
+          },
+          {
+            "loaded": true,
+            "failed": false,
+            "naturalWidth": 424
+          },
+          {
+            "loaded": true,
+            "failed": false,
+            "naturalWidth": 424
+          },
+          {
+            "loaded": true,
+            "failed": false,
+            "naturalWidth": 424
+          }
+        ],
+        "trapImagePath": "procedural-canvas-no-Image",
+        "canvas": {
+          "width": 540,
+          "height": 960,
+          "cssWidth": 540,
+          "cssHeight": 960
+        },
+        "devicePixelRatio": 1,
+        "viewScale": 1,
+        "viewOffsetX": 0,
+        "viewOffsetY": 0,
+        "isPortrait": true,
+        "W": 540,
+        "H": 960,
+        "viewportW": 540,
+        "viewportH": 960,
+        "worldY": 402,
+        "regionCss": {
+          "x": 202,
+          "y": 809,
+          "w": 150,
+          "h": 48
+        },
+        "regionPixels": {
+          "x": 202,
+          "y": 809,
+          "w": 150,
+          "h": 48
+        },
+        "orangeRegion": 760,
+        "orangeFull": 938,
+        "fonts": "loaded",
+        "loopRunning": false,
+        "systemPaused": false,
+        "rafId": 0,
+        "rafDiag": {
+          "requested": 201,
+          "fired": 200,
+          "lastFiredAt": 4578.628
+        },
+        "cam": 28379.6,
+        "cameraTarget": 28383.45960089557,
+        "anchorFrac": 0.30285259093412825,
+        "playerX": 28547,
+        "triggerX": 28602,
+        "spikeX": 28602,
+        "telegraphScreen": {
+          "left": 222.40000000000146,
+          "right": 302.40000000000146
+        },
+        "visibleHorizontal": {
+          "left": 0,
+          "right": 540
+        },
+        "armed": true,
+        "warning": 0.3783333333333336,
+        "spikeHeight": "telegraph-tips-6-10px",
+        "done": false,
+        "t": 0.29166666666666674
+      },
+      "diken-olumcul": {
+        "contextBefore": {
+          "alpha": 1,
+          "composite": "source-over",
+          "filter": "none",
+          "shadowBlur": 0,
+          "shadowColor": "#000000",
+          "lineWidth": 1,
+          "lineCap": "butt",
+          "fillStyle": "#18dc18",
+          "strokeStyle": "rgba(255, 255, 255, 0.125)",
+          "transform": [
+            1,
+            0,
+            0,
+            1,
+            0,
+            0
+          ]
+        },
+        "contextAfter": {
+          "alpha": 1,
+          "composite": "source-over",
+          "filter": "none",
+          "shadowBlur": 0,
+          "shadowColor": "#000000",
+          "lineWidth": 1,
+          "lineCap": "butt",
+          "fillStyle": "#18dc18",
+          "strokeStyle": "rgba(255, 255, 255, 0.125)",
+          "transform": [
+            1,
+            0,
+            0,
+            1,
+            0,
+            0
+          ]
+        },
+        "contextTrack": {
+          "depth": 0,
+          "clips": 0,
+          "underflow": 0
+        },
+        "pngState": [
+          {
+            "loaded": true,
+            "failed": false,
+            "naturalWidth": 424
+          },
+          {
+            "loaded": true,
+            "failed": false,
+            "naturalWidth": 424
+          },
+          {
+            "loaded": true,
+            "failed": false,
+            "naturalWidth": 424
+          },
+          {
+            "loaded": true,
+            "failed": false,
+            "naturalWidth": 424
+          }
+        ],
+        "trapImagePath": "procedural-canvas-no-Image",
+        "canvas": {
+          "width": 540,
+          "height": 960,
+          "cssWidth": 540,
+          "cssHeight": 960
+        },
+        "devicePixelRatio": 1,
+        "viewScale": 1,
+        "viewOffsetX": 0,
+        "viewOffsetY": 0,
+        "isPortrait": true,
+        "W": 540,
+        "H": 960,
+        "viewportW": 540,
+        "viewportH": 960,
+        "worldY": 402,
+        "regionCss": {
+          "x": 218,
+          "y": 809,
+          "w": 150,
+          "h": 48
+        },
+        "regionPixels": {
+          "x": 218,
+          "y": 809,
+          "w": 150,
+          "h": 48
+        },
+        "orangeRegion": 346,
+        "orangeFull": 353,
+        "fonts": "loaded",
+        "loopRunning": false,
+        "systemPaused": false,
+        "rafId": 0,
+        "rafDiag": {
+          "requested": 201,
+          "fired": 200,
+          "lastFiredAt": 4578.628
+        },
+        "cam": 28379.6,
+        "cameraTarget": 28384.938493097066,
+        "anchorFrac": 0.3001139016721022,
+        "playerX": 28547,
+        "triggerX": 28602,
+        "spikeX": 28617.62500000002,
+        "telegraphScreen": {
+          "left": 238.02500000001965,
+          "right": 318.02500000001965
+        },
+        "visibleHorizontal": {
+          "left": 0,
+          "right": 540
+        },
+        "armed": true,
+        "warning": 0,
+        "spikeHeight": "lethal-28px",
+        "done": false,
+        "t": 0.7916666666666663
+      }
+    },
+    "randomTrace": [],
+    "playerContrast": {
+      "pad-uyarisiz": 12.627446338383848,
+      "pad-uyari": 2.5302241161606247,
+      "diken-oncesi": 10.605232007574486,
+      "diken-telegraph": 8.24698153409004,
+      "diken-olumcul": 10.605232007574486
+    },
+    "files": {
+      "pad-uyarisiz": "E:\\oyunlar\\TrustMeBro\\02-kod\\03-test\\vc7-tur1b\\pad-uyarisiz-9x16.png",
+      "pad-uyari": "E:\\oyunlar\\TrustMeBro\\02-kod\\03-test\\vc7-tur1b\\pad-uyari-9x16.png",
+      "diken-oncesi": "E:\\oyunlar\\TrustMeBro\\02-kod\\03-test\\vc7-tur1b\\diken-oncesi-9x16.png",
+      "diken-telegraph": "E:\\oyunlar\\TrustMeBro\\02-kod\\03-test\\vc7-tur1b\\diken-telegraph-9x16.png",
+      "diken-olumcul": "E:\\oyunlar\\TrustMeBro\\02-kod\\03-test\\vc7-tur1b\\diken-olumcul-9x16.png"
+    }
+  }
+}

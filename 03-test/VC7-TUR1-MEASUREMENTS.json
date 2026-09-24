@@ -1,0 +1,706 @@
+{
+  "pads": [
+    {
+      "level": 1,
+      "part": 2,
+      "index": 0,
+      "box": {
+        "x": 386,
+        "y": 335,
+        "w": 30,
+        "h": 10
+      },
+      "landingX": 890.1586206896552
+    },
+    {
+      "level": 2,
+      "part": 2,
+      "index": 0,
+      "box": {
+        "x": 1091,
+        "y": 280,
+        "w": 30,
+        "h": 10
+      },
+      "landingX": 1595.1586206896552
+    },
+    {
+      "level": 3,
+      "part": 2,
+      "index": 0,
+      "box": {
+        "x": 591,
+        "y": 280,
+        "w": 30,
+        "h": 10
+      },
+      "landingX": 1095.1586206896552
+    },
+    {
+      "level": 4,
+      "part": 2,
+      "index": 0,
+      "box": {
+        "x": 591,
+        "y": 280,
+        "w": 30,
+        "h": 10
+      },
+      "landingX": 1245.0620689655173
+    },
+    {
+      "level": 5,
+      "part": 2,
+      "index": 0,
+      "box": {
+        "x": 386,
+        "y": 335,
+        "w": 30,
+        "h": 10
+      },
+      "landingX": 890.1586206896552
+    },
+    {
+      "level": 6,
+      "part": 2,
+      "index": 0,
+      "box": {
+        "x": 386,
+        "y": 335,
+        "w": 30,
+        "h": 10
+      },
+      "landingX": 890.1586206896552
+    },
+    {
+      "level": 7,
+      "part": 2,
+      "index": 0,
+      "box": {
+        "x": 936,
+        "y": 375,
+        "w": 30,
+        "h": 10
+      },
+      "landingX": 1744.9862068965517
+    },
+    {
+      "level": 8,
+      "part": 2,
+      "index": 0,
+      "box": {
+        "x": 591,
+        "y": 280,
+        "w": 30,
+        "h": 10
+      },
+      "landingX": 1245.0620689655173
+    },
+    {
+      "level": 9,
+      "part": 2,
+      "index": 0,
+      "box": {
+        "x": 741,
+        "y": 375,
+        "w": 30,
+        "h": 10
+      },
+      "landingX": 1245.1586206896552
+    },
+    {
+      "level": 10,
+      "part": 2,
+      "index": 0,
+      "box": {
+        "x": 386,
+        "y": 335,
+        "w": 30,
+        "h": 10
+      },
+      "landingX": 890.1586206896552
+    },
+    {
+      "level": 11,
+      "part": 2,
+      "index": 0,
+      "box": {
+        "x": 936,
+        "y": 375,
+        "w": 30,
+        "h": 10
+      },
+      "landingX": 1744.9862068965517
+    },
+    {
+      "level": 13,
+      "part": 2,
+      "index": 0,
+      "box": {
+        "x": 1091,
+        "y": 280,
+        "w": 30,
+        "h": 10
+      },
+      "landingX": 1745.0620689655173
+    },
+    {
+      "level": 14,
+      "part": 2,
+      "index": 0,
+      "box": {
+        "x": 1241,
+        "y": 375,
+        "w": 30,
+        "h": 10
+      },
+      "landingX": 1890.0413793103448
+    },
+    {
+      "level": 15,
+      "part": 2,
+      "index": 0,
+      "box": {
+        "x": 591,
+        "y": 280,
+        "w": 30,
+        "h": 10
+      },
+      "landingX": 1245.0620689655173
+    },
+    {
+      "level": 15,
+      "part": 2,
+      "index": 1,
+      "box": {
+        "x": 1091,
+        "y": 280,
+        "w": 30,
+        "h": 10
+      },
+      "landingX": 1595.1586206896552
+    },
+    {
+      "level": 16,
+      "part": 2,
+      "index": 0,
+      "box": {
+        "x": 1091,
+        "y": 280,
+        "w": 30,
+        "h": 10
+      },
+      "landingX": 1889.9448275862069
+    },
+    {
+      "level": 17,
+      "part": 2,
+      "index": 0,
+      "box": {
+        "x": 1091,
+        "y": 280,
+        "w": 30,
+        "h": 10
+      },
+      "landingX": 1889.9448275862069
+    },
+    {
+      "level": 18,
+      "part": 2,
+      "index": 0,
+      "box": {
+        "x": 1091,
+        "y": 280,
+        "w": 30,
+        "h": 10
+      },
+      "landingX": 1745.0620689655173
+    },
+    {
+      "level": 19,
+      "part": 2,
+      "index": 0,
+      "box": {
+        "x": 1091,
+        "y": 280,
+        "w": 30,
+        "h": 10
+      },
+      "landingX": 1889.9448275862069
+    },
+    {
+      "level": 20,
+      "part": 2,
+      "index": 0,
+      "box": {
+        "x": 591,
+        "y": 280,
+        "w": 30,
+        "h": 10
+      },
+      "landingX": 1245.0620689655173
+    },
+    {
+      "level": 21,
+      "part": 2,
+      "index": 0,
+      "box": {
+        "x": 386,
+        "y": 335,
+        "w": 30,
+        "h": 10
+      },
+      "landingX": 890.1586206896552
+    },
+    {
+      "level": 22,
+      "part": 2,
+      "index": 0,
+      "box": {
+        "x": 1091,
+        "y": 280,
+        "w": 30,
+        "h": 10
+      },
+      "landingX": 1889.9448275862069
+    },
+    {
+      "level": 24,
+      "part": 2,
+      "index": 0,
+      "box": {
+        "x": 591,
+        "y": 280,
+        "w": 30,
+        "h": 10
+      },
+      "landingX": 1245.0620689655173
+    },
+    {
+      "level": 25,
+      "part": 2,
+      "index": 0,
+      "box": {
+        "x": 591,
+        "y": 280,
+        "w": 30,
+        "h": 10
+      },
+      "landingX": 1095.1586206896552
+    },
+    {
+      "level": 27,
+      "part": 2,
+      "index": 0,
+      "box": {
+        "x": 591,
+        "y": 280,
+        "w": 30,
+        "h": 10
+      },
+      "landingX": 1095.1586206896552
+    },
+    {
+      "level": 28,
+      "part": 2,
+      "index": 0,
+      "box": {
+        "x": 1091,
+        "y": 280,
+        "w": 30,
+        "h": 10
+      },
+      "landingX": 1745.0620689655173
+    },
+    {
+      "level": 29,
+      "part": 2,
+      "index": 0,
+      "box": {
+        "x": 591,
+        "y": 280,
+        "w": 30,
+        "h": 10
+      },
+      "landingX": 1245.0620689655173
+    },
+    {
+      "level": 31,
+      "part": 2,
+      "index": 0,
+      "box": {
+        "x": 591,
+        "y": 280,
+        "w": 30,
+        "h": 10
+      },
+      "landingX": 1095.1586206896552
+    }
+  ],
+  "padTrials": [
+    {
+      "level": 1,
+      "part": 2,
+      "index": 0,
+      "warningFrame": 9,
+      "contactFrame": 82,
+      "ms": 608.3333333333333,
+      "input": "real game update() 120 Hz; speedLevel=1; speedHold=2.2; vx=400; collision-free measured approach lane; contact=player/pad overlap"
+    },
+    {
+      "level": 2,
+      "part": 2,
+      "index": 0,
+      "warningFrame": 8,
+      "contactFrame": 81,
+      "ms": 608.3333333333333,
+      "input": "real game update() 120 Hz; speedLevel=1; speedHold=2.2; vx=400; collision-free measured approach lane; contact=player/pad overlap"
+    },
+    {
+      "level": 3,
+      "part": 2,
+      "index": 0,
+      "warningFrame": 9,
+      "contactFrame": 82,
+      "ms": 608.3333333333333,
+      "input": "real game update() 120 Hz; speedLevel=1; speedHold=2.2; vx=400; collision-free measured approach lane; contact=player/pad overlap"
+    },
+    {
+      "level": 4,
+      "part": 2,
+      "index": 0,
+      "warningFrame": 9,
+      "contactFrame": 82,
+      "ms": 608.3333333333333,
+      "input": "real game update() 120 Hz; speedLevel=1; speedHold=2.2; vx=400; collision-free measured approach lane; contact=player/pad overlap"
+    },
+    {
+      "level": 5,
+      "part": 2,
+      "index": 0,
+      "warningFrame": 8,
+      "contactFrame": 81,
+      "ms": 608.3333333333333,
+      "input": "real game update() 120 Hz; speedLevel=1; speedHold=2.2; vx=400; collision-free measured approach lane; contact=player/pad overlap"
+    },
+    {
+      "level": 6,
+      "part": 2,
+      "index": 0,
+      "warningFrame": 8,
+      "contactFrame": 81,
+      "ms": 608.3333333333333,
+      "input": "real game update() 120 Hz; speedLevel=1; speedHold=2.2; vx=400; collision-free measured approach lane; contact=player/pad overlap"
+    },
+    {
+      "level": 7,
+      "part": 2,
+      "index": 0,
+      "warningFrame": 8,
+      "contactFrame": 81,
+      "ms": 608.3333333333333,
+      "input": "real game update() 120 Hz; speedLevel=1; speedHold=2.2; vx=400; collision-free measured approach lane; contact=player/pad overlap"
+    },
+    {
+      "level": 8,
+      "part": 2,
+      "index": 0,
+      "warningFrame": 8,
+      "contactFrame": 82,
+      "ms": 616.6666666666667,
+      "input": "real game update() 120 Hz; speedLevel=1; speedHold=2.2; vx=400; collision-free measured approach lane; contact=player/pad overlap"
+    },
+    {
+      "level": 9,
+      "part": 2,
+      "index": 0,
+      "warningFrame": 9,
+      "contactFrame": 82,
+      "ms": 608.3333333333333,
+      "input": "real game update() 120 Hz; speedLevel=1; speedHold=2.2; vx=400; collision-free measured approach lane; contact=player/pad overlap"
+    },
+    {
+      "level": 10,
+      "part": 2,
+      "index": 0,
+      "warningFrame": 9,
+      "contactFrame": 82,
+      "ms": 608.3333333333333,
+      "input": "real game update() 120 Hz; speedLevel=1; speedHold=2.2; vx=400; collision-free measured approach lane; contact=player/pad overlap"
+    },
+    {
+      "level": 11,
+      "part": 2,
+      "index": 0,
+      "warningFrame": 9,
+      "contactFrame": 82,
+      "ms": 608.3333333333333,
+      "input": "real game update() 120 Hz; speedLevel=1; speedHold=2.2; vx=400; collision-free measured approach lane; contact=player/pad overlap"
+    },
+    {
+      "level": 13,
+      "part": 2,
+      "index": 0,
+      "warningFrame": 9,
+      "contactFrame": 82,
+      "ms": 608.3333333333333,
+      "input": "real game update() 120 Hz; speedLevel=1; speedHold=2.2; vx=400; collision-free measured approach lane; contact=player/pad overlap"
+    },
+    {
+      "level": 14,
+      "part": 2,
+      "index": 0,
+      "warningFrame": 9,
+      "contactFrame": 82,
+      "ms": 608.3333333333333,
+      "input": "real game update() 120 Hz; speedLevel=1; speedHold=2.2; vx=400; collision-free measured approach lane; contact=player/pad overlap"
+    },
+    {
+      "level": 15,
+      "part": 2,
+      "index": 0,
+      "warningFrame": 9,
+      "contactFrame": 82,
+      "ms": 608.3333333333333,
+      "input": "real game update() 120 Hz; speedLevel=1; speedHold=2.2; vx=400; collision-free measured approach lane; contact=player/pad overlap"
+    },
+    {
+      "level": 15,
+      "part": 2,
+      "index": 1,
+      "warningFrame": 9,
+      "contactFrame": 81,
+      "ms": 600,
+      "input": "real game update() 120 Hz; speedLevel=1; speedHold=2.2; vx=400; collision-free measured approach lane; contact=player/pad overlap"
+    },
+    {
+      "level": 16,
+      "part": 2,
+      "index": 0,
+      "warningFrame": 8,
+      "contactFrame": 81,
+      "ms": 608.3333333333333,
+      "input": "real game update() 120 Hz; speedLevel=1; speedHold=2.2; vx=400; collision-free measured approach lane; contact=player/pad overlap"
+    },
+    {
+      "level": 17,
+      "part": 2,
+      "index": 0,
+      "warningFrame": 8,
+      "contactFrame": 81,
+      "ms": 608.3333333333333,
+      "input": "real game update() 120 Hz; speedLevel=1; speedHold=2.2; vx=400; collision-free measured approach lane; contact=player/pad overlap"
+    },
+    {
+      "level": 18,
+      "part": 2,
+      "index": 0,
+      "warningFrame": 8,
+      "contactFrame": 81,
+      "ms": 608.3333333333333,
+      "input": "real game update() 120 Hz; speedLevel=1; speedHold=2.2; vx=400; collision-free measured approach lane; contact=player/pad overlap"
+    },
+    {
+      "level": 19,
+      "part": 2,
+      "index": 0,
+      "warningFrame": 8,
+      "contactFrame": 81,
+      "ms": 608.3333333333333,
+      "input": "real game update() 120 Hz; speedLevel=1; speedHold=2.2; vx=400; collision-free measured approach lane; contact=player/pad overlap"
+    },
+    {
+      "level": 20,
+      "part": 2,
+      "index": 0,
+      "warningFrame": 8,
+      "contactFrame": 81,
+      "ms": 608.3333333333333,
+      "input": "real game update() 120 Hz; speedLevel=1; speedHold=2.2; vx=400; collision-free measured approach lane; contact=player/pad overlap"
+    },
+    {
+      "level": 21,
+      "part": 2,
+      "index": 0,
+      "warningFrame": 8,
+      "contactFrame": 81,
+      "ms": 608.3333333333333,
+      "input": "real game update() 120 Hz; speedLevel=1; speedHold=2.2; vx=400; collision-free measured approach lane; contact=player/pad overlap"
+    },
+    {
+      "level": 22,
+      "part": 2,
+      "index": 0,
+      "warningFrame": 8,
+      "contactFrame": 81,
+      "ms": 608.3333333333333,
+      "input": "real game update() 120 Hz; speedLevel=1; speedHold=2.2; vx=400; collision-free measured approach lane; contact=player/pad overlap"
+    },
+    {
+      "level": 24,
+      "part": 2,
+      "index": 0,
+      "warningFrame": 8,
+      "contactFrame": 81,
+      "ms": 608.3333333333333,
+      "input": "real game update() 120 Hz; speedLevel=1; speedHold=2.2; vx=400; collision-free measured approach lane; contact=player/pad overlap"
+    },
+    {
+      "level": 25,
+      "part": 2,
+      "index": 0,
+      "warningFrame": 8,
+      "contactFrame": 81,
+      "ms": 608.3333333333333,
+      "input": "real game update() 120 Hz; speedLevel=1; speedHold=2.2; vx=400; collision-free measured approach lane; contact=player/pad overlap"
+    },
+    {
+      "level": 27,
+      "part": 2,
+      "index": 0,
+      "warningFrame": 8,
+      "contactFrame": 81,
+      "ms": 608.3333333333333,
+      "input": "real game update() 120 Hz; speedLevel=1; speedHold=2.2; vx=400; collision-free measured approach lane; contact=player/pad overlap"
+    },
+    {
+      "level": 28,
+      "part": 2,
+      "index": 0,
+      "warningFrame": 8,
+      "contactFrame": 81,
+      "ms": 608.3333333333333,
+      "input": "real game update() 120 Hz; speedLevel=1; speedHold=2.2; vx=400; collision-free measured approach lane; contact=player/pad overlap"
+    },
+    {
+      "level": 29,
+      "part": 2,
+      "index": 0,
+      "warningFrame": 8,
+      "contactFrame": 81,
+      "ms": 608.3333333333333,
+      "input": "real game update() 120 Hz; speedLevel=1; speedHold=2.2; vx=400; collision-free measured approach lane; contact=player/pad overlap"
+    },
+    {
+      "level": 31,
+      "part": 2,
+      "index": 0,
+      "warningFrame": 9,
+      "contactFrame": 82,
+      "ms": 608.3333333333333,
+      "input": "real game update() 120 Hz; speedLevel=1; speedHold=2.2; vx=400; collision-free measured approach lane; contact=player/pad overlap"
+    }
+  ],
+  "padPixels": {
+    "positive": {
+      "mean": 53.76666666666697,
+      "changedRatio": 0.8438888888888889,
+      "pixels": 5400
+    },
+    "negative": {
+      "mean": 0,
+      "changedRatio": 0,
+      "pixels": 5400
+    },
+    "box": {
+      "x": 282,
+      "y": 287,
+      "w": 90,
+      "h": 60
+    }
+  },
+  "spikeTrials": [
+    {
+      "part": 1,
+      "armedFrame": 1,
+      "lethalFrame": 81,
+      "ms": 666.6666666666666,
+      "telegraphSafe": true,
+      "input": "real game update() 120 Hz; player held inside spike hitbox"
+    },
+    {
+      "part": 1,
+      "armedFrame": 1,
+      "lethalFrame": 81,
+      "ms": 666.6666666666666,
+      "telegraphSafe": true,
+      "input": "real game update() 120 Hz; player held inside spike hitbox"
+    },
+    {
+      "part": 1,
+      "armedFrame": 1,
+      "lethalFrame": 81,
+      "ms": 666.6666666666666,
+      "telegraphSafe": true,
+      "input": "real game update() 120 Hz; player held inside spike hitbox"
+    },
+    {
+      "part": 1,
+      "armedFrame": 1,
+      "lethalFrame": 81,
+      "ms": 666.6666666666666,
+      "telegraphSafe": true,
+      "input": "real game update() 120 Hz; player held inside spike hitbox"
+    },
+    {
+      "part": 1,
+      "armedFrame": 1,
+      "lethalFrame": 81,
+      "ms": 666.6666666666666,
+      "telegraphSafe": true,
+      "input": "real game update() 120 Hz; player held inside spike hitbox"
+    },
+    {
+      "part": 2,
+      "armedFrame": 1,
+      "lethalFrame": 81,
+      "ms": 666.6666666666666,
+      "telegraphSafe": true,
+      "input": "real game update() 120 Hz; player held inside spike hitbox"
+    },
+    {
+      "part": 2,
+      "armedFrame": 1,
+      "lethalFrame": 81,
+      "ms": 666.6666666666666,
+      "telegraphSafe": true,
+      "input": "real game update() 120 Hz; player held inside spike hitbox"
+    },
+    {
+      "part": 2,
+      "armedFrame": 1,
+      "lethalFrame": 81,
+      "ms": 666.6666666666666,
+      "telegraphSafe": true,
+      "input": "real game update() 120 Hz; player held inside spike hitbox"
+    },
+    {
+      "part": 2,
+      "armedFrame": 1,
+      "lethalFrame": 81,
+      "ms": 666.6666666666666,
+      "telegraphSafe": true,
+      "input": "real game update() 120 Hz; player held inside spike hitbox"
+    },
+    {
+      "part": 2,
+      "armedFrame": 1,
+      "lethalFrame": 81,
+      "ms": 666.6666666666666,
+      "telegraphSafe": true,
+      "input": "real game update() 120 Hz; player held inside spike hitbox"
+    }
+  ],
+  "spikePixels": {
+    "positive": {
+      "mean": 28.038578329882572,
+      "changedRatio": 0.6443064182194617,
+      "pixels": 4830
+    },
+    "negative": {
+      "mean": 0,
+      "changedRatio": 0,
+      "pixels": 4830
+    }
+  }
+}

@@ -3,7 +3,7 @@ const http = require("node:http"),
   fs = require("node:fs"),
   path = require("node:path");
 const root = path.resolve(__dirname, "..");
-const playgamaRoot = path.resolve(root, "../04-yayin/playgama/dist");
+const playgamaRoot = path.resolve(root, "../playgama/dist");
 const artifactDir=fs.mkdtempSync(path.join(require('node:os').tmpdir(),'tmb-vc4-'));
 let server, base;
 test.beforeAll(async () => {
