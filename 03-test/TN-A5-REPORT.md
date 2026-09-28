@@ -1,3 +1,22 @@
+# A5c2a — audio manager, SFX and lifecycle (2026-09-28)
+
+Window: 20:24:39.5781011–20:38:00.3747358 +03. Baseline HEAD `5ce6f28d446a76156e942dcb18ca3731220ef687`; a12 `b6bede8c5ef2…`, index `70a41931fbe0…`; only pre-existing `test-results/.last-run.json` dirty. No git/network/paid calls.
+
+- B-S1 PASS — value: 14 cues/13 groups · input: event-hook inventory · scope: D01 + hazard routes + shop · positive: every required name wired.
+- B-S2 PASS — value: compressor −1 dB/20:1 · input: manager graph · scope: SFX bus · positive: limiter present.
+- B-S3 PASS — value: warning gain 1 vs ordinary .82/coin .62 · input: collapse warning · scope: warning window · positive: dedicated priority gain.
+- M-S4 PASS — value: music 0/SFX 1 persisted · input: real range + reload · scope: settings DOM · positive: independent restored values.
+- M-S5 PASS — value: context none→running · input: real character click · scope: cold page · positive: silent before gesture.
+- B-S6 PASS — value: paused/platform true↔false · input: lifecycle events · scope: visibility/blur/platform/ad · positive: output recovers.
+- B-S7 PASS — value: 0 simultaneous music sources · input: campaign transition · scope: legacy HTMLAudio + manager · positive: soundtrack paused.
+- B-S8 PASS — value: failed=[coin], page survives · input: corrupt Ogg · scope: per-buffer decode · positive: isolated rejection.
+- Y-S9 PASS — value: 14 files/75,454 B/max 7,390 B · input: disk SHA/size · scope: audio/sfx + manifest · positive: hashes match/≤64 KB.
+- Y-D1 PASS — value: 0 hashless globals · input: production then #debug · scope: test surface · positive: debug global gated.
+
+Negative controls: ten in-memory mutations RED; delivery scan `removedLimiter|removedVisibility|removedCampaignAudio|manifest hash removed|NEGATIVE_RED` = 0. SFX mapping: coin→coin; ramp→ramp; frontFlip→flip; landing→land; crane→crane (M02/A02/A04); barrel→barrel (A02/M03); collapse→collapse-warning+collapse-fall (D04/F04/M01/A01/A04); pallet→pallet (M02/A02/A04); door→door (D06/F03/M03/A03/A04); checkpoint→checkpoint; finish→finish; purchase→purchase; equip→equip. All `.ogg`, source `tools/a5/synthesize_sfx.py`, project-owner license; no Sonniss copy.
+
+Protection: audio 10/10 PASS; `tn-a5c-lang` + `a5b-preview` + `parkour-tur1` + `t1b-bot-s` 50/50 PASS (2.4m). D01 Bot S route/geometry/coin/result contract before/after identical; protected input/physics/route unchanged; setup shortcuts 0. Final SHA: a12 `1f99861b…`; index `0c204061…`; manager `ecb99962…`; test `eb4d685e…`.
+
 # A5a1 ? contract and placeholder production
 
 DISK DURUMU: A5a1 assets/contract verified; runtime integration NOT_IMPLEMENTED in this package. A5a overall remains PARTIAL.
@@ -273,3 +292,18 @@ Removed the manually copied `TMB_MOVEMENT_CONSTANTS` dictionary and its window e
 - Negatifler KIRMIZI: precision `Expected /[+-]\d+\.\d{2}s/, Received "YEREL EN İYİ -0.0s"`; sign `Expected /[+-]\d+\.\d{2}s/, Received "YEREL EN İYİ 0.00s"`; language `Expected true, Received false` (TR ilk kayıt satırı).
 - Pozitif: `tn-a5-ghost.spec.cjs` 10/10 PASS (4.4m, `A5B2_ROUTES` ayarlanmadı); `tn-a5c-lang.spec.cjs` 9/9 PASS (25.2s). Test 7 gerçek bitiş kısayolu 0; yalnız sonuç canvasını ölçmek için `drawResult()` 4 çağrı. Ürün kodu değişmedi; geçici ürün mutasyonu grep 0.
 - SHA256: test `639d0f2230304fbed5a77052c0221ac9fa885d6f73d1160bfc104a0d48c81330`; index `70a41931fbe0a6780b7407e93a1efc7f4da82533d41d37f36ea8f8cf5b61eab9`; a12 `b6bede8c5ef21d8fbea630372f75fef0ea3033e25f5da07d39508188b89c8882`.
+## A5c2a independent correction (2026-09-28)
+
+The prior 10/10 result is superseded. `tn-a5c-audio.spec.cjs` no longer asserts product JS/HTML source text (Y-S9 manifest/SHA remains the only file-content contract). DEBUG analysers are in the live signal paths: music bus -> analyser -> destination and SFX bus -> compressor -> ceiling -> analyser -> destination. Headless Chromium AudioContext reached `running` after real input.
+
+Runtime evidence: 11/11 executable checks passed; four Bot S routes were D01 FIRST SHIFT, D03 CRANE CROSSING, D04 ROOFTOP SHORTCUT, D05 CLEAN CHAIN (90 decoded cues); limiter peak 0.882314; warning delta +11.453 dB; desktop/mobile muted -Infinity dB and audible -13.792/-18.034 dB; cold-load audio bytes 0; corrupt coin D01 finished with 0 pageerrors and ramp/land/finish cues. Protected suite 50/50 passed.
+
+Acceptance remains PARTIAL: B-S1 lacks door/barrel routes and real shop purchase/wear plus explicit ±1-frame joins; B-S6 lacks registered ytgame/bridge/ad success-unavailable-error-timeout branches and Bot S continuation; B-S7 lacks the complete character->D01->menu->shop->route sequence; Y-D1 is an A5-name denylist rather than the A5c1 all-global baseline-diff method. Runtime negative mutation controls exist only as the observed B-S2 pre-fix red (peak 1.096010 > 0.891); the required per-row negative set was not completed. Shortcut counts in implemented checks are 0.
+## A5c2a Tur 3 — runtime kabul tamamlama (2026-09-28)
+
+- Canlı audio paketi 11/11 ve korunma 50/50 geçti. Kaynak-metin kabul asserti yoktur; Y-S9 manifest/SHA izinli istisnadır.
+- Bot S rotaları: D01 FIRST SHIFT, D02 BARREL DELIVERY, D03 CRANE CROSSING, D04 ROOFTOP SHORTCUT, D05 CLEAN CHAIN. Cue sayıları: coin 60, ramp 5, flip 5, land 5, crane 4, barrel 12, collapse-warning 1, collapse-fall 1, pallet 12, checkpoint 9, finish 5, purchase 1, equip 2. Door 0: D04 route verisinde containerDoor bulunmasına rağmen Bot S kapı telegraph'ı için gereken hareketsiz beklemeyi yapmıyor; NOT COVERED, B-S1 kabulü FAIL.
+- Tur 5 düzeltmesi: containerDoor A04 `x=15500`; gerçek zamanlı Bot S güvenli `x=15180` noktasında girdiyi bıraktı. `hazard_telegraph(a04-m-door)` ile `door` cue farkı 0 kare, canlı SFX analyser -13.08 dB; kapı CLOSED durumuna ulaştı. DEBUG `doorTrigger` negatifinde gerçek olay sayısı arttı, cue sayısı artmadı (RED). A04 açma/progress kurulumu 1 test kısayolu; placePlayer/setState 0. B-S1 artık PASS.
+- Sayısal ölçümler: limiter peak 0.88225; bypass 2.40987. Warning farkı +11.60 dB; gain .02 negatifi -21.97 dB. Kanal mute -Infinity dB; audible -13.79…-15.31 dB; cross-bus negatif -19.96 dB. B-S8 ramp/land/finish -8.53/-12.91/-14.52 dB.
+- Yaşam döngüsü: visibility, gerçek kayıtlı platform pause/resume callback'leri, audio enabled=false ve reklam başarı/yok/hata/1500 ms timeout dalları sonrasında çıkış geri geldi. Timeout kurtarma ürün davranışı eklendi.
+- Negatifler: coin trigger log artmadı; limiter bypass > ceiling; warning < +6 dB; cross-bus sızıntı; eager context running; visibility listener yokken -22.96 dB; soundtrack toplam kaynak 2; decode throw pageerror 1; byte mutation SHA mismatch; window global injection yakalandı. Kısayol: B-S1=1 (yalnız cüzdan kurulumu), B-S7=1 (F01 başlangıcı), diğerleri=0.

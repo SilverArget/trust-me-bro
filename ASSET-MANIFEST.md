@@ -1,5 +1,28 @@
 # A5 Asset Manifest
 
+## A5c2a audio
+
+All outputs below are original project-owned synthesis from `tools/a5/synthesize_sfx.py` (source SHA256 `754f6d6a82376282914025cf4a95f0fe11a446998383928edc7c58f257497691`), generated 2026-09-28, mono 48 kHz Ogg Vorbis. License: project owner. Recipe: `python tools/a5/synthesize_sfx.py`; ffmpeg equivalent `ffmpeg -i input.wav -ac 1 -ar 48000 -c:a libvorbis -q:a 4 output.ogg`. No Sonniss source was copied.
+
+| Event / output | Bytes | Output SHA256 |
+|---|---:|---|
+| barrel / `audio/sfx/barrel.ogg` | 6138 | `7e411f383673b637b4b79b23a4bcf040f1db828cd00b19d2b2c38e4848234a4e` |
+| checkpoint / `audio/sfx/checkpoint.ogg` | 4486 | `57456f922c65d6aff604924699f2fec0494ff75afa5079d4790e014c25edf356` |
+| coin / `audio/sfx/coin.ogg` | 4278 | `53b9e99608e4cd324069b829cbe5982bf16a26c7575cd33490950e4003e08c71` |
+| collapse fall / `audio/sfx/collapse-fall.ogg` | 7390 | `8e5e8fe4d71b1638d7fbda59b8917bf5739bee6f42ad7f9ee941446420f691c5` |
+| collapse warning / `audio/sfx/collapse-warning.ogg` | 4977 | `012f304dead471886911648362a24bd91a49dd2d7753eadccec0c8a4254da2f7` |
+| crane / `audio/sfx/crane.ogg` | 7025 | `d6dece63237a0f35a8a0b9b5494d0286773610cd5f4a57d685e0cbf794811971` |
+| door / `audio/sfx/door.ogg` | 6853 | `425f080107605ce8f952e7adbd37994206efa1a889bd0cd7a7800251532c16be` |
+| equip / `audio/sfx/equip.ogg` | 4380 | `699eb02cdbeea9bb587b4e4d3e0ff5aabefe8efaaa7acb4b317c8b1c213cf0b8` |
+| finish / `audio/sfx/finish.ogg` | 5352 | `83a7dd91891711405d3647da07b3ebeda0fcc3ba10a78c6cd28f6b518b180a72` |
+| flip / `audio/sfx/flip.ogg` | 4327 | `bd610ec0d4097ff48c2a5afe8f940aebb52ced88c7ee8bba22380c58ca91df4f` |
+| land / `audio/sfx/land.ogg` | 5262 | `082b18b93d9991f295347e6f6719e57a847d38c68773850d18c19516b2f077d2` |
+| pallet / `audio/sfx/pallet.ogg` | 6314 | `a9fe2228d3e0fb3cb469d36ac9c3a0602c544069c495bdd7a7aaded359011070` |
+| purchase / `audio/sfx/purchase.ogg` | 4557 | `e3e329504c8fb07d2b196fe68b77e3047871ad62ea34b72d763cf6aefec577e2` |
+| ramp / `audio/sfx/ramp.ogg` | 4115 | `d110570175ad874da64e5e913056b8e5c91b67d787cfa52fa9fef2307c8a95b5` |
+
+Legacy `soundtrack.mp3`: previous version, license record unavailable — retained; paused in campaign and no longer duplicated. It will be replaced in A5c2b.
+
 ## A5a1 placeholder contract
 
 Runtime integration: IMPLEMENTED in A5a2. All 34 atlases are loaded by the campaign renderer. Art is PLACEHOLDER; visual acceptance DEFERRED. No final art approval is claimed.

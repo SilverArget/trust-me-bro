@@ -10,13 +10,14 @@
   const DEBUG = location.hash.toLowerCase().includes("debug");
   const telemetry = [];
   function emitGame(event, data = {}) {
-    const detail = { event, params:data, context:{ routeId, runId:run?.runId }, result:null };
+    const detail = { event, params:{...data,gameTime:typeof gameClock==="number"?gameClock:0,frame:typeof renderFrameCount==="number"?renderFrameCount:0}, context:{ routeId, runId:run?.runId }, result:null };
     document.dispatchEvent(new CustomEvent("tmb:analytics-emit", { detail }));
     const row = detail.result;
     if (row) telemetry.push(row);
     return row;
   }
-  function sCoin() {}
+  function sfx(name) { document.dispatchEvent(new CustomEvent("tmb:sfx", { detail:{ name, gameTime:typeof gameClock==="number"?gameClock:0, frame:renderFrameCount } })); }
+  function sCoin() { sfx("coin"); }
   function sJump() {}
   const GROUND = 455,
     W = 1080,
@@ -1897,6 +1898,8 @@
     movingPlatforms = route.obstacles.filter(o => o.type === "crane" || o.type === "pallet").map(o => ({ ...o, dir: 1, dx: 0, rideFrames: 0 }));
     collapsing = route.obstacles.filter(o=>o.type === "collapse").map(o=>({...o,state:"READY",timer:0,fallY:0}));
     containerDoors = route.obstacles.filter(o=>o.type === "containerDoor").map(o=>({...o,state:"OPEN",timer:0,currentY:o.openY,preparingElapsed:null,pushes:0}));
+    document.dispatchEvent(new Event("tmb:campaign-audio"));
+    for (const p of movingPlatforms) sfx(p.type === "crane" ? "crane" : "pallet");
     campaignChief = (routeId === "D06" || route.chief) ? {active:false,x:-400,y:GROUND-48,w:32,h:48,speed:205,catches:0,caughtT:0,lastReturnX:null} : null;
     campaignDeaths = 0;
     gameClock = 0;
@@ -2063,7 +2066,7 @@
     }
     for (const d of containerDoors) {
       d.timer += dt;
-      if (d.state === "OPEN" && d.timer >= d.open && !keys.right && joystick.axis < .08) { d.state="PREPARING"; d.timer=0; emitGame("hazard_telegraph",{routeId,obstacleId:d.id}); }
+      if (d.state === "OPEN" && d.timer >= d.open && !keys.right && joystick.axis < .08) { d.state="PREPARING"; d.timer=0; sfx("door"); emitGame("hazard_telegraph",{routeId,obstacleId:d.id}); }
       else if (d.state === "PREPARING" && d.timer >= d.prepare) { d.preparingElapsed=d.timer; d.state="CLOSING"; d.timer=0; }
       else if (d.state === "CLOSING") { d.currentY=d.openY+(d.y-d.openY)*Math.min(1,d.timer/d.close); if(d.timer>=d.close){d.currentY=d.y;d.state="CLOSED";d.timer=0;} }
       else if (d.state === "CLOSED" && d.timer >= d.closed) { d.state="OPEN"; d.timer=0; d.currentY=d.openY; }
@@ -2123,8 +2126,8 @@
     }
     for (const c of collapsing) {
       const supported=player.x+player.w>c.x+3&&player.x<c.x+c.w-3&&Math.abs(player.y+player.h-c.y)<7&&player.onGround;
-      if (c.state==="READY"&&supported) { c.state="CONTACT_WARNING"; c.timer=0; c.warningStartedAt=gameClock; emitGame("hazard_telegraph",{routeId,obstacleId:c.id}); }
-      else if(c.state==="CONTACT_WARNING") { c.timer+=dt; if(c.timer>=c.warning){c.state="FALLING";c.warningElapsed=gameClock-c.warningStartedAt;c.timer=0;engine.setGeometry(routeSurfaces(route));} }
+      if (c.state==="READY"&&supported) { c.state="CONTACT_WARNING"; c.timer=0; c.warningStartedAt=gameClock; sfx("collapse-warning"); emitGame("hazard_telegraph",{routeId,obstacleId:c.id}); }
+      else if(c.state==="CONTACT_WARNING") { c.timer+=dt; if(c.timer>=c.warning){c.state="FALLING";c.warningElapsed=gameClock-c.warningStartedAt;c.timer=0;sfx("collapse-fall");engine.setGeometry(routeSurfaces(route));} }
       else if(c.state==="FALLING") { c.timer+=dt;c.fallY+=260*dt;if(c.timer>=.65)c.state="ABSENT"; }
     }
     if (["vault", "slide", "wallRun", "roll"].includes(state)) {
@@ -2146,6 +2149,7 @@
       player.y + player.h >= GROUND - 100
     ) {
       engine.launch(390, -680);
+      sfx("ramp");
       frontFlip = {
         active: true,
         phase: "launch",
@@ -2159,6 +2163,7 @@
         obstacleId: ramp.id,
         kind: "frontFlip",
       });
+      sfx("flip");
     }
     if (frontFlip.active) {
       frontFlip.elapsed += dt;
@@ -2175,6 +2180,7 @@
       if (player.onGround && frontFlip.elapsed > 0.2) {
         frontFlip.active = false;
         frontFlip.phase = "land";
+        sfx("land");
         addFlow(`${ramp.id}-landing`, "cleanLanding", 8);
       }
     }
@@ -2192,6 +2198,7 @@
           life: 8,
           warning: 0.75,
         });
+        sfx("barrel");
         emitGame("hazard_telegraph", { routeId, obstacleId: worker.id });
       }
       for (const b of barrels) {
@@ -2207,6 +2214,7 @@
     for (const cp of route.checkpoints)
       if (player.x >= cp && run.checkpointX < cp) {
         run.checkpointX = cp;
+        sfx("checkpoint");
         emitGame("checkpoint_reached", { routeId, x: cp });
         saveRun();
       }
@@ -2216,6 +2224,7 @@
       player.x = route.finishX;
       player.vx = 0;
       result = bankRun();
+      sfx("finish");
       engine.setWon(true);
       emitGame("run_complete", { routeId, elapsed_s: result.elapsed });
     }
@@ -2367,6 +2376,7 @@
     a.setAttribute("aria-hidden", String(!show));
   }
   function applyLanguage() {
+    document.dispatchEvent(new CustomEvent("tmb:audio-language",{detail:profile.settings.language}));
     document.getElementById("hint").textContent = t("help");
     const card = document.getElementById("characterCard");
     if (card) { card.querySelector("h2").textContent = t("choose"); card.querySelector("p").textContent=t("samePhysics"); }
@@ -2759,7 +2769,7 @@
       const ok = await persist();
       if (!ok) profile = before;
       purchaseBusy = false;
-      if(ok)emitGame("outfit_worn",{itemId:id,runnerId});
+      if(ok){sfx("equip");emitGame("outfit_worn",{itemId:id,runnerId});}
       renderShop();
       return ok;
     }
@@ -2773,11 +2783,12 @@
     const ok = await persist();
     if (!ok) profile = before;
     purchaseBusy = false;
+    if(ok)sfx("purchase");
     emitGame(ok ? "purchase_success" : "purchase_failed", {
       itemId: id,
       price: item.price,
     });
-    if(ok)emitGame("outfit_worn",{itemId:id,runnerId});
+    if(ok){sfx("equip");emitGame("outfit_worn",{itemId:id,runnerId});}
     renderShop();
     return ok;
   }

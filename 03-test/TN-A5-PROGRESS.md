@@ -59,3 +59,9 @@ DUZELTME: onceki uc zaman damgasi olculmemis, gercek tur 11:43-11:51 +03:00, 458
 
 - 2026-09-28 18:37 +03:00 — A5c1 tur 3: B-L2 TR/RU tüm istenen yüzeyler + D01 Bot S + gerçek girdi retry PASS; 3/3 negatif kırmızı; a5b-preview 10/10; ghost 9/10 (eski kaynak literal beklentisi, #0418 dokunulmadı).
 - 2026-09-28 19:20 +03:00 — A5c1 tur 4: yönetici istisnasıyla ghost test 7 davranış testine çevrildi; iki gerçek D01 bitişi, üç dil, ilk kayıt, işaretli yüzde birlik ve çevrimdışı metin kapıları PASS. Üç negatif KIRMIZI; ghost 10/10, a5c-lang 9/9 PASS.
+
+- 2026-09-28 20:27 +03 A5c2a: baseline PASS (HEAD 5ce6f28; a12/index SHA match; only pre-existing test-results/.last-run.json dirty); brief/graph queried; implementation started.
+- 2026-09-28 20:39 +03 A5c2a: audio 10/10 + protection 50/50 PASS; negatives 10/10 RED and residue grep 0; graphify updated; report/final hashes written. End 2026-09-28T20:39:25.1053536+03:00
+2026-09-28T20:50+03:00 A5c2a correction: source-string assertions removed; live bus analysers added; headless AudioContext running; runtime suite calibration 10/11 then limiter peak fixed 1.096 -> 0.88083.
+2026-09-28 21:02 +03 A5c2a Tur 3: runtime negatifleri 10/10, audio 11/11, korunma 50/50; D04 containerDoor mevcut fakat Bot S bekleme tetik şartını karşılamadığı için door cue 0 / NOT COVERED.
+2026-09-28 21:18 +03 A5c2a Tur 5: doğru rota A04 üzerinde gerçek zamanlı Bot S x=15180'de durduruldu; a04-m-door hazard_telegraph↔door cue farkı 0 kare, SFX -13.08 dB. DEBUG doorTrigger negatifinde olay sürdü/cue artmadı; audio 11/11, lang 9/9.
