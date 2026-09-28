@@ -1,0 +1,143 @@
+{
+  "extraction": "UTF-8 LF-normalized; function start through next named function; includes intervening listeners/declarations",
+  "functions": [
+    {
+      "symbol": "gameInput",
+      "startLine": 292,
+      "endLine": 300,
+      "sha256": "2e1e34e8adf1d94d9947452df68acd199015d0f27cc20a3c072f36b7a70c4597"
+    },
+    {
+      "symbol": "clearInputs",
+      "startLine": 624,
+      "endLine": 631,
+      "sha256": "d780eba26b76e196e6aeb96954989260d4906eb67c3108061341a304443294e5"
+    },
+    {
+      "symbol": "solidSurfaces",
+      "startLine": 431,
+      "endLine": 431,
+      "sha256": "843b3663eb36d6527b5dbc5f4c20dd636ac209a7939ee0284bec915a2905cfc6"
+    },
+    {
+      "symbol": "solidRects",
+      "startLine": 654,
+      "endLine": 654,
+      "sha256": "b20763b9f04d84588e028cdf3c71e0c000b1e5d6c2f14107aaf61e173b9cc9ff"
+    },
+    {
+      "symbol": "parkourBody",
+      "startLine": 656,
+      "endLine": 656,
+      "sha256": "fa153289f0d383a24a4102ebec36b892a41ad506090e42971b721d072018b5b2"
+    },
+    {
+      "symbol": "parkourClear",
+      "startLine": 657,
+      "endLine": 657,
+      "sha256": "6b86acfbe125ce9549fac418ec170366a9b8497efd689a0df954937d3c4dbf07"
+    },
+    {
+      "symbol": "parkourStand",
+      "startLine": 658,
+      "endLine": 658,
+      "sha256": "3c00274174301a459acc3cbb858d8d1919bd0ee363d84c783fc9f38e737d4b81"
+    },
+    {
+      "symbol": "parkourCancel",
+      "startLine": 659,
+      "endLine": 659,
+      "sha256": "96a16284461153eb666762155d0d0895ca502074d56283135b4c85c88ccfe1d0"
+    },
+    {
+      "symbol": "parkourPoint",
+      "startLine": 660,
+      "endLine": 660,
+      "sha256": "1c7dc5c720a360e5680bd6231d67e35eab07191bd7ecc4028f3cea416ec25016"
+    },
+    {
+      "symbol": "parkourSweep",
+      "startLine": 661,
+      "endLine": 661,
+      "sha256": "e0c1ab9e1d48228da200bb0c07115ab83c6b08c579b573b6eb0b34675b41dc21"
+    },
+    {
+      "symbol": "parkourChoose",
+      "startLine": 662,
+      "endLine": 666,
+      "sha256": "0348985687354322c0b6106ae3953e07e859efc47eaf383eafa8c7d7240b8f8a"
+    },
+    {
+      "symbol": "parkourTick",
+      "startLine": 667,
+      "endLine": 671,
+      "sha256": "f29ec8747078a4a1e7b4a8420b10feefcfc4c20343ecf7f9521f189145cab2c8"
+    },
+    {
+      "symbol": "parkourLanded",
+      "startLine": 672,
+      "endLine": 672,
+      "sha256": "c78caca66ef589b5585c3f64c723ec21cafcf67c07d5e3662eceae767acb6722"
+    },
+    {
+      "symbol": "doPhysics",
+      "startLine": 673,
+      "endLine": 688,
+      "sha256": "c870283d50fd49d2b7ef5b16b2861a9e8b771114bfd668f5e259f4a6d8285a8e"
+    },
+    {
+      "symbol": "campaignWallAssist",
+      "startLine": 963,
+      "endLine": 963,
+      "sha256": "7972095117feabd40611d3e63c146d3201fa638c971fd81b4adbeac9a8bfb7c2"
+    },
+    {
+      "symbol": "updateDispatch",
+      "startLine": 964,
+      "endLine": 964,
+      "sha256": "e166ccecefd74440d2c8687c7f0c6b961072ba8ce60e24fe2624597a3f5bdf53"
+    },
+    {
+      "symbol": "setJoystickXY",
+      "startLine": 1083,
+      "endLine": 1083,
+      "sha256": "4ba8807a72a24fe35fe2901e56396c51c6070bf5cdbb68e467f2cbd97e013b0b"
+    },
+    {
+      "symbol": "releaseJoy",
+      "startLine": 1084,
+      "endLine": 1096,
+      "sha256": "1fb0cb83a30a3631248bc7daf6a8707ad4584cea5659e70624507cfb7ba0420a"
+    },
+    {
+      "symbol": "jumpPress",
+      "startLine": 1097,
+      "endLine": 1097,
+      "sha256": "7ac59229936663954208e54c65b9ae07e444590b132cc67e494375a96d8e356c"
+    },
+    {
+      "symbol": "jumpRelease",
+      "startLine": 1098,
+      "endLine": 1109,
+      "sha256": "acebcd710e49c9d17628dbaa7e8b0c7bf39683aec3f9ead8a4a5a0727b6a92cc"
+    },
+    {
+      "symbol": "kill",
+      "startLine": 647,
+      "endLine": 647,
+      "sha256": "ed5c98e8676ec453b91f07b4fa457bf0fb853e7b2cbf804620702736373b2d14"
+    },
+    {
+      "symbol": "updateChief",
+      "startLine": 636,
+      "endLine": 636,
+      "sha256": "6fdbec32df828c36e8e90f7b2cc068eb210835a029e8b30a9dcbf742f7c0ebee"
+    },
+    {
+      "symbol": "resetChief",
+      "startLine": 633,
+      "endLine": 633,
+      "sha256": "8885bd5d0802af307c46d5ebf6b7d6c771aedd10360340d7777a02744e215a18"
+    }
+  ]
+}

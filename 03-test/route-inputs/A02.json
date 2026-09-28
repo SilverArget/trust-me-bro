@@ -1,0 +1,194 @@
+[
+  {
+    "x": 205,
+    "action": "jump",
+    "holdMs": 120,
+    "move_id": "a02-m-intro"
+  },
+  {
+    "x": 405,
+    "action": "release",
+    "holdMs": 0,
+    "move_id": "a02-m-intro"
+  },
+  {
+    "x": 1655,
+    "action": "jump",
+    "holdMs": 120,
+    "move_id": "a02-m-01"
+  },
+  {
+    "x": 1855,
+    "action": "release",
+    "holdMs": 0,
+    "move_id": "a02-m-01"
+  },
+  {
+    "x": 2525,
+    "action": "jump",
+    "holdMs": 120,
+    "move_id": "a02-m-02"
+  },
+  {
+    "x": 2725,
+    "action": "release",
+    "holdMs": 0,
+    "move_id": "a02-m-02"
+  },
+  {
+    "x": 3555,
+    "action": "jump",
+    "holdMs": 120,
+    "move_id": "a02-m-03"
+  },
+  {
+    "x": 3755,
+    "action": "release",
+    "holdMs": 0,
+    "move_id": "a02-m-03"
+  },
+  {
+    "x": 4475,
+    "action": "jump",
+    "holdMs": 120,
+    "move_id": "a02-m-04"
+  },
+  {
+    "x": 4675,
+    "action": "release",
+    "holdMs": 0,
+    "move_id": "a02-m-04"
+  },
+  {
+    "x": 5345,
+    "action": "jump",
+    "holdMs": 120,
+    "move_id": "a02-m-05"
+  },
+  {
+    "x": 5545,
+    "action": "release",
+    "holdMs": 0,
+    "move_id": "a02-m-05"
+  },
+  {
+    "x": 6375,
+    "action": "jump",
+    "holdMs": 120,
+    "move_id": "a02-m-06"
+  },
+  {
+    "x": 6575,
+    "action": "release",
+    "holdMs": 0,
+    "move_id": "a02-m-06"
+  },
+  {
+    "x": 7295,
+    "action": "jump",
+    "holdMs": 120,
+    "move_id": "a02-m-07"
+  },
+  {
+    "x": 7495,
+    "action": "release",
+    "holdMs": 0,
+    "move_id": "a02-m-07"
+  },
+  {
+    "x": 8165,
+    "action": "jump",
+    "holdMs": 120,
+    "move_id": "a02-m-08"
+  },
+  {
+    "x": 8365,
+    "action": "release",
+    "holdMs": 0,
+    "move_id": "a02-m-08"
+  },
+  {
+    "x": 9195,
+    "action": "jump",
+    "holdMs": 120,
+    "move_id": "a02-m-09"
+  },
+  {
+    "x": 9395,
+    "action": "release",
+    "holdMs": 0,
+    "move_id": "a02-m-09"
+  },
+  {
+    "x": 10115,
+    "action": "jump",
+    "holdMs": 120,
+    "move_id": "a02-m-10"
+  },
+  {
+    "x": 10315,
+    "action": "release",
+    "holdMs": 0,
+    "move_id": "a02-m-10"
+  },
+  {
+    "x": 10985,
+    "action": "jump",
+    "holdMs": 120,
+    "move_id": "a02-m-11"
+  },
+  {
+    "x": 11185,
+    "action": "release",
+    "holdMs": 0,
+    "move_id": "a02-m-11"
+  },
+  {
+    "x": 12015,
+    "action": "jump",
+    "holdMs": 120,
+    "move_id": "a02-m-12"
+  },
+  {
+    "x": 12215,
+    "action": "release",
+    "holdMs": 0,
+    "move_id": "a02-m-12"
+  },
+  {
+    "x": 12935,
+    "action": "jump",
+    "holdMs": 120,
+    "move_id": "a02-m-13"
+  },
+  {
+    "x": 13135,
+    "action": "release",
+    "holdMs": 0,
+    "move_id": "a02-m-13"
+  },
+  {
+    "x": 13805,
+    "action": "jump",
+    "holdMs": 120,
+    "move_id": "a02-m-14"
+  },
+  {
+    "x": 14005,
+    "action": "release",
+    "holdMs": 0,
+    "move_id": "a02-m-14"
+  },
+  {
+    "x": 13955,
+    "action": "jump",
+    "holdMs": 120,
+    "move_id": "a02-m-rescue-overpass"
+  },
+  {
+    "x": 14155,
+    "action": "release",
+    "holdMs": 0,
+    "move_id": "a02-m-rescue-overpass"
+  }
+]

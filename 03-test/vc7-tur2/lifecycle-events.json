@@ -6,7 +6,7 @@
       "consoleTexts": [
         {
           "type": "debug",
-          "text": "GAME_EVENT {\"event\":\"session_end\",\"ts_ms\":256,\"session_id\":\"93ff52dd-9c6b-40e8-aa24-518d04bd311a\",\"build\":\"vc7\",\"platform\":\"bridge\",\"level_id\":\"1.1\",\"run_id\":\"ww5kndmz4\",\"device_class\":\"mobile\",\"variant\":{},\"params\":{\"reason\":\"pagehide\"}}"
+          "text": "GAME_EVENT {\"event\":\"session_end\",\"ts_ms\":351,\"session_id\":\"c8208f63-cc9d-4ea3-9bc7-0dfc647af8f9\",\"build\":\"vc7\",\"platform\":\"bridge\",\"level_id\":\"1.1\",\"run_id\":\"y949yjoe1y\",\"device_class\":\"mobile\",\"variant\":{},\"params\":{\"reason\":\"pagehide\"}}"
         }
       ],
       "method": "iframe real navigation pagehide + parent console GAME_EVENT"

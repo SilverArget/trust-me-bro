@@ -1,0 +1,11 @@
+{
+  "sameAcceptedFailures": true,
+  "previousLog": "01-tasarim/coin-T2/a4c2c-20260928/core.log",
+  "failures": [
+    "campaign-movement-and-frontflip",
+    "reward-budget-first-and-repeat",
+    "purchase-double-tap",
+    "D01 real-input route completion",
+    "D02 real-input route completion"
+  ]
+}

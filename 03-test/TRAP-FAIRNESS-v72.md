@@ -115,6 +115,10 @@ Kaynak HEAD: 88287f7; source SHA-256: c2458aad641d05cc8df154a0574b121ba5127d81de
 
 - TRAP-AUDIT procedural launch pads removed diyor; kod aktif 62 partta 28 launch pad uretiyor ve updateLaunchPads() update dongusunde cagriliyor.
 
+## Kod / TRAP-AUDIT celiskileri
+
+- TRAP-AUDIT procedural launch pads removed diyor; kod aktif 62 partta 28 launch pad uretiyor ve updateLaunchPads() update dongusunde cagriliyor.
+
 ## OLCULEMEDI
 
 Ses telegraphi WebAudio olay kaydi olmadigi icin ayri olculmedi. Tetik state gecisi uretmeyen satirlar ve olum uretmeyen satirlarda ilgili alan OLCULMEDI etiketi tasir.

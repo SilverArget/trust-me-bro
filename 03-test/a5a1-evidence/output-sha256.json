@@ -1,0 +1,207 @@
+[
+  {
+    "path": "ASSET-MANIFEST.md",
+    "bytes": 9255,
+    "sha256": "be07a313fdd61d547e7c2bc98a91be5e986827b5216ae212f659728fb63680bd"
+  },
+  {
+    "path": "sprites/a5/atlas-contract.json",
+    "bytes": 22186,
+    "sha256": "bcf25cc0720c428bc94f2909ac1a8fcd65a8757284881ef80d419e23ebc816ee"
+  },
+  {
+    "path": "sprites/a5/female-base-body.png",
+    "bytes": 11536,
+    "sha256": "43a9438b5568f7923578cbc749c71b8c1ded8429afa71988a1ef125cf5360412"
+  },
+  {
+    "path": "sprites/a5/female-default-bag.png",
+    "bytes": 3961,
+    "sha256": "039589eaeff13e68a51a13cb134869a863e4f1a19074ccdc81de42cc0f6072ae"
+  },
+  {
+    "path": "sprites/a5/female-default-eyewear.png",
+    "bytes": 2278,
+    "sha256": "2961babe908b2c7ace28204ae1cb0162b5fdf02e149e04116f79950a88e9d005"
+  },
+  {
+    "path": "sprites/a5/female-default-helmet.png",
+    "bytes": 3007,
+    "sha256": "3b6b6d2c854c1b7186139f43fa45ea1b65fadcc67c34a8dbe58f71ff1f96aaa2"
+  },
+  {
+    "path": "sprites/a5/female-default-vest.png",
+    "bytes": 4085,
+    "sha256": "3e582eaa8aa4d132b99fefe62d256aa097f0116a63da70d760d6bf637c3eb691"
+  },
+  {
+    "path": "sprites/a5/female-dockCrew-bag.png",
+    "bytes": 3952,
+    "sha256": "4553d0ac2390cd6850f2e9d7079d6e2d5f444391fdc7c30320680840aa84bede"
+  },
+  {
+    "path": "sprites/a5/female-dockCrew-eyewear.png",
+    "bytes": 2285,
+    "sha256": "dcc5560ed3cc081b424e954fc416ec507a71906925afb170abc27f5555a68063"
+  },
+  {
+    "path": "sprites/a5/female-dockCrew-helmet.png",
+    "bytes": 3023,
+    "sha256": "f7ff259900bf36b1e6c80293a35c1a572a7c8247ab68ee957cc9c9b7d0a557d0"
+  },
+  {
+    "path": "sprites/a5/female-dockCrew-vest.png",
+    "bytes": 4053,
+    "sha256": "41bb61f53e356493446de3405597d1079af5b53d14370433445c984eb24a180e"
+  },
+  {
+    "path": "sprites/a5/female-hazardRunner-bag.png",
+    "bytes": 3957,
+    "sha256": "33dcd1e038b65c5ce60bd3de78b1572e4f624c3f0201a222182c9ad0b4547189"
+  },
+  {
+    "path": "sprites/a5/female-hazardRunner-eyewear.png",
+    "bytes": 2292,
+    "sha256": "b911f21d3dff3acb66af7bac2b6d251c065b4b787febd66d5a98f94c7bb14887"
+  },
+  {
+    "path": "sprites/a5/female-hazardRunner-helmet.png",
+    "bytes": 3667,
+    "sha256": "003ec9b43b4dc2d63dc46271a447b1e5d17ce75984309985a0e4f43d61dc2938"
+  },
+  {
+    "path": "sprites/a5/female-hazardRunner-vest.png",
+    "bytes": 3966,
+    "sha256": "3ec4481de6f3c90aa2e065afac3d2d16d32c69b0d3223d71fb14ce3ce33e2745"
+  },
+  {
+    "path": "sprites/a5/female-nightShift-bag.png",
+    "bytes": 3953,
+    "sha256": "2083587d16268675371548a12ab5e836863c20c690e0eeadb336eae0a2f62830"
+  },
+  {
+    "path": "sprites/a5/female-nightShift-eyewear.png",
+    "bytes": 2295,
+    "sha256": "3130bdba6faa025f60f0bae8c4d9d645609c52cae4fc2cdfc017bb081b69e1b8"
+  },
+  {
+    "path": "sprites/a5/female-nightShift-helmet.png",
+    "bytes": 3024,
+    "sha256": "141a722adfda7a58f83d198bfa851aa121f9a4456d04c4e761e42f2df5f132e8"
+  },
+  {
+    "path": "sprites/a5/female-nightShift-vest.png",
+    "bytes": 4054,
+    "sha256": "eb4e4f3bc209f41fa08b86a979b26045111ce0cc7ee914ccdc0b83d6587fb0ab"
+  },
+  {
+    "path": "sprites/a5/male-base-body.png",
+    "bytes": 10929,
+    "sha256": "3a5f0d849daacdc6e9a44abb8a341ff9b0733b0c28e00944c3197f054adf7403"
+  },
+  {
+    "path": "sprites/a5/male-default-bag.png",
+    "bytes": 3961,
+    "sha256": "039589eaeff13e68a51a13cb134869a863e4f1a19074ccdc81de42cc0f6072ae"
+  },
+  {
+    "path": "sprites/a5/male-default-eyewear.png",
+    "bytes": 2278,
+    "sha256": "2961babe908b2c7ace28204ae1cb0162b5fdf02e149e04116f79950a88e9d005"
+  },
+  {
+    "path": "sprites/a5/male-default-helmet.png",
+    "bytes": 3007,
+    "sha256": "3b6b6d2c854c1b7186139f43fa45ea1b65fadcc67c34a8dbe58f71ff1f96aaa2"
+  },
+  {
+    "path": "sprites/a5/male-default-vest.png",
+    "bytes": 4309,
+    "sha256": "3a5f725b3c2375bfa93418696cf2e997b2f3ca87a025343042af621891ac3499"
+  },
+  {
+    "path": "sprites/a5/male-dockCrew-bag.png",
+    "bytes": 3952,
+    "sha256": "4553d0ac2390cd6850f2e9d7079d6e2d5f444391fdc7c30320680840aa84bede"
+  },
+  {
+    "path": "sprites/a5/male-dockCrew-eyewear.png",
+    "bytes": 2285,
+    "sha256": "dcc5560ed3cc081b424e954fc416ec507a71906925afb170abc27f5555a68063"
+  },
+  {
+    "path": "sprites/a5/male-dockCrew-helmet.png",
+    "bytes": 3023,
+    "sha256": "f7ff259900bf36b1e6c80293a35c1a572a7c8247ab68ee957cc9c9b7d0a557d0"
+  },
+  {
+    "path": "sprites/a5/male-dockCrew-vest.png",
+    "bytes": 4288,
+    "sha256": "dc28b4540af7832d8588c773b8094b5655352c9ad16d003eafcba6892591ea03"
+  },
+  {
+    "path": "sprites/a5/male-hazardRunner-bag.png",
+    "bytes": 3957,
+    "sha256": "33dcd1e038b65c5ce60bd3de78b1572e4f624c3f0201a222182c9ad0b4547189"
+  },
+  {
+    "path": "sprites/a5/male-hazardRunner-eyewear.png",
+    "bytes": 2292,
+    "sha256": "b911f21d3dff3acb66af7bac2b6d251c065b4b787febd66d5a98f94c7bb14887"
+  },
+  {
+    "path": "sprites/a5/male-hazardRunner-helmet.png",
+    "bytes": 3667,
+    "sha256": "003ec9b43b4dc2d63dc46271a447b1e5d17ce75984309985a0e4f43d61dc2938"
+  },
+  {
+    "path": "sprites/a5/male-hazardRunner-vest.png",
+    "bytes": 4210,
+    "sha256": "a476411fa6b842c05f302379e6309a95ffbf55f7beafb02ca8c8007b83768d90"
+  },
+  {
+    "path": "sprites/a5/male-nightShift-bag.png",
+    "bytes": 3953,
+    "sha256": "2083587d16268675371548a12ab5e836863c20c690e0eeadb336eae0a2f62830"
+  },
+  {
+    "path": "sprites/a5/male-nightShift-eyewear.png",
+    "bytes": 2295,
+    "sha256": "3130bdba6faa025f60f0bae8c4d9d645609c52cae4fc2cdfc017bb081b69e1b8"
+  },
+  {
+    "path": "sprites/a5/male-nightShift-helmet.png",
+    "bytes": 3024,
+    "sha256": "141a722adfda7a58f83d198bfa851aa121f9a4456d04c4e761e42f2df5f132e8"
+  },
+  {
+    "path": "sprites/a5/male-nightShift-vest.png",
+    "bytes": 4268,
+    "sha256": "bf3c548d31eee8815453a1e76f9ab4a457f31031d34c908a39daea8a0d3a9799"
+  },
+  {
+    "path": "tools/a5/baseline.py",
+    "bytes": 2512,
+    "sha256": "e2ebd0c82508119b9cf64f2708606fff4718b88f017d64e3818f34db76c5863f"
+  },
+  {
+    "path": "tools/a5/generate_placeholders.py",
+    "bytes": 4839,
+    "sha256": "17b5dcb1cc71ebcc00c55f491a1984483a109fecaba23d6abb92824746e79729"
+  },
+  {
+    "path": "tools/a5/write_contract.py",
+    "bytes": 5596,
+    "sha256": "c540f985b1354033668b4ebd935bae4beac326b256d344f0d6a34f26a884d2b5"
+  },
+  {
+    "path": "03-test/a5-assets-check.py",
+    "bytes": 4080,
+    "sha256": "652d25ca110e6b10e5c41e5e0f8c27ffe5bdb4fc435f029d8d9067d99b890732"
+  },
+  {
+    "path": "03-test/a5-integrity-check.py",
+    "bytes": 951,
+    "sha256": "c2bdbf9af1a9531e7934934f456950335979710289bce4d2bd0efb7ae9fa2e27"
+  }
+]

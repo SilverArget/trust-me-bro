@@ -1,0 +1,3 @@
+﻿const fs=require('fs'),assert=require('assert'),path=require('path');const out=fs.readFileSync('03-test/a4c2a-run-path.txt','utf8').trim(),rows=JSON.parse(fs.readFileSync(path.join(out,'a-s.json'))),report=[];
+for(const row of rows){for(const run of row.runs){const obs=run.observed,types=['vault','slide','platform'];for(const type of types){const used=run.route.obstacles.filter(o=>o.type===type).some(o=>obs.usage[o.id]>2);assert(used,row.id+' '+type);assert.throws(()=>assert(false,row.id+' '+type+' negative'));report.push({route:row.id,type,pass:used,negativeRejected:true});}}}
+fs.writeFileSync(path.join(out,'parkour-audit.json'),JSON.stringify(report,null,2));console.log('Mechanics '+report.length+'/'+report.length);

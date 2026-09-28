@@ -1,0 +1,218 @@
+{
+  "checks": 53,
+  "failed": [],
+  "rows": [
+    {
+      "name": "index.html",
+      "pass": true
+    },
+    {
+      "name": "js/a12-campaign.js",
+      "pass": true
+    },
+    {
+      "name": "03-test/tn-a4.spec.cjs",
+      "pass": true
+    },
+    {
+      "name": "03-test/t2-coins.spec.cjs",
+      "pass": true
+    },
+    {
+      "name": "03-test/lib/aftermath-b-probe.cjs",
+      "pass": true
+    },
+    {
+      "name": "03-test/lib/aftermath-probe.cjs",
+      "pass": true
+    },
+    {
+      "name": "03-test/lib/bot-aftermath.cjs",
+      "pass": true
+    },
+    {
+      "name": "03-test/lib/bot-magma.cjs",
+      "pass": true
+    },
+    {
+      "name": "03-test/lib/bot-s-drive.cjs",
+      "pass": true
+    },
+    {
+      "name": "03-test/lib/bot-w.cjs",
+      "pass": true
+    },
+    {
+      "name": "03-test/lib/magma-b-probe.cjs",
+      "pass": true
+    },
+    {
+      "name": "03-test/lib/magma-probe.cjs",
+      "pass": true
+    },
+    {
+      "name": "03-test/route-inputs/A01.json",
+      "pass": true
+    },
+    {
+      "name": "03-test/route-inputs/A02.json",
+      "pass": true
+    },
+    {
+      "name": "03-test/route-inputs/A03.json",
+      "pass": true
+    },
+    {
+      "name": "03-test/route-inputs/A04.json",
+      "pass": true
+    },
+    {
+      "name": "03-test/route-inputs/D01.json",
+      "pass": true
+    },
+    {
+      "name": "03-test/route-inputs/D02.json",
+      "pass": true
+    },
+    {
+      "name": "03-test/route-inputs/D03.json",
+      "pass": true
+    },
+    {
+      "name": "03-test/route-inputs/D04.json",
+      "pass": true
+    },
+    {
+      "name": "03-test/route-inputs/D05.json",
+      "pass": true
+    },
+    {
+      "name": "03-test/route-inputs/D06.json",
+      "pass": true
+    },
+    {
+      "name": "03-test/route-inputs/F01.json",
+      "pass": true
+    },
+    {
+      "name": "03-test/route-inputs/F02.json",
+      "pass": true
+    },
+    {
+      "name": "03-test/route-inputs/F03.json",
+      "pass": true
+    },
+    {
+      "name": "03-test/route-inputs/F04.json",
+      "pass": true
+    },
+    {
+      "name": "03-test/route-inputs/M01.json",
+      "pass": true
+    },
+    {
+      "name": "03-test/route-inputs/M02.json",
+      "pass": true
+    },
+    {
+      "name": "03-test/route-inputs/M03.json",
+      "pass": true
+    },
+    {
+      "name": "03-test/route-inputs/M04.json",
+      "pass": true
+    },
+    {
+      "name": "gameInput",
+      "pass": true
+    },
+    {
+      "name": "clearInputs",
+      "pass": true
+    },
+    {
+      "name": "solidSurfaces",
+      "pass": true
+    },
+    {
+      "name": "solidRects",
+      "pass": true
+    },
+    {
+      "name": "parkourBody",
+      "pass": true
+    },
+    {
+      "name": "parkourClear",
+      "pass": true
+    },
+    {
+      "name": "parkourStand",
+      "pass": true
+    },
+    {
+      "name": "parkourCancel",
+      "pass": true
+    },
+    {
+      "name": "parkourPoint",
+      "pass": true
+    },
+    {
+      "name": "parkourSweep",
+      "pass": true
+    },
+    {
+      "name": "parkourChoose",
+      "pass": true
+    },
+    {
+      "name": "parkourTick",
+      "pass": true
+    },
+    {
+      "name": "parkourLanded",
+      "pass": true
+    },
+    {
+      "name": "doPhysics",
+      "pass": true
+    },
+    {
+      "name": "campaignWallAssist",
+      "pass": true
+    },
+    {
+      "name": "updateDispatch",
+      "pass": true
+    },
+    {
+      "name": "setJoystickXY",
+      "pass": true
+    },
+    {
+      "name": "releaseJoy",
+      "pass": true
+    },
+    {
+      "name": "jumpPress",
+      "pass": true
+    },
+    {
+      "name": "jumpRelease",
+      "pass": true
+    },
+    {
+      "name": "kill",
+      "pass": true
+    },
+    {
+      "name": "updateChief",
+      "pass": true
+    },
+    {
+      "name": "resetChief",
+      "pass": true
+    }
+  ]
+}

@@ -1,0 +1,206 @@
+[
+  {
+    "x": 205,
+    "action": "jump",
+    "holdMs": 120,
+    "move_id": "a03-m-intro"
+  },
+  {
+    "x": 405,
+    "action": "release",
+    "holdMs": 0,
+    "move_id": "a03-m-intro"
+  },
+  {
+    "x": 1655,
+    "action": "jump",
+    "holdMs": 120,
+    "move_id": "a03-m-01"
+  },
+  {
+    "x": 1855,
+    "action": "release",
+    "holdMs": 0,
+    "move_id": "a03-m-01"
+  },
+  {
+    "x": 2685,
+    "action": "jump",
+    "holdMs": 120,
+    "move_id": "a03-m-02"
+  },
+  {
+    "x": 2885,
+    "action": "release",
+    "holdMs": 0,
+    "move_id": "a03-m-02"
+  },
+  {
+    "x": 3605,
+    "action": "jump",
+    "holdMs": 120,
+    "move_id": "a03-m-03"
+  },
+  {
+    "x": 3805,
+    "action": "release",
+    "holdMs": 0,
+    "move_id": "a03-m-03"
+  },
+  {
+    "x": 4475,
+    "action": "jump",
+    "holdMs": 120,
+    "move_id": "a03-m-04"
+  },
+  {
+    "x": 4675,
+    "action": "release",
+    "holdMs": 0,
+    "move_id": "a03-m-04"
+  },
+  {
+    "x": 5505,
+    "action": "jump",
+    "holdMs": 120,
+    "move_id": "a03-m-05"
+  },
+  {
+    "x": 5705,
+    "action": "release",
+    "holdMs": 0,
+    "move_id": "a03-m-05"
+  },
+  {
+    "x": 6425,
+    "action": "jump",
+    "holdMs": 120,
+    "move_id": "a03-m-06"
+  },
+  {
+    "x": 6625,
+    "action": "release",
+    "holdMs": 0,
+    "move_id": "a03-m-06"
+  },
+  {
+    "x": 7295,
+    "action": "jump",
+    "holdMs": 120,
+    "move_id": "a03-m-07"
+  },
+  {
+    "x": 7495,
+    "action": "release",
+    "holdMs": 0,
+    "move_id": "a03-m-07"
+  },
+  {
+    "x": 8325,
+    "action": "jump",
+    "holdMs": 120,
+    "move_id": "a03-m-08"
+  },
+  {
+    "x": 8525,
+    "action": "release",
+    "holdMs": 0,
+    "move_id": "a03-m-08"
+  },
+  {
+    "x": 9245,
+    "action": "jump",
+    "holdMs": 120,
+    "move_id": "a03-m-09"
+  },
+  {
+    "x": 9445,
+    "action": "release",
+    "holdMs": 0,
+    "move_id": "a03-m-09"
+  },
+  {
+    "x": 10115,
+    "action": "jump",
+    "holdMs": 120,
+    "move_id": "a03-m-10"
+  },
+  {
+    "x": 10315,
+    "action": "release",
+    "holdMs": 0,
+    "move_id": "a03-m-10"
+  },
+  {
+    "x": 11145,
+    "action": "jump",
+    "holdMs": 120,
+    "move_id": "a03-m-11"
+  },
+  {
+    "x": 11345,
+    "action": "release",
+    "holdMs": 0,
+    "move_id": "a03-m-11"
+  },
+  {
+    "x": 12065,
+    "action": "jump",
+    "holdMs": 120,
+    "move_id": "a03-m-12"
+  },
+  {
+    "x": 12265,
+    "action": "release",
+    "holdMs": 0,
+    "move_id": "a03-m-12"
+  },
+  {
+    "x": 12935,
+    "action": "jump",
+    "holdMs": 120,
+    "move_id": "a03-m-13"
+  },
+  {
+    "x": 13135,
+    "action": "release",
+    "holdMs": 0,
+    "move_id": "a03-m-13"
+  },
+  {
+    "x": 13965,
+    "action": "jump",
+    "holdMs": 120,
+    "move_id": "a03-m-14"
+  },
+  {
+    "x": 14165,
+    "action": "release",
+    "holdMs": 0,
+    "move_id": "a03-m-14"
+  },
+  {
+    "x": 15205,
+    "action": "jump",
+    "holdMs": 120,
+    "move_id": "a03-m-bypass"
+  },
+  {
+    "x": 15405,
+    "action": "release",
+    "holdMs": 0,
+    "move_id": "a03-m-bypass"
+  },
+  {
+    "x": 14955,
+    "action": "jump",
+    "holdMs": 120,
+    "move_id": "a03-m-step"
+  },
+  {
+    "x": 15155,
+    "action": "release",
+    "holdMs": 0,
+    "move_id": "a03-m-step"
+  }
+]

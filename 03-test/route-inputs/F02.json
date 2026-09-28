@@ -1,0 +1,182 @@
+[
+  {
+    "x": 135,
+    "action": "jump",
+    "holdMs": 120,
+    "move_id": "f02-t1b-slide-2"
+  },
+  {
+    "x": 356,
+    "action": "release",
+    "holdMs": 0,
+    "move_id": "f02-t1b-slide-2"
+  },
+  {
+    "x": 1305,
+    "action": "jump",
+    "holdMs": 120,
+    "move_id": "f02-crane-a"
+  },
+  {
+    "x": 1590,
+    "action": "release",
+    "holdMs": 0,
+    "move_id": "f02-crane-a"
+  },
+  {
+    "x": 2350,
+    "action": "jump",
+    "holdMs": 120,
+    "move_id": "f02-upper-a"
+  },
+  {
+    "x": 2690,
+    "action": "release",
+    "holdMs": 0,
+    "move_id": "f02-upper-a"
+  },
+  {
+    "x": 3531,
+    "action": "jump",
+    "holdMs": 120,
+    "move_id": "f02-t2c-vault-1"
+  },
+  {
+    "x": 3720,
+    "action": "release",
+    "holdMs": 0,
+    "move_id": "f02-t2c-vault-1"
+  },
+  {
+    "x": 4187,
+    "action": "jump",
+    "holdMs": 120,
+    "move_id": "f02-t2c-vault-2"
+  },
+  {
+    "x": 4376,
+    "action": "release",
+    "holdMs": 0,
+    "move_id": "f02-t2c-vault-2"
+  },
+  {
+    "x": 4605,
+    "action": "jump",
+    "holdMs": 120,
+    "move_id": "f02-t1b-vault-2"
+  },
+  {
+    "x": 4794,
+    "action": "release",
+    "holdMs": 0,
+    "move_id": "f02-t1b-vault-2"
+  },
+  {
+    "x": 5250,
+    "action": "jump",
+    "holdMs": 120,
+    "move_id": "f02-pallet"
+  },
+  {
+    "x": 5590,
+    "action": "release",
+    "holdMs": 0,
+    "move_id": "f02-pallet"
+  },
+  {
+    "x": 6650,
+    "action": "jump",
+    "holdMs": 120,
+    "move_id": "f02-upper-b"
+  },
+  {
+    "x": 6990,
+    "action": "release",
+    "holdMs": 0,
+    "move_id": "f02-upper-b"
+  },
+  {
+    "x": 7995,
+    "action": "jump",
+    "holdMs": 120,
+    "move_id": "f02-t1b-vault-1"
+  },
+  {
+    "x": 8184,
+    "action": "release",
+    "holdMs": 0,
+    "move_id": "f02-t1b-vault-1"
+  },
+  {
+    "x": 8555,
+    "action": "jump",
+    "holdMs": 120,
+    "move_id": "f02-crane-b"
+  },
+  {
+    "x": 8840,
+    "action": "release",
+    "holdMs": 0,
+    "move_id": "f02-crane-b"
+  },
+  {
+    "x": 10405,
+    "action": "jump",
+    "holdMs": 120,
+    "move_id": "f02-vault"
+  },
+  {
+    "x": 10594,
+    "action": "release",
+    "holdMs": 0,
+    "move_id": "f02-vault"
+  },
+  {
+    "x": 10729,
+    "action": "jump",
+    "holdMs": 120,
+    "move_id": "f02-t2c-vault-4"
+  },
+  {
+    "x": 10918,
+    "action": "release",
+    "holdMs": 0,
+    "move_id": "f02-t2c-vault-4"
+  },
+  {
+    "x": 11712,
+    "action": "jump",
+    "holdMs": 120,
+    "move_id": "f02-t1b-slide-1"
+  },
+  {
+    "x": 11933,
+    "action": "release",
+    "holdMs": 0,
+    "move_id": "f02-t1b-slide-1"
+  },
+  {
+    "x": 12641,
+    "action": "jump",
+    "holdMs": 120,
+    "move_id": "f02-t2c-vault-5"
+  },
+  {
+    "x": 12830,
+    "action": "release",
+    "holdMs": 0,
+    "move_id": "f02-t2c-vault-5"
+  },
+  {
+    "x": 13041,
+    "action": "jump",
+    "holdMs": 120,
+    "move_id": "f02-t2c-vault-7"
+  },
+  {
+    "x": 13230,
+    "action": "release",
+    "holdMs": 0,
+    "move_id": "f02-t2c-vault-7"
+  }
+]

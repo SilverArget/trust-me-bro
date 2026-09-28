@@ -1,0 +1,122 @@
+[
+  {
+    "path": "index.html",
+    "sha256": "fa5f956aefadf5aa96f00b375ef5f39b0ee4302e1725f513d69dbde8f772c142"
+  },
+  {
+    "path": "js/a12-campaign.js",
+    "sha256": "4a85b9d741aecd2d5213b845c82dd2bb3a5073bb047dbe339039c3f225f862cd"
+  },
+  {
+    "path": "03-test/tn-a4.spec.cjs",
+    "sha256": "93d06279ad61012a0b0a6ec5a556997233069a1de1ac32661f4d833bc2cace06"
+  },
+  {
+    "path": "03-test/t2-coins.spec.cjs",
+    "sha256": "bba1f8bff28dd1017b3196f1d5f26613ca234b38493be3ce0c1c52a55de53792"
+  },
+  {
+    "path": "03-test/lib/aftermath-b-probe.cjs",
+    "sha256": "35d5558b877ee7f5fe201b6424933af1c1eae29b5e4cc9c296f577c92ce1d367"
+  },
+  {
+    "path": "03-test/lib/aftermath-probe.cjs",
+    "sha256": "fbbb707442686d909fe6b872ca81a3d3ddbe0b1a344bc90c66d8e4615c250bf2"
+  },
+  {
+    "path": "03-test/lib/bot-aftermath.cjs",
+    "sha256": "411cf684e5f7313e1b0c07f355237a1e2d8a9f9cf81aa1e8a525d67ea7c3c59d"
+  },
+  {
+    "path": "03-test/lib/bot-magma.cjs",
+    "sha256": "a61bfffa8f340e6ec23cff3f1793cfff80615a4896ad7780a7e42401eef82054"
+  },
+  {
+    "path": "03-test/lib/bot-s-drive.cjs",
+    "sha256": "c51cfb72d138c39454db637df27a30282236da1a548053f128b5b7f738699f1f"
+  },
+  {
+    "path": "03-test/lib/bot-w.cjs",
+    "sha256": "a65af5fb0ae42f1009a08bdc5f819b40c249799e2bf57a41dab30634ec7211da"
+  },
+  {
+    "path": "03-test/lib/magma-b-probe.cjs",
+    "sha256": "324961d51d2e6687b243fe0029ca37f046e889dc5e7c7fd23ccd1629a5913359"
+  },
+  {
+    "path": "03-test/lib/magma-probe.cjs",
+    "sha256": "90e895229025812dc9dfd2138749be3c7ec3f65771a7f4ef67a734703ea0df03"
+  },
+  {
+    "path": "03-test/route-inputs/A01.json",
+    "sha256": "ed1fd06852bba8e858bf2d4db0bd5677741d257c411b22547e37b49b67073111"
+  },
+  {
+    "path": "03-test/route-inputs/A02.json",
+    "sha256": "4b89569b24898998b1e0f87ad4d8a75b1f145fb686af619fb7ef5e93f92ef62b"
+  },
+  {
+    "path": "03-test/route-inputs/A03.json",
+    "sha256": "bbdd25d06b6ecad5c065f28f99391278187ddd4c5106e5aa7f1471119fc154a7"
+  },
+  {
+    "path": "03-test/route-inputs/A04.json",
+    "sha256": "d37f48475ff779097aa7c8c47790e18f5916f2a19b1a5d9adab6cfff17b3fbee"
+  },
+  {
+    "path": "03-test/route-inputs/D01.json",
+    "sha256": "b33d37b5a6cccf3ef425c0d1fe4bc559beb4a3f79664ecefe4ff882d079ffa3d"
+  },
+  {
+    "path": "03-test/route-inputs/D02.json",
+    "sha256": "1d3aa54a580dfc6f61f4a63796230d159bc667f4593d0657629793b9f265a7f5"
+  },
+  {
+    "path": "03-test/route-inputs/D03.json",
+    "sha256": "effbd227d1d20d3b899603889cbfdadf5ba8899af66bce3844b93acf855f5fad"
+  },
+  {
+    "path": "03-test/route-inputs/D04.json",
+    "sha256": "dcfb76cf64e06c9d3623db94274361a8570065f9c2791aea12e48d653efe3e5c"
+  },
+  {
+    "path": "03-test/route-inputs/D05.json",
+    "sha256": "d0dbe2c995288d6652309e24547827bf787728d732b03405ef03944dc4b93c16"
+  },
+  {
+    "path": "03-test/route-inputs/D06.json",
+    "sha256": "359437df9b5a0a1ae95cd39e940dde784201c80cdb403fdefa07ca9e11673fb2"
+  },
+  {
+    "path": "03-test/route-inputs/F01.json",
+    "sha256": "93c45367f0c57cac5464b304a385056ff685ee3d147bac68bd47a9a65f10e599"
+  },
+  {
+    "path": "03-test/route-inputs/F02.json",
+    "sha256": "4eaee23e869367413c4423a19d32acd8c944ffbde2744deeb1bf1837b535b17c"
+  },
+  {
+    "path": "03-test/route-inputs/F03.json",
+    "sha256": "dbde3548d6a189fd3b4e344a5736e1bf152292a58d94a9a197a850451287ef7f"
+  },
+  {
+    "path": "03-test/route-inputs/F04.json",
+    "sha256": "cb91849f19e85ca1b1bc27919607513f9e8c01ac54972df5b467505731ca84bd"
+  },
+  {
+    "path": "03-test/route-inputs/M01.json",
+    "sha256": "f37660cbe80c265798558fcbeab01cad3526ba0731cee8601203b0cd4885c095"
+  },
+  {
+    "path": "03-test/route-inputs/M02.json",
+    "sha256": "b17256abb64abf830978255135e62a770b6464a916d4ee9cd8511c678cafcdf9"
+  },
+  {
+    "path": "03-test/route-inputs/M03.json",
+    "sha256": "65a49bf350565e9cdaf38a603e7119bb0e02084897c8a5581f515603ebf1bd80"
+  },
+  {
+    "path": "03-test/route-inputs/M04.json",
+    "sha256": "36989b4ed79f9fe504254004591339500aed952d7f817acd240d4db00c3c462f"
+  }
+]

@@ -1,0 +1,206 @@
+[
+  {
+    "x": 155,
+    "action": "jump",
+    "holdMs": 120,
+    "move_id": "f04-t1b-slide-1"
+  },
+  {
+    "x": 376,
+    "action": "release",
+    "holdMs": 0,
+    "move_id": "f04-t1b-slide-1"
+  },
+  {
+    "x": 1700,
+    "action": "jump",
+    "holdMs": 120,
+    "move_id": "f04-safe-landing"
+  },
+  {
+    "x": 1755,
+    "action": "jump",
+    "holdMs": 120,
+    "move_id": "f04-roll"
+  },
+  {
+    "x": 2040,
+    "action": "release",
+    "holdMs": 0,
+    "move_id": "f04-safe-landing"
+  },
+  {
+    "x": 2040,
+    "action": "release",
+    "holdMs": 0,
+    "move_id": "f04-roll"
+  },
+  {
+    "x": 3040,
+    "action": "jump",
+    "holdMs": 120,
+    "move_id": "f04-t1b-pallet-1"
+  },
+  {
+    "x": 3380,
+    "action": "release",
+    "holdMs": 0,
+    "move_id": "f04-t1b-pallet-1"
+  },
+  {
+    "x": 4895,
+    "action": "jump",
+    "holdMs": 120,
+    "move_id": "f04-t1b-vault-2"
+  },
+  {
+    "x": 5084,
+    "action": "release",
+    "holdMs": 0,
+    "move_id": "f04-t1b-vault-2"
+  },
+  {
+    "x": 5219,
+    "action": "jump",
+    "holdMs": 120,
+    "move_id": "f04-t2c-vault-2"
+  },
+  {
+    "x": 5408,
+    "action": "release",
+    "holdMs": 0,
+    "move_id": "f04-t2c-vault-2"
+  },
+  {
+    "x": 6060,
+    "action": "jump",
+    "holdMs": 120,
+    "move_id": "f04-upper-a"
+  },
+  {
+    "x": 6400,
+    "action": "release",
+    "holdMs": 0,
+    "move_id": "f04-upper-a"
+  },
+  {
+    "x": 6880,
+    "action": "jump",
+    "holdMs": 120,
+    "move_id": "f04-upper-b"
+  },
+  {
+    "x": 7220,
+    "action": "release",
+    "holdMs": 0,
+    "move_id": "f04-upper-b"
+  },
+  {
+    "x": 8015,
+    "action": "jump",
+    "holdMs": 120,
+    "move_id": "f04-t1b-vault-3"
+  },
+  {
+    "x": 8204,
+    "action": "release",
+    "holdMs": 0,
+    "move_id": "f04-t1b-vault-3"
+  },
+  {
+    "x": 8580,
+    "action": "jump",
+    "holdMs": 120,
+    "move_id": "f04-t1b-pallet-2"
+  },
+  {
+    "x": 8920,
+    "action": "release",
+    "holdMs": 0,
+    "move_id": "f04-t1b-pallet-2"
+  },
+  {
+    "x": 10187,
+    "action": "jump",
+    "holdMs": 120,
+    "move_id": "f04-t2c-vault-3"
+  },
+  {
+    "x": 10376,
+    "action": "release",
+    "holdMs": 0,
+    "move_id": "f04-t2c-vault-3"
+  },
+  {
+    "x": 10715,
+    "action": "jump",
+    "holdMs": 120,
+    "move_id": "f04-vault"
+  },
+  {
+    "x": 10904,
+    "action": "release",
+    "holdMs": 0,
+    "move_id": "f04-vault"
+  },
+  {
+    "x": 11039,
+    "action": "jump",
+    "holdMs": 120,
+    "move_id": "f04-t2c-vault-4"
+  },
+  {
+    "x": 11228,
+    "action": "release",
+    "holdMs": 0,
+    "move_id": "f04-t2c-vault-4"
+  },
+  {
+    "x": 11745,
+    "action": "jump",
+    "holdMs": 120,
+    "move_id": "f04-t1b-vault-1"
+  },
+  {
+    "x": 11934,
+    "action": "release",
+    "holdMs": 0,
+    "move_id": "f04-t1b-vault-1"
+  },
+  {
+    "x": 12069,
+    "action": "jump",
+    "holdMs": 120,
+    "move_id": "f04-t2c-vault-6"
+  },
+  {
+    "x": 12258,
+    "action": "release",
+    "holdMs": 0,
+    "move_id": "f04-t2c-vault-6"
+  },
+  {
+    "x": 13541,
+    "action": "jump",
+    "holdMs": 120,
+    "move_id": "f04-t2c-vault-8"
+  },
+  {
+    "x": 13730,
+    "action": "release",
+    "holdMs": 0,
+    "move_id": "f04-t2c-vault-8"
+  },
+  {
+    "x": 13941,
+    "action": "jump",
+    "holdMs": 120,
+    "move_id": "f04-t2c-vault-9"
+  },
+  {
+    "x": 14130,
+    "action": "release",
+    "holdMs": 0,
+    "move_id": "f04-t2c-vault-9"
+  }
+]

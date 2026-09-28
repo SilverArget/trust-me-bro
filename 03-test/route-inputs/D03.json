@@ -1,0 +1,170 @@
+[
+  {
+    "x": 925,
+    "action": "jump",
+    "holdMs": 120,
+    "move_id": "d03-t1b-vault-1"
+  },
+  {
+    "x": 1114,
+    "action": "release",
+    "holdMs": 0,
+    "move_id": "d03-t1b-vault-1"
+  },
+  {
+    "x": 1375,
+    "action": "jump",
+    "holdMs": 120,
+    "move_id": "d03-crane"
+  },
+  {
+    "x": 1660,
+    "action": "release",
+    "holdMs": 0,
+    "move_id": "d03-crane"
+  },
+  {
+    "x": 2250,
+    "action": "jump",
+    "holdMs": 120,
+    "move_id": "d03-upper"
+  },
+  {
+    "x": 2590,
+    "action": "release",
+    "holdMs": 0,
+    "move_id": "d03-upper"
+  },
+  {
+    "x": 3515,
+    "action": "jump",
+    "holdMs": 120,
+    "move_id": "d03-t1b-vault-3"
+  },
+  {
+    "x": 3704,
+    "action": "release",
+    "holdMs": 0,
+    "move_id": "d03-t1b-vault-3"
+  },
+  {
+    "x": 3881,
+    "action": "jump",
+    "holdMs": 120,
+    "move_id": "d03-t2c-vault-1"
+  },
+  {
+    "x": 4070,
+    "action": "release",
+    "holdMs": 0,
+    "move_id": "d03-t2c-vault-1"
+  },
+  {
+    "x": 4530,
+    "action": "jump",
+    "holdMs": 120,
+    "move_id": "d03-t1b-pallet-2"
+  },
+  {
+    "x": 4870,
+    "action": "release",
+    "holdMs": 0,
+    "move_id": "d03-t1b-pallet-2"
+  },
+  {
+    "x": 6155,
+    "action": "jump",
+    "holdMs": 120,
+    "move_id": "d03-crane-2"
+  },
+  {
+    "x": 6440,
+    "action": "release",
+    "holdMs": 0,
+    "move_id": "d03-crane-2"
+  },
+  {
+    "x": 7100,
+    "action": "jump",
+    "holdMs": 120,
+    "move_id": "d03-upper-2"
+  },
+  {
+    "x": 7440,
+    "action": "release",
+    "holdMs": 0,
+    "move_id": "d03-upper-2"
+  },
+  {
+    "x": 8485,
+    "action": "jump",
+    "holdMs": 120,
+    "move_id": "d03-t1b-vault-2"
+  },
+  {
+    "x": 8674,
+    "action": "release",
+    "holdMs": 0,
+    "move_id": "d03-t1b-vault-2"
+  },
+  {
+    "x": 9237,
+    "action": "jump",
+    "holdMs": 120,
+    "move_id": "d03-t2c-vault-2"
+  },
+  {
+    "x": 9426,
+    "action": "release",
+    "holdMs": 0,
+    "move_id": "d03-t2c-vault-2"
+  },
+  {
+    "x": 10515,
+    "action": "jump",
+    "holdMs": 120,
+    "move_id": "d03-t1b-slide-1"
+  },
+  {
+    "x": 10736,
+    "action": "release",
+    "holdMs": 0,
+    "move_id": "d03-t1b-slide-1"
+  },
+  {
+    "x": 11180,
+    "action": "jump",
+    "holdMs": 120,
+    "move_id": "d03-t1b-pallet-1"
+  },
+  {
+    "x": 11520,
+    "action": "release",
+    "holdMs": 0,
+    "move_id": "d03-t1b-pallet-1"
+  },
+  {
+    "x": 12595,
+    "action": "jump",
+    "holdMs": 120,
+    "move_id": "d03-t2c-vault-3"
+  },
+  {
+    "x": 12784,
+    "action": "release",
+    "holdMs": 0,
+    "move_id": "d03-t2c-vault-3"
+  },
+  {
+    "x": 12919,
+    "action": "jump",
+    "holdMs": 120,
+    "move_id": "d03-t2c-vault-4"
+  },
+  {
+    "x": 13108,
+    "action": "release",
+    "holdMs": 0,
+    "move_id": "d03-t2c-vault-4"
+  }
+]

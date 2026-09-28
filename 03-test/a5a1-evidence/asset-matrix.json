@@ -1,0 +1,50 @@
+{
+  "combinations": 128,
+  "frames": 1024,
+  "layerSamples": 5120,
+  "status": "PASS",
+  "scope": "OFFLINE ASSET CONTRACT ONLY; runtime outfit-animation-matrix NOT_RUN",
+  "negativeControls": [
+    {
+      "mutation": "anchor",
+      "rejected": true,
+      "reason": "anchor"
+    },
+    {
+      "mutation": "hitbox",
+      "rejected": true,
+      "reason": "hitbox"
+    },
+    {
+      "mutation": "missing-frame",
+      "rejected": true,
+      "reason": "all eight frames"
+    },
+    {
+      "mutation": "tuck",
+      "rejected": true,
+      "reason": "tuck"
+    },
+    {
+      "mutation": "missing-asset",
+      "rejected": true,
+      "reason": "asset coverage"
+    },
+    {
+      "mutation": "blank-layer",
+      "rejected": true,
+      "reason": "alpha/padding male default idle 0 body None"
+    },
+    {
+      "mutation": "padding",
+      "rejected": true,
+      "reason": "alpha/padding male default idle 0 body (19, 0, 64, 56)"
+    },
+    {
+      "mutation": "dimensions",
+      "rejected": true,
+      "reason": "atlas dimensions/mode"
+    }
+  ],
+  "assets": 34
+}
