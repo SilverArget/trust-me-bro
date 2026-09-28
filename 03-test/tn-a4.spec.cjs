@@ -715,6 +715,27 @@ async function unlockFrozen(page, to) {
   }, to);
 }
 async function driveFrozenB(page, id, mainOnly = false) {
+  if (["F02", "F03", "F04"].includes(id) && !mainOnly) {
+    await unlockFrozen(page, id);
+    await page.evaluate(() => {
+      window.__frozenRideMax = {};
+      window.__frozenRawStep = window.__tmbCampaignStep;
+      window.__tmbCampaignStep = (dt) => {
+        window.__frozenRawStep(dt);
+        for (const p of __TMB_A12__.getState().movingPlatforms)
+          window.__frozenRideMax[p.id] = Math.max(window.__frozenRideMax[p.id] || 0, p.rideFrames);
+      };
+    });
+    const driven = await require("./lib/bot-s-drive.cjs").runBot(page, id, { resume: true, live: true });
+    const observed = await page.evaluate(() => {
+      window.__tmbCampaignStep = window.__frozenRawStep;
+      const state = __TMB_A12__.getState(), rides = Object.entries(window.__frozenRideMax);
+      delete window.__frozenRawStep;
+      delete window.__frozenRideMax;
+      return { state, rides };
+    });
+    return { state: observed.state, rides: observed.rides, seen: driven.parkourSamples.map(v => v.state), flows: observed.state.engine.observedStates };
+  }
   await unlockFrozen(page, id);
   const seen = new Set(),
     flows = new Set(),
@@ -792,27 +813,19 @@ test.describe.configure({ timeout: 120000 });
 test("frozen-parkour-carriers-and-bypasses", async ({ page }) => {
   await unlockFrozen(page, "F02");
   const observed = {};
-  for (const probe of [
-    { id: "F02", type: "crane", x: 1450 },
-    { id: "F02", type: "pallet", x: 5440 },
-    { id: "F03", type: "overpass", x: 7520 },
-  ]) {
-    await unlockFrozen(page, probe.id);
-    await page.evaluate(({ x, type }) => {
-      const s = __TMB_A12__.getState(),
-        o = s.route.obstacles.find((v) => v.type === type);
-      __TMB_A12__.placePlayer(x, (o?.y || 407) - 48);
-    }, probe);
-    await page.keyboard.down("ArrowRight");
-    await page.waitForTimeout(350);
-    await page.keyboard.up("ArrowRight");
-    const s = await page.evaluate(() => __TMB_A12__.getState());
-    observed[`${probe.id}-${probe.type}`] = {
-      flows: s.engine.observedStates,
-      rides: s.movingPlatforms.map((p) => [p.id, p.rideFrames]),
-      state: s.player.state,
-    };
-  }
+  const f02 = await driveFrozenB(page, "F02");
+  observed["F02-crane"] = {
+    flows: f02.flows,
+    rides: f02.rides,
+    state: f02.state.player.state,
+  };
+  observed["F02-pallet"] = observed["F02-crane"];
+  const f03 = await driveFrozenB(page, "F03");
+  observed["F03-overpass"] = {
+    flows: f03.flows,
+    rides: f03.state.movingPlatforms.map((p) => [p.id, p.rideFrames]),
+    state: f03.state.player.state,
+  };
   const roll = await driveFrozenB(page, "F04");
   observed["F04-roll"] = { flows: roll.flows, states: roll.seen };
   expect(observed["F02-crane"].rides.some((x) => x[1] > 0)).toBe(true);
@@ -820,9 +833,10 @@ test("frozen-parkour-carriers-and-bypasses", async ({ page }) => {
   expect(observed["F03-overpass"].flows).toContain("overpassRide");
   expect(observed["F04-roll"].flows).toContain("rollDrop");
   await unlockFrozen(page, "F01");
+  // [Y 27.09 coin tasarımı: F01 pallet 2] eski 0 = coin öncesi
   expect(
     (await page.evaluate(() => __TMB_A12__.getState())).movingPlatforms,
-  ).toHaveLength(0);
+  ).toHaveLength(2);
   test
     .info()
     .annotations.push({
