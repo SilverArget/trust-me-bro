@@ -10,7 +10,11 @@
   const DEBUG = location.hash.toLowerCase().includes("debug");
   const telemetry = [];
   function emitGame(event, data = {}) {
-    telemetry.push({ event, ...data, ts_ms: performance.now() });
+    const detail = { event, params:data, context:{ routeId, runId:run?.runId }, result:null };
+    document.dispatchEvent(new CustomEvent("tmb:analytics-emit", { detail }));
+    const row = detail.result;
+    if (row) telemetry.push(row);
+    return row;
   }
   function sCoin() {}
   function sJump() {}
@@ -100,6 +104,7 @@
       saveFailed: "SAVE FAILED — RETRY",
       noCharge: "LIVE PREVIEW · NO CHARGE",
       worlds: "WORLDS", buyWorld: "BUY — {price}", select: "SELECT", selected: "SELECTED", planned: "PLANNED", insufficient: "INSUFFICIENT COINS",
+      idle: "IDLE", motionRun: "RUN", flip: "FLIP", language: "LANGUAGE", samePhysics: "Same physics. Shared wallet. Your runner.", ghostOn: "GHOST ON", ghostOff: "GHOST OFF", flow: "FLOW", localBest: "LOCAL BEST", newRecord: "NEW", clean: "CLEAN", mastery: "MASTERY", style: "STYLE",
     },
     tr: {
       M01: "DÖKÜMHANE YOLU", M02: "DÖKÜM VİNCİ", M03: "FIRIN KORİDORU", M04: "MAGMA ASANSÖRÜ",
@@ -130,11 +135,12 @@
       complete: "TAMAMLANDI",
       defaultOutfit: "VARSAYILAN KURYE",
       dockCrew: "LİMAN EKİBİ · BARET + YELEK",
-      nightShift: "Night Shift",
-      hazardRunner: "Hazard Runner",
+      nightShift: "GECE VARDİYASI",
+      hazardRunner: "TEHLİKE KOŞUCUSU",
       saveFailed: "KAYIT BAŞARISIZ — YENİDEN DENE",
       noCharge: "CANLI ÖNİZLEME · ÜCRETSİZ",
       worlds: "DÜNYALAR", buyWorld: "SATIN AL — {price}", select: "SEÇ", selected: "SEÇİLİ", planned: "PLANLANDI", insufficient: "YETERSİZ COIN",
+      idle: "BEKLE", motionRun: "KOŞ", flip: "TAKLA", language: "DİL", samePhysics: "Aynı fizik. Ortak cüzdan. Senin koşucun.", ghostOn: "HAYALET AÇIK", ghostOff: "HAYALET KAPALI", flow: "AKIŞ", localBest: "YEREL EN İYİ", newRecord: "YENİ", clean: "TEMİZ", mastery: "USTALIK", style: "STİL",
     },
     ru: {
       M01: "ЛИТЕЙНЫЙ ПУТЬ", M02: "ЛИТЕЙНЫЙ КРАН", M03: "ПЕЧНОЙ ПРОХОД", M04: "МАГМОВЫЙ ЛИФТ",
@@ -165,11 +171,12 @@
       complete: "ЗАВЕРШЁН",
       defaultOutfit: "ОБЫЧНЫЙ КУРЬЕР",
       dockCrew: "ПОРТОВАЯ БРИГАДА · КАСКА + ЖИЛЕТ",
-      nightShift: "Night Shift",
-      hazardRunner: "Hazard Runner",
+      nightShift: "НОЧНАЯ СМЕНА",
+      hazardRunner: "ОПАСНЫЙ БЕГУН",
       saveFailed: "ОШИБКА СОХРАНЕНИЯ — ПОВТОРИТЬ",
       noCharge: "ЖИВОЙ ПРОСМОТР · БЕСПЛАТНО",
       worlds: "МИРЫ", buyWorld: "КУПИТЬ — {price}", select: "ВЫБРАТЬ", selected: "ВЫБРАНО", planned: "ЗАПЛАНИРОВАНО", insufficient: "НЕДОСТАТОЧНО МОНЕТ",
+      idle: "ОЖИДАНИЕ", motionRun: "БЕГ", flip: "САЛЬТО", language: "ЯЗЫК", samePhysics: "Та же физика. Общий кошелёк. Твой бегун.", ghostOn: "ПРИЗРАК ВКЛ", ghostOff: "ПРИЗРАК ВЫКЛ", flow: "ПОТОК", localBest: "ЛУЧШИЙ РЕЗУЛЬТАТ", newRecord: "НОВЫЙ", clean: "ЧИСТО", mastery: "МАСТЕРСТВО", style: "СТИЛЬ",
     },
   });
   const COINS = Object.freeze({
@@ -1539,7 +1546,7 @@
       progressByRoute: {},
       pendingRunsByRoute: {},
       bestRunsByRouteVersion: {},
-      settings: { language: languageFrom(navigator.language) },
+      settings: { language: languageFrom(platformLanguage()) },
       migrationFlags: {},
       legacyProgress: null,
       bankedRunIds: [],
@@ -1548,6 +1555,11 @@
   function languageFrom(v) {
     v = String(v || "en").toLowerCase();
     return v.startsWith("tr") ? "tr" : v.startsWith("ru") ? "ru" : "en";
+  }
+  function platformLanguage() {
+    let value = navigator.language;
+    document.dispatchEvent(new CustomEvent("tmb:platform-language", { detail:v=>{value=v} }));
+    return value;
   }
   function normalizeProfile(raw) {
     const p = baseProfile();
@@ -1759,7 +1771,7 @@
     catch(_){ghostStorageFailed=true;return null;}
   }
   function writeGhost(record) { try { const old=parseSave(localStorage.getItem(GHOST_KEY)),routes=old?.routes&&typeof old.routes==="object"?{...old.routes}:Array.isArray(old?.samples)&&old.routeId?{[old.routeId]:old}:{};routes[record.routeId]=record;localStorage.setItem(GHOST_KEY,JSON.stringify({v:2,routes})); return true; } catch(_){ ghostStorageFailed=true; return false; } }
-  function setGhostEnabled(value){ghostEnabled=!!value;try{localStorage.setItem(GHOST_SETTING_KEY,ghostEnabled?"1":"0")}catch(_){}return ghostEnabled;}
+  function setGhostEnabled(value){ghostEnabled=!!value;try{localStorage.setItem(GHOST_SETTING_KEY,ghostEnabled?"1":"0")}catch(_){}emitGame("ghost_toggle",{enabled:ghostEnabled});return ghostEnabled;}
   function resetGhostRun() { ghostCompatible=readGhost(route);ghostSamples=[];ghostPlaybackTime=0; }
   function sampleGhost() { if(!run||result)return;const last=ghostSamples.at(-1);if(!last||gameClock-last.t>=1/20)ghostSamples.push({t:+gameClock.toFixed(3),x:+player.x.toFixed(2),y:+player.y.toFixed(2),f:player.facing||1}); }
   function ghostAt(time=ghostPlaybackTime){const s=ghostCompatible?.samples;if(!s?.length)return null;let i=0;while(i+1<s.length&&s[i+1].t<=time)i++;const a=s[i],b=s[Math.min(i+1,s.length-1)],q=b.t>a.t?Math.max(0,Math.min(1,(time-a.t)/(b.t-a.t))):0;return {x:a.x+(b.x-a.x)*q,y:a.y+(b.y-a.y)*q,f:q<.5?a.f:b.f};}
@@ -2357,9 +2369,12 @@
   function applyLanguage() {
     document.getElementById("hint").textContent = t("help");
     const card = document.getElementById("characterCard");
-    if (card) card.querySelector("h2").textContent = t("choose");
+    if (card) { card.querySelector("h2").textContent = t("choose"); card.querySelector("p").textContent=t("samePhysics"); }
     const actions = document.getElementById("a12Actions");
     if (actions) for (const b of actions.querySelectorAll("button")) b.textContent = t(b.dataset.act);
+    const language=document.getElementById("a12Language"),label=document.querySelector("#a12LanguageWrap span");
+    if(language) language.value=profile.settings.language;if(label) label.textContent=t("language");
+    const ghost=document.getElementById("a12GhostToggle");if(ghost) ghost.textContent=t(ghostEnabled?"ghostOn":"ghostOff");
     renderShop();
   }
   function drawHud() {
@@ -2381,8 +2396,8 @@
     ctx.fillStyle = "#7cecc0";
     ctx.fillText(`${t("wallet")} ◉ ${profile.walletBalance}`, 180, 57);
     ctx.fillStyle = "#fff";
-    ctx.fillText(`FLOW ${flow}`, 300, 57);
-    if(flowFlash>0){ctx.fillStyle=`rgba(255,222,80,${Math.min(1,flowFlash*2)})`;ctx.font="950 18px system-ui";ctx.fillText(`+ FLOW`,390,42)}
+    ctx.fillText(`${t("flow")} ${flow}`, 300, 57);
+    if(flowFlash>0){ctx.fillStyle=`rgba(255,222,80,${Math.min(1,flowFlash*2)})`;ctx.font="950 18px system-ui";ctx.fillText(`+ ${t("flow")}`,390,42)}
   }
   function drawResult() {
     ctx.fillStyle = "#06111be8";
@@ -2397,24 +2412,24 @@
     ctx.font = "800 18px system-ui";
     ctx.fillText(`${t("earned")} +${result.amount}`, W / 2, H / 2 - 70);
     ctx.fillText(
-      `${t("goals")} · ${run.runCoins}/${route.coins.length} · FLOW ${flow}`,
+      `${t("goals")} · ${run.runCoins}/${route.coins.length} · ${t("flow")} ${flow}`,
       W / 2,
       H / 2 - 34,
     );
     ctx.fillText(
-      `YEREL EN İYİ ${result.bestDiff === null ? "NEW" : (result.bestDiff >= 0 ? "-" : " +") + Math.abs(result.bestDiff).toFixed(2) + "s"}`,
+      `${t("localBest")} ${result.bestDiff === null ? t("newRecord") : (result.bestDiff >= 0 ? "-" : " +") + Math.abs(result.bestDiff).toFixed(2) + "s"}`,
       W / 2,
       H / 2 + 2,
     );
     ctx.fillText("★".repeat(result.stars) + "☆".repeat(3 - result.stars), W/2, H/2+58);
     const gs=result.goals||{};
     ctx.font="800 13px system-ui";
-    ctx.fillText(`CLEAN ${gs.clean?.earned?"✓":"○"} · MASTERY ${gs.mastery?.earned?"✓":"○"} · STYLE ${gs.style?.earned?"✓":"○"}`,W/2,H/2+34);
+    ctx.fillText(`${t("clean")} ${gs.clean?.earned?"✓":"○"} · ${t("mastery")} ${gs.mastery?.earned?"✓":"○"} · ${t("style")} ${gs.style?.earned?"✓":"○"}`,W/2,H/2+34);
     ctx.textAlign = "left";
   }
   function installUI() {
     const style = document.createElement("style");
-    style.textContent = `#a12Actions{position:fixed;z-index:31;left:50%;bottom:max(86px,calc(env(safe-area-inset-bottom) + 82px));transform:translateX(-50%);display:flex;gap:9px}#a12Actions[hidden]{display:none!important}#a12Actions button,#a12Shop button,#a12GhostToggle{border:1px solid #ffffff44;border-radius:12px;background:#153246;color:#fff;padding:11px 16px;font:900 13px system-ui}#a12GhostToggle{position:fixed;z-index:31;right:14px;top:78px}#a12Shop{position:fixed;inset:0;z-index:45;display:none;background:#06121bf2;color:#fff;padding:clamp(15px,4vw,38px)}#a12Shop.show{display:grid;grid-template-columns:minmax(230px,42%) 1fr;gap:25px}#a12Preview{display:grid;place-items:center;background:#102635;border-radius:18px;min-height:280px}#a12Preview canvas{width:180px;height:240px}#a12Products{overflow:auto}#a12Products article{padding:17px;margin:12px 0;background:#132b39;border:1px solid #ffffff30;border-radius:14px}.runnerSymbol{font-size:25px;display:block}.characterChoice[data-character="0"]{box-shadow:inset 0 0 0 2px #3aa2ff}.characterChoice[data-character="1"]{box-shadow:inset 0 0 0 2px #ff6aac}@media(max-width:540px) and (orientation:portrait){#a12Shop.show{grid-template-columns:1fr;grid-template-rows:35vh 1fr}#a12Preview{min-height:0}#a12Preview canvas{width:120px;height:160px}}`;
+    style.textContent = `#a12Actions{position:fixed;z-index:31;left:50%;bottom:max(86px,calc(env(safe-area-inset-bottom) + 82px));transform:translateX(-50%);display:flex;gap:9px}#a12Actions[hidden]{display:none!important}#a12Actions button,#a12Shop button,#a12GhostToggle,#a12Language{border:1px solid #ffffff44;border-radius:12px;background:#153246;color:#fff;padding:11px 16px;font:900 13px system-ui}#a12GhostToggle{position:fixed;z-index:31;right:14px;top:78px}#a12LanguageWrap{position:fixed;z-index:46;right:14px;bottom:14px;color:#fff;font:800 11px system-ui}#a12Language{margin-left:6px;padding:7px}#a12Shop{position:fixed;inset:0;z-index:45;display:none;background:#06121bf2;color:#fff;padding:clamp(15px,4vw,38px)}#a12Shop.show{display:grid;grid-template-columns:minmax(230px,42%) 1fr;gap:25px}#a12Preview{display:grid;place-items:center;background:#102635;border-radius:18px;min-height:280px}#a12Preview canvas{width:180px;height:240px}#a12Products{overflow:auto;padding-bottom:48px}#a12Products article{padding:17px;margin:12px 0;background:#132b39;border:1px solid #ffffff30;border-radius:14px}.runnerSymbol{font-size:25px;display:block}.characterChoice[data-character="0"]{box-shadow:inset 0 0 0 2px #3aa2ff}.characterChoice[data-character="1"]{box-shadow:inset 0 0 0 2px #ff6aac}@media(max-width:540px) and (orientation:portrait){#a12Shop.show{grid-template-columns:1fr;grid-template-rows:35vh 1fr}#a12Preview{min-height:0}#a12Preview canvas{width:120px;height:160px}#a12LanguageWrap{right:8px;bottom:8px}}`;
     style.textContent += `#a12Shop{box-sizing:border-box}#a12Shop.show{grid-template-columns:minmax(230px,40%) minmax(0,1fr);grid-template-rows:minmax(0,1fr);gap:18px}#a12Preview{display:flex;flex-direction:column;justify-content:center;gap:12px;min-width:0;min-height:0;overflow:hidden}#a12Preview canvas{width:min(100%,480px);height:auto;max-height:65%;aspect-ratio:3/2;object-fit:contain;image-rendering:pixelated}#a12Preview .previewControls{display:flex;flex-wrap:wrap;justify-content:center;gap:6px}#a12Preview button{padding:8px 10px}#a12Preview button[aria-pressed="true"]{background:#286650;border-color:#8ff1c8}#a12Products{min-height:0;min-width:0;overscroll-behavior:contain}@media(max-width:540px) and (orientation:portrait){#a12Shop.show{grid-template-columns:minmax(0,1fr);grid-template-rows:minmax(230px,40%) minmax(0,1fr);gap:12px}#a12Preview{gap:5px}#a12Preview canvas{max-height:62%;width:auto;max-width:100%}}`;
     document.head.appendChild(style);
     const actions = document.createElement("div");
@@ -2422,8 +2437,9 @@
     actions.innerHTML = `<button data-act="next">${t("next")}</button><button data-act="retry">${t("retry")}</button><button data-act="shop">${t("shop")}</button>`;
     document.body.appendChild(actions);
     const ghostToggle=document.createElement("button");ghostToggle.id="a12GhostToggle";ghostToggle.type="button";
-    const syncGhostToggle=()=>{ghostToggle.textContent=`GHOST ${ghostEnabled?"ON":"OFF"}`;ghostToggle.setAttribute("aria-pressed",String(ghostEnabled));};
+    const syncGhostToggle=()=>{ghostToggle.textContent=t(ghostEnabled?"ghostOn":"ghostOff");ghostToggle.setAttribute("aria-pressed",String(ghostEnabled));};
     ghostToggle.addEventListener("click",()=>{setGhostEnabled(!ghostEnabled);syncGhostToggle();});syncGhostToggle();document.body.appendChild(ghostToggle);
+    const languageWrap=document.createElement("label");languageWrap.id="a12LanguageWrap";languageWrap.innerHTML=`<span></span><select id="a12Language"><option value="en">EN</option><option value="tr">TR</option><option value="ru">RU</option></select>`;document.body.appendChild(languageWrap);const languageSelect=languageWrap.querySelector("select");languageSelect.value=profile.settings.language;languageSelect.addEventListener("change",async()=>{const previous=profile.settings.language;profile.settings.language=languageFrom(languageSelect.value);applyLanguage();emitGame("language_change",{from:previous,to:profile.settings.language});await persist();});
     actions.hidden = true;
     actions.addEventListener("click", (e) => {
       const a = e.target.dataset.act;
@@ -2465,8 +2481,7 @@
     const card = document.getElementById("characterCard");
     card.querySelector(".eyebrow").textContent = "TRUST ME BRO · DOCK 31";
     card.querySelector("h2").textContent = t("choose");
-    card.querySelector("p").textContent =
-      "Same physics. Shared wallet. Your runner.";
+    card.querySelector("p").textContent = t("samePhysics");
     const choices = [...document.querySelectorAll(".characterChoice")];
     choices.forEach((el, i) => {
       if (i > 1) {
@@ -2549,7 +2564,7 @@
   }
   function renderShop() {
     const s = document.getElementById("a12Shop");
-    const motionLabels={en:["Idle","Run","Flip"],tr:["Bekle","Ko?","Takla"],ru:["?????","???","??????"]}[profile.settings.language]||["Idle","Run","Flip"];
+    const motionLabels=[t("idle"),t("motionRun"),t("flip")];
     s.querySelectorAll('[data-preview-runner]').forEach(b=>{b.textContent=t(b.dataset.previewRunner);b.setAttribute('aria-pressed',String(b.dataset.previewRunner===previewRunnerId));});
     s.querySelectorAll('[data-preview-motion]').forEach((b,i)=>{b.textContent=motionLabels[i];b.setAttribute('aria-pressed',String(b.dataset.previewMotion===previewMotion));});
     s.querySelector("h2").textContent = `${t("shop")} · ${t(shopTab)} · ${t("wallet")} ${profile.walletBalance}`;
@@ -2744,6 +2759,7 @@
       const ok = await persist();
       if (!ok) profile = before;
       purchaseBusy = false;
+      if(ok)emitGame("outfit_worn",{itemId:id,runnerId});
       renderShop();
       return ok;
     }
@@ -2761,6 +2777,7 @@
       itemId: id,
       price: item.price,
     });
+    if(ok)emitGame("outfit_worn",{itemId:id,runnerId});
     renderShop();
     return ok;
   }
@@ -3078,6 +3095,7 @@
     if (document.body.dataset.gameMode === "campaign") return;
     document.body.dataset.gameMode = "campaign";
     loadProfile();
+    emitGame("session_start", { language: profile.settings.language });
     try { ghostEnabled=localStorage.getItem(GHOST_SETTING_KEY)!=="0"; } catch(_){ ghostEnabled=true; }
     engine = window.__installCampaignEngine({
       attach(api) {
@@ -3160,11 +3178,14 @@
           return (x-coin.x)**2+(y-coin.y)**2<=COIN_CONTACT_RADIUS**2;
         },
         setLanguage: (l) => {
+          const previous=profile.settings.language;
           profile.settings.language = languageFrom(l);
           applyLanguage();
+          emitGame("language_change",{from:previous,to:profile.settings.language});
           return persist();
         },
         i18n: () => clone(I18N),
+        analytics: () => { const detail={result:null};document.dispatchEvent(new CustomEvent("tmb:analytics-debug",{detail}));return detail.result||{capability:"LOCAL_ONLY",remote:"NOT_CONFIGURED",events:clone(telemetry),json:JSON.stringify(telemetry)}; },
         failSave: (v) => {
           saveFailure = !!v;
         },

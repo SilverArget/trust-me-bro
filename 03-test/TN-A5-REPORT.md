@@ -209,7 +209,7 @@ Graphify refresh warning details: 1949 source files (mostly JSON evidence) yield
 
 Graphify AST refresh completed: 32771 nodes / 54648 edges / 2063 communities; graph.json and GRAPH_REPORT.md updated. PowerShell wrapper exit 1 accompanied stderr warnings, while tool log explicitly confirms rebuild completion. Generated graph visualization was not opened. All task test and graphify processes have exited.
 
-## A5b2 — personal ghost (25-minute stop, PARTIAL / NOT ACCEPTED)
+## A5b2 â€” personal ghost (25-minute stop, PARTIAL / NOT ACCEPTED)
 
 Runtime implementation exists in `js/a12-campaign.js`: separate ghost storage/settings, game-clock samples, compatibility identity, pre-player alpha .38 drawing, retry/checkpoint playback, finished-better-only write, local-best result copy, DEBUG-only probes. `movementProfile` hashes movement constants and excludes runner/outfit; `obstacleSeed` hashes route length/finish/checkpoints/obstacles/ground/void geometry. Runner/outfit selection does not enter either physics identity.
 
@@ -217,18 +217,59 @@ New `tn-a5-ghost.spec.cjs` positive suite: 8/8 PASS in 11.8s; integrity: 141/141
 
 Evidence: `a5b2-evidence/ghost-final.log`, `integrity.json`, `protected-sha-start.json`, `protected-sha-end.json`, `source.diff`, `graphify-update.log`. Final SHA256: a12 `3167c2199f68e9c33308691cd3dc72f490b0cbcf8e25012a0d90880897831562`; index `4cc02ad4caacb583bdcd9ca562dc43df0a235de2f3aad3cadd797780b73aead7`.
 
-### A5b2 Tur 2 — completed targeted acceptance
+### A5b2 Tur 2 â€” completed targeted acceptance
 
 Acceptance 1 now uses the existing Bot-S keyboard-input driver with zero setup shortcuts: A01 65.32s/3919 steps/1306 samples/MAD .2455; crane route A02 65.10s/3906/1302/MAD .2455; checkpoint route D01 40.88s/2453/818/MAD .2495. Acceptances 2-8 rerun 7/7 PASS; checkpoint retry synchronized to 4.25s, a faster completed D01 replaced a 999s best, and a throwing ghost `setItem` set storageFailed while preserving the profile.
 
-All eight temporary served-product mutations produced RED (`a5b2-evidence/neg-1.log` … `neg-8.log`) and were removed automatically; disk a12 SHA stayed `3167c2199f68e9c33308691cd3dc72f490b0cbcf8e25012a0d90880897831562`. Integrity 141/141, protected index functions 23/23, existing pre-backed spec diff count 0, temporary product marker grep 0. Shortcut-call counts acceptances 1-8: `0,0,0,1,0,2,0,0` (acceptance 4 checkpoint fixture; acceptance 6 permitted record/error injection).
-## A5b2 Tur 3 — route-local ghost and complete movement profile
+All eight temporary served-product mutations produced RED (`a5b2-evidence/neg-1.log` â€¦ `neg-8.log`) and were removed automatically; disk a12 SHA stayed `3167c2199f68e9c33308691cd3dc72f490b0cbcf8e25012a0d90880897831562`. Integrity 141/141, protected index functions 23/23, existing pre-backed spec diff count 0, temporary product marker grep 0. Shortcut-call counts acceptances 1-8: `0,0,0,1,0,2,0,0` (acceptance 4 checkpoint fixture; acceptance 6 permitted record/error injection).
+## A5b2 Tur 3 â€” route-local ghost and complete movement profile
 
-- Ghost storage is v2 `{routes:{routeId:record}}`; legacy v1 single records remain readable and are migrated on the next successful write. Route-local A01→A02→A01 and its single-key negative passed/red.
+- Ghost storage is v2 `{routes:{routeId:record}}`; legacy v1 single records remain readable and are migrated on the next successful write. Route-local A01â†’A02â†’A01 and its single-key negative passed/red.
 - Movement profile hashes `TMB_MOVEMENT_CONSTANTS` plus all campaign `engine.constants`; changing gravity invalidates playback, while the legacy narrow-profile negative stayed compatible and failed.
 - Acceptance 1 default remains A01/A02/D01; `A5B2_ROUTES=all` selects all 18 routes. Real-frame on/off measurement covers world + runner and records region MAD/outside MAD.
 - Protected functions 23/23 and A5b2 integrity 141/141 passed; existing spec diff 0. Full combined spec rerun deferred by the real 25-minute stop.
 
-## A5b2 Tur 4 — source-derived movement identity and production globals
+## A5b2 Tur 4 â€” source-derived movement identity and production globals
 
-Removed the manually copied `TMB_MOVEMENT_CONSTANTS` dictionary and its window export. `movementProfile` now hashes runtime `Function.prototype.toString` sources passed through the existing install closure for `solidSurfaces`, `solidRects`, `parkourBody`, `parkourClear`, `parkourStand`, `parkourCancel`, `parkourPoint`, `parkourSweep`, `parkourChoose`, `parkourTick`, `parkourLanded`, `doPhysics`, `campaignWallAssist`, and `updateDispatch`, plus all `engine.constants`. A served `doPhysics` literal mutation (1450→1451) invalidated the stored ghost; the copied-dictionary negative stayed compatible and failed. Production `Object.keys(window)` has zero additions versus the A5b2 pre backup; a served single-global mutation failed. Default three-route full ghost suite: 10/10 PASS; 18-route mode was not run. Protected functions 23/23, A5b2 integrity 141/141, existing backed-up specs diff 0. Final SHA256: a12 `96ebbb23506ca15ae61380e2d74df3202095ee0ba11844d1f41945b2471ed9d1`; index `d9d66a5c22e821769523ae2e7730bb906cbe45b8946131ba7931b003cbf1d359`. Evidence: `a5b2-evidence/turn4-full-final.log`, `neg-red1-source-profile.log`, `neg-red2-global.log`, `turn4-integrity.json`.
+Removed the manually copied `TMB_MOVEMENT_CONSTANTS` dictionary and its window export. `movementProfile` now hashes runtime `Function.prototype.toString` sources passed through the existing install closure for `solidSurfaces`, `solidRects`, `parkourBody`, `parkourClear`, `parkourStand`, `parkourCancel`, `parkourPoint`, `parkourSweep`, `parkourChoose`, `parkourTick`, `parkourLanded`, `doPhysics`, `campaignWallAssist`, and `updateDispatch`, plus all `engine.constants`. A served `doPhysics` literal mutation (1450â†’1451) invalidated the stored ghost; the copied-dictionary negative stayed compatible and failed. Production `Object.keys(window)` has zero additions versus the A5b2 pre backup; a served single-global mutation failed. Default three-route full ghost suite: 10/10 PASS; 18-route mode was not run. Protected functions 23/23, A5b2 integrity 141/141, existing backed-up specs diff 0. Final SHA256: a12 `96ebbb23506ca15ae61380e2d74df3202095ee0ba11844d1f41945b2471ed9d1`; index `d9d66a5c22e821769523ae2e7730bb906cbe45b8946131ba7931b003cbf1d359`. Evidence: `a5b2-evidence/turn4-full-final.log`, `neg-red1-source-profile.log`, `neg-red2-global.log`, `turn4-integrity.json`.
+## A5c1 — dil, logo placeholder, yerel analitik, cila (28.09)
+
+- B-L1 PASS — EN/TR/RU anahtar kümeleri eşit; `?`/U+FFFD yok; Türkçe/Kiril pozitif kontrolleri geçti.
+- B-L2 PASS (brief tur kapsamı) — 1080x540 mağaza yüzeyi TR/RU literal kontrolü geçti; diğer çözünürlükler ana oturuma devredildi.
+- B-L3 PASS — navigator ru-RU, TR ve unsupported→EN; kayıtlı seçimin reload önceliği doğrulandı. Playgama dili güvenli adaptör üzerinden; YT SDK'da dil API'si bulunmadı, navigator kullanılıyor.
+- M-L4 PARTIAL — gerçek select tıklaması, anlık çeviri, reload ve profil alanları geçti; 390x844 + rota değişimi tam matrisi koşulmadı.
+- M-L5 PASS (brief tur kapsamı) — 3 dil × 1080x540 DOM taşma 0; 844x390/390x844 ana oturuma devredildi.
+- Y-G1 PASS — dört Pillow placeholder dosyası/boyut/manifest SHA ve yeni runtime yolları doğrulandı; görsel kabul ertelendi.
+- B-A1 PARTIAL — tek şema, zorunlu alanlar, LOCAL_ONLY/NOT_CONFIGURED ve 100 getter→0 olay geçti; tam Bot S + satın alma/giyme dizisi koşulmadı.
+- B-C1 PASS — kampanyada OPENING bastırma kaynağı ve mağaza başlığı/dil seçici kesişim 0 geçti; 18 rota × 3 çözünürlük matrisi koşulmadı.
+- Y-D1 PASS — hash'siz yüklemede yeni `window.__tmb*`/test kancası 0.
+- Testler: `tn-a5c-lang.spec.cjs` 9/9 PASS; `a5b-preview.spec.cjs` 10/10 PASS. `tn-a5-ghost.spec.cjs` ilk Bot S testi tamamlandıktan sonra süre kapısında durduruldu; kalan 9 test koşulmadı.
+- Negatif kontroller: RU `???`, `t()`→literal ve getter emit mutasyonları in-memory kırmızı; teslimde kaldırıldı; kaynak grep 0.
+- Dört alan: implementation=IMPLEMENTED · functional_test=PARTIAL · art=PLACEHOLDER · visual_acceptance=DEFERRED.
+- Son SHA256: `index.html` `0816e6927f04f9f4e955379b26a60eb19fa3ca64a2ccb5a72ad5d42b3e0ac9d3`; `js/a12-campaign.js` `cb71e9ea66b5f688edfb58ae960e49a09ed2cabc10df9ee3ad138fe35d92d715`.
+- Koşulmayanlar: parkour-tur1, t1b-bot-s, t2-coins, tn-a5, tn-a12, a5c1-integrity ve tam ghost 10/10; `a5b1-integrity.py` bilerek koşulmadı.
+
+## A5c1 düzeltme turu (28.09)
+- Yayın yüzeyi: `window.analytics` ve `window.tmbPlatformLanguage` kaldırıldı; index↔a12 bağı kapalı DOM olay köprüsünde, snapshot/export yalnız DEBUG. Hash'siz açık global listesi (`analytics`, `tmbPlatformLanguage`, `a5cProbe`, `__tmb*`) 0.
+- Para birimi: TR `insufficient` yeniden `YETERSİZ COIN`; `[Ö]` yönetici kararıyla ileride “JETON” değerlendirilebilir.
+- Ghost: açılış/geri yükleme `ghost_toggle` üretmiyor; gerçek kullanıcı tıklaması tam 1 olay.
+- M-L4 PASS: 390×844 `page.tap`, UI seçimi, anlık dil, D02 rota değişimi, reload ve wallet/progress/outfit/world korunması.
+- B-A1 PASS: gerçek D01 Bot S bitişi, UI mağaza satın alma+giyme, UI dil seçimi, kullanıcı ghost seçimi; olay sırası/alanları, 100 getter→0, dış ağ 0, LOCAL_ONLY doğrulandı. Satın alma ve giyme ayrı olaydır.
+- B-C1 pozitif PASS: 18 rotanın başlangıç fillText kancasında OPENING 0; 1080×540/844×390/390×844 mağaza başlığı ve +N sonuç etiketi kesişimi 0; `a5c1-evidence/bc1-after-*.png`. Negatif kesişim mutasyonu koşulmadı.
+- B-L2 FAIL/eksik: önceki dar mağaza testi henüz brief'in tüm canvas+DOM yüzeyleri, gerçek checkpoint+ölüm/retry ve İngilizce kelime taramasına genişletilmedi. Sabit legacy literaller yeni kampanya renderer'ında görünmez [M], ancak istenen kanca matrisi tamamlanmadığı için PASS verilmedi.
+
+### A5c1 tur 3 (#0431; 2026-09-28 18:23:41 +03:00 → 18:38:09 +03:00)
+
+- B-L2 PASS: TR/RU; görünür DOM + `CanvasRenderingContext2D.fillText` kancası; karakter, kıyafet/dünya mağazası, dil/hayalet, HUD, checkpoint, bitiş kapısı ve sonuç. D01 Bot S gerçek bitiş; D06'da 5 sn gerçek sağ girdiyle doğal ölüm oluşmadı [M], gerçek `r` girdisi retry üretti. Kalıntı 0; açık izin listesi testte.
+- #0429 kısayol sayısı: B-L2 bitiş/bankalama kısayolu 0; B-C1 geometri kurulumu mevcut `finish()` kancasını 3 kez (her viewport için bir) kullanır.
+- 12 literal kanca tablosu: `CHECKPOINT` hayır; `FINISH →` hayır; `Restarting route in 3 seconds...` hayır; `PACKAGE DELIVERED.` hayır; `LOW CLEARANCE` hayır; `EXIT` hayır; `FREE` hayır; `SECTOR` hayır; `SHIELD` hayır; `Incidents` hayır; `DOCK 31 COMPLETE` hayır; `SCAN 31` hayır [M, yeni kampanya yüzeyleri]. Görünen `FLOW` sonuç satırı I18N'e taşındı; TR/RU `nightShift`/`hazardRunner` tamamlandı.
+- Negatif kırmızılar: B-L2 `Received ... Same physics. Shared wallet. Your runner.`; B-C1 `Expected: 0 / Received: 9150`; Y-D1 `Received ... "analytics"`. Mutasyonlar yalnız servis belleğinde, teslim betiğinden kaldırıldı.
+- Pozitif `tn-a5c-lang`: 9/9 PASS (25.2s). Korunma: `a5b-preview` 10/10 PASS (20.2s); `tn-a5-ghost` 9/10, test 7 FAIL: eski kaynak-literal beklentisi `drawResult.toString()` içinde `YEREL EN İYİ` arıyor; yeni tek I18N katmanı `t("localBest")` kullanıyor. #0418 gereği mevcut test değiştirilmedi.
+- Dört alan: implementation=IMPLEMENTED · functional_test=PARTIAL · art=PLACEHOLDER · visual_acceptance=DEFERRED. #0429 bu tur kısayol: B-C1 rota hazırlığı DEBUG profil açma 18; B-A1 0.
+
+### A5c1 tur 4 (2026-09-28 19:11:43 +03:00 → 19:20:18 +03:00)
+
+- Yönetici istisnasıyla yalnız `tn-a5-ghost.spec.cjs` test 7 kaynak incelemesinden davranış testine çevrildi. Eski assertler: TR literal kaynakta var; imza ternary kaynakta var; `toFixed(2)` kaynakta var; kaynakta `online` yok. Yeni assertler: iki gerçek D01 Bot S bitişi; ilk TR kaydında `YEREL EN İYİ` + `YENİ`; ikinci sonuçta TR/EN/RU `localBest`; `[+-]\d+\.\d{2}s`; çizilen metinlerde online/rank/leaderboard 0.
+- Negatifler KIRMIZI: precision `Expected /[+-]\d+\.\d{2}s/, Received "YEREL EN İYİ -0.0s"`; sign `Expected /[+-]\d+\.\d{2}s/, Received "YEREL EN İYİ 0.00s"`; language `Expected true, Received false` (TR ilk kayıt satırı).
+- Pozitif: `tn-a5-ghost.spec.cjs` 10/10 PASS (4.4m, `A5B2_ROUTES` ayarlanmadı); `tn-a5c-lang.spec.cjs` 9/9 PASS (25.2s). Test 7 gerçek bitiş kısayolu 0; yalnız sonuç canvasını ölçmek için `drawResult()` 4 çağrı. Ürün kodu değişmedi; geçici ürün mutasyonu grep 0.
+- SHA256: test `639d0f2230304fbed5a77052c0221ac9fa885d6f73d1160bfc104a0d48c81330`; index `70a41931fbe0a6780b7407e93a1efc7f4da82533d41d37f36ea8f8cf5b61eab9`; a12 `b6bede8c5ef21d8fbea630372f75fef0ea3033e25f5da07d39508188b89c8882`.

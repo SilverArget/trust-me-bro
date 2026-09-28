@@ -47,7 +47,9 @@ const mutations = {
       "return movementProfileCache||(movementProfileCache=sha256(canonical({ground:GROUND,coinContact:COIN_CONTACT_RADIUS,wallHeight:engine?.constants?.PK_WALL_HEIGHT,wallRise:engine?.constants?.PK_WALL_RISE})));",
     ],
   ],
-  7: [["YEREL EN İYİ", "ONLINE #1"]],
+  "7-precision": [["Math.abs(result.bestDiff).toFixed(2)", "Math.abs(result.bestDiff).toFixed(1)"]],
+  "7-sign": [['(result.bestDiff >= 0 ? "-" : " +") +', '"" +']],
+  "7-language": [['${t("localBest")}', '${I18N.en.localBest}']],
   8: [
     [
       '"use strict";',
@@ -113,6 +115,12 @@ test.beforeEach(async ({ page }) =>
     Object.defineProperty(performance, "now", { value: () => now });
     window.__tmbAdvanceTime = (ms) => {
       now += ms;
+    };
+    window.__a5b2ResultText = [];
+    const rawFillText = CanvasRenderingContext2D.prototype.fillText;
+    CanvasRenderingContext2D.prototype.fillText = function (value, ...args) {
+      window.__a5b2ResultText.push(String(value));
+      return rawFillText.call(this, value, ...args);
     };
     localStorage.setItem(
       "trust_me_bro_campaign_profile_v1",
@@ -412,12 +420,34 @@ test("6 changed physics profile rejects an otherwise compatible ghost", async ({
 test("7 local-best signed hundredth seconds and no fake online rank", async ({
   page,
 }) => {
+  test.setTimeout(180000);
   await open(page);
-  const source = await page.evaluate(() => a5Probe("drawResult.toString()"));
-  expect(source).toContain("YEREL EN İYİ");
-  expect(source).toContain('bestDiff >= 0 ? "-" : " +"');
-  expect(source).toContain("toFixed(2)");
-  expect(source.toLowerCase()).not.toContain("online");
+  await page.selectOption("#a12Language", "tr");
+  await page.evaluate(() => { window.__a5b2ResultText.length = 0; });
+  const first = await runBot(page, "D01");
+  expect(first.finished).toBe(true);
+  await page.evaluate(() => a5Probe("drawResult()"));
+  const firstTexts = await page.evaluate(() => [...window.__a5b2ResultText]);
+  expect(firstTexts.some((text) => text.includes("YEREL EN İYİ") && text.includes("YENİ"))).toBe(true);
+
+  await page.evaluate(() => { window.__a5b2ResultText.length = 0; });
+  const second = await runBot(page, "D01");
+  expect(second.finished).toBe(true);
+  const byLanguage = {};
+  for (const language of ["tr", "en", "ru"]) {
+    await page.evaluate(() => { window.__a5b2ResultText.length = 0; });
+    await page.selectOption("#a12Language", language);
+    await page.evaluate(() => a5Probe("drawResult()"));
+    byLanguage[language] = await page.evaluate(() => [...window.__a5b2ResultText]);
+  }
+  const dictionary = await page.evaluate(() => __TMB_A12__.i18n());
+  for (const language of ["tr", "en", "ru"]) {
+    const localBest = byLanguage[language].find((text) => text.includes(dictionary[language].localBest));
+    expect(localBest, `${language} local-best result row`).toBeTruthy();
+    expect(localBest).toMatch(/[+-]\d+\.\d{2}s/);
+  }
+  const allDrawn = [...firstTexts, ...Object.values(byLanguage).flat()].join("\n");
+  expect(allDrawn).not.toMatch(/online|rank|leaderboard/i);
 });
 test("8 hooks debug-only; production new globals zero", async ({ browser }) => {
   const globals = async url => {

@@ -92,3 +92,16 @@ Live shop reuses A5a's versioned atlases: 480x320 canvas, 3:2 aspect; idle/flip 
 Worker/chief reactions only add a surprised face while an active flip is within 320 px; phase follows frontFlip.elapsed, ends with flip. Hazard warnings unchanged. Final art replacement retains anchors, role mapping and pure drawing contract. No new image file/cache dependency; runtime source SHA is tracked in `03-test/a5b1-evidence/output-sha256.json`.
 
 implementation=IMPLEMENTED; functional_test=PASSED; art=PLACEHOLDER; visual_acceptance=DEFERRED. Final NPC design and final atlas aesthetic approval remain deferred.
+
+## A5c1 placeholder brand family
+
+Generated locally by `tools/a5/generate_logo.py` with Pillow. License: project owner. The only embedded words are the protected game title. Final visual acceptance remains deferred.
+
+| Path | Bytes | Dimensions | SHA256 | Four fields |
+|---|---:|---:|---|---|
+| `sprites/a5/brand/trust-me-bro-logo.png` | 19458 | 1024x384 | `9932126c213c16b66a469d7bcc3c36d8896ffb5591d1cec79bf789edad67b417` | implementation=IMPLEMENTED · functional_test=PASSED · art=PLACEHOLDER · visual_acceptance=DEFERRED |
+| `sprites/a5/brand/trust-me-bro-icon-512.png` | 3796 | 512x512 | `c02eac8d33a92ce183fbeb380b28aba3370498e13fca62ed72fc6573432c4e46` | implementation=IMPLEMENTED · functional_test=PASSED · art=PLACEHOLDER · visual_acceptance=DEFERRED |
+| `sprites/a5/brand/trust-me-bro-icon-48.png` | 521 | 48x48 | `6790aa3acf6bec1067c3796b8ff81670fb10f785f50b0acb3db55f025302644c` | implementation=IMPLEMENTED · functional_test=PASSED · art=PLACEHOLDER · visual_acceptance=DEFERRED |
+| `sprites/a5/brand/trust-me-bro-store-cover.png` | 22729 | 1200x630 | `701d613c640a5ac2ff1aca0bb2ee9036e3bc62d71f2deb7fa55ef5c90e0418a6` | implementation=IMPLEMENTED · functional_test=PASSED · art=PLACEHOLDER · visual_acceptance=DEFERRED |
+
+Previous-version assets, retained unchanged; license record unavailable: `trust-me-bro-logo.png` (86857 B, `cfb98cbe793d96844b2857fcb91a849c1bab8271bd79b3d94a302a9ec3f8abe3`), `game-icon.png` (9157 B, `5138d6ec728d5930d27b537bd421744f1907ca9bec77ef9620476bbc19fe3a3a`), `cover-art.png` (2231826 B, `6a268b49d40575ff685977499561bb01475a760dc39c7bad52d24131c5ba2ba3`).

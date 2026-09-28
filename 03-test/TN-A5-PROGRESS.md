@@ -7,7 +7,7 @@ Scope: contract + reproducible placeholder production. Runtime integration and p
 Budget: 5 min baseline/contract, 7 min generation + file matrix/negative controls, 10 min focused preservation gates, 3 min report. Hard limit 25 min.
 Tests: asset matrix (all frames), reproducibility, deliberate malformed asset rejection, index/function and D/F/M/A input baseline hashes; parkour-tur1, tn-a12, t1b-bot-s, tn-a4 -g world, t2-coins static. No full regression.
 
-2026-09-28T05:06:45.900157 — 34 atlases generated; 128 combinations / 1024 frames / 5120 layer samples PASS; 8 negative controls rejected; regeneration SHA identical. Runtime source unchanged. Starting preservation gates.
+2026-09-28T05:06:45.900157 â€” 34 atlases generated; 128 combinations / 1024 frames / 5120 layer samples PASS; 8 negative controls rejected; regeneration SHA identical. Runtime source unchanged. Starting preservation gates.
 
 2026-09-28T05:13:23.714924 Final: core 43 PASS / same 5 accepted old FAIL; world 12 PASS; static 9 PASS; preservation 53/53. A5a1 PASS, A5a PARTIAL. A5a2 integration deferred; no pending tests.
 
@@ -45,9 +45,17 @@ DUZELTME: onceki uc zaman damgasi olculmemis, gercek tur 11:43-11:51 +03:00, 458
 2026-09-28T12:24:19.3816486+03:00 V2 rota haritasi + v1 kayipsiz okuma, salt-okunur hareket sabit sozlugu ve yeni kabul 5/6 satirlari uygulandi; hedefli testlere geciliyor.
 2026-09-28T12:44:36.4065080+03:00 Tur 3 DUR: varsayilan 3 rota gercek Bot-S + normal kare PASS (4.1 dk), rota haritasi ve fizik profili pozitifleri PASS, iki negatif KIRMIZI; integrity 141/141 ve 23/23 korunan SHA temiz. 25 dk siniri nedeniyle tam spec yeniden kosulmadi.
 
-- 2026-09-28T13:20:49.2022558+03:00 — A5b2 Tur 4 başladı; kaynak-türevli hareket profili ve yayın-global fark kapıları.
-- 2026-09-28T13:33:17.5283914+03:00 — A5b2 Tur 4 tamamlandı; tam spec 10/10, iki negatif RED, bütünlük 141/141.
+- 2026-09-28T13:20:49.2022558+03:00 â€” A5b2 Tur 4 baÅŸladÄ±; kaynak-tÃ¼revli hareket profili ve yayÄ±n-global fark kapÄ±larÄ±.
+- 2026-09-28T13:33:17.5283914+03:00 â€” A5b2 Tur 4 tamamlandÄ±; tam spec 10/10, iki negatif RED, bÃ¼tÃ¼nlÃ¼k 141/141.
 
-- 2026-09-28T15:04:42.7752504+03:00 � A5b2 Tur 5 ba�lad�; FAIL1 �nbellek uyguland�, FAIL2 A04�M01 minimal k�rm�z� d�ng�s� �al���yor.
-- 2026-09-28T15:11:35.1675276+03:00 � A04�M01 minimal zinciri 5.5 dk i�inde beklenen KIRMIZI: M01 s�r�c�s� A04 rotas�nda kald�; rota ba��na temiz sayfa d�zeltmesi uyguland�, 18 rota kap�s� ba�lad�.
-- 2026-09-28T15:33:24.7268429+03:00 � Tur 5, 30 dk ger�ek s�re s�n�r�nda DUR: 18-rota yeniden ko�usu s�re dolunca sonland�r�ld�; B-D06 ve varsay�lan tam suite ko�ulmad�; b�t�nl�k kap�s� al�nd�.
+- 2026-09-28T15:04:42.7752504+03:00 — A5b2 Tur 5 başladı; FAIL1 önbellek uygulandı, FAIL2 A04›M01 minimal kırmızı döngüsü çalışıyor.
+- 2026-09-28T15:11:35.1675276+03:00 — A04›M01 minimal zinciri 5.5 dk içinde beklenen KIRMIZI: M01 sürücüsü A04 rotasında kaldı; rota başına temiz sayfa düzeltmesi uygulandı, 18 rota kapısı başladı.
+- 2026-09-28T15:33:24.7268429+03:00 — Tur 5, 30 dk gerçek süre sınırında DUR: 18-rota yeniden koşusu süre dolunca sonlandırıldı; B-D06 ve varsayılan tam suite koşulmadı; bütünlük kapısı alındı.
+2026-09-28 A5c1 başlangıç: HEAD f6e9e16, dal part6-15tuzak, durum yalnız test-results/.last-run.json; index d9d66a5c…, a12 3f800072… — brief tabanı PASS.
+2026-09-28 A5c1 uygulama: tek EN/TR/RU katmanı genişletildi; görünür dil seçici, LOCAL_ONLY analitik adaptörü, placeholder logo ailesi ve manifest/test yüzeyi eklendi; sözdizimi PASS.
+2026-09-28 A5c1 ölçüm: tn-a5c-lang 9/9 PASS; negatif kontroller 3/3 kırmızı ve kalıntı grep 0; a5b-preview 10/10 PASS; tn-a5-ghost koşuyor.
+2026-09-28 A5c1 süre kapısı: ghost ilk Bot S testi tamamlandı, kalan koşu durduruldu; rapor PARTIAL alanları ve devredilen kapılarla yazıldı. Son SHA index 0816e692…, a12 cb71e9ea….
+2026-09-28 A5c1 düzeltme turu: üretim globals kaldırıldı, kapalı CustomEvent köprüsü + DEBUG-only snapshot kuruldu; TR para birimi COIN'e döndü; kullanıcı-dışı ghost_toggle 0 ölçüldü. M-L4 mobil touch/rota/reload PASS, B-A1 gerçek D01 Bot S + UI satın alma/giyme/dil + sıra/şema/ağ/getter PASS, B-C1 18 başlangıç + 3 çözünürlük pozitif PASS. 25 dk DUR: B-L2 tam canvas+DOM/ölüm-retry ve B-C1 negatif mutasyonu tamamlanmadı.
+
+- 2026-09-28 18:37 +03:00 — A5c1 tur 3: B-L2 TR/RU tüm istenen yüzeyler + D01 Bot S + gerçek girdi retry PASS; 3/3 negatif kırmızı; a5b-preview 10/10; ghost 9/10 (eski kaynak literal beklentisi, #0418 dokunulmadı).
+- 2026-09-28 19:20 +03:00 — A5c1 tur 4: yönetici istisnasıyla ghost test 7 davranış testine çevrildi; iki gerçek D01 bitişi, üç dil, ilk kayıt, işaretli yüzde birlik ve çevrimdışı metin kapıları PASS. Üç negatif KIRMIZI; ghost 10/10, a5c-lang 9/9 PASS.
