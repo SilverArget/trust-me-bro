@@ -4,7 +4,9 @@
   "use strict";
   const SCHEMA = 1,
     PROFILE_KEY = "trust_me_bro_campaign_profile_v1",
-    LEGACY_KEY = "trust_me_bro_last_delivery_v2_save";
+    LEGACY_KEY = "trust_me_bro_last_delivery_v2_save",
+    GHOST_KEY = "trust_me_bro_personal_ghost_v1",
+    GHOST_SETTING_KEY = "trust_me_bro_personal_ghost_enabled_v1";
   const DEBUG = location.hash.toLowerCase().includes("debug");
   const telemetry = [];
   function emitGame(event, data = {}) {
@@ -1721,8 +1723,47 @@
     debugHidePlayer = false,
     debugHideMovingPlatforms = false,
     gameClock = 0,
+    ghostEnabled = true,
+    ghostCompatible = null,
+    ghostSamples = [],
+    ghostPlaybackTime = 0,
+    ghostStorageFailed = false,
+    movementProfileCache = null,
+    obstacleSeedCache = new Map(),
     platformOrder = { colliderFrame: 0, landingFrame: 0, carryFrame: 0 },
     flowFlash = 0;
+  function canonical(value) {
+    if (Array.isArray(value)) return `[${value.map(canonical).join(",")}]`;
+    if (value && typeof value === "object") return `{${Object.keys(value).sort().map(k=>`${JSON.stringify(k)}:${canonical(value[k])}`).join(",")}}`;
+    return JSON.stringify(value);
+  }
+  function sha256(text) {
+    const r=(n,x)=>(x>>>n)|(x<<(32-n)),k=[],h=[],p={};let u=2,n=0;
+    while(k.length<64){if(!p[u]){for(let i=2;i*i<=u;i++)if(u%i===0){p[u]=1;break}if(!p[u]){if(n<8)h[n]=(Math.pow(u,.5)*4294967296)|0;k[n++]=(Math.pow(u,1/3)*4294967296)|0}}u++}
+    const bytes=new TextEncoder().encode(text),bit=bytes.length*8,a=Array.from(bytes);a.push(128);while(a.length%64!==56)a.push(0);for(let i=7;i>=0;i--)a.push(i<4?(bit>>>i*8)&255:0);
+    for(let o=0;o<a.length;o+=64){const w=[];for(let i=0;i<16;i++)w[i]=(a[o+4*i]<<24)|(a[o+4*i+1]<<16)|(a[o+4*i+2]<<8)|a[o+4*i+3];for(let i=16;i<64;i++){const x=w[i-15],y=w[i-2];w[i]=(w[i-16]+(r(7,x)^r(18,x)^(x>>>3))+w[i-7]+(r(17,y)^r(19,y)^(y>>>10)))|0}let [A,B,C,D,E,F,G,Hh]=h;for(let i=0;i<64;i++){const t1=(Hh+(r(6,E)^r(11,E)^r(25,E))+((E&F)^(~E&G))+k[i]+w[i])|0,t2=((r(2,A)^r(13,A)^r(22,A))+((A&B)^(A&C)^(B&C)))|0;Hh=G;G=F;F=E;E=(D+t1)|0;D=C;C=B;B=A;A=(t1+t2)|0}h[0]=(h[0]+A)|0;h[1]=(h[1]+B)|0;h[2]=(h[2]+C)|0;h[3]=(h[3]+D)|0;h[4]=(h[4]+E)|0;h[5]=(h[5]+F)|0;h[6]=(h[6]+G)|0;h[7]=(h[7]+Hh)|0}
+    return h.map(x=>(x>>>0).toString(16).padStart(8,"0")).join("");
+  }
+  function movementProfile() {
+    return movementProfileCache||(movementProfileCache=sha256(canonical({movementSources:engine?.movementSources||{},engineConstants:engine?.constants||{}})));
+  }
+  function obstacleSeed(r=route) {
+    const key=`${r.routeId}@${r.version}`;
+    if(!obstacleSeedCache.has(key))obstacleSeedCache.set(key,sha256(canonical({length:r.length,finishX:r.finishX,checkpoints:r.checkpoints,obstacles:r.obstacles,groundSegments:r.groundSegments||null,voidEdges:r.voidEdges||null})));
+    return obstacleSeedCache.get(key);
+  }
+  function ghostIdentity(r=route){return {routeId:r.routeId,routeVersion:r.version,movementProfile:movementProfile(),obstacleSeed:obstacleSeed(r)};}
+  function readGhost(r=route) {
+    ghostStorageFailed=false;
+    try { const stored=parseSave(localStorage.getItem(GHOST_KEY));if(!stored)return null;const v=Array.isArray(stored.samples)?stored:stored.routes?.[r.routeId];if(!v||!Array.isArray(v.samples))return null;const id=ghostIdentity(r);return Object.keys(id).every(k=>v[k]===id[k])?v:null; }
+    catch(_){ghostStorageFailed=true;return null;}
+  }
+  function writeGhost(record) { try { const old=parseSave(localStorage.getItem(GHOST_KEY)),routes=old?.routes&&typeof old.routes==="object"?{...old.routes}:Array.isArray(old?.samples)&&old.routeId?{[old.routeId]:old}:{};routes[record.routeId]=record;localStorage.setItem(GHOST_KEY,JSON.stringify({v:2,routes})); return true; } catch(_){ ghostStorageFailed=true; return false; } }
+  function setGhostEnabled(value){ghostEnabled=!!value;try{localStorage.setItem(GHOST_SETTING_KEY,ghostEnabled?"1":"0")}catch(_){}return ghostEnabled;}
+  function resetGhostRun() { ghostCompatible=readGhost(route);ghostSamples=[];ghostPlaybackTime=0; }
+  function sampleGhost() { if(!run||result)return;const last=ghostSamples.at(-1);if(!last||gameClock-last.t>=1/20)ghostSamples.push({t:+gameClock.toFixed(3),x:+player.x.toFixed(2),y:+player.y.toFixed(2),f:player.facing||1}); }
+  function ghostAt(time=ghostPlaybackTime){const s=ghostCompatible?.samples;if(!s?.length)return null;let i=0;while(i+1<s.length&&s[i+1].t<=time)i++;const a=s[i],b=s[Math.min(i+1,s.length-1)],q=b.t>a.t?Math.max(0,Math.min(1,(time-a.t)/(b.t-a.t))):0;return {x:a.x+(b.x-a.x)*q,y:a.y+(b.y-a.y)*q,f:q<.5?a.f:b.f};}
+  function drawGhost(c){if(!ghostEnabled)return;const g=ghostAt();if(!g)return;c.save();c.globalAlpha=.38;c.fillStyle="#b8f7ff";c.translate(g.x+(g.f<0?player.w:0),g.y);c.scale(g.f<0?-1:1,1);c.fillRect(7,0,18,14);c.fillRect(3,14,26,31);c.fillRect(5,45,8,player.h-45);c.fillRect(19,45,8,player.h-45);c.restore();}
   function routeSurfaces(r) {
     // M01 ground segments use the existing engine surface API; D/F keep their original ground.
     const out = r.worldId === "magma" && r.groundSegments ? r.groundSegments.map(s=>({...s})) : [{ x: 0, y: GROUND, w: r.length, h: 100, kind: "ground" }];
@@ -1847,6 +1888,7 @@
     campaignChief = (routeId === "D06" || route.chief) ? {active:false,x:-400,y:GROUND-48,w:32,h:48,speed:205,catches:0,caughtT:0,lastReturnX:null} : null;
     campaignDeaths = 0;
     gameClock = 0;
+    resetGhostRun();
     platformOrder = { colliderFrame: 0, landingFrame: 0, carryFrame: 0 };
     engine.setDynamicSurfaces(movingPlatforms);
     engine.reset(70, GROUND - player.h);
@@ -1910,7 +1952,7 @@
     profile.walletBalance += amount;
     profile.bankedRunIds.push(run.economyRunId);
     profile.bankedRunIds = profile.bankedRunIds.slice(-100);
-    const elapsed = (performance.now() - routeStartedAt) / 1000,
+    const elapsed = gameClock,
       key = `${routeId}@${route.version}`,
       old = profile.bestRunsByRouteVersion[key];
     profile.bestRunsByRouteVersion[key] = old
@@ -1937,6 +1979,8 @@
         style: { earned: style >= 5, reason: style >= 5 ? "flow" : "flow-low" },
       },
     };
+    const ghostRecord={...ghostIdentity(route),elapsed,samples:ghostSamples};
+    if(ghostSamples.length>1&&(!ghostCompatible||elapsed<ghostCompatible.elapsed))writeGhost(ghostRecord);
     document.body.dataset.campaignPhase = "result";
     syncActionVisibility();
     emitGame("run_reward_banked", {
@@ -1958,6 +2002,8 @@
       run.checkpointX = 70;
     }
     engine.reset(full ? 70 : run.checkpointX, GROUND - player.h);
+    if(full){gameClock=0;ghostPlaybackTime=0;ghostSamples=[];}
+    else {const cp=run.checkpointX,hit=ghostCompatible?.samples?.find(v=>v.x>=cp);ghostPlaybackTime=hit?.t||0;gameClock=ghostPlaybackTime;ghostSamples=ghostSamples.filter(v=>v.t<=gameClock);}
     barrels = [];
     collapsing = route.obstacles.filter(o=>o.type === "collapse").map(o=>({...o,state:"READY",timer:0,fallY:0}));
     engine.setGeometry(routeSurfaces(route));
@@ -1991,6 +2037,8 @@
   function beforePhysicsIntegrated(dt) {
     if (!campaign || shopOpen || result) return;
     gameClock += dt;
+    ghostPlaybackTime += dt;
+    sampleGhost();
     for (const p of movingPlatforms) {
       const oldX = p.x;
       p.x += p.dir * p.speed * dt;
@@ -2354,7 +2402,7 @@
       H / 2 - 34,
     );
     ctx.fillText(
-      `${t("record")} ${result.bestDiff === null ? "NEW" : (result.bestDiff >= 0 ? "-" : " +") + Math.abs(result.bestDiff).toFixed(2) + "s"}`,
+      `YEREL EN İYİ ${result.bestDiff === null ? "NEW" : (result.bestDiff >= 0 ? "-" : " +") + Math.abs(result.bestDiff).toFixed(2) + "s"}`,
       W / 2,
       H / 2 + 2,
     );
@@ -2366,13 +2414,16 @@
   }
   function installUI() {
     const style = document.createElement("style");
-    style.textContent = `#a12Actions{position:fixed;z-index:31;left:50%;bottom:max(86px,calc(env(safe-area-inset-bottom) + 82px));transform:translateX(-50%);display:flex;gap:9px}#a12Actions[hidden]{display:none!important}#a12Actions button,#a12Shop button{border:1px solid #ffffff44;border-radius:12px;background:#153246;color:#fff;padding:11px 16px;font:900 13px system-ui}#a12Shop{position:fixed;inset:0;z-index:45;display:none;background:#06121bf2;color:#fff;padding:clamp(15px,4vw,38px)}#a12Shop.show{display:grid;grid-template-columns:minmax(230px,42%) 1fr;gap:25px}#a12Preview{display:grid;place-items:center;background:#102635;border-radius:18px;min-height:280px}#a12Preview canvas{width:180px;height:240px}#a12Products{overflow:auto}#a12Products article{padding:17px;margin:12px 0;background:#132b39;border:1px solid #ffffff30;border-radius:14px}.runnerSymbol{font-size:25px;display:block}.characterChoice[data-character="0"]{box-shadow:inset 0 0 0 2px #3aa2ff}.characterChoice[data-character="1"]{box-shadow:inset 0 0 0 2px #ff6aac}@media(max-width:540px) and (orientation:portrait){#a12Shop.show{grid-template-columns:1fr;grid-template-rows:35vh 1fr}#a12Preview{min-height:0}#a12Preview canvas{width:120px;height:160px}}`;
+    style.textContent = `#a12Actions{position:fixed;z-index:31;left:50%;bottom:max(86px,calc(env(safe-area-inset-bottom) + 82px));transform:translateX(-50%);display:flex;gap:9px}#a12Actions[hidden]{display:none!important}#a12Actions button,#a12Shop button,#a12GhostToggle{border:1px solid #ffffff44;border-radius:12px;background:#153246;color:#fff;padding:11px 16px;font:900 13px system-ui}#a12GhostToggle{position:fixed;z-index:31;right:14px;top:78px}#a12Shop{position:fixed;inset:0;z-index:45;display:none;background:#06121bf2;color:#fff;padding:clamp(15px,4vw,38px)}#a12Shop.show{display:grid;grid-template-columns:minmax(230px,42%) 1fr;gap:25px}#a12Preview{display:grid;place-items:center;background:#102635;border-radius:18px;min-height:280px}#a12Preview canvas{width:180px;height:240px}#a12Products{overflow:auto}#a12Products article{padding:17px;margin:12px 0;background:#132b39;border:1px solid #ffffff30;border-radius:14px}.runnerSymbol{font-size:25px;display:block}.characterChoice[data-character="0"]{box-shadow:inset 0 0 0 2px #3aa2ff}.characterChoice[data-character="1"]{box-shadow:inset 0 0 0 2px #ff6aac}@media(max-width:540px) and (orientation:portrait){#a12Shop.show{grid-template-columns:1fr;grid-template-rows:35vh 1fr}#a12Preview{min-height:0}#a12Preview canvas{width:120px;height:160px}}`;
     style.textContent += `#a12Shop{box-sizing:border-box}#a12Shop.show{grid-template-columns:minmax(230px,40%) minmax(0,1fr);grid-template-rows:minmax(0,1fr);gap:18px}#a12Preview{display:flex;flex-direction:column;justify-content:center;gap:12px;min-width:0;min-height:0;overflow:hidden}#a12Preview canvas{width:min(100%,480px);height:auto;max-height:65%;aspect-ratio:3/2;object-fit:contain;image-rendering:pixelated}#a12Preview .previewControls{display:flex;flex-wrap:wrap;justify-content:center;gap:6px}#a12Preview button{padding:8px 10px}#a12Preview button[aria-pressed="true"]{background:#286650;border-color:#8ff1c8}#a12Products{min-height:0;min-width:0;overscroll-behavior:contain}@media(max-width:540px) and (orientation:portrait){#a12Shop.show{grid-template-columns:minmax(0,1fr);grid-template-rows:minmax(230px,40%) minmax(0,1fr);gap:12px}#a12Preview{gap:5px}#a12Preview canvas{max-height:62%;width:auto;max-width:100%}}`;
     document.head.appendChild(style);
     const actions = document.createElement("div");
     actions.id = "a12Actions";
     actions.innerHTML = `<button data-act="next">${t("next")}</button><button data-act="retry">${t("retry")}</button><button data-act="shop">${t("shop")}</button>`;
     document.body.appendChild(actions);
+    const ghostToggle=document.createElement("button");ghostToggle.id="a12GhostToggle";ghostToggle.type="button";
+    const syncGhostToggle=()=>{ghostToggle.textContent=`GHOST ${ghostEnabled?"ON":"OFF"}`;ghostToggle.setAttribute("aria-pressed",String(ghostEnabled));};
+    ghostToggle.addEventListener("click",()=>{setGhostEnabled(!ghostEnabled);syncGhostToggle();});syncGhostToggle();document.body.appendChild(ghostToggle);
     actions.hidden = true;
     actions.addEventListener("click", (e) => {
       const a = e.target.dataset.act;
@@ -2719,6 +2770,9 @@
       profile: clone(profile),
       routeId,
       routeVersion: route?.version,
+      movementProfile: movementProfile(),
+      obstacleSeed: obstacleSeed(route),
+      ghost: {enabled:ghostEnabled,compatible:!!ghostCompatible,sampleCount:ghostSamples.length,playbackTime:ghostPlaybackTime,storageFailed:ghostStorageFailed,alpha:.38},
       runnerId: profile.runnerId,
       hitbox: { w: player.w, h: player.h },
       economy: run
@@ -2955,6 +3009,7 @@
   function drawWorldWithNpcs(c) {
     drawWorldIntegrated(c);
     drawNpcPresentation(c);
+    drawGhost(c);
   }
   // A5 presentation only: atlas selection never writes player/parkour state.
   let runnerAtlasContract = null;
@@ -3023,6 +3078,7 @@
     if (document.body.dataset.gameMode === "campaign") return;
     document.body.dataset.gameMode = "campaign";
     loadProfile();
+    try { ghostEnabled=localStorage.getItem(GHOST_SETTING_KEY)!=="0"; } catch(_){ ghostEnabled=true; }
     engine = window.__installCampaignEngine({
       attach(api) {
         engine = api;
@@ -3057,6 +3113,7 @@
       };
       window.__TMB_A12__ = Object.freeze({
         getState: debugState,
+        ghost: Object.freeze({identity:()=>ghostIdentity(route),read:()=>clone(readGhost(route)),setEnabled:setGhostEnabled,at:(time)=>ghostAt(time),clear:()=>{try{localStorage.removeItem(GHOST_KEY)}catch(_){}ghostCompatible=null;},inject:(value)=>{if(typeof value==="string")localStorage.setItem(GHOST_KEY,value);else writeGhost(value);ghostCompatible=readGhost(route);return debugState();}}),
         routeDefinition: (id)=>clone(ROUTES[id]),
         migrateV36: (v, p) => migrateV36(v, p),
         startRoute: (id, fresh = true, fullD06 = false) => startRoute(id, fresh, fullD06),

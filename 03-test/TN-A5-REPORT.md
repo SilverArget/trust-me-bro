@@ -208,3 +208,27 @@ Final a12 SHA256: `6a2108c75ac846f524d25ebc75f695eea594410daaa96d553a466be922522
 Graphify refresh warning details: 1949 source files (mostly JSON evidence) yielded no nodes; three existing Android Gradle files were partially extracted due to syntax errors. Community labels changed (2061 saved / 2063 current; 79 renamed by hub); no paid/network LLM label refresh was requested. See `a5b1-evidence/graphify-update.log`.
 
 Graphify AST refresh completed: 32771 nodes / 54648 edges / 2063 communities; graph.json and GRAPH_REPORT.md updated. PowerShell wrapper exit 1 accompanied stderr warnings, while tool log explicitly confirms rebuild completion. Generated graph visualization was not opened. All task test and graphify processes have exited.
+
+## A5b2 — personal ghost (25-minute stop, PARTIAL / NOT ACCEPTED)
+
+Runtime implementation exists in `js/a12-campaign.js`: separate ghost storage/settings, game-clock samples, compatibility identity, pre-player alpha .38 drawing, retry/checkpoint playback, finished-better-only write, local-best result copy, DEBUG-only probes. `movementProfile` hashes movement constants and excludes runner/outfit; `obstacleSeed` hashes route length/finish/checkpoints/obstacles/ground/void geometry. Runner/outfit selection does not enter either physics identity.
+
+New `tn-a5-ghost.spec.cjs` positive suite: 8/8 PASS in 11.8s; integrity: 141/141; protected index functions: 23/23 start/end. However acceptance is NOT granted: acceptance 1 used ghost injection on A01/A02/D01 rather than three real Bot-S completions (shortcut calls per row: 3,1,0,1,1,2,0,0), and required per-row temporary negative-control executions were not completed. Delivery grep for temporary mutation markers is 0. Full/legacy preservation gates and 18-route acceptance 1 remain main-session work per brief.
+
+Evidence: `a5b2-evidence/ghost-final.log`, `integrity.json`, `protected-sha-start.json`, `protected-sha-end.json`, `source.diff`, `graphify-update.log`. Final SHA256: a12 `3167c2199f68e9c33308691cd3dc72f490b0cbcf8e25012a0d90880897831562`; index `4cc02ad4caacb583bdcd9ca562dc43df0a235de2f3aad3cadd797780b73aead7`.
+
+### A5b2 Tur 2 — completed targeted acceptance
+
+Acceptance 1 now uses the existing Bot-S keyboard-input driver with zero setup shortcuts: A01 65.32s/3919 steps/1306 samples/MAD .2455; crane route A02 65.10s/3906/1302/MAD .2455; checkpoint route D01 40.88s/2453/818/MAD .2495. Acceptances 2-8 rerun 7/7 PASS; checkpoint retry synchronized to 4.25s, a faster completed D01 replaced a 999s best, and a throwing ghost `setItem` set storageFailed while preserving the profile.
+
+All eight temporary served-product mutations produced RED (`a5b2-evidence/neg-1.log` … `neg-8.log`) and were removed automatically; disk a12 SHA stayed `3167c2199f68e9c33308691cd3dc72f490b0cbcf8e25012a0d90880897831562`. Integrity 141/141, protected index functions 23/23, existing pre-backed spec diff count 0, temporary product marker grep 0. Shortcut-call counts acceptances 1-8: `0,0,0,1,0,2,0,0` (acceptance 4 checkpoint fixture; acceptance 6 permitted record/error injection).
+## A5b2 Tur 3 — route-local ghost and complete movement profile
+
+- Ghost storage is v2 `{routes:{routeId:record}}`; legacy v1 single records remain readable and are migrated on the next successful write. Route-local A01→A02→A01 and its single-key negative passed/red.
+- Movement profile hashes `TMB_MOVEMENT_CONSTANTS` plus all campaign `engine.constants`; changing gravity invalidates playback, while the legacy narrow-profile negative stayed compatible and failed.
+- Acceptance 1 default remains A01/A02/D01; `A5B2_ROUTES=all` selects all 18 routes. Real-frame on/off measurement covers world + runner and records region MAD/outside MAD.
+- Protected functions 23/23 and A5b2 integrity 141/141 passed; existing spec diff 0. Full combined spec rerun deferred by the real 25-minute stop.
+
+## A5b2 Tur 4 — source-derived movement identity and production globals
+
+Removed the manually copied `TMB_MOVEMENT_CONSTANTS` dictionary and its window export. `movementProfile` now hashes runtime `Function.prototype.toString` sources passed through the existing install closure for `solidSurfaces`, `solidRects`, `parkourBody`, `parkourClear`, `parkourStand`, `parkourCancel`, `parkourPoint`, `parkourSweep`, `parkourChoose`, `parkourTick`, `parkourLanded`, `doPhysics`, `campaignWallAssist`, and `updateDispatch`, plus all `engine.constants`. A served `doPhysics` literal mutation (1450→1451) invalidated the stored ghost; the copied-dictionary negative stayed compatible and failed. Production `Object.keys(window)` has zero additions versus the A5b2 pre backup; a served single-global mutation failed. Default three-route full ghost suite: 10/10 PASS; 18-route mode was not run. Protected functions 23/23, A5b2 integrity 141/141, existing backed-up specs diff 0. Final SHA256: a12 `96ebbb23506ca15ae61380e2d74df3202095ee0ba11844d1f41945b2471ed9d1`; index `d9d66a5c22e821769523ae2e7730bb906cbe45b8946131ba7931b003cbf1d359`. Evidence: `a5b2-evidence/turn4-full-final.log`, `neg-red1-source-profile.log`, `neg-red2-global.log`, `turn4-integrity.json`.
