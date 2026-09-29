@@ -65,3 +65,14 @@ DUZELTME: onceki uc zaman damgasi olculmemis, gercek tur 11:43-11:51 +03:00, 458
 2026-09-28T20:50+03:00 A5c2a correction: source-string assertions removed; live bus analysers added; headless AudioContext running; runtime suite calibration 10/11 then limiter peak fixed 1.096 -> 0.88083.
 2026-09-28 21:02 +03 A5c2a Tur 3: runtime negatifleri 10/10, audio 11/11, korunma 50/50; D04 containerDoor mevcut fakat Bot S bekleme tetik ÅŸartÄ±nÄ± karÅŸÄ±lamadÄ±ÄŸÄ± iÃ§in door cue 0 / NOT COVERED.
 2026-09-28 21:18 +03 A5c2a Tur 5: doÄŸru rota A04 Ã¼zerinde gerÃ§ek zamanlÄ± Bot S x=15180'de durduruldu; a04-m-door hazard_telegraphâ†”door cue farkÄ± 0 kare, SFX -13.08 dB. DEBUG doorTrigger negatifinde olay sÃ¼rdÃ¼/cue artmadÄ±; audio 11/11, lang 9/9.
+2026-09-28 22:42 +03 A5c2b Tur 1 adÄ±m 1 PASS: baseline kopya oluÅŸturuldu; a12 bb4e6990â€¦, index 2c189a4eâ€¦, a5-audio 600958b9â€¦ kaynakla eÅŸit.
+2026-09-28 22:43 +03 A5c2b Tur 1 adÄ±m 2 FAIL/DUR: taban B-S3 5.031 sn, delta=NaN (eÅŸik >=6), shortcuts=0; stop_on nedeniyle B-S7/Y-S9 ve sonraki adÄ±mlar Ã§alÄ±ÅŸtÄ±rÄ±lmadÄ±.
+2026-09-28 23:50 A5c2b Tur 2: H1 doÄŸrulandÄ± (ctx running iken currentTime 0; ilk render 770-813 ms), H2/H3/H4 Ã§Ã¼rÃ¼tÃ¼ldÃ¼; kÃ¶k neden B-S3 running vekili, Ã¼rÃ¼n deÄŸiÅŸikliÄŸi yok.
+
+A5c2b Tur 3 baþlangýç: 2026-09-29T00:09:29.2002542+03:00 — HEAD 38187c2; K-A5C2B-UNLOCK uygulanýyor.
+2026-09-29T00:09:49.2514822+03:00 — A deðiþikliði doðrulandý: test diff 1+/1-, soðuk B-S3 1/3 öncesi 90 sn bekleme.
+2026-09-29T00:11:32.0786578+03:00 — soðuk B-S3 1/3 PASS; koþu 2 öncesi 90 sn bekleme.
+2026-09-29T00:13:08.0984772+03:00 — soðuk B-S3 2/3 PASS; koþu 3 öncesi 90 sn bekleme.
+2026-09-29T00:14:50.3456139+03:00 — soðuk B-S3 3/3 PASS; beklemesiz 3 koþu baþlýyor.
+2026-09-29T00:15:12.7736934+03:00 — beklemesiz B-S3 3/3 PASS; tn-a5c-audio 11 test baþlýyor.
+2026-09-29T00:18:03.8022298+03:00 — DUR: tn-a5c-audio 9/11; M-S4 desktop/mobile negatif musicToSfx -Infinity. B adýmlarý çalýþtýrýlmadý.

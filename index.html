@@ -188,10 +188,10 @@ let campaignEngine=null;
 // Audio
 let ac=null,master=null,audioAllowed=true,bgmGain=null,bgmSourceConnected=false,bgmFallback=true,debugAudioErr='';
 let bgmMuted=false,bgmStarted=false,bgmStarting=false;
-const bgm=new Audio('soundtrack.mp3');bgm.loop=true;bgm.volume=.35;bgm.preload='auto';try{bgm.load()}catch(_){}
+const bgm=new Audio('soundtrack.mp3');bgm.loop=true;bgm.volume=.35;bgm.preload='none';
 document.addEventListener('tmb:campaign-audio',()=>{try{bgm.pause()}catch(_){}});
 function applyMute(){const m=!audioAllowed||bgmMuted;if(bgmFallback)bgm.muted=m;else if(bgmGain)bgmGain.gain.value=m?0:0.35;const mb=document.getElementById('muteBtn');if(mb)mb.innerHTML=bgmMuted?'🔇':'🔊';}
-function initBgm(){if(bgmStarted||bgmStarting)return;bgmStarting=true;try{ensureAudio()}catch(e){}if(ac&&ac.state==='suspended')ac.resume();const p=bgm.play();if(p!==undefined)p.then(()=>{bgmStarted=true;bgmStarting=false;debugAudioErr='';['pointerdown','touchstart','keydown'].forEach(e=>window.removeEventListener(e,initBgm))}).catch(err=>{bgmStarting=false;debugAudioErr=((err&&err.name?err.name:'err')+':'+(err&&err.message?err.message:'')).slice(0,60)});else{bgmStarted=true;bgmStarting=false;['pointerdown','touchstart','keydown'].forEach(e=>window.removeEventListener(e,initBgm))}}
+function initBgm(){if(bgmStarted||bgmStarting)return;bgmStarting=true;document.dispatchEvent(new CustomEvent('tmb:music',{detail:{source:'menu'}}));bgmStarted=true;bgmStarting=false;['pointerdown','touchstart','keydown'].forEach(e=>window.removeEventListener(e,initBgm))}
 ['pointerdown','touchstart','keydown'].forEach(e=>window.addEventListener(e,initBgm,{passive:true}));
 let muteHandled=false;const handleMuteBtn=e=>{if(e&&e.preventDefault)e.preventDefault();if(muteHandled)return;muteHandled=true;bgmMuted=!bgmMuted;applyMute();saveProgress();setTimeout(()=>muteHandled=false,250)};
 const mBtn=document.getElementById('muteBtn');if(mBtn){mBtn.addEventListener('pointerdown',handleMuteBtn,{passive:false});mBtn.addEventListener('touchstart',handleMuteBtn,{passive:false});mBtn.addEventListener('click',handleMuteBtn,{passive:false});}
@@ -266,7 +266,7 @@ function notifyLevelFailed(){if(gameplayActive===null)return;platformAdapter.lev
 function notifyLevelPaused(){if(gameplayActive!==true)return;gameplayActive=false;platformAdapter.levelPaused()}
 function notifyLevelResumed(){if(gameplayActive!==false)return;gameplayActive=true;platformAdapter.levelResumed()}
 function pauseGame(source='system'){if(systemPaused)return;if(!parkourCancel()){parkour.state='crouch';parkour.timer=0;parkour.roll=0}systemPaused=true;document.dispatchEvent(new CustomEvent('tmb:audio-pause',{detail:true}));notifyLevelPaused();keys.left=keys.right=keys.jump=false;joystick.axis=0;joystick.active=false;try{if(typeof releaseJoy==='function')releaseJoy()}catch(_){}saveProgress();if(rafId)cancelAnimationFrame(rafId);rafId=0;loopRunning=false;bgm.pause();try{if(ac&&ac.state==='running')ac.suspend()}catch(_){}}
-function resumeGame(source='system'){if(!systemPaused)return;systemPaused=false;document.dispatchEvent(new CustomEvent('tmb:audio-pause',{detail:false}));notifyLevelResumed();resetChief();last=performance.now();try{if(audioAllowed&&ac&&ac.state==='suspended')ac.resume();if(bgmStarted)bgm.play().catch(()=>{})}catch(_){}startLoop()}
+function resumeGame(source='system'){if(!systemPaused)return;systemPaused=false;document.dispatchEvent(new CustomEvent('tmb:audio-pause',{detail:false}));notifyLevelResumed();resetChief();last=performance.now();try{if(audioAllowed&&ac&&ac.state==='suspended')ac.resume()}catch(_){}startLoop()}
 const pauseOverlay=document.getElementById('pauseOverlay');document.getElementById('pauseBtn').addEventListener('click',e=>{e.preventDefault();e.stopPropagation();pauseGame('user');pauseOverlay.classList.add('show')});pauseOverlay.addEventListener('click',()=>{pauseOverlay.classList.remove('show');resumeGame('user')});
 let platformPauseListener=()=>{},platformResumeListener=()=>{};
 function setupLifecycle(){

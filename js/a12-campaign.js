@@ -1898,7 +1898,7 @@
     movingPlatforms = route.obstacles.filter(o => o.type === "crane" || o.type === "pallet").map(o => ({ ...o, dir: 1, dx: 0, rideFrames: 0 }));
     collapsing = route.obstacles.filter(o=>o.type === "collapse").map(o=>({...o,state:"READY",timer:0,fallY:0}));
     containerDoors = route.obstacles.filter(o=>o.type === "containerDoor").map(o=>({...o,state:"OPEN",timer:0,currentY:o.openY,preparingElapsed:null,pushes:0}));
-    document.dispatchEvent(new Event("tmb:campaign-audio"));
+    document.dispatchEvent(new CustomEvent("tmb:campaign-audio", { detail: { worldId: route.worldId, routeId } }));
     for (const p of movingPlatforms) sfx(p.type === "crane" ? "crane" : "pallet");
     campaignChief = (routeId === "D06" || route.chief) ? {active:false,x:-400,y:GROUND-48,w:32,h:48,speed:205,catches:0,caughtT:0,lastReturnX:null} : null;
     campaignDeaths = 0;

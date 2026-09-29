@@ -21,7 +21,19 @@ All outputs below are original project-owned synthesis from `tools/a5/synthesize
 | purchase / `audio/sfx/purchase.ogg` | 4557 | `e3e329504c8fb07d2b196fe68b77e3047871ad62ea34b72d763cf6aefec577e2` |
 | ramp / `audio/sfx/ramp.ogg` | 4115 | `d110570175ad874da64e5e913056b8e5c91b67d787cfa52fa9fef2307c8a95b5` |
 
-Legacy `soundtrack.mp3`: previous version, license record unavailable — retained; paused in campaign and no longer duplicated. It will be replaced in A5c2b.
+## A5c2b music — YÖNETİCİ MÜZİK SÜRÜMÜ (2026-09-29)
+
+Final music acceptance requires manager listening. Tarihçe: SENTEZ SÜRÜM (synthesize_music.py, seed 50202) 2026-09-29 dinlemede reddedildi ("komple uğultu"; 4/5 parçada spektral rolloff 229–356 Hz; yedek `01-tasarim/a5c2b-sentez-yedek-2026-09-29/`); Sonniss ambiyans denemesi de reddedildi (dünyalarla alakasız). Kaynak: yöneticinin indirdiği müzik paketi, ham MP3'ler `01-tasarim/a5c2b-muzik-kaynak-2026-09-29/` (11 dosya; stage1-5, altstage4/5, boss, altboss, *_nointro, gameover). License: **CC0 1.0** — "Platformer Chiptunes" by Guy G. Gamerson, OpenGameArt (https://opengameart.org/content/platformer-chiptunes, gönderim 2026-01-30, sayfa 2026-09-29 doğrulandı); atıf gerekmez, ticari kullanım serbest. Recipe (her satır): mono 48 kHz; baş/son sessizlik `silenceremove` (−45 dB); döngü noktası: son `X` s ile ilk `X` s `acrossfade` (tri) → kusursuz `L` s loop (L = kırpılmış süre − X); sabit kazanç (`volume`) ile −16 LUFS + `alimiter` (−2 dBTP); baş/son 0.384 s sessiz dolgu (`adelay=384`,`apad=0.384`); `-c:a libvorbis -q:a 3`. P is encoded padding and L is the played loop length. Seam kontrolü: `tools/a5/music_loop_check.py --p 0.384 --l L` 5/5 PASS (2026-09-29). Alternatifler (dinleme için, teslimde silinir): `audio/music-alt/alt-stage3|4|5.ogg`.
+
+| Output | Bytes | Output SHA256 | P | L | source / license |
+|---|---:|---|---:|---:|---|
+| `audio/music/menu.ogg` | 576924 | `eb5bfff9f8c7137ece9d3cec122e7ce35bb8cc21b3fba11c636e280873ae4142` | 0.384 s | 56.999333 s | yönetici paketi `stage1.mp3`; X 3 s; CC0 1.0 (OpenGameArt Platformer Chiptunes); q3 |
+| `audio/music/dock31.ogg` | 533001 | `3f710df2ee3d7d9e719ce2a1b5edaf8064b947ac792bb4b385d1f2ec63eb8130` | 0.384 s | 53.697375 s | yönetici paketi `stage2.mp3`; X 1.5 s; CC0 1.0 (OpenGameArt Platformer Chiptunes); q3 |
+| `audio/music/frozen.ogg` | 665433 | `5d232335566b5141f96d19878115584f6243532e48c071a3bf936eb52b0dd95c` | 0.384 s | 71.327563 s | yönetici paketi `stage5.mp3`; X 1.5 s; CC0 1.0 (OpenGameArt Platformer Chiptunes); q3 |
+| `audio/music/magma.ogg` | 611281 | `c46e814926510d6601d785875d244eff1ea1ca65c615943c67e7cd612d092a57` | 0.384 s | 62.915083 s | yönetici paketi `boss_nointro.mp3`; X 3.5 s; CC0 1.0 (OpenGameArt Platformer Chiptunes); q3 |
+| `audio/music/aftermath.ogg` | 446213 | `d483075b2094790179fb65211052210ac4eef635e3b416710fa69e3c6d92152e` | 0.384 s | 47.899646 s | yönetici paketi `altboss_nointro.mp3`; X 1.6 s; CC0 1.0 (OpenGameArt Platformer Chiptunes); q3 |
+
+Legacy `soundtrack.mp3`: previous version, license record unavailable — retained; kampanya ve menüde kullanılmaz.
 
 ## A5a1 placeholder contract
 
