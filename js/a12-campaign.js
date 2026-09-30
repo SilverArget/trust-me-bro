@@ -1222,6 +1222,7 @@
       length: 10400,
       finishX: 10260,
       checkpoints: [70, 5250],
+      chief: { startX: 5250 },
       obstacles: [
         // T2-c2: approved gap additions; existing geometry is preserved.
         {"id":"d01-t2c-vault-3","type":"vault","x":7208,"y":407,"w":24,"h":48},
@@ -1252,6 +1253,7 @@
       length: 12540,
       finishX: 12400,
       checkpoints: [70, 2400, 6800, 10300],
+      chief: { startX: 2400 },
       obstacles: [
         // T2-c2: approved gap additions; existing geometry is preserved.
         {"id":"d02-t2c-vault-1","type":"vault","x":3800,"y":407,"w":24,"h":48},
@@ -1280,6 +1282,7 @@
     D03: {
       routeId: "D03", worldId: "dock31", version: 2, name: "CRANE CROSSING",
       length: 14300, finishX: 14160, checkpoints: [70, 4300, 9000],
+      chief: { startX: 4300 },
       obstacles: [
         // T2-c2: approved gap additions; existing geometry is preserved.
         {"id":"d03-t2c-vault-1","type":"vault","x":3976,"y":407,"w":24,"h":48},
@@ -1304,6 +1307,7 @@
     D04: {
       routeId: "D04", worldId: "dock31", version: 1, name: "ROOFTOP SHORTCUT",
       length: 11100, finishX: 10960, checkpoints: [70, 5350],
+      chief: { startX: 5350 },
       obstacles: [
         // T2-c2: approved gap additions; existing geometry is preserved.
         {"id":"d04-t2c-vault-2","type":"vault","x":7680,"y":407,"w":24,"h":48},
@@ -1329,6 +1333,7 @@
     D05: {
       routeId: "D05", worldId: "dock31", version: 1, name: "CLEAN CHAIN",
       length: 13250, finishX: 13110, checkpoints: [70, 5300, 11000],
+      chief: { startX: 5300 },
       obstacles: [
         // T2-c2: approved gap additions; existing geometry is preserved.
         {"id":"d05-t2c-vault-3","type":"vault","x":7106,"y":407,"w":24,"h":48},
@@ -1551,6 +1556,7 @@
       migrationFlags: {},
       legacyProgress: null,
       bankedRunIds: [],
+      rewardedRunIds: [],
     };
   }
   function languageFrom(v) {
@@ -1611,6 +1617,9 @@
       ...new Set(
         Array.isArray(raw.bankedRunIds) ? raw.bankedRunIds.slice(-100) : [],
       ),
+    ];
+    n.rewardedRunIds = [
+      ...new Set(Array.isArray(raw.rewardedRunIds) ? raw.rewardedRunIds.slice(-100) : []),
     ];
     return n;
   }
@@ -1988,6 +1997,7 @@
       first,
       style,
       elapsed,
+      economyRunId: run.economyRunId,
       bestDiff: old ? old - elapsed : null,
       goals: {
         clean: { earned: staggerT <= 0, reason: staggerT <= 0 ? "clean" : "contact" },
@@ -2377,6 +2387,28 @@
     const show = !!result && !shopOpen;
     a.hidden = !show;
     a.setAttribute("aria-hidden", String(!show));
+    syncRewardedButton();
+  }
+  let rewardedInFlight = null;
+  function rewardedText(amount, claimed=false) {
+    const language=profile.settings.language;
+    if(claimed)return language==="tr"?"ALINDI":language==="ru"?"ПОЛУЧЕНО":"CLAIMED";
+    return language==="tr"?`REKLAM İZLE · +${amount} COIN`:language==="ru"?`РЕКЛАМА · +${amount} МОНЕТЫ`:`WATCH AD · +${amount} COINS`;
+  }
+  function rewardedAvailable() { const detail={available:false};document.dispatchEvent(new CustomEvent("tmb:rewarded-capability",{detail}));return detail.available===true; }
+  function syncRewardedButton() {
+    const button=document.querySelector('#a12Actions [data-act="rewarded"]');if(!button)return;
+    const claimed=!!result&&profile.rewardedRunIds.includes(result.economyRunId),visible=!!result&&result.amount>0&&(claimed||rewardedAvailable());
+    button.hidden=!visible;button.disabled=claimed||rewardedInFlight===result?.economyRunId;button.textContent=rewardedText(result?.amount||0,claimed);
+  }
+  async function claimRewardedResult() {
+    if(!result||result.amount<=0||!rewardedAvailable())return false;
+    const id=result.economyRunId,amount=result.amount;if(rewardedInFlight||profile.rewardedRunIds.includes(id))return false;
+    rewardedInFlight=id;syncRewardedButton();emitGame("rewarded_offer",{placement:"result_x2",economyRunId:id});emitGame("rewarded_start",{placement:"result_x2",economyRunId:id});
+    const detail={placement:"result_x2",promise:null};document.dispatchEvent(new CustomEvent("tmb:rewarded-request",{detail}));let granted=false;try{granted=!!(detail.promise&&await detail.promise)}catch(_){}
+    if(rewardedInFlight!==id)return false;rewardedInFlight=null;const current=!!result&&result.economyRunId===id;
+    if(!granted||!current||profile.rewardedRunIds.includes(id)){emitGame("rewarded_complete",{placement:"result_x2",granted:false});syncRewardedButton();return false;}
+    profile.rewardedRunIds.push(id);profile.rewardedRunIds=profile.rewardedRunIds.slice(-100);profile.walletBalance+=amount;await persist();emitGame("rewarded_complete",{placement:"result_x2",granted:true});emitGame("reward_granted",{placement:"result_x2",economyRunId:id,amount});syncRewardedButton();return true;
   }
   function applyLanguage() {
     document.dispatchEvent(new CustomEvent("tmb:audio-language",{detail:profile.settings.language}));
@@ -2385,6 +2417,7 @@
     if (card) { card.querySelector("h2").textContent = t("choose"); card.querySelector("p").textContent=t("samePhysics"); }
     const actions = document.getElementById("a12Actions");
     if (actions) for (const b of actions.querySelectorAll("button")) b.textContent = t(b.dataset.act);
+    syncRewardedButton();
     const language=document.getElementById("a12Language"),label=document.querySelector("#a12LanguageWrap span");
     if(language) language.value=profile.settings.language;if(label) label.textContent=t("language");
     const ghost=document.getElementById("a12GhostToggle");if(ghost) ghost.textContent=t(ghostEnabled?"ghostOn":"ghostOff");
@@ -2446,9 +2479,10 @@
     style.textContent = `#a12Actions{position:fixed;z-index:31;left:50%;bottom:max(86px,calc(env(safe-area-inset-bottom) + 82px));transform:translateX(-50%);display:flex;gap:9px}#a12Actions[hidden]{display:none!important}#a12Actions button,#a12Shop button,#a12GhostToggle,#a12EffectsToggle,#a12Language{border:1px solid #ffffff44;border-radius:12px;background:#153246;color:#fff;padding:11px 16px;font:900 13px system-ui}#a12GhostToggle,#a12EffectsToggle{position:fixed;z-index:31;right:14px;min-height:44px}#a12GhostToggle{top:78px}#a12EffectsToggle{top:130px}#a12LanguageWrap{position:fixed;z-index:46;right:14px;bottom:14px;color:#fff;font:800 11px system-ui}#a12LanguageWrap span{display:inline-block}#a12Language{margin-left:6px;padding:7px}#a12Shop{position:fixed;inset:0;z-index:45;display:none;background:#06121bf2;color:#fff;padding:clamp(15px,4vw,38px)}#a12Shop.show{display:grid;grid-template-columns:minmax(230px,42%) 1fr;gap:25px}#a12Preview{display:grid;place-items:center;background:#102635;border-radius:18px;min-height:280px}#a12Preview canvas{width:180px;height:240px}#a12Products{overflow:auto;padding-bottom:48px}#a12Products article{padding:17px;margin:12px 0;background:#132b39;border:1px solid #ffffff30;border-radius:14px}.runnerSymbol{font-size:25px;display:block}.characterChoice[data-character="0"]{box-shadow:inset 0 0 0 2px #3aa2ff}.characterChoice[data-character="1"]{box-shadow:inset 0 0 0 2px #ff6aac}@media(max-width:540px) and (orientation:portrait){#a12Shop.show{grid-template-columns:1fr;grid-template-rows:35vh 1fr}#a12Preview{min-height:0}#a12Preview canvas{width:120px;height:160px}#a12LanguageWrap{right:8px;bottom:8px}}`;
     style.textContent += `#a12Shop{box-sizing:border-box}#a12Shop.show{grid-template-columns:minmax(230px,40%) minmax(0,1fr);grid-template-rows:minmax(0,1fr);gap:18px}#a12Preview{display:flex;flex-direction:column;justify-content:center;gap:12px;min-width:0;min-height:0;overflow:hidden}#a12Preview canvas{width:min(100%,480px);height:auto;max-height:65%;aspect-ratio:3/2;object-fit:contain;image-rendering:pixelated}#a12Preview .previewControls{display:flex;flex-wrap:wrap;justify-content:center;gap:6px}#a12Preview button{padding:8px 10px}#a12Preview button[aria-pressed="true"]{background:#286650;border-color:#8ff1c8}#a12Products{min-height:0;min-width:0;overscroll-behavior:contain}@media(max-width:540px) and (orientation:portrait){#a12Shop.show{grid-template-columns:minmax(0,1fr);grid-template-rows:minmax(230px,40%) minmax(0,1fr);gap:12px}#a12Preview{gap:5px}#a12Preview canvas{max-height:62%;width:auto;max-width:100%}}`;
     document.head.appendChild(style);
+    style.textContent += `#a12Actions{flex-wrap:wrap;justify-content:center;max-width:min(96vw,720px)}#a12Actions [data-act="rewarded"]{background:#286650;border-color:#8ff1c8}`;
     const actions = document.createElement("div");
     actions.id = "a12Actions";
-    actions.innerHTML = `<button data-act="next">${t("next")}</button><button data-act="retry">${t("retry")}</button><button data-act="shop">${t("shop")}</button>`;
+    actions.innerHTML = `<button data-act="rewarded" hidden></button><button data-act="next">${t("next")}</button><button data-act="retry">${t("retry")}</button><button data-act="shop">${t("shop")}</button>`;
     document.body.appendChild(actions);
     const ghostToggle=document.createElement("button");ghostToggle.id="a12GhostToggle";ghostToggle.type="button";
     const syncGhostToggle=()=>{ghostToggle.textContent=t(ghostEnabled?"ghostOn":"ghostOff");ghostToggle.setAttribute("aria-pressed",String(ghostEnabled));};
@@ -2461,6 +2495,7 @@
     actions.addEventListener("click", (e) => {
       const a = e.target.dataset.act;
       if (!a) return;
+      if (a === "rewarded") { void claimRewardedResult(); return; }
       if (a === "next") { const order=profile.selectedWorldId==="aftermath"?WORLD_REGISTRY.aftermath.routes:profile.selectedWorldId==="magma"?["M01","M02","M03","M04"]:profile.selectedWorldId==="frozen"?["F01","F02","F03","F04"]:["D01","D02","D03","D04","D05","D06"], next=order[order.indexOf(routeId)+1]||order[0]; startRoute(ROUTES[next]?next:order[0], true, next==="D06"); }
       if (a === "retry") startRoute(routeId, true, routeId === "D06");
       if (a === "shop") openShop();
@@ -2931,18 +2966,22 @@
         c.fillStyle = "#17252d"; c.font = "950 26px system-ui"; c.fillText("↗", o.x + o.w * .52, GROUND - 20); c.restore();
       } else if (o.type === "worker" && magma) {
         // Aluminized heat suit: hood, dark visor, separated gauntlets and boots.
-        c.fillStyle="#bdc5cc";c.beginPath();c.moveTo(o.x-17,GROUND-65);c.lineTo(o.x-23,GROUND-25);c.lineTo(o.x+23,GROUND-25);c.lineTo(o.x+17,GROUND-65);c.closePath();c.fill();
-        c.fillStyle="#8f9ba7";c.fillRect(o.x-13,GROUND-27,10,27);c.fillRect(o.x+3,GROUND-27,10,27);
-        c.fillStyle="#e2e6e8";c.beginPath();c.arc(o.x,GROUND-72,17,0,Math.PI*2);c.fill();
-        c.fillStyle="#252d3b";c.fillRect(o.x-12,GROUND-81,24,14);c.fillStyle="#a4c0cf";c.fillRect(o.x-10,GROUND-79,8,3);
-        c.fillStyle="#535d6b";c.fillRect(o.x-23,GROUND-48,8,19);c.fillRect(o.x+15,GROUND-48,8,19);
+        if(!drawNpcWorkerSprite(c,o.x,GROUND)){
+          c.fillStyle="#bdc5cc";c.beginPath();c.moveTo(o.x-17,GROUND-65);c.lineTo(o.x-23,GROUND-25);c.lineTo(o.x+23,GROUND-25);c.lineTo(o.x+17,GROUND-65);c.closePath();c.fill();
+          c.fillStyle="#8f9ba7";c.fillRect(o.x-13,GROUND-27,10,27);c.fillRect(o.x+3,GROUND-27,10,27);
+          c.fillStyle="#e2e6e8";c.beginPath();c.arc(o.x,GROUND-72,17,0,Math.PI*2);c.fill();
+          c.fillStyle="#252d3b";c.fillRect(o.x-12,GROUND-81,24,14);c.fillStyle="#a4c0cf";c.fillRect(o.x-10,GROUND-79,8,3);
+          c.fillStyle="#535d6b";c.fillRect(o.x-23,GROUND-48,8,19);c.fillRect(o.x+15,GROUND-48,8,19);
+        }
         if(workerClock>1.65){c.fillStyle="#ff4f45";c.font="950 22px system-ui";c.fillText("!",o.x-3,GROUND-98);}
       } else if (o.type === "worker") {
-        c.fillStyle = frozen?"#17384b":magma?"#b8b9b5":"#243c49"; c.fillRect(o.x - (frozen?18:15), GROUND - 60, frozen?36:30, 60);
-        c.fillStyle = frozen?"#397ba0":magma?"#d4d1c7":"#ff8d28"; c.fillRect(o.x - 15, GROUND - 48, 30, 20);
-        c.fillStyle = "#fff27d"; c.fillRect(o.x - 15, GROUND - 39, 30, 4);
-        c.fillStyle = "#e8b486"; c.beginPath(); c.arc(o.x, GROUND - 69, 11, 0, Math.PI * 2); c.fill();
-        c.fillStyle = frozen?"#224e68":"#f1bb2c";c.beginPath();c.arc(o.x,GROUND-76,15,Math.PI,0);c.fill();c.fillRect(o.x-15,GROUND-77,30,7);
+        if(!drawNpcWorkerSprite(c,o.x,GROUND)){
+          c.fillStyle = frozen?"#17384b":magma?"#b8b9b5":"#243c49"; c.fillRect(o.x - (frozen?18:15), GROUND - 60, frozen?36:30, 60);
+          c.fillStyle = frozen?"#397ba0":magma?"#d4d1c7":"#ff8d28"; c.fillRect(o.x - 15, GROUND - 48, 30, 20);
+          c.fillStyle = "#fff27d"; c.fillRect(o.x - 15, GROUND - 39, 30, 4);
+          c.fillStyle = "#e8b486"; c.beginPath(); c.arc(o.x, GROUND - 69, 11, 0, Math.PI * 2); c.fill();
+          c.fillStyle = frozen?"#224e68":"#f1bb2c";c.beginPath();c.arc(o.x,GROUND-76,15,Math.PI,0);c.fill();c.fillRect(o.x-15,GROUND-77,30,7);
+        }
         if (workerClock > 1.65) { c.fillStyle = "#ff4f45"; c.font = "950 22px system-ui"; c.fillText("!", o.x - 3, GROUND - 92); }
       }
     if (!debugHideMovingPlatforms) for (const p of movingPlatforms) {
@@ -3023,6 +3062,17 @@
     if(campaignChief?.active)roles.push({role:"chief",x:campaignChief.x+14,y:campaignChief.y-25,added:false});
     return roles;
   }
+  let npcAtlasContract=null;
+  const npcAtlasImages=new Map();
+  const npcAtlasReady=fetch("sprites/a5/npc-contract.json",{cache:"no-cache"}).then(r=>{if(!r.ok)throw new Error("npc contract");return r.json();}).then(async contract=>{
+    await Promise.all(contract.assets.map(asset=>new Promise((resolve,reject)=>{const image=new Image();image.onload=()=>{if(image.naturalWidth!==asset.size[0]||image.naturalHeight!==asset.size[1])return reject(new Error("npc dimensions"));npcAtlasImages.set(asset.kind,image);resolve();};image.onerror=()=>reject(new Error("npc unavailable"));image.src=asset.path+"?v="+asset.cacheVersion;})));
+    npcAtlasContract=contract;return true;
+  }).catch(()=>false);
+  function drawNpcWorkerSprite(c,x,feet){
+    const image=npcAtlasImages.get("worker");if(!npcAtlasContract||!image)return false;
+    const thrown=workerClock<=.35&&barrels.length>0,frame=thrown?2:workerClock>1.65?1:0;
+    c.drawImage(image,frame*128,0,128,128,x-51,feet-90,103,103);return true;
+  }
   function drawNpcPresentation(c, react=true) {
     const colors={dock31:["#447b98","#efc467"],frozen:["#a9cedc","#e7f6fa"],magma:["#b4bbc0","#f1de8e"],aftermath:["#cc7946","#e6d6a3"]};
     const [suit,trim]=colors[profile.selectedWorldId]||colors.dock31;
@@ -3032,10 +3082,14 @@
       if(n.added){
         // PLACEHOLDER elevated background station, outside playable surfaces.
         c.fillStyle="#25333d";c.fillRect(-27,0,64,6);c.fillRect(-24,6,3,22);c.fillRect(29,6,3,22);
-        c.fillStyle=suit;c.fillRect(-9,-32,18,24);c.fillRect(-9,-9,6,9);c.fillRect(3,-9,6,9);
-        c.fillStyle=trim;c.fillRect(-10,-46,20,8);c.fillRect(-7,-38,14,9);c.fillRect(-8,-23,16,4);
-        if(n.role==="carrier"){c.fillStyle="#a49a80";c.fillRect(6,-28,21,21);c.strokeStyle=trim;c.strokeRect(6,-28,21,21);}
-        else{c.fillStyle="#293c48";c.fillRect(9,-21,20,21);c.fillStyle=trim;c.fillRect(12,-18,14,4);}
+        const npcImage=npcAtlasImages.get("decor"),frame=(n.role==="carrier"?0:2)+(surprised?1:0);
+        if(npcAtlasContract&&npcImage)c.drawImage(npcImage,frame*64,0,64,64,-32,-56,64,64);
+        else{
+          c.fillStyle=suit;c.fillRect(-9,-32,18,24);c.fillRect(-9,-9,6,9);c.fillRect(3,-9,6,9);
+          c.fillStyle=trim;c.fillRect(-10,-46,20,8);c.fillRect(-7,-38,14,9);c.fillRect(-8,-23,16,4);
+          if(n.role==="carrier"){c.fillStyle="#a49a80";c.fillRect(6,-28,21,21);c.strokeStyle=trim;c.strokeRect(6,-28,21,21);}
+          else{c.fillStyle="#293c48";c.fillRect(9,-21,20,21);c.fillStyle=trim;c.fillRect(12,-18,14,4);}
+        }
       }
       if(surprised){const lift=Math.sin(Math.min(1,frontFlip.elapsed/.8)*Math.PI)*5;c.fillStyle="#e4f5ed";c.beginPath();c.ellipse(0,-61-lift,13,10,0,0,Math.PI*2);c.fill();c.fillStyle="#21313b";c.fillRect(-6,-65-lift,3,3);c.fillRect(3,-65-lift,3,3);c.strokeStyle="#21313b";c.lineWidth=2;c.beginPath();c.arc(0,-58-lift,3,0,Math.PI*2);c.stroke();}
       c.restore();
@@ -3073,6 +3127,9 @@
     c.save();c.translate(x,feet);c.scale(facing,1);c.imageSmoothingEnabled=false;
     if(!runnerAtlasContract){c.fillStyle=runner==="female"?"#d5e3de":"#c1d2df";c.fillRect(-12,-44,24,44);c.restore();return;}
     const row=runnerAtlasContract.motions[pose.motion].row;
+    const fullPath=`sprites/a5/${runner}-${outfit}-full.png`;
+    const full=runnerAtlasImages.get(fullPath);
+    if(full){c.drawImage(full,pose.frame*64,row*64,64,64,-32,-56,64,64);c.restore();return;}
     for(const layer of runnerAtlasContract.layerOrder){if(layer===omit)continue;
       const path=`sprites/a5/${runner}-${layer==="body"?"base":outfit}-${layer}.png`;
       c.drawImage(runnerAtlasImages.get(path),pose.frame*64,row*64,64,64,-32,-56,64,64);
@@ -3165,6 +3222,8 @@
           return debugState();
         },
         finish: () => bankRun(),
+        claimRewardedResult,
+        syncRewardedButton,
         retry,
         openShop,
         closeShop,

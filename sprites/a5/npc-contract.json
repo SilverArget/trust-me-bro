@@ -1,0 +1,44 @@
+{
+  "version": 1,
+  "facing": "left",
+  "assets": [
+    {
+      "path": "sprites/a5/npc-worker.png",
+      "kind": "worker",
+      "size": [
+        384,
+        128
+      ],
+      "cell": [
+        128,
+        128
+      ],
+      "anchor": [
+        64,
+        128
+      ],
+      "frames": 3,
+      "sha256": "ca74b9b18f33bb7b7f216885566a7de21b6bb8d948d9876e8b1959af09850868",
+      "cacheVersion": "ca74b9b18f33bb7b"
+    },
+    {
+      "path": "sprites/a5/npc-decor.png",
+      "kind": "decor",
+      "size": [
+        256,
+        64
+      ],
+      "cell": [
+        64,
+        64
+      ],
+      "anchor": [
+        32,
+        64
+      ],
+      "frames": 4,
+      "sha256": "3d2516407bb1c36e815446ae7b6efedf8b5cac8ff7846166dbf91a1d33bf8f7e",
+      "cacheVersion": "3d2516407bb1c36e"
+    }
+  ]
+}

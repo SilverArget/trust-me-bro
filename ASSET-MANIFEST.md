@@ -140,3 +140,27 @@ Generated locally by `tools/a5/generate_logo.py` with Pillow. License: project o
 | `sprites/a5/brand/trust-me-bro-store-cover.png` | 22729 | 1200x630 | `701d613c640a5ac2ff1aca0bb2ee9036e3bc62d71f2deb7fa55ef5c90e0418a6` | implementation=IMPLEMENTED · functional_test=PASSED · art=PLACEHOLDER · visual_acceptance=DEFERRED |
 
 Previous-version assets, retained unchanged; license record unavailable: `trust-me-bro-logo.png` (86857 B, `cfb98cbe793d96844b2857fcb91a849c1bab8271bd79b3d94a302a9ec3f8abe3`), `game-icon.png` (9157 B, `5138d6ec728d5930d27b537bd421744f1907ca9bec77ef9620476bbc19fe3a3a`), `cover-art.png` (2231826 B, `6a268b49d40575ff685977499561bb01475a760dc39c7bad52d24131c5ba2ba3`).
+
+## A5e AI runner art
+
+Source: eight project-manager-provided ChatGPT image generations, approved 2026-09-30. Imported deterministically with `python tools/a5/import_ai_sheets.py`; see `03-test/a5e-evidence/import.json` and `contact-*.png`. Art is cel-shaded, not pixel art; pixel snapping does not apply.
+
+| Asset | Bytes | SHA256 |
+|---|---:|---|
+| `sprites/a5/male-default-full.png` | 249692 | `49f270c83b364628ad49509d38e2108f0ff33210dc254c2bb41bd60e86b99ad6` |
+| `sprites/a5/male-dockCrew-full.png` | 252798 | `6a4547603de8d583e1128be20ca926fba772529608b85a0a5a5c7cded5fb323d` |
+| `sprites/a5/male-nightShift-full.png` | 227574 | `97239fac5c10ea655204ea13e3626e249ddda894db621bdec8300f00734b9d06` |
+| `sprites/a5/male-hazardRunner-full.png` | 245407 | `49a7b62ed5812e9673df627cd81d0e512a76bbed213a9347e0e4ee6995d22ef1` |
+| `sprites/a5/female-default-full.png` | 263227 | `dcd3b87f1684577c0dc56341f8d4bf6fa0f370250d7c8b39b9764d35f5175731` |
+| `sprites/a5/female-dockCrew-full.png` | 268734 | `c61b240823e620c554e577a71ac5d84aeaf493711f864790a29f4086edd744ca` |
+| `sprites/a5/female-nightShift-full.png` | 268797 | `a5bdf9b8ce45f263a2119b57a50f3ddb3e5cde50b03e056dc6daf9608e4aece9` |
+| `sprites/a5/female-hazardRunner-full.png` | 280717 | `90a107d7faa7a2edb96559ab4d553aa4fbb2902bf720155f1d3404f3923cffa0` |
+
+## A5f NPC art
+
+Source: project-manager-approved ChatGPT `sprites/raw/a5-ai/npc-sheet.png`, imported deterministically with `python tools/a5/import_npc_sheet.py`. The source flying-barrel frame is intentionally excluded to avoid duplicate gameplay barrels. See `sprites/a5/npc-contract.json` and `03-test/a5f-evidence/import.json`.
+
+| Asset | Bytes | SHA256 |
+|---|---:|---|
+| `sprites/a5/npc-worker.png` | 47609 | `ca74b9b18f33bb7b7f216885566a7de21b6bb8d948d9876e8b1959af09850868` |
+| `sprites/a5/npc-decor.png` | 19076 | `3d2516407bb1c36e815446ae7b6efedf8b5cac8ff7846166dbf91a1d33bf8f7e` |
