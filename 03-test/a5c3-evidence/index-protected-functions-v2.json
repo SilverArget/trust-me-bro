@@ -1,0 +1,102 @@
+{
+  "source_commit": "5ce6f28",
+  "rule": "balanced-brace",
+  "extraction": "balanced function body; strings/regex/comments ignored",
+  "edgeCases": [
+    "template literal interpolation braces are treated as string content; protected set has no such boundary case"
+  ],
+  "functions": [
+    {
+      "symbol": "gameInput",
+      "sha256": "2ce0997448c9503e9e5c8533a9c47ac6cc005e03c346be167237098fe2c32827"
+    },
+    {
+      "symbol": "clearInputs",
+      "sha256": "460366844f20711dd39b40d4ef72fe0b8f72af57d0660b3326cfd0dd99738908"
+    },
+    {
+      "symbol": "solidSurfaces",
+      "sha256": "dcbbaf779cdb89ed908a364db7fee8915083b25374b8833c6a919a36eca32abb"
+    },
+    {
+      "symbol": "solidRects",
+      "sha256": "510f448ddbd457e4153d246337cf67d10cb2e7e79e65d7ccc4532cf4443e26f4"
+    },
+    {
+      "symbol": "parkourBody",
+      "sha256": "c5ffb85bb358986b4e386803df5044c0f871a1bda0d73ead23aaef35cd13e165"
+    },
+    {
+      "symbol": "parkourClear",
+      "sha256": "2d7188ca83546d00799212c3626c6e7ec627dcae0bdc94b5864063a1fc16bb7c"
+    },
+    {
+      "symbol": "parkourStand",
+      "sha256": "d39ea7e2d03a1267fc0ae6f86f1bafea54350a51fae13fab295c6882c418a878"
+    },
+    {
+      "symbol": "parkourCancel",
+      "sha256": "db6f31da63593e7c239c86a30775b151821377085c4bcf606722a88ecaddc56a"
+    },
+    {
+      "symbol": "parkourPoint",
+      "sha256": "502886373fea180132ecf1e370a16c7803f5cdf237c27c7aa8b3920888959b25"
+    },
+    {
+      "symbol": "parkourSweep",
+      "sha256": "4acbe4a401257200cf84d391cf1d8dedc2ad480bb9214db105ad7824e29de550"
+    },
+    {
+      "symbol": "parkourChoose",
+      "sha256": "e8780b9c3a412b4f0c5d5a37f938a26e2a95b3bc260179384fa5013f46e73dfd"
+    },
+    {
+      "symbol": "parkourTick",
+      "sha256": "dac7994be9ce57c52dda316c2dbe0847c025778ecd22e7c441a0be9e83e2ca34"
+    },
+    {
+      "symbol": "parkourLanded",
+      "sha256": "770369d12aaa4dbd418ded7ae5350e42c33db43a8485b21bfb0779e8159e2e61"
+    },
+    {
+      "symbol": "doPhysics",
+      "sha256": "8bea96f108b68afe9736201a93b82838f3de9fe194ec706049c2e6f4c467dac7"
+    },
+    {
+      "symbol": "campaignWallAssist",
+      "sha256": "cc7a0fbb5e854fb4da904eedc4524d765fb913a08c7a4499078b6329c5eb2ac8"
+    },
+    {
+      "symbol": "updateDispatch",
+      "sha256": "97bc0deb90d7e1de2fb4bf578fdeae6ba38942e09d2ccc401e4fbdcdac476a66"
+    },
+    {
+      "symbol": "setJoystickXY",
+      "sha256": "02dc6e1c66199a862bc88447a00f10e9b47f1890c158a76ad2e93a9cc8259186"
+    },
+    {
+      "symbol": "releaseJoy",
+      "sha256": "d6d526d9e572e211e8eebf690179e4525d4228654fcc10915feb0e36c4d28951"
+    },
+    {
+      "symbol": "jumpPress",
+      "sha256": "43d4adedee8110ac2ba24c26d9d7cf9f7043faf235e73c815acdacf6c671237b"
+    },
+    {
+      "symbol": "jumpRelease",
+      "sha256": "097f1726494324bcdb84d74f729cd29a560e12d5dedaae6247a3bc20df49587f"
+    },
+    {
+      "symbol": "kill",
+      "sha256": "b4cc90b6ca9c141267261472279fc5864a692a16971f02587f7feb81b45f5491"
+    },
+    {
+      "symbol": "updateChief",
+      "sha256": "5eb82d3481d49de1ed34023e90d8648d24f7c310d89eb69bc3954a6ae56ee075"
+    },
+    {
+      "symbol": "resetChief",
+      "sha256": "cd2e15e5a1f029abc43286566e51c89079c76aa7eb81fa81c2797d0477f1d394"
+    }
+  ]
+}

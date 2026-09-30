@@ -76,3 +76,27 @@ A5c2b Tur 3 ba�lang��: 2026-09-29T00:09:29.2002542+03:00 � HEAD 38187c2; K-A5C2B
 2026-09-29T00:14:50.3456139+03:00 � so�uk B-S3 3/3 PASS; beklemesiz 3 ko�u ba�l�yor.
 2026-09-29T00:15:12.7736934+03:00 � beklemesiz B-S3 3/3 PASS; tn-a5c-audio 11 test ba�l�yor.
 2026-09-29T00:18:03.8022298+03:00 � DUR: tn-a5c-audio 9/11; M-S4 desktop/mobile negatif musicToSfx -Infinity. B ad�mlar� �al��t�r�lmad�.
+
+2026-09-29 23:19:24 +03:00 - A5c3 baseline PASS: corrected accessibility regex 0 lines; HEAD/branch/status/three SHA matched.
+2026-09-29 23:26:24 +03:00 - Core setting/UI/A4c gain/index:961 implemented; B-E1/M-E2/B-E3 and A4c 1893/1909 PASS; copied integrity 22/23, pre-existing jumpRelease baseline mismatch triggers DUR.
+2026-09-29 23:31:55 +03:00 - A5c3 Tur 3 resumed: jumpRelease mismatch accepted as known 38187c2 tail-segmentation artifact; B-E1/B-E4/B-E5/B-E6/B-E7 live measurements underway.
+2026-09-29 23:36:08 +03:00 - B-E1 PASS; B-E4 two live gates PASS; B-E5 partial pixel probe PASS; B-E6 FAIL (Bot W D01 produced no death segment/jitter positive); B-E7 first matrix deterministic but F04 remained locked, unlock correction running.
+2026-09-29 23:37:45 +03:00 - Tur 3 measured disk: B-E7 D01/F04/A01 positive matrix PASS after real prerequisite runs; B-E5 telegraph-region matrix and B-E6 death segment remain incomplete, reported FAIL/PARTIAL without relaxing thresholds.
+2026-09-29 23:41:26 +03:00 - Tur 4 started: replacing B-E5 literals/probe with canvas pixels, scanning Bot W deaths, and adding B-E7 behavioral mutation.
+2026-09-29 23:48:12 +03:00 - Tur 4 measured: B-E7 behavioral negative PASS; B-E6 first death D06 segment 4 but post-helper shake already zero; B-E5 canvas run stalled before evidence and telegraph rows remain unmeasured.
+- 2026-09-29 23:50:12 +03:00 TUR 5a: disk SHA/list kapisi gecti; B-E5/B-E6 mevcut helper kaliplari inceleniyor.
+- 2026-09-29 23:53:12 +03:00 TUR 5a: B-E6 observer run measured D06 death but rAF log remained empty; B-E5 real canvas run starting.
+- 2026-09-29 23:55:05 +03:00 TUR 5a DUR: B-E6 rAF log 0; B-E5 M01 generic Bot S world mismatch nedeniyle ölçüm geçersiz, eşik/assert gevşetilmedi.
+2026-09-30 00:04:30 +03:00 A5c3 TUR5b: playwright list 12; B-E5 240s timeout before fresh evidence (old b-e5 invalid); B-E6 D06 x=1210 real ArrowRight dead=false both modes, 0 frames; final attempt stopped, thresholds unchanged.
+2026-09-30 00:07:59 +03:00 A5c3 TUR6: B-E8 six-row mute matrix and M-L5b/c full screen matrix implemented; playwright list 12; target runs starting.
+2026-09-30 00:31:03 +03:00 A5c3 TUR6 DUR: B-E8 6/6 measured but hazards not instantiated (MAD/event 0); M-L5b/c 2/2 PASS; preservation 56/56 PASS; access full 9 PASS, B-E5/B-E6/B-E8 FAIL.
+- [2026-09-30 06:02:24 +03:00] A5c3 TUR 7 başladı: HEAD/SHA/list 12 ölçüldü; brief 127 satır baştan sona okundu; graphify query yapıldı (update yok).
+- [2026-09-30 06:06:50 +03:00] TUR 7: normalize/additive gate yeşil; B-E1/B-E3/B-L1 yeşil; M-E2 overlay gerçek tıklamayı engelledi, karakter seçimi adımı eklendi; integrity v2 23/23.
+- [2026-09-30 06:08:16 +03:00] TUR 7: M-E2 tam matris 3/3 yeşil; M-L5 tam filtre ▲ pseudo-element taşmasını doğruladı (78/62), CSS touch kuralı daraltıldı; yeniden ölçülüyor.
+- [2026-09-30 06:10:57 +03:00] A5c3 TUR 7 tamam: additive/B-E1/M-E2/B-E3/B-L1/M-L5b-c/parkour/BotS yeşil; integrity eski 22/23 jumpRelease, v2 23/23; TUR 8 B-E5/B-E6/B-E8.
+[2026-09-30 06:12:56 +03:00] A5c3 TUR 8 basladi: canli surucu B-E5/B-E6/B-E8 olcumu; urun kodu degismeyecek.
+[2026-09-30 06:14:44 +03:00] TUR 8: canli surucu importu ve integrity metadata eklendi; B-E6 Bot W death-x kesfi + Bot S stopAtX + gercek ArrowRight olarak kuruldu, dar kapi kosuyor.
+[2026-09-30 06:16:49 +03:00] TUR 8: B-E6 death x=2300/segment4/7.450 bulundu; stopAtX=2150 + ArrowRight 5 sn olum uretmedi. B-E8 fixture/placePlayer kaldirildi, canli zincir dar kapida.
+[2026-09-30 06:22:11 +03:00] A5c3 TUR 8 DUR/PARTIAL: B-E8 canli zincir ham kanit yazdi fakat 240 sn timeout/assert RED; B-E6 D06 seg4 deathX=2300/7.450, stopAtX=2150 + gercek ArrowRight olum uretmedi; B-E5 baslatilmadi. Tam 12 kosu RED onkapi nedeniyle kosulmadi.
+[2026-09-30 06:26:34 +03:00] A5c3 TUR 9: spec 12/12 list + node check + integrity v2 23/23; eski deneysel bloklar silindi; pseudo hit-area geri; M-L5 Range ölçümü ilk koşu LANGUAGE yaprakları kırmızı, kapsam içi düzeltme sürüyor; parkour 25/25.
+[2026-09-30 06:40:33 +03:00] A5c3 TUR 9 tamam: spec 12 list/node check; tam koşu 9 PASS/3 beklenen FAIL (B-E5/B-E6/B-E8), lang 9/9, a5-live 1/1, M-L5 2/2, parkour 25/25, Bot S 6/6, integrity v2 23/23; rapor güncellendi.

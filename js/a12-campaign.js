@@ -105,7 +105,7 @@
       saveFailed: "SAVE FAILED — RETRY",
       noCharge: "LIVE PREVIEW · NO CHARGE",
       worlds: "WORLDS", buyWorld: "BUY — {price}", select: "SELECT", selected: "SELECTED", planned: "PLANNED", insufficient: "INSUFFICIENT COINS",
-      idle: "IDLE", motionRun: "RUN", flip: "FLIP", language: "LANGUAGE", samePhysics: "Same physics. Shared wallet. Your runner.", ghostOn: "GHOST ON", ghostOff: "GHOST OFF", flow: "FLOW", localBest: "LOCAL BEST", newRecord: "NEW", clean: "CLEAN", mastery: "MASTERY", style: "STYLE",
+      idle: "IDLE", motionRun: "RUN", flip: "FLIP", language: "LANGUAGE", samePhysics: "Same physics. Shared wallet. Your runner.", ghostOn: "GHOST ON", ghostOff: "GHOST OFF", effectsFull: "EFFECTS FULL", effectsReduced: "EFFECTS REDUCED", flow: "FLOW", localBest: "LOCAL BEST", newRecord: "NEW", clean: "CLEAN", mastery: "MASTERY", style: "STYLE",
     },
     tr: {
       M01: "DÖKÜMHANE YOLU", M02: "DÖKÜM VİNCİ", M03: "FIRIN KORİDORU", M04: "MAGMA ASANSÖRÜ",
@@ -141,7 +141,7 @@
       saveFailed: "KAYIT BAŞARISIZ — YENİDEN DENE",
       noCharge: "CANLI ÖNİZLEME · ÜCRETSİZ",
       worlds: "DÜNYALAR", buyWorld: "SATIN AL — {price}", select: "SEÇ", selected: "SEÇİLİ", planned: "PLANLANDI", insufficient: "YETERSİZ COIN",
-      idle: "BEKLE", motionRun: "KOŞ", flip: "TAKLA", language: "DİL", samePhysics: "Aynı fizik. Ortak cüzdan. Senin koşucun.", ghostOn: "HAYALET AÇIK", ghostOff: "HAYALET KAPALI", flow: "AKIŞ", localBest: "YEREL EN İYİ", newRecord: "YENİ", clean: "TEMİZ", mastery: "USTALIK", style: "STİL",
+      idle: "BEKLE", motionRun: "KOŞ", flip: "TAKLA", language: "DİL", samePhysics: "Aynı fizik. Ortak cüzdan. Senin koşucun.", ghostOn: "HAYALET AÇIK", ghostOff: "HAYALET KAPALI", effectsFull: "EFEKTLER TAM", effectsReduced: "EFEKTLER AZALTILDI", flow: "AKIŞ", localBest: "YEREL EN İYİ", newRecord: "YENİ", clean: "TEMİZ", mastery: "USTALIK", style: "STİL",
     },
     ru: {
       M01: "ЛИТЕЙНЫЙ ПУТЬ", M02: "ЛИТЕЙНЫЙ КРАН", M03: "ПЕЧНОЙ ПРОХОД", M04: "МАГМОВЫЙ ЛИФТ",
@@ -177,7 +177,7 @@
       saveFailed: "ОШИБКА СОХРАНЕНИЯ — ПОВТОРИТЬ",
       noCharge: "ЖИВОЙ ПРОСМОТР · БЕСПЛАТНО",
       worlds: "МИРЫ", buyWorld: "КУПИТЬ — {price}", select: "ВЫБРАТЬ", selected: "ВЫБРАНО", planned: "ЗАПЛАНИРОВАНО", insufficient: "НЕДОСТАТОЧНО МОНЕТ",
-      idle: "ОЖИДАНИЕ", motionRun: "БЕГ", flip: "САЛЬТО", language: "ЯЗЫК", samePhysics: "Та же физика. Общий кошелёк. Твой бегун.", ghostOn: "ПРИЗРАК ВКЛ", ghostOff: "ПРИЗРАК ВЫКЛ", flow: "ПОТОК", localBest: "ЛУЧШИЙ РЕЗУЛЬТАТ", newRecord: "НОВЫЙ", clean: "ЧИСТО", mastery: "МАСТЕРСТВО", style: "СТИЛЬ",
+      idle: "ОЖИДАНИЕ", motionRun: "БЕГ", flip: "САЛЬТО", language: "ЯЗЫК", samePhysics: "Та же физика. Общий кошелёк. Твой бегун.", ghostOn: "ПРИЗРАК ВКЛ", ghostOff: "ПРИЗРАК ВЫКЛ", effectsFull: "ЭФФЕКТЫ ПОЛНЫЕ", effectsReduced: "ЭФФЕКТЫ СНИЖЕНЫ", flow: "ПОТОК", localBest: "ЛУЧШИЙ РЕЗУЛЬТАТ", newRecord: "НОВЫЙ", clean: "ЧИСТО", mastery: "МАСТЕРСТВО", style: "СТИЛЬ",
     },
   });
   const COINS = Object.freeze({
@@ -1686,6 +1686,7 @@
       legacy = localStorage.getItem(LEGACY_KEY);
     } catch (_) {}
     profile = migrateV36(legacy, raw);
+    if (!raw) profile.settings.reducedEffects = !!window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
     if (profile.migrationFlags.v36 && !raw) void persist();
     document
       .querySelectorAll(".characterChoice")
@@ -2368,6 +2369,8 @@
   function t(k) {
     return (I18N[profile.settings.language] || I18N.en)[k] || I18N.en[k] || k;
   }
+  function effectsGain() { return profile.settings.reducedEffects === true ? 0 : 1; }
+  document.addEventListener("tmb:effects-gain",e=>{e.detail.value=effectsGain();});
   function syncActionVisibility() {
     const a = document.getElementById("a12Actions");
     if (!a) return;
@@ -2385,6 +2388,7 @@
     const language=document.getElementById("a12Language"),label=document.querySelector("#a12LanguageWrap span");
     if(language) language.value=profile.settings.language;if(label) label.textContent=t("language");
     const ghost=document.getElementById("a12GhostToggle");if(ghost) ghost.textContent=t(ghostEnabled?"ghostOn":"ghostOff");
+    const effects=document.getElementById("a12EffectsToggle");if(effects) effects.textContent=t(profile.settings.reducedEffects?"effectsReduced":"effectsFull");
     renderShop();
   }
   function drawHud() {
@@ -2439,7 +2443,7 @@
   }
   function installUI() {
     const style = document.createElement("style");
-    style.textContent = `#a12Actions{position:fixed;z-index:31;left:50%;bottom:max(86px,calc(env(safe-area-inset-bottom) + 82px));transform:translateX(-50%);display:flex;gap:9px}#a12Actions[hidden]{display:none!important}#a12Actions button,#a12Shop button,#a12GhostToggle,#a12Language{border:1px solid #ffffff44;border-radius:12px;background:#153246;color:#fff;padding:11px 16px;font:900 13px system-ui}#a12GhostToggle{position:fixed;z-index:31;right:14px;top:78px}#a12LanguageWrap{position:fixed;z-index:46;right:14px;bottom:14px;color:#fff;font:800 11px system-ui}#a12Language{margin-left:6px;padding:7px}#a12Shop{position:fixed;inset:0;z-index:45;display:none;background:#06121bf2;color:#fff;padding:clamp(15px,4vw,38px)}#a12Shop.show{display:grid;grid-template-columns:minmax(230px,42%) 1fr;gap:25px}#a12Preview{display:grid;place-items:center;background:#102635;border-radius:18px;min-height:280px}#a12Preview canvas{width:180px;height:240px}#a12Products{overflow:auto;padding-bottom:48px}#a12Products article{padding:17px;margin:12px 0;background:#132b39;border:1px solid #ffffff30;border-radius:14px}.runnerSymbol{font-size:25px;display:block}.characterChoice[data-character="0"]{box-shadow:inset 0 0 0 2px #3aa2ff}.characterChoice[data-character="1"]{box-shadow:inset 0 0 0 2px #ff6aac}@media(max-width:540px) and (orientation:portrait){#a12Shop.show{grid-template-columns:1fr;grid-template-rows:35vh 1fr}#a12Preview{min-height:0}#a12Preview canvas{width:120px;height:160px}#a12LanguageWrap{right:8px;bottom:8px}}`;
+    style.textContent = `#a12Actions{position:fixed;z-index:31;left:50%;bottom:max(86px,calc(env(safe-area-inset-bottom) + 82px));transform:translateX(-50%);display:flex;gap:9px}#a12Actions[hidden]{display:none!important}#a12Actions button,#a12Shop button,#a12GhostToggle,#a12EffectsToggle,#a12Language{border:1px solid #ffffff44;border-radius:12px;background:#153246;color:#fff;padding:11px 16px;font:900 13px system-ui}#a12GhostToggle,#a12EffectsToggle{position:fixed;z-index:31;right:14px;min-height:44px}#a12GhostToggle{top:78px}#a12EffectsToggle{top:130px}#a12LanguageWrap{position:fixed;z-index:46;right:14px;bottom:14px;color:#fff;font:800 11px system-ui}#a12LanguageWrap span{display:inline-block}#a12Language{margin-left:6px;padding:7px}#a12Shop{position:fixed;inset:0;z-index:45;display:none;background:#06121bf2;color:#fff;padding:clamp(15px,4vw,38px)}#a12Shop.show{display:grid;grid-template-columns:minmax(230px,42%) 1fr;gap:25px}#a12Preview{display:grid;place-items:center;background:#102635;border-radius:18px;min-height:280px}#a12Preview canvas{width:180px;height:240px}#a12Products{overflow:auto;padding-bottom:48px}#a12Products article{padding:17px;margin:12px 0;background:#132b39;border:1px solid #ffffff30;border-radius:14px}.runnerSymbol{font-size:25px;display:block}.characterChoice[data-character="0"]{box-shadow:inset 0 0 0 2px #3aa2ff}.characterChoice[data-character="1"]{box-shadow:inset 0 0 0 2px #ff6aac}@media(max-width:540px) and (orientation:portrait){#a12Shop.show{grid-template-columns:1fr;grid-template-rows:35vh 1fr}#a12Preview{min-height:0}#a12Preview canvas{width:120px;height:160px}#a12LanguageWrap{right:8px;bottom:8px}}`;
     style.textContent += `#a12Shop{box-sizing:border-box}#a12Shop.show{grid-template-columns:minmax(230px,40%) minmax(0,1fr);grid-template-rows:minmax(0,1fr);gap:18px}#a12Preview{display:flex;flex-direction:column;justify-content:center;gap:12px;min-width:0;min-height:0;overflow:hidden}#a12Preview canvas{width:min(100%,480px);height:auto;max-height:65%;aspect-ratio:3/2;object-fit:contain;image-rendering:pixelated}#a12Preview .previewControls{display:flex;flex-wrap:wrap;justify-content:center;gap:6px}#a12Preview button{padding:8px 10px}#a12Preview button[aria-pressed="true"]{background:#286650;border-color:#8ff1c8}#a12Products{min-height:0;min-width:0;overscroll-behavior:contain}@media(max-width:540px) and (orientation:portrait){#a12Shop.show{grid-template-columns:minmax(0,1fr);grid-template-rows:minmax(230px,40%) minmax(0,1fr);gap:12px}#a12Preview{gap:5px}#a12Preview canvas{max-height:62%;width:auto;max-width:100%}}`;
     document.head.appendChild(style);
     const actions = document.createElement("div");
@@ -2449,6 +2453,9 @@
     const ghostToggle=document.createElement("button");ghostToggle.id="a12GhostToggle";ghostToggle.type="button";
     const syncGhostToggle=()=>{ghostToggle.textContent=t(ghostEnabled?"ghostOn":"ghostOff");ghostToggle.setAttribute("aria-pressed",String(ghostEnabled));};
     ghostToggle.addEventListener("click",()=>{setGhostEnabled(!ghostEnabled);syncGhostToggle();});syncGhostToggle();document.body.appendChild(ghostToggle);
+    const effectsToggle=document.createElement("button");effectsToggle.id="a12EffectsToggle";effectsToggle.type="button";
+    const syncEffectsToggle=()=>{effectsToggle.textContent=t(profile.settings.reducedEffects?"effectsReduced":"effectsFull");effectsToggle.setAttribute("aria-pressed",String(profile.settings.reducedEffects));};
+    effectsToggle.addEventListener("click",async()=>{profile.settings.reducedEffects=!profile.settings.reducedEffects;syncEffectsToggle();await persist();});syncEffectsToggle();document.body.appendChild(effectsToggle);
     const languageWrap=document.createElement("label");languageWrap.id="a12LanguageWrap";languageWrap.innerHTML=`<span></span><select id="a12Language"><option value="en">EN</option><option value="tr">TR</option><option value="ru">RU</option></select>`;document.body.appendChild(languageWrap);const languageSelect=languageWrap.querySelector("select");languageSelect.value=profile.settings.language;languageSelect.addEventListener("change",async()=>{const previous=profile.settings.language;profile.settings.language=languageFrom(languageSelect.value);applyLanguage();emitGame("language_change",{from:previous,to:profile.settings.language});await persist();});
     actions.hidden = true;
     actions.addEventListener("click", (e) => {
@@ -2670,7 +2677,7 @@
     if(!enabled)return;
     const pulse=.5+.5*Math.sin(time*Math.PI); // 2 second period; surface overlay <= 4% alpha.
     for(const d of aftermathDecor()){
-      c.fillStyle=`rgba(255,94,38,${.58+.32*pulse})`;c.fillRect(d.x+64,GROUND-116,16,9);
+      c.fillStyle=`rgba(255,94,38,${.58+.32*pulse*gain})`;c.fillRect(d.x+64,GROUND-116,16,9);
       c.fillStyle=`rgba(255,171,85,${.04*pulse*gain})`;c.fillRect(d.x,GROUND-3,150,28);
     }
   }
@@ -2868,7 +2875,7 @@
     if(frozen||magma||profile.selectedWorldId==="aftermath") drawThemeScene(c,w,h,profile.selectedWorldId); else engine.drawDockBackdrop(activeWorldCacheKey);
   }
   function drawWorldIntegrated(c) {
-    if(profile.selectedWorldId==="aftermath"){drawAftermathWorld(c);return;}
+    if(profile.selectedWorldId==="aftermath"){drawAftermathWorld(c,true,gameClock,effectsGain());return;}
     ctx = c;
     const frozen=profile.selectedWorldId==="frozen",magma=profile.selectedWorldId==="magma";
     // Dock silhouettes stay behind gameplay geometry and make hazards readable at approach distance.
@@ -3195,6 +3202,10 @@
           emitGame("language_change",{from:previous,to:profile.settings.language});
           return persist();
         },
+        effectsGain,
+        getReducedEffects: () => profile.settings.reducedEffects === true,
+        setReducedEffects: async (value) => { profile.settings.reducedEffects=!!value;applyLanguage();await persist();return effectsGain(); },
+        normalizeProfile: (value) => clone(normalizeProfile(value)),
         i18n: () => clone(I18N),
         analytics: () => { const detail={result:null};document.dispatchEvent(new CustomEvent("tmb:analytics-debug",{detail}));return detail.result||{capability:"LOCAL_ONLY",remote:"NOT_CONFIGURED",events:clone(telemetry),json:JSON.stringify(telemetry)}; },
         failSave: (v) => {

@@ -292,6 +292,11 @@ Removed the manually copied `TMB_MOVEMENT_CONSTANTS` dictionary and its window e
 - Negatifler KIRMIZI: precision `Expected /[+-]\d+\.\d{2}s/, Received "YEREL EN İYİ -0.0s"`; sign `Expected /[+-]\d+\.\d{2}s/, Received "YEREL EN İYİ 0.00s"`; language `Expected true, Received false` (TR ilk kayıt satırı).
 - Pozitif: `tn-a5-ghost.spec.cjs` 10/10 PASS (4.4m, `A5B2_ROUTES` ayarlanmadı); `tn-a5c-lang.spec.cjs` 9/9 PASS (25.2s). Test 7 gerçek bitiş kısayolu 0; yalnız sonuç canvasını ölçmek için `drawResult()` 4 çağrı. Ürün kodu değişmedi; geçici ürün mutasyonu grep 0.
 - SHA256: test `639d0f2230304fbed5a77052c0221ac9fa885d6f73d1160bfc104a0d48c81330`; index `70a41931fbe0a6780b7407e93a1efc7f4da82533d41d37f36ea8f8cf5b61eab9`; a12 `b6bede8c5ef21d8fbea630372f75fef0ea3033e25f5da07d39508188b89c8882`.
+## A5c3 Tur 3
+
+- `jumpRelease`: bilinen ölçüm artefaktı, `38187c2`'den beri; fonksiyon gövdesi aynı. Baseline JSON ve `a5c3-integrity.py` değiştirilmedi.
+- ÖNERİ (uygulama yok): integrity segment sınırı sonraki `^function`/EOF yerine fonksiyonun kapanış ayracı veya `</script>` olmalı.
+
 ## A5c2a independent correction (2026-09-28)
 
 The prior 10/10 result is superseded. `tn-a5c-audio.spec.cjs` no longer asserts product JS/HTML source text (Y-S9 manifest/SHA remains the only file-content contract). DEBUG analysers are in the live signal paths: music bus -> analyser -> destination and SFX bus -> compressor -> ceiling -> analyser -> destination. Headless Chromium AudioContext reached `running` after real input.
@@ -307,3 +312,21 @@ Acceptance remains PARTIAL: B-S1 lacks door/barrel routes and real shop purchase
 - Sayısal ölçümler: limiter peak 0.88225; bypass 2.40987. Warning farkı +11.60 dB; gain .02 negatifi -21.97 dB. Kanal mute -Infinity dB; audible -13.79…-15.31 dB; cross-bus negatif -19.96 dB. B-S8 ramp/land/finish -8.53/-12.91/-14.52 dB.
 - Yaşam döngüsü: visibility, gerçek kayıtlı platform pause/resume callback'leri, audio enabled=false ve reklam başarı/yok/hata/1500 ms timeout dalları sonrasında çıkış geri geldi. Timeout kurtarma ürün davranışı eklendi.
 - Negatifler: coin trigger log artmadı; limiter bypass > ceiling; warning < +6 dB; cross-bus sızıntı; eager context running; visibility listener yokken -22.96 dB; soundtrack toplam kaynak 2; decode throw pageerror 1; byte mutation SHA mismatch; window global injection yakalandı. Kısayol: B-S1=1 (yalnız cüzdan kurulumu), B-S7=1 (F01 başlangıcı), diğerleri=0.
+
+## A5c3 TUR 9 — teslim durumu
+
+- B-E1 PASS · eksik alan=false/kayıtlı true · 3 fixture · diff 0.
+- M-E2 PASS · ilk rAF gain=0/hedef ≥44/kesişim 0 · 3 viewport · reload/rota/dünya korunur.
+- B-E3 PASS · azaltılmış ışık/overlay 0/0 · 121 kare · normal fark pozitif.
+- B-E4 PASS · iki tn-a4 kapısı · HEAD kaynak · SHA korunur.
+- B-E5 FAIL · dört dünya canlı canvas · tek canlı kalıp · telegraph matrisi tamamlanmadı.
+- B-E6 FAIL · D06 x=2300/yaklaşım 2150 · gerçek sağ giriş ≤5 sn ölüm yok · 17 kare yok.
+- B-E7 PASS · D01/F04/A01 birebir · Bot S sahte saat · davranışsal negatif kırmızı/kaldırıldı.
+- B-E8 FAIL · worker MAD 5.896/5.553, event 13/13 PASS; collapse alt yolda, door PREPARING pencere öncesi · 6 satır · eşik aynı.
+- B-E9 PASS · minEdge >15 · azaltılmış aftermath · normal B-E4 pozitif.
+- M-L5b PASS · 844x390 × 3 dil · Range metin ≤ clientWidth+1 · canvas aynı.
+- M-L5c PASS · 390x844 × 3 dil · ▲ 64×64, metin 23/client 62 px · hit-area ölçüm dışı.
+- Y-D1 PASS · üretimde yeni debug globali 0 · hash'siz · DEBUG pozitif ayrı.
+- Integrity: eski 22/23 (`jumpRelease`); balanced-brace v2 23/23, kaynak `5ce6f28`.
+- Kök neden: canlı kalıp worker'da çalıştı; collapse Bot S alt yolda; door penceresi erken; D06 yaklaşımı ölüm üretmedi.
+- ÖNERİ: sonraki yetkili tur yalnız hedef durum yakalamayı çözsün; eşik/telegraph/fizik değişmesin.
