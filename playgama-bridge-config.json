@@ -27,6 +27,9 @@
         },
         {
           "id": "out_of_lives"
+        },
+        {
+          "id": "route_completed"
         }
       ]
     },
@@ -34,6 +37,12 @@
       "placements": [
         {
           "id": "skip_part"
+        },
+        {
+          "id": "skip_sector"
+        },
+        {
+          "id": "result_x2"
         }
       ]
     }

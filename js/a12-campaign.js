@@ -1672,31 +1672,45 @@
   let profile = baseProfile(),
     saveStatus = "idle",
     saveFailure = false;
-  async function persist() {
+  function fallbackStorage() {
+    return {
+      get: async (key) => localStorage.getItem(key),
+      set: async (key, value) => localStorage.setItem(key, value),
+      delete: async (key) => localStorage.removeItem(key),
+    };
+  }
+  const campaignStorage = window.__tmbStorage || fallbackStorage();
+  let persistQueue = Promise.resolve();
+  function persist() {
     profile.profileRevision++;
     const raw = JSON.stringify(profile);
-    try {
-      localStorage.setItem(PROFILE_KEY, raw);
-      saveStatus = "saved";
-      saveFailure = false;
-      return true;
-    } catch (e) {
-      saveStatus = "failed";
-      saveFailure = true;
-      emitGame("profile_save_failed", { reason: e?.name || "storage" });
-      return false;
-    }
+    const write = async () => {
+      try {
+        await campaignStorage.set(PROFILE_KEY, raw);
+        saveStatus = "saved";
+        saveFailure = false;
+        return true;
+      } catch (e) {
+        saveStatus = "failed";
+        saveFailure = true;
+        emitGame("profile_save_failed", { reason: e?.name || "storage" });
+        return false;
+      }
+    };
+    const result = persistQueue.then(write, write);
+    persistQueue = result.then(() => undefined, () => undefined);
+    return result;
   }
-  function loadProfile() {
+  async function loadProfile() {
     let raw = null,
       legacy = null;
     try {
-      raw = parseSave(localStorage.getItem(PROFILE_KEY));
-      legacy = localStorage.getItem(LEGACY_KEY);
+      raw = parseSave(await campaignStorage.get(PROFILE_KEY));
+      legacy = await campaignStorage.get(LEGACY_KEY);
     } catch (_) {}
     profile = migrateV36(legacy, raw);
     if (!raw) profile.settings.reducedEffects = !!window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
-    if (profile.migrationFlags.v36 && !raw) void persist();
+    if (profile.migrationFlags.v36 && !raw) await persist();
     document
       .querySelectorAll(".characterChoice")
       .forEach((el) => el.replaceWith(el.cloneNode(true)));
@@ -1754,7 +1768,10 @@
     movementProfileCache = null,
     obstacleSeedCache = new Map(),
     platformOrder = { colliderFrame: 0, landingFrame: 0, carryFrame: 0 },
-    flowFlash = 0;
+    flowFlash = 0,
+    campaignAdPaused = false,
+    routesSinceInterstitial = 0;
+  document.addEventListener("tmb:campaign-ad-pause",e=>{campaignAdPaused=e.detail===true;});
   function canonical(value) {
     if (Array.isArray(value)) return `[${value.map(canonical).join(",")}]`;
     if (value && typeof value === "object") return `{${Object.keys(value).sort().map(k=>`${JSON.stringify(k)}:${canonical(value[k])}`).join(",")}}`;
@@ -1776,13 +1793,14 @@
     return obstacleSeedCache.get(key);
   }
   function ghostIdentity(r=route){return {routeId:r.routeId,routeVersion:r.version,movementProfile:movementProfile(),obstacleSeed:obstacleSeed(r)};}
+  let ghostStorageRaw=null;
   function readGhost(r=route) {
     ghostStorageFailed=false;
-    try { const stored=parseSave(localStorage.getItem(GHOST_KEY));if(!stored)return null;const v=Array.isArray(stored.samples)?stored:stored.routes?.[r.routeId];if(!v||!Array.isArray(v.samples))return null;const id=ghostIdentity(r);return Object.keys(id).every(k=>v[k]===id[k])?v:null; }
+    try { const stored=parseSave(ghostStorageRaw);if(!stored)return null;const v=Array.isArray(stored.samples)?stored:stored.routes?.[r.routeId];if(!v||!Array.isArray(v.samples))return null;const id=ghostIdentity(r);return Object.keys(id).every(k=>v[k]===id[k])?v:null; }
     catch(_){ghostStorageFailed=true;return null;}
   }
-  function writeGhost(record) { try { const old=parseSave(localStorage.getItem(GHOST_KEY)),routes=old?.routes&&typeof old.routes==="object"?{...old.routes}:Array.isArray(old?.samples)&&old.routeId?{[old.routeId]:old}:{};routes[record.routeId]=record;localStorage.setItem(GHOST_KEY,JSON.stringify({v:2,routes})); return true; } catch(_){ ghostStorageFailed=true; return false; } }
-  function setGhostEnabled(value){ghostEnabled=!!value;try{localStorage.setItem(GHOST_SETTING_KEY,ghostEnabled?"1":"0")}catch(_){}emitGame("ghost_toggle",{enabled:ghostEnabled});return ghostEnabled;}
+  async function writeGhost(record) { try { const old=parseSave(await campaignStorage.get(GHOST_KEY)),routes=old?.routes&&typeof old.routes==="object"?{...old.routes}:Array.isArray(old?.samples)&&old.routeId?{[old.routeId]:old}:{};routes[record.routeId]=record;ghostStorageRaw=JSON.stringify({v:2,routes});await campaignStorage.set(GHOST_KEY,ghostStorageRaw); return true; } catch(_){ ghostStorageFailed=true; return false; } }
+  async function setGhostEnabled(value){ghostEnabled=!!value;try{await campaignStorage.set(GHOST_SETTING_KEY,ghostEnabled?"1":"0")}catch(_){ghostStorageFailed=true}emitGame("ghost_toggle",{enabled:ghostEnabled});return ghostEnabled;}
   function resetGhostRun() { ghostCompatible=readGhost(route);ghostSamples=[];ghostPlaybackTime=0; }
   function sampleGhost() { if(!run||result)return;const last=ghostSamples.at(-1);if(!last||gameClock-last.t>=1/20)ghostSamples.push({t:+gameClock.toFixed(3),x:+player.x.toFixed(2),y:+player.y.toFixed(2),f:player.facing||1}); }
   function ghostAt(time=ghostPlaybackTime){const s=ghostCompatible?.samples;if(!s?.length)return null;let i=0;while(i+1<s.length&&s[i+1].t<=time)i++;const a=s[i],b=s[Math.min(i+1,s.length-1)],q=b.t>a.t?Math.max(0,Math.min(1,(time-a.t)/(b.t-a.t))):0;return {x:a.x+(b.x-a.x)*q,y:a.y+(b.y-a.y)*q,f:q<.5?a.f:b.f};}
@@ -1988,6 +2006,7 @@
       completed: true,
       completions: (profile.progressByRoute[routeId]?.completions || 0) + 1,
     };
+    routesSinceInterstitial++;
     delete profile.pendingRunsByRoute[routeId];
     const stars = 1 + Number(run.runCoins >= Math.ceil(route.coins.length / 2)) + Number(run.runCoins === route.coins.length);
     profile.progressByRoute[routeId].stars = Math.max(profile.progressByRoute[routeId].stars || 0, stars);
@@ -2396,6 +2415,14 @@
     return language==="tr"?`REKLAM İZLE · +${amount} COIN`:language==="ru"?`РЕКЛАМА · +${amount} МОНЕТЫ`:`WATCH AD · +${amount} COINS`;
   }
   function rewardedAvailable() { const detail={available:false};document.dispatchEvent(new CustomEvent("tmb:rewarded-capability",{detail}));return detail.available===true; }
+  function interstitialAvailable() { const detail={available:false};document.dispatchEvent(new CustomEvent("tmb:interstitial-capability",{detail}));return detail.available===true; }
+  async function requestRouteInterstitial() {
+    if(routesSinceInterstitial<2||!interstitialAvailable())return false;
+    routesSinceInterstitial=0;
+    const detail={placement:"route_completed",promise:null};document.dispatchEvent(new CustomEvent("tmb:interstitial-request",{detail}));
+    try{if(detail.promise)await detail.promise;}catch(_){}
+    return true;
+  }
   function syncRewardedButton() {
     const button=document.querySelector('#a12Actions [data-act="rewarded"]');if(!button)return;
     const claimed=!!result&&profile.rewardedRunIds.includes(result.economyRunId),visible=!!result&&result.amount>0&&(claimed||rewardedAvailable());
@@ -2492,11 +2519,11 @@
     effectsToggle.addEventListener("click",async()=>{profile.settings.reducedEffects=!profile.settings.reducedEffects;syncEffectsToggle();await persist();});syncEffectsToggle();document.body.appendChild(effectsToggle);
     const languageWrap=document.createElement("label");languageWrap.id="a12LanguageWrap";languageWrap.innerHTML=`<span></span><select id="a12Language"><option value="en">EN</option><option value="tr">TR</option><option value="ru">RU</option></select>`;document.body.appendChild(languageWrap);const languageSelect=languageWrap.querySelector("select");languageSelect.value=profile.settings.language;languageSelect.addEventListener("change",async()=>{const previous=profile.settings.language;profile.settings.language=languageFrom(languageSelect.value);applyLanguage();emitGame("language_change",{from:previous,to:profile.settings.language});await persist();});
     actions.hidden = true;
-    actions.addEventListener("click", (e) => {
+    actions.addEventListener("click", async (e) => {
       const a = e.target.dataset.act;
       if (!a) return;
       if (a === "rewarded") { void claimRewardedResult(); return; }
-      if (a === "next") { const order=profile.selectedWorldId==="aftermath"?WORLD_REGISTRY.aftermath.routes:profile.selectedWorldId==="magma"?["M01","M02","M03","M04"]:profile.selectedWorldId==="frozen"?["F01","F02","F03","F04"]:["D01","D02","D03","D04","D05","D06"], next=order[order.indexOf(routeId)+1]||order[0]; startRoute(ROUTES[next]?next:order[0], true, next==="D06"); }
+      if (a === "next") { const order=profile.selectedWorldId==="aftermath"?WORLD_REGISTRY.aftermath.routes:profile.selectedWorldId==="magma"?["M01","M02","M03","M04"]:profile.selectedWorldId==="frozen"?["F01","F02","F03","F04"]:["D01","D02","D03","D04","D05","D06"], next=order[order.indexOf(routeId)+1]||order[0]; await requestRouteInterstitial();startRoute(ROUTES[next]?next:order[0], true, next==="D06"); }
       if (a === "retry") startRoute(routeId, true, routeId === "D06");
       if (a === "shop") openShop();
     });
@@ -3166,12 +3193,12 @@
     }
     syncActionVisibility();
   }
-  function init() {
+  async function init() {
     if (document.body.dataset.gameMode === "campaign") return;
     document.body.dataset.gameMode = "campaign";
-    loadProfile();
+    await loadProfile();
     emitGame("session_start", { language: profile.settings.language });
-    try { ghostEnabled=localStorage.getItem(GHOST_SETTING_KEY)!=="0"; } catch(_){ ghostEnabled=true; }
+    try { ghostStorageRaw=await campaignStorage.get(GHOST_KEY);ghostEnabled=(await campaignStorage.get(GHOST_SETTING_KEY))!=="0"; } catch(_){ ghostStorageRaw=null;ghostEnabled=true;ghostStorageFailed=true; }
     engine = window.__installCampaignEngine({
       attach(api) {
         engine = api;
@@ -3181,6 +3208,7 @@
       },
       blocked: () =>
         shopOpen ||
+        campaignAdPaused ||
         !!result ||
         document.getElementById("characterSelect")?.classList.contains("show"),
       length: () => route.length,
@@ -3206,7 +3234,7 @@
       };
       window.__TMB_A12__ = Object.freeze({
         getState: debugState,
-        ghost: Object.freeze({identity:()=>ghostIdentity(route),read:()=>clone(readGhost(route)),setEnabled:setGhostEnabled,at:(time)=>ghostAt(time),clear:()=>{try{localStorage.removeItem(GHOST_KEY)}catch(_){}ghostCompatible=null;},inject:(value)=>{if(typeof value==="string")localStorage.setItem(GHOST_KEY,value);else writeGhost(value);ghostCompatible=readGhost(route);return debugState();}}),
+        ghost: Object.freeze({identity:()=>ghostIdentity(route),read:()=>clone(readGhost(route)),setEnabled:setGhostEnabled,at:(time)=>ghostAt(time),clear:async()=>{try{await campaignStorage.delete(GHOST_KEY);ghostStorageRaw=null}catch(_){ghostStorageFailed=true}ghostCompatible=null;},inject:async(value)=>{if(typeof value==="string"){await campaignStorage.set(GHOST_KEY,value);ghostStorageRaw=value}else await writeGhost(value);ghostCompatible=readGhost(route);return debugState();}}),
         routeDefinition: (id)=>clone(ROUTES[id]),
         migrateV36: (v, p) => migrateV36(v, p),
         startRoute: (id, fresh = true, fullD06 = false) => startRoute(id, fresh, fullD06),
