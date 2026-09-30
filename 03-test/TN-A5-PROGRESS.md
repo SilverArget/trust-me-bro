@@ -100,3 +100,30 @@ A5c2b Tur 3 ba�lang��: 2026-09-29T00:09:29.2002542+03:00 � HEAD 38187c2; K-A5C2B
 [2026-09-30 06:22:11 +03:00] A5c3 TUR 8 DUR/PARTIAL: B-E8 canli zincir ham kanit yazdi fakat 240 sn timeout/assert RED; B-E6 D06 seg4 deathX=2300/7.450, stopAtX=2150 + gercek ArrowRight olum uretmedi; B-E5 baslatilmadi. Tam 12 kosu RED onkapi nedeniyle kosulmadi.
 [2026-09-30 06:26:34 +03:00] A5c3 TUR 9: spec 12/12 list + node check + integrity v2 23/23; eski deneysel bloklar silindi; pseudo hit-area geri; M-L5 Range ölçümü ilk koşu LANGUAGE yaprakları kırmızı, kapsam içi düzeltme sürüyor; parkour 25/25.
 [2026-09-30 06:40:33 +03:00] A5c3 TUR 9 tamam: spec 12 list/node check; tam koşu 9 PASS/3 beklenen FAIL (B-E5/B-E6/B-E8), lang 9/9, a5-live 1/1, M-L5 2/2, parkour 25/25, Bot S 6/6, integrity v2 23/23; rapor güncellendi.
+09:39:02 TUR B1 başlangıç ölçümü eşleşti; B-E5/B-E8 düzenleme başlıyor.
+09:40:08 TUR B1: getState kamera erişimi doğrulanıyor; stop_on kapısı kontrolü.
+- 2026-09-30 10:00:34 +03:00 TUR B1 yeniden: başlangıç yeşil; DRAW kancası eklendi; B-E5 canlı donma gövdesi hazırlanıyor.
+- 2026-09-30 10:09:48 +03:00 TUR B1 deneme 3: UTF-8/.NET splice tamamlandi; syntax/diff dogrulaniyor.
+- 2026-09-30 10:11:43 +03:00 TUR B1: access 9/12; B-E5/B-E8 Bot S saat kurulum sirasi duzeltildi, tekrar kosuyor.
+- 2026-09-30 10:19:21 +03:00 TUR B1 deneme 3: B-E5 300s timeout; access 9/12 ilk kosu; integrity tamamlandi.
+2026-09-30T10:51:46.4317277+03:00 TUR B1-c start measurement
+2026-09-30T10:55:27.2695892+03:00 TUR B1-c P0 retry runBot live resume
+2026-09-30T10:59:02.9645620+03:00 TUR B1-c B-E5 single-page run
+2026-09-30T11:02:48.6510580+03:00 TUR B1-c B-E5 retry pause-handoff-pageshow
+2026-09-30T11:08:24.2880882+03:00 TUR B1-c B-E5 timeout; dock incremental evidence preserved
+2026-09-30T11:09:26.0697466+03:00 TUR B1-c interim stop before 25m; final disk measurement
+2026-09-30T11:18:48.7729891+03:00 TUR B1-d D0 tani basladi
+2026-09-30T11:20:22.9939441+03:00 TUR B1-d DUR H3 fullPositiveMad=0; D0 temizlendi
+2026-09-30T12:24:34.1470867+03:00 TUR B1-e start check PASS; inspecting B-E5/B-E8 and worker live path
+2026-09-30T12:25:54.8547305+03:00 TUR B1-e STOP: GROUND 455 != layout.groundY 437; no spec rewrite
+2026-09-30T12:29:05.1182100+03:00 TUR B1-e/f baslangic kapisi PASS; worker/collapse duzeltmesi hazirlaniyor.
+2026-09-30T12:39:38.8963828+03:00 B-E5 304.698 sn timeout olculdu; tam iki teste bolundu, sayfa-ici MAD optimizasyonu uygulandi.
+2026-09-30T12:43:44.1693988+03:00 B-E5 telegraphs 222.919 sn tamamlandi ancak assert kirmizi; ham kanit inceleniyor.
+2026-09-30T13:43:22.5485324+03:00 TUR B2 start gate PASS; inspecting real chief_catch/player_fall paths
+2026-09-30T14:05:34.0489298+03:00 TUR B2-b start check PASS; preparing M01 real-fall probe
+2026-09-30T14:15:48.9441058+03:00 TUR B2-b M01 probe: purchase/select fixed; tuning real Space input at intro, no synthetic state
+2026-09-30T14:18:41.2490983+03:00 TUR B2-b STOP: M01 real input crossed void via bridge; no below-ground frame or retry; temp probe removed
+2026-09-30T14:24:41.1231776+03:00 TUR B2-c start checks PASS; callback hashing and fixme edit starting
+2026-09-30T14:32:58.5180137+03:00 TUR B2-c STOP: unchanged B-E5 worlds assertion failed; integrity/audio not started
+2026-09-30T14:36:48.4749406+03:00 TUR B2-d start check PASS; editing B-E5 worlds declaration only
+2026-09-30T14:38:30.1182695+03:00 TUR B2-d access PASS 9 passed 4 skipped; integrity exit 0

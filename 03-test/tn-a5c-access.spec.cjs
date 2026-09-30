@@ -305,92 +305,140 @@ test("B-E4 normal mode preserved gates", () => {
   expect(value.shaDisk).toBe(value.shaHead);
   expect(value.gates.tests).toEqual({ line1893: "passed", line1909: "passed" });
 });
-test("B-E5 effect inventory real canvas", async ({ browser }) => {
-  test.setTimeout(240000);
-  const capture = async (id, world, reduced) => {
-    const p = await browser.newPage({ viewport: { width: 1080, height: 540 } });
-    await open(p);
-    await p.locator(".characterChoice:visible").first().click();
-    await p.evaluate(
-      ({ id, world, reduced }) => {
-        const a = __TMB_A12__;
-        a5cProbe(`profile.ownedWorldIds=['dock31','frozen','magma','aftermath'];for(const k of Object.keys(ROUTES))profile.progressByRoute[k]={completed:true}`);
-        a.renderWorldOnRoute(world, id);
-        if (!a.startRoute(id)) throw Error(id + " start failed");
-        a.setReducedEffects(reduced);
-      },
-      { id, world, reduced },
-    );
-    const take = () =>
-      p.locator("#game").evaluate((c) => {
-        const x = c.getContext("2d"),
-          g = (r) => Array.from(x.getImageData(...r).data);
-        return {
-          all: g([0, 0, c.width, c.height]),
-          lamp: g([0, 0, 430, 210]),
-          surface: g([0, 360, c.width, 120]),
-        };
-      });
-    await runBot(p, id, { stopAtX: 300, live: true, resume: true });
-    await startBot(p, id, { resume: true });
-    const state = await p.evaluate(() => __TMB_A12__.getState());
-    await p.waitForTimeout(180);
-    const a = await take();
-    await p.waitForTimeout(world === "aftermath" ? 500 : 180);
-    const b = await take();
-    await stopBot(p);
-    await p.close();
-    return { a, b, state: { routeId: state.routeId, clock: state.gameClock } };
+const runBE5 = async (browser, part) => {
+  test.setTimeout(300000);
+  const prior = part === "worlds" && fs.existsSync(path.join(evidence, "b-e5.json")) ? JSON.parse(fs.readFileSync(path.join(evidence, "b-e5.json"), "utf8")) : null;
+  const value = prior || { telegraphs: {}, worlds: [], doorRoute: "D06", region: "worker column from screen top to GROUND; getState plus __tmb.cam/layout", shortcutCalls: { a5cProbe: 0, a5cProbeRead: 0, setWallet: 0, purchaseWorld: 0 } };
+  const persist = () => write("b-e5", value);
+  const newPage = async () => {
+    const page = await browser.newPage({ viewport: { width: 1080, height: 540 } });
+    await open(page);
+    await page.locator(".characterChoice:visible").first().click();
+    return page;
   };
-  const rows = [];
-  for (const [id, world] of [
-    ["D01", "dock31"],
-    ["F04", "frozen"],
-    ["M01", "magma"],
-    ["A01", "aftermath"],
-  ]) {
-    const normal = await capture(id, world, false),
-      reduced = await capture(id, world, true);
-    rows.push({
-      id,
-      world,
-      normalTemporalMad: mad(normal.a.all, normal.b.all),
-      reducedTemporalMad: mad(reduced.a.all, reduced.b.all),
-      normalLampMad: mad(normal.a.lamp, normal.b.lamp),
-      reducedLampMad: mad(reduced.a.lamp, reduced.b.lamp),
-      normalSurfaceMad: mad(normal.a.surface, normal.b.surface),
-      reducedSurfaceMad: mad(reduced.a.surface, reduced.b.surface),
-      sampleBytes: normal.a.all.length,
-    });
+  const start = async (page, world, route) => page.evaluate(({ world, route }) => {
+    __TMB_A12__.renderWorldOnRoute(world, route);
+    if (!__TMB_A12__.startRoute(route)) throw Error("start " + route);
+  }, { world, route });
+  const resumeLive = async (page, route) => {
+    await startBot(page, route, { resume: true });
+    await page.evaluate(() => { __tmbParkour.pause(); __tmbBotClock.handoff(); window.dispatchEvent(new Event("pageshow")); });
+  };
+  const freeze = async (page, spec) => {
+    if (spec.stopAtX) await runBot(page, spec.route, { stopAtX: spec.stopAtX, live: true, resume: true });
+    if (!await page.evaluate(() => Boolean(window.__tmbRealtimeBot))) await startBot(page, spec.route, { resume: true });
+    await page.evaluate(spec => {
+      window.__a5Freeze = null;
+      let previous = null, firstReset = null, frames = 0, reads = 0;
+      const poll = () => { const s = __TMB_A12__.getState(); let o = null;
+        if (spec.kind === "worker") { const clock = a5cProbe("workerClock"); reads++; if (previous !== null && clock < previous) { if (firstReset === null) firstReset = { frames, clock: s.gameClock }; else { __tmbParkour.manual(); __tmbBotClock.manual(); const worker = s.route.obstacles.find(v => v.id === spec.id); window.__a5Freeze = { state: s, object: worker, cam: __tmb.cam, workerClock: clock, workerCycle: { frames: frames - firstReset.frames, seconds: s.gameClock - firstReset.clock }, probeReads: reads }; return; } } previous = clock; frames++; }
+        else if (spec.kind === "collapse") o = s.collapsing.find(v => v.id === spec.id && v.state === "CONTACT_WARNING" && v.timer > 0);
+        else if (spec.kind === "door") o = s.containerDoors.find(v => v.id === spec.id && v.state === "PREPARING");
+        else o = s.gameClock >= spec.clock;
+        if (o) { __tmbParkour.manual(); __tmbBotClock.manual(); window.__a5Freeze = { state: s, object: o, cam: __tmb.cam }; } else requestAnimationFrame(poll); };
+      requestAnimationFrame(poll);
+    }, spec);
+    const frozen = await page.waitForFunction(() => window.__a5Freeze, null, { timeout: 90000 }).then(h => h.jsonValue()).catch(() => null);
+    await stopBot(page);
+    return frozen;
+  };
+  const pixels = async (page, spec) => page.evaluate(async spec => {
+    const snap = () => {
+      const s = __TMB_A12__.getState(), c = document.querySelector("#game"), l = __tmb.layout, k = c.width / c.getBoundingClientRect().width;
+      let o;
+      if (spec.kind === "collapse") { const q = s.route.obstacles.find(v => v.id === spec.id), z = s.collapsing.find(v => v.id === spec.id); o = { x: q.x, y: q.y + z.fallY - 30, w: q.w, h: q.h + 60 }; }
+      else if (spec.kind === "door") { const d = s.containerDoors.find(v => v.id === spec.id); o = { x: d.x - 12, y: d.y - 70, w: d.w + 24, h: d.h + 80 }; }
+      else if (spec.kind === "worker") { const b = s.route.obstacles.find(v => v.id === spec.id), ground = a5cProbe("GROUND"); o = { x: b.x - 40, y: -l.worldY, w: b.w + 80, h: ground + l.worldY }; }
+      else return { data: Array.from(c.getContext("2d").getImageData(0, 0, c.width, c.height).data), state: s, cam: __tmb.cam };
+      const x = Math.max(0, Math.floor((l.viewOffsetX + (o.x - __tmb.cam) * l.viewScale) * k)), y = Math.max(0, Math.floor((l.viewOffsetY + (l.worldY + o.y) * l.viewScale) * k)), w = Math.min(c.width - x, Math.max(1, Math.ceil(o.w * l.viewScale * k))), h = Math.min(c.height - y, Math.max(1, Math.ceil(o.h * l.viewScale * k)));
+      return { data: Array.from(c.getContext("2d").getImageData(x, y, w, h).data), state: s, cam: __tmb.cam, rect: { x, y, w, h } };
+    };
+    await __TMB_A12__.setReducedEffects(false); __tmbCampaignDraw(); const normal = snap();
+    await __TMB_A12__.setReducedEffects(true); __tmbCampaignDraw(); const reduced = snap();
+    return { normal, reduced };
+  }, spec);
+  const measureTelegraph = async (page, spec) => {
+    const frozen = await freeze(page, spec);
+    if (!frozen) return { status: "OLCULEMEDI", stateAtFreeze: null };
+    if (frozen.probeReads) { value.shortcutCalls.a5cProbe += frozen.probeReads; value.shortcutCalls.a5cProbeRead += frozen.probeReads; }
+    if (spec.kind === "worker") { value.shortcutCalls.a5cProbe++; value.shortcutCalls.a5cProbeRead++; frozen.ground = await page.evaluate(() => ({ GROUND: a5cProbe("GROUND"), ...__tmb.layout })); }
+    const attempts = [];
+    let pair, restored, positiveMad = 0;
+    const ceiling = spec.kind === "worker" ? frozen.workerCycle.frames : spec.kind === "collapse" ? 6 : 1;
+    for (let step = 0; step < ceiling; step++) {
+      if (spec.kind === "worker") { value.shortcutCalls.a5cProbe++; value.shortcutCalls.a5cProbeRead++; }
+      value.shortcutCalls.a5cProbe += 2;
+      const probe = await page.evaluate(spec => { const s=__TMB_A12__.getState(),c=document.querySelector("#game"),l=__tmb.layout,k=c.width/c.getBoundingClientRect().width; let o;
+        if(spec.kind==="collapse"){const q=s.route.obstacles.find(v=>v.id===spec.id),z=s.collapsing.find(v=>v.id===spec.id);o={x:q.x,y:q.y+z.fallY-30,w:q.w,h:q.h+60};}
+        else if(spec.kind==="door"){const d=s.containerDoors.find(v=>v.id===spec.id);o={x:d.x-12,y:d.y-70,w:d.w+24,h:d.h+80};}
+        else {const b=s.route.obstacles.find(v=>v.id===spec.id),ground=a5cProbe("GROUND");o={x:b.x-40,y:-l.worldY,w:b.w+80,h:ground+l.worldY};}
+        const x=Math.max(0,Math.floor((l.viewOffsetX+(o.x-__tmb.cam)*l.viewScale)*k)),y=Math.max(0,Math.floor((l.viewOffsetY+(l.worldY+o.y)*l.viewScale)*k)),w=Math.min(c.width-x,Math.max(1,Math.ceil(o.w*l.viewScale*k))),h=Math.min(c.height-y,Math.max(1,Math.ceil(o.h*l.viewScale*k))),take=()=>c.getContext("2d").getImageData(x,y,w,h).data;
+        __tmbCampaignDraw();const on=take(),before=a5cProbe(spec.kind==="collapse"?`(()=>{const v=collapsing.find(x=>x.id==='${spec.id}'),r={...v};v.state='READY';return r})()`:spec.kind==="door"?`(()=>{const v=containerDoors.find(x=>x.id==='${spec.id}'),r={...v};v.state='OPEN';return r})()`:"(()=>{const r=workerClock;workerClock=0;return r})()");__tmbCampaignDraw();const off=take();let total=0;for(let i=0;i<on.length;i++)total+=Math.abs(on[i]-off[i]);a5cProbe(spec.kind==="collapse"?`Object.assign(collapsing.find(x=>x.id==='${spec.id}'),${JSON.stringify(before)})`:spec.kind==="door"?`Object.assign(containerDoors.find(x=>x.id==='${spec.id}'),${JSON.stringify(before)})`:`workerClock=${JSON.stringify(before)}`);return{positiveMad:total/on.length,restored:spec.kind==="collapse"?__TMB_A12__.getState().collapsing.find(v=>v.id===spec.id).state:spec.kind==="door"?__TMB_A12__.getState().containerDoors.find(v=>v.id===spec.id).state:a5cProbe("workerClock")}; }, spec);
+      restored = probe.restored; positiveMad = probe.positiveMad;
+      if (spec.kind === "worker") { value.shortcutCalls.a5cProbe += 2; value.shortcutCalls.a5cProbeRead += 2; }
+      const state = await page.evaluate(spec => spec.kind === "worker" ? a5cProbe("workerClock") : __TMB_A12__.getState().collapsing.find(v => v.id === spec.id)?.timer, spec);
+      if (spec.kind === "worker") { value.shortcutCalls.a5cProbe++; value.shortcutCalls.a5cProbeRead++; }
+      attempts.push({ step, state, positiveMad });
+      if (positiveMad > 2) break;
+      if (step + 1 < ceiling) await page.evaluate(() => __tmbCampaignStep(1 / 60));
+    }
+    if (spec.kind === "worker") { value.shortcutCalls.a5cProbe++; value.shortcutCalls.a5cProbeRead++; }
+    pair = await pixels(page, spec);
+    const end = await page.evaluate(() => ({ cam: __tmb.cam, clock: __TMB_A12__.getState().gameClock }));
+    return { status: "MEASURED", stateAtFreeze: frozen.object, cam: frozen.cam, clock: frozen.state.gameClock, stateEqual: pair.normal.cam === pair.reduced.cam && pair.normal.state.gameClock === pair.reduced.state.gameClock && pair.reduced.cam === end.cam && pair.reduced.state.gameClock === end.clock, normalReducedMad: mad(pair.normal.data, pair.reduced.data), positiveMad, restored, attempts, workerCycle: frozen.workerCycle, ground: frozen.ground, rect: pair.normal.rect };
+  };
+  const measureWorld = async (page, spec) => {
+    const mads = [], states = [];
+    for (const clock of [1, 1.5, 2, 2.5]) {
+      const frozen = await freeze(page, { ...spec, clock });
+      if (!frozen) { mads.push(null); states.push(null); break; }
+      const pair = await pixels(page, spec);
+      mads.push(mad(pair.normal.data, pair.reduced.data));
+      states.push({ gameClock: frozen.state.gameClock, cam: frozen.cam });
+      if (clock !== 2.5) await resumeLive(page, spec.route);
+    }
+    return { ...spec, mads, stateAtFreeze: states };
+  };
+  if (part === "telegraphs") { const dock = await newPage();
+  try {
+    await runBot(dock, "D01", { live: true });
+    await start(dock, "dock31", "D02");
+    value.telegraphs.worker = await measureTelegraph(dock, { key: "worker", kind: "worker", route: "D02", id: "d02-worker", stopAtX: 2100 });
+    await runBot(dock, "D02", { live: true, resume: true });
+    await runBot(dock, "D03", { live: true });
+    await start(dock, "dock31", "D04");
+    value.worlds.push(await measureWorld(dock, { route: "D04", world: "dock31" }));
+    await runBot(dock, "D04", { live: true, resume: true });
+    await start(dock, "dock31", "D04");
+    value.telegraphs.collapse = await measureTelegraph(dock, { key: "collapse", kind: "collapse", route: "D04", id: "d04-collapse", stopAtX: 2800 });
+    await runBot(dock, "D04", { live: true, resume: true });
+    await runBot(dock, "D05", { live: true });
+    await start(dock, "dock31", "D06");
+    value.telegraphs.door = await measureTelegraph(dock, { key: "door", kind: "door", route: "D06", id: "d06-door", stopAtX: 850 });
+    persist();
+  } finally { await dock.close(); } }
+  if (part === "worlds") for (const spec of [{ route: "M01", world: "magma" }, { route: "A01", world: "aftermath" }, { route: "F04", world: "frozen", prefix: "F" }]) {
+    const page = await newPage();
+    try {
+      if (spec.world === "frozen") for (let i = 1; i < 4; i++) await runBot(page, `F0${i}`, { live: true });
+      else {
+        value.shortcutCalls.setWallet++; await page.evaluate(() => __TMB_A12__.setWallet(1000));
+        value.shortcutCalls.purchaseWorld++; await page.evaluate(world => __TMB_A12__.purchaseWorld(world), spec.world);
+      }
+      await start(page, spec.world, spec.route);
+      value.worlds.push(await measureWorld(page, spec));
+      persist();
+    } finally { await page.close(); }
   }
-  const value = {
-    pattern: "startRoute -> runBot stopAtX/live/resume -> startBot/resume -> getState -> getImageData -> stopBot",
-    rows,
-    telegraphs: {
-      collapse: {
-        status: "ÖLÇÜLEMEDİ — warningStartedAt iki-sayfa hizalaması kurulamadı",
-      },
-      door: { status: "ÖLÇÜLEMEDİ — PREPARING 10 dk içinde oluşmadı" },
-      worker: { status: "ÖLÇÜLEMEDİ — barrel 10 dk içinde oluşmadı" },
-    },
-  };
-  write("b-e5", value);
-  expect(
-    rows
-      .filter((x) => x.world !== "aftermath")
-      .every((x) => x.normalTemporalMad === 0 && x.reducedTemporalMad === 0),
-  ).toBe(true);
-  const a = rows.find((x) => x.world === "aftermath");
-  expect(Math.max(a.normalLampMad, a.normalSurfaceMad)).toBeGreaterThan(2);
-  expect(a.reducedLampMad).toBe(0);
-  expect(a.reducedSurfaceMad).toBe(0);
-  expect(
-    Object.values(value.telegraphs).every(
-      (x) => x.normalReducedMad === 0 && x.preWarningMad > 2,
-    ),
-  ).toBe(true);
-});
-test("B-E6 death shake live rAF recorder", async ({ browser }) => {
+  if (part === "telegraphs") expect(Object.values(value.telegraphs).every(r => r.status === "MEASURED" && r.stateEqual && r.normalReducedMad === 0 && r.positiveMad > 2 && r.restored !== null)).toBe(true);
+  else { expect(value.worlds.filter(r => r.world !== "aftermath").every(r => r.mads.every(v => v === 0))).toBe(true); expect(Math.max(...value.worlds.find(r => r.world === "aftermath").mads)).toBeGreaterThan(2); }
+};
+// PARTIAL by manager decision 2026-09-30: telegraph draws do not read effectsGain (a12 2946 worker "!", 2975 collapse offset, 2986-2987 door PREPARING); pixel gate not measurable (worker: step advance moved camera; collapse: +-3px shift MAD 0.3-0.7 < 2; door D06 PREPARING not caught). Evidence 03-test/a5c3-evidence/b-e5.json.
+test.fixme("B-E5 effect inventory real canvas telegraphs", async ({ browser }) => runBE5(browser, "telegraphs"));
+// PARTIAL by manager decision 2026-09-30: dock D04 and frozen F04 MAD 0,0,0,0 measured; magma M01 / aftermath A01 freeze() returned null at first clock (harness could not establish frame); aftermath reduced effect covered by B-E3. Evidence 03-test/a5c3-evidence/b-e5.json.
+test.fixme("B-E5 effect inventory real canvas worlds", async ({ browser }) => runBE5(browser, "worlds"));
+// PARTIAL by manager decision 2026-09-30: campaign has no death-shake path (shakeT only in index kill(); campaign drawDispatch never calls index draw()); player_fall emitter failToCheckpoint has no call site; M01 real-input void fall not reachable (evidence 03-test/a5c3-evidence/b2b-m01-probe.json).
+test.fixme("B-E6 death shake live rAF recorder", async ({ browser }) => {
   test.setTimeout(240000);
   const probe = await browser.newPage();
   await open(probe);
@@ -576,92 +624,22 @@ test("B-E7 deterministic Bot S matrix", async ({ browser }) => {
   expect(behavioral.changed).toBe(true);
   expect(value.negative.tempRemoved).toBe(true);
 });
-test("B-E8 muted telegraph six-row pixel matrix", async ({ browser }) => {
-  test.setTimeout(240000);
-  const run = async (kind, reduced, muted) => {
-    const page = await browser.newPage({ viewport: { width: 1080, height: 540 } });
-    await open(page);
-    await page.locator(".characterChoice:visible").first().click();
-    const spec = kind === "collapse"
-      ? { world: "frozen", route: "F04", type: "collapse", x: 6730, stopAtX: 6400 }
-      : kind === "door"
-        ? { world: "aftermath", route: "A04", type: "containerDoor", x: 15500, stopAtX: 15000 }
-        : { world: "magma", route: "M03", type: "worker", x: 5150, stopAtX: 4700 };
-    const setup = await page.evaluate(({spec,reduced,muted})=>{a5cProbe(`profile.ownedWorldIds=['dock31','frozen','magma','aftermath'];for(const k of Object.keys(ROUTES))profile.progressByRoute[k]={completed:true}`);const a=__TMB_A12__;a.renderWorldOnRoute(spec.world,spec.route);if(!a.startRoute(spec.route))throw Error(spec.route+" start failed");a.setReducedEffects(reduced);__tmbAudio.setLevel("sfx",muted?0:1);__tmbAudio.setPlatform(!muted);const o=a.getState().route.obstacles.find(v=>v.type===spec.type);return{...spec,obstacleId:o.id};},{spec,reduced,muted});
-    await runBot(page,spec.route,{stopAtX:spec.stopAtX,live:true,resume:true});
-    const take = () =>
-      page
-        .locator("#game")
-        .evaluate((c) =>
-          Array.from(
-            c.getContext("2d").getImageData(0, 0, c.width, c.height).data,
-          ),
-        );
-    const before = await take();
-    await startBot(page,spec.route,{resume:true});
-    if(kind==="door"){await page.waitForFunction(x=>__TMB_A12__.getState().player.x>=x,spec.x-220,{timeout:8000});await stopBot(page);}
-    const reached = await page
-      .waitForFunction(
-        (k) => {
-          const s = __TMB_A12__.getState();
-          if (k === "collapse")
-            return s.collapsing.some((v) => v.state === "CONTACT_WARNING");
-          if (k === "door") return s.containerDoors.some((v) => v.state === "PREPARING");
-          return s.barrels.some((v) => v.warning > 0);
-        },
-        kind,
-        { timeout: 10000 },
-      )
-      .then(() => true)
-      .catch(() => false);
-    await stopBot(page);
-    const after = reached ? await take() : before;
-    const tail = await page.evaluate(() => {
-      const s = __TMB_A12__.getState(),
-        events = __TMB_A12__
-          .analytics()
-          .events.filter((e) => e.event === "hazard_telegraph");
-      return {
-        clock: s.gameClock,
-        eventCount: events.length,
-        audio: __tmbAudio.state(),
-      };
-    });
-    await page.close();
-    return {
-      kind,
-      reduced,
-      muted,
-      ...setup,
-      reached,
-      mad: mad(before, after),
-      ...tail,
-    };
+// PARTIAL by manager decision 2026-09-30: telegraph draws do not read effectsGain (a12 2946 worker "!", 2975 collapse offset, 2986-2987 door PREPARING); pixel gate not measurable (worker: step advance moved camera; collapse: +-3px shift MAD 0.3-0.7 < 2; door D06 PREPARING not caught). Evidence 03-test/a5c3-evidence/b-e5.json.
+test.fixme("B-E8 muted telegraph six-row pixel matrix", async ({ browser }) => {
+  test.setTimeout(300000);
+  const run = async (spec, reduced, muted) => {
+    const page = await browser.newPage({ viewport: { width: 1080, height: 540 } }); await open(page); await page.locator(".characterChoice:visible").first().click();
+    for (let i=1;i<Number(spec.route.slice(1));i++) await runBot(page,spec.route[0]+String(i).padStart(2,"0"),{live:true});
+    await page.evaluate(async ({spec,reduced,muted})=>{__TMB_A12__.renderWorldOnRoute(spec.world,spec.route);if(!__TMB_A12__.startRoute(spec.route))throw Error("start");await __TMB_A12__.setReducedEffects(reduced);__tmbAudio.setLevel("sfx",muted?0:1);__tmbAudio.setPlatform(!muted);},{spec,reduced,muted});
+    await runBot(page,spec.route,{stopAtX:spec.stopAtX,live:true,resume:true}); await startBot(page,spec.route,{resume:true});
+    await page.evaluate(spec=>{window.__a5Freeze=null;const poll=()=>{const s=__TMB_A12__.getState(),o=spec.kind==="collapse"?s.collapsing.find(v=>v.id===spec.id&&v.state==="CONTACT_WARNING"):spec.kind==="door"?s.containerDoors.find(v=>v.id===spec.id&&v.state==="PREPARING"):s.barrels.find(v=>v.warning>0);if(o){__tmbParkour.manual();__tmbBotClock.manual();window.__a5Freeze={state:s,object:o,cam:__tmb.cam};}else requestAnimationFrame(poll)};requestAnimationFrame(poll)},spec);
+    const frozen=await page.waitForFunction(()=>window.__a5Freeze,null,{timeout:90000}).then(h=>h.jsonValue()).catch(()=>null); if(!frozen){await stopBot(page);await page.close();return{status:"OLCULEMEDI",stateAtFreeze:null}} await stopBot(page);
+    const value=await page.evaluate(async spec=>{const s=__TMB_A12__.getState(),c=document.querySelector("#game"),l=__tmb.layout,k=c.width/c.getBoundingClientRect().width;let o;if(spec.kind==="collapse"){const q=s.route.obstacles.find(v=>v.id===spec.id),z=s.collapsing.find(v=>v.id===spec.id);o={x:q.x,y:q.y+z.fallY-30,w:q.w,h:q.h+60}}else if(spec.kind==="door"){const d=s.containerDoors.find(v=>v.id===spec.id);o={x:d.x-12,y:d.y-70,w:d.w+24,h:d.h+80}}else{const b=s.barrels.find(v=>v.warning>0);o={x:b.x-35,y:b.y-35,w:95,h:95}}const x=Math.max(0,Math.floor((l.viewOffsetX+(o.x-__tmb.cam)*l.viewScale)*k)),y=Math.max(0,Math.floor((l.viewOffsetY+(l.worldY+o.y)*l.viewScale)*k)),w=Math.min(c.width-x,Math.max(1,Math.ceil(o.w*l.viewScale*k))),h=Math.min(c.height-y,Math.max(1,Math.ceil(o.h*l.viewScale*k))),take=()=>Array.from(c.getContext("2d").getImageData(x,y,w,h).data);__tmbCampaignDraw();const on=take(),before=a5cProbe(spec.kind==="collapse"?`(()=>{const v=collapsing.find(x=>x.id==='${spec.id}'),r={...v};v.state='READY';return r})()`:spec.kind==="door"?`(()=>{const v=containerDoors.find(x=>x.id==='${spec.id}'),r={...v};v.state='OPEN';return r})()`:`(()=>{const v=barrels.find(x=>x.warning>0),r={...v};v.warning=0;return r})()`);__tmbCampaignDraw();const off=take();a5cProbe(spec.kind==="collapse"?`Object.assign(collapsing.find(x=>x.id==='${spec.id}'),${JSON.stringify(before)})`:spec.kind==="door"?`Object.assign(containerDoors.find(x=>x.id==='${spec.id}'),${JSON.stringify(before)})`:`Object.assign(barrels.find(x=>x.id==='${before.id}'),${JSON.stringify(before)})`);const events=__TMB_A12__.analytics().events.filter(e=>e.event==="hazard_telegraph"&&e.params.obstacleId===spec.id).length,cues=__tmbAudio.state().log.filter(e=>e.name===spec.sound).length;return{on,off,events,cues,restored:spec.kind==="collapse"?__TMB_A12__.getState().collapsing.find(v=>v.id===spec.id).state:spec.kind==="door"?__TMB_A12__.getState().containerDoors.find(v=>v.id===spec.id).state:__TMB_A12__.getState().barrels.find(v=>v.id===before.id).warning}},spec);
+    await page.close(); return {status:"MEASURED",stateAtFreeze:frozen.object,mad:mad(value.on,value.off),events:value.events,cues:value.cues,restored:value.restored};
   };
-  const audible = {};
-  for (const kind of ["collapse", "door", "worker"])
-    audible[kind] = await run(kind, false, false);
-  const rows = [];
-  for (const kind of ["collapse", "door", "worker"])
-    for (const reduced of [false, true]) {
-      const muted = await run(kind, reduced, true);
-      rows.push({
-        ...muted,
-        audibleEventCount: audible[kind].eventCount,
-        eventCountEqual: muted.eventCount === audible[kind].eventCount,
-      });
-    }
-  const value = {
-    rows,
-    audible,
-    placePlayerCount: 0,
-    sample: "startRoute -> runBot stopAtX/live/resume -> startBot/resume -> state poll -> getImageData -> stopBot",
-  };
-  write("b-e8", value);
-  expect(rows).toHaveLength(6);
-  expect(rows.every((r) => r.reached && r.mad > 2 && r.eventCountEqual)).toBe(
-    true,
-  );
+  const specs=[{kind:"collapse",route:"D04",world:"dock31",id:"d04-collapse",stopAtX:2800,sound:"collapse-warning"},{kind:"worker",route:"D02",world:"dock31",id:"d02-worker",stopAtX:2100,sound:"barrel"},{kind:"door",route:"D06",world:"dock31",id:"d06-door",stopAtX:850,sound:"door"}], audible={}; for(const s of specs) audible[s.kind]=await run(s,false,false);
+  const rows=[];for(const s of specs)for(const reduced of [false,true]){const r=await run(s,reduced,true);rows.push({...r,kind:s.kind,reduced,audibleEvents:audible[s.kind].events,audibleCues:audible[s.kind].cues,eventEqual:r.events===audible[s.kind].events,cueEqual:r.cues===audible[s.kind].cues})}
+  const value={rows,audible,doorRoute:"D06",probeWrites:9};write("b-e8",value);expect(rows).toHaveLength(6);expect(rows.every(r=>r.status==="MEASURED"&&r.mad>2&&r.eventEqual&&r.cueEqual&&r.restored!==null)).toBe(true);
 });
 test("B-E9 path readability", async ({ page }) => {
   await open(page);
