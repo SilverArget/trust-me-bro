@@ -4,6 +4,7 @@ const { test, expect } = require("playwright/test"),
   http = require("http");
 const { runBot } = require("./lib/bot-s-drive.cjs");
 const aftermath = require("./lib/bot-aftermath.cjs");
+test.skip(()=>true,"yönetici 01.10: hayalet/efekt/ses paneli kaldırıldı");
 let server, base;
 const root = path.resolve(__dirname, ".."),
   out = path.join(__dirname, "a5b2-evidence"),
