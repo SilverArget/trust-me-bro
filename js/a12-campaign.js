@@ -1223,27 +1223,62 @@
       finishX: 10260,
       checkpoints: [70, 5250],
       chief: { startX: 5250 },
-      obstacles: [
-        // T2-c2: approved gap additions; existing geometry is preserved.
-        {"id":"d01-t2c-vault-3","type":"vault","x":7208,"y":407,"w":24,"h":48},
-        {"id":"d01-t2c-vault-5","type":"vault","x":7936,"y":407,"w":24,"h":48},
-        { id: "d01-t1b-vault-1", type: "vault", x: 230, w: 24, h: 48 },
-        { id: "d01-t1b-platform-2", type: "platform", x: 930, y: 370, w: 320, h: 24 },
-        { id: "d01-vault", type: "vault", x: 1600, w: 24, h: 48 },
-        { id: "d01-t1b-vault-5", type: "vault", x: 2310, w: 24, h: 48 },
-        { id: "d01-slide", type: "slide", x: 2700, w: 56, h: 160 },
-        { id: "d01-t1b-slide-3", type: "slide", x: 3297, w: 56, h: 160 },
-        { id: "d01-t1b-vault-3", type: "vault", x: 3669, w: 24, h: 48 },
-        { id: "d01-t1b-vault-2", type: "vault", x: 4160, w: 24, h: 48 },
-        { id: "d01-ramp", type: "ramp", x: 4650, w: 180, h: 74 },
-        { id: "d01-t1b-platform-3", type: "platform", x: 5450, y: 370, w: 320, h: 24 },
-        { id: "d01-t1b-platform-1", type: "platform", x: 6588, y: 370, w: 320, h: 24 },
-        { id: "d01-t1b-slide-1", type: "slide", x: 7580, w: 56, h: 160 },
-        { id: "d01-t1b-vault-4", type: "vault", x: 8620, w: 24, h: 48 },
-        { id: "d01-t1b-platform-4", type: "platform", x: 9020, y: 370, w: 320, h: 24 },
-        { id: "d01-t1b-slide-2", type: "slide", x: 9790, w: 56, h: 160 },
+      groundSegments: [
+        { id: "d01-dock-start", x: 0, y: 455, w: 520, h: 100, kind: "ground" },
+        { id: "d01-container-1", x: 520, y: 395, w: 530, h: 100, kind: "ground" },
+        { id: "d01-container-2", x: 1050, y: 335, w: 600, h: 100, kind: "ground" },
+        { id: "d01-container-3", x: 1650, y: 275, w: 550, h: 100, kind: "ground" },
+        { id: "d01-container-4", x: 2200, y: 215, w: 550, h: 100, kind: "ground" },
+        { id: "d01-warehouse-roof-a", x: 2820, y: 275, w: 580, h: 100, kind: "ground" },
+        { id: "d01-warehouse-roof-b", x: 3460, y: 335, w: 640, h: 100, kind: "ground" },
+        { id: "d01-crane-rail-a", x: 4100, y: 275, w: 600, h: 100, kind: "ground" },
+        { id: "d01-crane-rail-b", x: 4700, y: 215, w: 600, h: 100, kind: "ground" },
+        { id: "d01-crane-boom", x: 5300, y: 155, w: 700, h: 100, kind: "ground" },
+        { id: "d01-suspended-load", x: 6060, y: 275, w: 600, h: 100, kind: "ground" },
+        { id: "d01-ship-rail", x: 6720, y: 335, w: 600, h: 100, kind: "ground" },
+        { id: "d01-ship-borda", x: 7380, y: 395, w: 620, h: 100, kind: "ground" },
+        { id: "d01-deck-1", x: 8000, y: 335, w: 600, h: 100, kind: "ground" },
+        { id: "d01-deck-2", x: 8600, y: 275, w: 600, h: 100, kind: "ground" },
+        { id: "d01-bridge-roof", x: 9200, y: 215, w: 600, h: 100, kind: "ground" },
+        { id: "d01-stern-deck", x: 9880, y: 335, w: 520, h: 100, kind: "ground" },
       ],
-      coins: makeCoins("D01", COINS.D01),
+      obstacles: [
+        { id: "d01-vault-dock", type: "vault", x: 230, w: 24, h: 48, baseY: 455 },
+        { id: "d01-vault-stack", type: "vault", x: 1180, w: 24, h: 48, baseY: 335 },
+        { id: "d01-slide-stack", type: "slide", x: 1830, w: 56, h: 160, baseY: 275 },
+        { id: "d01-vault-top", type: "vault", x: 2410, w: 24, h: 48, baseY: 215 },
+        { id: "d01-slide-roof", type: "slide", x: 3050, w: 56, h: 160, baseY: 275 },
+        { id: "d01-vault-roof", type: "vault", x: 3650, w: 24, h: 48, baseY: 335 },
+        { id: "d01-ramp-crane", type: "ramp", x: 4260, w: 150, h: 60, baseY: 275 },
+        { id: "d01-vault-crane", type: "vault", x: 4880, w: 24, h: 48, baseY: 215 },
+        { id: "d01-slide-boom", type: "slide", x: 5550, w: 56, h: 160, baseY: 155 },
+        { id: "d01-vault-load", type: "vault", x: 6250, w: 24, h: 48, baseY: 275 },
+        { id: "d01-slide-rail", type: "slide", x: 6900, w: 56, h: 160, baseY: 335 },
+        { id: "d01-vault-borda", type: "vault", x: 7580, w: 24, h: 48, baseY: 395 },
+        { id: "d01-wall-deck", type: "wallRun", x: 7976, w: 24, h: 130, baseY: 395 },
+        { id: "d01-vault-deck", type: "vault", x: 8790, w: 24, h: 48, baseY: 275 },
+        { id: "d01-slide-bridge", type: "slide", x: 9430, w: 56, h: 160, baseY: 215 },
+        { id: "d01-high-entry", type: "platform", x: 5900, y: 75, w: 210, h: 24 },
+        { id: "d01-high-catwalk-a", type: "platform", x: 6150, y: 75, w: 220, h: 24 },
+        { id: "d01-high-catwalk-b", type: "platform", x: 6410, y: 75, w: 220, h: 24 },
+        { id: "d01-high-drop-a", type: "platform", x: 6670, y: 135, w: 220, h: 24 },
+        { id: "d01-high-drop-b", type: "platform", x: 6930, y: 195, w: 220, h: 24 },
+        { id: "d01-worker", type: "worker", x: 10180, w: 44, h: 84, baseY: 335 },
+      ],
+      coins: [
+        { id: "D01-c01", n: 0, move_id: "d01-vault-stack", kind: "CJ", x: 1200, y: 215, skill: false },
+        { id: "D01-c02", n: 1, move_id: "d01-slide-stack", kind: "CS", x: 1858, y: 260, skill: true },
+        { id: "D01-c03", n: 2, move_id: "d01-vault-top", kind: "CJ", x: 2410, y: 155, skill: false },
+        { id: "D01-c04", n: 3, move_id: "d01-slide-roof", kind: "CS", x: 3078, y: 260, skill: true },
+        { id: "D01-c05", n: 4, move_id: "d01-vault-roof", kind: "CJ", x: 3650, y: 275, skill: false },
+        { id: "D01-c06", n: 5, move_id: "d01-slide-boom", kind: "CS", x: 5578, y: 140, skill: true },
+        { id: "D01-c07", n: 6, move_id: "d01-high-entry", kind: "CC", x: 5940, y: 55, skill: true },
+        { id: "D01-c08", n: 7, move_id: "d01-high-catwalk-b", kind: "CC", x: 6430, y: 55, skill: true },
+        { id: "D01-c09", n: 8, move_id: "d01-high-drop-b", kind: "CC", x: 7040, y: 175, skill: true },
+        { id: "D01-c10", n: 9, move_id: "d01-vault-borda", kind: "CJ", x: 7580, y: 335, skill: false },
+        { id: "D01-c11", n: 10, move_id: "d01-vault-deck", kind: "CJ", x: 8790, y: 215, skill: false },
+        { id: "D01-c12", n: 11, move_id: "d01-slide-bridge", kind: "CS", x: 9458, y: 200, skill: true },
+      ],
     },
     D02: {
       routeId: "D02",
@@ -1806,15 +1841,15 @@
   function ghostAt(time=ghostPlaybackTime){const s=ghostCompatible?.samples;if(!s?.length)return null;let i=0;while(i+1<s.length&&s[i+1].t<=time)i++;const a=s[i],b=s[Math.min(i+1,s.length-1)],q=b.t>a.t?Math.max(0,Math.min(1,(time-a.t)/(b.t-a.t))):0;return {x:a.x+(b.x-a.x)*q,y:a.y+(b.y-a.y)*q,f:q<.5?a.f:b.f};}
   function drawGhost(c){if(!ghostEnabled)return;const g=ghostAt();if(!g)return;c.save();c.globalAlpha=.38;c.fillStyle="#b8f7ff";c.translate(g.x+(g.f<0?player.w:0),g.y);c.scale(g.f<0?-1:1,1);c.fillRect(7,0,18,14);c.fillRect(3,14,26,31);c.fillRect(5,45,8,player.h-45);c.fillRect(19,45,8,player.h-45);c.restore();}
   function routeSurfaces(r) {
-    // M01 ground segments use the existing engine surface API; D/F keep their original ground.
-    const out = r.worldId === "magma" && r.groundSegments ? r.groundSegments.map(s=>({...s})) : [{ x: 0, y: GROUND, w: r.length, h: 100, kind: "ground" }];
+    const out = r.groundSegments ? r.groundSegments.map(s=>({...s})) : [{ x: 0, y: GROUND, w: r.length, h: 100, kind: "ground" }];
     for (const o of r.obstacles) {
+      const baseY = o.baseY ?? GROUND;
       if (o.type === "vault")
-        out.push({ x: o.x, y: GROUND - o.h, w: o.w, h: o.h, parkour: "vault" });
+        out.push({ x: o.x, y: baseY - o.h, w: o.w, h: o.h, parkour: "vault" });
       if (o.type === "slide")
         out.push({
           x: o.x,
-          y: GROUND - o.h - 32,
+          y: baseY - o.h - 32,
           w: o.w,
           h: o.h,
           parkour: "slide",
@@ -1822,7 +1857,7 @@
       if (o.type === "wallRun")
         out.push({
           x: o.x,
-          y: GROUND - 130,
+          y: baseY - 130,
           w: o.w,
           h: 130,
           parkour: "wallRun",
@@ -1838,6 +1873,10 @@
       }
     }
     return out;
+  }
+  function routeGroundYAt(x) {
+    const grounds=routeSurfaces(route).filter(s=>s.kind==="ground"&&x>=s.x&&x<=s.x+s.w);
+    return grounds.length?Math.min(...grounds.map(s=>s.y)):GROUND;
   }
   function freshRun(id = routeId) {
     return {
@@ -1928,13 +1967,13 @@
     containerDoors = route.obstacles.filter(o=>o.type === "containerDoor").map(o=>({...o,state:"OPEN",timer:0,currentY:o.openY,preparingElapsed:null,pushes:0}));
     document.dispatchEvent(new CustomEvent("tmb:campaign-audio", { detail: { worldId: route.worldId, routeId } }));
     for (const p of movingPlatforms) sfx(p.type === "crane" ? "crane" : "pallet");
-    campaignChief = (routeId === "D06" || route.chief) ? {active:false,x:-400,y:GROUND-48,w:32,h:48,speed:205,catches:0,caughtT:0,lastReturnX:null} : null;
+    campaignChief = (routeId === "D06" || route.chief) ? {active:false,x:-400,y:routeGroundYAt(route.chief?.startX ?? 70)-48,w:32,h:48,speed:205,catches:0,caughtT:0,lastReturnX:null} : null;
     campaignDeaths = 0;
     gameClock = 0;
     resetGhostRun();
     platformOrder = { colliderFrame: 0, landingFrame: 0, carryFrame: 0 };
     engine.setDynamicSurfaces(movingPlatforms);
-    engine.reset(70, GROUND - player.h);
+    engine.reset(70, routeGroundYAt(70) - player.h);
     routeStartedAt = performance.now();
     campaign = true;
     closeCharacterSelect();
@@ -2046,7 +2085,8 @@
       run.attemptId = uid("try");
       run.checkpointX = 70;
     }
-    engine.reset(full ? 70 : run.checkpointX, GROUND - player.h);
+    const resetX=full ? 70 : run.checkpointX;
+    engine.reset(resetX, routeGroundYAt(resetX) - player.h);
     if(full){gameClock=0;ghostPlaybackTime=0;ghostSamples=[];}
     else {const cp=run.checkpointX,hit=ghostCompatible?.samples?.find(v=>v.x>=cp);ghostPlaybackTime=hit?.t||0;gameClock=ghostPlaybackTime;ghostSamples=ghostSamples.filter(v=>v.t<=gameClock);}
     barrels = [];
@@ -2128,9 +2168,9 @@
           campaignDeaths++;
           campaignChief.caughtT=.35;
           campaignChief.lastReturnX=run.checkpointX;
-          engine.reset(run.checkpointX,GROUND-player.h);
+          engine.reset(run.checkpointX,routeGroundYAt(run.checkpointX)-player.h);
           campaignChief.x=run.checkpointX-380;
-          campaignChief.y=GROUND-campaignChief.h;
+          campaignChief.y=routeGroundYAt(run.checkpointX)-campaignChief.h;
           emitGame("chief_catch",{routeId,checkpointX:run.checkpointX});
         }
       }
@@ -2170,13 +2210,14 @@
     if (rollDrop && !player.onGround && player.x+player.w>rollDrop.x && player.x<rollDrop.x+rollDrop.w)
       addFlow(rollDrop.id,"rollDrop",8);
     const ramp = route.obstacles.find((o) => o.type === "ramp");
+    const rampBaseY = ramp?.baseY ?? GROUND;
     if (
       ramp &&
       !frontFlip.active &&
       player.x + player.w > ramp.x &&
       player.x < ramp.x + ramp.w &&
       player.vx > 180 &&
-      player.y + player.h >= GROUND - 100
+      player.y + player.h >= rampBaseY - 100
     ) {
       engine.launch(390, -680);
       sfx("ramp");
@@ -2223,7 +2264,7 @@
         barrels.push({
           id: uid("barrel"),
           x: worker.x - 18,
-          y: GROUND - 28,
+          y: (worker.baseY ?? GROUND) - 28,
           vx: -185,
           life: 8,
           warning: 0.75,
@@ -2359,21 +2400,23 @@
       }
     }
     for (const cp of route.checkpoints.slice(1)) {
+      const baseY=routeGroundYAt(cp);
       ctx.fillStyle = run && run.checkpointX >= cp ? "#65efb0" : "#f1d45e";
-      ctx.fillRect(cp, GROUND - 62, 6, 62);
+      ctx.fillRect(cp, baseY - 62, 6, 62);
       ctx.beginPath();
-      ctx.moveTo(cp + 6, GROUND - 60);
-      ctx.lineTo(cp + 52, GROUND - 45);
-      ctx.lineTo(cp + 6, GROUND - 30);
+      ctx.moveTo(cp + 6, baseY - 60);
+      ctx.lineTo(cp + 52, baseY - 45);
+      ctx.lineTo(cp + 6, baseY - 30);
       ctx.fill();
     }
+    const finishY=routeGroundYAt(route.finishX);
     ctx.fillStyle = "#19242b";
-    ctx.fillRect(route.finishX, GROUND - 120, 16, 120);
+    ctx.fillRect(route.finishX, finishY - 120, 16, 120);
     ctx.fillStyle = "#79f0bc";
-    ctx.fillRect(route.finishX + 16, GROUND - 118, 88, 48);
+    ctx.fillRect(route.finishX + 16, finishY - 118, 88, 48);
     ctx.fillStyle = "#10252b";
     ctx.font = "900 15px system-ui";
-    ctx.fillText(t("finish"), route.finishX + 28, GROUND - 88);
+    ctx.fillText(t("finish"), route.finishX + 28, finishY - 88);
     if (run)
       drawRunner(
         player.x + player.w / 2,
@@ -2961,7 +3004,9 @@
       c.lineWidth = 2;
       c.beginPath(); c.moveTo(x + 350, 155); c.lineTo(x + 350, 245); c.stroke();
     }
-    if(frozen) frozenSurface(c,0,GROUND,route.length,100,"ground"); else if(magma) { for (const g of (route.groundSegments || [{x:0,y:GROUND,w:route.length,h:100}])) magmaSurface(c,g.x,g.y,g.w,g.h,"ground"); for(const x of (route.voidEdges||[])){c.strokeStyle="#eef1e9";c.lineWidth=4;c.beginPath();c.moveTo(x,GROUND-36);c.lineTo(x,GROUND+8);c.stroke();c.fillStyle="#c8ced2";c.fillText("!",x-4,GROUND-44);} } else engine.drawMetal(0, GROUND, route.length, 100);
+    const groundSurfaces=routeSurfaces(route).filter(v=>v.kind==="ground");
+    for(const g of groundSurfaces){if(frozen) frozenSurface(c,g.x,g.y,g.w,g.h,"ground");else if(magma)magmaSurface(c,g.x,g.y,g.w,g.h,"ground");else engine.drawMetal(g.x,g.y,g.w,g.h)}
+    if(magma)for(const x of (route.voidEdges||[])){c.strokeStyle="#eef1e9";c.lineWidth=4;c.beginPath();c.moveTo(x,GROUND-36);c.lineTo(x,GROUND+8);c.stroke();c.fillStyle="#c8ced2";c.fillText("!",x-4,GROUND-44);}
     if(frozen)for(let x=210;x<route.length;x+=480){const top=GROUND-92;c.strokeStyle="#203944";c.lineWidth=5;c.beginPath();c.moveTo(x,top);c.lineTo(x,GROUND);c.stroke();c.fillStyle="#ffd27a";c.fillRect(x-13,top-5,26,8);const glow=c.createLinearGradient(x,top,x,top+50);glow.addColorStop(0,"#ffd98a77");glow.addColorStop(1,"#ffd98a00");c.fillStyle=glow;c.beginPath();c.moveTo(x-15,top+3);c.lineTo(x+15,top+3);c.lineTo(x+31,top+50);c.lineTo(x-31,top+50);c.closePath();c.fill();}
     for (const s of routeSurfaces(route).filter((v) => v.kind !== "ground")) {
       if(frozen) frozenSurface(c,s.x,s.y,s.w,s.h); else if(magma) magmaSurface(c,s.x,s.y,s.w,s.h); else engine.drawMetal(s.x, s.y, s.w, s.h);
@@ -2982,14 +3027,15 @@
     }
     for (const o of route.obstacles)
       if (o.type === "ramp") {
+        const baseY=o.baseY ?? GROUND;
         c.save(); c.shadowColor = frozen?"#8eeaff":magma?"#aaa49a":"#ffd95a"; c.shadowBlur = 14; c.fillStyle = frozen?"#47778b":magma?"#464549":"#e99b22";
         c.beginPath();
-        c.moveTo(o.x, GROUND);
-        c.lineTo(o.x + o.w, GROUND - o.h);
-        c.lineTo(o.x + o.w, GROUND);
+        c.moveTo(o.x, baseY);
+        c.lineTo(o.x + o.w, baseY - o.h);
+        c.lineTo(o.x + o.w, baseY);
         c.closePath(); c.fill(); c.shadowBlur = 0; c.strokeStyle = frozen?"#effcff":magma?"#eee8dc":"#fff0a0"; c.lineWidth = magma?9:5; c.stroke();
-        if(magma){c.strokeStyle="#adb5bb";c.lineWidth=2;for(let q=24;q<o.w;q+=36){c.beginPath();c.moveTo(o.x+q,GROUND-5);c.lineTo(o.x+q,GROUND-o.h*(q/o.w)+7);c.stroke();}}
-        if(frozen){c.fillStyle="#eafaff";for(let q=18;q<o.w;q+=34)c.fillRect(o.x+q,GROUND-o.h*(q/o.w)-5,22,5);}
+        if(magma){c.strokeStyle="#adb5bb";c.lineWidth=2;for(let q=24;q<o.w;q+=36){c.beginPath();c.moveTo(o.x+q,baseY-5);c.lineTo(o.x+q,baseY-o.h*(q/o.w)+7);c.stroke();}}
+        if(frozen){c.fillStyle="#eafaff";for(let q=18;q<o.w;q+=34)c.fillRect(o.x+q,baseY-o.h*(q/o.w)-5,22,5);}
         c.fillStyle = "#17252d"; c.font = "950 26px system-ui"; c.fillText("↗", o.x + o.w * .52, GROUND - 20); c.restore();
       } else if (o.type === "worker" && magma) {
         // Aluminized heat suit: hood, dark visor, separated gauntlets and boots.
@@ -3002,14 +3048,15 @@
         }
         if(workerClock>1.65){c.fillStyle="#ff4f45";c.font="950 22px system-ui";c.fillText("!",o.x-3,GROUND-98);}
       } else if (o.type === "worker") {
-        if(!drawNpcWorkerSprite(c,o.x,GROUND)){
-          c.fillStyle = frozen?"#17384b":magma?"#b8b9b5":"#243c49"; c.fillRect(o.x - (frozen?18:15), GROUND - 60, frozen?36:30, 60);
-          c.fillStyle = frozen?"#397ba0":magma?"#d4d1c7":"#ff8d28"; c.fillRect(o.x - 15, GROUND - 48, 30, 20);
-          c.fillStyle = "#fff27d"; c.fillRect(o.x - 15, GROUND - 39, 30, 4);
-          c.fillStyle = "#e8b486"; c.beginPath(); c.arc(o.x, GROUND - 69, 11, 0, Math.PI * 2); c.fill();
-          c.fillStyle = frozen?"#224e68":"#f1bb2c";c.beginPath();c.arc(o.x,GROUND-76,15,Math.PI,0);c.fill();c.fillRect(o.x-15,GROUND-77,30,7);
+        const baseY=o.baseY ?? GROUND;
+        if(!drawNpcWorkerSprite(c,o.x,baseY)){
+          c.fillStyle = frozen?"#17384b":magma?"#b8b9b5":"#243c49"; c.fillRect(o.x - (frozen?18:15), baseY - 60, frozen?36:30, 60);
+          c.fillStyle = frozen?"#397ba0":magma?"#d4d1c7":"#ff8d28"; c.fillRect(o.x - 15, baseY - 48, 30, 20);
+          c.fillStyle = "#fff27d"; c.fillRect(o.x - 15, baseY - 39, 30, 4);
+          c.fillStyle = "#e8b486"; c.beginPath(); c.arc(o.x, baseY - 69, 11, 0, Math.PI * 2); c.fill();
+          c.fillStyle = frozen?"#224e68":"#f1bb2c";c.beginPath();c.arc(o.x,baseY-76,15,Math.PI,0);c.fill();c.fillRect(o.x-15,baseY-77,30,7);
         }
-        if (workerClock > 1.65) { c.fillStyle = "#ff4f45"; c.font = "950 22px system-ui"; c.fillText("!", o.x - 3, GROUND - 92); }
+        if (workerClock > 1.65) { c.fillStyle = "#ff4f45"; c.font = "950 22px system-ui"; c.fillText("!", o.x - 3, baseY - 92); }
       }
     if (!debugHideMovingPlatforms) for (const p of movingPlatforms) {
       c.save();
@@ -3070,20 +3117,21 @@
       } else { c.fillStyle="#111820";c.fillRect(campaignChief.x,campaignChief.y,campaignChief.w,campaignChief.h); }
       c.restore();
     }
+    const finishY=routeGroundYAt(route.finishX);
     c.fillStyle = "#19242b";
-    c.fillRect(route.finishX, GROUND - 120, 16, 120);
+    c.fillRect(route.finishX, finishY - 120, 16, 120);
     c.fillStyle = magma?"#bec6cc":"#79f0bc";
-    c.fillRect(route.finishX + 16, GROUND - 118, 88, 48);
-    if(magma){c.fillStyle="#68717b";c.fillRect(route.finishX+99,GROUND-120,10,120);c.strokeStyle="#eff1eb";c.lineWidth=3;c.strokeRect(route.finishX+20,GROUND-113,76,38);}
+    c.fillRect(route.finishX + 16, finishY - 118, 88, 48);
+    if(magma){c.fillStyle="#68717b";c.fillRect(route.finishX+99,finishY-120,10,120);c.strokeStyle="#eff1eb";c.lineWidth=3;c.strokeRect(route.finishX+20,finishY-113,76,38);}
     c.fillStyle = "#10252b";
     c.font = "900 15px system-ui";
-    c.fillText(t("finish"), route.finishX + 28, GROUND - 88);
+    c.fillText(t("finish"), route.finishX + 28, finishY - 88);
   }
   // A5b decorative layer: no RNG, collisions, profile or simulation writes.
   function presentationNpcs() {
     const roles=[{role:"carrier",x:520,y:GROUND-125,added:true}];
     for(const o of route.obstacles){
-      if(o.type==="worker")roles.push({role:"worker",x:o.x,y:GROUND-100,added:false});
+      if(o.type==="worker")roles.push({role:"worker",x:o.x,y:(o.baseY ?? GROUND)-100,added:false});
       if(o.type==="crane")roles.push({role:"operator",x:o.x-90,y:GROUND-145,added:true});
     }
     if(campaignChief?.active)roles.push({role:"chief",x:campaignChief.x+14,y:campaignChief.y-25,added:false});

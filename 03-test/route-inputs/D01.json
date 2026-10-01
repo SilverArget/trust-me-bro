@@ -1,194 +1,29 @@
 [
-  {
-    "x": 135,
-    "action": "jump",
-    "holdMs": 120,
-    "move_id": "d01-t1b-vault-1"
-  },
-  {
-    "x": 324,
-    "action": "release",
-    "holdMs": 0,
-    "move_id": "d01-t1b-vault-1"
-  },
-  {
-    "x": 780,
-    "action": "jump",
-    "holdMs": 120,
-    "move_id": "d01-t1b-platform-2"
-  },
-  {
-    "x": 1120,
-    "action": "release",
-    "holdMs": 0,
-    "move_id": "d01-t1b-platform-2"
-  },
-  {
-    "x": 1505,
-    "action": "jump",
-    "holdMs": 120,
-    "move_id": "d01-vault"
-  },
-  {
-    "x": 1694,
-    "action": "release",
-    "holdMs": 0,
-    "move_id": "d01-vault"
-  },
-  {
-    "x": 2215,
-    "action": "jump",
-    "holdMs": 120,
-    "move_id": "d01-t1b-vault-5"
-  },
-  {
-    "x": 2404,
-    "action": "release",
-    "holdMs": 0,
-    "move_id": "d01-t1b-vault-5"
-  },
-  {
-    "x": 2605,
-    "action": "jump",
-    "holdMs": 120,
-    "move_id": "d01-slide"
-  },
-  {
-    "x": 2826,
-    "action": "release",
-    "holdMs": 0,
-    "move_id": "d01-slide"
-  },
-  {
-    "x": 3202,
-    "action": "jump",
-    "holdMs": 120,
-    "move_id": "d01-t1b-slide-3"
-  },
-  {
-    "x": 3423,
-    "action": "release",
-    "holdMs": 0,
-    "move_id": "d01-t1b-slide-3"
-  },
-  {
-    "x": 3574,
-    "action": "jump",
-    "holdMs": 120,
-    "move_id": "d01-t1b-vault-3"
-  },
-  {
-    "x": 3763,
-    "action": "release",
-    "holdMs": 0,
-    "move_id": "d01-t1b-vault-3"
-  },
-  {
-    "x": 4065,
-    "action": "jump",
-    "holdMs": 120,
-    "move_id": "d01-t1b-vault-2"
-  },
-  {
-    "x": 4254,
-    "action": "release",
-    "holdMs": 0,
-    "move_id": "d01-t1b-vault-2"
-  },
-  {
-    "x": 5300,
-    "action": "jump",
-    "holdMs": 120,
-    "move_id": "d01-t1b-platform-3"
-  },
-  {
-    "x": 5640,
-    "action": "release",
-    "holdMs": 0,
-    "move_id": "d01-t1b-platform-3"
-  },
-  {
-    "x": 6438,
-    "action": "jump",
-    "holdMs": 120,
-    "move_id": "d01-t1b-platform-1"
-  },
-  {
-    "x": 6778,
-    "action": "release",
-    "holdMs": 0,
-    "move_id": "d01-t1b-platform-1"
-  },
-  {
-    "x": 7113,
-    "action": "jump",
-    "holdMs": 120,
-    "move_id": "d01-t2c-vault-3"
-  },
-  {
-    "x": 7302,
-    "action": "release",
-    "holdMs": 0,
-    "move_id": "d01-t2c-vault-3"
-  },
-  {
-    "x": 7485,
-    "action": "jump",
-    "holdMs": 120,
-    "move_id": "d01-t1b-slide-1"
-  },
-  {
-    "x": 7706,
-    "action": "release",
-    "holdMs": 0,
-    "move_id": "d01-t1b-slide-1"
-  },
-  {
-    "x": 7841,
-    "action": "jump",
-    "holdMs": 120,
-    "move_id": "d01-t2c-vault-5"
-  },
-  {
-    "x": 8030,
-    "action": "release",
-    "holdMs": 0,
-    "move_id": "d01-t2c-vault-5"
-  },
-  {
-    "x": 8525,
-    "action": "jump",
-    "holdMs": 120,
-    "move_id": "d01-t1b-vault-4"
-  },
-  {
-    "x": 8714,
-    "action": "release",
-    "holdMs": 0,
-    "move_id": "d01-t1b-vault-4"
-  },
-  {
-    "x": 8870,
-    "action": "jump",
-    "holdMs": 120,
-    "move_id": "d01-t1b-platform-4"
-  },
-  {
-    "x": 9210,
-    "action": "release",
-    "holdMs": 0,
-    "move_id": "d01-t1b-platform-4"
-  },
-  {
-    "x": 9695,
-    "action": "jump",
-    "holdMs": 120,
-    "move_id": "d01-t1b-slide-2"
-  },
-  {
-    "x": 9916,
-    "action": "release",
-    "holdMs": 0,
-    "move_id": "d01-t1b-slide-2"
-  }
+  {"x":135,"action":"jump","holdMs":120,"move_id":"d01-vault-dock"},
+  {"x":430,"action":"jump","holdMs":120,"move_id":"d01-step-container-1"},
+  {"x":960,"action":"jump","holdMs":120,"move_id":"d01-step-container-2"},
+  {"x":1180,"action":"jump","holdMs":120,"move_id":"d01-vault-stack"},
+  {"x":1560,"action":"jump","holdMs":120,"move_id":"d01-step-container-3"},
+  {"x":1830,"action":"jump","holdMs":120,"move_id":"d01-slide-stack"},
+  {"x":2110,"action":"jump","holdMs":120,"move_id":"d01-step-container-4"},
+  {"x":2410,"action":"jump","holdMs":120,"move_id":"d01-vault-top"},
+  {"x":3050,"action":"jump","holdMs":120,"move_id":"d01-slide-roof"},
+  {"x":3650,"action":"jump","holdMs":120,"move_id":"d01-vault-roof"},
+  {"x":4010,"action":"jump","holdMs":120,"move_id":"d01-step-crane-rail"},
+  {"x":4610,"action":"jump","holdMs":120,"move_id":"d01-step-crane-high"},
+  {"x":4880,"action":"jump","holdMs":120,"move_id":"d01-vault-crane"},
+  {"x":5200,"action":"jump","holdMs":180,"move_id":"d01-step-crane-boom"},
+  {"x":5550,"action":"jump","holdMs":120,"move_id":"d01-slide-boom"},
+  {"x":5750,"action":"jump","holdMs":180,"move_id":"d01-high-entry"},
+  {"x":6020,"action":"jump","holdMs":150,"move_id":"d01-high-catwalk-a"},
+  {"x":6280,"action":"jump","holdMs":150,"move_id":"d01-high-catwalk-b"},
+  {"x":6540,"action":"jump","holdMs":120,"move_id":"d01-high-drop-a"},
+  {"x":6800,"action":"jump","holdMs":120,"move_id":"d01-high-drop-b"},
+  {"x":6900,"action":"jump","holdMs":120,"move_id":"d01-slide-rail"},
+  {"x":7580,"action":"jump","holdMs":120,"move_id":"d01-vault-borda"},
+  {"x":7886,"action":"jump","holdMs":120,"move_id":"d01-wall-deck"},
+  {"x":8510,"action":"jump","holdMs":120,"move_id":"d01-step-deck-2"},
+  {"x":8790,"action":"jump","holdMs":120,"move_id":"d01-vault-deck"},
+  {"x":9110,"action":"jump","holdMs":120,"move_id":"d01-step-bridge"},
+  {"x":9430,"action":"jump","holdMs":120,"move_id":"d01-slide-bridge"}
 ]
