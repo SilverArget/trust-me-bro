@@ -17,6 +17,21 @@ test('safe-area keeps camera framing centered and controls on their safe side',a
   expect(Math.abs(rows[1].pad-rows[2].pad)).toBeLessThanOrEqual(1);console.log('MOBILE_SAFE',JSON.stringify(rows));
 });
 
+test('fullscreen control is reachable in landscape without covering play UI',async({page,browser})=>{
+  const cases=[['none',0,0],['left',45,0],['right',0,45]],rows=[];
+  await open(page);const cdp=await page.context().newCDPSession(page);
+  for(const [name,left,right] of cases){
+    await cdp.send('Emulation.setSafeAreaInsetsOverride',{insets:{top:0,left,bottom:0,right}});await page.evaluate(()=>dispatchEvent(new Event('resize')));await page.waitForTimeout(50);
+    const button=page.locator('#fullscreenBtn');await expect(button,name).toBeVisible();
+    rows.push(await page.evaluate(name=>{const r=e=>{const x=e.getBoundingClientRect();return{x:x.left,y:x.top,w:x.width,h:x.height,right:x.right,bottom:x.bottom}},hit=(a,b)=>Math.max(0,Math.min(a.right,b.right)-Math.max(a.x,b.x))*Math.max(0,Math.min(a.bottom,b.bottom)-Math.max(a.y,b.y)),b=r(fullscreenBtn),l=__tmb.layout,s=v=>v*l.viewScale,canvasRect=x=>({x:l.viewOffsetX+s(x.x),y:l.viewOffsetY+s(x.y),w:s(x.w),h:s(x.h),right:l.viewOffsetX+s(x.x+x.w),bottom:l.viewOffsetY+s(x.y+x.h)}),runner=canvasRect(l.runner),targets={hud:canvasRect(l.hud),pause:r(pauseBtn),mute:r(muteBtn),swap:r(characterChange),joystick:r(document.querySelector('#joystick')),jump:r(document.querySelector('#jumpWrap button'))};return{name,button:b,intersections:Object.fromEntries(Object.entries({...targets,runner}).map(([k,v])=>[k,hit(b,v)]))}},name));
+  }
+  await page.locator('#fullscreenBtn').click();await page.waitForFunction(()=>!!(document.fullscreenElement||document.webkitFullscreenElement));await expect(page.locator('#fullscreenBtn')).toBeHidden();await page.evaluate(()=>document.exitFullscreen());await expect(page.locator('#fullscreenBtn')).toBeVisible();
+  await page.setViewportSize({width:390,height:844});await page.evaluate(()=>dispatchEvent(new Event('orientationchange')));await expect(page.locator('#fullscreenBtn')).toBeHidden();
+  const hiddenCases=[['desktop',{viewport:{width:1280,height:720},hasTouch:false,isMobile:false},null],['native',{...pixel,viewport:{width:pixel.viewport.height,height:pixel.viewport.width}},()=>{window.Capacitor={isNativePlatform:()=>true}}],['playables',{...pixel,viewport:{width:pixel.viewport.height,height:pixel.viewport.width}},()=>{window.ytgame={IN_PLAYABLES_ENV:true}}]];
+  for(const [name,options,init] of hiddenCases){const context=await browser.newContext(options);if(init)await context.addInitScript(init);const candidate=await context.newPage();await open(candidate);await expect(candidate.locator('#fullscreenBtn'),name).toBeHidden();await context.close()}
+  for(const row of rows.filter(x=>x.intersections))for(const [target,area] of Object.entries(row.intersections))expect(area,`${row.name}:${target}`).toBe(0);console.log('MOBILE_FULLSCREEN',JSON.stringify(rows));
+});
+
 test('audio unlock retries after a resume that resolves while still suspended',async({page})=>{
   await page.addInitScript(()=>{window.__blockAudioResume=true;const A=window.AudioContext||window.webkitAudioContext,raw=A.prototype.resume,failed=new WeakSet(),resumed=new WeakSet();let owner=A.prototype,state;while(owner&&!(state=Object.getOwnPropertyDescriptor(owner,'state')))owner=Object.getPrototypeOf(owner);A.prototype.resume=function(){if(window.__blockAudioResume){failed.add(this);return Promise.resolve()}resumed.add(this);return raw.call(this)};Object.defineProperty(A.prototype,'state',{configurable:true,get(){return failed.has(this)&&!resumed.has(this)?'suspended':state.get.call(this)}})});await open(page);
   await page.evaluate(()=>dispatchEvent(new Event('click')));await page.waitForTimeout(50);expect((await page.evaluate(()=>__tmbAudio.state().context))).toBe('suspended');
