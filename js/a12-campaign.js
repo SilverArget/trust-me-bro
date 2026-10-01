@@ -2452,6 +2452,7 @@
     syncRewardedButton();
   }
   let rewardedInFlight = null;
+  let shopReturnToCharacter = false;
   function rewardedText(amount, claimed=false) {
     const language=profile.settings.language;
     if(claimed)return language==="tr"?"ALINDI":language==="ru"?"ПОЛУЧЕНО":"CLAIMED";
@@ -2492,6 +2493,7 @@
     if(language) language.value=profile.settings.language;if(label) label.textContent=t("language");
     const ghost=document.getElementById("a12GhostToggle");if(ghost) ghost.textContent=t(ghostEnabled?"ghostOn":"ghostOff");
     const effects=document.getElementById("a12EffectsToggle");if(effects) effects.textContent=t(profile.settings.reducedEffects?"effectsReduced":"effectsFull");
+    const characterShop=document.getElementById("characterShop");if(characterShop) characterShop.textContent=t("shop");
     renderShop();
   }
   function drawHud() {
@@ -2617,6 +2619,9 @@
       el.lastChild.textContent = i ? t("female") : t("male");
       el.addEventListener("click", () => selectRunner(i ? "female" : "male"));
     });
+    const syncRunnerChoice=()=>choices.forEach((el,i)=>el.setAttribute("aria-pressed",String((i?"female":"male")===profile.runnerId)));
+    syncRunnerChoice();
+    document.getElementById("characterShop")?.addEventListener("click",()=>{shopReturnToCharacter=true;openShop();});
     const change = document.getElementById("characterChange");
     change.textContent = "↔";
     change.title = t("choose");
@@ -2662,6 +2667,7 @@
   }
   function selectRunner(id) {
     profile.runnerId = id;
+    document.querySelectorAll(".characterChoice").forEach((el,i)=>el.setAttribute("aria-pressed",String((i?"female":"male")===id)));
     engine.setCharacter(RUNNERS[id].legacy);
     void persist();
     startRoute(firstRouteForWorld(), true);
@@ -2682,6 +2688,7 @@
     shopOpen = false;
     document.getElementById("a12Shop").classList.remove("show");
     document.getElementById("a12Shop").setAttribute("aria-hidden", "true");
+    if(shopReturnToCharacter){shopReturnToCharacter=false;document.getElementById("characterSelect")?.classList.add("show");document.getElementById("characterSelect")?.setAttribute("aria-hidden","false");}
     syncActionVisibility();
   }
   function renderShop() {
@@ -3373,7 +3380,8 @@
       const available=profile.selectedWorldId==="aftermath"?["A04","A03","A02","A01"]:profile.selectedWorldId==="magma"?["M04","M03","M02","M01"]:profile.selectedWorldId==="frozen"?["F04","F03","F02","F01"]:["D06","D05","D04","D03","D02","D01"];
       const resumeRoute = available.find(id => profile.pendingRunsByRoute[id]&&routeUnlocked(id)) || firstRouteForWorld();
       startRoute(resumeRoute, false, resumeRoute === "D06");
-    } else openCharacterSelect();
+    }
+    openCharacterSelect();
   }
   if (document.body.dataset.engineReady === "true") init();
   else addEventListener("tmb-engine-ready", init, { once: true });
