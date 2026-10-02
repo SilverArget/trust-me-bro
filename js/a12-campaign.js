@@ -25,6 +25,7 @@
     COIN_CONTACT_RADIUS = COIN_FILL_RADIUS + COIN_STROKE_WIDTH / 2;
   let engine = null,
     cameraWorldY = -78,
+    backgroundCameraWorldY = -78,
     cameraWorldVelocity = 0,
     cameraGroundFootY = GROUND,
     player = null,
@@ -1791,6 +1792,7 @@
     flowMoves = [],
     wallMantle = null,
     lastWallMantle = null,
+    slopeContact = null,
     routeStartedAt = 0,
     movingPlatforms = [],
     collapsing = [],
@@ -1862,6 +1864,8 @@
     return out;
   }
   function routeGroundYAt(x) {
+    const slope=(route.slopes||[]).find(s=>x>=Math.min(s.x1,s.x2)&&x<=Math.max(s.x1,s.x2));
+    if(slope){const t=(x-slope.x1)/(slope.x2-slope.x1);return slope.y1+(slope.y2-slope.y1)*t}
     const grounds=routeSurfaces(route).filter(s=>s.kind==="ground"&&x>=s.x&&x<=s.x+s.w);
     return grounds.length?Math.min(...grounds.map(s=>s.y)):GROUND;
   }
@@ -1937,6 +1941,7 @@
     flowMoves = [];
     wallMantle = null;
     lastWallMantle = null;
+    slopeContact = null;
     flowFlash = 0;
     staggerT = 0;
     respawnT = 0;
@@ -1964,7 +1969,7 @@
     platformOrder = { colliderFrame: 0, landingFrame: 0, carryFrame: 0 };
     engine.setDynamicSurfaces(movingPlatforms);
     engine.reset(70, routeGroundYAt(70) - player.h);
-    if (innerWidth>innerHeight) { cameraGroundFootY=player.y+player.h;cameraWorldY=H*.62-cameraGroundFootY;cameraWorldVelocity=0;engine.setWorldY(cameraWorldY); }
+    cameraGroundFootY=player.y+player.h;cameraWorldY=H*(innerWidth>innerHeight?.62:.58)-cameraGroundFootY;backgroundCameraWorldY=cameraWorldY;cameraWorldVelocity=0;engine.setWorldY(cameraWorldY);
     routeStartedAt = performance.now();
     campaign = true;
     closeCharacterSelect();
@@ -2163,6 +2168,16 @@
   }
   function updateIntegrated(dt, state) {
     if (!campaign || shopOpen || result) return;
+    const slopeCenter=player.x+player.w/2;
+    const slope=(route.slopes||[]).find(s=>slopeCenter>=Math.min(s.x1,s.x2)&&slopeCenter<=Math.max(s.x1,s.x2));
+    if(slope){
+      const t=(slopeCenter-slope.x1)/(slope.x2-slope.x1),surfaceY=slope.y1+(slope.y2-slope.y1)*t,feet=player.y+player.h;
+      if((slopeContact===slope.id||player.onGround||feet>=surfaceY-3)&&feet<=surfaceY+Math.max(36,Math.abs(player.vy)/20)){
+        player.y=surfaceY-player.h;player.vy=0;player.onGround=true;slopeContact=slope.id;
+        const dx=slope.x2-slope.x1,dy=slope.y2-slope.y1,angle=Math.atan2(Math.abs(dy),Math.abs(dx))*180/Math.PI,downhill=Math.sign(dx*dy);
+        if(angle>=25&&Math.sign(player.vx||player.facing)===downhill){player.vx=downhill*Math.max(255,Math.abs(player.vx));engine.parkour.state="slide";engine.parkour.timer=Math.max(engine.parkour.timer,.08);engine.parkour.dir=downhill}
+      }
+    }else slopeContact=null;
     if (wallMantle) {
       if (wallMantle.phase === "wallRun" && state !== "wallRun") {
         const dir = player.facing >= 0 ? 1 : -1;
@@ -2214,6 +2229,16 @@
       const foot=cameraWorldY+player.y+player.h;
       if(foot<H*.251){cameraWorldY+=H*.251-foot;cameraWorldVelocity=Math.max(0,cameraWorldVelocity)}
       else if(foot>H*.799){cameraWorldY-=foot-H*.799;cameraWorldVelocity=Math.min(0,cameraWorldVelocity)}
+      engine.setWorldY(cameraWorldY);
+    } else {
+      const footY=player.y+player.h;
+      if(player.onGround)cameraGroundFootY=footY;
+      const targetWorldY=H*.58-cameraGroundFootY,omega=16;
+      cameraWorldVelocity+=(omega*omega*(targetWorldY-cameraWorldY)-2*omega*cameraWorldVelocity)*dt;
+      cameraWorldY+=cameraWorldVelocity*dt;
+      const foot=cameraWorldY+player.y+player.h;
+      if(foot<H*.24){cameraWorldY+=H*.24-foot;cameraWorldVelocity=Math.max(0,cameraWorldVelocity)}
+      else if(foot>H*.76){cameraWorldY-=foot-H*.76;cameraWorldVelocity=Math.min(0,cameraWorldVelocity)}
       engine.setWorldY(cameraWorldY);
     }
     document.body.dataset.playerX=String(Math.round(player.x));
@@ -2378,7 +2403,7 @@
         saveRun();
       }
     collectPhysical();
-    if (player.y > H + 120) retry(false);
+    if (player.y > Math.max(H + 120,routeGroundYAt(player.x+player.w/2)+120)) retry(false);
     if (player.x >= route.finishX) {
       player.x = route.finishX;
       player.vx = 0;
@@ -3089,7 +3114,29 @@
     activeWorldCacheKey=`${profile.selectedWorldId}|${cacheRoute}|${cacheVersion}|${engine.renderInfo().dpr}`;
     const frozen=profile.selectedWorldId==="frozen",magma=profile.selectedWorldId==="magma";
     renderSignatures=(frozen||magma||profile.selectedWorldId==="aftermath")?{deckStripe:0,dock31Text:0,containerBlock:0,dockCrane:0,loadingCorridor:0,foregroundLampGroundGap:0,snowCap:0,icicles:0,iceRatio:0}:{deckStripe:1,dock31Text:1,containerBlock:1,dockCrane:1,loadingCorridor:1,foregroundLampGroundGap:0,snowCap:0,icicles:0,iceRatio:0};
+    const verticalParallax=Math.max(-.35*h,Math.min(.35*h,.25*(cameraWorldY-backgroundCameraWorldY)));
+    const backgroundKey=`${activeWorldCacheKey}|${w}|${h}`;
+    drawBackgroundIntegrated.edgeColors=drawBackgroundIntegrated.edgeColors||new Map();
+    let backdropCalls=0;
+    c.save();
+    c.translate(0,verticalParallax);
     if(frozen||magma||profile.selectedWorldId==="aftermath") drawThemeScene(c,w,h,profile.selectedWorldId); else engine.drawDockBackdrop(activeWorldCacheKey);
+    backdropCalls++;
+    c.restore();
+    let edges=drawBackgroundIntegrated.edgeColors.get(backgroundKey);
+    if(!edges){
+      const transform=c.getTransform(),canvas=c.canvas,averageRow=y=>{
+        const py=Math.max(0,Math.min(canvas.height-1,Math.round(transform.f*y+transform.d*y))),x0=Math.max(0,Math.round(transform.e)),x1=Math.min(canvas.width,Math.round(transform.e+transform.a*w));
+        const data=c.getImageData(x0,py,Math.max(1,x1-x0),1).data,sum=[0,0,0];let weight=0;
+        for(let i=0;i<data.length;i+=4){const a=data[i+3]/255;sum[0]+=data[i]*a;sum[1]+=data[i+1]*a;sum[2]+=data[i+2]*a;weight+=a}
+        return sum.map(v=>Math.round(v/Math.max(1,weight)));
+      };
+      edges={top:averageRow(verticalParallax),bottom:averageRow(verticalParallax+h-1)};
+      drawBackgroundIntegrated.edgeColors.set(backgroundKey,edges);
+    }
+    if(verticalParallax>0){c.fillStyle=`rgb(${edges.top.join(',')})`;c.fillRect(0,0,w,verticalParallax)}
+    else if(verticalParallax<0){c.fillStyle=`rgb(${edges.bottom.join(',')})`;c.fillRect(0,h+verticalParallax,w,-verticalParallax)}
+    window.__tmbBackgroundDraw={calls:backdropCalls,offset:verticalParallax,fillBoundary:verticalParallax>0?verticalParallax:verticalParallax<0?h+verticalParallax:null};
   }
   function drawWorldIntegrated(c) {
     if(profile.selectedWorldId==="aftermath"){drawAftermathWorld(c,true,gameClock,effectsGain());return;}
@@ -3137,6 +3184,7 @@
         c.fillStyle = "#17252d"; c.font = "900 10px system-ui"; c.fillText("↓", s.x + s.w / 2 - 4, s.y + s.h + 15);
       }
     }
+    for(const s of route.slopes||[]){c.fillStyle="#30383f";c.beginPath();c.moveTo(s.x1,s.y1);c.lineTo(s.x2,s.y2);c.lineTo(s.x2,s.y2+100);c.lineTo(s.x1,s.y1+100);c.closePath();c.fill();c.strokeStyle="#8b98a1";c.lineWidth=3;c.beginPath();c.moveTo(s.x1,s.y1);c.lineTo(s.x2,s.y2);c.stroke()}
     for (const o of route.obstacles)
       if (o.type === "ramp") {
         const baseY=o.baseY ?? GROUND;
