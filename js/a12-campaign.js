@@ -1792,6 +1792,13 @@
     flowMoves = [],
     wallMantle = null,
     lastWallMantle = null,
+    edgeClimb = null,
+    edgeCatchCooldown = 0,
+    edgeCatchProbe = null,
+    vectorJumpPending = null,
+    vectorAir = null,
+    vectorRollStarts = 0,
+    diveRun = null,
     slopeContact = null,
     routeStartedAt = 0,
     movingPlatforms = [],
@@ -1831,6 +1838,7 @@
   }
   function routeSurfaces(r) {
     const out = r.groundSegments ? r.groundSegments.map(s=>({...s})) : [{ x: 0, y: GROUND, w: r.length, h: 100, kind: "ground" }];
+    const catchableById=new Map((r.catchableSurfaces||[]).map(s=>typeof s==="string"?[s,{}]:[s.id,s]));
     for (const o of r.obstacles) {
       const baseY = o.baseY ?? GROUND;
       if (o.type === "vault")
@@ -1852,7 +1860,7 @@
           parkour: "wallRun",
         });
       if (o.type === "platform")
-        out.push({ x: o.x, y: o.y, w: o.w, h: o.h, kind: "platform" });
+        out.push({ x: o.x, y: o.y, w: o.w, h: o.h, kind: "platform", ...(catchableById.has(o.id)?{id:o.id}:{}) });
       if (o.type === "overpass")
         out.push({ x: o.x, y: o.y, w: o.w, h: o.h, kind: "movingPlatform", id:o.id });
       if (o.type === "collapse") {
@@ -1861,6 +1869,7 @@
           out.push({ x:o.x, y:o.y, w:o.w, h:o.h, kind:"collapse", id:o.id });
       }
     }
+    for(const s of out)if(s.id&&catchableById.has(s.id)){s.catchable=true;s.catchDir=catchableById.get(s.id).dir||1}
     return out;
   }
   function routeGroundYAt(x) {
@@ -1941,6 +1950,13 @@
     flowMoves = [];
     wallMantle = null;
     lastWallMantle = null;
+    edgeClimb = null;
+    edgeCatchCooldown = 0;
+    edgeCatchProbe = null;
+    vectorJumpPending = null;
+    vectorAir = null;
+    vectorRollStarts = 0;
+    diveRun = null;
     slopeContact = null;
     flowFlash = 0;
     staggerT = 0;
@@ -2141,9 +2157,32 @@
       player.y + player.h > GROUND - o.h
     );
   }
+  function tryEdgeCatch() {
+    if(route.movementProfile!=="vector-v1"||edgeClimb||wallMantle||edgeCatchCooldown>0||player.onGround||engine.parkour.state==="wallRun")return;
+    const input=(keys.right?1:0)-(keys.left?1:0),feet=player.y+player.h,vy=player.vy;
+    if(!input)return;
+    const candidates=routeSurfaces(route).filter(s=>s.catchable);
+    const probes=candidates.map(s=>{const gap=input>0?s.x-(player.x+player.w):player.x-(s.x+s.w),front=input===s.catchDir&&(input>0?player.x+player.w<=s.x+2:player.x>=s.x+s.w-2),toward=input>0?s.x>=player.x+player.w-2:s.x+s.w<=player.x+2,vertical=feet>=s.y-4&&feet<=s.y+60,apex=vy>=-120&&vy<=180;return{id:s.id,gap,feetDelta:feet-s.y,vy,front,toward,vertical,apex}});
+    edgeCatchProbe={input,probes};
+    const accepted=probes.find(p=>p.gap>=-2&&p.gap<=14&&p.front&&p.toward&&p.vertical&&p.apex);
+    const wall=accepted&&candidates.find(s=>s.id===accepted.id);
+    if(!wall)return;
+    const dir=input,startX=dir>0?wall.x-player.w:wall.x+wall.w;
+    edgeClimb={wall,dir,elapsed:0,duration:.8,startX,startY:player.y,endX:dir>0?wall.x+4:wall.x+wall.w-player.w-4,endY:wall.y-player.h};
+    frontFlip.active=false;
+    engine.setGeometry(routeSurfaces(route).filter(s=>!(s.catchable&&s.id===wall.id)));
+    player.x=startX;player.vx=player.vy=0;
+  }
   function beforePhysicsIntegrated(dt) {
     if (!campaign || shopOpen || result) return;
     gameClock += dt;
+    if(edgeClimb){engine.parkour.state="normal";engine.parkour.timer=0}
+    if(route.movementProfile==="vector-v1"&&keys.jump&&player.onGround){
+      const center=player.x+player.w/2;
+      const diveZone=(route.diveZones||[]).find(z=>center>=z.x1&&center<=z.x2);
+      vectorJumpPending={kind:diveZone?"dive":(route.highJumpZones||[]).some(z=>center>=z.x1&&center<=z.x2)?"high":"normal",frames:0,diveZone};
+    }
+    tryEdgeCatch();
     for (const p of movingPlatforms) {
       const oldX = p.x;
       p.x += p.dir * p.speed * dt;
@@ -2168,6 +2207,59 @@
   }
   function updateIntegrated(dt, state) {
     if (!campaign || shopOpen || result) return;
+    edgeCatchCooldown=Math.max(0,edgeCatchCooldown-dt);
+    if(route.movementProfile==="vector-v1"&&vectorJumpPending&&player.vy<0&&!player.onGround){
+      if(vectorJumpPending.kind==="dive"){
+        const z=vectorJumpPending.diveZone,dir=player.facing>=0?1:-1,startX=player.x,startY=player.y;
+        diveRun={elapsed:0,duration:.46,startX,startY,endX:dir>0?z.landX:z.landX-player.w,landY:z.landY-player.h,dir};
+        engine.parkour.state="normal";engine.parkour.timer=0;engine.parkour.dir=dir;
+      }else player.vy=vectorJumpPending.kind==="high"?-520:-390;
+      vectorJumpPending=null;
+    }else if(vectorJumpPending&&++vectorJumpPending.frames>1){
+      vectorJumpPending=null;
+    }
+    if(route.movementProfile==="vector-v1"){
+      const feet=player.y+player.h;
+      if(!player.onGround&&!edgeClimb&&!diveRun){
+        if(!vectorAir)vectorAir={minFeet:feet};else vectorAir.minFeet=Math.min(vectorAir.minFeet,feet);
+      }else if(player.onGround&&vectorAir){
+        const drop=feet-vectorAir.minFeet;
+        if(drop>=200&&engine.parkour.state!=="roll"){
+          engine.parkour.state="roll";engine.parkour.timer=.24;engine.parkour.roll=0;engine.parkour.dir=player.facing;vectorRollStarts++;
+        }
+        vectorAir=null;
+      }
+    }else vectorAir=null;
+    if(diveRun){
+      const d=diveRun,t=Math.min(1,(d.elapsed+=dt)/d.duration),arc=4*t*(1-t);
+      engine.parkour.state="normal";engine.parkour.timer=0;engine.parkour.dir=d.dir;
+      player.x=d.startX+(d.endX-d.startX)*t;player.y=d.startY+(d.landY-d.startY)*t-74*arc;
+      player.vx=(d.endX-d.startX)/d.duration;player.vy=0;player.onGround=false;
+      if(t===1){
+        player.x=d.endX;player.y=d.landY;player.vx=d.dir*Math.max(255,Math.abs(player.vx));player.vy=0;player.onGround=true;
+        engine.parkour.state="roll";engine.parkour.timer=.24;engine.parkour.roll=0;engine.parkour.dir=d.dir;vectorRollStarts++;
+        diveRun=null;vectorAir=null;
+      }
+    }
+    if(edgeClimb){
+      const input=(keys.right?1:0)-(keys.left?1:0),c=edgeClimb;
+      if(!input||input!==c.dir){
+        engine.setGeometry(routeSurfaces(route));
+        engine.parkour.state="normal";engine.parkour.timer=0;edgeClimb=null;edgeCatchCooldown=.12;
+      }else{
+        c.elapsed=Math.min(c.duration,c.elapsed+dt);
+        const t=c.elapsed/c.duration,hold=.12/c.duration,move=Math.max(0,(t-hold)/(1-hold)),rise=Math.min(1,move/.85),pull=Math.max(0,(move-.85)/.15);
+        engine.parkour.state=move>0?"climb":"catch";engine.parkour.timer=c.duration-c.elapsed;engine.parkour.dir=c.dir;
+        player.x=c.startX+(c.endX-c.startX)*pull;
+        player.y=c.startY+(c.endY-c.startY)*rise;
+        player.vx=player.vy=0;player.onGround=false;
+        if(t===1){
+          engine.setGeometry(routeSurfaces(route));
+          player.x=c.endX;player.y=c.endY;player.vx=c.dir*255;player.vy=0;player.onGround=true;
+          edgeClimb=null;edgeCatchCooldown=.25;
+        }
+      }
+    }
     const slopeCenter=player.x+player.w/2;
     const slope=(route.slopes||[]).find(s=>slopeCenter>=Math.min(s.x1,s.x2)&&slopeCenter<=Math.max(s.x1,s.x2));
     if(slope){
@@ -3033,9 +3125,15 @@
       cameraWorldY,
       cameraGroundFootY,
       movementProfile: movementProfile(),
+      vectorJumpPending: vectorJumpPending ? { ...vectorJumpPending } : null,
+      vectorAir: vectorAir ? { ...vectorAir } : null,
+      vectorRollStarts,
+      diveRun: diveRun ? {elapsed:diveRun.elapsed,duration:diveRun.duration,startX:diveRun.startX,endX:diveRun.endX,landY:diveRun.landY} : null,
+      parkour: {state:diveRun?"dive":engine.parkour.state,timer:diveRun?Math.max(0,diveRun.duration-diveRun.elapsed):engine.parkour.timer,dir:engine.parkour.dir},
       obstacleSeed: obstacleSeed(route),
       runnerId: profile.runnerId,
       hitbox: { w: player.w, h: player.h },
+      viewport: { w: engine.W, h: engine.H },
       economy: run
         ? {
             economyRunId: run.economyRunId,
@@ -3097,6 +3195,9 @@
           }
         : null,
       lastWallMantle: lastWallMantle ? { ...lastWallMantle } : null,
+      edgeClimb: edgeClimb ? {wallId:edgeClimb.wall.id,phase:engine.parkour.state,elapsed:edgeClimb.elapsed,duration:edgeClimb.duration,wallTop:edgeClimb.wall.y} : null,
+      edgeCatchProbe: edgeCatchProbe ? clone(edgeCatchProbe) : null,
+      campaignDeaths,
       collapsing: collapsing.map(c=>({id:c.id,state:c.state,timer:c.timer,fallY:c.fallY,warning:c.warning,warningStartedAt:c.warningStartedAt,warningElapsed:c.warningElapsed})),
       containerDoors: containerDoors.map(d=>({id:d.id,state:d.state,timer:d.timer,x:d.x,y:d.currentY,w:d.w,h:d.h,preparingElapsed:d.preparingElapsed,pushes:d.pushes})),
       chief: campaignChief ? {...campaignChief,distance:player.x-campaignChief.x} : null,
@@ -3353,7 +3454,7 @@
   function runnerAtlasPose(state) {
     const pk=state.state;
     if(frontFlip.active){const e=frontFlip.elapsed;return {motion:"frontFlip",frame:e<.16?Math.min(1,Math.floor(e/.08)):e<.62?2+Math.min(3,Math.floor((e-.16)/.115)):6+Math.min(1,Math.floor((e-.62)/.09))};}
-    if(["vault","slide","crouch","wallRun","roll"].includes(pk))return {motion:pk==="crouch"?"slide":pk,frame:pk==="crouch"?7:Math.min(7,Math.floor(Math.max(0,1-state.timer/state.duration)*8+1e-9))};
+    if(["vault","slide","crouch","wallRun","roll","dive"].includes(pk)){const motion=pk==="crouch"?"slide":pk==="dive"?"vault":pk,duration=pk==="dive"?.46:state.duration;return {motion,frame:pk==="crouch"?7:Math.min(7,Math.floor(Math.max(0,1-state.timer/duration)*8+1e-9))};}
     const motion=pk==="stun"?"idle":!player.onGround?"jump":Math.abs(player.vx)>18?"run":"idle";
     // Existing simulation clock and velocity; render does not advance a clock.
     const frame=motion==="jump"?Math.max(0,Math.min(7,Math.floor((player.vy+560)/140))):Math.floor(gameClock*(motion==="run"?16:8))%8;
@@ -3375,7 +3476,8 @@
   function drawRunnerIntegrated(c,state) {
     if(debugHidePlayer)return;
     const runner=profile.runnerId||"male",outfit=profile.equippedOutfitByRunner[runner]||"default";
-    drawRunnerAtlas(c,runner,outfit,runnerAtlasPose(state),player.x+player.w/2,player.y+player.h,player.facing);
+    const poseState=diveRun?{...state,state:"dive",timer:Math.max(0,diveRun.duration-diveRun.elapsed),duration:diveRun.duration}:state;
+    drawRunnerAtlas(c,runner,outfit,runnerAtlasPose(poseState),player.x+player.w/2,player.y+player.h,player.facing);
   }
   function drawRunnerLayerIntegrated(c) { ctx=c; }
   function drawOverlayIntegrated(c, w, h) {
