@@ -1225,6 +1225,21 @@
       finishX: 10260,
       checkpoints: [70, 5250],
       chief: { startX: 5250 },
+      movementProfile: "vector-v1",
+      catchableSurfaces: [
+        { id: "d01-container-1" },
+        { id: "d01-container-2" },
+        { id: "d01-container-3" },
+        { id: "d01-container-4" },
+        { id: "d01-crane-rail-a" },
+        { id: "d01-crane-rail-b" },
+        { id: "d01-crane-boom" },
+        { id: "d01-deck-2" },
+        { id: "d01-bridge-roof" },
+        { id: "d01-high-entry" },
+      ],
+      highJumpZones: [{ x1: 9640, x2: 9760 }],
+      diveZones: [{ x1: 8060, x2: 8212, landX: 8360, landY: 335 }],
       groundSegments: [
         { id: "d01-dock-start", x: 0, y: 455, w: 520, h: 100, kind: "ground" },
         { id: "d01-container-1", x: 520, y: 395, w: 530, h: 100, kind: "ground" },
@@ -1266,6 +1281,7 @@
         { id: "d01-high-drop-a", type: "platform", x: 6670, y: 135, w: 220, h: 24 },
         { id: "d01-high-drop-b", type: "platform", x: 6930, y: 195, w: 220, h: 24 },
         { id: "d01-worker", type: "worker", x: 10180, w: 44, h: 84, baseY: 335 },
+        { id: "d01-dive-box", type: "platform", x: 8260, y: 313, w: 72, h: 22 },
       ],
       coins: [
         { id: "D01-c01", n: 0, move_id: "d01-vault-stack", kind: "CJ", x: 1200, y: 215, skill: false },
@@ -2168,7 +2184,7 @@
     const wall=accepted&&candidates.find(s=>s.id===accepted.id);
     if(!wall)return;
     const dir=input,startX=dir>0?wall.x-player.w:wall.x+wall.w;
-    edgeClimb={wall,dir,elapsed:0,duration:.8,startX,startY:player.y,endX:dir>0?wall.x+4:wall.x+wall.w-player.w-4,endY:wall.y-player.h};
+    edgeClimb={wall,dir,elapsed:0,duration:.2+.6*Math.max(0,Math.min(1,((player.y+player.h)-wall.y-12)/24)),startX,startY:player.y,endX:dir>0?wall.x+4:wall.x+wall.w-player.w-4,endY:wall.y-player.h};
     frontFlip.active=false;
     engine.setGeometry(routeSurfaces(route).filter(s=>!(s.catchable&&s.id===wall.id)));
     player.x=startX;player.vx=player.vy=0;
