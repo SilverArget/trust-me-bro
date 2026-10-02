@@ -1789,6 +1789,8 @@
     flow = 0,
     flowSeen = new Set(),
     flowMoves = [],
+    wallMantle = null,
+    lastWallMantle = null,
     routeStartedAt = 0,
     movingPlatforms = [],
     collapsing = [],
@@ -1933,6 +1935,8 @@
     flow = run.flowScore || 0;
     flowSeen = new Set();
     flowMoves = [];
+    wallMantle = null;
+    lastWallMantle = null;
     flowFlash = 0;
     staggerT = 0;
     respawnT = 0;
@@ -1983,10 +1987,36 @@
     flow += points;
     flowFlash = 0.55;
     run.flowScore = flow;
-    if (move === "wallRun")
-      engine.setGeometry(
-        routeSurfaces(route).filter((s) => s.parkour !== "wallRun"),
-      );
+    if (move === "wallRun") {
+      const wall = route.obstacles.find((o) => o.id === id && o.type === "wallRun");
+      if (wall) {
+        const wallY = (wall.baseY ?? GROUND) - 130;
+        wallMantle = {
+          wall,
+          wallY,
+          phase: "wallRun",
+          elapsed: 0,
+          duration: 0.1,
+          startX: null,
+          startY: null,
+          endX: null,
+          endY: wallY - player.h,
+          restored: false,
+          startedAt: null,
+        };
+        engine.setGeometry(
+          routeSurfaces(route).filter(
+            (s) =>
+              !(
+                s.parkour === "wallRun" &&
+                s.x === wall.x &&
+                s.y === wallY &&
+                s.w === wall.w
+              ),
+          ),
+        );
+      }
+    }
     emitGame("movement_completed", {
       routeId,
       obstacleId: id,
@@ -2133,6 +2163,48 @@
   }
   function updateIntegrated(dt, state) {
     if (!campaign || shopOpen || result) return;
+    if (wallMantle) {
+      if (wallMantle.phase === "wallRun" && state !== "wallRun") {
+        const dir = player.facing >= 0 ? 1 : -1;
+        wallMantle.phase = "mantle";
+        wallMantle.startedAt = gameClock;
+        wallMantle.startX = player.x;
+        wallMantle.startY = player.y;
+        wallMantle.endX =
+          dir > 0
+            ? wallMantle.wall.x + wallMantle.wall.w - player.w
+            : wallMantle.wall.x;
+      }
+      if (wallMantle.phase === "mantle") {
+        wallMantle.elapsed = Math.min(
+          wallMantle.duration,
+          wallMantle.elapsed + dt,
+        );
+        const t = wallMantle.elapsed / wallMantle.duration;
+        const riseT = Math.min(1, t * 2);
+        const crossT = t ** 1.5;
+        player.x =
+          wallMantle.startX + (wallMantle.endX - wallMantle.startX) * crossT;
+        player.y =
+          wallMantle.startY + (wallMantle.endY - wallMantle.startY) * riseT;
+        player.vx = player.vy = 0;
+        player.onGround = t === 1;
+        if (t === 1) {
+          engine.setGeometry(routeSurfaces(route));
+          wallMantle.restored = true;
+          lastWallMantle = {
+            wallId: wallMantle.wall.id,
+            duration: wallMantle.elapsed,
+            startedAt: wallMantle.startedAt,
+            restoredAt: gameClock,
+            endFeet: player.y + player.h,
+            wallTop: wallMantle.wallY,
+            geometryRestored: true,
+          };
+          wallMantle = null;
+        }
+      }
+    }
     if (innerWidth>innerHeight) {
       const footY=player.y+player.h;
       if(player.onGround)cameraGroundFootY=footY;
@@ -2985,6 +3057,21 @@
       movingPlatforms: movingPlatforms.map(p=>({id:p.id,x:p.x,y:p.y,w:p.w,h:p.h,minX:p.minX,maxX:p.maxX,dx:p.dx,rideFrames:p.rideFrames})),
       platformOrder: {...platformOrder},
       gameClock,
+      wallMantle: wallMantle
+        ? {
+            wallId: wallMantle.wall.id,
+            phase: wallMantle.phase,
+            elapsed: wallMantle.elapsed,
+            duration: wallMantle.duration,
+            startedAt: wallMantle.startedAt,
+            wallTop: wallMantle.wallY,
+            startX: wallMantle.startX,
+            startY: wallMantle.startY,
+            endX: wallMantle.endX,
+            endY: wallMantle.endY,
+          }
+        : null,
+      lastWallMantle: lastWallMantle ? { ...lastWallMantle } : null,
       collapsing: collapsing.map(c=>({id:c.id,state:c.state,timer:c.timer,fallY:c.fallY,warning:c.warning,warningStartedAt:c.warningStartedAt,warningElapsed:c.warningElapsed})),
       containerDoors: containerDoors.map(d=>({id:d.id,state:d.state,timer:d.timer,x:d.x,y:d.currentY,w:d.w,h:d.h,preparingElapsed:d.preparingElapsed,pushes:d.pushes})),
       chief: campaignChief ? {...campaignChief,distance:player.x-campaignChief.x} : null,
