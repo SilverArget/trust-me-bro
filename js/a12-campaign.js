@@ -2173,9 +2173,34 @@
       player.y + player.h > GROUND - o.h
     );
   }
+  function vectorMoveDir() {
+    return Math.abs(joystick.axis)>.08?Math.sign(joystick.axis):(keys.right?1:0)-(keys.left?1:0);
+  }
+  function beginZoneCatch() {
+    if(route.movementProfile!=="vector-v1"||edgeClimb||wallMantle||edgeCatchCooldown>0||!keys.jump||engine.parkour.state==="wallRun")return false;
+    const dir=vectorMoveDir();
+    if(!dir)return false;
+    const feet=player.y+player.h,candidates=routeSurfaces(route).filter(s=>s.catchable);
+    const wall=candidates.find(s=>{
+      const gap=dir>0?s.x-(player.x+player.w):player.x-(s.x+s.w);
+      const front=dir===s.catchDir&&(dir>0?player.x+player.w<=s.x+2:player.x>=s.x+s.w-2);
+      const toward=dir>0?s.x>=player.x+player.w-2:s.x+s.w<=player.x+2;
+      const vertical=player.onGround?feet-s.y>=0&&feet-s.y<=100:feet>=s.y-4&&feet<=s.y+100;
+      return gap>=0&&gap<=96&&front&&toward&&vertical;
+    });
+    if(!wall)return false;
+    const gap=dir>0?wall.x-(player.x+player.w):player.x-(wall.x+wall.w),startX=player.x,startY=player.y;
+    const catchX=dir>0?wall.x-player.w:wall.x+wall.w,H=Math.max(0,feet-wall.y);
+    edgeClimb={wall,dir,elapsed:0,duration:.2+.6*Math.max(0,Math.min(1,(H-60)/36)),startX:catchX,startY,endX:dir>0?wall.x+4:wall.x+wall.w-player.w-4,endY:wall.y-player.h,approach:{elapsed:0,duration:Math.max(.08,gap/Math.max(255,Math.abs(player.vx))),startX,startY,endX:catchX}};
+    vectorJumpPending=null;
+    keys.jump=false;
+    frontFlip.active=false;
+    engine.setGeometry(routeSurfaces(route).filter(s=>!(s.catchable&&s.id===wall.id)));
+    return true;
+  }
   function tryEdgeCatch() {
     if(route.movementProfile!=="vector-v1"||edgeClimb||wallMantle||edgeCatchCooldown>0||player.onGround||engine.parkour.state==="wallRun")return;
-    const input=(keys.right?1:0)-(keys.left?1:0),feet=player.y+player.h,vy=player.vy;
+    const input=vectorMoveDir(),feet=player.y+player.h,vy=player.vy;
     if(!input)return;
     const candidates=routeSurfaces(route).filter(s=>s.catchable);
     const probes=candidates.map(s=>{const gap=input>0?s.x-(player.x+player.w):player.x-(s.x+s.w),front=input===s.catchDir&&(input>0?player.x+player.w<=s.x+2:player.x>=s.x+s.w-2),toward=input>0?s.x>=player.x+player.w-2:s.x+s.w<=player.x+2,vertical=feet>=s.y-4&&feet<=s.y+60,apex=vy>=-120&&vy<=180;return{id:s.id,gap,feetDelta:feet-s.y,vy,front,toward,vertical,apex}});
@@ -2184,7 +2209,7 @@
     const wall=accepted&&candidates.find(s=>s.id===accepted.id);
     if(!wall)return;
     const dir=input,startX=dir>0?wall.x-player.w:wall.x+wall.w;
-    edgeClimb={wall,dir,elapsed:0,duration:.2+.6*Math.max(0,Math.min(1,((player.y+player.h)-wall.y-12)/24)),startX,startY:player.y,endX:dir>0?wall.x+4:wall.x+wall.w-player.w-4,endY:wall.y-player.h};
+    edgeClimb={wall,dir,elapsed:0,duration:.2+.6*Math.max(0,Math.min(1,((player.y+player.h)-wall.y-60)/36)),startX,startY:player.y,endX:dir>0?wall.x+4:wall.x+wall.w-player.w-4,endY:wall.y-player.h};
     frontFlip.active=false;
     engine.setGeometry(routeSurfaces(route).filter(s=>!(s.catchable&&s.id===wall.id)));
     player.x=startX;player.vx=player.vy=0;
@@ -2193,11 +2218,12 @@
     if (!campaign || shopOpen || result) return;
     gameClock += dt;
     if(edgeClimb){engine.parkour.state="normal";engine.parkour.timer=0}
-    if(route.movementProfile==="vector-v1"&&keys.jump&&player.onGround){
+    if(route.movementProfile==="vector-v1"&&keys.jump&&player.onGround&&!edgeClimb){
       const center=player.x+player.w/2;
       const diveZone=(route.diveZones||[]).find(z=>center>=z.x1&&center<=z.x2);
       vectorJumpPending={kind:diveZone?"dive":(route.highJumpZones||[]).some(z=>center>=z.x1&&center<=z.x2)?"high":"normal",frames:0,diveZone};
     }
+    if(!vectorJumpPending||vectorJumpPending.kind==="normal")beginZoneCatch();
     tryEdgeCatch();
     for (const p of movingPlatforms) {
       const oldX = p.x;
@@ -2258,10 +2284,12 @@
       }
     }
     if(edgeClimb){
-      const input=(keys.right?1:0)-(keys.left?1:0),c=edgeClimb;
+      const input=vectorMoveDir(),c=edgeClimb;
       if(!input||input!==c.dir){
         engine.setGeometry(routeSurfaces(route));
         engine.parkour.state="normal";engine.parkour.timer=0;edgeClimb=null;edgeCatchCooldown=.12;
+      }else if(c.approach){
+        const a=c.approach,t=Math.min(1,(a.elapsed+=dt)/a.duration),arc=4*t*(1-t);engine.parkour.state="normal";engine.parkour.timer=0;engine.parkour.dir=c.dir;player.x=a.startX+(a.endX-a.startX)*t;player.y=a.startY-12*arc;player.vx=(a.endX-a.startX)/a.duration;player.vy=0;player.onGround=false;if(t===1){player.x=a.endX;player.y=a.startY;player.vx=player.vy=0;delete c.approach}
       }else{
         c.elapsed=Math.min(c.duration,c.elapsed+dt);
         const t=c.elapsed/c.duration,hold=.12/c.duration,move=Math.max(0,(t-hold)/(1-hold)),rise=Math.min(1,move/.85),pull=Math.max(0,(move-.85)/.15);
