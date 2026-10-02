@@ -128,13 +128,43 @@ for (const id of ["F01", "F02"])
   });
 test("world-purchase-ui-and-insufficient-i18n", async ({ page }) => {
   await page.evaluate(() => __TMB_A12__.setWallet(159));
-  let b = await worlds(page);
-  for (const lang of ["en", "tr", "ru"]) {
-    await page.evaluate((l) => __TMB_A12__.setLanguage(l), lang);
-    await expect(b).toBeDisabled();
-    expect(await b.textContent()).toBe(
-      (await page.evaluate(() => __TMB_A12__.i18n()))[lang].insufficient,
-    );
+  const b = await worlds(page);
+  await page.locator('[data-item="frozen"] h3').click();
+  for (const size of [
+    { width: 844, height: 390 },
+    { width: 390, height: 844 },
+  ]) {
+    await page.setViewportSize(size);
+    for (const lang of ["en", "tr", "ru"]) {
+      await page.evaluate((l) => __TMB_A12__.setLanguage(l), lang);
+      await expect(b).toBeDisabled();
+      await expect(b).toHaveText("🔒 ◉ 160");
+      const warning = page.locator("[data-world-insufficient]");
+      await expect(warning).toBeVisible();
+      await expect(warning).toHaveText(
+        (await page.evaluate(() => __TMB_A12__.i18n()))[lang].insufficient,
+      );
+      const boxes = await Promise.all([
+        warning.boundingBox(),
+        page.locator("#a12ShopTop").boundingBox(),
+        page.locator("#a12ShopBottom").boundingBox(),
+        page.locator('[data-list="worlds"]').boundingBox(),
+      ]);
+      expect(boxes[0]?.width).toBeGreaterThan(0);
+      for (const other of boxes.slice(1))
+        expect(
+          Math.max(
+            0,
+            Math.min(boxes[0].x + boxes[0].width, other.x + other.width) -
+              Math.max(boxes[0].x, other.x),
+          ) *
+            Math.max(
+              0,
+              Math.min(boxes[0].y + boxes[0].height, other.y + other.height) -
+                Math.max(boxes[0].y, other.y),
+            ),
+        ).toBe(0);
+    }
   }
   expect(
     (await page.evaluate(() => __TMB_A12__.getState())).profile.walletBalance,
@@ -312,13 +342,15 @@ test("world-theme-readable-wide-light-grounded", async ({ page }) => {
 test("world-buy-i18n-tr-ru", async ({ page }) => {
   await page.evaluate(() => __TMB_A12__.setWallet(500));
   const b = await worlds(page);
+  await page.locator('[data-item="frozen"] h3').click();
   for (const lang of ["tr", "ru"]) {
     await page.evaluate((l) => __TMB_A12__.setLanguage(l), lang);
     const expected = await page.evaluate(
       (l) => __TMB_A12__.i18n()[l].buyWorld.replace("{price}", "160"),
       lang,
     );
-    expect(await b.textContent()).toBe(expected);
+    await expect(page.locator("[data-shop-buy]")).toHaveText(expected);
+    await expect(b).toHaveText("◉ 160");
   }
 });
 test("world-theme-screenshots", async ({ page }) => {
