@@ -78,8 +78,17 @@ const d02Steps = [
   ["d02-slope-1",1412.4,-65.5,85.8,43.5], ["d02-slope-2",1498.2,-22,85.8,43.5],
   ["d02-slope-3",1584,21.5,85.8,43.5], ["d02-slope-4",1669.8,65,85.8,43.5],
 ].map(([id,x,y,w,h]) => ({ id,x,y,w,h,kind:"ground" }));
-segmentCheck(routes.D01, d01Expected, 1, "B-1 D01 IR");
-segmentCheck({groundSegments: routes.D02.groundSegments.filter(s => /^d02-[vu]-/.test(s.id))}, d02Ir, 1, "B-1 D02 IR");
+const extracted = {
+  D01: new Set(["d01-v-12","d01-v-13","d01-v-18"]),
+  D02: new Set(["d02-v-07","d02-v-12","d02-v-13"]),
+};
+segmentCheck(routes.D01, d01Expected.filter(s => !extracted.D01.has(s.id)), 1, "B-1 D01 IR");
+segmentCheck({groundSegments: routes.D02.groundSegments.filter(s => /^d02-[vu]-/.test(s.id))}, d02Ir.filter(s => !extracted.D02.has(s.id)), 1, "B-1 D02 IR");
+for (const [id, expected] of [["D01",d01Expected],["D02",d02Ir]]) {
+  const route=routes[id], wanted=expected.filter(s=>extracted[id].has(s.id));
+  const found=wanted.filter(s=>route.obstacles.some(o=>Math.abs(o.x-s.x)<=1&&Math.abs(o.w-s.w)<=1&&Math.abs(o.h-s.h)<=1&&(o.type==="slide"||o.type==="vault")));
+  report(`B-1 ${id} çıkarılan engel`, `${found.length}/${wanted.length}`, `${wanted.length}/${wanted.length}; IR ±1px`, found.length===wanted.length);
+}
 segmentCheck({groundSegments: routes.D02.groundSegments.filter(s => /^d02-(roof|slope)/.test(s.id))}, d02Steps, .01, "B-1 D02 basamak");
 
 for (const id of ["D01", "D02"]) {

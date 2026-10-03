@@ -1226,9 +1226,9 @@
       checkpoints: [70, 4214],
       chief: { startX: 4214 },
       movementProfile: "vector-v1",
-      catchableSurfaces: [],
+      catchableSurfaces: [{id:"d01-v-04"},{id:"d01-v-05"},{id:"d01-v-06"},{id:"d01-v-07"},{id:"d01-v-09"},{id:"d01-v-10"},{id:"d01-v-14"},{id:"d01-v-15"},{id:"d01-v-16"},{id:"d01-v-17"},{id:"d01-v-19"},{id:"d01-v-20"},{id:"d01-v-22"},{id:"d01-v-24"}],
       highJumpZones: [],
-      diveZones: [],
+      diveZones: [{id:"d01-dz-01",x1:305.6,x2:425.6,landX:1048,landY:-256.45},{id:"d01-dz-02",x1:5586.45,x2:5706.45,landX:5985.67,landY:145.43}],
       groundSegments: [
         { id: "d01-v-01", x: 0, y: -584.05, w: 441.6, h: 66, kind: "ground" },
         { id: "d01-v-02", x: 1008, y: -256.45, w: 240, h: 240, kind: "ground" },
@@ -1241,13 +1241,10 @@
         { id: "d01-v-09", x: 1721.94, y: -222.85, w: 66, h: 62.4, kind: "ground" },
         { id: "d01-v-10", x: 2136, y: -255.25, w: 192, h: 94.8, kind: "ground" },
         { id: "d01-v-11", x: 2424.72, y: -107.65, w: 980.04, h: 360, kind: "ground" },
-        { id: "d01-v-12", x: 2773.2, y: -225.25, w: 48, h: 86.4, kind: "ground" },
-        { id: "d01-v-13", x: 3031.2, y: -225.25, w: 48, h: 86.4, kind: "ground" },
         { id: "d01-v-14", x: 3233.28, y: -129.25, w: 171.6, h: 21.6, kind: "ground" },
         { id: "d01-v-15", x: 3405.12, y: -203.65, w: 1200, h: 240, kind: "ground" },
         { id: "d01-v-16", x: 3549.12, y: -225.25, w: 72, h: 21.6, kind: "ground" },
         { id: "d01-v-17", x: 3767.52, y: -225.25, w: 72, h: 21.6, kind: "ground" },
-        { id: "d01-v-18", x: 3983.52, y: -225.25, w: 28.8, h: 21.6, kind: "ground" },
         { id: "d01-v-19", x: 4197.12, y: -225.25, w: 408, h: 21.6, kind: "ground" },
         { id: "d01-v-20", x: 4461.12, y: -299.65, w: 144, h: 74.4, kind: "ground" },
         { id: "d01-v-21", x: 4763.04, y: -155.65, w: 960, h: 48, kind: "ground" },
@@ -1263,7 +1260,14 @@
         { id: "d01-u-3", x: 8498.61, y: 1300.04, w: 28.8, h: 21.6, kind: "ground" },
         { id: "d01-u-4", x: 8661.81, y: 1300.04, w: 28.8, h: 21.6, kind: "ground" },
       ],
-      obstacles: [],
+      obstacles: [
+        {id:"d01-slide-01",type:"slide",x:2773.2,w:48,h:86.4,baseY:-107.65},
+        {id:"d01-slide-02",type:"slide",x:3031.2,w:48,h:86.4,baseY:-107.65},
+        {id:"d01-vault-01",type:"vault",x:8609.01,w:24,h:48,baseY:455},
+        {id:"d01-vault-02",type:"vault",x:3983.52,w:28.8,h:21.6,baseY:-203.65},
+        {id:"d01-vault-03",type:"vault",x:8032.53,w:24,h:48,baseY:455},
+        {id:"d01-vault-04",type:"vault",x:8445.81,w:24,h:48,baseY:455},
+      ],
       coins: [
         { id: "D01-c01", n: 0, move_id: "d01-vault-stack", kind: "CJ", x: 1200, y: 215, skill: false },
         { id: "D01-c02", n: 1, move_id: "d01-slide-stack", kind: "CS", x: 1858, y: 260, skill: true },
@@ -1289,9 +1293,9 @@
       checkpoints: [70, 1211, 3433, 5200],
       chief: { startX: 1211 },
       movementProfile: "vector-v1",
-      catchableSurfaces: [],
+      catchableSurfaces: [{id:"d02-roof1-1"},{id:"d02-roof1-2"},{id:"d02-roof1-3"},{id:"d02-roof2-1"},{id:"d02-roof2-2"},{id:"d02-roof2-3"},{id:"d02-v-06"},{id:"d02-v-08"},{id:"d02-v-09"}],
       highJumpZones: [],
-      diveZones: [],
+      diveZones: [{id:"d02-dz-01",x1:1685.8,x2:1787.6,landX:2184.7,landY:362.36}],
       groundSegments: [
         { id: "d02-v-01", x: 0, y: -224.2, w: 1280.4, h: 240, kind: "ground" },
         { id: "d02-v-02", x: 1282.8, y: -109, w: 129.6, h: 381.6, kind: "ground" },
@@ -1299,13 +1303,10 @@
         { id: "d02-v-04", x: 1755.6, y: 65, w: 48, h: 32.4, kind: "ground" },
         { id: "d02-v-05", x: 2144.7, y: 362.36, w: 146.6, h: 360, kind: "ground" },
         { id: "d02-v-06", x: 2285.58, y: 270.2, w: 1012.8, h: 360, kind: "ground" },
-        { id: "d02-v-07", x: 2494.38, y: 248.6, w: 28.8, h: 21.6, kind: "ground" },
         { id: "d02-v-08", x: 2761.92, y: 248.6, w: 72, h: 21.6, kind: "ground" },
         { id: "d02-v-09", x: 3046.38, y: 248.6, w: 72, h: 21.6, kind: "ground" },
         { id: "d02-v-10", x: 3298.38, y: 270.2, w: 1507.2, h: 120, kind: "ground" },
         { id: "d02-v-11", x: 4930.08, y: 390.2, w: 919.96, h: 616.8, kind: "ground" },
-        { id: "d02-v-12", x: 5458.38, y: 368.6, w: 28.8, h: 21.6, kind: "ground" },
-        { id: "d02-v-13", x: 5627.58, y: 368.6, w: 28.8, h: 21.6, kind: "ground" },
         { id: "d02-v-14", x: 5905.15, y: 455, w: 928.9, h: 463.2, kind: "ground" },
         { id: "d02-v-15", x: 6339.06, y: 263.24, w: 12, h: 120, kind: "ground" },
         { id: "d02-u-1", x: 2655.18, y: 301.64, w: 28.8, h: 21.6, kind: "ground" },
@@ -1325,7 +1326,14 @@
         { id: "d02-slope-3", x: 1584, y: 21.5, w: 85.8, h: 43.5, kind: "ground" },
         { id: "d02-slope-4", x: 1669.8, y: 65, w: 85.8, h: 43.5, kind: "ground" },
       ],
-      obstacles: [],
+      obstacles: [
+        {id:"d02-vault-01",type:"vault",x:2602.38,w:24,h:48,baseY:270.2},
+        {id:"d02-vault-02",type:"vault",x:5627.58,w:28.8,h:21.6,baseY:390.2},
+        {id:"d02-vault-03",type:"vault",x:3351.18,w:24,h:48,baseY:270.2},
+        {id:"d02-vault-04",type:"vault",x:5458.38,w:28.8,h:21.6,baseY:390.2},
+        {id:"d02-vault-05",type:"vault",x:5367.9,w:24,h:48,baseY:390.2},
+        {id:"d02-vault-06",type:"vault",x:2494.38,w:28.8,h:21.6,baseY:270.2},
+      ],
       coins: makeCoins("D02", COINS.D02),
     },
     D03: {
@@ -2256,7 +2264,10 @@
     if(route.movementProfile==="vector-v1"&&vectorJumpPending&&player.vy<0&&!player.onGround){
       if(vectorJumpPending.kind==="dive"){
         const z=vectorJumpPending.diveZone,dir=player.facing>=0?1:-1,startX=player.x,startY=player.y;
-        diveRun={elapsed:0,duration:.46,startX,startY,endX:dir>0?z.landX:z.landX-player.w,landY:z.landY-player.h,dir};
+        const endX=dir>0?z.landX:z.landX-player.w,landY=z.landY-player.h,dx=Math.abs(endX-startX),top=Math.min(startY,landY)-93;
+        const Tb=Math.sqrt(2*(startY-top)/1450)+Math.sqrt(2*(landY-top)/1450),vx=Math.max(dx/Tb,Math.abs(player.vx)),duration=dx>0?dx/vx:Tb;
+        const vy0=(landY-startY-725*duration*duration)/duration;
+        diveRun={elapsed:0,duration,vy0,startX,startY,endX,landY,dir};
         engine.parkour.state="normal";engine.parkour.timer=0;engine.parkour.dir=dir;
       }else player.vy=vectorJumpPending.kind==="high"?-520:-390;
       vectorJumpPending=null;
@@ -2276,11 +2287,11 @@
       }
     }else vectorAir=null;
     if(diveRun){
-      const d=diveRun,t=Math.min(1,(d.elapsed+=dt)/d.duration),arc=4*t*(1-t);
+      const d=diveRun,tau=Math.min(d.elapsed+=dt,d.duration),t=tau/d.duration;
       engine.parkour.state="normal";engine.parkour.timer=0;engine.parkour.dir=d.dir;
-      player.x=d.startX+(d.endX-d.startX)*t;player.y=d.startY+(d.landY-d.startY)*t-74*arc;
-      player.vx=(d.endX-d.startX)/d.duration;player.vy=0;player.onGround=false;
-      if(t===1){
+      player.x=d.startX+(d.endX-d.startX)*tau/d.duration;player.y=d.startY+d.vy0*tau+725*tau*tau;
+      player.vx=(d.endX-d.startX)/d.duration;player.vy=d.vy0+1450*tau;player.onGround=false;
+      if(tau===d.duration){
         player.x=d.endX;player.y=d.landY;player.vx=d.dir*Math.max(255,Math.abs(player.vx));player.vy=0;player.onGround=true;
         engine.parkour.state="roll";engine.parkour.timer=.24;engine.parkour.roll=0;engine.parkour.dir=d.dir;vectorRollStarts++;
         diveRun=null;vectorAir=null;
@@ -3586,7 +3597,7 @@
       window.__tmbSegmentStart = (x) => {
         if (!Number.isFinite(x) || x < 0 || x > route.finishX) throw new RangeError('segment x');
         startRoute(routeId, true);
-        engine.reset(x, GROUND - player.h);
+        engine.reset(x, route.movementProfile==="vector-v1" ? routeGroundYAt(x) - player.h : GROUND - player.h);
         player.vx = player.vy = 0;
         player.onGround = true;
         return debugState();
