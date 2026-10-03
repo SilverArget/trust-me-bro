@@ -2272,6 +2272,10 @@
   function updateIntegrated(dt, state) {
     if (!campaign || shopOpen || result) return;
     edgeCatchCooldown=Math.max(0,edgeCatchCooldown-dt);
+    if(route.movementProfile==="vector-v1"&&state.bufferedJump&&!vectorJumpPending){
+      const center=player.x+player.w/2,diveZone=(route.diveZones||[]).find(z=>center>=z.x1&&center<=z.x2);
+      if(diveZone)vectorJumpPending={kind:"dive",frames:0,diveZone};
+    }
     if(route.movementProfile==="vector-v1"&&vectorJumpPending&&player.vy<0&&!player.onGround){
       if(vectorJumpPending.kind==="dive"){
         const z=vectorJumpPending.diveZone,dir=player.facing>=0?1:-1,startX=player.x,startY=player.y;
