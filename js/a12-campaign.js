@@ -2269,10 +2269,10 @@
     const doorRects=containerDoors.filter(d=>d.state==="CLOSING"||d.state==="CLOSED").map(d=>({x:d.x,y:d.currentY,w:d.w,h:d.h,kind:"containerDoor",id:d.id}));
     engine.setDynamicSurfaces([...movingPlatforms.map(p => ({ x:p.x, y:p.y, w:p.w, h:p.h, kind:"movingPlatform", id:p.id })),...doorRects]);
   }
-  function updateIntegrated(dt, state) {
+  function updateIntegrated(dt, state, input={}) {
     if (!campaign || shopOpen || result) return;
     edgeCatchCooldown=Math.max(0,edgeCatchCooldown-dt);
-    if(route.movementProfile==="vector-v1"&&state.bufferedJump&&!vectorJumpPending){
+    if(route.movementProfile==="vector-v1"&&input.bufferedJump&&!vectorJumpPending){
       const center=player.x+player.w/2,diveZone=(route.diveZones||[]).find(z=>center>=z.x1&&center<=z.x2);
       if(diveZone)vectorJumpPending={kind:"dive",frames:0,diveZone};
     }
