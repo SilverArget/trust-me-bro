@@ -3199,6 +3199,7 @@
       routeVersion: route?.version,
       cameraWorldY,
       cameraGroundFootY,
+      ...(DEBUG ? {pose:{...runnerAtlasPose(diveRun?{...engine.parkour,state:"dive",timer:Math.max(0,diveRun.duration-diveRun.elapsed),duration:diveRun.duration}:engine.parkour),angle:0}} : {}),
       movementProfile: movementProfile(),
       vectorJumpPending: vectorJumpPending ? { ...vectorJumpPending } : null,
       vectorAir: vectorAir ? { ...vectorAir } : null,
