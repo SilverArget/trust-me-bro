@@ -24,8 +24,8 @@ async function bootD01(page){
   await sampleUntil(page,s=>s.route?.id==='D01'||s.routeId==='D01'||s.route?.catchableSurfaces?.length>=3);
 }
 
-function wallFor(route,surface){return route.obstacles.find(o=>o.id===surface.id)||route.platforms?.find(o=>o.id===surface.id)}
-async function placeBefore(page,wall,dir){await page.evaluate(({wall,dir})=>{const s=__TMB_A12__.getState(),cx=wall.x+(dir<0?wall.w+105:-105),g=s.route.groundSegments.find(v=>cx>=v.x&&cx<=v.x+v.w);if(!g)throw new Error(`no ground below ${wall.id}`);__TMB_A12__.placePlayer(cx-s.hitbox.w/2,g.y-s.hitbox.h)}, {wall,dir})}
+function wallFor(route,surface){return route.groundSegments.find(o=>o.id===surface.id)}
+async function placeBefore(page,route,wall,dir){await page.evaluate(({route,wall,dir})=>{const s=__TMB_A12__.getState(),cx=wall.x+(dir<0?wall.w+105:-105),g=route.groundSegments.find(v=>cx>=v.x&&cx<=v.x+v.w);if(!g)throw new Error(`no ground below ${wall.id}`);__TMB_A12__.placePlayer(cx-s.hitbox.w/2,g.y-s.hitbox.h)}, {route,wall,dir})}
 
 async function touch(page,hold){
   const cdp=await page.context().newCDPSession(page),joy={x:155,y:650,id:1,radiusX:2,radiusY:2,force:1},jump={x:1125,y:625,id:2,radiusX:2,radiusY:2,force:1};
@@ -38,7 +38,7 @@ async function pixels(page,s){return page.evaluate(s=>{const c=document.querySel
 async function alphaBox(page,pose){return page.evaluate(async pose=>{const s=__TMB_A12__.getState(),runner=s.runnerId||'male',outfit=JSON.parse(localStorage.getItem('trust_me_bro_last_delivery_v2_save')||'{}')?.v36?.equippedOutfitByRunner?.[runner]||'default',contract=await fetch('sprites/a5/atlas-contract.json').then(r=>r.json()),img=new Image();img.src=`sprites/a5/${runner}-${outfit}-full.png`;await img.decode();const c=document.createElement('canvas');c.width=c.height=64;const g=c.getContext('2d');g.drawImage(img,pose.frame*64,contract.motions[pose.motion].row*64,64,64,0,0,64,64);const d=g.getImageData(0,0,64,64).data;let min=64,max=-1;for(let y=0;y<64;y++)for(let x=0;x<64;x++)if(d[(y*64+x)*4+3]){min=Math.min(min,x);max=Math.max(max,x)}return{min:min-32,max:max-32}},pose)}
 
 async function runVariant(page,surfaceIndex,kind,hold){
-  await bootD01(page);const initial=await page.evaluate(()=>__TMB_A12__.getState()),surface=initial.route.catchableSurfaces[surfaceIndex],wall=wallFor(initial.route,surface),dir=surface.dir||1;if(!wall)throw new Error(`wall ${surface.id} missing`);await placeBefore(page,wall,dir);
+  await bootD01(page);const route=await page.evaluate(()=>__TMB_A12__.routeDefinition('D01')),surface=route.catchableSurfaces[surfaceIndex],wall=wallFor(route,surface),dir=surface.dir||1;if(!wall)throw new Error(`wall ${surface.id} missing`);await placeBefore(page,route,wall,dir);
   let releaseTouch=null;const moveKey=dir<0?'ArrowLeft':'ArrowRight';if(kind==='keyboard'){await page.keyboard.down(moveKey);await page.keyboard.down('ArrowUp');if(!hold){await page.waitForTimeout(80);await page.keyboard.up('ArrowUp')}}else releaseTouch=await touch(page,hold);
   const trace=[],proof={};let endClock=null;
   for(let i=0;i<900;i++){
