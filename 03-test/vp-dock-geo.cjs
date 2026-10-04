@@ -88,7 +88,7 @@ const extracted = {
   D01: new Set(["d01-v-12","d01-v-13","d01-v-18"]),
   D02: new Set(["d02-v-07","d02-v-12","d02-v-13"]),
   D03: new Set(["d03-v-10","d03-v-15","d03-v-22"]),
-  D04: new Set(["d04-v-04","d04-v-11"]),
+  D04: new Set(["d04-v-04","d04-v-11","d04-v-12"]),
 };
 segmentCheck(routes.D01, d01Expected.filter(s => !extracted.D01.has(s.id)), 1, "B-1 D01 IR");
 segmentCheck({groundSegments: routes.D02.groundSegments.filter(s => /^d02-[vu]-/.test(s.id))}, d02Ir.filter(s => !extracted.D02.has(s.id)), 1, "B-1 D02 IR");

@@ -91,13 +91,20 @@ async function drive(page, id, {touch=false, stopAfter} = {}) {
       if (fired.has(key)) continue;
       if (t.mech === 'normal' && !pending.has(key) && coyote && right >= t.A.x1 - 25 && right <= t.A.x1 - 2) target = [key, t];
       const d03d04 = id === 'D03' || id === 'D04';
-      if (t.mech === 'dive' && (d03d04 ? !s.edgeClimb : p.onGround) && center >= Math.min(t.x1,t.x2) + 4 && center <= Math.max(t.x1,t.x2) - 4 && (!lastPress.has(key) || s.gameClock-lastPress.get(key)>=(d03d04?.1:.2))) target=[key,t];
-      const lowStep = t.mech === 'tutunma' && ((id === 'D03' && t.B.id === 'd03-v-16') || (id === 'D04' && t.B.id === 'd04-v-12'));
+      if (t.mech === 'dive' && (d03d04 ? !s.edgeClimb : p.onGround) && center >= t.x1 + 4 && center <= t.x2 - 4 && (!lastPress.has(key) || s.gameClock-lastPress.get(key)>=(d03d04?.1:.2))) target=[key,t];
+      const lowStep = t.mech === 'tutunma' && id === 'D03' && t.B.id === 'd03-v-16';
       if (lowStep && !pending.has(key) && right >= t.B.x0 - 125 && right <= t.B.x0 - 105) target = [key, {...t,mech:'normal',neutralJump:true}];
       const catchWindow = right >= t.B.x0 - 58 && right <= t.B.x0 + 4;
       const braced = p.onGround && p.vx <= 1 && right >= t.B.x0 - 4 && right <= t.B.x0 + 4;
       if (t.mech === 'tutunma' && !lowStep && !pending.has(key) && (catchWindow || braced) && (!lastPress.has(key) || s.gameClock-lastPress.get(key)>=.1)) target = [key, t];
       if (target) break;
+    }
+    if (!target) {
+      const longStep = Math.floor((p.x - 5530) / 82.65);
+      const key = `normal-d04-long-${longStep}-${Math.floor(s.gameClock * 2)}`;
+      if (id === 'D04' && p.onGround && p.x >= 5530 && p.x < 6190 && !pending.has(key)) {
+        target = [key, {mech:'normal'}];
+      }
     }
     if (!target) {
       for (const o of s.route.obstacles.filter(o => o.type === 'vault')) {

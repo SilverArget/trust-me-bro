@@ -99,7 +99,9 @@ function transition(A, B, moves, groundByY, i) {
     const top=Math.min(A.y,B.y)-93;
     row.Tb=round(Math.sqrt(2*(A.y-top)/1450)+Math.sqrt(2*(B.y-top)/1450),3);
     row.landX=round(B.x0+40); row.landY=B.y;
-    row.x2=round(Math.min(A.x1,row.landX-255*row.Tb)); row.x1=round(Math.max(A.x0,row.x2-120));
+    row.x2=round(Math.min(A.x1,row.landX-255*row.Tb));
+    if(row.x2<A.x0){row.x1=A.x0;row.x2=A.x1;}
+    else row.x1=round(Math.max(A.x0,row.x2-120));
   }
   return row;
 }
@@ -119,6 +121,11 @@ function analyze(id, cfg) {
     vaultN++;
     if(box){removed.add(box.id);obstacles.push({id:`${id.toLowerCase()}-vault-${String(vaultN).padStart(2,"0")}`,type:"vault",x:box.x,w:box.w,h:round(box.below.y-box.y),baseY:box.below.y,sourceId:box.id});}
     else obstacles.push({id:`${id.toLowerCase()}-vault-${String(vaultN).padStart(2,"0")}`,type:"vault",x:t.x,w:24,h:48,baseY:floor.y,sourceId:null});
+  }
+  if(id==="D04") {
+    const box=roles.find(s=>s.id==="d04-v-12");
+    removed.add(box.id); vaultN++;
+    obstacles.push({id:`d04-vault-${String(vaultN).padStart(2,"0")}`,type:"vault",x:box.x,w:72,h:48,baseY:box.below.y,sourceId:box.id});
   }
   const extras=routeData[id].groundSegments.filter(s=>new RegExp(`^${id.toLowerCase()}-(slope|long)-`).test(s.id));
   const profileInputs=[...roles.filter(s=>s.role==="zemin"&&!removed.has(s.id)),...extras];
@@ -142,6 +149,7 @@ const roleExpected=["D03:d03-v-10:slide","D03:d03-v-13:ust-gecit","D03:d03-v-15:
 const firstDive=results.find(r=>r.id==="D03").transitions.find(t=>t.mech==="dive");
 const spot=firstDive&&Math.abs(firstDive.x1-2442)<=.5&&Math.abs(firstDive.x2-2562)<=.5&&Math.abs(firstDive.landX-3029.08)<=.5&&Math.abs(firstDive.landY-301.4)<=.5&&Math.abs(firstDive.Tb-.989)<=.005;
 const unmatched=results.flatMap(r=>r.transitions.filter(t=>t.mech==="UYMAYAN").map(t=>({...t,route:r.id})));
+const reversedDives=Object.entries(routeData).flatMap(([route, data])=>(data.diveZones||[]).filter(z=>!(z.x1<z.x2)).map(z=>({route,...z})));
 let codeParity=true;
 for(const r of results){
   const route=routeData[r.id];
@@ -155,4 +163,5 @@ console.log("\nZORUNLU KONTROLLER");
 console.log(`Roller | ${JSON.stringify(roleActual)} | ${JSON.stringify(roleExpected)} | ${JSON.stringify(roleActual)===JSON.stringify(roleExpected)?"PASS":"FAIL"}`);
 console.log(`Spot | ${firstDive?`x1=${firstDive.x1} x2=${firstDive.x2} landX=${firstDive.landX} landY=${firstDive.landY} Tb=${firstDive.Tb}`:"yok"} | ±0.5px/±0.005sn | ${spot?"PASS":"FAIL"}`);
 console.log(`UYMAYAN | ${unmatched.length} | 0 | ${unmatched.length===0?"PASS":"FAIL"}`);
-if(JSON.stringify(roleActual)!==JSON.stringify(roleExpected)||!spot||unmatched.length||!codeParity) process.exitCode=1;
+console.log(`Dive aralıkları | ${reversedDives.length} ters | 0 | ${reversedDives.length===0?"PASS":"FAIL"}`);
+if(JSON.stringify(roleActual)!==JSON.stringify(roleExpected)||!spot||unmatched.length||reversedDives.length||!codeParity) process.exitCode=1;
