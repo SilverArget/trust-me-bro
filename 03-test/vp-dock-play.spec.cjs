@@ -8,6 +8,7 @@ const path = require('path');
 // M-1 viewportlari 390x844 / 844x390; esikler ilk kosumdan once sabittir.
 const root = path.join(__dirname, '..');
 const dataRoots = {D01:'E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/dock-d01d02',D02:'E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/dock-d01d02',D03:'E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/dock-d03d04',D04:'E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/dock-d03d04',D05:'E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/dock-d05d06',D06:'E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/dock-d05d06',F01:'E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/frozen-f01f02',F02:'E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/frozen-f01f02',F03:'E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/frozen-f03f04',F04:'E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/frozen-f03f04',M01:'E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/magma-m01m02',M02:'E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/magma-m01m02',M03:'E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/magma-m03m04',M04:'E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/magma-m03m04',A01:'E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/aftermath-a01a02',A02:'E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/aftermath-a01a02'};
+for(let n=7;n<=18;n++)dataRoots[`D${String(n).padStart(2,'0')}`]=path.join(__dirname,'dock18-generated');
 const transitions = Object.fromEntries(Object.keys(dataRoots).map(id => [id, JSON.parse(fs.readFileSync(`${dataRoots[id]}/transitions-${id}.json`, 'utf8'))]));
 let server, base;
 
@@ -68,7 +69,7 @@ async function jump(page, touch) {
 
 async function drive(page, id, {touch=false, stopAfter, omitDives=[]} = {}) {
   const fired = new Set(), pending = new Map(), lastPress = new Map(), trace = [], tr = transitions[id], started = Date.now();
-  const d05d06 = ['D05','D06','F01','F02','F03','F04','M01','M02','M03','M04','A01','A02'].includes(id);
+  const d05d06 = ['D05','D06','F01','F02','F03','F04','M01','M02','M03','M04','A01','A02'].includes(id)||/^D(0[7-9]|1\d)$/.test(id);
   let diveSeen = false, catchSeen = false, deaths = 0, retries = 0, end, stuckSince = null, c07Y = null, previousSample = null, lastGroundAt = -Infinity, chainClimbSeconds = 0;
   while (Date.now() - started < 115000) {
     const s = await page.evaluate(() => __TMB_A12__.getState());
@@ -156,7 +157,7 @@ async function drive(page, id, {touch=false, stopAfter, omitDives=[]} = {}) {
     }
     if (!target) {
       const key=`a02-s-wall-${Math.floor(s.gameClock*3)}`;
-      if(id==='A02'&&p.x>=5200&&p.x<5320&&!pending.has(key)) target=[key,{mech:'tutunma'}];
+      if((id==='A02'||id==='D16')&&p.x>=5200&&p.x<5320&&!pending.has(key)) target=[key,{mech:'tutunma'}];
     }
     if (!target) {
       const key = `normal-d05-v15-retry-${Math.floor(s.gameClock * 2)}`;
@@ -203,7 +204,7 @@ async function drive(page, id, {touch=false, stopAfter, omitDives=[]} = {}) {
   return {end, deaths, retries, elapsed:(Date.now()-started)/1000, diveSeen, catchSeen, trace, c07Y};
 }
 
-for (const id of ['D01','D02','D03','D04','D05','D06','F01','F02','F03','F04','M01','M02','M03','M04','A01','A02']) test(`O-1 B-5 ${id} ideal keyboard route`, async ({page}) => {
+for (const id of ['D01','D02','D03','D04','D05','D06','D07','D08','D09','D10','D11','D12','D13','D14','D15','D16','D17','D18','F01','F02','F03','F04','M01','M02','M03','M04','A01','A02']) test(`O-1 B-5 ${id} ideal keyboard route`, async ({page}) => {
   test.setTimeout(120000); await boot(page,id); const r=await drive(page,id);
   const collected=r.end.economy.collectedCoinIds.length, expected=r.end.route.coins.length;
   const pass=!!r.end.result || r.end.player.x+r.end.hitbox.w>=r.end.route.finishX;
@@ -244,6 +245,16 @@ test('O-4a D01 first dive omission retries', async ({page}) => {
   expect(pass).toBeTruthy();
 });
 
+test('O-4a D17 first dive omission retries', async ({page}) => {
+  test.setTimeout(30000); await boot(page,'D17');const first=transitions.D17.find(t=>t.mech==='dive'&&t.i>0);let previousX=null,dropped=false;
+  const r=await drive(page,'D17',{omitDives:[first.i],stopAfter:({s})=>{const x=s.player.x;dropped=previousX!==null&&previousX-x>100;previousX=x;return dropped}});
+  console.log(`O-4a-D17 | retry=${dropped}, attempts=${r.retries} | missed required dive retries | ${dropped?'PASS':'FAIL'}`);expect(dropped).toBeTruthy();
+});
+
+test('Dock 18 mobile result menu screenshot', async ({page}) => {
+  await boot(page,'D01',{width:390,height:844});await page.keyboard.up('ArrowRight');await page.evaluate(()=>__TMB_A12__.finish());const nav=page.locator('#a12DockRoutes');await expect(nav).toBeVisible();const box=await nav.boundingBox();expect(box.x).toBeGreaterThanOrEqual(0);expect(box.y).toBeGreaterThanOrEqual(0);expect(box.x+box.width).toBeLessThanOrEqual(390);expect(box.y+box.height).toBeLessThanOrEqual(844);expect(await nav.locator('button').count()).toBe(18);await page.screenshot({path:path.join(__dirname,'dock18-menu-390x844.png')});
+});
+
 test('O-4b D01 ground below continues', async ({page}) => {
   test.setTimeout(120000); await boot(page,'D01'); const before=await page.evaluate(()=>__TMB_A12__.getState().economy.attemptId);
   await page.keyboard.up('ArrowRight'); await page.evaluate(()=>{const r=__TMB_A12__.routeDefinition('D01'),v=r.groundSegments.find(x=>x.id==='d01-v-23');__TMB_A12__.placePlayer(v.x+v.w/2,v.y-248);});
@@ -261,7 +272,7 @@ for (const pitId of ['d06-v-07','d06-v-09']) test(`O-4c D06 ${pitId} keyboard pi
   console.log(`O-4c ${pitId} | attemptSame=${s.economy.attemptId===setup.attempt}, x=${s.player.x.toFixed(2)}, feet=${(s.player.y+s.hitbox.h).toFixed(2)} | keyboard escape to B x>=${setup.bx}, feet<=${setup.by+4} | ${escaped?'PASS':'FAIL'}`); expect(escaped).toBeTruthy();
 });
 
-for (const id of ['D01','D03','D04','D05','D06','F01','F02','F03','F04','M01','M02','M03','M04','A01','A02']) for (const viewport of [{width:390,height:844},{width:844,height:390}]) test(`M-1 ${id} touch ${viewport.width}x${viewport.height}`, async ({browser}) => {
+for (const id of ['D01','D03','D04','D05','D06','D17','D18','F01','F02','F03','F04','M01','M02','M03','M04','A01','A02']) for (const viewport of [{width:390,height:844},{width:844,height:390}]) test(`M-1 ${id} touch ${viewport.width}x${viewport.height}`, async ({browser}) => {
   test.setTimeout(120000);
   const context=await browser.newContext({viewport,hasTouch:true,isMobile:true,deviceScaleFactor:1}),page=await context.newPage();
   try {
