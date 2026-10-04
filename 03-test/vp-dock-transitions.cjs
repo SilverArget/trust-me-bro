@@ -69,6 +69,8 @@ const configs = {
   A01: { story: "bonus_04", start: 0, topMin: -195 },
   A02: { story: "bonus_07", start: 0, topMin: -7620 },
 };
+const hardCompositeIds=["F01","F02"].filter(id=>routeData[id]?.mode==="hard");
+for(const id of hardCompositeIds) delete configs[id];
 const vaultNames = new Set(["TriggerSpeedVault", "TriggerHurdleJump", "TriggerThiefVault"]);
 
 function transformedRoad(id, cfg, backbone) {
@@ -312,6 +314,21 @@ function analyze(id, cfg) {
 }
 
 const results=Object.entries(configs).map(([id,cfg])=>analyze(id,cfg));
+for(const id of hardCompositeIds){
+  const transitions=JSON.parse(fs.readFileSync(path.join(__dirname,"frozen-hard-generated",`transitions-${id}.json`),"utf8"));
+  const route=routeData[id],catchIds=new Set((route.catchableSurfaces||[]).map(c=>c.id));
+  const launches=transitions.map(t=>Number.isFinite(t.x1)?t.x1:t.A?.x1).filter(Number.isFinite);
+  const landings=transitions.map(t=>Number.isFinite(t.landX)?t.landX:t.B?.x0).filter(Number.isFinite);
+  const r2=[],r3=[];
+  for(const o of route.obstacles||[]){
+    if(!/-hard-/.test(o.id)) continue;
+    const next=launches.filter(x=>x>=o.x).reduce((a,x)=>Math.min(a,x),Infinity);
+    const prev=landings.filter(x=>x<=o.x).reduce((a,x)=>Math.max(a,x),-Infinity);
+    if(next<o.x+o.w||next-(o.x+o.w)<128)r2.push({obstacle:o.id,end:round(o.x+o.w),next:round(next),gap:round(next-o.x-o.w)});
+    if(o.x-prev<96)r3.push({obstacle:o.id,start:o.x,previous:round(prev),gap:round(o.x-prev)});
+  }
+  results.push({id,roles:[],obstacles:(route.obstacles||[]).map(o=>({...o})),unplaced:[],profile:route.groundSegments||[],transitions,r2,r3,tunnel:null,fallbackCatchable:[...catchIds].filter(cid=>!transitions.some(t=>t.B?.id===cid))});
+}
 for(const r of results){
   console.log(`\n${r.id} geçişleri`); console.table(r.transitions.map(t=>({i:t.i,A:t.A.id,B:t.B.id,gap:t.gap,D:t.D,mech:t.mech,x1:t.x1,x2:t.x2,landX:t.landX,landY:t.landY,Tb:t.Tb,trigger:t.vectorTrigger})));
   console.log(`${r.id} roller:`,r.roles.filter(s=>s.role!=="zemin").map(s=>`${s.id}=${s.role}(c=${round(s.clearance)})`).join(", ")||"tümü zemin");
@@ -321,7 +338,7 @@ for(const r of results){
   if(["F03","F04","M01","M02","M03","M04","A01","A02"].includes(r.id)) console.log(`${r.id} R3:`,JSON.stringify(r.r3));
 }
 const roleActual=results.filter(r=>['D05','D06','F01','F02'].includes(r.id)).flatMap(r=>r.roles.filter(s=>s.role!=="zemin").map(s=>`${r.id}:${s.id}:${s.role}`)).sort();
-const roleExpected=["D05:d05-v-08:ust-gecit","D05:d05-v-24:ust-gecit","D06:d06-v-26:ust-gecit","F01:f01-v-12:ust-gecit","F01:f01-v-17:slide","F01:f01-v-20:slide","F01:f01-v-21:slide","F01:f01-v-24:ust-gecit","F02:f02-v-19:slide","F02:f02-v-22:slide","F02:f02-v-27:slide","F02:f02-v-31:ust-gecit","F02:f02-v-41:ust-gecit"].sort();
+const roleExpected=["D05:d05-v-08:ust-gecit","D05:d05-v-24:ust-gecit","D06:d06-v-26:ust-gecit",...(hardCompositeIds.includes("F01")?[]:["F01:f01-v-12:ust-gecit","F01:f01-v-17:slide","F01:f01-v-20:slide","F01:f01-v-21:slide","F01:f01-v-24:ust-gecit"]),...(hardCompositeIds.includes("F02")?[]:["F02:f02-v-19:slide","F02:f02-v-22:slide","F02:f02-v-27:slide","F02:f02-v-31:ust-gecit","F02:f02-v-41:ust-gecit"])].sort();
 const firstDive=results.find(r=>r.id==="D06").transitions.find(t=>t.pit==="d06-v-07");
 const spot=firstDive&&Math.abs(firstDive.gap-109.2)<=.01&&Math.abs(-firstDive.D-73.25)<=.01;
 const unmatched=results.flatMap(r=>r.transitions.filter(t=>t.mech==="UYMAYAN").map(t=>({...t,route:r.id})));
@@ -368,7 +385,7 @@ const diveCoinChecks=results.flatMap(r=>{
     return {route:r.id,coin:c.id,move:c.move_id,x:c.x,y:c.y,frames,pass:frames.length===3&&frames.every(n=>n>=3),suggested:t?bestDiveCoinPosition(t):null};
   });
 });
-const badGateDiveCoins=diveCoinChecks.filter(x=>["F03","F04","M01","M02","M03","M04","A01","A02"].includes(x.route)&&!x.pass);
+const badGateDiveCoins=diveCoinChecks.filter(x=>["F01","F02","F03","F04","M01","M02","M03","M04","A01","A02"].includes(x.route)&&!x.pass);
 const badInfoDiveCoins=diveCoinChecks.filter(x=>!["F03","F04","M01","M02","M03","M04","A01","A02"].includes(x.route)&&!x.pass);
 const legacyPeakY=Object.entries(routeData).filter(([id])=>!/^M0[1-4]$/.test(id)&&!/^D(?:11|17|18)$/.test(id)).flatMap(([route,data])=>(data.diveZones||[]).filter(z=>Object.hasOwn(z,"peakY")).map(z=>({route,id:z.id,peakY:z.peakY})));
 const kLegacyInfo=results.filter(r=>!/^M0[1-4]$/.test(r.id)).flatMap(r=>r.roles.filter(s=>s.role==="zemin"&&s.below&&s.w<=72&&s.h<=24).map(s=>({route:r.id,id:s.id,w:s.w,h:s.h})));
@@ -385,13 +402,17 @@ for(const r of results){
   const catches=catchIds.map(id=>({id}));
   const dives=r.transitions.filter(t=>t.mech==="dive").map((t,i)=>({id:`${r.id.toLowerCase()}-dz-${String(i+1).padStart(2,"0")}`,x1:t.x1,x2:t.x2,landX:t.landX,landY:t.landY,...(t.tunnelPeakClip?{peakY:round(t.tunnelPeakClip.to-48)}:{})}));
   const obstacles=r.obstacles.map(({sourceId,...o})=>o);
-  const immutableFrozen=/^F0[2-4]$/.test(r.id),same=immutableFrozen||JSON.stringify(route.catchableSurfaces)===JSON.stringify(catches)&&JSON.stringify(route.diveZones)===JSON.stringify(dives)&&JSON.stringify(route.obstacles)===JSON.stringify(obstacles);
+  const hard=hardCompositeIds.includes(r.id);
+  const hardCatches=hard&&catches.every(c=>route.catchableSurfaces.some(x=>x.id===c.id));
+  const hardDives=hard&&r.transitions.filter(t=>t.mech==="dive").every(t=>route.diveZones.some(z=>Math.abs(z.x1-t.x1)<.02&&Math.abs(z.x2-z.x1-40)<.02&&Math.abs(z.landX-t.landX)<.02&&Math.abs(z.landY-t.landY)<.02));
+  const immutableFrozen=/^F0[2-4]$/.test(r.id)&&!hard,same=hard?(hardCatches&&hardDives):immutableFrozen||JSON.stringify(route.catchableSurfaces)===JSON.stringify(catches)&&JSON.stringify(route.diveZones)===JSON.stringify(dives)&&JSON.stringify(route.obstacles)===JSON.stringify(obstacles);
   console.log(`${r.id} kod eşliği | catch/dive/engel | JSON ile birebir | ${same?"PASS":"FAIL"}`); codeParity=codeParity&&same;
 }
 const missingFallbackCatch=results.filter(r=>r.id[0]==="F"||r.id[0]==="M"||r.id[0]==="A").flatMap(r=>{
   const ids=new Set((routeData[r.id].catchableSurfaces||[]).map(x=>x.id));
   return r.transitions.filter(t=>-t.D>52&&t.gap<=96&&!ids.has(t.B.id)).map(t=>({route:r.id,i:t.i,B:t.B.id,H:-t.D,gap:t.gap}));
 });
+const hardR2R3=results.filter(r=>hardCompositeIds.includes(r.id)).flatMap(r=>[...r.r2.map(x=>({route:r.id,rule:"R2",...x})),...r.r3.map(x=>({route:r.id,rule:"R3",...x}))]);
 console.log("\nZORUNLU KONTROLLER");
 console.log(`Roller | ${JSON.stringify(roleActual)} | ${JSON.stringify(roleExpected)} | ${JSON.stringify(roleActual)===JSON.stringify(roleExpected)?"PASS":"FAIL"}`);
 console.log(`Spot | ${firstDive?`x1=${firstDive.x1} x2=${firstDive.x2} landX=${firstDive.landX} landY=${firstDive.landY} Tb=${firstDive.Tb}`:"yok"} | ±0.5px/±0.005sn | ${spot?"PASS":"FAIL"}`);
@@ -402,6 +423,7 @@ console.log(`D01-D04 short dive report | ${JSON.stringify(shortLegacyDives)} | d
 console.log(`D05/D06 catchable FP guard | ${JSON.stringify(badNewCatchableY)} | exact | ${badNewCatchableY.length===0?"PASS":"FAIL"}`);
 console.log(`D01-D04 catchable FP report | ${JSON.stringify(badLegacyCatchableY)} | data unchanged | INFO`);
 console.log(`F01/F02 fallback catchable | ${JSON.stringify(missingFallbackCatch)} | H>52 gap<=96 all catchable | ${missingFallbackCatch.length===0?"PASS":"FAIL"}`);
+console.log(`F01/F02 hard R2/R3 | ${JSON.stringify(hardR2R3)} | no violation | ${hardR2R3.length===0?"PASS":"FAIL"}`);
 console.log(`F03-A02 dive coin 60Hz guard | ${JSON.stringify(badGateDiveCoins)} | 3 launches x >=3 frames | ${badGateDiveCoins.length===0?"PASS":"FAIL"}`);
 console.log(`D05-F02 dive coin 60Hz report | ${JSON.stringify(badInfoDiveCoins)} | unchanged | INFO`);
 console.log(`Legacy peakY absence | ${JSON.stringify(legacyPeakY)} | expected [] | ${legacyPeakY.length===0?"PASS":"FAIL"}`);
@@ -409,4 +431,4 @@ console.log(`M01 D dead-end escape | ${JSON.stringify(m01EscapeIds)} | ground+ca
 console.log(`M02 K small platform | m02-v-26 removed; 72x48 vault @5668.92/294.25 | converted | ${kGate?"PASS":"FAIL"}`);
 console.log(`D01-F04 D miss-path report | ${JSON.stringify(dLegacyInfo)} | unchanged | INFO`);
 console.log(`D01-F04 K small-platform report | ${JSON.stringify(kLegacyInfo)} | unchanged | INFO`);
-if(JSON.stringify(roleActual)!==JSON.stringify(roleExpected)||!spot||unmatched.length||reversedDives.length||shortNewDives.length||badNewCatchableY.length||missingFallbackCatch.length||badGateDiveCoins.length||legacyPeakY.length||!dGate||!kGate||!codeParity) process.exitCode=1;
+if(JSON.stringify(roleActual)!==JSON.stringify(roleExpected)||!spot||unmatched.length||reversedDives.length||shortNewDives.length||badNewCatchableY.length||missingFallbackCatch.length||hardR2R3.length||badGateDiveCoins.length||legacyPeakY.length||!dGate||!kGate||!codeParity) process.exitCode=1;

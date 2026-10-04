@@ -127,9 +127,24 @@ for (const [id, expected] of [["D01",d01Expected],["D02",d02Ir]]) {
   const found=wanted.filter(s=>route.obstacles.some(o=>Math.abs(o.x-s.x)<=1&&Math.abs(o.w-s.w)<=1&&Math.abs(o.h-s.h)<=1&&(o.type==="slide"||o.type==="vault")));
   report(`B-1 ${id} çıkarılan engel`, `${found.length}/${wanted.length}`, `${wanted.length}/${wanted.length}; IR ±1px`, found.length===wanted.length);
 }
-for (const [id, expected] of [["F01",f01Expected],["F02",f02Expected]]) {
-  segmentCheck({groundSegments:routes[id].groundSegments.filter(s=>new RegExp(`^${id.toLowerCase()}-[vu]-`).test(s.id))},expected.filter(s=>!extracted[id].has(s.id)),1,`B-1 ${id} IR`);
-  segmentCheck({groundSegments:routes[id].groundSegments.filter(s=>/^f02-slope-/.test(s.id))},extraSteps[id].map(([id,x,y,w,h])=>({id,x,y,w,h,kind:"ground"})),.063,`B-1 ${id} basamak`);
+const hardMetaPath=path.join(root,"03-test/frozen-hard-meta.json");
+const hardMeta=fs.existsSync(hardMetaPath)?JSON.parse(fs.readFileSync(hardMetaPath,"utf8")):{};
+for (const id of ["F01","F02"]) {
+  if(routes[id].mode!=="hard") {
+    const expected=id==="F01"?f01Expected:f02Expected;
+    segmentCheck({groundSegments:routes[id].groundSegments.filter(s=>new RegExp(`^${id.toLowerCase()}-[vu]-`).test(s.id))},expected.filter(s=>!extracted[id].has(s.id)),1,`B-1 ${id} IR`);
+    segmentCheck({groundSegments:routes[id].groundSegments.filter(s=>new RegExp(`^${id.toLowerCase()}-slope-`).test(s.id))},extraSteps[id].map(([id,x,y,w,h])=>({id,x,y,w,h,kind:"ground"})),.063,`B-1 ${id} basamak`);
+    continue;
+  }
+  const parts=hardMeta[id]?.parts||[];
+  for(const [pi,spec] of parts.entries()){
+    const prefix=`${id.toLowerCase()}-p${pi+1}-`, source=new Map(routes[spec.id].groundSegments.map(s=>[s.id,s]));
+    const actual=routes[id].groundSegments.filter(s=>s.id.startsWith(prefix));
+    let dx=null,dy=null,maxShape=0,ok=actual.length>0;
+    for(const a of actual){const s=source.get(a.id.slice(prefix.length));if(!s){ok=false;continue;}maxShape=Math.max(maxShape,Math.abs(a.w-s.w),Math.abs(a.h-s.h));const qx=a.x-s.x,qy=a.y-s.y;if(dx===null){dx=qx;dy=qy}else if(Math.abs(qx-dx)>.011||Math.abs(qy-dy)>.071)ok=false;}
+    ok=ok&&maxShape<=.011;
+    report(`B-1 ${id} parca ${pi+1}`,`${actual.length} segments; dx=${round2(dx)} dy=${round2(dy)} shape=${maxShape.toFixed(3)}`,`${spec.id} ${spec.side} uniform transform`,ok);
+  }
 }
 for (const [id, expected] of [["F03",f03Expected],["F04",f04Expected]]) {
   const actual=routes[id].groundSegments.filter(s=>new RegExp(`^${id.toLowerCase()}-v-`).test(s.id));

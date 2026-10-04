@@ -1,0 +1,38 @@
+{
+  "F01": {
+    "parts": [
+      {
+        "id": "D07",
+        "side": "left",
+        "fraction": 0.5
+      },
+      {
+        "id": "D13",
+        "side": "right",
+        "fraction": 0.5
+      }
+    ],
+    "length": 9416.4,
+    "movements": 20,
+    "addedObstacles": 7,
+    "coins": 14
+  },
+  "F02": {
+    "parts": [
+      {
+        "id": "D08",
+        "side": "left",
+        "fraction": 0.5
+      },
+      {
+        "id": "D14",
+        "side": "right",
+        "fraction": 0.5
+      }
+    ],
+    "length": 9638.4,
+    "movements": 21,
+    "addedObstacles": 4,
+    "coins": 14
+  }
+}

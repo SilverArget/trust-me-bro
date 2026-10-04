@@ -9,6 +9,7 @@ const path = require('path');
 const root = path.join(__dirname, '..');
 const dataRoots = {D01:'E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/dock-d01d02',D02:'E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/dock-d01d02',D03:'E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/dock-d03d04',D04:'E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/dock-d03d04',D05:'E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/dock-d05d06',D06:'E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/dock-d05d06',F01:'E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/frozen-f01f02',F02:'E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/frozen-f01f02',F03:'E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/frozen-f03f04',F04:'E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/frozen-f03f04',M01:'E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/magma-m01m02',M02:'E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/magma-m01m02',M03:'E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/magma-m03m04',M04:'E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/magma-m03m04',A01:'E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/aftermath-a01a02',A02:'E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/aftermath-a01a02'};
 for(let n=7;n<=18;n++)dataRoots[`D${String(n).padStart(2,'0')}`]=path.join(__dirname,'dock18-generated');
+for(const id of ['F01','F02'])if(fs.existsSync(path.join(__dirname,'frozen-hard-generated',`transitions-${id}.json`)))dataRoots[id]=path.join(__dirname,'frozen-hard-generated');
 const transitions = Object.fromEntries(Object.keys(dataRoots).map(id => [id, JSON.parse(fs.readFileSync(`${dataRoots[id]}/transitions-${id}.json`, 'utf8'))]));
 let server, base;
 
@@ -70,9 +71,9 @@ async function jump(page, touch) {
 
 async function drive(page, id, {touch=false, stopAfter, omitDives=[]} = {}) {
   const fired = new Set(), pending = new Map(), lastPress = new Map(), trace = [], tr = transitions[id], started = Date.now();
-  const chiefSamples = [];
+  const chiefSamples = [], movementSamples = [];
   const d05d06 = ['D05','D06','F01','F02','F03','F04','M01','M02','M03','M04','A01','A02'].includes(id)||/^D(0[7-9]|1\d)$/.test(id);
-  let diveSeen = false, catchSeen = false, deaths = 0, retries = 0, end, stuckSince = null, c07Y = null, previousSample = null, lastGroundAt = -Infinity, chainClimbSeconds = 0, chiefMinGap = Infinity, chiefCatches = 0;
+  let diveSeen = false, catchSeen = false, deaths = 0, retries = 0, end, stuckSince = null, c07Y = null, previousSample = null, lastGroundAt = -Infinity, chainClimbSeconds = 0, chiefMinGap = Infinity, chiefCatches = 0, manualInputs = 0;
   while (Date.now() - started < 115000) {
     const s = await page.evaluate(() => __TMB_A12__.getState());
     if (process.env.TMB_RECORD_CHIEF && (!chiefSamples.length || s.gameClock-chiefSamples.at(-1)[0] >= .05)) {
@@ -83,6 +84,9 @@ async function drive(page, id, {touch=false, stopAfter, omitDives=[]} = {}) {
     chiefCatches = Math.max(chiefCatches, s.chief?.catches || 0);
     const p = s.player, right = p.x + s.hitbox.w, center = p.x + s.hitbox.w / 2;
     const centerY = p.y + s.hitbox.h / 2;
+    if (process.env.TMB_MEASURE_HARD_TRACE && (!movementSamples.length || s.gameClock-movementSamples.at(-1).t >= 1/60-.003)) {
+      movementSamples.push({t:+s.gameClock.toFixed(4),x:+p.x.toFixed(3),y:+p.y.toFixed(3),w:s.hitbox.w,h:s.hitbox.h,state:s.parkour.state,onGround:p.onGround,vx:+p.vx.toFixed(3),vy:+p.vy.toFixed(3)});
+    }
     if (p.onGround) lastGroundAt = s.gameClock;
     const coyote = p.onGround || s.gameClock - lastGroundAt <= .12;
     if (previousSample && ['catch','climb'].includes(previousSample.parkour) && previousSample.playerX >= 6500) chainClimbSeconds += Math.max(0,s.gameClock-previousSample.clock);
@@ -190,6 +194,7 @@ async function drive(page, id, {touch=false, stopAfter, omitDives=[]} = {}) {
       }
     }
     if (target) {
+      manualInputs++;
       trace.push(`[DBG-B2] ${s.gameClock.toFixed(2)} ${p.x.toFixed(2)},${p.y.toFixed(2)} ${s.parkour.state} press ${target[0]}`);
       if (!pending.has(target[0])) pending.set(target[0], {mech:target[1].mech, at:s.gameClock, wasOnGround:p.onGround || !!target[1].neutralJump});
       lastPress.set(target[0], s.gameClock);
@@ -208,13 +213,14 @@ async function drive(page, id, {touch=false, stopAfter, omitDives=[]} = {}) {
     await page.waitForTimeout(16);
   }
   await page.keyboard.up('ArrowRight');
-  return {end, deaths, retries, elapsed:(Date.now()-started)/1000, diveSeen, catchSeen, trace, c07Y, chiefSamples, chiefMinGap, chiefCatches};
+  if (process.env.TMB_MEASURE_HARD_TRACE) fs.writeFileSync(path.join(__dirname,`frozen-hard-generated`,`${id}-60hz-trace.json`),JSON.stringify(movementSamples,null,2)+'\n');
+  return {end, deaths, retries, elapsed:(Date.now()-started)/1000, diveSeen, catchSeen, trace, c07Y, chiefSamples, chiefMinGap, chiefCatches, manualInputs};
 }
 
 for (const id of ['D01','D02','D03','D04','D05','D06','D07','D08','D09','D10','D11','D12','D13','D14','D15','D16','D17','D18','F01','F02','F03','F04','M01','M02','M03','M04','A01','A02']) test(`O-1 B-5 ${id} ideal keyboard route`, async ({page}) => {
   test.setTimeout(120000); await boot(page,id); const r=await drive(page,id);
   const collected=r.end.economy.collectedCoinIds.length, expected=r.end.route.coins.length;
-  const coinBaseline=id==='D03'?12:expected;
+  const coinBaseline=process.env.TMB_MEASURE_HARD_TRACE?0:id==='D03'?12:expected;
   const pass=!!r.end.result || r.end.player.x+r.end.hitbox.w>=r.end.route.finishX;
   if (!(pass && r.deaths === 0 && r.retries === 0 && collected >= coinBaseline)) {
     const got = new Set(r.end.economy.collectedCoinIds);
@@ -223,10 +229,11 @@ for (const id of ['D01','D02','D03','D04','D05','D06','D07','D08','D09','D10','D
   }
   console.log(`O-1-${id} | ${r.elapsed.toFixed(2)}s, x=${r.end.player.x.toFixed(2)}, deaths=${r.deaths}, retries=${r.retries}, coin=${collected}/${expected} | finish, deaths=0, retries=0, coin>=${coinBaseline}/${expected} | ${pass&&r.deaths===0&&r.retries===0&&collected>=coinBaseline?'PASS':'FAIL'}`);
   console.log(`B-5-${id} | ${collected}/${expected} coin | baseline ${coinBaseline}/${expected} coin | ${collected>=coinBaseline?'PASS':'FAIL'}`);
-  if (/^D(?:0[1-9]|1[0-8])$/.test(id)) console.log(`CHIEF-${id} | minGap=${r.chiefMinGap.toFixed(3)}s, catches=${r.chiefCatches} | catches=0 | ${r.chiefCatches===0?'PASS':'FAIL'}`);
-  if (process.env.TMB_RECORD_CHIEF) fs.writeFileSync(path.join(__dirname,`.chief-record-${id}.json`),JSON.stringify({delay:['D01','D02'].includes(id)?2.5:1.5,routeHash:r.end.chiefRouteHash,samples:r.chiefSamples}));
+  if (['F01','F02','D07','D08','D13','D14'].includes(id)) { const movements=transitions[id].length+r.end.route.obstacles.filter(o=>o.type==='vault'||o.type==='slide').length; console.log(`DENSITY-${id} | length=${r.end.route.length.toFixed(2)}, movements=${movements}, per1000=${(movements*1000/r.end.route.length).toFixed(3)}, manualInputs=${r.manualInputs}`); }
+  if (/^(?:D(?:0[1-9]|1[0-8])|F0[1-6])$/.test(id)&&r.end.chief) console.log(`CHIEF-${id} | minGap=${r.chiefMinGap.toFixed(3)}s, catches=${r.chiefCatches} | catches=0 | ${r.chiefCatches===0?'PASS':'FAIL'}`);
+  if (process.env.TMB_RECORD_CHIEF) fs.writeFileSync(path.join(__dirname,`.chief-record-${id}.json`),JSON.stringify({delay:id[0]==='F'?1.2:['D01','D02'].includes(id)?2.5:1.5,routeHash:r.end.chiefRouteHash,samples:r.chiefSamples}));
   if (id === 'D01') console.log(`D01-c07-y | measured=${r.c07Y?.toFixed(2)} | coin center y | ${r.c07Y!==null?'PASS':'FAIL'}`);
-  expect(pass).toBeTruthy(); expect(r.deaths).toBe(0); expect(r.retries).toBe(0); expect(collected).toBeGreaterThanOrEqual(coinBaseline); if (/^D(?:0[1-9]|1[0-8])$/.test(id) && !process.env.TMB_RECORD_CHIEF) { expect(r.chiefCatches).toBe(0); expect(Number.isFinite(r.chiefMinGap)).toBeTruthy(); }
+  expect(pass).toBeTruthy(); expect(r.deaths).toBe(0); expect(r.retries).toBe(0); expect(collected).toBeGreaterThanOrEqual(coinBaseline); if (/^(?:D(?:0[1-9]|1[0-8])|F0[1-6])$/.test(id) && r.end.chief && !process.env.TMB_RECORD_CHIEF) { expect(r.chiefCatches).toBe(0); expect(Number.isFinite(r.chiefMinGap)).toBeTruthy(); }
 });
 
 for (const i of [14,17]) test(`F01 i${i} missed-dive fallback catch`, async ({page}) => {
@@ -235,6 +242,14 @@ for (const i of [14,17]) test(`F01 i${i} missed-dive fallback catch`, async ({pa
   const crossed=r.end.player.x+r.end.hitbox.w>=t.B.x0+24&&r.end.player.y+r.end.hitbox.h<=t.B.y+4;
   console.log(`F01-i${i}-fallback | x=${r.end.player.x.toFixed(2)}, feet=${(r.end.player.y+r.end.hitbox.h).toFixed(2)} | no dive, keyboard catch onto ${t.B.id} | ${crossed?'PASS':'FAIL'}`);
   expect(crossed).toBeTruthy(); expect(r.deaths).toBe(0);
+});
+test('F01 fatal void causes death, retry, and no route lock', async ({page}) => {
+  test.setTimeout(15000); await boot(page,'F01'); await page.keyboard.up('ArrowRight');
+  const setup=await page.evaluate(()=>{const s=__TMB_A12__.getState(),r=__TMB_A12__.routeDefinition('F01'),surfaces=r.groundSegments.filter(v=>v.w>0).sort((a,b)=>a.x-b.x),candidates=[];for(let i=0;i<surfaces.length-1;i++){const a=surfaces[i],x0=a.x+a.w;for(let j=i+1;j<surfaces.length;j++){const b=surfaces[j];if(b.x<=x0)continue;const x=(x0+b.x)/2;if(b.x-x0>40&&x>200&&x<r.finishX-200&&!surfaces.some(v=>v.x<=x&&v.x+v.w>=x)){const nearby=surfaces.filter(v=>v.x-400<=x&&x<=v.x+v.w+400);candidates.push({x,gap:b.x-x0,y:Math.max(...nearby.map(v=>v.y))+121});}break}}candidates.sort((a,b)=>b.gap-a.gap);const pit=candidates[0];if(!pit)throw Error('F01 fatal void candidate missing');__TMB_A12__.placePlayer(pit.x,pit.y);return {attempt:s.economy.attemptId,pit}});
+  await page.waitForFunction(pitX=>__TMB_A12__.getState().player.x<pitX-100,setup.pit.x,{timeout:5000});
+  const after=await page.evaluate(()=>__TMB_A12__.getState()),retried=after.player.x<setup.pit.x-100,pass=after.route.id==='F01'&&retried&&!after.dead;
+  console.log(`F01-FATAL-VOID | gap=${setup.pit.gap.toFixed(2)}, retry=${retried}, resetX=${after.player.x.toFixed(2)}, route=${after.route.id} | fatal retry, no lock | ${pass?'PASS':'FAIL'}`);
+  expect(pass).toBeTruthy();
 });
 test('F03 missed-dive fallback catch', async ({page}) => {
   test.setTimeout(120000); await boot(page,'F03'); const t=transitions.F03.find(x=>x.mech==='dive'&&-x.D>52&&x.gap<=96);

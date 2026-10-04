@@ -5,8 +5,8 @@ const vm = require('vm');
 
 const root = path.join(__dirname, '..');
 const ids = process.argv.slice(2);
-if (!ids.length || ids.some(id => !/^D(?:0[1-9]|1[0-8])$/.test(id))) {
-  throw new Error('usage: node 03-test/record-chief-paths.cjs <D01...D18>');
+if (!ids.length || ids.some(id => !/^(?:D(?:0[1-9]|1[0-8])|F0[1-6])$/.test(id))) {
+  throw new Error('usage: node 03-test/record-chief-paths.cjs <D01...D18|F01...F06>');
 }
 const nodePath = process.env.NODE_PATH || 'C:/Users/Arget/AppData/Roaming/npm/node_modules';
 const pattern = `O-1 B-5 (?:${ids.join('|')}) ideal keyboard route`;
@@ -18,8 +18,7 @@ const productPath = path.join(root, 'js/chief-paths.js');
 const context = {window:{}};
 if (fs.existsSync(productPath)) vm.runInNewContext(fs.readFileSync(productPath, 'utf8'), context);
 const out = context.window.TMB_CHIEF_PATHS || {};
-for (let n = 1; n <= 18; n++) {
-  const id = `D${String(n).padStart(2, '0')}`;
+for (const id of ids) {
   const file = path.join(__dirname, `.chief-record-${id}.json`);
   if (fs.existsSync(file)) {
     const record = JSON.parse(fs.readFileSync(file, 'utf8'));
