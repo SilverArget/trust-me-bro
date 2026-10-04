@@ -141,6 +141,10 @@ for (const [id, expected] of [["M01",m01Expected],["M02",m02Expected],["M03",m03
   segmentCheck({groundSegments:actual},expected.filter(s=>actual.some(a=>a.id===s.id)),1,`B-1 ${id} IR`);
   segmentCheck({groundSegments:routes[id].groundSegments.filter(s=>new RegExp(`^${id.toLowerCase()}-slope`).test(s.id))},extraSteps[id].map(([id,x,y,w,h])=>({id,x,y,w,h,kind:"ground"})),.063,`B-1 ${id} basamak`);
 }
+for(const id of ["A01","A02"]){
+  const generated=JSON.parse(fs.readFileSync(`E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/aftermath-a01a02/generated-${id}.json`,`utf8`));
+  segmentCheck({groundSegments:routes[id].groundSegments},generated.groundSegments,.001,`B-1 ${id} IR+S`);
+}
 segmentCheck({groundSegments: routes.D02.groundSegments.filter(s => /^d02-(roof|slope)/.test(s.id))}, d02Steps, .01, "B-1 D02 basamak");
 for (const [id, expected] of [["D03",d03Expected],["D04",d04Expected]]) {
   segmentCheck({groundSegments:routes[id].groundSegments.filter(s=>new RegExp(`^${id.toLowerCase()}-[vu]-`).test(s.id))},expected.filter(s=>!extracted[id].has(s.id)),1,`B-1 ${id} IR`);
@@ -151,13 +155,13 @@ for (const [id, expected] of [["D05",d05Expected],["D06",d06Expected]]) {
   segmentCheck({groundSegments:routes[id].groundSegments.filter(s=>/^d05-(up|down)/.test(s.id))},extraSteps[id].map(([id,x,y,w,h])=>({id,x,y,w,h,kind:"ground"})),id==="D05"?.063:.02,`B-1 ${id} basamak`);
 }
 
-for (const id of ["D01", "D02", "D03", "D04", "D05", "D06", "F01", "F02", "F03", "F04", "M01", "M02", "M03", "M04"]) {
+for (const id of ["D01", "D02", "D03", "D04", "D05", "D06", "F01", "F02", "F03", "F04", "M01", "M02", "M03", "M04", "A01", "A02"]) {
   const ramps = (routes[id].obstacles || []).filter(o => o.type === "ramp").length;
   report(`B-2 ${id} ramp`, ramps, 0, ramps === 0);
 }
 const rampIds = rs => Object.fromEntries(Object.entries(rs).map(([id,r]) => [id,(r.obstacles||[]).filter(o=>o.type==="ramp").map(o=>o.id)]));
 const currentRamps = rampIds(routes), baseRamps = rampIds(base);
-const vectorIds = ["D01","D02","D03","D04","D05","D06","F01","F02","F03","F04","M01","M02","M03","M04"];
+const vectorIds = ["D01","D02","D03","D04","D05","D06","F01","F02","F03","F04","M01","M02","M03","M04","A01","A02"];
 const totalRamps = vectorIds.flatMap(id => currentRamps[id]).length;
 report("B-2 toplam ramp", totalRamps, 0, totalRamps === 0);
 
@@ -183,13 +187,17 @@ for(const [id,length,finishX,checkpoints] of [["M03",9043.52,8903.52,[70,1683.6,
   const r=routes[id],ok=r.length===length&&r.finishX===finishX&&JSON.stringify(r.checkpoints)===JSON.stringify(checkpoints)&&!Object.hasOwn(r,"chief")&&r.movementProfile==="vector-v1";
   report(`B-3 ${id} metadata`,`${r.length}/${r.finishX}/${r.checkpoints.join(",")}/chief=${Object.hasOwn(r,"chief")}`,`${length}/${finishX}/${checkpoints.join(",")}/chief=false`,ok);
 }
+for(const [id,length,finishX,checkpoints] of [["A01",8646.08,8506.08,[70,746.16,3210.96,5365.44]],["A02",8009.12,7869.12,[70,3149.04,4585.44,6433.68]]]){
+  const r=routes[id],ok=r.length===length&&r.finishX===finishX&&JSON.stringify(r.checkpoints)===JSON.stringify(checkpoints)&&!Object.hasOwn(r,"chief")&&r.movementProfile==="vector-v1";
+  report(`B-3 ${id} metadata`,`${r.length}/${r.finishX}/${r.checkpoints.join(",")}/chief=${Object.hasOwn(r,"chief")}`,`${length}/${finishX}/${checkpoints.join(",")}/chief=false`,ok);
+}
 for (const [id, route] of Object.entries(routes)) {
   const byId = new Map((route.groundSegments || []).map(s => [s.id, s]));
   const bad = (route.catchableSurfaces || []).map(c => byId.get(c.id)).filter(s => s && ((s.y - 48) + 48) !== s.y).map(s => s.id);
-  if (["D05","D06","F01","F02","F03","F04","M01","M02","M03","M04"].includes(id)) report(`FP ${id} catchable y`, bad.join(",") || "none", "none", bad.length === 0);
+  if (["D05","D06","F01","F02","F03","F04","M01","M02","M03","M04","A01","A02"].includes(id)) report(`FP ${id} catchable y`, bad.join(",") || "none", "none", bad.length === 0);
   else if (/^D0[1-4]$/.test(id)) console.log(`FP ${id} catchable y | ${bad.join(",") || "none"} | INFO (data unchanged)`);
 }
-const otherIds = Object.keys(base).filter(id => !["D01","D02","D03","D04","D05","D06","F01","F02","F03","F04","M01","M02","M03","M04"].includes(id));
+const otherIds = Object.keys(base).filter(id => !["D01","D02","D03","D04","D05","D06","F01","F02","F03","F04","M01","M02","M03","M04","A01","A02"].includes(id));
 const unchanged = otherIds.filter(id => JSON.stringify(routes[id]) === JSON.stringify(base[id]));
 report("NEG diğer rotalar", `${unchanged.length}/${otherIds.length}`, `${otherIds.length}/${otherIds.length}`, unchanged.length === otherIds.length);
 console.log(`${pass} PASS / ${fail} FAIL`);

@@ -7,7 +7,7 @@ const vm = require("vm");
 
 const root = path.resolve(__dirname, "..");
 const irRoot = "E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/ir";
-const outRoots = {D05:"E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/dock-d05d06",D06:"E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/dock-d05d06",F01:"E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/frozen-f01f02",F02:"E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/frozen-f01f02",F03:"E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/frozen-f03f04",F04:"E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/frozen-f03f04",M01:"E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/magma-m01m02",M02:"E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/magma-m01m02",M03:"E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/magma-m03m04",M04:"E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/magma-m03m04"};
+const outRoots = {D05:"E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/dock-d05d06",D06:"E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/dock-d05d06",F01:"E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/frozen-f01f02",F02:"E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/frozen-f01f02",F03:"E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/frozen-f03f04",F04:"E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/frozen-f03f04",M01:"E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/magma-m01m02",M02:"E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/magma-m01m02",M03:"E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/magma-m03m04",M04:"E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/magma-m03m04",A01:"E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/aftermath-a01a02",A02:"E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/aftermath-a01a02"};
 const sourcePath = path.join(root, "js/a12-campaign.js");
 const round = (n, p = 2) => Math.round((n + Number.EPSILON) * 10 ** p) / 10 ** p;
 const snapY = n => Math.round(n * 8) / 8;
@@ -66,6 +66,8 @@ const configs = {
   M02: { story: "bonus_01", start: 0, topMin: -2715 },
   M03: { story: "bonus_02", start: 0, topMin: -2720 },
   M04: { story: "bonus_03", start: 0, topMin: -1112 },
+  A01: { story: "bonus_04", start: 0, topMin: -195 },
+  A02: { story: "bonus_07", start: 0, topMin: -7620 },
 };
 const vaultNames = new Set(["TriggerSpeedVault", "TriggerHurdleJump", "TriggerThiefVault"]);
 
@@ -169,14 +171,14 @@ function analyze(id, cfg) {
     vaultN++;
     if(box){
       removed.add(box.id);
-      const wide=["D05","D06","F01","F02","F03","F04","M01","M02","M03","M04"].includes(id), w=wide?72:box.w, h=wide?48:round(box.below.rawY-box.rawY);
+      const wide=["D05","D06","F01","F02","F03","F04","M01","M02","M03","M04","A01","A02"].includes(id), w=wide?72:box.w, h=wide?48:round(box.below.rawY-box.rawY);
       obstacles.push({id:`${id.toLowerCase()}-vault-${String(vaultN).padStart(2,"0")}`,type:"vault",x:round(box.x+(box.w-w)/2),w,h,baseY:box.below.y,sourceId:box.id});
     }
     else obstacles.push({id:`${id.toLowerCase()}-vault-${String(vaultN).padStart(2,"0")}`,type:"vault",x:t.x,w:24,h:48,baseY:floor.y,sourceId:null});
   }
   // K: small IR platforms standing on a walkable surface are vaults even when
   // Vector did not place a vault trigger close enough to identify the box.
-  if(/^M0[1-4]$/.test(id)) for(const box of roles.filter(s=>s.role==="zemin"&&s.below&&s.w<=72&&s.h<=24&&!removed.has(s.id))){
+  if(/^(M0[1-4]|A0[12])$/.test(id)) for(const box of roles.filter(s=>s.role==="zemin"&&s.below&&s.w<=72&&s.h<=24&&!removed.has(s.id))){
     const template=obstacles.find(o=>o.type==="vault"&&o.sourceId==null&&Math.abs((o.x+o.w/2)-(box.x+box.w/2))<=60);
     if(template) obstacles.splice(obstacles.indexOf(template),1);
     removed.add(box.id); vaultN++;
@@ -210,7 +212,10 @@ function analyze(id, cfg) {
     ...Array.from({length:3},(_,i)=>({id:`m04-slope1-${i+1}`,x:round(1736.4+i*67.2),w:67.2,y:snapY(303.375-(i+1)*(118.625/3)),h:118.625/3,kind:"ground",role:"zemin"})),
     ...Array.from({length:4},(_,i)=>({id:`m04-slope2-${i+1}`,x:round(5570.4+i*60.9),w:60.9,y:snapY(162.25+(i+1)*45.875),h:45.875,kind:"ground",role:"zemin"})),
   ];
-  const extras=id==="D05"?d05Steps:id==="F02"?f02Steps:id==="F03"?f03Steps:id==="M01"?m01Steps:id==="M02"?m02Steps:id==="M03"?m03Steps:id==="M04"?m04Steps:[];
+  // S: bonus_07's wall-run/reversed section has no TMB mechanic. Three
+  // wall-adjacent, equal-rise catch ledges retain 96 px of run-up on v-20.
+  const a02Steps=id==="A02"?Array.from({length:3},(_,i)=>({id:`a02-s-wall-${i+1}`,x:5278.8,w:36,y:snapY(-734.25-(i+1)*(231.625/3)),h:231.625/3,kind:"ground",role:"zemin",sDeviation:true})):[];
+  const extras=id==="D05"?d05Steps:id==="F02"?f02Steps:id==="F03"?f03Steps:id==="M01"?m01Steps:id==="M02"?m02Steps:id==="M03"?m03Steps:id==="M04"?m04Steps:a02Steps;
   let tunnel=null, tunnelFloor=null, tunnelExcluded=new Set();
   if(id==="M01"){
     const rawFloor=backbone.surfaces.find(s=>s.vx===12030&&s.vy===-325);
@@ -223,7 +228,7 @@ function analyze(id, cfg) {
     for(const s of roles) if(s.id===ceiling.id||(s.x<tunnel.x1&&s.x+s.w>tunnel.x0&&s.y<tunnelFloor.y)) tunnelExcluded.add(s.id);
   }
   const solidInputs=[...roles.filter(s=>s.role==="zemin"&&!removed.has(s.id)),...(tunnelFloor?[tunnelFloor]:[]),...extras];
-  const profileInputs=solidInputs.filter(s=>!tunnelExcluded.has(s.id));
+  const profileInputs=solidInputs.filter(s=>!tunnelExcluded.has(s.id)&&!s.sDeviation);
   const profile=makeProfile(profileInputs), groundByY=new Map();
   for(const s of profileInputs){if(!groundByY.has(s.y))groundByY.set(s.y,[]);groundByY.get(s.y).push(s);}
   const transitions=[];
@@ -246,11 +251,16 @@ function analyze(id, cfg) {
     }
     transitions.push(direct);
   }
+  if(id==="A02"){
+    const wall=transitions.find(t=>t.A.id==="a02-v-20"&&t.B.id==="a02-v-21"&&t.mech==="UYMAYAN");
+    if(!wall) throw new Error("A02 S wall transition missing");
+    wall.mech="sapma-basamak"; wall.steps=a02Steps.map(s=>s.id); wall.vectorDeviation=true;
+  }
   const r2=[];
   const r3=[];
   const fallbackCatchable=new Set();
   const r2TransitionDone=new Set();
-  if(id[0]==="F"||id[0]==="M") for(const o of [...obstacles].sort((a,b)=>(b.x+b.w)-(a.x+a.w))){
+  if(id[0]==="F"||id[0]==="M"||id[0]==="A") for(const o of [...obstacles].sort((a,b)=>(b.x+b.w)-(a.x+a.w))){
     const end=round(o.x+o.w);
     const t=transitions.find(q=>{
       if(q.mech!=="tutunma"&&q.mech!=="dive") return false;
@@ -270,7 +280,7 @@ function analyze(id, cfg) {
     if(newX-previousLanding>=64){o.x=newX;forceDive(t,runStart,newX+o.w+(o.type==="slide"?31:0),tunnel);r2.push({obstacle:o.id,transition:t.i,action:"sola-kaydir",old,now:{x:o.x,mech:t.mech,x1:t.x1,x2:t.x2}});continue;}
     obstacles.splice(obstacles.indexOf(o),1);forceDive(t,runStart,-Infinity,tunnel);r2.push({obstacle:o.id,transition:t.i,action:"kaldir",old,now:{mech:t.mech,x1:t.x1,x2:t.x2},vectorDeviation:true});
   }
-  if(["F03","F04","M01","M02","M03","M04"].includes(id)) for(const o of [...obstacles]){
+  if(["F03","F04","M01","M02","M03","M04","A01","A02"].includes(id)) for(const o of [...obstacles]){
     const landingAnchors=transitions.filter(t=>t.landX!=null&&t.landX<=o.x).map(t=>t.landX);
     const shortSurfaceEnds=profileInputs.filter(s=>s.w<=160&&s.x+s.w<=o.x&&s.x+s.w>=Math.max(0,...landingAnchors)).map(s=>s.x+s.w);
     const priorObstacleEnds=obstacles.filter(p=>p!==o&&p.x+p.w<=o.x).map(p=>p.x+p.w);
@@ -288,13 +298,13 @@ function analyze(id, cfg) {
       obstacles.splice(obstacles.indexOf(o),1);r3.push({obstacle:o.id,action:"kaldir",previousLanding,oldX,vectorDeviation:true});
     }
   }
-  if(["F03","F04","M01","M02","M03","M04"].includes(id)) for(const t of transitions) if(t.mech==="dive"&&t.x2-t.x1<40) t.x1=round(t.x2-40);
+  if(["F03","F04","M01","M02","M03","M04","A01","A02"].includes(id)) for(const t of transitions) if(t.mech==="dive"&&t.x2-t.x1<40) t.x1=round(t.x2-40);
   if((id==="M03"||id==="M04")&&transitions.some(t=>t.mech==="UYMAYAN")) return {id,roles,obstacles,unplaced,profile,transitions,r2,r3,tunnel,fallbackCatchable};
   fs.mkdirSync(outRoots[id],{recursive:true});
   fs.writeFileSync(path.join(outRoots[id],`transitions-${id}.json`),JSON.stringify(transitions,null,2)+"\n");
-  if(id[0]==="F"||id[0]==="M") fs.writeFileSync(path.join(outRoots[id],`generated-${id}.json`),JSON.stringify({
+  if(id[0]==="F"||id[0]==="M"||id[0]==="A") fs.writeFileSync(path.join(outRoots[id],`generated-${id}.json`),JSON.stringify({
     groundSegments:solidInputs.filter(s=>!removed.has(s.id)).map(s=>({id:s.id,x:s.x,y:s.y,w:s.w,h:round(s.h),kind:"ground"})),
-    catchableSurfaces:[...new Set([...transitions.filter(t=>t.mech==="tutunma"||(-t.D>52&&t.gap<=96)).map(t=>t.B.id),...fallbackCatchable])].map(id=>({id})),
+    catchableSurfaces:[...new Set([...transitions.filter(t=>t.mech==="tutunma"||(-t.D>52&&t.gap<=96)).map(t=>t.B.id),...fallbackCatchable,...a02Steps.map(s=>s.id)])].map(id=>({id})),
     diveZones:transitions.filter(t=>t.mech==="dive").map((t,i)=>({id:`${id.toLowerCase()}-dz-${String(i+1).padStart(2,"0")}`,x1:t.x1,x2:t.x2,landX:t.landX,landY:t.landY,...(t.tunnelPeakClip?{peakY:round(t.tunnelPeakClip.to-48)}:{})})),
     obstacles:obstacles.map(({sourceId,...o})=>o),r2,r3
   },null,2)+"\n");
@@ -308,7 +318,7 @@ for(const r of results){
   console.log(`${r.id} engeller:`,JSON.stringify(r.obstacles));
   console.log(`${r.id} konmayan tetikler:`,JSON.stringify(r.unplaced));
   console.log(`${r.id} R2:`,JSON.stringify(r.r2));
-  if(["F03","F04","M01","M02","M03","M04"].includes(r.id)) console.log(`${r.id} R3:`,JSON.stringify(r.r3));
+  if(["F03","F04","M01","M02","M03","M04","A01","A02"].includes(r.id)) console.log(`${r.id} R3:`,JSON.stringify(r.r3));
 }
 const roleActual=results.filter(r=>['D05','D06','F01','F02'].includes(r.id)).flatMap(r=>r.roles.filter(s=>s.role!=="zemin").map(s=>`${r.id}:${s.id}:${s.role}`)).sort();
 const roleExpected=["D05:d05-v-08:ust-gecit","D05:d05-v-24:ust-gecit","D06:d06-v-26:ust-gecit","F01:f01-v-12:ust-gecit","F01:f01-v-17:slide","F01:f01-v-20:slide","F01:f01-v-21:slide","F01:f01-v-24:ust-gecit","F02:f02-v-19:slide","F02:f02-v-22:slide","F02:f02-v-27:slide","F02:f02-v-31:ust-gecit","F02:f02-v-41:ust-gecit"].sort();
@@ -358,8 +368,8 @@ const diveCoinChecks=results.flatMap(r=>{
     return {route:r.id,coin:c.id,move:c.move_id,x:c.x,y:c.y,frames,pass:frames.length===3&&frames.every(n=>n>=3),suggested:t?bestDiveCoinPosition(t):null};
   });
 });
-const badGateDiveCoins=diveCoinChecks.filter(x=>["F03","F04","M01","M02","M03","M04"].includes(x.route)&&!x.pass);
-const badInfoDiveCoins=diveCoinChecks.filter(x=>!["F03","F04","M01","M02","M03","M04"].includes(x.route)&&!x.pass);
+const badGateDiveCoins=diveCoinChecks.filter(x=>["F03","F04","M01","M02","M03","M04","A01","A02"].includes(x.route)&&!x.pass);
+const badInfoDiveCoins=diveCoinChecks.filter(x=>!["F03","F04","M01","M02","M03","M04","A01","A02"].includes(x.route)&&!x.pass);
 const legacyPeakY=Object.entries(routeData).filter(([id])=>!/^M0[1-4]$/.test(id)).flatMap(([route,data])=>(data.diveZones||[]).filter(z=>Object.hasOwn(z,"peakY")).map(z=>({route,id:z.id,peakY:z.peakY})));
 const kLegacyInfo=results.filter(r=>!/^M0[1-4]$/.test(r.id)).flatMap(r=>r.roles.filter(s=>s.role==="zemin"&&s.below&&s.w<=72&&s.h<=24).map(s=>({route:r.id,id:s.id,w:s.w,h:s.h})));
 const m01EscapeIds=[1,2,3].map(n=>`m01-deadend-i11-step-${n}`);
@@ -370,7 +380,7 @@ const dLegacyInfo=results.filter(r=>!/^M0[1-4]$/.test(r.id)).flatMap(r=>r.transi
 let codeParity=true;
 for(const r of results){
   const route=routeData[r.id];
-  const catchIds=[...new Set([...r.transitions.filter(t=>t.mech==="tutunma"||((r.id[0]==="F"||r.id[0]==="M")&&-t.D>52&&t.gap<=96)).map(t=>t.B.id),...(r.id[0]==="M"?[...r.fallbackCatchable]:[])])];
+  const catchIds=[...new Set([...r.transitions.filter(t=>t.mech==="tutunma"||(-t.D>52&&t.gap<=96)).map(t=>t.B.id),...r.fallbackCatchable,...(r.id==="A02"?["a02-s-wall-1","a02-s-wall-2","a02-s-wall-3"]:[])])];
   if(r.id==="D06") catchIds.splice(catchIds.indexOf("d06-v-05")+1,0,"d06-pit1-step-1","d06-pit1-step-2","d06-pit2-step-1","d06-pit2-step-2");
   const catches=catchIds.map(id=>({id}));
   const dives=r.transitions.filter(t=>t.mech==="dive").map((t,i)=>({id:`${r.id.toLowerCase()}-dz-${String(i+1).padStart(2,"0")}`,x1:t.x1,x2:t.x2,landX:t.landX,landY:t.landY,...(t.tunnelPeakClip?{peakY:round(t.tunnelPeakClip.to-48)}:{})}));
@@ -378,7 +388,7 @@ for(const r of results){
   const same=JSON.stringify(route.catchableSurfaces)===JSON.stringify(catches)&&JSON.stringify(route.diveZones)===JSON.stringify(dives)&&JSON.stringify(route.obstacles)===JSON.stringify(obstacles);
   console.log(`${r.id} kod eşliği | catch/dive/engel | JSON ile birebir | ${same?"PASS":"FAIL"}`); codeParity=codeParity&&same;
 }
-const missingFallbackCatch=results.filter(r=>r.id[0]==="F"||r.id[0]==="M").flatMap(r=>{
+const missingFallbackCatch=results.filter(r=>r.id[0]==="F"||r.id[0]==="M"||r.id[0]==="A").flatMap(r=>{
   const ids=new Set((routeData[r.id].catchableSurfaces||[]).map(x=>x.id));
   return r.transitions.filter(t=>-t.D>52&&t.gap<=96&&!ids.has(t.B.id)).map(t=>({route:r.id,i:t.i,B:t.B.id,H:-t.D,gap:t.gap}));
 });
@@ -392,7 +402,7 @@ console.log(`D01-D04 short dive report | ${JSON.stringify(shortLegacyDives)} | d
 console.log(`D05/D06 catchable FP guard | ${JSON.stringify(badNewCatchableY)} | exact | ${badNewCatchableY.length===0?"PASS":"FAIL"}`);
 console.log(`D01-D04 catchable FP report | ${JSON.stringify(badLegacyCatchableY)} | data unchanged | INFO`);
 console.log(`F01/F02 fallback catchable | ${JSON.stringify(missingFallbackCatch)} | H>52 gap<=96 all catchable | ${missingFallbackCatch.length===0?"PASS":"FAIL"}`);
-console.log(`F03-M04 dive coin 60Hz guard | ${JSON.stringify(badGateDiveCoins)} | 3 launches x >=3 frames | ${badGateDiveCoins.length===0?"PASS":"FAIL"}`);
+console.log(`F03-A02 dive coin 60Hz guard | ${JSON.stringify(badGateDiveCoins)} | 3 launches x >=3 frames | ${badGateDiveCoins.length===0?"PASS":"FAIL"}`);
 console.log(`D05-F02 dive coin 60Hz report | ${JSON.stringify(badInfoDiveCoins)} | unchanged | INFO`);
 console.log(`Legacy peakY absence | ${JSON.stringify(legacyPeakY)} | expected [] | ${legacyPeakY.length===0?"PASS":"FAIL"}`);
 console.log(`M01 D dead-end escape | ${JSON.stringify(m01EscapeIds)} | ground+catchable | ${dGate?"PASS":"FAIL"}`);

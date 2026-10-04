@@ -7,7 +7,7 @@ const path = require('path');
 // tutunma B.x0-[58,2], vault x-[55,18], slide gap [2,36]. O-4 esikleri 0.8 s ve 1.0 s,
 // M-1 viewportlari 390x844 / 844x390; esikler ilk kosumdan once sabittir.
 const root = path.join(__dirname, '..');
-const dataRoots = {D01:'E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/dock-d01d02',D02:'E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/dock-d01d02',D03:'E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/dock-d03d04',D04:'E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/dock-d03d04',D05:'E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/dock-d05d06',D06:'E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/dock-d05d06',F01:'E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/frozen-f01f02',F02:'E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/frozen-f01f02',F03:'E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/frozen-f03f04',F04:'E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/frozen-f03f04',M01:'E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/magma-m01m02',M02:'E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/magma-m01m02',M03:'E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/magma-m03m04',M04:'E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/magma-m03m04'};
+const dataRoots = {D01:'E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/dock-d01d02',D02:'E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/dock-d01d02',D03:'E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/dock-d03d04',D04:'E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/dock-d03d04',D05:'E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/dock-d05d06',D06:'E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/dock-d05d06',F01:'E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/frozen-f01f02',F02:'E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/frozen-f01f02',F03:'E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/frozen-f03f04',F04:'E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/frozen-f03f04',M01:'E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/magma-m01m02',M02:'E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/magma-m01m02',M03:'E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/magma-m03m04',M04:'E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/magma-m03m04',A01:'E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/aftermath-a01a02',A02:'E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/aftermath-a01a02'};
 const transitions = Object.fromEntries(Object.keys(dataRoots).map(id => [id, JSON.parse(fs.readFileSync(`${dataRoots[id]}/transitions-${id}.json`, 'utf8'))]));
 let server, base;
 
@@ -41,6 +41,10 @@ async function boot(page, id, viewport = {width:1280,height:720}) {
       await __TMB_A12__.setWallet(1000); await __TMB_A12__.purchaseWorld('magma'); await __TMB_A12__.purchaseWorld('magma');
       __TMB_A12__.renderWorldOnRoute('magma','M01');
       for(const prior of ['M01','M02','M03'].slice(0,['M01','M02','M03','M04'].indexOf(id))){ __TMB_A12__.startRoute(prior); __TMB_A12__.finish(); }
+    } else if(id[0]==='A'){
+      await __TMB_A12__.setWallet(1000); await __TMB_A12__.purchaseWorld('aftermath'); await __TMB_A12__.purchaseWorld('aftermath');
+      __TMB_A12__.renderWorldOnRoute('aftermath','A01');
+      if(id==='A02'){ __TMB_A12__.startRoute('A01'); __TMB_A12__.finish(); }
     } else __TMB_A12__.renderWorldOnRoute('dock31',id);
     __TMB_A12__.startRoute(id);
   }, id);
@@ -64,7 +68,7 @@ async function jump(page, touch) {
 
 async function drive(page, id, {touch=false, stopAfter, omitDives=[]} = {}) {
   const fired = new Set(), pending = new Map(), lastPress = new Map(), trace = [], tr = transitions[id], started = Date.now();
-  const d05d06 = ['D05','D06','F01','F02','F03','F04','M01','M02','M03','M04'].includes(id);
+  const d05d06 = ['D05','D06','F01','F02','F03','F04','M01','M02','M03','M04','A01','A02'].includes(id);
   let diveSeen = false, catchSeen = false, deaths = 0, retries = 0, end, stuckSince = null, c07Y = null, previousSample = null, lastGroundAt = -Infinity, chainClimbSeconds = 0;
   while (Date.now() - started < 115000) {
     const s = await page.evaluate(() => __TMB_A12__.getState());
@@ -137,7 +141,7 @@ async function drive(page, id, {touch=false, stopAfter, omitDives=[]} = {}) {
       const normalLead = /^F0[1-4]$/.test(id) ? 12 : 25;
       if (t.mech === 'normal' && !pending.has(key) && coyote && right >= t.A.x1 - normalLead && right <= t.A.x1 - 2) target = [key, t];
       const d03d04 = id === 'D03' || id === 'D04';
-      if (t.mech === 'dive' && !omitDives.includes(t.i) && (d03d04 || d05d06 ? !s.edgeClimb : p.onGround) && center >= t.x1 + (id==='D06'?0:4) && center <= t.x2 - (id==='D06'?0:4) && (!lastPress.has(key) || s.gameClock-lastPress.get(key)>=((d03d04 || d05d06)?.1:.2))) target=[key,t];
+      if (t.mech === 'dive' && !omitDives.includes(t.i) && (id[0]==='A'?p.onGround:(d03d04 || d05d06 ? !s.edgeClimb : p.onGround)) && center >= t.x1 + (id==='D06'?0:4) && center <= t.x2 - (id==='D06'?0:4) && (!lastPress.has(key) || s.gameClock-lastPress.get(key)>=(id[0]==='A'?.3:(d03d04 || d05d06)?.1:.2))) target=[key,t];
       const d03LowStep = t.mech === 'tutunma' && id === 'D03' && t.B.id === 'd03-v-16';
       const d05LowStep = t.mech === 'tutunma' && id === 'D05' && ['d05-v-15','d05-v-20','d05-v-21','d05-v-22'].includes(t.B.id);
       const lowStep = d03LowStep || d05LowStep;
@@ -149,6 +153,10 @@ async function drive(page, id, {touch=false, stopAfter, omitDives=[]} = {}) {
         : p.onGround && p.vx <= 1 && right >= t.B.x0 - 4 && right <= t.B.x0 + 4;
       if (t.mech === 'tutunma' && !lowStep && !pending.has(key) && (catchWindow || braced) && (!lastPress.has(key) || s.gameClock-lastPress.get(key)>=.1)) target = [key, t];
       if (target) break;
+    }
+    if (!target) {
+      const key=`a02-s-wall-${Math.floor(s.gameClock*3)}`;
+      if(id==='A02'&&p.x>=5200&&p.x<5320&&!pending.has(key)) target=[key,{mech:'tutunma'}];
     }
     if (!target) {
       const key = `normal-d05-v15-retry-${Math.floor(s.gameClock * 2)}`;
@@ -195,7 +203,7 @@ async function drive(page, id, {touch=false, stopAfter, omitDives=[]} = {}) {
   return {end, deaths, retries, elapsed:(Date.now()-started)/1000, diveSeen, catchSeen, trace, c07Y};
 }
 
-for (const id of ['D01','D02','D03','D04','D05','D06','F01','F02','F03','F04','M01','M02','M03','M04']) test(`O-1 B-5 ${id} ideal keyboard route`, async ({page}) => {
+for (const id of ['D01','D02','D03','D04','D05','D06','F01','F02','F03','F04','M01','M02','M03','M04','A01','A02']) test(`O-1 B-5 ${id} ideal keyboard route`, async ({page}) => {
   test.setTimeout(120000); await boot(page,id); const r=await drive(page,id);
   const collected=r.end.economy.collectedCoinIds.length, expected=r.end.route.coins.length;
   const pass=!!r.end.result || r.end.player.x+r.end.hitbox.w>=r.end.route.finishX;
@@ -253,7 +261,7 @@ for (const pitId of ['d06-v-07','d06-v-09']) test(`O-4c D06 ${pitId} keyboard pi
   console.log(`O-4c ${pitId} | attemptSame=${s.economy.attemptId===setup.attempt}, x=${s.player.x.toFixed(2)}, feet=${(s.player.y+s.hitbox.h).toFixed(2)} | keyboard escape to B x>=${setup.bx}, feet<=${setup.by+4} | ${escaped?'PASS':'FAIL'}`); expect(escaped).toBeTruthy();
 });
 
-for (const id of ['D01','D03','D04','D05','D06','F01','F02','F03','F04','M01','M02','M03','M04']) for (const viewport of [{width:390,height:844},{width:844,height:390}]) test(`M-1 ${id} touch ${viewport.width}x${viewport.height}`, async ({browser}) => {
+for (const id of ['D01','D03','D04','D05','D06','F01','F02','F03','F04','M01','M02','M03','M04','A01','A02']) for (const viewport of [{width:390,height:844},{width:844,height:390}]) test(`M-1 ${id} touch ${viewport.width}x${viewport.height}`, async ({browser}) => {
   test.setTimeout(120000);
   const context=await browser.newContext({viewport,hasTouch:true,isMobile:true,deviceScaleFactor:1}),page=await context.newPage();
   try {
