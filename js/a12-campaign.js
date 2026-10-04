@@ -84,7 +84,7 @@
       wallet: "WALLET",
       shop: "SHOP",
       outfits: "OUTFITS",
-      buy: "BUY & WEAR — {price}",
+      buy: "BUY & WEAR â€” {price}",
       wear: "WEAR",
       worn: "WORN",
       preview: "LIVE PREVIEW",
@@ -98,88 +98,88 @@
       safe: "SAFE LINE",
       skill: "SKILL LINE",
       checkpoint: "CHECKPOINT",
-      help: "A/D or ←/→ • SPACE/W/↑ • R restart",
+      help: "A/D or â†/â†’ â€¢ SPACE/W/â†‘ â€¢ R restart",
       complete: "COMPLETE",
       defaultOutfit: "DEFAULT COURIER",
-      dockCrew: "DOCK CREW · HELMET + VEST",
+      dockCrew: "DOCK CREW Â· HELMET + VEST",
       nightShift: "Night Shift",
       hazardRunner: "Hazard Runner",
-      saveFailed: "SAVE FAILED — RETRY",
-      noCharge: "LIVE PREVIEW · NO CHARGE",
-      worlds: "WORLDS", buyWorld: "BUY — {price}", select: "SELECT", selected: "SELECTED", planned: "PLANNED", insufficient: "INSUFFICIENT COINS",
+      saveFailed: "SAVE FAILED â€” RETRY",
+      noCharge: "LIVE PREVIEW Â· NO CHARGE",
+      worlds: "WORLDS", buyWorld: "BUY â€” {price}", select: "SELECT", selected: "SELECTED", planned: "PLANNED", insufficient: "INSUFFICIENT COINS",
       idle: "IDLE", motionRun: "RUN", flip: "FLIP", language: "LANGUAGE", samePhysics: "Same physics. Shared wallet. Your runner.", ghostOn: "GHOST ON", ghostOff: "GHOST OFF", effectsFull: "EFFECTS FULL", effectsReduced: "EFFECTS REDUCED", flow: "FLOW", localBest: "LOCAL BEST", newRecord: "NEW", clean: "CLEAN", mastery: "MASTERY", style: "STYLE",
     },
     tr: {
-      M01: "DÖKÜMHANE YOLU", M02: "DÖKÜM VİNCİ", M03: "FIRIN KORİDORU", M04: "MAGMA ASANSÖRÜ",
-      A01: "HASARLI KABUL", A02: "ACİL DURUM YÜKÜ", A03: "SON KURYE", A04: "SON SEVKİYAT",
-      choose: "KOŞUCUNU SEÇ",
-      male: "ERKEK KOŞUCU",
-      female: "KADIN KOŞUCU",
+      M01: "DÃ–KÃœMHANE YOLU", M02: "DÃ–KÃœM VÄ°NCÄ°", M03: "FIRIN KORÄ°DORU", M04: "MAGMA ASANSÃ–RÃœ",
+      A01: "HASARLI KABUL", A02: "ACÄ°L DURUM YÃœKÃœ", A03: "SON KURYE", A04: "SON SEVKÄ°YAT",
+      choose: "KOÅUCUNU SEÃ‡",
+      male: "ERKEK KOÅUCU",
+      female: "KADIN KOÅUCU",
       route: "ROTA",
-      run: "KOŞU",
-      wallet: "CÜZDAN",
-      shop: "MAĞAZA",
+      run: "KOÅU",
+      wallet: "CÃœZDAN",
+      shop: "MAÄAZA",
       outfits: "KIYAFETLER",
-      buy: "SATIN AL VE GİY — {price}",
-      wear: "GİY",
-      worn: "GİYİLİ",
-      preview: "CANLI ÖNİZLEME",
-      next: "SONRAKİ",
-      retry: "YENİDEN DENE",
-      earned: "KAZANÇ",
+      buy: "SATIN AL VE GÄ°Y â€” {price}",
+      wear: "GÄ°Y",
+      worn: "GÄ°YÄ°LÄ°",
+      preview: "CANLI Ã–NÄ°ZLEME",
+      next: "SONRAKÄ°",
+      retry: "YENÄ°DEN DENE",
+      earned: "KAZANÃ‡",
       goals: "HEDEFLER",
       record: "REKOR FARKI",
-      first: "İLK TAMAMLAMA",
-      finish: "BİTİŞ",
-      safe: "GÜVENLİ HAT",
-      skill: "BECERİ HATTI",
+      first: "Ä°LK TAMAMLAMA",
+      finish: "BÄ°TÄ°Å",
+      safe: "GÃœVENLÄ° HAT",
+      skill: "BECERÄ° HATTI",
       checkpoint: "KONTROL NOKTASI",
-      help: "A/D veya ←/→ • SPACE/W/↑ • R yeniden başlat",
+      help: "A/D veya â†/â†’ â€¢ SPACE/W/â†‘ â€¢ R yeniden baÅŸlat",
       complete: "TAMAMLANDI",
       defaultOutfit: "VARSAYILAN KURYE",
-      dockCrew: "LİMAN EKİBİ · BARET + YELEK",
-      nightShift: "GECE VARDİYASI",
-      hazardRunner: "TEHLİKE KOŞUCUSU",
-      saveFailed: "KAYIT BAŞARISIZ — YENİDEN DENE",
-      noCharge: "CANLI ÖNİZLEME · ÜCRETSİZ",
-      worlds: "DÜNYALAR", buyWorld: "SATIN AL — {price}", select: "SEÇ", selected: "SEÇİLİ", planned: "PLANLANDI", insufficient: "Yetersiz jeton",
-      idle: "BEKLE", motionRun: "KOŞ", flip: "TAKLA", language: "DİL", samePhysics: "Aynı fizik. Ortak cüzdan. Senin koşucun.", ghostOn: "HAYALET AÇIK", ghostOff: "HAYALET KAPALI", effectsFull: "EFEKTLER TAM", effectsReduced: "EFEKTLER AZALTILDI", flow: "AKIŞ", localBest: "YEREL EN İYİ", newRecord: "YENİ", clean: "TEMİZ", mastery: "USTALIK", style: "STİL",
+      dockCrew: "LÄ°MAN EKÄ°BÄ° Â· BARET + YELEK",
+      nightShift: "GECE VARDÄ°YASI",
+      hazardRunner: "TEHLÄ°KE KOÅUCUSU",
+      saveFailed: "KAYIT BAÅARISIZ â€” YENÄ°DEN DENE",
+      noCharge: "CANLI Ã–NÄ°ZLEME Â· ÃœCRETSÄ°Z",
+      worlds: "DÃœNYALAR", buyWorld: "SATIN AL â€” {price}", select: "SEÃ‡", selected: "SEÃ‡Ä°LÄ°", planned: "PLANLANDI", insufficient: "Yetersiz jeton",
+      idle: "BEKLE", motionRun: "KOÅ", flip: "TAKLA", language: "DÄ°L", samePhysics: "AynÄ± fizik. Ortak cÃ¼zdan. Senin koÅŸucun.", ghostOn: "HAYALET AÃ‡IK", ghostOff: "HAYALET KAPALI", effectsFull: "EFEKTLER TAM", effectsReduced: "EFEKTLER AZALTILDI", flow: "AKIÅ", localBest: "YEREL EN Ä°YÄ°", newRecord: "YENÄ°", clean: "TEMÄ°Z", mastery: "USTALIK", style: "STÄ°L",
     },
     ru: {
-      M01: "ЛИТЕЙНЫЙ ПУТЬ", M02: "ЛИТЕЙНЫЙ КРАН", M03: "ПЕЧНОЙ ПРОХОД", M04: "МАГМОВЫЙ ЛИФТ",
-      A01: "ПОВРЕЖДЁННАЯ ПРИЁМКА", A02: "АВАРИЙНЫЙ ГРУЗ", A03: "ПОСЛЕДНИЙ КУРЬЕР", A04: "ФИНАЛЬНАЯ ОТПРАВКА",
-      choose: "ВЫБЕРИ БЕГУНА",
-      male: "МУЖСКОЙ БЕГУН",
-      female: "ЖЕНСКИЙ БЕГУН",
-      route: "МАРШРУТ",
-      run: "ЗАБЕГ",
-      wallet: "КОШЕЛЁК",
-      shop: "МАГАЗИН",
-      outfits: "КОСТЮМЫ",
-      buy: "КУПИТЬ И НАДЕТЬ — {price}",
-      wear: "НАДЕТЬ",
-      worn: "НАДЕТО",
-      preview: "ПРИМЕРКА",
-      next: "ДАЛЕЕ",
-      retry: "ЕЩЁ РАЗ",
-      earned: "НАГРАДА",
-      goals: "ЦЕЛИ",
-      record: "РАЗНИЦА РЕКОРДА",
-      first: "ПЕРВОЕ ПРОХОЖДЕНИЕ",
-      finish: "ФИНИШ",
-      safe: "БЕЗОПАСНЫЙ ПУТЬ",
-      skill: "ЛИНИЯ МАСТЕРСТВА",
-      checkpoint: "КОНТРОЛЬНАЯ ТОЧКА",
-      help: "A/D или ←/→ • SPACE/W/↑ • R заново",
-      complete: "ЗАВЕРШЁН",
-      defaultOutfit: "ОБЫЧНЫЙ КУРЬЕР",
-      dockCrew: "ПОРТОВАЯ БРИГАДА · КАСКА + ЖИЛЕТ",
-      nightShift: "НОЧНАЯ СМЕНА",
-      hazardRunner: "ОПАСНЫЙ БЕГУН",
-      saveFailed: "ОШИБКА СОХРАНЕНИЯ — ПОВТОРИТЬ",
-      noCharge: "ЖИВОЙ ПРОСМОТР · БЕСПЛАТНО",
-      worlds: "МИРЫ", buyWorld: "КУПИТЬ — {price}", select: "ВЫБРАТЬ", selected: "ВЫБРАНО", planned: "ЗАПЛАНИРОВАНО", insufficient: "НЕДОСТАТОЧНО МОНЕТ",
-      idle: "ОЖИДАНИЕ", motionRun: "БЕГ", flip: "САЛЬТО", language: "ЯЗЫК", samePhysics: "Та же физика. Общий кошелёк. Твой бегун.", ghostOn: "ПРИЗРАК ВКЛ", ghostOff: "ПРИЗРАК ВЫКЛ", effectsFull: "ЭФФЕКТЫ ПОЛНЫЕ", effectsReduced: "ЭФФЕКТЫ СНИЖЕНЫ", flow: "ПОТОК", localBest: "ЛУЧШИЙ РЕЗУЛЬТАТ", newRecord: "НОВЫЙ", clean: "ЧИСТО", mastery: "МАСТЕРСТВО", style: "СТИЛЬ",
+      M01: "Ğ›Ğ˜Ğ¢Ğ•Ğ™ĞĞ«Ğ™ ĞŸĞ£Ğ¢Ğ¬", M02: "Ğ›Ğ˜Ğ¢Ğ•Ğ™ĞĞ«Ğ™ ĞšĞ ĞĞ", M03: "ĞŸĞ•Ğ§ĞĞĞ™ ĞŸĞ ĞĞ¥ĞĞ”", M04: "ĞœĞĞ“ĞœĞĞ’Ğ«Ğ™ Ğ›Ğ˜Ğ¤Ğ¢",
+      A01: "ĞŸĞĞ’Ğ Ğ•Ğ–Ğ”ĞĞĞĞĞ¯ ĞŸĞ Ğ˜ĞĞœĞšĞ", A02: "ĞĞ’ĞĞ Ğ˜Ğ™ĞĞ«Ğ™ Ğ“Ğ Ğ£Ğ—", A03: "ĞŸĞĞ¡Ğ›Ğ•Ğ”ĞĞ˜Ğ™ ĞšĞ£Ğ Ğ¬Ğ•Ğ ", A04: "Ğ¤Ğ˜ĞĞĞ›Ğ¬ĞĞĞ¯ ĞĞ¢ĞŸĞ ĞĞ’ĞšĞ",
+      choose: "Ğ’Ğ«Ğ‘Ğ•Ğ Ğ˜ Ğ‘Ğ•Ğ“Ğ£ĞĞ",
+      male: "ĞœĞ£Ğ–Ğ¡ĞšĞĞ™ Ğ‘Ğ•Ğ“Ğ£Ğ",
+      female: "Ğ–Ğ•ĞĞ¡ĞšĞ˜Ğ™ Ğ‘Ğ•Ğ“Ğ£Ğ",
+      route: "ĞœĞĞ Ğ¨Ğ Ğ£Ğ¢",
+      run: "Ğ—ĞĞ‘Ğ•Ğ“",
+      wallet: "ĞšĞĞ¨Ğ•Ğ›ĞĞš",
+      shop: "ĞœĞĞ“ĞĞ—Ğ˜Ğ",
+      outfits: "ĞšĞĞ¡Ğ¢Ğ®ĞœĞ«",
+      buy: "ĞšĞ£ĞŸĞ˜Ğ¢Ğ¬ Ğ˜ ĞĞĞ”Ğ•Ğ¢Ğ¬ â€” {price}",
+      wear: "ĞĞĞ”Ğ•Ğ¢Ğ¬",
+      worn: "ĞĞĞ”Ğ•Ğ¢Ğ",
+      preview: "ĞŸĞ Ğ˜ĞœĞ•Ğ ĞšĞ",
+      next: "Ğ”ĞĞ›Ğ•Ğ•",
+      retry: "Ğ•Ğ©Ğ Ğ ĞĞ—",
+      earned: "ĞĞĞ“Ğ ĞĞ”Ğ",
+      goals: "Ğ¦Ğ•Ğ›Ğ˜",
+      record: "Ğ ĞĞ—ĞĞ˜Ğ¦Ğ Ğ Ğ•ĞšĞĞ Ğ”Ğ",
+      first: "ĞŸĞ•Ğ Ğ’ĞĞ• ĞŸĞ ĞĞ¥ĞĞ–Ğ”Ğ•ĞĞ˜Ğ•",
+      finish: "Ğ¤Ğ˜ĞĞ˜Ğ¨",
+      safe: "Ğ‘Ğ•Ğ—ĞĞŸĞĞ¡ĞĞ«Ğ™ ĞŸĞ£Ğ¢Ğ¬",
+      skill: "Ğ›Ğ˜ĞĞ˜Ğ¯ ĞœĞĞ¡Ğ¢Ğ•Ğ Ğ¡Ğ¢Ğ’Ğ",
+      checkpoint: "ĞšĞĞĞ¢Ğ ĞĞ›Ğ¬ĞĞĞ¯ Ğ¢ĞĞ§ĞšĞ",
+      help: "A/D Ğ¸Ğ»Ğ¸ â†/â†’ â€¢ SPACE/W/â†‘ â€¢ R Ğ·Ğ°Ğ½Ğ¾Ğ²Ğ¾",
+      complete: "Ğ—ĞĞ’Ğ•Ğ Ğ¨ĞĞ",
+      defaultOutfit: "ĞĞ‘Ğ«Ğ§ĞĞ«Ğ™ ĞšĞ£Ğ Ğ¬Ğ•Ğ ",
+      dockCrew: "ĞŸĞĞ Ğ¢ĞĞ’ĞĞ¯ Ğ‘Ğ Ğ˜Ğ“ĞĞ”Ğ Â· ĞšĞĞ¡ĞšĞ + Ğ–Ğ˜Ğ›Ğ•Ğ¢",
+      nightShift: "ĞĞĞ§ĞĞĞ¯ Ğ¡ĞœĞ•ĞĞ",
+      hazardRunner: "ĞĞŸĞĞ¡ĞĞ«Ğ™ Ğ‘Ğ•Ğ“Ğ£Ğ",
+      saveFailed: "ĞĞ¨Ğ˜Ğ‘ĞšĞ Ğ¡ĞĞ¥Ğ ĞĞĞ•ĞĞ˜Ğ¯ â€” ĞŸĞĞ’Ğ¢ĞĞ Ğ˜Ğ¢Ğ¬",
+      noCharge: "Ğ–Ğ˜Ğ’ĞĞ™ ĞŸĞ ĞĞ¡ĞœĞĞ¢Ğ  Â· Ğ‘Ğ•Ğ¡ĞŸĞ›ĞĞ¢ĞĞ",
+      worlds: "ĞœĞ˜Ğ Ğ«", buyWorld: "ĞšĞ£ĞŸĞ˜Ğ¢Ğ¬ â€” {price}", select: "Ğ’Ğ«Ğ‘Ğ ĞĞ¢Ğ¬", selected: "Ğ’Ğ«Ğ‘Ğ ĞĞĞ", planned: "Ğ—ĞĞŸĞ›ĞĞĞ˜Ğ ĞĞ’ĞĞĞ", insufficient: "ĞĞ•Ğ”ĞĞ¡Ğ¢ĞĞ¢ĞĞ§ĞĞ ĞœĞĞĞ•Ğ¢",
+      idle: "ĞĞ–Ğ˜Ğ”ĞĞĞ˜Ğ•", motionRun: "Ğ‘Ğ•Ğ“", flip: "Ğ¡ĞĞ›Ğ¬Ğ¢Ğ", language: "Ğ¯Ğ—Ğ«Ğš", samePhysics: "Ğ¢Ğ° Ğ¶Ğµ Ñ„Ğ¸Ğ·Ğ¸ĞºĞ°. ĞĞ±Ñ‰Ğ¸Ğ¹ ĞºĞ¾ÑˆĞµĞ»Ñ‘Ğº. Ğ¢Ğ²Ğ¾Ğ¹ Ğ±ĞµĞ³ÑƒĞ½.", ghostOn: "ĞŸĞ Ğ˜Ğ—Ğ ĞĞš Ğ’ĞšĞ›", ghostOff: "ĞŸĞ Ğ˜Ğ—Ğ ĞĞš Ğ’Ğ«ĞšĞ›", effectsFull: "Ğ­Ğ¤Ğ¤Ğ•ĞšĞ¢Ğ« ĞŸĞĞ›ĞĞ«Ğ•", effectsReduced: "Ğ­Ğ¤Ğ¤Ğ•ĞšĞ¢Ğ« Ğ¡ĞĞ˜Ğ–Ğ•ĞĞ«", flow: "ĞŸĞĞ¢ĞĞš", localBest: "Ğ›Ğ£Ğ§Ğ¨Ğ˜Ğ™ Ğ Ğ•Ğ—Ğ£Ğ›Ğ¬Ğ¢ĞĞ¢", newRecord: "ĞĞĞ’Ğ«Ğ™", clean: "Ğ§Ğ˜Ğ¡Ğ¢Ğ", mastery: "ĞœĞĞ¡Ğ¢Ğ•Ğ Ğ¡Ğ¢Ğ’Ğ", style: "Ğ¡Ğ¢Ğ˜Ğ›Ğ¬",
     },
   });
   const COINS = Object.freeze({
@@ -1481,226 +1481,8 @@
   ],
   "D05": [{"n":0,"move_id":"d05-dz-01","kind":"CJ","x":2461.4,"y":-798.375,"skill":false},{"n":1,"move_id":"d05-tr-17","kind":"CJ","x":4868.85,"y":-245.25,"skill":false},{"n":2,"move_id":"d05-dz-02","kind":"CJ","x":3717.32,"y":-582.625,"skill":false},{"n":3,"move_id":"d05-dz-03","kind":"CJ","x":7169.39,"y":272,"skill":false},{"n":4,"move_id":"d05-tr-36","kind":"CJ","x":6698.75,"y":335,"skill":false},{"n":5,"move_id":"d05-tr-10","kind":"CJ","x":2026.32,"y":-866.75,"skill":false},{"n":6,"move_id":"d05-tr-23","kind":"CJ","x":5167.43,"y":-86.75,"skill":false},{"n":7,"move_id":"d05-tr-37","kind":"CJ","x":6760,"y":313.375,"skill":false},{"n":8,"move_id":"d05-tr-25","kind":"CJ","x":5654.16,"y":-158.375,"skill":false},{"n":9,"move_id":"d05-vault-03","kind":"CS","x":6843.25,"y":337,"skill":true},{"n":10,"move_id":"d05-up-1","kind":"CC","x":211.6,"y":-781,"skill":true},{"n":11,"move_id":"d05-v-05","kind":"CC","x":1134,"y":-797.75,"skill":true},{"n":12,"move_id":"d05-v-15","kind":"CC","x":5315.44,"y":-105.375,"skill":true}],
   "D06": [{"n":0,"move_id":"d06-dz-01","kind":"CJ","x":1099.69,"y":24.75,"skill":false},{"n":1,"move_id":"d06-dz-02","kind":"CJ","x":1400,"y":0,"skill":false},{"n":2,"move_id":"d06-dz-03","kind":"CJ","x":1918.1,"y":-96.375,"skill":false},{"n":3,"move_id":"d06-dz-04","kind":"CJ","x":4647.2,"y":291.25,"skill":false},{"n":4,"move_id":"d06-tr-6","kind":"CJ","x":879,"y":54.75,"skill":false},{"n":5,"move_id":"d06-tr-12","kind":"CJ","x":2422.2,"y":155.625,"skill":false},{"n":6,"move_id":"d06-tr-15","kind":"CJ","x":2930.4,"y":198.75,"skill":false},{"n":7,"move_id":"d06-tr-17","kind":"CJ","x":3439.8,"y":132.75,"skill":false},{"n":8,"move_id":"d06-vault-01","kind":"CS","x":3663,"y":361,"skill":true},{"n":9,"move_id":"d06-v-02","kind":"CC","x":274,"y":129.375,"skill":true},{"n":10,"move_id":"d06-v-05","kind":"CC","x":740.8,"y":107.75,"skill":true},{"n":11,"move_id":"d06-v-16","kind":"CC","x":2539,"y":230.25,"skill":true},{"n":12,"move_id":"d06-v-22","kind":"CC","x":3898.6,"y":327.375,"skill":true}],
-  "F01": [
-    {
-      "n": 0,
-      "move_id": "f01-wide-a",
-      "kind": "CC",
-      "x": 2251,
-      "y": 375,
-      "skill": true
-    },
-    {
-      "n": 1,
-      "move_id": "f01-t1b-vault-1",
-      "kind": "CJ",
-      "x": 2957,
-      "y": 355,
-      "skill": false
-    },
-    {
-      "n": 2,
-      "move_id": "f01-t2c-vault-1",
-      "kind": "CJ",
-      "x": 3357,
-      "y": 355,
-      "skill": false
-    },
-    {
-      "n": 3,
-      "move_id": "f01-vault",
-      "kind": "CJ",
-      "x": 3757,
-      "y": 355,
-      "skill": false
-    },
-    {
-      "n": 4,
-      "move_id": "f01-t1b-slide-2",
-      "kind": "CS",
-      "x": 4510,
-      "y": 440,
-      "skill": true
-    },
-    {
-      "n": 5,
-      "move_id": "f01-wide-b",
-      "kind": "CC",
-      "x": 5150,
-      "y": 360,
-      "skill": true
-    },
-    {
-      "n": 6,
-      "move_id": "f01-t2c-vault-2",
-      "kind": "CJ",
-      "x": 6193,
-      "y": 355,
-      "skill": false
-    },
-    {
-      "n": 7,
-      "move_id": "f01-t1b-vault-3",
-      "kind": "CJ",
-      "x": 6593,
-      "y": 355,
-      "skill": false
-    },
-    {
-      "n": 8,
-      "move_id": "f01-t1b-vault-2",
-      "kind": "CJ",
-      "x": 7811,
-      "y": 355,
-      "skill": false
-    },
-    {
-      "n": 9,
-      "move_id": "f01-t2c-vault-3",
-      "kind": "CJ",
-      "x": 8410,
-      "y": 355,
-      "skill": false
-    },
-    {
-      "n": 10,
-      "move_id": "f01-wide-c",
-      "kind": "CC",
-      "x": 8810,
-      "y": 382,
-      "skill": true
-    },
-    {
-      "n": 11,
-      "move_id": "f01-t2c-vault-4",
-      "kind": "CJ",
-      "x": 10230,
-      "y": 355,
-      "skill": false
-    },
-    {
-      "n": 12,
-      "move_id": "f01-t1b-pallet-2",
-      "kind": "CC",
-      "x": 11418,
-      "y": 385,
-      "skill": true
-    },
-    {
-      "n": 13,
-      "move_id": "f01-t1b-pallet-1",
-      "kind": "CC",
-      "x": 12633,
-      "y": 385,
-      "skill": true
-    }
-  ],
-  "F02": [
-    {
-      "n": 0,
-      "move_id": "f02-crane-a",
-      "kind": "CC",
-      "x": 1344,
-      "y": 330,
-      "skill": true
-    },
-    {
-      "n": 1,
-      "move_id": "f02-upper-a",
-      "kind": "CC",
-      "x": 2500,
-      "y": 280,
-      "skill": true
-    },
-    {
-      "n": 2,
-      "move_id": "f02-t2c-vault-1",
-      "kind": "CJ",
-      "x": 3548,
-      "y": 355,
-      "skill": false
-    },
-    {
-      "n": 3,
-      "move_id": "f02-t2c-vault-2",
-      "kind": "CJ",
-      "x": 4205,
-      "y": 355,
-      "skill": false
-    },
-    {
-      "n": 4,
-      "move_id": "f02-t1b-vault-2",
-      "kind": "CJ",
-      "x": 4623,
-      "y": 355,
-      "skill": false
-    },
-    {
-      "n": 5,
-      "move_id": "f02-pallet",
-      "kind": "CC",
-      "x": 5361,
-      "y": 370,
-      "skill": true
-    },
-    {
-      "n": 7,
-      "move_id": "f02-t1b-vault-1",
-      "kind": "CJ",
-      "x": 8010,
-      "y": 355,
-      "skill": false
-    },
-    {
-      "n": 8,
-      "move_id": "f02-crane-b",
-      "kind": "CC",
-      "x": 8584,
-      "y": 345,
-      "skill": true
-    },
-    {
-      "n": 9,
-      "move_id": "f02-vault",
-      "kind": "CJ",
-      "x": 10422,
-      "y": 355,
-      "skill": false
-    },
-    {
-      "n": 10,
-      "move_id": "f02-t2c-vault-4",
-      "kind": "CJ",
-      "x": 10822,
-      "y": 355,
-      "skill": false
-    },
-    {
-      "n": 11,
-      "move_id": "f02-t1b-slide-1",
-      "kind": "CS",
-      "x": 11817,
-      "y": 440,
-      "skill": true
-    },
-    {
-      "n": 12,
-      "move_id": "f02-t2c-vault-5",
-      "kind": "CJ",
-      "x": 12657,
-      "y": 355,
-      "skill": false
-    },
-    {
-      "n": 13,
-      "move_id": "f02-t2c-vault-7",
-      "kind": "CJ",
-      "x": 13057,
-      "y": 355,
-      "skill": false
-    }
-  ],
+  "F01": [{"n":0,"move_id":"f01-dz-01","kind":"CJ","x":632,"y":-31,"skill":false},{"n":1,"move_id":"f01-dz-02","kind":"CJ","x":1784,"y":127.375,"skill":false},{"n":2,"move_id":"f01-dz-03","kind":"CJ","x":2912,"y":207.75,"skill":false},{"n":3,"move_id":"f01-dz-04","kind":"CJ","x":4599.2,"y":294.25,"skill":false},{"n":4,"move_id":"f01-dz-05","kind":"CJ","x":5097.2,"y":183.75,"skill":false},{"n":5,"move_id":"f01-dz-06","kind":"CJ","x":5582.72,"y":224.625,"skill":false},{"n":6,"move_id":"f01-dz-07","kind":"CJ","x":5750,"y":122.75,"skill":false},{"n":7,"move_id":"f01-vault-01","kind":"CJ","x":789.6,"y":-67,"skill":false},{"n":8,"move_id":"f01-v-02","kind":"CC","x":333.6,"y":-52.625,"skill":true},{"n":9,"move_id":"f01-v-08","kind":"CC","x":2186.4,"y":170.625,"skill":true},{"n":10,"move_id":"f01-v-13","kind":"CC","x":3154.8,"y":186.25,"skill":true},{"n":11,"move_id":"f01-v-16","kind":"CC","x":4795.6,"y":246.25,"skill":true},{"n":12,"move_id":"f01-v-18","kind":"CC","x":5097.2,"y":183.75,"skill":true},{"n":13,"move_id":"f01-slide-02","kind":"CS","x":5262.24,"y":287,"skill":true}],
+  "F02": [{"n":0,"move_id":"f02-dz-01","kind":"CJ","x":539.6,"y":-445,"skill":false},{"n":1,"move_id":"f02-dz-02","kind":"CJ","x":794,"y":-493,"skill":false},{"n":2,"move_id":"f02-dz-03","kind":"CJ","x":1292,"y":-471.375,"skill":false},{"n":3,"move_id":"f02-dz-04","kind":"CJ","x":2667.2,"y":-351.375,"skill":false},{"n":4,"move_id":"f02-dz-05","kind":"CJ","x":3075.2,"y":-411.375,"skill":false},{"n":5,"move_id":"f02-dz-06","kind":"CJ","x":3435.2,"y":-339.375,"skill":false},{"n":6,"move_id":"f02-dz-07","kind":"CJ","x":4023.2,"y":-255.375,"skill":false},{"n":7,"move_id":"f02-dz-08","kind":"CJ","x":4347.2,"y":-229,"skill":false},{"n":8,"move_id":"f02-dz-09","kind":"CC","x":5800,"y":-184.375,"skill":true},{"n":9,"move_id":"f02-v-08","kind":"CC","x":1074.4,"y":-383.75,"skill":true},{"n":10,"move_id":"f02-v-12","kind":"CC","x":1591.6,"y":-373,"skill":true},{"n":11,"move_id":"f02-dz-10","kind":"CC","x":6900,"y":-137.25,"skill":true},{"n":12,"move_id":"f02-slide-01","kind":"CS","x":2822.61,"y":-351.375,"skill":true}],
   "F03": [
     {
       "n": 0,
@@ -2058,57 +1840,10 @@
       catchableSurfaces: [{id:"d04-v-03"},{id:"d04-v-05"},{id:"d04-v-06"},{id:"d04-v-08"},{id:"d04-v-09"},{id:"d04-v-10"},{id:"d04-v-15"},{id:"d04-v-17"},{id:"d04-v-18"},{id:"d04-v-21"},{id:"d04-v-26"}], highJumpZones: [], diveZones: [{id:"d04-dz-01",x1:3276,x2:3396,landX:3846.4,landY:-83.8},{id:"d04-dz-02",x1:4809.6,x2:4882.8,landX:4922.8,landY:-155.8},{id:"d04-dz-03",x1:6974.4,x2:7094.4,landX:7634.8,landY:455}],
       groundSegments: [{id:"d04-v-01",x:0,y:-376.6,w:1368,h:72,kind:"ground"},{id:"d04-v-02",x:0,y:-448.6,w:240,h:72,kind:"ground"},{id:"d04-v-03",x:379.2,y:-448.6,w:312,h:72,kind:"ground"},{id:"d04-v-05",x:830.4,y:-448.6,w:543.6,h:72,kind:"ground"},{id:"d04-v-06",x:1058.16,y:-520.6,w:144,h:72,kind:"ground"},{id:"d04-v-07",x:1656,y:-131.8,w:360,h:240,kind:"ground"},{id:"d04-v-08",x:1656,y:-203.8,w:121.2,h:72,kind:"ground"},{id:"d04-v-09",x:1873.2,y:-203.8,w:48,h:72,kind:"ground"},{id:"d04-v-10",x:2016,y:-203.8,w:1380,h:240,kind:"ground"},{id:"d04-v-13",x:3806.4,y:-83.8,w:504,h:240,kind:"ground"},{id:"d04-v-14",x:3829.68,y:-297.4,w:42,h:120,kind:"ground"},{id:"d04-v-15",x:4086,y:-105.4,w:72,h:21.6,kind:"ground"},{id:"d04-v-16",x:4310.4,y:-15.4,w:620.4,h:171.6,kind:"ground"},{id:"d04-v-17",x:4358.4,y:-83.8,w:168,h:68.4,kind:"ground"},{id:"d04-v-18",x:4617.6,y:-83.8,w:192,h:68.4,kind:"ground"},{id:"d04-v-19",x:4882.8,y:-155.8,w:48,h:140.4,kind:"ground"},{id:"d04-v-20",x:4930.8,y:-83.8,w:129.6,h:240,kind:"ground"},{id:"d04-v-21",x:5060.4,y:-155.8,w:240,h:312,kind:"ground"},{id:"d04-v-22",x:5372.4,y:-88.6,w:240,h:240,kind:"ground"},{id:"d04-v-23",x:6273.6,y:270.2,w:820.8,h:240,kind:"ground"},{id:"d04-v-24",x:7593.6,y:276.2,w:150,h:87.6,kind:"ground"},{id:"d04-v-25",x:7594.8,y:455,w:1327.2,h:308.4,kind:"ground"},{id:"d04-v-26",x:7879.2,y:433.4,w:87.6,h:21.6,kind:"ground"},{id:"d04-v-27",x:8131.92,y:265.16,w:12,h:120,kind:"ground"},{id:"d04-u-1",x:117.6,y:-413.08,w:28.8,h:21.6,kind:"ground"},{id:"d04-u-2",x:930,y:-382.6,w:28.8,h:21.6,kind:"ground"},{id:"d04-u-3",x:2163.6,y:-44.68,w:72,h:21.6,kind:"ground"},{id:"d04-slope-1",x:1374,w:40.29,y:-403.34,h:45.26,kind:"ground",role:"zemin"},{id:"d04-slope-2",x:1414.29,w:40.29,y:-358.09,h:45.26,kind:"ground",role:"zemin"},{id:"d04-slope-3",x:1454.57,w:40.29,y:-312.83,h:45.26,kind:"ground",role:"zemin"},{id:"d04-slope-4",x:1494.86,w:40.29,y:-267.57,h:45.26,kind:"ground",role:"zemin"},{id:"d04-slope-5",x:1535.14,w:40.29,y:-222.31,h:45.26,kind:"ground",role:"zemin"},{id:"d04-slope-6",x:1575.43,w:40.29,y:-177.06,h:45.26,kind:"ground",role:"zemin"},{id:"d04-slope-7",x:1615.71,w:40.29,y:-131.8,h:45.26,kind:"ground",role:"zemin"},{id:"d04-long-1",x:5612.4,w:82.65,y:-43.75,h:44.85,kind:"ground",role:"zemin"},{id:"d04-long-2",x:5695.05,w:82.65,y:1.1,h:44.85,kind:"ground",role:"zemin"},{id:"d04-long-3",x:5777.7,w:82.65,y:45.95,h:44.85,kind:"ground",role:"zemin"},{id:"d04-long-4",x:5860.35,w:82.65,y:90.8,h:44.85,kind:"ground",role:"zemin"},{id:"d04-long-5",x:5943,w:82.65,y:135.65,h:44.85,kind:"ground",role:"zemin"},{id:"d04-long-6",x:6025.65,w:82.65,y:180.5,h:44.85,kind:"ground",role:"zemin"},{id:"d04-long-7",x:6108.3,w:82.65,y:225.35,h:44.85,kind:"ground",role:"zemin"},{id:"d04-long-8",x:6190.95,w:82.65,y:270.2,h:44.85,kind:"ground",role:"zemin"}], obstacles: [{id:"d04-slide-01",type:"slide",x:552.72,w:48,h:86.4,baseY:-448.6},{id:"d04-vault-01",type:"vault",x:877.2,w:24,h:48,baseY:-448.6},{id:"d04-vault-02",type:"vault",x:2397.6,w:28.8,h:21.6,baseY:-203.8},{id:"d04-vault-03",type:"vault",x:2600.4,w:72,h:48,baseY:-203.8}], coins: [{id:"D04-c01",n:0,move_id:"d04-dz-01",kind:"CJ",x:3617.2,y:-279.8,skill:false},{id:"D04-c02",n:1,move_id:"d04-dz-02",kind:"CJ",x:4898.8,y:-179.8,skill:false},{id:"D04-c03",n:2,move_id:"d04-v-06",kind:"CC",x:1074.16,y:-560.6,skill:true},{id:"D04-c04",n:3,move_id:"d04-dz-03",kind:"CJ",x:7360.6,y:194.2,skill:false},{id:"D04-c05",n:4,move_id:"d04-slide-01",kind:"CS",x:576.72,y:-472.6,skill:true},{id:"D04-c06",n:5,move_id:"d04-dz-02",kind:"CJ",x:4898.8,y:-179.8,skill:false},{id:"D04-c07",n:6,move_id:"d04-tr-32",kind:"CJ",x:5352.4,y:-231.8,skill:false},{id:"D04-c08",n:7,move_id:"d04-dz-03",kind:"CJ",x:7360.6,y:194.2,skill:false},{id:"D04-c09",n:8,move_id:"d04-v-17",kind:"CC",x:4374.4,y:-123.8,skill:true},{id:"D04-c10",n:9,move_id:"d04-dz-02",kind:"CJ",x:4898.8,y:-179.8,skill:false},{id:"D04-c11",n:10,move_id:"d04-v-21",kind:"CC",x:5076.4,y:-195.8,skill:true},{id:"D04-c12",n:11,move_id:"d04-slide-01",kind:"CS",x:576.72,y:-472.6,skill:true}],
     },
-    D05: {"routeId":"D05","worldId":"dock31","version":1,"name":"CLEAN CHAIN","length":7610,"finishX":7470,"checkpoints":[70,3019.91,6394.48],"chief":{"startX":3019.91},"movementProfile":"vector-v1","catchableSurfaces":[{"id":"d05-up-1"},{"id":"d05-up-2"},{"id":"d05-up-3"},{"id":"d05-v-03"},{"id":"d05-v-04"},{"id":"d05-v-05"},{"id":"d05-v-09"},{"id":"d05-v-13"},{"id":"d05-v-15"},{"id":"d05-v-20"},{"id":"d05-v-21"},{"id":"d05-v-22"}],"highJumpZones":[],"diveZones":[{"id":"d05-dz-01","x1":2204.4,"x2":2324.4,"landX":2598.4,"landY":-489.625},{"id":"d05-dz-02","x1":3362.4,"x2":3482.4,"landX":3952.24,"landY":-265},{"id":"d05-dz-03","x1":6929.97,"x2":7049.97,"landX":7240.96,"landY":365}],"groundSegments":[{"id":"d05-v-01","x":0,"y":-701.75,"w":1154.13,"h":165.6,"kind":"ground"},{"id":"d05-v-02","x":435.6,"y":-819.375,"w":300,"h":117.6,"kind":"ground"},{"id":"d05-v-03","x":600,"y":-841,"w":88.8,"h":21.6,"kind":"ground"},{"id":"d05-v-04","x":813.6,"y":-764.25,"w":66,"h":62.4,"kind":"ground"},{"id":"d05-v-05","x":1150.08,"y":-773.75,"w":819.37,"h":237.6,"kind":"ground"},{"id":"d05-v-06","x":2083.2,"y":-705.375,"w":241.2,"h":312,"kind":"ground"},{"id":"d05-v-07","x":2558.4,"y":-489.625,"w":924,"h":452.4,"kind":"ground"},{"id":"d05-v-08","x":2558.64,"y":-827.125,"w":120,"h":240,"kind":"ground"},{"id":"d05-v-09","x":2803.2,"y":-511.25,"w":72,"h":21.6,"kind":"ground"},{"id":"d05-v-10","x":3912.24,"y":-265,"w":360,"h":632.4,"kind":"ground"},{"id":"d05-v-11","x":4272.24,"y":-202.625,"w":312,"h":324,"kind":"ground"},{"id":"d05-v-12","x":4584.24,"y":-118.625,"w":219.31,"h":240,"kind":"ground"},{"id":"d05-v-13","x":4802.88,"y":-193.25,"w":131.94,"h":314.4,"kind":"ground"},{"id":"d05-v-14","x":5167.44,"y":6.25,"w":132,"h":115.2,"kind":"ground"},{"id":"d05-v-15","x":5299.44,"y":-65.375,"w":308.4,"h":186.72,"kind":"ground"},{"id":"d05-v-17","x":5700.48,"y":23,"w":96,"h":549.6,"kind":"ground"},{"id":"d05-v-18","x":6030.48,"y":203,"w":61.2,"h":369.6,"kind":"ground"},{"id":"d05-v-19","x":6324.48,"y":455,"w":353.37,"h":117.6,"kind":"ground"},{"id":"d05-v-20","x":6677.76,"y":383,"w":420.06,"h":189.6,"kind":"ground"},{"id":"d05-v-21","x":6810,"y":361.375,"w":287.53,"h":21.6,"kind":"ground"},{"id":"d05-v-22","x":6989.52,"y":339.75,"w":28.8,"h":21.6,"kind":"ground"},{"id":"d05-v-23","x":7200.96,"y":365,"w":840,"h":463.2,"kind":"ground"},{"id":"d05-v-24","x":7549.68,"y":173.25,"w":12,"h":120,"kind":"ground"},{"id":"d05-u-1","x":1242,"y":-646.375,"w":48,"h":86.4,"kind":"ground"},{"id":"d05-up-1","x":195.6,"w":80,"y":-741,"h":39.2,"kind":"ground","role":"zemin"},{"id":"d05-up-2","x":275.6,"w":80,"y":-780.25,"h":39.2,"kind":"ground","role":"zemin"},{"id":"d05-up-3","x":355.6,"w":80,"y":-819.375,"h":39.2,"kind":"ground","role":"zemin"},{"id":"d05-down1-1","x":4934.82,"w":46.52,"y":-152.875,"h":39.888,"kind":"ground","role":"zemin"},{"id":"d05-down1-2","x":4981.34,"w":46.52,"y":-113,"h":39.888,"kind":"ground","role":"zemin"},{"id":"d05-down1-3","x":5027.86,"w":46.52,"y":-73.125,"h":39.888,"kind":"ground","role":"zemin"},{"id":"d05-down1-4","x":5074.38,"w":46.52,"y":-33.25,"h":39.888,"kind":"ground","role":"zemin"},{"id":"d05-down1-5","x":5120.9,"w":46.52,"y":6.625,"h":39.888,"kind":"ground","role":"zemin"},{"id":"d05-down2-1","x":5796.48,"w":58.5,"y":68,"h":45,"kind":"ground","role":"zemin"},{"id":"d05-down2-2","x":5854.98,"w":58.5,"y":113,"h":45,"kind":"ground","role":"zemin"},{"id":"d05-down2-3","x":5913.48,"w":58.5,"y":158,"h":45,"kind":"ground","role":"zemin"},{"id":"d05-down2-4","x":5971.98,"w":58.5,"y":203,"h":45,"kind":"ground","role":"zemin"},{"id":"d05-down3-1","x":6091.68,"w":38.8,"y":245,"h":42,"kind":"ground","role":"zemin"},{"id":"d05-down3-2","x":6130.48,"w":38.8,"y":287,"h":42,"kind":"ground","role":"zemin"},{"id":"d05-down3-3","x":6169.28,"w":38.8,"y":329,"h":42,"kind":"ground","role":"zemin"},{"id":"d05-down3-4","x":6208.08,"w":38.8,"y":371,"h":42,"kind":"ground","role":"zemin"},{"id":"d05-down3-5","x":6246.88,"w":38.8,"y":413,"h":42,"kind":"ground","role":"zemin"},{"id":"d05-down3-6","x":6285.68,"w":38.8,"y":455,"h":42,"kind":"ground","role":"zemin"}],"obstacles":[{"id":"d05-vault-01","type":"vault","x":5441.76,"w":28.8,"h":22.32,"baseY":-65.375},{"id":"d05-vault-02","type":"vault","x":5355.12,"w":24,"h":48,"baseY":-65.375},{"id":"d05-vault-03","type":"vault","x":6924.48,"w":24,"h":48,"baseY":361.375}],"coins":makeCoins("D05", COINS.D05)},
-    D06: {"routeId":"D06","worldId":"dock31","version":1,"name":"SHIFT SUPERVISOR","length":5130,"finishX":4990,"checkpoints":[70,1560.4,2281.61,3913],"movementProfile":"vector-v1","catchableSurfaces":[{"id":"d06-v-02"},{"id":"d06-v-03"},{"id":"d06-v-05"},{"id":"d06-pit1-step-1"},{"id":"d06-pit1-step-2"},{"id":"d06-pit2-step-1"},{"id":"d06-pit2-step-2"},{"id":"d06-v-11"},{"id":"d06-v-14"},{"id":"d06-v-16"},{"id":"d06-v-18"},{"id":"d06-v-22"},{"id":"d06-v-23"},{"id":"d06-v-24"}],"highJumpZones":[],"diveZones":[{"id":"d06-dz-01","x1":937.2,"x2":992.97,"landX":1206.4,"landY":117.75},{"id":"d06-dz-02","x1":1166.4,"x2":1210.17,"landX":1423.6,"landY":44.625},{"id":"d06-dz-03","x1":1658.4,"x2":1778.4,"landX":2057.8,"landY":291.75},{"id":"d06-dz-04","x1":4414.2,"x2":4534.2,"landX":4760.2,"landY":434.625}],"groundSegments":[{"id":"d06-v-01","x":0,"y":191,"w":652.8,"h":237.6,"kind":"ground"},{"id":"d06-v-02","x":258,"y":169.375,"w":72,"h":21.6,"kind":"ground"},{"id":"d06-v-03","x":532.8,"y":169.375,"w":120,"h":21.6,"kind":"ground"},{"id":"d06-v-04","x":652.8,"y":219.75,"w":72,"h":79.2,"kind":"ground"},{"id":"d06-v-05","x":724.8,"y":147.75,"w":96,"h":178.8,"kind":"ground"},{"id":"d06-v-06","x":937.2,"y":191,"w":120,"h":276,"kind":"ground"},{"id":"d06-v-07","x":1057.2,"y":350.625,"w":148.8,"h":116.4,"kind":"ground"},{"id":"d06-v-08","x":1166.4,"y":117.75,"w":120,"h":232.8,"kind":"ground"},{"id":"d06-v-09","x":1286.4,"y":275,"w":97.2,"h":75.6,"kind":"ground"},{"id":"d06-pit1-step-1","x":1094.4,"y":273,"w":36,"h":77.6,"kind":"ground","role":"pit-step"},{"id":"d06-pit1-step-2","x":1130.4,"y":195.375,"w":36,"h":155.2,"kind":"ground","role":"pit-step"},{"id":"d06-pit2-step-1","x":1335.6,"y":198.25,"w":24,"h":76.8,"kind":"ground","role":"pit-step"},{"id":"d06-pit2-step-2","x":1359.6,"y":121.375,"w":24,"h":153.6,"kind":"ground","role":"pit-step"},{"id":"d06-v-10","x":1383.6,"y":44.625,"w":106.8,"h":306,"kind":"ground"},{"id":"d06-v-11","x":1490.4,"y":-3.375,"w":288,"h":354,"kind":"ground"},{"id":"d06-v-13","x":2017.8,"y":291.75,"w":360,"h":240,"kind":"ground"},{"id":"d06-v-14","x":2260.2,"y":248.625,"w":117.6,"h":43.2,"kind":"ground"},{"id":"d06-v-15","x":2466.6,"y":291.75,"w":408,"h":240,"kind":"ground"},{"id":"d06-v-16","x":2523,"y":270.25,"w":72,"h":21.6,"kind":"ground"},{"id":"d06-v-17","x":2986.2,"y":307.375,"w":169.2,"h":38.4,"kind":"ground"},{"id":"d06-v-18","x":3155.4,"y":225.75,"w":240,"h":120,"kind":"ground"},{"id":"d06-v-19","x":3484.2,"y":422.625,"w":360,"h":240,"kind":"ground"},{"id":"d06-v-21","x":3843,"y":455,"w":691.2,"h":208.32,"kind":"ground"},{"id":"d06-v-22","x":3882.6,"y":367.375,"w":136.8,"h":87.6,"kind":"ground"},{"id":"d06-v-23","x":4141.8,"y":399.75,"w":138,"h":55.2,"kind":"ground"},{"id":"d06-v-24","x":4396.2,"y":384.25,"w":138,"h":70.8,"kind":"ground"},{"id":"d06-v-25","x":4720.2,"y":434.625,"w":840,"h":463.2,"kind":"ground"},{"id":"d06-v-26","x":5068.92,"y":242.875,"w":12,"h":120,"kind":"ground"},{"id":"d06-u-1","x":109.2,"y":257.125,"w":28.8,"h":21.6,"kind":"ground"},{"id":"d06-u-2","x":2986.2,"y":414.25,"w":408,"h":96,"kind":"ground"},{"id":"d06-u-3","x":3084.6,"y":392.625,"w":72,"h":21.6,"kind":"ground"},{"id":"d06-u-4","x":3364.2,"y":345.75,"w":19.2,"h":10.8,"kind":"ground"}],"obstacles":[{"id":"d06-vault-01","type":"vault","x":3648.6,"w":28.8,"h":21.6,"baseY":422.625},{"id":"d06-vault-02","type":"vault","x":1571.76,"w":24,"h":48,"baseY":-3.375},{"id":"d06-vault-03","type":"vault","x":56.4,"w":24,"h":48,"baseY":191},{"id":"d06-vault-04","type":"vault","x":1654.8,"w":28.8,"h":21.6,"baseY":-3.375}],"coins":makeCoins("D06", COINS.D06)},
-    F01: {
-      routeId: "F01", worldId: "frozen", version: 1, name: "COLD ARRIVAL",
-      length: 14250, finishX: 14110, checkpoints: [70, 4300, 9550],
-      obstacles: [
-        // T2-c2: approved gap additions; existing geometry is preserved.
-        {"id":"f01-t2c-vault-1","type":"vault","x":3359,"y":407,"w":24,"h":48},
-        {"id":"f01-t2c-vault-2","type":"vault","x":6270,"y":407,"w":24,"h":48},
-        {"id":"f01-t2c-vault-3","type":"vault","x":8486,"y":407,"w":24,"h":48},
-        {"id":"f01-t2c-vault-4","type":"vault","x":10306,"y":407,"w":24,"h":48},
-        { id: "f01-t1b-slide-1", type: "slide", x: 720, w: 56, h: 160 },
-        { id: "f01-ramp-a", type: "ramp", x: 1530, w: 220, h: 62 },
-        { id: "f01-wide-a", type: "platform", x: 2060, y: 395, w: 620, h: 36 },
-        { id: "f01-t1b-vault-1", type: "vault", x: 3035, w: 24, h: 48 },
-        { id: "f01-vault", type: "vault", x: 3740, w: 24, h: 48 },
-        { id: "f01-t1b-slide-2", type: "slide", x: 4500, w: 56, h: 160 },
-        { id: "f01-wide-b", type: "platform", x: 5150, y: 380, w: 820, h: 42 },
-        { id: "f01-t1b-vault-3", type: "vault", x: 6620, w: 24, h: 48 },
-        { id: "f01-ramp-b", type: "ramp", x: 7060, w: 240, h: 68 },
-        { id: "f01-t1b-vault-2", type: "vault", x: 7890, w: 24, h: 48 },
-        { id: "f01-wide-c", type: "platform", x: 8810, y: 402, w: 980, h: 30 },
-        { id: "f01-t1b-pallet-2", type: "pallet", x: 10760, y: 405, w: 210, h: 22, minX: 10630, maxX: 11610, speed: 105 },
-        { id: "f01-t1b-pallet-1", type: "pallet", x: 12550, y: 405, w: 210, h: 22, minX: 12420, maxX: 13400, speed: 105 },
-      ],
-      coins: makeCoins("F01", COINS.F01),
-    },
-    F02: {
-      routeId: "F02", worldId: "frozen", version: 1, name: "SUSPENDED CARGO",
-      length: 13600, finishX: 13460, checkpoints: [70, 3950, 8850],
-      obstacles: [
-        // T2-c2: approved gap additions; existing geometry is preserved.
-        {"id":"f02-t2c-vault-1","type":"vault","x":3626,"y":407,"w":24,"h":48},
-        {"id":"f02-t2c-vault-2","type":"vault","x":4282,"y":407,"w":24,"h":48},
-        {"id":"f02-t2c-vault-4","type":"vault","x":10824,"y":407,"w":24,"h":48},
-        {"id":"f02-t2c-vault-5","type":"vault","x":12736,"y":407,"w":24,"h":48},
-        {"id":"f02-t2c-vault-7","type":"vault","x":13136,"y":407,"w":24,"h":48},
-        { id: "f02-t1b-slide-2", type: "slide", x: 230, w: 56, h: 160 },
-        { id: "f02-crane-a", type: "crane", x: 1400, y: 350, w: 280, h: 22, minX: 1330, maxX: 2370, speed: 88 },
-        { id: "f02-upper-a", type: "platform", x: 2500, y: 300, w: 760, h: 24 },
-        { id: "f02-t1b-vault-2", type: "vault", x: 4700, w: 24, h: 48 },
-        { id: "f02-pallet", type: "pallet", x: 5400, y: 390, w: 230, h: 22, minX: 5220, maxX: 6550, speed: 102 },
-        { id: "f02-ramp", type: "ramp", x: 6560, w: 200, h: 70 },
-        { id: "f02-upper-b", type: "platform", x: 6800, y: 325, w: 980, h: 24 },
-        { id: "f02-t1b-vault-1", type: "vault", x: 8090, w: 24, h: 48 },
-        { id: "f02-crane-b", type: "crane", x: 8650, y: 365, w: 250, h: 22, minX: 8470, maxX: 9800, speed: 96 },
-        { id: "f02-vault", type: "vault", x: 10500, w: 24, h: 48 },
-        { id: "f02-t1b-slide-1", type: "slide", x: 11807, w: 56, h: 160 },
-      ],
-      coins: makeCoins("F02", COINS.F02),
-    },
+    D05: {"routeId":"D05","worldId":"dock31","version":1,"name":"CLEAN CHAIN","length":7610,"finishX":7470,"checkpoints":[70,3019.91,6394.48],"chief":{"startX":3019.91},"movementProfile":"vector-v1","catchableSurfaces":[{"id":"d05-up-1"},{"id":"d05-up-2"},{"id":"d05-up-3"},{"id":"d05-v-03"},{"id":"d05-v-04"},{"id":"d05-v-05"},{"id":"d05-v-09"},{"id":"d05-v-13"},{"id":"d05-v-15"},{"id":"d05-v-20"},{"id":"d05-v-21"},{"id":"d05-v-22"}],"highJumpZones":[],"diveZones":[{"id":"d05-dz-01","x1":2204.4,"x2":2324.4,"landX":2598.4,"landY":-489.625},{"id":"d05-dz-02","x1":3362.4,"x2":3482.4,"landX":3952.24,"landY":-265},{"id":"d05-dz-03","x1":6929.97,"x2":7049.97,"landX":7240.96,"landY":365}],"groundSegments":[{"id":"d05-v-01","x":0,"y":-701.75,"w":1154.13,"h":165.6,"kind":"ground"},{"id":"d05-v-02","x":435.6,"y":-819.375,"w":300,"h":117.6,"kind":"ground"},{"id":"d05-v-03","x":600,"y":-841,"w":88.8,"h":21.6,"kind":"ground"},{"id":"d05-v-04","x":813.6,"y":-764.25,"w":66,"h":62.4,"kind":"ground"},{"id":"d05-v-05","x":1150.08,"y":-773.75,"w":819.37,"h":237.6,"kind":"ground"},{"id":"d05-v-06","x":2083.2,"y":-705.375,"w":241.2,"h":312,"kind":"ground"},{"id":"d05-v-07","x":2558.4,"y":-489.625,"w":924,"h":452.4,"kind":"ground"},{"id":"d05-v-08","x":2558.64,"y":-827.125,"w":120,"h":240,"kind":"ground"},{"id":"d05-v-09","x":2803.2,"y":-511.25,"w":72,"h":21.6,"kind":"ground"},{"id":"d05-v-10","x":3912.24,"y":-265,"w":360,"h":632.4,"kind":"ground"},{"id":"d05-v-11","x":4272.24,"y":-202.625,"w":312,"h":324,"kind":"ground"},{"id":"d05-v-12","x":4584.24,"y":-118.625,"w":219.31,"h":240,"kind":"ground"},{"id":"d05-v-13","x":4802.88,"y":-193.25,"w":131.94,"h":314.4,"kind":"ground"},{"id":"d05-v-14","x":5167.44,"y":6.25,"w":132,"h":115.2,"kind":"ground"},{"id":"d05-v-15","x":5299.44,"y":-65.375,"w":308.4,"h":186.72,"kind":"ground"},{"id":"d05-v-17","x":5700.48,"y":23,"w":96,"h":549.6,"kind":"ground"},{"id":"d05-v-18","x":6030.48,"y":203,"w":61.2,"h":369.6,"kind":"ground"},{"id":"d05-v-19","x":6324.48,"y":455,"w":353.37,"h":117.6,"kind":"ground"},{"id":"d05-v-20","x":6677.76,"y":383,"w":420.06,"h":189.6,"kind":"ground"},{"id":"d05-v-21","x":6810,"y":361.375,"w":287.53,"h":21.6,"kind":"ground"},{"id":"d05-v-22","x":6989.52,"y":339.75,"w":28.8,"h":21.6,"kind":"ground"},{"id":"d05-v-23","x":7200.96,"y":365,"w":840,"h":463.2,"kind":"ground"},{"id":"d05-v-24","x":7549.68,"y":173.25,"w":12,"h":120,"kind":"ground"},{"id":"d05-u-1","x":1242,"y":-646.375,"w":48,"h":86.4,"kind":"ground"},{"id":"d05-up-1","x":195.6,"w":80,"y":-741,"h":39.2,"kind":"ground","role":"zemin"},{"id":"d05-up-2","x":275.6,"w":80,"y":-780.25,"h":39.2,"kind":"ground","role":"zemin"},{"id":"d05-up-3","x":355.6,"w":80,"y":-819.375,"h":39.2,"kind":"ground","role":"zemin"},{"id":"d05-down1-1","x":4934.82,"w":46.52,"y":-152.875,"h":39.888,"kind":"ground","role":"zemin"},{"id":"d05-down1-2","x":4981.34,"w":46.52,"y":-113,"h":39.888,"kind":"ground","role":"zemin"},{"id":"d05-down1-3","x":5027.86,"w":46.52,"y":-73.125,"h":39.888,"kind":"ground","role":"zemin"},{"id":"d05-down1-4","x":5074.38,"w":46.52,"y":-33.25,"h":39.888,"kind":"ground","role":"zemin"},{"id":"d05-down1-5","x":5120.9,"w":46.52,"y":6.625,"h":39.888,"kind":"ground","role":"zemin"},{"id":"d05-down2-1","x":5796.48,"w":58.5,"y":68,"h":45,"kind":"ground","role":"zemin"},{"id":"d05-down2-2","x":5854.98,"w":58.5,"y":113,"h":45,"kind":"ground","role":"zemin"},{"id":"d05-down2-3","x":5913.48,"w":58.5,"y":158,"h":45,"kind":"ground","role":"zemin"},{"id":"d05-down2-4","x":5971.98,"w":58.5,"y":203,"h":45,"kind":"ground","role":"zemin"},{"id":"d05-down3-1","x":6091.68,"w":38.8,"y":245,"h":42,"kind":"ground","role":"zemin"},{"id":"d05-down3-2","x":6130.48,"w":38.8,"y":287,"h":42,"kind":"ground","role":"zemin"},{"id":"d05-down3-3","x":6169.28,"w":38.8,"y":329,"h":42,"kind":"ground","role":"zemin"},{"id":"d05-down3-4","x":6208.08,"w":38.8,"y":371,"h":42,"kind":"ground","role":"zemin"},{"id":"d05-down3-5","x":6246.88,"w":38.8,"y":413,"h":42,"kind":"ground","role":"zemin"},{"id":"d05-down3-6","x":6285.68,"w":38.8,"y":455,"h":42,"kind":"ground","role":"zemin"}],"obstacles":[{"id":"d05-vault-01","type":"vault","x":5420.16,"w":72,"h":48,"baseY":-65.375},{"id":"d05-vault-02","type":"vault","x":5355.12,"w":24,"h":48,"baseY":-65.375},{"id":"d05-vault-03","type":"vault","x":6924.48,"w":24,"h":48,"baseY":361.375}],"coins":makeCoins("D05", COINS.D05)},
+    D06: {"routeId":"D06","worldId":"dock31","version":1,"name":"SHIFT SUPERVISOR","length":5130,"finishX":4990,"checkpoints":[70,1560.4,2281.61,3913],"movementProfile":"vector-v1","catchableSurfaces":[{"id":"d06-v-02"},{"id":"d06-v-03"},{"id":"d06-v-05"},{"id":"d06-pit1-step-1"},{"id":"d06-pit1-step-2"},{"id":"d06-pit2-step-1"},{"id":"d06-pit2-step-2"},{"id":"d06-v-11"},{"id":"d06-v-14"},{"id":"d06-v-16"},{"id":"d06-v-18"},{"id":"d06-v-22"},{"id":"d06-v-23"},{"id":"d06-v-24"}],"highJumpZones":[],"diveZones":[{"id":"d06-dz-01","x1":937.2,"x2":992.97,"landX":1206.4,"landY":117.75},{"id":"d06-dz-02","x1":1166.4,"x2":1210.17,"landX":1423.6,"landY":44.625},{"id":"d06-dz-03","x1":1658.4,"x2":1778.4,"landX":2057.8,"landY":291.75},{"id":"d06-dz-04","x1":4414.2,"x2":4534.2,"landX":4760.2,"landY":434.625}],"groundSegments":[{"id":"d06-v-01","x":0,"y":191,"w":652.8,"h":237.6,"kind":"ground"},{"id":"d06-v-02","x":258,"y":169.375,"w":72,"h":21.6,"kind":"ground"},{"id":"d06-v-03","x":532.8,"y":169.375,"w":120,"h":21.6,"kind":"ground"},{"id":"d06-v-04","x":652.8,"y":219.75,"w":72,"h":79.2,"kind":"ground"},{"id":"d06-v-05","x":724.8,"y":147.75,"w":96,"h":178.8,"kind":"ground"},{"id":"d06-v-06","x":937.2,"y":191,"w":120,"h":276,"kind":"ground"},{"id":"d06-v-07","x":1057.2,"y":350.625,"w":148.8,"h":116.4,"kind":"ground"},{"id":"d06-v-08","x":1166.4,"y":117.75,"w":120,"h":232.8,"kind":"ground"},{"id":"d06-v-09","x":1286.4,"y":275,"w":97.2,"h":75.6,"kind":"ground"},{"id":"d06-pit1-step-1","x":1094.4,"y":273,"w":36,"h":77.6,"kind":"ground","role":"pit-step"},{"id":"d06-pit1-step-2","x":1130.4,"y":195.375,"w":36,"h":155.2,"kind":"ground","role":"pit-step"},{"id":"d06-pit2-step-1","x":1335.6,"y":198.25,"w":24,"h":76.8,"kind":"ground","role":"pit-step"},{"id":"d06-pit2-step-2","x":1359.6,"y":121.375,"w":24,"h":153.6,"kind":"ground","role":"pit-step"},{"id":"d06-v-10","x":1383.6,"y":44.625,"w":106.8,"h":306,"kind":"ground"},{"id":"d06-v-11","x":1490.4,"y":-3.375,"w":288,"h":354,"kind":"ground"},{"id":"d06-v-13","x":2017.8,"y":291.75,"w":360,"h":240,"kind":"ground"},{"id":"d06-v-14","x":2260.2,"y":248.625,"w":117.6,"h":43.2,"kind":"ground"},{"id":"d06-v-15","x":2466.6,"y":291.75,"w":408,"h":240,"kind":"ground"},{"id":"d06-v-16","x":2523,"y":270.25,"w":72,"h":21.6,"kind":"ground"},{"id":"d06-v-17","x":2986.2,"y":307.375,"w":169.2,"h":38.4,"kind":"ground"},{"id":"d06-v-18","x":3155.4,"y":225.75,"w":240,"h":120,"kind":"ground"},{"id":"d06-v-19","x":3484.2,"y":422.625,"w":360,"h":240,"kind":"ground"},{"id":"d06-v-21","x":3843,"y":455,"w":691.2,"h":208.32,"kind":"ground"},{"id":"d06-v-22","x":3882.6,"y":367.375,"w":136.8,"h":87.6,"kind":"ground"},{"id":"d06-v-23","x":4141.8,"y":399.75,"w":138,"h":55.2,"kind":"ground"},{"id":"d06-v-24","x":4396.2,"y":384.25,"w":138,"h":70.8,"kind":"ground"},{"id":"d06-v-25","x":4720.2,"y":434.625,"w":840,"h":463.2,"kind":"ground"},{"id":"d06-v-26","x":5068.92,"y":242.875,"w":12,"h":120,"kind":"ground"},{"id":"d06-u-1","x":109.2,"y":257.125,"w":28.8,"h":21.6,"kind":"ground"},{"id":"d06-u-2","x":2986.2,"y":414.25,"w":408,"h":96,"kind":"ground"},{"id":"d06-u-3","x":3084.6,"y":392.625,"w":72,"h":21.6,"kind":"ground"},{"id":"d06-u-4","x":3364.2,"y":345.75,"w":19.2,"h":10.8,"kind":"ground"}],"obstacles":[{"id":"d06-vault-01","type":"vault","x":3627,"w":72,"h":48,"baseY":422.625},{"id":"d06-vault-02","type":"vault","x":1571.76,"w":24,"h":48,"baseY":-3.375},{"id":"d06-vault-03","type":"vault","x":56.4,"w":24,"h":48,"baseY":191},{"id":"d06-vault-04","type":"vault","x":1633.2,"w":72,"h":48,"baseY":-3.375}],"coins":makeCoins("D06", COINS.D06)},
+    F01: {"routeId":"F01","worldId":"frozen","version":1,"name":"COLD ARRIVAL","length":6343.52,"finishX":6203.52,"checkpoints":[70,1918,4825.6],"movementProfile":"vector-v1","catchableSurfaces":[{"id":"f01-v-02"},{"id":"f01-v-04"},{"id":"f01-v-08"},{"id":"f01-v-13"},{"id":"f01-v-16"},{"id":"f01-v-18"},{"id":"f01-v-22"}],"highJumpZones":[],"diveZones":[{"id":"f01-dz-01","x1":480,"x2":612,"landX":652,"landY":-7},{"id":"f01-dz-02","x1":1212,"x2":1332,"landX":1804,"landY":151.375},{"id":"f01-dz-03","x1":2647.2,"x2":2746.36,"landX":2932,"landY":231.75},{"id":"f01-dz-04","x1":4081.2,"x2":4201.2,"landX":4619.2,"landY":318.25},{"id":"f01-dz-05","x1":4787.85,"x2":4907.85,"landX":5117.2,"landY":207.75},{"id":"f01-dz-06","x1":5353.37,"x2":5393.37,"landX":5602.72,"landY":248.625},{"id":"f01-dz-07","x1":5569.2,"x2":5689.2,"landX":5974,"landY":455}],"groundSegments":[{"id":"f01-v-01","x":0,"y":-7,"w":480,"h":238.8,"kind":"ground"},{"id":"f01-v-02","x":289.2,"y":-28.625,"w":88.8,"h":21.6,"kind":"ground"},{"id":"f01-v-03","x":480,"y":163.375,"w":132,"h":68.4,"kind":"ground"},{"id":"f01-v-04","x":612,"y":-7,"w":720,"h":238.8,"kind":"ground"},{"id":"f01-v-06","x":1764,"y":151.375,"w":240,"h":326.4,"kind":"ground"},{"id":"f01-v-07","x":2004,"y":237.75,"w":795.6,"h":240,"kind":"ground"},{"id":"f01-v-08","x":2066.4,"y":194.625,"w":240,"h":43.2,"kind":"ground"},{"id":"f01-v-11","x":2892,"y":231.75,"w":1309.2,"h":320.4,"kind":"ground"},{"id":"f01-v-12","x":2892,"y":101,"w":19.2,"h":79.2,"kind":"ground"},{"id":"f01-v-13","x":3118.8,"y":210.25,"w":72,"h":21.6,"kind":"ground"},{"id":"f01-v-15","x":4579.2,"y":318.25,"w":176.4,"h":369.6,"kind":"ground"},{"id":"f01-v-16","x":4755.6,"y":270.25,"w":408,"h":280.8,"kind":"ground"},{"id":"f01-v-18","x":5077.2,"y":207.75,"w":66,"h":62.4,"kind":"ground"},{"id":"f01-v-19","x":5163.6,"y":311,"w":525.6,"h":240,"kind":"ground"},{"id":"f01-v-22","x":5562.72,"y":248.625,"w":126.48,"h":62.4,"kind":"ground"},{"id":"f01-v-23","x":5934,"y":455,"w":840,"h":463.2,"kind":"ground"},{"id":"f01-v-24","x":6282.72,"y":263.25,"w":12,"h":120,"kind":"ground"}],"obstacles":[{"id":"f01-slide-02","type":"slide","x":5238.24,"w":48,"h":86.4,"baseY":311},{"id":"f01-slide-03","type":"slide","x":5274.37,"w":48,"h":86.4,"baseY":311},{"id":"f01-vault-01","type":"vault","x":753.6,"w":72,"h":48,"baseY":-7},{"id":"f01-vault-02","type":"vault","x":2575.2,"w":72,"h":48,"baseY":237.75},{"id":"f01-vault-03","type":"vault","x":3382.8,"w":72,"h":48,"baseY":231.75},{"id":"f01-vault-04","type":"vault","x":2457.6,"w":72,"h":48,"baseY":237.75}],"coins":makeCoins("F01", COINS.F01)},
+    F02: {"routeId":"F02","worldId":"frozen","version":1,"name":"SUSPENDED CARGO","length":8604.32,"finishX":8464.32,"checkpoints":[70,2496,6073.6],"movementProfile":"vector-v1","catchableSurfaces":[{"id":"f02-v-03"},{"id":"f02-v-05"},{"id":"f02-v-07"},{"id":"f02-v-08"},{"id":"f02-v-12"},{"id":"f02-v-13"},{"id":"f02-v-14"},{"id":"f02-v-15"},{"id":"f02-v-16"},{"id":"f02-v-17"},{"id":"f02-v-20"},{"id":"f02-v-23"},{"id":"f02-v-28"},{"id":"f02-v-29"}],"highJumpZones":[],"diveZones":[{"id":"f02-dz-01","x1":398.4,"x2":519.6,"landX":559.6,"landY":-421},{"id":"f02-dz-02","x1":656.4,"x2":774,"landX":814,"landY":-469},{"id":"f02-dz-03","x1":1034.4,"x2":1093.46,"landX":1312,"landY":-447.375},{"id":"f02-dz-04","x1":2443.2,"x2":2504.62,"landX":2687.2,"landY":-327.375},{"id":"f02-dz-05","x1":2846.61,"x2":2886.61,"landX":3095.2,"landY":-387.375},{"id":"f02-dz-06","x1":3117.94,"x2":3237.94,"landX":3455.2,"landY":-315.375},{"id":"f02-dz-07","x1":3739.2,"x2":3859.2,"landX":4043.2,"landY":-231.375},{"id":"f02-dz-08","x1":4155.6,"x2":4287.6,"landX":4367.2,"landY":-205},{"id":"f02-dz-09","x1":5504.4,"x2":5624.4,"landX":6043.6,"landY":32.625},{"id":"f02-dz-10","x1":6799.62,"x2":6839.62,"landX":7032.4,"landY":11},{"id":"f02-dz-11","x1":7629.84,"x2":7748.4,"landX":8234.8,"landY":455}],"groundSegments":[{"id":"f02-v-01","x":0,"y":-433,"w":162.93,"h":199.2,"kind":"ground"},{"id":"f02-v-02","x":136.8,"y":-301,"w":261.6,"h":67.2,"kind":"ground"},{"id":"f02-v-03","x":260.4,"y":-359.75,"w":138,"h":58.8,"kind":"ground"},{"id":"f02-v-04","x":368.4,"y":-233.75,"w":290.4,"h":58.8,"kind":"ground"},{"id":"f02-v-05","x":519.6,"y":-421,"w":136.8,"h":187.2,"kind":"ground"},{"id":"f02-v-06","x":656.4,"y":-301,"w":516,"h":67.2,"kind":"ground"},{"id":"f02-v-07","x":774,"y":-469,"w":136.8,"h":168,"kind":"ground"},{"id":"f02-v-08","x":1034.4,"y":-359.75,"w":138,"h":58.8,"kind":"ground"},{"id":"f02-v-09","x":1272,"y":-231.375,"w":1267.2,"h":240,"kind":"ground"},{"id":"f02-v-10","x":1272,"y":-447.375,"w":136.8,"h":216,"kind":"ground"},{"id":"f02-v-11","x":1408.8,"y":-279.375,"w":528,"h":48,"kind":"ground"},{"id":"f02-v-12","x":1551.6,"y":-349,"w":136.8,"h":69.6,"kind":"ground"},{"id":"f02-v-13","x":1760.16,"y":-301,"w":72,"h":21.6,"kind":"ground"},{"id":"f02-v-14","x":2079.6,"y":-274.625,"w":56.4,"h":43.2,"kind":"ground"},{"id":"f02-v-15","x":2188.8,"y":-291.375,"w":16.8,"h":60,"kind":"ground"},{"id":"f02-v-16","x":2282.4,"y":-253,"w":72,"h":21.6,"kind":"ground"},{"id":"f02-v-17","x":2443.2,"y":-327.375,"w":96,"h":96,"kind":"ground"},{"id":"f02-v-18","x":2647.2,"y":-327.375,"w":408,"h":338.4,"kind":"ground"},{"id":"f02-v-20","x":3055.2,"y":-387.375,"w":48,"h":398.4,"kind":"ground"},{"id":"f02-v-21","x":3103.2,"y":-231.375,"w":756,"h":242.4,"kind":"ground"},{"id":"f02-v-23","x":3415.2,"y":-315.375,"w":120,"h":84,"kind":"ground"},{"id":"f02-v-24","x":4003.2,"y":-231.375,"w":80.88,"h":348,"kind":"ground"},{"id":"f02-v-25","x":4069.2,"y":-169,"w":86.4,"h":115.2,"kind":"ground"},{"id":"f02-v-26","x":4155.6,"y":-105.375,"w":132,"h":51.6,"kind":"ground"},{"id":"f02-v-28","x":4327.2,"y":-205,"w":490.8,"h":145.2,"kind":"ground"},{"id":"f02-v-29","x":4595.76,"y":-226.625,"w":72,"h":21.6,"kind":"ground"},{"id":"f02-u-1","x":4789.2,"y":-143.75,"w":28.8,"h":21.6,"kind":"ground"},{"id":"f02-v-30","x":4902,"y":-67,"w":722.4,"h":145.2,"kind":"ground"},{"id":"f02-v-31","x":4986,"y":-347.75,"w":634.8,"h":145.2,"kind":"ground"},{"id":"f02-v-32","x":6003.6,"y":32.625,"w":1344,"h":434.4,"kind":"ground"},{"id":"f02-v-37","x":6992.4,"y":11,"w":72,"h":21.6,"kind":"ground"},{"id":"f02-v-39","x":7700.4,"y":239,"w":48,"h":32.4,"kind":"ground"},{"id":"f02-v-40","x":8194.8,"y":455,"w":840,"h":463.2,"kind":"ground"},{"id":"f02-v-41","x":8543.52,"y":263.25,"w":12,"h":120,"kind":"ground"},{"id":"f02-slope-1","x":7347.6,"w":70.56,"y":73.875,"h":41.275,"kind":"ground","role":"zemin"},{"id":"f02-slope-2","x":7418.160000000001,"w":70.56,"y":115.125,"h":41.275,"kind":"ground","role":"zemin"},{"id":"f02-slope-3","x":7488.72,"w":70.56,"y":156.5,"h":41.275,"kind":"ground","role":"zemin"},{"id":"f02-slope-4","x":7559.280000000001,"w":70.56,"y":197.75,"h":41.275,"kind":"ground","role":"zemin"},{"id":"f02-slope-5","x":7629.84,"w":70.56,"y":239,"h":41.275,"kind":"ground","role":"zemin"}],"obstacles":[{"id":"f02-slide-01","type":"slide","x":2767.61,"w":48,"h":86.4,"baseY":-327.375},{"id":"f02-vault-01","type":"vault","x":6222,"w":72,"h":48,"baseY":32.625},{"id":"f02-vault-02","type":"vault","x":7165.2,"w":72,"h":48,"baseY":32.625},{"id":"f02-vault-03","type":"vault","x":6538.8,"w":72,"h":48,"baseY":32.625},{"id":"f02-vault-04","type":"vault","x":6380.4,"w":72,"h":48,"baseY":32.625},{"id":"f02-vault-05","type":"vault","x":6727.62,"w":72,"h":48,"baseY":32.625}],"coins":makeCoins("F02", COINS.F02)},
     F03: {
       routeId: "F03", worldId: "frozen", version: 1, name: "HANGAR RUN",
       length: 14800, finishX: 14660, checkpoints: [70, 4200, 9350],
@@ -3241,7 +2976,7 @@
         ctx.stroke();
         ctx.fillStyle = "#142735";
         ctx.font = "900 20px system-ui";
-        ctx.fillText("➜", o.x + 75, GROUND - 20);
+        ctx.fillText("âœ", o.x + 75, GROUND - 20);
       }
       if (o.type === "worker") {
         ctx.fillStyle = "#152b38";
@@ -3252,14 +2987,14 @@
         ctx.fill();
         ctx.fillStyle = "#fff";
         ctx.font = "900 15px system-ui";
-        ctx.fillText(workerClock > 1.65 ? "!" : "…", o.x - 4, GROUND - 91);
+        ctx.fillText(workerClock > 1.65 ? "!" : "â€¦", o.x - 4, GROUND - 91);
       }
     }
     for(const p of movingPlatforms){
       if(p.type==="crane"){c.strokeStyle="#c7d8df";c.lineWidth=3;c.beginPath();c.moveTo(p.x+p.w/2,115);c.lineTo(p.x+p.w/2,p.y);c.stroke();}
       c.fillStyle="#0005";c.beginPath();c.ellipse(p.x+p.w/2,GROUND-3,p.w*.48,8,0,0,Math.PI*2);c.fill();
       c.fillStyle=p.type==="pallet"?"#91613b":"#d28a2c";c.fillRect(p.x,p.y,p.w,p.h);c.strokeStyle="#ffe190";c.strokeRect(p.x+2,p.y+2,p.w-4,p.h-4);
-      c.fillStyle=p.type==="pallet"?"#f2c84b":"#ff5148";c.font="950 18px system-ui";c.fillText(p.type==="pallet"?"↔":"!",p.x+p.w/2-8,p.y-10);
+      c.fillStyle=p.type==="pallet"?"#f2c84b":"#ff5148";c.font="950 18px system-ui";c.fillText(p.type==="pallet"?"â†”":"!",p.x+p.w/2-8,p.y-10);
     }
     for (const coin of route.coins)
       if (!run?.collectedCoinIds.includes(coin.id)) {
@@ -3342,8 +3077,8 @@
   let shopReturnToCharacter = false;
   function rewardedText(amount, claimed=false) {
     const language=profile.settings.language;
-    if(claimed)return language==="tr"?"ALINDI":language==="ru"?"ПОЛУЧЕНО":"CLAIMED";
-    return language==="tr"?`REKLAM İZLE · +${amount} COIN`:language==="ru"?`РЕКЛАМА · +${amount} МОНЕТЫ`:`WATCH AD · +${amount} COINS`;
+    if(claimed)return language==="tr"?"ALINDI":language==="ru"?"ĞŸĞĞ›Ğ£Ğ§Ğ•ĞĞ":"CLAIMED";
+    return language==="tr"?`REKLAM Ä°ZLE Â· +${amount} COIN`:language==="ru"?`Ğ Ğ•ĞšĞ›ĞĞœĞ Â· +${amount} ĞœĞĞĞ•Ğ¢Ğ«`:`WATCH AD Â· +${amount} COINS`;
   }
   function rewardedAvailable() { const detail={available:false};document.dispatchEvent(new CustomEvent("tmb:rewarded-capability",{detail}));return detail.available===true; }
   function interstitialAvailable() { const detail={available:false};document.dispatchEvent(new CustomEvent("tmb:interstitial-capability",{detail}));return detail.available===true; }
@@ -3394,11 +3129,11 @@
     rr(14, 14, 360, 54, 14);
     ctx.fillStyle = "#fff";
     ctx.font = "900 14px system-ui";
-    ctx.fillText(`${t("route")} ${routeId} · ${(["magma","aftermath"].includes(route.worldId) ? t(route.routeId) : route.name)}`, 29, 36);
+    ctx.fillText(`${t("route")} ${routeId} Â· ${(["magma","aftermath"].includes(route.worldId) ? t(route.routeId) : route.name)}`, 29, 36);
     ctx.fillStyle = "#ffd43d";
-    ctx.fillText(`${t("run")} ◉ ${run?.runCoins || 0}/40`, 29, 57);
+    ctx.fillText(`${t("run")} â—‰ ${run?.runCoins || 0}/40`, 29, 57);
     ctx.fillStyle = "#7cecc0";
-    ctx.fillText(`${t("wallet")} ◉ ${profile.walletBalance}`, 180, 57);
+    ctx.fillText(`${t("wallet")} â—‰ ${profile.walletBalance}`, 180, 57);
     ctx.fillStyle = "#fff";
     ctx.fillText(`${t("flow")} ${flow}`, 300, 57);
     if(flowFlash>0){ctx.fillStyle=`rgba(255,222,80,${Math.min(1,flowFlash*2)})`;ctx.font="950 18px system-ui";ctx.fillText(`+ ${t("flow")}`,390,42)}
@@ -3416,7 +3151,7 @@
     ctx.font = "800 18px system-ui";
     ctx.fillText(`${t("earned")} +${result.amount}`, W / 2, H / 2 - 70);
     ctx.fillText(
-      `${t("goals")} · ${run.runCoins}/${route.coins.length} · ${t("flow")} ${flow}`,
+      `${t("goals")} Â· ${run.runCoins}/${route.coins.length} Â· ${t("flow")} ${flow}`,
       W / 2,
       H / 2 - 34,
     );
@@ -3425,10 +3160,10 @@
       W / 2,
       H / 2 + 2,
     );
-    ctx.fillText("★".repeat(result.stars) + "☆".repeat(3 - result.stars), W/2, H/2+58);
+    ctx.fillText("â˜…".repeat(result.stars) + "â˜†".repeat(3 - result.stars), W/2, H/2+58);
     const gs=result.goals||{};
     ctx.font="800 13px system-ui";
-    ctx.fillText(`${t("clean")} ${gs.clean?.earned?"✓":"○"} · ${t("mastery")} ${gs.mastery?.earned?"✓":"○"} · ${t("style")} ${gs.style?.earned?"✓":"○"}`,W/2,H/2+34);
+    ctx.fillText(`${t("clean")} ${gs.clean?.earned?"âœ“":"â—‹"} Â· ${t("mastery")} ${gs.mastery?.earned?"âœ“":"â—‹"} Â· ${t("style")} ${gs.style?.earned?"âœ“":"â—‹"}`,W/2,H/2+34);
     ctx.textAlign = "left";
   }
   function installUI() {
@@ -3456,7 +3191,7 @@
     const shop = document.createElement("section");
     shop.id = "a12Shop";
     shop.setAttribute("aria-hidden", "true");
-    shop.innerHTML = `<div id="a12Preview"><canvas width="480" height="320" aria-label="Runner preview"></canvas><p id="a12WorldWarning" data-world-insufficient hidden></p><div class="previewControls"><button data-preview-runner="male"></button><button data-preview-runner="female"></button></div><div class="previewControls"><button data-preview-motion="idle"></button><button data-preview-motion="run"></button><button data-preview-motion="frontFlip"></button></div></div><div id="a12Products"><div id="a12ShopTop"><h2></h2><button data-close>×</button></div><div class="a12Tabs"><button data-tab="outfits"></button><button data-tab="worlds"></button></div><div data-list="outfits"><article data-item="default"><h3></h3><button data-action></button></article><article data-item="dockCrew"><h3></h3><button data-action></button></article></div><div data-list="worlds"></div><div id="a12ShopBottom"><button data-shop-back></button><button data-shop-buy></button></div><p data-save></p></div>`;
+    shop.innerHTML = `<div id="a12Preview"><canvas width="480" height="320" aria-label="Runner preview"></canvas><p id="a12WorldWarning" data-world-insufficient hidden></p><div class="previewControls"><button data-preview-runner="male"></button><button data-preview-runner="female"></button></div><div class="previewControls"><button data-preview-motion="idle"></button><button data-preview-motion="run"></button><button data-preview-motion="frontFlip"></button></div></div><div id="a12Products"><div id="a12ShopTop"><h2></h2><button data-close>Ã—</button></div><div class="a12Tabs"><button data-tab="outfits"></button><button data-tab="worlds"></button></div><div data-list="outfits"><article data-item="default"><h3></h3><button data-action></button></article><article data-item="dockCrew"><h3></h3><button data-action></button></article></div><div data-list="worlds"></div><div id="a12ShopBottom"><button data-shop-back></button><button data-shop-buy></button></div><p data-save></p></div>`;
     shop.querySelector('[data-list="outfits"]').innerHTML = Object.keys(OUTFITS).map(id=>`<article data-item="${id}"><h3></h3><button data-action></button></article>`).join("");
     document.body.appendChild(shop);
     shop.addEventListener("click", async (e) => {
@@ -3486,7 +3221,7 @@
       if (shopOpen) drawShopPreview();
     }, 80);
     const card = document.getElementById("characterCard");
-    card.querySelector(".eyebrow").textContent = "TRUST ME BRO · DOCK 31";
+    card.querySelector(".eyebrow").textContent = "TRUST ME BRO Â· DOCK 31";
     card.querySelector("h2").textContent = t("choose");
     card.querySelector("p").textContent = t("samePhysics");
     const choices = [...document.querySelectorAll(".characterChoice")];
@@ -3497,7 +3232,7 @@
       }
       el.querySelector(":scope > canvas")?.insertAdjacentHTML(
         "beforebegin",
-        `<span class="runnerSymbol">${i ? "♀" : "♂"}</span>`,
+        `<span class="runnerSymbol">${i ? "â™€" : "â™‚"}</span>`,
       );
       el.lastChild.textContent = i ? t("female") : t("male");
       el.addEventListener("click", () => selectRunner(i ? "female" : "male"));
@@ -3506,7 +3241,7 @@
     syncRunnerChoice();
     document.getElementById("characterShop")?.addEventListener("click",()=>{shopReturnToCharacter=true;openShop();});
     const change = document.getElementById("characterChange");
-    change.textContent = "↔";
+    change.textContent = "â†”";
     change.title = t("choose");
     applyLanguage();
     addEventListener("keydown", (e) => {
@@ -3579,7 +3314,7 @@
     const motionLabels=[t("idle"),t("motionRun"),t("flip")];
     s.querySelectorAll('[data-preview-runner]').forEach(b=>{b.textContent=t(b.dataset.previewRunner);b.setAttribute('aria-pressed',String(b.dataset.previewRunner===previewRunnerId));});
     s.querySelectorAll('[data-preview-motion]').forEach((b,i)=>{b.textContent=motionLabels[i];b.setAttribute('aria-pressed',String(b.dataset.previewMotion===previewMotion));});
-    s.querySelector("h2").textContent = `${t("shop")} · ${t(shopTab)} · ${t("wallet")} ${profile.walletBalance}`;
+    s.querySelector("h2").textContent = `${t("shop")} Â· ${t(shopTab)} Â· ${t("wallet")} ${profile.walletBalance}`;
     s.querySelector('[data-tab="outfits"]').textContent=t("outfits");
     s.querySelector('[data-tab="worlds"]').textContent=t("worlds");
     s.querySelector('[data-list="outfits"]').hidden=shopTab!=="outfits";
@@ -3598,14 +3333,14 @@
         ? t("worn")
         : owned
           ? t("wear")
-          : `${short?"🔒 ":""}◉ ${OUTFITS[id].price}`;
+          : `${short?"ğŸ”’ ":""}â—‰ ${OUTFITS[id].price}`;
       a.querySelector("button").disabled = worn || purchaseBusy || short;
       a.querySelector('.priceBadge')?.remove();
     }
     const worlds=s.querySelector('[data-list="worlds"]');
     worlds.innerHTML=Object.values(WORLD_REGISTRY).map(w=>`<article data-item="${w.id}"><h3>${w.id.toUpperCase()}</h3><button data-action></button></article>`).join("");
-    for(const a of worlds.querySelectorAll("article")){const w=WORLD_REGISTRY[a.dataset.item],owned=profile.ownedWorldIds.includes(w.id),selected=profile.selectedWorldId===w.id,b=a.querySelector("button"),short=!owned&&profile.walletBalance<w.price;a.dataset.owned=String(owned);a.dataset.price=String(w.price);a.style.outline=previewWorldId===w.id?"2px solid #79e9ba":"none";b.textContent=!w.enabled?t("planned"):selected?t("selected"):owned?t("select"):`${short?"🔒 ":""}◉ ${w.price}`;b.disabled=!w.enabled||selected||purchaseBusy||short;}
-    const back=s.querySelector('[data-shop-back]'),buy=s.querySelector('[data-shop-buy]'),selected=s.querySelector(`${shopTab==="worlds"?'[data-list="worlds"]':'[data-list="outfits"]'} [data-item="${shopTab==="worlds"?previewWorldId:previewOutfitId}"] [data-action]`),previewWorld=WORLD_REGISTRY[previewWorldId],worldOwned=!!previewWorld&&profile.ownedWorldIds.includes(previewWorldId),worldSelected=profile.selectedWorldId===previewWorldId,worldShort=!!previewWorld&&!worldOwned&&profile.walletBalance<previewWorld.price,warning=s.querySelector('[data-world-insufficient]');back.textContent=profile.settings.language==='tr'?'GERİ':profile.settings.language==='ru'?'НАЗАД':'BACK';if(shopTab==="worlds"&&previewWorld){buy.textContent=!previewWorld.enabled?t("planned"):worldSelected?t("selected"):worldOwned?t("select"):t("buyWorld").replace("{price}",previewWorld.price);buy.disabled=!previewWorld.enabled||worldSelected||purchaseBusy||worldShort}else{buy.textContent=selected?.textContent||t('selected');buy.disabled=!!selected?.disabled}warning.hidden=!(shopTab==="worlds"&&previewWorld?.enabled&&worldShort);warning.textContent=warning.hidden?"":t("insufficient");
+    for(const a of worlds.querySelectorAll("article")){const w=WORLD_REGISTRY[a.dataset.item],owned=profile.ownedWorldIds.includes(w.id),selected=profile.selectedWorldId===w.id,b=a.querySelector("button"),short=!owned&&profile.walletBalance<w.price;a.dataset.owned=String(owned);a.dataset.price=String(w.price);a.style.outline=previewWorldId===w.id?"2px solid #79e9ba":"none";b.textContent=!w.enabled?t("planned"):selected?t("selected"):owned?t("select"):`${short?"ğŸ”’ ":""}â—‰ ${w.price}`;b.disabled=!w.enabled||selected||purchaseBusy||short;}
+    const back=s.querySelector('[data-shop-back]'),buy=s.querySelector('[data-shop-buy]'),selected=s.querySelector(`${shopTab==="worlds"?'[data-list="worlds"]':'[data-list="outfits"]'} [data-item="${shopTab==="worlds"?previewWorldId:previewOutfitId}"] [data-action]`),previewWorld=WORLD_REGISTRY[previewWorldId],worldOwned=!!previewWorld&&profile.ownedWorldIds.includes(previewWorldId),worldSelected=profile.selectedWorldId===previewWorldId,worldShort=!!previewWorld&&!worldOwned&&profile.walletBalance<previewWorld.price,warning=s.querySelector('[data-world-insufficient]');back.textContent=profile.settings.language==='tr'?'GERÄ°':profile.settings.language==='ru'?'ĞĞĞ—ĞĞ”':'BACK';if(shopTab==="worlds"&&previewWorld){buy.textContent=!previewWorld.enabled?t("planned"):worldSelected?t("selected"):worldOwned?t("select"):t("buyWorld").replace("{price}",previewWorld.price);buy.disabled=!previewWorld.enabled||worldSelected||purchaseBusy||worldShort}else{buy.textContent=selected?.textContent||t('selected');buy.disabled=!!selected?.disabled}warning.hidden=!(shopTab==="worlds"&&previewWorld?.enabled&&worldShort);warning.textContent=warning.hidden?"":t("insufficient");
     s.querySelector("[data-save]").textContent = saveFailure ? t("saveFailed") : t("noCharge");
     drawShopPreview();
   }
@@ -3686,10 +3421,10 @@
     for(const s of routeSurfaces(route).filter(v=>v.kind!=='ground')){
       aftermathSurface(c,s.x,s.y,s.w,s.h);
       if(s.parkour==='vault'){c.strokeStyle='#c6c9af';c.lineWidth=3;c.beginPath();c.moveTo(s.x+4,s.y+8);c.lineTo(s.x+s.w*.6,s.y+s.h*.6);c.lineTo(s.x+s.w-4,s.y+11);c.stroke();c.fillStyle='#262c29';c.fillRect(s.x+s.w*.2,s.y+s.h*.6,s.w*.6,8);}
-      if(s.parkour==='slide'){c.fillStyle='#eff0cc';c.fillRect(s.x-5,s.y+s.h-6,s.w+10,6);c.fillStyle='#e9c04b';c.font='bold 17px system-ui';c.fillText('↓',s.x+s.w/2-7,s.y+s.h+17);}
+      if(s.parkour==='slide'){c.fillStyle='#eff0cc';c.fillRect(s.x-5,s.y+s.h-6,s.w+10,6);c.fillStyle='#e9c04b';c.font='bold 17px system-ui';c.fillText('â†“',s.x+s.w/2-7,s.y+s.h+17);}
     }
     for(const o of route.obstacles){if(o.type==='ramp'){c.fillStyle='#73796b';c.beginPath();c.moveTo(o.x,GROUND);c.lineTo(o.x+o.w,GROUND-o.h);c.lineTo(o.x+o.w,GROUND);c.closePath();c.fill();c.strokeStyle='#edf1cd';c.lineWidth=6;c.stroke();c.strokeStyle='#333d35';c.lineWidth=3;c.beginPath();c.moveTo(o.x+o.w*.5,GROUND-o.h*.5+7);c.lineTo(o.x+o.w*.6,GROUND-10);c.stroke();}else if(o.type==='worker'){aftermathRescuer(c,o.x,GROUND);if(!workerDisabled&&workerClock>1.65){c.fillStyle='#ff6551';c.font='bold 22px system-ui';c.fillText('!',o.x-3,GROUND-97);}}}
-    if(!debugHideMovingPlatforms)for(const p of movingPlatforms){if(p.type==='crane'){c.strokeStyle='#d5d7b9';c.lineWidth=4;c.beginPath();c.moveTo(p.x+p.w*.3-35,115);c.quadraticCurveTo(p.x+p.w*.3+20,190,p.x+p.w*.3,p.y);c.moveTo(p.x+p.w*.75+22,115);c.lineTo(p.x+p.w*.75,p.y);c.stroke();}aftermathSurface(c,p.x,p.y,p.w,p.h);c.fillStyle='#ecbd55';c.fillRect(p.x+7,p.y+7,Math.max(4,p.w*.24),6);c.fillStyle='#eff2d5';c.font='bold 18px system-ui';c.fillText(p.type==='pallet'?'↔':'!',p.x+p.w/2-7,p.y-9);}
+    if(!debugHideMovingPlatforms)for(const p of movingPlatforms){if(p.type==='crane'){c.strokeStyle='#d5d7b9';c.lineWidth=4;c.beginPath();c.moveTo(p.x+p.w*.3-35,115);c.quadraticCurveTo(p.x+p.w*.3+20,190,p.x+p.w*.3,p.y);c.moveTo(p.x+p.w*.75+22,115);c.lineTo(p.x+p.w*.75,p.y);c.stroke();}aftermathSurface(c,p.x,p.y,p.w,p.h);c.fillStyle='#ecbd55';c.fillRect(p.x+7,p.y+7,Math.max(4,p.w*.24),6);c.fillStyle='#eff2d5';c.font='bold 18px system-ui';c.fillText(p.type==='pallet'?'â†”':'!',p.x+p.w/2-7,p.y-9);}
     for(const p of collapsing){if(p.state==='ABSENT')continue;c.save();if(p.state==='CONTACT_WARNING')c.translate(Math.sin(p.timer*55)*3,0);const y=p.y+p.fallY;aftermathSurface(c,p.x,y,p.w,p.h);c.strokeStyle='#17251d';c.lineWidth=4;c.beginPath();c.moveTo(p.x+10,y+5);c.lineTo(p.x+p.w*.4,y+19);c.lineTo(p.x+p.w*.7,y+5);c.lineTo(p.x+p.w-10,y+20);c.stroke();c.fillStyle='#f3c54b';c.fillRect(p.x,y,p.w,4);c.restore();}
     for(const d of containerDoors){aftermathSurface(c,d.x,d.currentY,d.w,d.h);c.strokeStyle='#d5c8a0';c.lineWidth=6;c.beginPath();c.moveTo(d.x-8,d.currentY+d.h);c.lineTo(d.x-3,d.currentY-12);c.lineTo(d.x+d.w+9,d.currentY-5);c.stroke();c.fillStyle=d.state==='OPEN'?'#63f2a5':d.state==='PREPARING'?'#ffd34d':'#ff5b55';c.beginPath();c.arc(d.x+d.w/2,d.currentY-26,9,0,7);c.fill();}
     for(const b of barrels){c.fillStyle='#343c32';c.strokeStyle='#c6bd94';c.lineWidth=3;c.beginPath();c.moveTo(b.x+5,b.y);c.lineTo(b.x+27,b.y+4);c.lineTo(b.x+24,b.y+27);c.lineTo(b.x,b.y+22);c.closePath();c.fill();c.stroke();c.beginPath();c.moveTo(b.x+3,b.y+9);c.lineTo(b.x+23,b.y+17);c.stroke();}
@@ -3965,7 +3700,7 @@
       }
       if (s.parkour === "slide") {
         c.fillStyle = frozen?"#bdeff7":magma?"#b9b9b4":"#f2c230"; c.fillRect(s.x - 16, s.y + s.h - 7, s.w + 32, 7);
-        c.fillStyle = "#17252d"; c.font = "900 10px system-ui"; c.fillText("↓", s.x + s.w / 2 - 4, s.y + s.h + 15);
+        c.fillStyle = "#17252d"; c.font = "900 10px system-ui"; c.fillText("â†“", s.x + s.w / 2 - 4, s.y + s.h + 15);
       }
     }
     for(const s of route.slopes||[]){c.fillStyle="#30383f";c.beginPath();c.moveTo(s.x1,s.y1);c.lineTo(s.x2,s.y2);c.lineTo(s.x2,s.y2+100);c.lineTo(s.x1,s.y1+100);c.closePath();c.fill();c.strokeStyle="#8b98a1";c.lineWidth=3;c.beginPath();c.moveTo(s.x1,s.y1);c.lineTo(s.x2,s.y2);c.stroke()}
@@ -3980,7 +3715,7 @@
         c.closePath(); c.fill(); c.shadowBlur = 0; c.strokeStyle = frozen?"#effcff":magma?"#eee8dc":"#fff0a0"; c.lineWidth = magma?9:5; c.stroke();
         if(magma){c.strokeStyle="#adb5bb";c.lineWidth=2;for(let q=24;q<o.w;q+=36){c.beginPath();c.moveTo(o.x+q,baseY-5);c.lineTo(o.x+q,baseY-o.h*(q/o.w)+7);c.stroke();}}
         if(frozen){c.fillStyle="#eafaff";for(let q=18;q<o.w;q+=34)c.fillRect(o.x+q,baseY-o.h*(q/o.w)-5,22,5);}
-        c.fillStyle = "#17252d"; c.font = "950 26px system-ui"; c.fillText("↗", o.x + o.w * .52, GROUND - 20); c.restore();
+        c.fillStyle = "#17252d"; c.font = "950 26px system-ui"; c.fillText("â†—", o.x + o.w * .52, GROUND - 20); c.restore();
       } else if (o.type === "worker" && magma) {
         // Aluminized heat suit: hood, dark visor, separated gauntlets and boots.
         if(!drawNpcWorkerSprite(c,o.x,GROUND)){
@@ -4022,7 +3757,7 @@
         c.fillStyle="#6b4b38";c.fillRect(p.x,p.y+8,p.w,p.h-8);c.fillStyle="#f4fdff";c.beginPath();c.moveTo(p.x,p.y+10);for(let q=0;q<=p.w;q+=28)c.lineTo(p.x+q,p.y+2+(q/28%2)*5);c.lineTo(p.x+p.w,p.y+14);c.lineTo(p.x,p.y+14);c.closePath();c.fill();
         c.strokeStyle="#dffaff";c.lineWidth=3;c.strokeRect(p.x+2,p.y+2,p.w-4,p.h-4);
       }
-      c.fillStyle=p.type==="pallet"?"#f2c84b":"#ff5148";c.font="950 18px system-ui";c.fillText(p.type==="pallet"?"↔":"!",p.x+p.w/2-8,p.y-10);
+      c.fillStyle=p.type==="pallet"?"#f2c84b":"#ff5148";c.font="950 18px system-ui";c.fillText(p.type==="pallet"?"â†”":"!",p.x+p.w/2-8,p.y-10);
       c.restore();
     }
     for (const p of collapsing) {
@@ -4171,18 +3906,18 @@
     c.fillRect(14, 14, 360, 54);
     c.fillStyle = "#fff";
     c.font = "900 14px system-ui";
-    c.fillText(`${t("route")} ${routeId} · ${(["magma","aftermath"].includes(route.worldId) ? t(route.routeId) : route.name)}`, 29, 36);
+    c.fillText(`${t("route")} ${routeId} Â· ${(["magma","aftermath"].includes(route.worldId) ? t(route.routeId) : route.name)}`, 29, 36);
     c.fillStyle = "#ffd43d";
-    c.fillText(`${t("run")} ◉ ${run?.runCoins || 0}/40`, 29, 57);
+    c.fillText(`${t("run")} â—‰ ${run?.runCoins || 0}/40`, 29, 57);
     c.fillStyle = "#7cecc0";
-    c.fillText(`${t("wallet")} ◉ ${profile.walletBalance}`, 180, 57);
+    c.fillText(`${t("wallet")} â—‰ ${profile.walletBalance}`, 180, 57);
     if (result) {
       c.fillStyle = "#06111be8";
       c.fillRect(0, 0, w, h);
       c.fillStyle = "#7cecc0";
       c.textAlign = "center";
       c.font = "950 30px system-ui";
-      c.fillText(`${routeId} ${t("complete")} · +${result.amount}`, w / 2, h / 2);
+      c.fillText(`${routeId} ${t("complete")} Â· +${result.amount}`, w / 2, h / 2);
       c.textAlign = "left";
     }
     syncActionVisibility();

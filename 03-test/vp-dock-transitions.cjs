@@ -7,7 +7,7 @@ const vm = require("vm");
 
 const root = path.resolve(__dirname, "..");
 const irRoot = "E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/ir";
-const outRoot = "E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/dock-d05d06";
+const outRoots = {D05:"E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/dock-d05d06",D06:"E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/dock-d05d06",F01:"E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/frozen-f01f02",F02:"E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/frozen-f01f02"};
 const sourcePath = path.join(root, "js/a12-campaign.js");
 const round = (n, p = 2) => Math.round((n + Number.EPSILON) * 10 ** p) / 10 ** p;
 const snapY = n => Math.round(n * 8) / 8;
@@ -46,6 +46,8 @@ const routeData = loadRoutes(fs.readFileSync(sourcePath, "utf8"));
 const configs = {
   D05: { story: "05", start: 0, topMin: -4820 },
   D06: { story: "06", start: 0, topMin: -1100 },
+  F01: { story: "07", start: 0, topMin: -1925 },
+  F02: { story: "08", start: 0, topMin: -3700 },
 };
 const vaultNames = new Set(["TriggerSpeedVault", "TriggerHurdleJump", "TriggerThiefVault"]);
 
@@ -83,14 +85,16 @@ function makeProfile(segments) {
   }
   return parts;
 }
-function transition(A, B, moves, groundByY, i, runStart=A.x0) {
+function transition(A, B, moves, groundByY, i, runStart=A.x0, robust=false) {
   const gap = round(B.x0 - A.x1), D = round(B.y - A.y), H = -D;
   let mech;
   if (gap <= .01 && D >= 0) mech = "kosu";
   else {
     const disc = 390 ** 2 + 2900 * D;
     const reach = disc >= 0 ? 255 * (390 + Math.sqrt(disc)) / 1450 : -Infinity;
-    if (gap > .01 && reach >= gap + 32) mech = "normal";
+    const robustReach = disc >= 0 ? 200 * (390 + Math.sqrt(disc)) / 1450 : -Infinity;
+    if (gap > .01 && reach >= gap + 32 && robust && robustReach < gap + 44) mech = "dive";
+    else if (gap > .01 && reach >= gap + 32) mech = "normal";
     else if (H > 0 && H <= 100 && gap <= 96) mech = "tutunma";
     else if (H <= 193) mech = "dive";
     else mech = "UYMAYAN";
@@ -105,6 +109,17 @@ function transition(A, B, moves, groundByY, i, runStart=A.x0) {
     if(row.x2<runStart){row.x1=runStart;row.x2=A.x1;}
     else row.x1=round(Math.max(runStart,row.x2-120));
   }
+  return row;
+}
+function forceDive(row, runStart, afterX=-Infinity) {
+  row.mech="dive";
+  const A=row.A,B=row.B,top=Math.min(A.y,B.y)-93;
+  row.Tb=round(Math.sqrt(2*(A.y-top)/1450)+Math.sqrt(2*(B.y-top)/1450),3);
+  row.landX=round(B.x0+40); row.landY=B.y;
+  row.x2=round(Math.min(A.x1,row.landX-255*row.Tb));
+  if(row.x2<runStart){row.x1=runStart;row.x2=A.x1;}
+  else row.x1=round(Math.max(runStart,row.x2-120));
+  row.x1=round(Math.max(row.x1,afterX));
   return row;
 }
 const d05Steps = [
@@ -127,7 +142,11 @@ function analyze(id, cfg) {
     if(!floor){unplaced.push({move:t.move_name,x:t.x});continue;}
     const box=roles.filter(s=>s.role==="zemin"&&s.id!==floor.id&&s.w<=72&&s.below&&s.below.y-s.y<=48&&Math.abs(s.x-t.x)<=60).sort((a,b)=>Math.abs(a.x-t.x)-Math.abs(b.x-t.x))[0];
     vaultN++;
-    if(box){removed.add(box.id);obstacles.push({id:`${id.toLowerCase()}-vault-${String(vaultN).padStart(2,"0")}`,type:"vault",x:box.x,w:box.w,h:round(box.below.rawY-box.rawY),baseY:box.below.y,sourceId:box.id});}
+    if(box){
+      removed.add(box.id);
+      const wide=["D05","D06","F01","F02"].includes(id), w=wide?72:box.w, h=wide?48:round(box.below.rawY-box.rawY);
+      obstacles.push({id:`${id.toLowerCase()}-vault-${String(vaultN).padStart(2,"0")}`,type:"vault",x:round(box.x+(box.w-w)/2),w,h,baseY:box.below.y,sourceId:box.id});
+    }
     else obstacles.push({id:`${id.toLowerCase()}-vault-${String(vaultN).padStart(2,"0")}`,type:"vault",x:t.x,w:24,h:48,baseY:floor.y,sourceId:null});
   }
   if(id==="D04") {
@@ -135,7 +154,8 @@ function analyze(id, cfg) {
     removed.add(box.id); vaultN++;
     obstacles.push({id:`d04-vault-${String(vaultN).padStart(2,"0")}`,type:"vault",x:box.x,w:72,h:48,baseY:box.below.y,sourceId:box.id});
   }
-  const extras=id==="D05"?d05Steps:[];
+  const f02Steps=Array.from({length:5},(_,i)=>({id:`f02-slope-${i+1}`,x:round(7347.6+i*70.56),w:70.56,y:snapY(32.625+(i+1)*41.275),h:41.275,kind:"ground",role:"zemin"}));
+  const extras=id==="D05"?d05Steps:id==="F02"?f02Steps:[];
   const profileInputs=[...roles.filter(s=>s.role==="zemin"&&!removed.has(s.id)),...extras];
   const profile=makeProfile(profileInputs), groundByY=new Map();
   for(const s of profileInputs){if(!groundByY.has(s.y))groundByY.set(s.y,[]);groundByY.get(s.y).push(s);}
@@ -150,7 +170,7 @@ function analyze(id, cfg) {
     return start;
   };
   for(let i=0;i<profile.length-1;i++){
-    const A=profile[i],P=profile[i+1],direct=transition(A,P,moves,groundByY,transitions.length,runStartAt(i));
+    const A=profile[i],P=profile[i+1],direct=transition(A,P,moves,groundByY,transitions.length,runStartAt(i),id[0]==="F");
     if(direct.mech==="kosu"&&i+2<profile.length){
       const B=profile[i+2],up=transition(P,B,moves,groundByY,transitions.length+1);
       if(up.mech==="UYMAYAN"){
@@ -159,9 +179,35 @@ function analyze(id, cfg) {
     }
     transitions.push(direct);
   }
-  fs.mkdirSync(outRoot,{recursive:true});
-  fs.writeFileSync(path.join(outRoot,`transitions-${id}.json`),JSON.stringify(transitions,null,2)+"\n");
-  return {id,roles,obstacles,unplaced,profile,transitions};
+  const r2=[];
+  const r2TransitionDone=new Set();
+  if(id[0]==="F") for(const o of [...obstacles].sort((a,b)=>(b.x+b.w)-(a.x+a.w))){
+    const end=round(o.x+o.w);
+    const t=transitions.find(q=>{
+      if(q.mech!=="tutunma"&&q.mech!=="dive") return false;
+      const entry=q.mech==="tutunma"?q.B.x0-96:q.x1;
+      return entry>=end-128&&entry-end<128&&q.B.x0>=end-.01;
+    });
+    if(!t||r2TransitionDone.has(t.i)) continue;
+    r2TransitionDone.add(t.i);
+    const old={mech:t.mech,x1:t.x1,x2:t.x2,x:o.x};
+    const pi=profile.findIndex(p=>p.id===t.A.id&&Math.abs(p.x1-t.A.x1)<.02), runStart=pi>=0?runStartAt(pi):t.A.x0;
+    const exitX=end+(o.type==="slide"?31:0);
+    forceDive(t,runStart,exitX);
+    if(t.x2-t.x1>=40){r2.push({obstacle:o.id,transition:t.i,action:"betikli",old,now:{mech:t.mech,x1:t.x1,x2:t.x2}});continue;}
+    const previousLanding=Math.max(runStart,...transitions.filter(q=>q.landX!=null&&q.landX<=o.x).map(q=>q.landX));
+    const newX=round(Math.min(o.x,t.x2-40-o.w-(o.type==="slide"?31:0)));
+    if(newX-previousLanding>=64){o.x=newX;forceDive(t,runStart,newX+o.w+(o.type==="slide"?31:0));r2.push({obstacle:o.id,transition:t.i,action:"sola-kaydir",old,now:{x:o.x,mech:t.mech,x1:t.x1,x2:t.x2}});continue;}
+    obstacles.splice(obstacles.indexOf(o),1);forceDive(t,runStart);r2.push({obstacle:o.id,transition:t.i,action:"kaldir",old,now:{mech:t.mech,x1:t.x1,x2:t.x2},vectorDeviation:true});
+  }
+  fs.mkdirSync(outRoots[id],{recursive:true});
+  fs.writeFileSync(path.join(outRoots[id],`transitions-${id}.json`),JSON.stringify(transitions,null,2)+"\n");
+  if(id[0]==="F") fs.writeFileSync(path.join(outRoots[id],`generated-${id}.json`),JSON.stringify({
+    catchableSurfaces:[...new Set(transitions.filter(t=>t.mech==="tutunma"||(-t.D>52&&t.gap<=96)).map(t=>t.B.id))].map(id=>({id})),
+    diveZones:transitions.filter(t=>t.mech==="dive").map((t,i)=>({id:`${id.toLowerCase()}-dz-${String(i+1).padStart(2,"0")}`,x1:t.x1,x2:t.x2,landX:t.landX,landY:t.landY})),
+    obstacles:obstacles.map(({sourceId,...o})=>o),r2
+  },null,2)+"\n");
+  return {id,roles,obstacles,unplaced,profile,transitions,r2};
 }
 
 const results=Object.entries(configs).map(([id,cfg])=>analyze(id,cfg));
@@ -170,9 +216,10 @@ for(const r of results){
   console.log(`${r.id} roller:`,r.roles.filter(s=>s.role!=="zemin").map(s=>`${s.id}=${s.role}(c=${round(s.clearance)})`).join(", ")||"tümü zemin");
   console.log(`${r.id} engeller:`,JSON.stringify(r.obstacles));
   console.log(`${r.id} konmayan tetikler:`,JSON.stringify(r.unplaced));
+  console.log(`${r.id} R2:`,JSON.stringify(r.r2));
 }
 const roleActual=results.flatMap(r=>r.roles.filter(s=>s.role!=="zemin").map(s=>`${r.id}:${s.id}:${s.role}`)).sort();
-const roleExpected=["D05:d05-v-08:ust-gecit","D05:d05-v-24:ust-gecit","D06:d06-v-26:ust-gecit"].sort();
+const roleExpected=["D05:d05-v-08:ust-gecit","D05:d05-v-24:ust-gecit","D06:d06-v-26:ust-gecit","F01:f01-v-12:ust-gecit","F01:f01-v-17:slide","F01:f01-v-20:slide","F01:f01-v-21:slide","F01:f01-v-24:ust-gecit","F02:f02-v-19:slide","F02:f02-v-22:slide","F02:f02-v-27:slide","F02:f02-v-31:ust-gecit","F02:f02-v-41:ust-gecit"].sort();
 const firstDive=results.find(r=>r.id==="D06").transitions.find(t=>t.pit==="d06-v-07");
 const spot=firstDive&&Math.abs(firstDive.gap-109.2)<=.01&&Math.abs(-firstDive.D-73.25)<=.01;
 const unmatched=results.flatMap(r=>r.transitions.filter(t=>t.mech==="UYMAYAN").map(t=>({...t,route:r.id})));
@@ -180,12 +227,12 @@ const reversedDives=Object.entries(routeData).flatMap(([route, data])=>(data.div
 const shortNewDives=results.flatMap(r=>r.transitions.filter(t=>t.mech==="dive"&&t.x2-t.x1<40).map(t=>({route:r.id,i:t.i,width:round(t.x2-t.x1)})));
 const shortLegacyDives=Object.entries(routeData).filter(([id])=>/^D0[1-4]$/.test(id)).flatMap(([route,data])=>(data.diveZones||[]).filter(z=>z.x2-z.x1<40).map(z=>({route,id:z.id,width:round(z.x2-z.x1)})));
 const badCatchableY=Object.entries(routeData).flatMap(([route,data])=>{const byId=new Map((data.groundSegments||[]).map(s=>[s.id,s]));return (data.catchableSurfaces||[]).map(c=>byId.get(c.id)).filter(s=>s&&((s.y-48)+48)!==s.y).map(s=>({route,id:s.id,y:s.y}));});
-const badNewCatchableY=badCatchableY.filter(x=>x.route==="D05"||x.route==="D06");
+const badNewCatchableY=badCatchableY.filter(x=>["D05","D06","F01","F02"].includes(x.route));
 const badLegacyCatchableY=badCatchableY.filter(x=>/^D0[1-4]$/.test(x.route));
 let codeParity=true;
 for(const r of results){
   const route=routeData[r.id];
-  const catchIds=[...new Set(r.transitions.filter(t=>t.mech==="tutunma").map(t=>t.B.id))];
+  const catchIds=[...new Set(r.transitions.filter(t=>t.mech==="tutunma"||(r.id[0]==="F"&&-t.D>52&&t.gap<=96)).map(t=>t.B.id))];
   if(r.id==="D06") catchIds.splice(catchIds.indexOf("d06-v-05")+1,0,"d06-pit1-step-1","d06-pit1-step-2","d06-pit2-step-1","d06-pit2-step-2");
   const catches=catchIds.map(id=>({id}));
   const dives=r.transitions.filter(t=>t.mech==="dive").map((t,i)=>({id:`${r.id.toLowerCase()}-dz-${String(i+1).padStart(2,"0")}`,x1:t.x1,x2:t.x2,landX:t.landX,landY:t.landY}));
@@ -193,6 +240,10 @@ for(const r of results){
   const same=JSON.stringify(route.catchableSurfaces)===JSON.stringify(catches)&&JSON.stringify(route.diveZones)===JSON.stringify(dives)&&JSON.stringify(route.obstacles)===JSON.stringify(obstacles);
   console.log(`${r.id} kod eşliği | catch/dive/engel | JSON ile birebir | ${same?"PASS":"FAIL"}`); codeParity=codeParity&&same;
 }
+const missingFallbackCatch=results.filter(r=>r.id[0]==="F").flatMap(r=>{
+  const ids=new Set((routeData[r.id].catchableSurfaces||[]).map(x=>x.id));
+  return r.transitions.filter(t=>-t.D>52&&t.gap<=96&&!ids.has(t.B.id)).map(t=>({route:r.id,i:t.i,B:t.B.id,H:-t.D,gap:t.gap}));
+});
 console.log("\nZORUNLU KONTROLLER");
 console.log(`Roller | ${JSON.stringify(roleActual)} | ${JSON.stringify(roleExpected)} | ${JSON.stringify(roleActual)===JSON.stringify(roleExpected)?"PASS":"FAIL"}`);
 console.log(`Spot | ${firstDive?`x1=${firstDive.x1} x2=${firstDive.x2} landX=${firstDive.landX} landY=${firstDive.landY} Tb=${firstDive.Tb}`:"yok"} | ±0.5px/±0.005sn | ${spot?"PASS":"FAIL"}`);
@@ -202,4 +253,5 @@ console.log(`D05/D06 dive width | ${JSON.stringify(shortNewDives)} | every windo
 console.log(`D01-D04 short dive report | ${JSON.stringify(shortLegacyDives)} | data unchanged | INFO`);
 console.log(`D05/D06 catchable FP guard | ${JSON.stringify(badNewCatchableY)} | exact | ${badNewCatchableY.length===0?"PASS":"FAIL"}`);
 console.log(`D01-D04 catchable FP report | ${JSON.stringify(badLegacyCatchableY)} | data unchanged | INFO`);
-if(JSON.stringify(roleActual)!==JSON.stringify(roleExpected)||!spot||unmatched.length||reversedDives.length||shortNewDives.length||badNewCatchableY.length||!codeParity) process.exitCode=1;
+console.log(`F01/F02 fallback catchable | ${JSON.stringify(missingFallbackCatch)} | H>52 gap<=96 all catchable | ${missingFallbackCatch.length===0?"PASS":"FAIL"}`);
+if(JSON.stringify(roleActual)!==JSON.stringify(roleExpected)||!spot||unmatched.length||reversedDives.length||shortNewDives.length||badNewCatchableY.length||missingFallbackCatch.length||!codeParity) process.exitCode=1;

@@ -7,7 +7,7 @@ const path = require('path');
 // tutunma B.x0-[58,2], vault x-[55,18], slide gap [2,36]. O-4 esikleri 0.8 s ve 1.0 s,
 // M-1 viewportlari 390x844 / 844x390; esikler ilk kosumdan once sabittir.
 const root = path.join(__dirname, '..');
-const dataRoots = {D01:'E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/dock-d01d02',D02:'E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/dock-d01d02',D03:'E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/dock-d03d04',D04:'E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/dock-d03d04',D05:'E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/dock-d05d06',D06:'E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/dock-d05d06'};
+const dataRoots = {D01:'E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/dock-d01d02',D02:'E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/dock-d01d02',D03:'E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/dock-d03d04',D04:'E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/dock-d03d04',D05:'E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/dock-d05d06',D06:'E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/dock-d05d06',F01:'E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/frozen-f01f02',F02:'E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/frozen-f01f02'};
 const transitions = Object.fromEntries(Object.keys(dataRoots).map(id => [id, JSON.parse(fs.readFileSync(`${dataRoots[id]}/transitions-${id}.json`, 'utf8'))]));
 let server, base;
 
@@ -30,7 +30,16 @@ async function boot(page, id, viewport = {width:1280,height:720}) {
   await page.goto(base + '#debug');
   await page.waitForFunction(() => window.__TMB_A12__);
   await page.locator('.characterChoice:visible').first().click();
-  await page.evaluate(id => { __TMB_A12__.renderWorldOnRoute('dock31', id); __TMB_A12__.startRoute(id); }, id);
+  await page.evaluate(async id => {
+    if(id[0]==='F'){
+      await __TMB_A12__.setWallet(500); await __TMB_A12__.purchaseWorld('frozen');
+      __TMB_A12__.renderWorldOnRoute('frozen','F01');
+      if(id==='F02'){ __TMB_A12__.startRoute('F01'); __TMB_A12__.finish(); }
+    } else __TMB_A12__.renderWorldOnRoute('dock31',id);
+    __TMB_A12__.startRoute(id);
+  }, id);
+  await page.waitForFunction(id => __TMB_A12__.getState().route.id === id, id);
+  expect((await page.evaluate(() => __TMB_A12__.getState())).route.id).toBe(id);
   await page.keyboard.down('ArrowRight');
 }
 
@@ -47,9 +56,9 @@ async function jump(page, touch) {
   }
 }
 
-async function drive(page, id, {touch=false, stopAfter} = {}) {
+async function drive(page, id, {touch=false, stopAfter, omitDives=[]} = {}) {
   const fired = new Set(), pending = new Map(), lastPress = new Map(), trace = [], tr = transitions[id], started = Date.now();
-  const d05d06 = id === 'D05' || id === 'D06';
+  const d05d06 = ['D05','D06','F01','F02'].includes(id);
   let diveSeen = false, catchSeen = false, deaths = 0, retries = 0, end, stuckSince = null, c07Y = null, previousSample = null, lastGroundAt = -Infinity, chainClimbSeconds = 0;
   while (Date.now() - started < 115000) {
     const s = await page.evaluate(() => __TMB_A12__.getState());
@@ -62,13 +71,32 @@ async function drive(page, id, {touch=false, stopAfter} = {}) {
     if (previousSample && previousSample.playerX - p.x > 150) {
       retries++;
       trace.push(`[DBG-B2] ${s.gameClock.toFixed(2)} retry player=${previousSample.playerX.toFixed(2)} chief=${previousSample.chiefX?.toFixed(2) ?? 'n/a'} chainClimb=${chainClimbSeconds.toFixed(2)}s`);
+      if (id === 'F01' || id === 'F02') {
+        const checkpointX = p.x;
+        for (const key of [...fired]) {
+          const ti = /^(?:normal|dive|tutunma)-(\d+)$/.exec(key);
+          const oi = /^(?:vault|slide)-(.+)$/.exec(key);
+          const x = ti ? (tr.find(t => t.i === Number(ti[1]))?.B.x0 ?? -Infinity)
+            : oi ? (s.route.obstacles.find(o => o.id === oi[1])?.x ?? -Infinity) : -Infinity;
+          if (x > checkpointX) fired.delete(key);
+        }
+        for (const [key,q] of [...pending]) {
+          const ti = /^(?:normal|dive|tutunma)-(\d+)$/.exec(key);
+          const oi = /^(?:vault|slide)-(.+)$/.exec(key);
+          const x = ti ? (tr.find(t => t.i === Number(ti[1]))?.B.x0 ?? -Infinity)
+            : oi ? (s.route.obstacles.find(o => o.id === oi[1])?.x ?? -Infinity) : -Infinity;
+          if (x > checkpointX) { pending.delete(key); lastPress.delete(key); }
+        }
+      }
       await page.keyboard.up('ArrowRight'); await page.waitForTimeout(60); await page.keyboard.down('ArrowRight');
+      if (id === 'F01' || id === 'F02') await jump(page, touch);
     }
     if (id === 'D01' && c07Y === null && previousSample && previousSample.x <= 1267.6 && center >= 1267.6) {
       const ratio = (1267.6 - previousSample.x) / (center - previousSample.x);
       c07Y = previousSample.y + (centerY - previousSample.y) * ratio;
       trace.push(`[DBG-B2] ${s.gameClock.toFixed(2)} 1267.60 ${s.parkour.state} c07-center-y ${c07Y.toFixed(2)}`);
     }
+    if (previousSample?.parkour === 'slide' && s.parkour.state === 'normal') trace.push(`[SLIDE-EXIT] ${id} center=${center.toFixed(2)} player=${p.x.toFixed(2)}`);
     previousSample = {x:center, y:centerY, playerX:p.x,chiefX:s.chief?.x,parkour:s.parkour.state,clock:s.gameClock};
     for (const [key, q] of pending) {
       const happened = q.mech === 'dive' ? (!!s.diveRun || s.parkour.state === 'dive')
@@ -89,17 +117,19 @@ async function drive(page, id, {touch=false, stopAfter} = {}) {
     }
     let target = null;
     for (const t of d05d06 ? tr : []) {
-      if (t.mech !== 'tutunma') continue;
+      const fallbackCatch = (id === 'F01' || id === 'F02') && -t.D > 52 && t.gap <= 96;
+      if (t.mech !== 'tutunma' && !fallbackCatch) continue;
       const key = `${t.mech}-${t.i}`;
       const braced = p.onGround && !s.edgeClimb && s.parkour.state !== 'climb' && right >= t.B.x0 - 8 && right <= t.B.x0;
-      if (braced && !pending.has(key) && (!lastPress.has(key) || s.gameClock-lastPress.get(key)>=.1)) { target=[key,t]; break; }
+      if (braced && !pending.has(key) && (!lastPress.has(key) || s.gameClock-lastPress.get(key)>=.1)) { target=[key,{...t,mech:'tutunma'}]; break; }
     }
     if (!target) for (const t of tr) {
       const key = `${t.mech}-${t.i}`;
       if (fired.has(key)) continue;
-      if (t.mech === 'normal' && !pending.has(key) && coyote && right >= t.A.x1 - 25 && right <= t.A.x1 - 2) target = [key, t];
+      const normalLead = (id === 'F01' || id === 'F02') ? 12 : 25;
+      if (t.mech === 'normal' && !pending.has(key) && coyote && right >= t.A.x1 - normalLead && right <= t.A.x1 - 2) target = [key, t];
       const d03d04 = id === 'D03' || id === 'D04';
-      if (t.mech === 'dive' && (d03d04 || d05d06 ? !s.edgeClimb : p.onGround) && center >= t.x1 + (id==='D06'?0:4) && center <= t.x2 - (id==='D06'?0:4) && (!lastPress.has(key) || s.gameClock-lastPress.get(key)>=((d03d04 || d05d06)?.1:.2))) target=[key,t];
+      if (t.mech === 'dive' && !omitDives.includes(t.i) && (d03d04 || d05d06 ? !s.edgeClimb : p.onGround) && center >= t.x1 + (id==='D06'?0:4) && center <= t.x2 - (id==='D06'?0:4) && (!lastPress.has(key) || s.gameClock-lastPress.get(key)>=((d03d04 || d05d06)?.1:.2))) target=[key,t];
       const d03LowStep = t.mech === 'tutunma' && id === 'D03' && t.B.id === 'd03-v-16';
       const d05LowStep = t.mech === 'tutunma' && id === 'D05' && ['d05-v-15','d05-v-20','d05-v-21','d05-v-22'].includes(t.B.id);
       const lowStep = d03LowStep || d05LowStep;
@@ -157,7 +187,7 @@ async function drive(page, id, {touch=false, stopAfter} = {}) {
   return {end, deaths, retries, elapsed:(Date.now()-started)/1000, diveSeen, catchSeen, trace, c07Y};
 }
 
-for (const id of ['D01','D02','D03','D04','D05','D06']) test(`O-1 B-5 ${id} ideal keyboard route`, async ({page}) => {
+for (const id of ['D01','D02','D03','D04','D05','D06','F01','F02']) test(`O-1 B-5 ${id} ideal keyboard route`, async ({page}) => {
   test.setTimeout(120000); await boot(page,id); const r=await drive(page,id);
   const collected=r.end.economy.collectedCoinIds.length, expected=r.end.route.coins.length;
   const pass=!!r.end.result || r.end.player.x+r.end.hitbox.w>=r.end.route.finishX;
@@ -170,6 +200,14 @@ for (const id of ['D01','D02','D03','D04','D05','D06']) test(`O-1 B-5 ${id} idea
   console.log(`B-5-${id} | ${collected}/${expected} coin | ${expected}/${expected} coin | ${collected===expected?'PASS':'FAIL'}`);
   if (id === 'D01') console.log(`D01-c07-y | measured=${r.c07Y?.toFixed(2)} | coin center y | ${r.c07Y!==null?'PASS':'FAIL'}`);
   expect(pass).toBeTruthy(); expect(r.deaths).toBe(0); expect(r.retries).toBe(0); expect(collected).toBe(expected);
+});
+
+for (const i of [14,17]) test(`F01 i${i} missed-dive fallback catch`, async ({page}) => {
+  test.setTimeout(120000); await boot(page,'F01'); const t=transitions.F01.find(x=>x.i===i);
+  const r=await drive(page,'F01',{omitDives:[i],stopAfter:({s})=>s.player.x+s.hitbox.w>=t.B.x0+24&&s.player.y+s.hitbox.h<=t.B.y+4});
+  const crossed=r.end.player.x+r.end.hitbox.w>=t.B.x0+24&&r.end.player.y+r.end.hitbox.h<=t.B.y+4;
+  console.log(`F01-i${i}-fallback | x=${r.end.player.x.toFixed(2)}, feet=${(r.end.player.y+r.end.hitbox.h).toFixed(2)} | no dive, keyboard catch onto ${t.B.id} | ${crossed?'PASS':'FAIL'}`);
+  expect(crossed).toBeTruthy(); expect(r.deaths).toBe(0);
 });
 
 test('O-4a D01 first dive omission retries', async ({page}) => {
@@ -203,7 +241,7 @@ for (const pitId of ['d06-v-07','d06-v-09']) test(`O-4c D06 ${pitId} keyboard pi
   console.log(`O-4c ${pitId} | attemptSame=${s.economy.attemptId===setup.attempt}, x=${s.player.x.toFixed(2)}, feet=${(s.player.y+s.hitbox.h).toFixed(2)} | keyboard escape to B x>=${setup.bx}, feet<=${setup.by+4} | ${escaped?'PASS':'FAIL'}`); expect(escaped).toBeTruthy();
 });
 
-for (const id of ['D01','D03','D04','D05','D06']) for (const viewport of [{width:390,height:844},{width:844,height:390}]) test(`M-1 ${id} touch ${viewport.width}x${viewport.height}`, async ({browser}) => {
+for (const id of ['D01','D03','D04','D05','D06','F01','F02']) for (const viewport of [{width:390,height:844},{width:844,height:390}]) test(`M-1 ${id} touch ${viewport.width}x${viewport.height}`, async ({browser}) => {
   test.setTimeout(120000);
   const context=await browser.newContext({viewport,hasTouch:true,isMobile:true,deviceScaleFactor:1}),page=await context.newPage();
   try {
