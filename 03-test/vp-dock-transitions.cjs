@@ -7,7 +7,7 @@ const vm = require("vm");
 
 const root = path.resolve(__dirname, "..");
 const irRoot = "E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/ir";
-const outRoots = {D05:"E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/dock-d05d06",D06:"E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/dock-d05d06",F01:"E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/frozen-f01f02",F02:"E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/frozen-f01f02",F03:"E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/frozen-f03f04",F04:"E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/frozen-f03f04",M01:"E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/magma-m01m02",M02:"E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/magma-m01m02"};
+const outRoots = {D05:"E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/dock-d05d06",D06:"E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/dock-d05d06",F01:"E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/frozen-f01f02",F02:"E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/frozen-f01f02",F03:"E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/frozen-f03f04",F04:"E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/frozen-f03f04",M01:"E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/magma-m01m02",M02:"E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/magma-m01m02",M03:"E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/magma-m03m04",M04:"E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/magma-m03m04"};
 const sourcePath = path.join(root, "js/a12-campaign.js");
 const round = (n, p = 2) => Math.round((n + Number.EPSILON) * 10 ** p) / 10 ** p;
 const snapY = n => Math.round(n * 8) / 8;
@@ -64,6 +64,8 @@ const configs = {
   F04: { story: "10", start: 0, topMin: -2275 },
   M01: { story: "11", start: 0, topMin: -5671 },
   M02: { story: "bonus_01", start: 0, topMin: -2715 },
+  M03: { story: "bonus_02", start: 0, topMin: -2720 },
+  M04: { story: "bonus_03", start: 0, topMin: -1112 },
 };
 const vaultNames = new Set(["TriggerSpeedVault", "TriggerHurdleJump", "TriggerThiefVault"]);
 
@@ -167,14 +169,14 @@ function analyze(id, cfg) {
     vaultN++;
     if(box){
       removed.add(box.id);
-      const wide=["D05","D06","F01","F02","F03","F04","M01","M02"].includes(id), w=wide?72:box.w, h=wide?48:round(box.below.rawY-box.rawY);
+      const wide=["D05","D06","F01","F02","F03","F04","M01","M02","M03","M04"].includes(id), w=wide?72:box.w, h=wide?48:round(box.below.rawY-box.rawY);
       obstacles.push({id:`${id.toLowerCase()}-vault-${String(vaultN).padStart(2,"0")}`,type:"vault",x:round(box.x+(box.w-w)/2),w,h,baseY:box.below.y,sourceId:box.id});
     }
     else obstacles.push({id:`${id.toLowerCase()}-vault-${String(vaultN).padStart(2,"0")}`,type:"vault",x:t.x,w:24,h:48,baseY:floor.y,sourceId:null});
   }
   // K: small IR platforms standing on a walkable surface are vaults even when
   // Vector did not place a vault trigger close enough to identify the box.
-  if(id==="M01"||id==="M02") for(const box of roles.filter(s=>s.role==="zemin"&&s.below&&s.w<=72&&s.h<=24&&!removed.has(s.id))){
+  if(/^M0[1-4]$/.test(id)) for(const box of roles.filter(s=>s.role==="zemin"&&s.below&&s.w<=72&&s.h<=24&&!removed.has(s.id))){
     const template=obstacles.find(o=>o.type==="vault"&&o.sourceId==null&&Math.abs((o.x+o.w/2)-(box.x+box.w/2))<=60);
     if(template) obstacles.splice(obstacles.indexOf(template),1);
     removed.add(box.id); vaultN++;
@@ -198,7 +200,17 @@ function analyze(id, cfg) {
     ...Array.from({length:3},(_,i)=>({id:`m01-deadend-i11-step-${i+1}`,x:round(2356.8+i*36),w:36,y:snapY(-1075.25-(i+1)*(211.25/3)),h:211.25/3,kind:"ground",role:"zemin"})),
   ];
   const m02Steps=Array.from({length:5},(_,i)=>({id:`m02-slope-${i+1}`,x:round(1455.6+i*66.48),w:66.48,y:snapY(-461.8+(i+1)*40.08),h:40.08,kind:"ground",role:"zemin"}));
-  const extras=id==="D05"?d05Steps:id==="F02"?f02Steps:id==="F03"?f03Steps:id==="M01"?m01Steps:id==="M02"?m02Steps:[];
+  const m03Steps=[
+    ...Array.from({length:3},(_,i)=>({id:`m03-slope1-${i+1}`,x:round(375.6+i*74.8),w:74.8,y:snapY(-197.75-(i+1)*39.625),h:39.625,kind:"ground",role:"zemin"})),
+    ...Array.from({length:5},(_,i)=>({id:`m03-slope2-${i+1}`,x:round(1803.6+i*46.32),w:46.32,y:snapY(-218.25+(i+1)*40.8),h:40.8,kind:"ground",role:"zemin"})),
+    ...Array.from({length:3},(_,i)=>({id:`m03-slope3-${i+1}`,x:round(7387.2+i*53.2),w:53.2,y:snapY(337.375+(i+1)*35.625),h:35.625,kind:"ground",role:"zemin"})),
+    ...Array.from({length:2},(_,i)=>({id:`m03-slope4-${i+1}`,x:round(7779.6+i*74.4),w:74.4,y:snapY(444.25-(i+1)*47.1875),h:47.1875,kind:"ground",role:"zemin"})),
+  ];
+  const m04Steps=[
+    ...Array.from({length:3},(_,i)=>({id:`m04-slope1-${i+1}`,x:round(1736.4+i*67.2),w:67.2,y:snapY(303.375-(i+1)*(118.625/3)),h:118.625/3,kind:"ground",role:"zemin"})),
+    ...Array.from({length:4},(_,i)=>({id:`m04-slope2-${i+1}`,x:round(5570.4+i*60.9),w:60.9,y:snapY(162.25+(i+1)*45.875),h:45.875,kind:"ground",role:"zemin"})),
+  ];
+  const extras=id==="D05"?d05Steps:id==="F02"?f02Steps:id==="F03"?f03Steps:id==="M01"?m01Steps:id==="M02"?m02Steps:id==="M03"?m03Steps:id==="M04"?m04Steps:[];
   let tunnel=null, tunnelFloor=null, tunnelExcluded=new Set();
   if(id==="M01"){
     const rawFloor=backbone.surfaces.find(s=>s.vx===12030&&s.vy===-325);
@@ -258,7 +270,7 @@ function analyze(id, cfg) {
     if(newX-previousLanding>=64){o.x=newX;forceDive(t,runStart,newX+o.w+(o.type==="slide"?31:0),tunnel);r2.push({obstacle:o.id,transition:t.i,action:"sola-kaydir",old,now:{x:o.x,mech:t.mech,x1:t.x1,x2:t.x2}});continue;}
     obstacles.splice(obstacles.indexOf(o),1);forceDive(t,runStart,-Infinity,tunnel);r2.push({obstacle:o.id,transition:t.i,action:"kaldir",old,now:{mech:t.mech,x1:t.x1,x2:t.x2},vectorDeviation:true});
   }
-  if(["F03","F04","M01","M02"].includes(id)) for(const o of [...obstacles]){
+  if(["F03","F04","M01","M02","M03","M04"].includes(id)) for(const o of [...obstacles]){
     const landingAnchors=transitions.filter(t=>t.landX!=null&&t.landX<=o.x).map(t=>t.landX);
     const shortSurfaceEnds=profileInputs.filter(s=>s.w<=160&&s.x+s.w<=o.x&&s.x+s.w>=Math.max(0,...landingAnchors)).map(s=>s.x+s.w);
     const priorObstacleEnds=obstacles.filter(p=>p!==o&&p.x+p.w<=o.x).map(p=>p.x+p.w);
@@ -276,7 +288,8 @@ function analyze(id, cfg) {
       obstacles.splice(obstacles.indexOf(o),1);r3.push({obstacle:o.id,action:"kaldir",previousLanding,oldX,vectorDeviation:true});
     }
   }
-  if(["F03","F04","M01","M02"].includes(id)) for(const t of transitions) if(t.mech==="dive"&&t.x2-t.x1<40) t.x1=round(t.x2-40);
+  if(["F03","F04","M01","M02","M03","M04"].includes(id)) for(const t of transitions) if(t.mech==="dive"&&t.x2-t.x1<40) t.x1=round(t.x2-40);
+  if((id==="M03"||id==="M04")&&transitions.some(t=>t.mech==="UYMAYAN")) return {id,roles,obstacles,unplaced,profile,transitions,r2,r3,tunnel,fallbackCatchable};
   fs.mkdirSync(outRoots[id],{recursive:true});
   fs.writeFileSync(path.join(outRoots[id],`transitions-${id}.json`),JSON.stringify(transitions,null,2)+"\n");
   if(id[0]==="F"||id[0]==="M") fs.writeFileSync(path.join(outRoots[id],`generated-${id}.json`),JSON.stringify({
@@ -295,7 +308,7 @@ for(const r of results){
   console.log(`${r.id} engeller:`,JSON.stringify(r.obstacles));
   console.log(`${r.id} konmayan tetikler:`,JSON.stringify(r.unplaced));
   console.log(`${r.id} R2:`,JSON.stringify(r.r2));
-  if(["F03","F04","M01","M02"].includes(r.id)) console.log(`${r.id} R3:`,JSON.stringify(r.r3));
+  if(["F03","F04","M01","M02","M03","M04"].includes(r.id)) console.log(`${r.id} R3:`,JSON.stringify(r.r3));
 }
 const roleActual=results.filter(r=>['D05','D06','F01','F02'].includes(r.id)).flatMap(r=>r.roles.filter(s=>s.role!=="zemin").map(s=>`${r.id}:${s.id}:${s.role}`)).sort();
 const roleExpected=["D05:d05-v-08:ust-gecit","D05:d05-v-24:ust-gecit","D06:d06-v-26:ust-gecit","F01:f01-v-12:ust-gecit","F01:f01-v-17:slide","F01:f01-v-20:slide","F01:f01-v-21:slide","F01:f01-v-24:ust-gecit","F02:f02-v-19:slide","F02:f02-v-22:slide","F02:f02-v-27:slide","F02:f02-v-31:ust-gecit","F02:f02-v-41:ust-gecit"].sort();
@@ -306,7 +319,7 @@ const reversedDives=Object.entries(routeData).flatMap(([route, data])=>(data.div
 const shortNewDives=results.flatMap(r=>r.transitions.filter(t=>t.mech==="dive"&&t.x2-t.x1<39.999).map(t=>({route:r.id,i:t.i,width:round(t.x2-t.x1)})));
 const shortLegacyDives=Object.entries(routeData).filter(([id])=>/^D0[1-4]$/.test(id)).flatMap(([route,data])=>(data.diveZones||[]).filter(z=>z.x2-z.x1<40).map(z=>({route,id:z.id,width:round(z.x2-z.x1)})));
 const badCatchableY=Object.entries(routeData).flatMap(([route,data])=>{const byId=new Map((data.groundSegments||[]).map(s=>[s.id,s]));return (data.catchableSurfaces||[]).map(c=>byId.get(c.id)).filter(s=>s&&((s.y-48)+48)!==s.y).map(s=>({route,id:s.id,y:s.y}));});
-const badNewCatchableY=badCatchableY.filter(x=>["D05","D06","F01","F02","F03","F04","M01","M02"].includes(x.route));
+const badNewCatchableY=badCatchableY.filter(x=>["D05","D06","F01","F02","F03","F04","M01","M02","M03","M04"].includes(x.route));
 const badLegacyCatchableY=badCatchableY.filter(x=>/^D0[1-4]$/.test(x.route));
 function diveCoinFrames(t, coin, launchCenter) {
   const startX=launchCenter-16,startY=t.A.y-48,endX=t.landX,endY=t.landY-48,dx=endX-startX;
@@ -345,15 +358,15 @@ const diveCoinChecks=results.flatMap(r=>{
     return {route:r.id,coin:c.id,move:c.move_id,x:c.x,y:c.y,frames,pass:frames.length===3&&frames.every(n=>n>=3),suggested:t?bestDiveCoinPosition(t):null};
   });
 });
-const badGateDiveCoins=diveCoinChecks.filter(x=>["F03","F04","M01","M02"].includes(x.route)&&!x.pass);
-const badInfoDiveCoins=diveCoinChecks.filter(x=>!["F03","F04","M01","M02"].includes(x.route)&&!x.pass);
-const legacyPeakY=Object.entries(routeData).filter(([id])=>id!=="M01"&&id!=="M02").flatMap(([route,data])=>(data.diveZones||[]).filter(z=>Object.hasOwn(z,"peakY")).map(z=>({route,id:z.id,peakY:z.peakY})));
-const kLegacyInfo=results.filter(r=>!/^M0[12]$/.test(r.id)).flatMap(r=>r.roles.filter(s=>s.role==="zemin"&&s.below&&s.w<=72&&s.h<=24).map(s=>({route:r.id,id:s.id,w:s.w,h:s.h})));
+const badGateDiveCoins=diveCoinChecks.filter(x=>["F03","F04","M01","M02","M03","M04"].includes(x.route)&&!x.pass);
+const badInfoDiveCoins=diveCoinChecks.filter(x=>!["F03","F04","M01","M02","M03","M04"].includes(x.route)&&!x.pass);
+const legacyPeakY=Object.entries(routeData).filter(([id])=>!/^M0[1-4]$/.test(id)).flatMap(([route,data])=>(data.diveZones||[]).filter(z=>Object.hasOwn(z,"peakY")).map(z=>({route,id:z.id,peakY:z.peakY})));
+const kLegacyInfo=results.filter(r=>!/^M0[1-4]$/.test(r.id)).flatMap(r=>r.roles.filter(s=>s.role==="zemin"&&s.below&&s.w<=72&&s.h<=24).map(s=>({route:r.id,id:s.id,w:s.w,h:s.h})));
 const m01EscapeIds=[1,2,3].map(n=>`m01-deadend-i11-step-${n}`);
 const m01Route=routeData.M01,m02Route=routeData.M02;
 const dGate=m01EscapeIds.every(id=>m01Route.groundSegments.some(s=>s.id===id)&&m01Route.catchableSurfaces.some(c=>c.id===id));
 const kGate=!m02Route.groundSegments.some(s=>s.id==="m02-v-26")&&m02Route.obstacles.some(o=>o.type==="vault"&&o.w===72&&o.h===48&&Math.abs(o.x-5668.92)<.01&&Math.abs(o.baseY-294.25)<.01);
-const dLegacyInfo=results.filter(r=>!/^M0[12]$/.test(r.id)).flatMap(r=>r.transitions.filter(t=>(t.mech==="dive"||t.mech==="normal")&&t.pit).map(t=>({route:r.id,i:t.i,pit:t.pit,B:t.B.id})));
+const dLegacyInfo=results.filter(r=>!/^M0[1-4]$/.test(r.id)).flatMap(r=>r.transitions.filter(t=>(t.mech==="dive"||t.mech==="normal")&&t.pit).map(t=>({route:r.id,i:t.i,pit:t.pit,B:t.B.id})));
 let codeParity=true;
 for(const r of results){
   const route=routeData[r.id];
@@ -379,7 +392,7 @@ console.log(`D01-D04 short dive report | ${JSON.stringify(shortLegacyDives)} | d
 console.log(`D05/D06 catchable FP guard | ${JSON.stringify(badNewCatchableY)} | exact | ${badNewCatchableY.length===0?"PASS":"FAIL"}`);
 console.log(`D01-D04 catchable FP report | ${JSON.stringify(badLegacyCatchableY)} | data unchanged | INFO`);
 console.log(`F01/F02 fallback catchable | ${JSON.stringify(missingFallbackCatch)} | H>52 gap<=96 all catchable | ${missingFallbackCatch.length===0?"PASS":"FAIL"}`);
-console.log(`F03/F04 dive coin 60Hz guard | ${JSON.stringify(badGateDiveCoins)} | 3 launches x >=3 frames | ${badGateDiveCoins.length===0?"PASS":"FAIL"}`);
+console.log(`F03-M04 dive coin 60Hz guard | ${JSON.stringify(badGateDiveCoins)} | 3 launches x >=3 frames | ${badGateDiveCoins.length===0?"PASS":"FAIL"}`);
 console.log(`D05-F02 dive coin 60Hz report | ${JSON.stringify(badInfoDiveCoins)} | unchanged | INFO`);
 console.log(`Legacy peakY absence | ${JSON.stringify(legacyPeakY)} | expected [] | ${legacyPeakY.length===0?"PASS":"FAIL"}`);
 console.log(`M01 D dead-end escape | ${JSON.stringify(m01EscapeIds)} | ground+catchable | ${dGate?"PASS":"FAIL"}`);
