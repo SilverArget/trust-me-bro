@@ -7,7 +7,7 @@ const vm = require("vm");
 
 const root = path.resolve(__dirname, "..");
 const irRoot = "E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/ir";
-const outRoot = "E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/dock-d01d02";
+const outRoot = "E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/dock-d03d04";
 const sourcePath = path.join(root, "js/a12-campaign.js");
 const round = (n, p = 2) => Math.round((n + Number.EPSILON) * 10 ** p) / 10 ** p;
 
@@ -43,8 +43,8 @@ function loadRoutes(source) {
 
 const routeData = loadRoutes(fs.readFileSync(sourcePath, "utf8"));
 const configs = {
-  D01: { story: "01", start: 905, topMin: -4329.375 },
-  D02: { story: "02", start: -10, topMin: -2820 },
+  D03: { story: "03", start: 0, topMin: -1065 },
+  D04: { story: "04", start: 0, topMin: -3765 },
 };
 const vaultNames = new Set(["TriggerSpeedVault", "TriggerHurdleJump", "TriggerThiefVault"]);
 
@@ -99,7 +99,7 @@ function transition(A, B, moves, groundByY, i) {
     const top=Math.min(A.y,B.y)-93;
     row.Tb=round(Math.sqrt(2*(A.y-top)/1450)+Math.sqrt(2*(B.y-top)/1450),3);
     row.landX=round(B.x0+40); row.landY=B.y;
-    row.x2=round(Math.min(A.x1-16,row.landX-255*row.Tb)); row.x1=round(Math.max(A.x0+16,row.x2-120));
+    row.x2=round(Math.min(A.x1,row.landX-255*row.Tb)); row.x1=round(Math.max(A.x0,row.x2-120));
   }
   return row;
 }
@@ -120,7 +120,7 @@ function analyze(id, cfg) {
     if(box){removed.add(box.id);obstacles.push({id:`${id.toLowerCase()}-vault-${String(vaultN).padStart(2,"0")}`,type:"vault",x:box.x,w:box.w,h:round(box.below.y-box.y),baseY:box.below.y,sourceId:box.id});}
     else obstacles.push({id:`${id.toLowerCase()}-vault-${String(vaultN).padStart(2,"0")}`,type:"vault",x:t.x,w:24,h:48,baseY:floor.y,sourceId:null});
   }
-  const extras=id==="D02"?routeData.D02.groundSegments.filter(s=>/^d02-(roof|slope)/.test(s.id)):[];
+  const extras=routeData[id].groundSegments.filter(s=>new RegExp(`^${id.toLowerCase()}-(slope|long)-`).test(s.id));
   const profileInputs=[...roles.filter(s=>s.role==="zemin"&&!removed.has(s.id)),...extras];
   const profile=makeProfile(profileInputs), groundByY=new Map();
   for(const s of profileInputs){if(!groundByY.has(s.y))groundByY.set(s.y,[]);groundByY.get(s.y).push(s);}
@@ -138,9 +138,9 @@ for(const r of results){
   console.log(`${r.id} konmayan tetikler:`,JSON.stringify(r.unplaced));
 }
 const roleActual=results.flatMap(r=>r.roles.filter(s=>s.role!=="zemin").map(s=>`${r.id}:${s.id}:${s.role}`)).sort();
-const roleExpected=["D01:d01-v-12:slide","D01:d01-v-13:slide","D01:d01-v-28:ust-gecit","D02:d02-v-15:ust-gecit"].sort();
-const firstDive=results.find(r=>r.id==="D01").transitions.find(t=>t.mech==="dive");
-const spot=firstDive&&Math.abs(firstDive.x1-305.6)<=.5&&Math.abs(firstDive.x2-425.6)<=.5&&Math.abs(firstDive.landX-1048)<=.5&&Math.abs(firstDive.landY+256.45)<=.5&&Math.abs(firstDive.Tb-1.120)<=.005;
+const roleExpected=["D03:d03-v-10:slide","D03:d03-v-13:ust-gecit","D03:d03-v-15:slide","D03:d03-v-32:ust-gecit","D04:d04-v-04:slide","D04:d04-v-14:ust-gecit","D04:d04-v-24:ust-gecit","D04:d04-v-27:ust-gecit"].sort();
+const firstDive=results.find(r=>r.id==="D03").transitions.find(t=>t.mech==="dive");
+const spot=firstDive&&Math.abs(firstDive.x1-2442)<=.5&&Math.abs(firstDive.x2-2562)<=.5&&Math.abs(firstDive.landX-3029.08)<=.5&&Math.abs(firstDive.landY-301.4)<=.5&&Math.abs(firstDive.Tb-.989)<=.005;
 const unmatched=results.flatMap(r=>r.transitions.filter(t=>t.mech==="UYMAYAN").map(t=>({...t,route:r.id})));
 let codeParity=true;
 for(const r of results){

@@ -183,17 +183,924 @@
     },
   });
   const COINS = Object.freeze({
-"A03":[{"n": 0, "move_id": "a03-m-01", "kind": "CS", "x": 1768, "y": 440, "skill": true}, {"n": 1, "move_id": "a03-m-02", "kind": "CC", "x": 2780, "y": 350, "skill": true}, {"n": 2, "move_id": "a03-m-03", "kind": "CJ", "x": 3665, "y": 355, "skill": false}, {"n": 3, "move_id": "a03-m-04", "kind": "CS", "x": 4588, "y": 440, "skill": true}, {"n": 4, "move_id": "a03-m-05", "kind": "CJ", "x": 5565, "y": 355, "skill": false}, {"n": 5, "move_id": "a03-m-06", "kind": "CC", "x": 6520, "y": 350, "skill": true}, {"n": 6, "move_id": "a03-m-07", "kind": "CJ", "x": 7355, "y": 355, "skill": false}, {"n": 7, "move_id": "a03-m-08", "kind": "CS", "x": 8438, "y": 440, "skill": true}, {"n": 8, "move_id": "a03-m-09", "kind": "CC", "x": 9340, "y": 350, "skill": true}, {"n": 9, "move_id": "a03-m-10", "kind": "CJ", "x": 10175, "y": 355, "skill": false}, {"n": 10, "move_id": "a03-m-11", "kind": "CC", "x": 11240, "y": 350, "skill": true}, {"n": 11, "move_id": "a03-m-12", "kind": "CJ", "x": 12125, "y": 355, "skill": false}, {"n": 12, "move_id": "a03-m-13", "kind": "CS", "x": 13048, "y": 440, "skill": true}, {"n": 13, "move_id": "a03-m-14", "kind": "CJ", "x": 14025, "y": 355, "skill": false}],"A04":[{"n": 0, "move_id": "a04-m-01", "kind": "CC", "x": 1750, "y": 350, "skill": true}, {"n": 1, "move_id": "a04-m-02", "kind": "CJ", "x": 2635, "y": 355, "skill": false}, {"n": 2, "move_id": "a04-m-03", "kind": "CS", "x": 3558, "y": 440, "skill": true}, {"n": 3, "move_id": "a04-m-04", "kind": "CC", "x": 4570, "y": 370, "skill": true}, {"n": 4, "move_id": "a04-m-05", "kind": "CJ", "x": 5455, "y": 355, "skill": false}, {"n": 5, "move_id": "a04-m-06", "kind": "CS", "x": 6378, "y": 440, "skill": true}, {"n": 6, "move_id": "a04-m-07", "kind": "CC", "x": 7390, "y": 350, "skill": true}, {"n": 7, "move_id": "a04-m-08", "kind": "CJ", "x": 8275, "y": 355, "skill": false}, {"n": 8, "move_id": "a04-m-09", "kind": "CC", "x": 9180, "y": 370, "skill": true}, {"n": 9, "move_id": "a04-m-10", "kind": "CS", "x": 10228, "y": 440, "skill": true}, {"n": 10, "move_id": "a04-m-11", "kind": "CJ", "x": 11095, "y": 355, "skill": false}, {"n": 11, "move_id": "a04-m-12", "kind": "CC", "x": 12000, "y": 350, "skill": true}, {"n": 12, "move_id": "a04-m-13", "kind": "CJ", "x": 12995, "y": 355, "skill": false}, {"n": 13, "move_id": "a04-m-14", "kind": "CJ", "x": 13915, "y": 355, "skill": false}],
-"A01":[{"n": 0, "move_id": "a01-m-01", "kind": "CJ", "x": 1715, "y": 355, "skill": false}, {"n": 1, "move_id": "a01-m-02", "kind": "CS", "x": 2688, "y": 440, "skill": true}, {"n": 2, "move_id": "a01-m-03", "kind": "CJ", "x": 3505, "y": 355, "skill": false}, {"n": 3, "move_id": "a01-m-04", "kind": "CC", "x": 4570, "y": 350, "skill": true}, {"n": 4, "move_id": "a01-m-05", "kind": "CJ", "x": 5455, "y": 355, "skill": false}, {"n": 5, "move_id": "a01-m-06", "kind": "CS", "x": 6378, "y": 440, "skill": true}, {"n": 6, "move_id": "a01-m-07", "kind": "CC", "x": 7390, "y": 350, "skill": true}, {"n": 7, "move_id": "a01-m-08", "kind": "CJ", "x": 8275, "y": 355, "skill": false}, {"n": 8, "move_id": "a01-m-09", "kind": "CC", "x": 9180, "y": 350, "skill": true}, {"n": 9, "move_id": "a01-m-10", "kind": "CJ", "x": 10175, "y": 355, "skill": false}, {"n": 10, "move_id": "a01-m-11", "kind": "CS", "x": 11148, "y": 440, "skill": true}, {"n": 11, "move_id": "a01-m-12", "kind": "CJ", "x": 11965, "y": 355, "skill": false}, {"n": 12, "move_id": "a01-m-13", "kind": "CC", "x": 13030, "y": 350, "skill": true}, {"n": 13, "move_id": "a01-m-14", "kind": "CJ", "x": 13915, "y": 355, "skill": false}],"A02":[{"n": 0, "move_id": "a02-m-01", "kind": "CC", "x": 1750, "y": 370, "skill": true}, {"n": 1, "move_id": "a02-m-02", "kind": "CS", "x": 2638, "y": 440, "skill": true}, {"n": 2, "move_id": "a02-m-03", "kind": "CJ", "x": 3615, "y": 355, "skill": false}, {"n": 3, "move_id": "a02-m-04", "kind": "CC", "x": 4570, "y": 350, "skill": true}, {"n": 4, "move_id": "a02-m-05", "kind": "CS", "x": 5458, "y": 440, "skill": true}, {"n": 5, "move_id": "a02-m-06", "kind": "CJ", "x": 6435, "y": 355, "skill": false}, {"n": 6, "move_id": "a02-m-07", "kind": "CC", "x": 7390, "y": 370, "skill": true}, {"n": 7, "move_id": "a02-m-08", "kind": "CJ", "x": 8225, "y": 355, "skill": false}, {"n": 8, "move_id": "a02-m-09", "kind": "CS", "x": 9308, "y": 440, "skill": true}, {"n": 9, "move_id": "a02-m-10", "kind": "CC", "x": 10210, "y": 350, "skill": true}, {"n": 10, "move_id": "a02-m-11", "kind": "CJ", "x": 11045, "y": 355, "skill": false}, {"n": 11, "move_id": "a02-m-12", "kind": "CC", "x": 12110, "y": 370, "skill": true}, {"n": 12, "move_id": "a02-m-13", "kind": "CJ", "x": 12995, "y": 355, "skill": false}, {"n": 13, "move_id": "a02-m-14", "kind": "CJ", "x": 13865, "y": 355, "skill": false}],
-"M04":[{"n":0,"move_id":"m04-m-01","kind":"CC","x":1800,"y":350,"skill":true},{"n":1,"move_id":"m04-m-02","kind":"CJ","x":2715,"y":355,"skill":false},{"n":2,"move_id":"m04-m-03","kind":"CC","x":3700,"y":370,"skill":true},{"n":3,"move_id":"m04-m-04","kind":"CJ","x":4615,"y":355,"skill":false},{"n":4,"move_id":"m04-m-05","kind":"CS","x":5618,"y":440,"skill":true},{"n":5,"move_id":"m04-m-06","kind":"CC","x":6550,"y":350,"skill":true},{"n":6,"move_id":"m04-m-07","kind":"CJ","x":7465,"y":355,"skill":false},{"n":7,"move_id":"m04-m-08","kind":"CC","x":8450,"y":370,"skill":true},{"n":8,"move_id":"m04-m-09","kind":"CJ","x":9365,"y":355,"skill":false},{"n":9,"move_id":"m04-m-10","kind":"CS","x":10368,"y":440,"skill":true},{"n":10,"move_id":"m04-m-11","kind":"CC","x":11300,"y":350,"skill":true},{"n":11,"move_id":"m04-m-12","kind":"CJ","x":12215,"y":355,"skill":false},{"n":12,"move_id":"m04-m-13","kind":"CJ","x":13165,"y":355,"skill":false},{"n":13,"move_id":"m04-m-14","kind":"CJ","x":14115,"y":355,"skill":false}],
-"M03":[{"n":0,"move_id":"m03-m-01","kind":"CJ","x":1765,"y":355,"skill":false},{"n":1,"move_id":"m03-m-02","kind":"CS","x":2768,"y":440,"skill":true},{"n":2,"move_id":"m03-m-03","kind":"CC","x":3700,"y":350,"skill":true},{"n":3,"move_id":"m03-m-04","kind":"CJ","x":4615,"y":355,"skill":false},{"n":4,"move_id":"m03-m-05","kind":"CS","x":5618,"y":440,"skill":true},{"n":5,"move_id":"m03-m-06","kind":"CJ","x":6515,"y":355,"skill":false},{"n":6,"move_id":"m03-m-07","kind":"CC","x":7500,"y":350,"skill":true},{"n":7,"move_id":"m03-m-08","kind":"CJ","x":8415,"y":355,"skill":false},{"n":8,"move_id":"m03-m-09","kind":"CS","x":9418,"y":440,"skill":true},{"n":9,"move_id":"m03-m-10","kind":"CC","x":10350,"y":350,"skill":true},{"n":10,"move_id":"m03-m-11","kind":"CJ","x":11265,"y":355,"skill":false},{"n":11,"move_id":"m03-m-12","kind":"CJ","x":12215,"y":355,"skill":false},{"n":12,"move_id":"m03-m-13","kind":"CC","x":13200,"y":350,"skill":true},{"n":13,"move_id":"m03-m-14","kind":"CJ","x":14115,"y":355,"skill":false}],
-"M01":[{"n": 0, "move_id": "m01-m-01", "kind": "CJ", "x": 1765, "y": 355, "skill": false}, {"n": 1, "move_id": "m01-m-02", "kind": "CC", "x": 2750, "y": 350, "skill": true}, {"n": 2, "move_id": "m01-m-03", "kind": "CS", "x": 3718, "y": 440, "skill": true}, {"n": 3, "move_id": "m01-m-04", "kind": "CJ", "x": 4615, "y": 355, "skill": false}, {"n": 4, "move_id": "m01-m-05", "kind": "CC", "x": 5600, "y": 350, "skill": true}, {"n": 5, "move_id": "m01-m-06", "kind": "CJ", "x": 6515, "y": 355, "skill": false}, {"n": 6, "move_id": "m01-m-07", "kind": "CS", "x": 7518, "y": 440, "skill": true}, {"n": 7, "move_id": "m01-m-08", "kind": "CC", "x": 8450, "y": 350, "skill": true}, {"n": 8, "move_id": "m01-m-09", "kind": "CJ", "x": 9365, "y": 355, "skill": false}, {"n": 9, "move_id": "m01-m-10", "kind": "CJ", "x": 10315, "y": 355, "skill": false}, {"n": 10, "move_id": "m01-m-11", "kind": "CC", "x": 11300, "y": 350, "skill": true}, {"n": 11, "move_id": "m01-m-12", "kind": "CJ", "x": 12215, "y": 355, "skill": false}, {"n": 12, "move_id": "m01-m-13", "kind": "CJ", "x": 13165, "y": 355, "skill": false}, {"n": 13, "move_id": "m01-m-14", "kind": "CJ", "x": 14115, "y": 355, "skill": false}],"M02":[{"n": 0, "move_id": "m02-m-01", "kind": "CC", "x": 1800, "y": 370, "skill": true}, {"n": 1, "move_id": "m02-m-02", "kind": "CJ", "x": 2715, "y": 355, "skill": false}, {"n": 2, "move_id": "m02-m-03", "kind": "CS", "x": 3718, "y": 440, "skill": true}, {"n": 3, "move_id": "m02-m-04", "kind": "CC", "x": 4650, "y": 350, "skill": true}, {"n": 4, "move_id": "m02-m-05", "kind": "CJ", "x": 5565, "y": 355, "skill": false}, {"n": 5, "move_id": "m02-m-06", "kind": "CC", "x": 6550, "y": 370, "skill": true}, {"n": 6, "move_id": "m02-m-07", "kind": "CJ", "x": 7465, "y": 355, "skill": false}, {"n": 7, "move_id": "m02-m-08", "kind": "CC", "x": 8450, "y": 350, "skill": true}, {"n": 8, "move_id": "m02-m-09", "kind": "CS", "x": 9418, "y": 440, "skill": true}, {"n": 9, "move_id": "m02-m-10", "kind": "CC", "x": 10350, "y": 370, "skill": true}, {"n": 10, "move_id": "m02-m-11", "kind": "CJ", "x": 11265, "y": 355, "skill": false}, {"n": 11, "move_id": "m02-m-12", "kind": "CC", "x": 12250, "y": 350, "skill": true}, {"n": 12, "move_id": "m02-m-13", "kind": "CJ", "x": 13165, "y": 355, "skill": false}, {"n": 13, "move_id": "m02-m-14", "kind": "CJ", "x": 14115, "y": 355, "skill": false}],
+  "A03": [
+    {
+      "n": 0,
+      "move_id": "a03-m-01",
+      "kind": "CS",
+      "x": 1768,
+      "y": 440,
+      "skill": true
+    },
+    {
+      "n": 1,
+      "move_id": "a03-m-02",
+      "kind": "CC",
+      "x": 2780,
+      "y": 350,
+      "skill": true
+    },
+    {
+      "n": 2,
+      "move_id": "a03-m-03",
+      "kind": "CJ",
+      "x": 3665,
+      "y": 355,
+      "skill": false
+    },
+    {
+      "n": 3,
+      "move_id": "a03-m-04",
+      "kind": "CS",
+      "x": 4588,
+      "y": 440,
+      "skill": true
+    },
+    {
+      "n": 4,
+      "move_id": "a03-m-05",
+      "kind": "CJ",
+      "x": 5565,
+      "y": 355,
+      "skill": false
+    },
+    {
+      "n": 5,
+      "move_id": "a03-m-06",
+      "kind": "CC",
+      "x": 6520,
+      "y": 350,
+      "skill": true
+    },
+    {
+      "n": 6,
+      "move_id": "a03-m-07",
+      "kind": "CJ",
+      "x": 7355,
+      "y": 355,
+      "skill": false
+    },
+    {
+      "n": 7,
+      "move_id": "a03-m-08",
+      "kind": "CS",
+      "x": 8438,
+      "y": 440,
+      "skill": true
+    },
+    {
+      "n": 8,
+      "move_id": "a03-m-09",
+      "kind": "CC",
+      "x": 9340,
+      "y": 350,
+      "skill": true
+    },
+    {
+      "n": 9,
+      "move_id": "a03-m-10",
+      "kind": "CJ",
+      "x": 10175,
+      "y": 355,
+      "skill": false
+    },
+    {
+      "n": 10,
+      "move_id": "a03-m-11",
+      "kind": "CC",
+      "x": 11240,
+      "y": 350,
+      "skill": true
+    },
+    {
+      "n": 11,
+      "move_id": "a03-m-12",
+      "kind": "CJ",
+      "x": 12125,
+      "y": 355,
+      "skill": false
+    },
+    {
+      "n": 12,
+      "move_id": "a03-m-13",
+      "kind": "CS",
+      "x": 13048,
+      "y": 440,
+      "skill": true
+    },
+    {
+      "n": 13,
+      "move_id": "a03-m-14",
+      "kind": "CJ",
+      "x": 14025,
+      "y": 355,
+      "skill": false
+    }
+  ],
+  "A04": [
+    {
+      "n": 0,
+      "move_id": "a04-m-01",
+      "kind": "CC",
+      "x": 1750,
+      "y": 350,
+      "skill": true
+    },
+    {
+      "n": 1,
+      "move_id": "a04-m-02",
+      "kind": "CJ",
+      "x": 2635,
+      "y": 355,
+      "skill": false
+    },
+    {
+      "n": 2,
+      "move_id": "a04-m-03",
+      "kind": "CS",
+      "x": 3558,
+      "y": 440,
+      "skill": true
+    },
+    {
+      "n": 3,
+      "move_id": "a04-m-04",
+      "kind": "CC",
+      "x": 4570,
+      "y": 370,
+      "skill": true
+    },
+    {
+      "n": 4,
+      "move_id": "a04-m-05",
+      "kind": "CJ",
+      "x": 5455,
+      "y": 355,
+      "skill": false
+    },
+    {
+      "n": 5,
+      "move_id": "a04-m-06",
+      "kind": "CS",
+      "x": 6378,
+      "y": 440,
+      "skill": true
+    },
+    {
+      "n": 6,
+      "move_id": "a04-m-07",
+      "kind": "CC",
+      "x": 7390,
+      "y": 350,
+      "skill": true
+    },
+    {
+      "n": 7,
+      "move_id": "a04-m-08",
+      "kind": "CJ",
+      "x": 8275,
+      "y": 355,
+      "skill": false
+    },
+    {
+      "n": 8,
+      "move_id": "a04-m-09",
+      "kind": "CC",
+      "x": 9180,
+      "y": 370,
+      "skill": true
+    },
+    {
+      "n": 9,
+      "move_id": "a04-m-10",
+      "kind": "CS",
+      "x": 10228,
+      "y": 440,
+      "skill": true
+    },
+    {
+      "n": 10,
+      "move_id": "a04-m-11",
+      "kind": "CJ",
+      "x": 11095,
+      "y": 355,
+      "skill": false
+    },
+    {
+      "n": 11,
+      "move_id": "a04-m-12",
+      "kind": "CC",
+      "x": 12000,
+      "y": 350,
+      "skill": true
+    },
+    {
+      "n": 12,
+      "move_id": "a04-m-13",
+      "kind": "CJ",
+      "x": 12995,
+      "y": 355,
+      "skill": false
+    },
+    {
+      "n": 13,
+      "move_id": "a04-m-14",
+      "kind": "CJ",
+      "x": 13915,
+      "y": 355,
+      "skill": false
+    }
+  ],
+  "A01": [
+    {
+      "n": 0,
+      "move_id": "a01-m-01",
+      "kind": "CJ",
+      "x": 1715,
+      "y": 355,
+      "skill": false
+    },
+    {
+      "n": 1,
+      "move_id": "a01-m-02",
+      "kind": "CS",
+      "x": 2688,
+      "y": 440,
+      "skill": true
+    },
+    {
+      "n": 2,
+      "move_id": "a01-m-03",
+      "kind": "CJ",
+      "x": 3505,
+      "y": 355,
+      "skill": false
+    },
+    {
+      "n": 3,
+      "move_id": "a01-m-04",
+      "kind": "CC",
+      "x": 4570,
+      "y": 350,
+      "skill": true
+    },
+    {
+      "n": 4,
+      "move_id": "a01-m-05",
+      "kind": "CJ",
+      "x": 5455,
+      "y": 355,
+      "skill": false
+    },
+    {
+      "n": 5,
+      "move_id": "a01-m-06",
+      "kind": "CS",
+      "x": 6378,
+      "y": 440,
+      "skill": true
+    },
+    {
+      "n": 6,
+      "move_id": "a01-m-07",
+      "kind": "CC",
+      "x": 7390,
+      "y": 350,
+      "skill": true
+    },
+    {
+      "n": 7,
+      "move_id": "a01-m-08",
+      "kind": "CJ",
+      "x": 8275,
+      "y": 355,
+      "skill": false
+    },
+    {
+      "n": 8,
+      "move_id": "a01-m-09",
+      "kind": "CC",
+      "x": 9180,
+      "y": 350,
+      "skill": true
+    },
+    {
+      "n": 9,
+      "move_id": "a01-m-10",
+      "kind": "CJ",
+      "x": 10175,
+      "y": 355,
+      "skill": false
+    },
+    {
+      "n": 10,
+      "move_id": "a01-m-11",
+      "kind": "CS",
+      "x": 11148,
+      "y": 440,
+      "skill": true
+    },
+    {
+      "n": 11,
+      "move_id": "a01-m-12",
+      "kind": "CJ",
+      "x": 11965,
+      "y": 355,
+      "skill": false
+    },
+    {
+      "n": 12,
+      "move_id": "a01-m-13",
+      "kind": "CC",
+      "x": 13030,
+      "y": 350,
+      "skill": true
+    },
+    {
+      "n": 13,
+      "move_id": "a01-m-14",
+      "kind": "CJ",
+      "x": 13915,
+      "y": 355,
+      "skill": false
+    }
+  ],
+  "A02": [
+    {
+      "n": 0,
+      "move_id": "a02-m-01",
+      "kind": "CC",
+      "x": 1750,
+      "y": 370,
+      "skill": true
+    },
+    {
+      "n": 1,
+      "move_id": "a02-m-02",
+      "kind": "CS",
+      "x": 2638,
+      "y": 440,
+      "skill": true
+    },
+    {
+      "n": 2,
+      "move_id": "a02-m-03",
+      "kind": "CJ",
+      "x": 3615,
+      "y": 355,
+      "skill": false
+    },
+    {
+      "n": 3,
+      "move_id": "a02-m-04",
+      "kind": "CC",
+      "x": 4570,
+      "y": 350,
+      "skill": true
+    },
+    {
+      "n": 4,
+      "move_id": "a02-m-05",
+      "kind": "CS",
+      "x": 5458,
+      "y": 440,
+      "skill": true
+    },
+    {
+      "n": 5,
+      "move_id": "a02-m-06",
+      "kind": "CJ",
+      "x": 6435,
+      "y": 355,
+      "skill": false
+    },
+    {
+      "n": 6,
+      "move_id": "a02-m-07",
+      "kind": "CC",
+      "x": 7390,
+      "y": 370,
+      "skill": true
+    },
+    {
+      "n": 7,
+      "move_id": "a02-m-08",
+      "kind": "CJ",
+      "x": 8225,
+      "y": 355,
+      "skill": false
+    },
+    {
+      "n": 8,
+      "move_id": "a02-m-09",
+      "kind": "CS",
+      "x": 9308,
+      "y": 440,
+      "skill": true
+    },
+    {
+      "n": 9,
+      "move_id": "a02-m-10",
+      "kind": "CC",
+      "x": 10210,
+      "y": 350,
+      "skill": true
+    },
+    {
+      "n": 10,
+      "move_id": "a02-m-11",
+      "kind": "CJ",
+      "x": 11045,
+      "y": 355,
+      "skill": false
+    },
+    {
+      "n": 11,
+      "move_id": "a02-m-12",
+      "kind": "CC",
+      "x": 12110,
+      "y": 370,
+      "skill": true
+    },
+    {
+      "n": 12,
+      "move_id": "a02-m-13",
+      "kind": "CJ",
+      "x": 12995,
+      "y": 355,
+      "skill": false
+    },
+    {
+      "n": 13,
+      "move_id": "a02-m-14",
+      "kind": "CJ",
+      "x": 13865,
+      "y": 355,
+      "skill": false
+    }
+  ],
+  "M04": [
+    {
+      "n": 0,
+      "move_id": "m04-m-01",
+      "kind": "CC",
+      "x": 1800,
+      "y": 350,
+      "skill": true
+    },
+    {
+      "n": 1,
+      "move_id": "m04-m-02",
+      "kind": "CJ",
+      "x": 2715,
+      "y": 355,
+      "skill": false
+    },
+    {
+      "n": 2,
+      "move_id": "m04-m-03",
+      "kind": "CC",
+      "x": 3700,
+      "y": 370,
+      "skill": true
+    },
+    {
+      "n": 3,
+      "move_id": "m04-m-04",
+      "kind": "CJ",
+      "x": 4615,
+      "y": 355,
+      "skill": false
+    },
+    {
+      "n": 4,
+      "move_id": "m04-m-05",
+      "kind": "CS",
+      "x": 5618,
+      "y": 440,
+      "skill": true
+    },
+    {
+      "n": 5,
+      "move_id": "m04-m-06",
+      "kind": "CC",
+      "x": 6550,
+      "y": 350,
+      "skill": true
+    },
+    {
+      "n": 6,
+      "move_id": "m04-m-07",
+      "kind": "CJ",
+      "x": 7465,
+      "y": 355,
+      "skill": false
+    },
+    {
+      "n": 7,
+      "move_id": "m04-m-08",
+      "kind": "CC",
+      "x": 8450,
+      "y": 370,
+      "skill": true
+    },
+    {
+      "n": 8,
+      "move_id": "m04-m-09",
+      "kind": "CJ",
+      "x": 9365,
+      "y": 355,
+      "skill": false
+    },
+    {
+      "n": 9,
+      "move_id": "m04-m-10",
+      "kind": "CS",
+      "x": 10368,
+      "y": 440,
+      "skill": true
+    },
+    {
+      "n": 10,
+      "move_id": "m04-m-11",
+      "kind": "CC",
+      "x": 11300,
+      "y": 350,
+      "skill": true
+    },
+    {
+      "n": 11,
+      "move_id": "m04-m-12",
+      "kind": "CJ",
+      "x": 12215,
+      "y": 355,
+      "skill": false
+    },
+    {
+      "n": 12,
+      "move_id": "m04-m-13",
+      "kind": "CJ",
+      "x": 13165,
+      "y": 355,
+      "skill": false
+    },
+    {
+      "n": 13,
+      "move_id": "m04-m-14",
+      "kind": "CJ",
+      "x": 14115,
+      "y": 355,
+      "skill": false
+    }
+  ],
+  "M03": [
+    {
+      "n": 0,
+      "move_id": "m03-m-01",
+      "kind": "CJ",
+      "x": 1765,
+      "y": 355,
+      "skill": false
+    },
+    {
+      "n": 1,
+      "move_id": "m03-m-02",
+      "kind": "CS",
+      "x": 2768,
+      "y": 440,
+      "skill": true
+    },
+    {
+      "n": 2,
+      "move_id": "m03-m-03",
+      "kind": "CC",
+      "x": 3700,
+      "y": 350,
+      "skill": true
+    },
+    {
+      "n": 3,
+      "move_id": "m03-m-04",
+      "kind": "CJ",
+      "x": 4615,
+      "y": 355,
+      "skill": false
+    },
+    {
+      "n": 4,
+      "move_id": "m03-m-05",
+      "kind": "CS",
+      "x": 5618,
+      "y": 440,
+      "skill": true
+    },
+    {
+      "n": 5,
+      "move_id": "m03-m-06",
+      "kind": "CJ",
+      "x": 6515,
+      "y": 355,
+      "skill": false
+    },
+    {
+      "n": 6,
+      "move_id": "m03-m-07",
+      "kind": "CC",
+      "x": 7500,
+      "y": 350,
+      "skill": true
+    },
+    {
+      "n": 7,
+      "move_id": "m03-m-08",
+      "kind": "CJ",
+      "x": 8415,
+      "y": 355,
+      "skill": false
+    },
+    {
+      "n": 8,
+      "move_id": "m03-m-09",
+      "kind": "CS",
+      "x": 9418,
+      "y": 440,
+      "skill": true
+    },
+    {
+      "n": 9,
+      "move_id": "m03-m-10",
+      "kind": "CC",
+      "x": 10350,
+      "y": 350,
+      "skill": true
+    },
+    {
+      "n": 10,
+      "move_id": "m03-m-11",
+      "kind": "CJ",
+      "x": 11265,
+      "y": 355,
+      "skill": false
+    },
+    {
+      "n": 11,
+      "move_id": "m03-m-12",
+      "kind": "CJ",
+      "x": 12215,
+      "y": 355,
+      "skill": false
+    },
+    {
+      "n": 12,
+      "move_id": "m03-m-13",
+      "kind": "CC",
+      "x": 13200,
+      "y": 350,
+      "skill": true
+    },
+    {
+      "n": 13,
+      "move_id": "m03-m-14",
+      "kind": "CJ",
+      "x": 14115,
+      "y": 355,
+      "skill": false
+    }
+  ],
+  "M01": [
+    {
+      "n": 0,
+      "move_id": "m01-m-01",
+      "kind": "CJ",
+      "x": 1765,
+      "y": 355,
+      "skill": false
+    },
+    {
+      "n": 1,
+      "move_id": "m01-m-02",
+      "kind": "CC",
+      "x": 2750,
+      "y": 350,
+      "skill": true
+    },
+    {
+      "n": 2,
+      "move_id": "m01-m-03",
+      "kind": "CS",
+      "x": 3718,
+      "y": 440,
+      "skill": true
+    },
+    {
+      "n": 3,
+      "move_id": "m01-m-04",
+      "kind": "CJ",
+      "x": 4615,
+      "y": 355,
+      "skill": false
+    },
+    {
+      "n": 4,
+      "move_id": "m01-m-05",
+      "kind": "CC",
+      "x": 5600,
+      "y": 350,
+      "skill": true
+    },
+    {
+      "n": 5,
+      "move_id": "m01-m-06",
+      "kind": "CJ",
+      "x": 6515,
+      "y": 355,
+      "skill": false
+    },
+    {
+      "n": 6,
+      "move_id": "m01-m-07",
+      "kind": "CS",
+      "x": 7518,
+      "y": 440,
+      "skill": true
+    },
+    {
+      "n": 7,
+      "move_id": "m01-m-08",
+      "kind": "CC",
+      "x": 8450,
+      "y": 350,
+      "skill": true
+    },
+    {
+      "n": 8,
+      "move_id": "m01-m-09",
+      "kind": "CJ",
+      "x": 9365,
+      "y": 355,
+      "skill": false
+    },
+    {
+      "n": 9,
+      "move_id": "m01-m-10",
+      "kind": "CJ",
+      "x": 10315,
+      "y": 355,
+      "skill": false
+    },
+    {
+      "n": 10,
+      "move_id": "m01-m-11",
+      "kind": "CC",
+      "x": 11300,
+      "y": 350,
+      "skill": true
+    },
+    {
+      "n": 11,
+      "move_id": "m01-m-12",
+      "kind": "CJ",
+      "x": 12215,
+      "y": 355,
+      "skill": false
+    },
+    {
+      "n": 12,
+      "move_id": "m01-m-13",
+      "kind": "CJ",
+      "x": 13165,
+      "y": 355,
+      "skill": false
+    },
+    {
+      "n": 13,
+      "move_id": "m01-m-14",
+      "kind": "CJ",
+      "x": 14115,
+      "y": 355,
+      "skill": false
+    }
+  ],
+  "M02": [
+    {
+      "n": 0,
+      "move_id": "m02-m-01",
+      "kind": "CC",
+      "x": 1800,
+      "y": 370,
+      "skill": true
+    },
+    {
+      "n": 1,
+      "move_id": "m02-m-02",
+      "kind": "CJ",
+      "x": 2715,
+      "y": 355,
+      "skill": false
+    },
+    {
+      "n": 2,
+      "move_id": "m02-m-03",
+      "kind": "CS",
+      "x": 3718,
+      "y": 440,
+      "skill": true
+    },
+    {
+      "n": 3,
+      "move_id": "m02-m-04",
+      "kind": "CC",
+      "x": 4650,
+      "y": 350,
+      "skill": true
+    },
+    {
+      "n": 4,
+      "move_id": "m02-m-05",
+      "kind": "CJ",
+      "x": 5565,
+      "y": 355,
+      "skill": false
+    },
+    {
+      "n": 5,
+      "move_id": "m02-m-06",
+      "kind": "CC",
+      "x": 6550,
+      "y": 370,
+      "skill": true
+    },
+    {
+      "n": 6,
+      "move_id": "m02-m-07",
+      "kind": "CJ",
+      "x": 7465,
+      "y": 355,
+      "skill": false
+    },
+    {
+      "n": 7,
+      "move_id": "m02-m-08",
+      "kind": "CC",
+      "x": 8450,
+      "y": 350,
+      "skill": true
+    },
+    {
+      "n": 8,
+      "move_id": "m02-m-09",
+      "kind": "CS",
+      "x": 9418,
+      "y": 440,
+      "skill": true
+    },
+    {
+      "n": 9,
+      "move_id": "m02-m-10",
+      "kind": "CC",
+      "x": 10350,
+      "y": 370,
+      "skill": true
+    },
+    {
+      "n": 10,
+      "move_id": "m02-m-11",
+      "kind": "CJ",
+      "x": 11265,
+      "y": 355,
+      "skill": false
+    },
+    {
+      "n": 11,
+      "move_id": "m02-m-12",
+      "kind": "CC",
+      "x": 12250,
+      "y": 350,
+      "skill": true
+    },
+    {
+      "n": 12,
+      "move_id": "m02-m-13",
+      "kind": "CJ",
+      "x": 13165,
+      "y": 355,
+      "skill": false
+    },
+    {
+      "n": 13,
+      "move_id": "m02-m-14",
+      "kind": "CJ",
+      "x": 14115,
+      "y": 355,
+      "skill": false
+    }
+  ],
   "D01": [
     {
       "n": 0,
       "move_id": "d01-t1b-platform-2",
       "kind": "CC",
-      "x": 1200.0,
+      "x": 1200,
       "y": 350,
       "skill": true
     },
@@ -201,7 +1108,7 @@
       "n": 1,
       "move_id": "d01-vault",
       "kind": "CJ",
-      "x": 1600.0,
+      "x": 1600,
       "y": 355,
       "skill": false
     },
@@ -209,7 +1116,7 @@
       "n": 2,
       "move_id": "d01-t1b-vault-5",
       "kind": "CJ",
-      "x": 2230.0,
+      "x": 2230,
       "y": 355,
       "skill": false
     },
@@ -217,7 +1124,7 @@
       "n": 3,
       "move_id": "d01-t1b-vault-3",
       "kind": "CJ",
-      "x": 3590.0,
+      "x": 3590,
       "y": 355,
       "skill": false
     },
@@ -225,7 +1132,7 @@
       "n": 4,
       "move_id": "d01-t1b-vault-2",
       "kind": "CJ",
-      "x": 4082.0,
+      "x": 4082,
       "y": 355,
       "skill": false
     },
@@ -233,7 +1140,7 @@
       "n": 5,
       "move_id": "d01-t1b-platform-3",
       "kind": "CC",
-      "x": 5450.0,
+      "x": 5450,
       "y": 350,
       "skill": true
     },
@@ -241,7 +1148,7 @@
       "n": 6,
       "move_id": "d01-t1b-platform-1",
       "kind": "CC",
-      "x": 6588.0,
+      "x": 6588,
       "y": 350,
       "skill": true
     },
@@ -249,7 +1156,7 @@
       "n": 7,
       "move_id": "d01-t2c-vault-3",
       "kind": "CJ",
-      "x": 7128.0,
+      "x": 7128,
       "y": 355,
       "skill": false
     },
@@ -257,7 +1164,7 @@
       "n": 8,
       "move_id": "d01-t2c-vault-5",
       "kind": "CJ",
-      "x": 7859.0,
+      "x": 7859,
       "y": 355,
       "skill": false
     },
@@ -265,7 +1172,7 @@
       "n": 9,
       "move_id": "d01-t1b-vault-4",
       "kind": "CJ",
-      "x": 8541.0,
+      "x": 8541,
       "y": 355,
       "skill": false
     },
@@ -273,7 +1180,7 @@
       "n": 10,
       "move_id": "d01-t1b-platform-4",
       "kind": "CC",
-      "x": 9020.0,
+      "x": 9020,
       "y": 350,
       "skill": true
     },
@@ -281,7 +1188,7 @@
       "n": 11,
       "move_id": "d01-t1b-slide-2",
       "kind": "CS",
-      "x": 9800.0,
+      "x": 9800,
       "y": 440,
       "skill": true
     }
@@ -291,7 +1198,7 @@
       "n": 0,
       "move_id": "d02-slide",
       "kind": "CS",
-      "x": 1330.0,
+      "x": 1330,
       "y": 440,
       "skill": true
     },
@@ -299,7 +1206,7 @@
       "n": 1,
       "move_id": "d02-t2c-vault-1",
       "kind": "CJ",
-      "x": 3720.0,
+      "x": 3720,
       "y": 355,
       "skill": false
     },
@@ -307,7 +1214,7 @@
       "n": 2,
       "move_id": "d02-t1b-platform-1",
       "kind": "CC",
-      "x": 4960.0,
+      "x": 4960,
       "y": 350,
       "skill": true
     },
@@ -315,7 +1222,7 @@
       "n": 3,
       "move_id": "d02-t1b-platform-2",
       "kind": "CC",
-      "x": 5890.0,
+      "x": 5890,
       "y": 350,
       "skill": true
     },
@@ -323,7 +1230,7 @@
       "n": 4,
       "move_id": "d02-loading-vault",
       "kind": "CJ",
-      "x": 7120.0,
+      "x": 7120,
       "y": 355,
       "skill": false
     },
@@ -331,7 +1238,7 @@
       "n": 5,
       "move_id": "d02-dispatch-vault",
       "kind": "CJ",
-      "x": 9122.0,
+      "x": 9122,
       "y": 355,
       "skill": false
     },
@@ -339,7 +1246,7 @@
       "n": 6,
       "move_id": "d02-t2c-vault-2",
       "kind": "CJ",
-      "x": 9596.0,
+      "x": 9596,
       "y": 355,
       "skill": false
     },
@@ -347,7 +1254,7 @@
       "n": 7,
       "move_id": "d02-t2c-vault-3",
       "kind": "CJ",
-      "x": 10553.0,
+      "x": 10553,
       "y": 355,
       "skill": false
     },
@@ -355,7 +1262,7 @@
       "n": 8,
       "move_id": "d02-t2c-vault-4",
       "kind": "CJ",
-      "x": 11453.0,
+      "x": 11453,
       "y": 355,
       "skill": false
     },
@@ -363,7 +1270,7 @@
       "n": 9,
       "move_id": "d02-t2c-vault-5",
       "kind": "CJ",
-      "x": 11853.0,
+      "x": 11853,
       "y": 355,
       "skill": false
     }
@@ -371,204 +1278,204 @@
   "D03": [
     {
       "n": 0,
-      "move_id": "d03-crane",
+      "move_id": "d03-v-03",
       "kind": "CC",
-      "x": 1404.0,
-      "y": 345,
+      "x": 241.6,
+      "y": 94.6,
       "skill": true
     },
     {
       "n": 1,
-      "move_id": "d03-upper",
+      "move_id": "d03-v-04",
       "kind": "CC",
-      "x": 2400.0,
-      "y": 310,
+      "x": 479.68,
+      "y": 137.8,
       "skill": true
     },
     {
       "n": 2,
-      "move_id": "d03-t1b-vault-3",
+      "move_id": "d03-tr-15",
       "kind": "CJ",
-      "x": 3530.0,
-      "y": 355,
+      "x": 3260.42,
+      "y": 225.4,
       "skill": false
     },
     {
       "n": 3,
-      "move_id": "d03-t2c-vault-1",
+      "move_id": "d03-dz-02",
       "kind": "CJ",
-      "x": 3930.0,
-      "y": 355,
+      "x": 4071.88,
+      "y": 238.8,
       "skill": false
     },
     {
       "n": 4,
-      "move_id": "d03-t1b-pallet-2",
+      "move_id": "d03-v-09",
       "kind": "CC",
-      "x": 4550.0,
-      "y": 385,
+      "x": 1318,
+      "y": 65.8,
       "skill": true
     },
     {
       "n": 5,
-      "move_id": "d03-crane-2",
+      "move_id": "d03-v-11",
       "kind": "CC",
-      "x": 6194.0,
-      "y": 330,
+      "x": 1903.48,
+      "y": 44.2,
       "skill": true
     },
     {
       "n": 6,
-      "move_id": "d03-upper-2",
+      "move_id": "d03-v-16",
       "kind": "CC",
-      "x": 7250.0,
-      "y": 295,
+      "x": 3889.24,
+      "y": 304.6,
       "skill": true
     },
     {
       "n": 7,
-      "move_id": "d03-t1b-vault-2",
+      "move_id": "d03-dz-01",
       "kind": "CJ",
-      "x": 8500.0,
-      "y": 355,
+      "x": 2791.54,
+      "y": 29.8,
       "skill": false
     },
     {
       "n": 8,
-      "move_id": "d03-t2c-vault-2",
+      "move_id": "d03-tr-15",
       "kind": "CJ",
-      "x": 9253.0,
-      "y": 355,
+      "x": 3260.42,
+      "y": 225.4,
       "skill": false
     },
     {
       "n": 9,
-      "move_id": "d03-t1b-slide-1",
+      "move_id": "d03-slide-02",
       "kind": "CS",
-      "x": 10620.0,
-      "y": 440,
+      "x": 3741.24,
+      "y": 326.2,
       "skill": true
     },
     {
       "n": 10,
-      "move_id": "d03-t1b-pallet-1",
+      "move_id": "d03-v-27",
       "kind": "CC",
-      "x": 11846.0,
-      "y": 385,
+      "x": 5788.6,
+      "y": 345.4,
       "skill": true
     },
     {
       "n": 11,
-      "move_id": "d03-t2c-vault-3",
+      "move_id": "d03-tr-34",
       "kind": "CJ",
-      "x": 12612.0,
-      "y": 355,
+      "x": 6699.64,
+      "y": 331,
       "skill": false
     },
     {
       "n": 12,
-      "move_id": "d03-t2c-vault-4",
+      "move_id": "d03-tr-10",
       "kind": "CJ",
-      "x": 13012.0,
-      "y": 355,
+      "x": 1171,
+      "y": 101.8,
       "skill": false
     }
   ],
   "D04": [
     {
       "n": 0,
-      "move_id": "d04-t1b-vault-1",
+      "move_id": "d04-dz-01",
       "kind": "CJ",
-      "x": 1299.0,
-      "y": 355,
+      "x": 3617.2,
+      "y": -279.8,
       "skill": false
     },
     {
       "n": 1,
-      "move_id": "d04-t1b-vault-3",
+      "move_id": "d04-dz-02",
       "kind": "CJ",
-      "x": 1699.0,
-      "y": 355,
+      "x": 4898.8,
+      "y": -231.8,
       "skill": false
     },
     {
       "n": 2,
-      "move_id": "d04-roof-b",
+      "move_id": "d04-v-06",
       "kind": "CC",
-      "x": 3370.0,
-      "y": 387,
+      "x": 1074.16,
+      "y": -560.6,
       "skill": true
     },
     {
       "n": 3,
-      "move_id": "d04-t1b-vault-2",
+      "move_id": "d04-dz-03",
       "kind": "CJ",
-      "x": 4383.0,
-      "y": 355,
+      "x": 7360.6,
+      "y": 194.2,
       "skill": false
     },
     {
       "n": 4,
-      "move_id": "d04-t1b-slide-2",
+      "move_id": "d04-slide-01",
       "kind": "CS",
-      "x": 5000.0,
-      "y": 440,
+      "x": 576.72,
+      "y": -575,
       "skill": true
     },
     {
       "n": 5,
-      "move_id": "d04-t1b-vault-5",
+      "move_id": "d04-dz-02",
       "kind": "CJ",
-      "x": 5681.0,
-      "y": 355,
+      "x": 4898.8,
+      "y": -231.8,
       "skill": false
     },
     {
       "n": 6,
-      "move_id": "d04-t1b-vault-4",
+      "move_id": "d04-tr-32",
       "kind": "CJ",
-      "x": 6280.0,
-      "y": 355,
+      "x": 5352.4,
+      "y": -231.8,
       "skill": false
     },
     {
       "n": 7,
-      "move_id": "d04-t2c-vault-2",
+      "move_id": "d04-dz-03",
       "kind": "CJ",
-      "x": 7602.0,
-      "y": 355,
+      "x": 7360.6,
+      "y": 194.2,
       "skill": false
     },
     {
       "n": 8,
-      "move_id": "d04-t1b-pallet-3",
+      "move_id": "d04-v-17",
       "kind": "CC",
-      "x": 8200.0,
-      "y": 385,
+      "x": 4374.4,
+      "y": -123.8,
       "skill": true
     },
     {
       "n": 9,
-      "move_id": "d04-t2c-vault-3",
+      "move_id": "d04-dz-02",
       "kind": "CJ",
-      "x": 8976.0,
-      "y": 355,
+      "x": 4898.8,
+      "y": -231.8,
       "skill": false
     },
     {
       "n": 10,
-      "move_id": "d04-t1b-pallet-1",
+      "move_id": "d04-v-21",
       "kind": "CC",
-      "x": 9380.0,
-      "y": 385,
+      "x": 5076.4,
+      "y": -195.8,
       "skill": true
     },
     {
       "n": 11,
-      "move_id": "d04-t1b-slide-1",
+      "move_id": "d04-slide-01",
       "kind": "CS",
-      "x": 10360,
-      "y": 440,
+      "x": 576.72,
+      "y": -575,
       "skill": true
     }
   ],
@@ -577,7 +1484,7 @@
       "n": 0,
       "move_id": "d05-t1b-slide-2",
       "kind": "CS",
-      "x": 1220.0,
+      "x": 1220,
       "y": 440,
       "skill": true
     },
@@ -585,7 +1492,7 @@
       "n": 1,
       "move_id": "d05-pallet",
       "kind": "CC",
-      "x": 2291.0,
+      "x": 2291,
       "y": 385,
       "skill": true
     },
@@ -593,7 +1500,7 @@
       "n": 2,
       "move_id": "d05-t1b-vault-4",
       "kind": "CJ",
-      "x": 3141.0,
+      "x": 3141,
       "y": 355,
       "skill": false
     },
@@ -601,7 +1508,7 @@
       "n": 3,
       "move_id": "d05-t1b-platform-3",
       "kind": "CC",
-      "x": 3640.0,
+      "x": 3640,
       "y": 350,
       "skill": true
     },
@@ -609,7 +1516,7 @@
       "n": 4,
       "move_id": "d05-t1b-platform-2",
       "kind": "CC",
-      "x": 4366.0,
+      "x": 4366,
       "y": 350,
       "skill": true
     },
@@ -617,7 +1524,7 @@
       "n": 5,
       "move_id": "d05-vault",
       "kind": "CJ",
-      "x": 5911.0,
+      "x": 5911,
       "y": 355,
       "skill": false
     },
@@ -625,7 +1532,7 @@
       "n": 6,
       "move_id": "d05-t2c-vault-3",
       "kind": "CJ",
-      "x": 7028.0,
+      "x": 7028,
       "y": 355,
       "skill": false
     },
@@ -633,7 +1540,7 @@
       "n": 7,
       "move_id": "d05-t1b-vault-2",
       "kind": "CJ",
-      "x": 7451.0,
+      "x": 7451,
       "y": 355,
       "skill": false
     },
@@ -641,7 +1548,7 @@
       "n": 8,
       "move_id": "d05-t2c-vault-4",
       "kind": "CJ",
-      "x": 9333.0,
+      "x": 9333,
       "y": 355,
       "skill": false
     },
@@ -649,7 +1556,7 @@
       "n": 9,
       "move_id": "d05-t1b-vault-3",
       "kind": "CJ",
-      "x": 10134.0,
+      "x": 10134,
       "y": 355,
       "skill": false
     },
@@ -657,7 +1564,7 @@
       "n": 10,
       "move_id": "d05-t2c-vault-5",
       "kind": "CJ",
-      "x": 10598.0,
+      "x": 10598,
       "y": 355,
       "skill": false
     },
@@ -665,7 +1572,7 @@
       "n": 11,
       "move_id": "d05-t1b-vault-1",
       "kind": "CJ",
-      "x": 12284.0,
+      "x": 12284,
       "y": 355,
       "skill": false
     },
@@ -673,7 +1580,7 @@
       "n": 12,
       "move_id": "d05-t2c-vault-9",
       "kind": "CJ",
-      "x": 12710.0,
+      "x": 12710,
       "y": 355,
       "skill": false
     }
@@ -683,7 +1590,7 @@
       "n": 0,
       "move_id": "d06-t1b-platform-1",
       "kind": "CC",
-      "x": 2630.0,
+      "x": 2630,
       "y": 350,
       "skill": true
     },
@@ -691,7 +1598,7 @@
       "n": 1,
       "move_id": "d06-t1b-vault-4",
       "kind": "CJ",
-      "x": 3572.0,
+      "x": 3572,
       "y": 355,
       "skill": false
     },
@@ -699,7 +1606,7 @@
       "n": 2,
       "move_id": "d06-t2c-vault-1",
       "kind": "CJ",
-      "x": 3972.0,
+      "x": 3972,
       "y": 355,
       "skill": false
     },
@@ -707,7 +1614,7 @@
       "n": 3,
       "move_id": "d06-t2c-vault-3",
       "kind": "CJ",
-      "x": 5029.0,
+      "x": 5029,
       "y": 355,
       "skill": false
     },
@@ -715,7 +1622,7 @@
       "n": 4,
       "move_id": "d06-t1b-pallet-1",
       "kind": "CC",
-      "x": 5992.0,
+      "x": 5992,
       "y": 385,
       "skill": true
     },
@@ -723,7 +1630,7 @@
       "n": 5,
       "move_id": "d06-t1b-vault-2",
       "kind": "CJ",
-      "x": 7152.0,
+      "x": 7152,
       "y": 355,
       "skill": false
     },
@@ -731,7 +1638,7 @@
       "n": 6,
       "move_id": "d06-t2c-vault-6",
       "kind": "CJ",
-      "x": 8251.0,
+      "x": 8251,
       "y": 355,
       "skill": false
     },
@@ -739,7 +1646,7 @@
       "n": 7,
       "move_id": "d06-t1b-pallet-2",
       "kind": "CC",
-      "x": 8860.0,
+      "x": 8860,
       "y": 385,
       "skill": true
     },
@@ -747,7 +1654,7 @@
       "n": 8,
       "move_id": "d06-t1b-vault-3",
       "kind": "CJ",
-      "x": 10353.0,
+      "x": 10353,
       "y": 355,
       "skill": false
     },
@@ -755,7 +1662,7 @@
       "n": 9,
       "move_id": "d06-t1b-slide-1",
       "kind": "CS",
-      "x": 10890.0,
+      "x": 10890,
       "y": 440,
       "skill": true
     },
@@ -763,7 +1670,7 @@
       "n": 10,
       "move_id": "d06-t1b-pallet-3",
       "kind": "CC",
-      "x": 12591.0,
+      "x": 12591,
       "y": 385,
       "skill": true
     },
@@ -771,7 +1678,7 @@
       "n": 11,
       "move_id": "d06-t2c-vault-7",
       "kind": "CJ",
-      "x": 14305.0,
+      "x": 14305,
       "y": 355,
       "skill": false
     },
@@ -779,7 +1686,7 @@
       "n": 12,
       "move_id": "d06-t2c-vault-8",
       "kind": "CJ",
-      "x": 14796.0,
+      "x": 14796,
       "y": 355,
       "skill": false
     }
@@ -789,7 +1696,7 @@
       "n": 0,
       "move_id": "f01-wide-a",
       "kind": "CC",
-      "x": 2251.0,
+      "x": 2251,
       "y": 375,
       "skill": true
     },
@@ -797,7 +1704,7 @@
       "n": 1,
       "move_id": "f01-t1b-vault-1",
       "kind": "CJ",
-      "x": 2957.0,
+      "x": 2957,
       "y": 355,
       "skill": false
     },
@@ -805,7 +1712,7 @@
       "n": 2,
       "move_id": "f01-t2c-vault-1",
       "kind": "CJ",
-      "x": 3357.0,
+      "x": 3357,
       "y": 355,
       "skill": false
     },
@@ -813,7 +1720,7 @@
       "n": 3,
       "move_id": "f01-vault",
       "kind": "CJ",
-      "x": 3757.0,
+      "x": 3757,
       "y": 355,
       "skill": false
     },
@@ -821,7 +1728,7 @@
       "n": 4,
       "move_id": "f01-t1b-slide-2",
       "kind": "CS",
-      "x": 4510.0,
+      "x": 4510,
       "y": 440,
       "skill": true
     },
@@ -829,7 +1736,7 @@
       "n": 5,
       "move_id": "f01-wide-b",
       "kind": "CC",
-      "x": 5150.0,
+      "x": 5150,
       "y": 360,
       "skill": true
     },
@@ -837,7 +1744,7 @@
       "n": 6,
       "move_id": "f01-t2c-vault-2",
       "kind": "CJ",
-      "x": 6193.0,
+      "x": 6193,
       "y": 355,
       "skill": false
     },
@@ -845,7 +1752,7 @@
       "n": 7,
       "move_id": "f01-t1b-vault-3",
       "kind": "CJ",
-      "x": 6593.0,
+      "x": 6593,
       "y": 355,
       "skill": false
     },
@@ -853,7 +1760,7 @@
       "n": 8,
       "move_id": "f01-t1b-vault-2",
       "kind": "CJ",
-      "x": 7811.0,
+      "x": 7811,
       "y": 355,
       "skill": false
     },
@@ -861,7 +1768,7 @@
       "n": 9,
       "move_id": "f01-t2c-vault-3",
       "kind": "CJ",
-      "x": 8410.0,
+      "x": 8410,
       "y": 355,
       "skill": false
     },
@@ -869,7 +1776,7 @@
       "n": 10,
       "move_id": "f01-wide-c",
       "kind": "CC",
-      "x": 8810.0,
+      "x": 8810,
       "y": 382,
       "skill": true
     },
@@ -877,7 +1784,7 @@
       "n": 11,
       "move_id": "f01-t2c-vault-4",
       "kind": "CJ",
-      "x": 10230.0,
+      "x": 10230,
       "y": 355,
       "skill": false
     },
@@ -885,7 +1792,7 @@
       "n": 12,
       "move_id": "f01-t1b-pallet-2",
       "kind": "CC",
-      "x": 11418.0,
+      "x": 11418,
       "y": 385,
       "skill": true
     },
@@ -893,7 +1800,7 @@
       "n": 13,
       "move_id": "f01-t1b-pallet-1",
       "kind": "CC",
-      "x": 12633.0,
+      "x": 12633,
       "y": 385,
       "skill": true
     }
@@ -903,7 +1810,7 @@
       "n": 0,
       "move_id": "f02-crane-a",
       "kind": "CC",
-      "x": 1344.0,
+      "x": 1344,
       "y": 330,
       "skill": true
     },
@@ -911,7 +1818,7 @@
       "n": 1,
       "move_id": "f02-upper-a",
       "kind": "CC",
-      "x": 2500.0,
+      "x": 2500,
       "y": 280,
       "skill": true
     },
@@ -919,7 +1826,7 @@
       "n": 2,
       "move_id": "f02-t2c-vault-1",
       "kind": "CJ",
-      "x": 3548.0,
+      "x": 3548,
       "y": 355,
       "skill": false
     },
@@ -927,7 +1834,7 @@
       "n": 3,
       "move_id": "f02-t2c-vault-2",
       "kind": "CJ",
-      "x": 4205.0,
+      "x": 4205,
       "y": 355,
       "skill": false
     },
@@ -935,7 +1842,7 @@
       "n": 4,
       "move_id": "f02-t1b-vault-2",
       "kind": "CJ",
-      "x": 4623.0,
+      "x": 4623,
       "y": 355,
       "skill": false
     },
@@ -943,7 +1850,7 @@
       "n": 5,
       "move_id": "f02-pallet",
       "kind": "CC",
-      "x": 5361.0,
+      "x": 5361,
       "y": 370,
       "skill": true
     },
@@ -951,7 +1858,7 @@
       "n": 7,
       "move_id": "f02-t1b-vault-1",
       "kind": "CJ",
-      "x": 8010.0,
+      "x": 8010,
       "y": 355,
       "skill": false
     },
@@ -959,7 +1866,7 @@
       "n": 8,
       "move_id": "f02-crane-b",
       "kind": "CC",
-      "x": 8584.0,
+      "x": 8584,
       "y": 345,
       "skill": true
     },
@@ -967,7 +1874,7 @@
       "n": 9,
       "move_id": "f02-vault",
       "kind": "CJ",
-      "x": 10422.0,
+      "x": 10422,
       "y": 355,
       "skill": false
     },
@@ -975,7 +1882,7 @@
       "n": 10,
       "move_id": "f02-t2c-vault-4",
       "kind": "CJ",
-      "x": 10822.0,
+      "x": 10822,
       "y": 355,
       "skill": false
     },
@@ -983,7 +1890,7 @@
       "n": 11,
       "move_id": "f02-t1b-slide-1",
       "kind": "CS",
-      "x": 11817.0,
+      "x": 11817,
       "y": 440,
       "skill": true
     },
@@ -991,7 +1898,7 @@
       "n": 12,
       "move_id": "f02-t2c-vault-5",
       "kind": "CJ",
-      "x": 12657.0,
+      "x": 12657,
       "y": 355,
       "skill": false
     },
@@ -999,7 +1906,7 @@
       "n": 13,
       "move_id": "f02-t2c-vault-7",
       "kind": "CJ",
-      "x": 13057.0,
+      "x": 13057,
       "y": 355,
       "skill": false
     }
@@ -1009,7 +1916,7 @@
       "n": 0,
       "move_id": "f03-t1b-vault-4",
       "kind": "CJ",
-      "x": 1461.0,
+      "x": 1461,
       "y": 355,
       "skill": false
     },
@@ -1017,7 +1924,7 @@
       "n": 1,
       "move_id": "f03-t2c-vault-4",
       "kind": "CJ",
-      "x": 1861.0,
+      "x": 1861,
       "y": 355,
       "skill": false
     },
@@ -1025,7 +1932,7 @@
       "n": 2,
       "move_id": "f03-t1b-platform-1",
       "kind": "CC",
-      "x": 3640.0,
+      "x": 3640,
       "y": 350,
       "skill": true
     },
@@ -1033,7 +1940,7 @@
       "n": 3,
       "move_id": "f03-slide-b",
       "kind": "CS",
-      "x": 4570.0,
+      "x": 4570,
       "y": 440,
       "skill": true
     },
@@ -1041,7 +1948,7 @@
       "n": 4,
       "move_id": "f03-t1b-vault-2",
       "kind": "CJ",
-      "x": 5371.0,
+      "x": 5371,
       "y": 355,
       "skill": false
     },
@@ -1049,7 +1956,7 @@
       "n": 5,
       "move_id": "f03-t1b-platform-2",
       "kind": "CC",
-      "x": 5810.0,
+      "x": 5810,
       "y": 350,
       "skill": true
     },
@@ -1057,7 +1964,7 @@
       "n": 6,
       "move_id": "f03-t1b-vault-3",
       "kind": "CJ",
-      "x": 8090.0,
+      "x": 8090,
       "y": 355,
       "skill": false
     },
@@ -1065,7 +1972,7 @@
       "n": 7,
       "move_id": "f03-t2c-vault-6",
       "kind": "CJ",
-      "x": 8490.0,
+      "x": 8490,
       "y": 355,
       "skill": false
     },
@@ -1073,7 +1980,7 @@
       "n": 8,
       "move_id": "f03-t1b-platform-3",
       "kind": "CC",
-      "x": 9570.0,
+      "x": 9570,
       "y": 350,
       "skill": true
     },
@@ -1081,7 +1988,7 @@
       "n": 9,
       "move_id": "f03-vault",
       "kind": "CJ",
-      "x": 10480.0,
+      "x": 10480,
       "y": 355,
       "skill": false
     },
@@ -1089,7 +1996,7 @@
       "n": 10,
       "move_id": "f03-t2c-vault-12",
       "kind": "CJ",
-      "x": 10880.0,
+      "x": 10880,
       "y": 355,
       "skill": false
     },
@@ -1097,7 +2004,7 @@
       "n": 11,
       "move_id": "f03-t2c-vault-16",
       "kind": "CJ",
-      "x": 12747.0,
+      "x": 12747,
       "y": 355,
       "skill": false
     },
@@ -1105,7 +2012,7 @@
       "n": 12,
       "move_id": "f03-t1b-vault-1",
       "kind": "CJ",
-      "x": 14230.0,
+      "x": 14230,
       "y": 355,
       "skill": false
     }
@@ -1115,7 +2022,7 @@
       "n": 0,
       "move_id": "f04-t1b-pallet-1",
       "kind": "CC",
-      "x": 3311.0,
+      "x": 3311,
       "y": 385,
       "skill": true
     },
@@ -1123,7 +2030,7 @@
       "n": 1,
       "move_id": "f04-t1b-vault-2",
       "kind": "CJ",
-      "x": 4913.0,
+      "x": 4913,
       "y": 355,
       "skill": false
     },
@@ -1131,7 +2038,7 @@
       "n": 2,
       "move_id": "f04-t2c-vault-2",
       "kind": "CJ",
-      "x": 5313.0,
+      "x": 5313,
       "y": 355,
       "skill": false
     },
@@ -1139,7 +2046,7 @@
       "n": 5,
       "move_id": "f04-t1b-vault-3",
       "kind": "CJ",
-      "x": 8031.0,
+      "x": 8031,
       "y": 355,
       "skill": false
     },
@@ -1147,7 +2054,7 @@
       "n": 6,
       "move_id": "f04-t1b-pallet-2",
       "kind": "CC",
-      "x": 8600.0,
+      "x": 8600,
       "y": 385,
       "skill": true
     },
@@ -1155,7 +2062,7 @@
       "n": 7,
       "move_id": "f04-t2c-vault-3",
       "kind": "CJ",
-      "x": 10204.0,
+      "x": 10204,
       "y": 355,
       "skill": false
     },
@@ -1163,7 +2070,7 @@
       "n": 8,
       "move_id": "f04-vault",
       "kind": "CJ",
-      "x": 10734.0,
+      "x": 10734,
       "y": 355,
       "skill": false
     },
@@ -1171,7 +2078,7 @@
       "n": 9,
       "move_id": "f04-t2c-vault-4",
       "kind": "CJ",
-      "x": 11134.0,
+      "x": 11134,
       "y": 355,
       "skill": false
     },
@@ -1179,7 +2086,7 @@
       "n": 10,
       "move_id": "f04-t1b-vault-1",
       "kind": "CJ",
-      "x": 11760.0,
+      "x": 11760,
       "y": 355,
       "skill": false
     },
@@ -1187,7 +2094,7 @@
       "n": 11,
       "move_id": "f04-t2c-vault-6",
       "kind": "CJ",
-      "x": 12160.0,
+      "x": 12160,
       "y": 355,
       "skill": false
     },
@@ -1195,7 +2102,7 @@
       "n": 12,
       "move_id": "f04-t2c-vault-8",
       "kind": "CJ",
-      "x": 13559.0,
+      "x": 13559,
       "y": 355,
       "skill": false
     },
@@ -1203,7 +2110,7 @@
       "n": 13,
       "move_id": "f04-t2c-vault-9",
       "kind": "CJ",
-      "x": 13959.0,
+      "x": 13959,
       "y": 355,
       "skill": false
     }
@@ -1349,54 +2256,17 @@
     },
     D03: {
       routeId: "D03", worldId: "dock31", version: 2, name: "CRANE CROSSING",
-      length: 14300, finishX: 14160, checkpoints: [70, 4300, 9000],
-      chief: { startX: 4300 },
-      obstacles: [
-        // T2-c2: approved gap additions; existing geometry is preserved.
-        {"id":"d03-t2c-vault-1","type":"vault","x":3976,"y":407,"w":24,"h":48},
-        {"id":"d03-t2c-vault-2","type":"vault","x":9332,"y":407,"w":24,"h":48},
-        {"id":"d03-t2c-vault-3","type":"vault","x":12690,"y":407,"w":24,"h":48},
-        {"id":"d03-t2c-vault-4","type":"vault","x":13014,"y":407,"w":24,"h":48},
-        { id: "d03-t1b-vault-1", type: "vault", x: 1020, w: 24, h: 48 },
-        { id: "d03-crane", type: "crane", x: 1470, y: 365, w: 260, h: 22, minX: 1400, maxX: 2310, speed: 92 },
-        { id: "d03-upper", type: "platform", x: 2400, y: 330, w: 760, h: 24 },
-        { id: "d03-t1b-vault-3", type: "vault", x: 3610, w: 24, h: 48 },
-        { id: "d03-t1b-pallet-2", type: "pallet", x: 4680, y: 405, w: 210, h: 22, minX: 4550, maxX: 5530, speed: 105 },
-        { id: "d03-crane-2", type: "crane", x: 6250, y: 350, w: 240, h: 22, minX: 6100, maxX: 7150, speed: 106 },
-        { id: "d03-upper-2", type: "platform", x: 7250, y: 315, w: 920, h: 24 },
-        { id: "d03-t1b-vault-2", type: "vault", x: 8580, w: 24, h: 48 },
-        { id: "d03-ramp", type: "ramp", x: 9700, w: 180, h: 74 },
-        { id: "d03-t1b-slide-1", type: "slide", x: 10610, w: 56, h: 160 },
-        { id: "d03-t1b-pallet-1", type: "pallet", x: 11330, y: 405, w: 210, h: 22, minX: 11200, maxX: 12180, speed: 105 },
-        { id: "d03-dispatch-ramp", type: "ramp", x: 13400, w: 180, h: 74 },
-      ],
-      coins: makeCoins("D03", COINS.D03),
+      length: 7139, finishX: 6999, checkpoints: [70,2125,4449],
+      chief: { startX: 2125 }, movementProfile: "vector-v1",
+      catchableSurfaces: [{id:"d03-v-03"},{id:"d03-v-04"},{id:"d03-v-06"},{id:"d03-v-07"},{id:"d03-v-09"},{id:"d03-v-11"},{id:"d03-v-16"},{id:"d03-v-18"},{id:"d03-v-20"},{id:"d03-v-26"},{id:"d03-v-27"},{id:"d03-v-28"},{id:"d03-v-30"}], highJumpZones: [], diveZones: [{id:"d03-dz-01",x1:2442,x2:2562,landX:3029.08,landY:301.4},{id:"d03-dz-02",x1:3873.24,x2:3983.64,landX:4168.12,landY:347},{id:"d03-dz-03",x1:4489.5,x2:4348.66,landX:4576.12,landY:282.2}],
+      groundSegments: [{id:"d03-v-01",x:0,y:199.4,w:620.4,h:168,kind:"ground"},{id:"d03-v-02",x:0,y:156.2,w:225.3,h:43.2,kind:"ground"},{id:"d03-v-03",x:225.6,y:134.6,w:69.6,h:64.8,kind:"ground"},{id:"d03-v-04",x:463.68,y:177.8,w:72,h:21.6,kind:"ground"},{id:"d03-v-05",x:620.4,y:221,w:510,h:145.2,kind:"ground"},{id:"d03-v-06",x:705.18,y:199.4,w:72,h:21.6,kind:"ground"},{id:"d03-v-07",x:940.8,y:199.4,w:189.6,h:21.6,kind:"ground"},{id:"d03-v-08",x:1179.6,y:177.8,w:123.7,h:439.2,kind:"ground"},{id:"d03-v-09",x:1302,y:105.8,w:1260,h:120,kind:"ground"},{id:"d03-v-11",x:1887.48,y:84.2,w:72,h:21.6,kind:"ground"},{id:"d03-v-12",x:2989.08,y:301.4,w:255.31,h:254.4,kind:"ground"},{id:"d03-v-13",x:3025.56,y:-49,w:739.2,h:238.8,kind:"ground"},{id:"d03-v-14",x:3244.44,y:387.8,w:739.2,h:238.8,kind:"ground"},{id:"d03-v-16",x:3873.24,y:344.6,w:110.4,h:43.2,kind:"ground"},{id:"d03-v-17",x:4128.12,y:347,w:240,h:240,kind:"ground"},{id:"d03-v-18",x:4208.52,y:325.4,w:160.8,h:21.6,kind:"ground"},{id:"d03-v-19",x:4368.12,y:396.2,w:796.54,h:246.48,kind:"ground"},{id:"d03-v-20",x:4422.12,y:304.04,w:67.38,h:92.4,kind:"ground"},{id:"d03-v-21",x:4536.12,y:282.2,w:309.6,h:114,kind:"ground"},{id:"d03-v-23",x:4845.72,y:282.2,w:100.81,h:115.6,kind:"ground"},{id:"d03-v-24",x:5299.8,y:407,w:121.2,h:554.4,kind:"ground"},{id:"d03-v-25",x:5421,y:428.6,w:117.6,h:218.4,kind:"ground"},{id:"d03-v-26",x:5538.6,y:407,w:720,h:240,kind:"ground"},{id:"d03-v-27",x:5772.6,y:385.4,w:72,h:21.6,kind:"ground"},{id:"d03-v-28",x:6075,y:385.4,w:72,h:21.6,kind:"ground"},{id:"d03-v-29",x:6258.6,y:455,w:115.2,h:192,kind:"ground"},{id:"d03-v-30",x:6373.8,y:407,w:264,h:240,kind:"ground"},{id:"d03-v-31",x:6729.48,y:445.16,w:840,h:463.2,kind:"ground"},{id:"d03-v-32",x:7078.2,y:253.4,w:12,h:120,kind:"ground"},{id:"d03-u-1",x:1170,y:2058.92,w:648,h:240,kind:"ground"},{id:"d03-u-2",x:1399.2,y:1941.32,w:48,h:86.4,kind:"ground"},{id:"d03-u-3",x:1645.68,y:167.06,w:72,h:21.6,kind:"ground"},{id:"d03-u-4",x:1666.8,y:1941.32,w:48,h:86.4,kind:"ground"},{id:"d03-u-5",x:3244.44,y:344.6,w:219.51,h:43.2,kind:"ground"},{id:"d03-u-6",x:3464.04,y:344.6,w:88.8,h:43.2,kind:"ground"},{id:"d03-u-7",x:3552.84,y:366.2,w:244.8,h:21.6,kind:"ground"},{id:"d03-u-8",x:4845.72,y:646.52,w:98.99,h:39.6,kind:"ground"},{id:"d03-u-9",x:4947.72,y:925.4,w:48,h:74.4,kind:"ground"},{id:"d03-u-10",x:5103.72,y:866.36,w:48,h:74.4,kind:"ground"},{id:"d03-u-11",x:5644.2,y:681.8,w:28.8,h:21.6,kind:"ground"},{id:"d03-u-12",x:5945.4,y:653.72,w:28.8,h:21.6,kind:"ground"},{id:"d03-u-13",x:6300.6,y:489.08,w:33.6,h:48,kind:"ground"},{id:"d03-u-14",x:6730.2,y:1925.48,w:480,h:339.6,kind:"ground"},{id:"d03-u-15",x:6958.2,y:1882.28,w:12,h:43.2,kind:"ground"},{id:"d03-u-16",x:7114.2,y:1903.88,w:96,h:21.6,kind:"ground"},{id:"d03-slope-1",x:4946.53,w:117.76,y:323.8,h:41.6,kind:"ground",role:"zemin"},{id:"d03-slope-2",x:5064.29,w:117.76,y:365.4,h:41.6,kind:"ground",role:"zemin"},{id:"d03-slope-3",x:5182.04,w:117.76,y:407,h:41.6,kind:"ground",role:"zemin"}], obstacles: [{id:"d03-slide-01",type:"slide",x:1423.2,w:48,h:86.4,baseY:105.8},{id:"d03-slide-02",type:"slide",x:3693.24,w:96,h:21.6,baseY:387.8},{id:"d03-vault-01",type:"vault",x:5892.6,w:24,h:48,baseY:407},{id:"d03-vault-02",type:"vault",x:4706.52,w:28.8,h:21.6,baseY:282.2},{id:"d03-vault-03",type:"vault",x:5591.4,w:24,h:48,baseY:407}], coins: [{id:"D03-c01",n:0,move_id:"d03-v-03",kind:"CC",x:241.6,y:94.6,skill:true},{id:"D03-c02",n:1,move_id:"d03-v-04",kind:"CC",x:479.68,y:137.8,skill:true},{id:"D03-c03",n:2,move_id:"d03-tr-15",kind:"CJ",x:3260.42,y:225.4,skill:false},{id:"D03-c04",n:3,move_id:"d03-dz-02",kind:"CJ",x:4071.88,y:238.8,skill:false},{id:"D03-c05",n:4,move_id:"d03-v-09",kind:"CC",x:1318,y:65.8,skill:true},{id:"D03-c06",n:5,move_id:"d03-v-11",kind:"CC",x:1903.48,y:44.2,skill:true},{id:"D03-c07",n:6,move_id:"d03-v-16",kind:"CC",x:3889.24,y:304.6,skill:true},{id:"D03-c08",n:7,move_id:"d03-dz-01",kind:"CJ",x:2791.54,y:29.8,skill:false},{id:"D03-c09",n:8,move_id:"d03-tr-15",kind:"CJ",x:3260.42,y:225.4,skill:false},{id:"D03-c10",n:9,move_id:"d03-slide-02",kind:"CS",x:3741.24,y:326.2,skill:true},{id:"D03-c11",n:10,move_id:"d03-v-27",kind:"CC",x:5788.6,y:345.4,skill:true},{id:"D03-c12",n:11,move_id:"d03-tr-34",kind:"CJ",x:6699.64,y:331,skill:false},{id:"D03-c13",n:12,move_id:"d03-tr-10",kind:"CJ",x:1171,y:101.8,skill:false}],
     },
     D04: {
       routeId: "D04", worldId: "dock31", version: 1, name: "ROOFTOP SHORTCUT",
-      length: 11100, finishX: 10960, checkpoints: [70, 5350],
-      chief: { startX: 5350 },
-      obstacles: [
-        // T2-c2: approved gap additions; existing geometry is preserved.
-        {"id":"d04-t2c-vault-2","type":"vault","x":7680,"y":407,"w":24,"h":48},
-        {"id":"d04-t2c-vault-3","type":"vault","x":9056,"y":407,"w":24,"h":48},
-        { id: "d04-t1b-pallet-2", type: "pallet", x: 615, y: 405, w: 210, h: 22, minX: 485, maxX: 785, speed: 105 },
-        { id: "d04-t1b-vault-1", type: "vault", x: 1379, w: 24, h: 48 },
-        { id: "d04-t1b-vault-3", type: "vault", x: 1777, w: 24, h: 48 },
-        { id: "d04-rise", type: "ramp", x: 2130, w: 180, h: 74 },
-        { id: "d04-roof-a", type: "platform", x: 2370, y: 407, w: 640, h: 24 },
-        { id: "d04-collapse", type: "collapse", x: 3010, y: 407, w: 300, h: 24, warning: 0.9 },
-        { id: "d04-roof-b", type: "platform", x: 3310, y: 407, w: 720, h: 24 },
-        { id: "d04-t1b-vault-2", type: "vault", x: 4460, w: 24, h: 48 },
-        { id: "d04-t1b-slide-2", type: "slide", x: 4990, w: 56, h: 160 },
-        { id: "d04-t1b-vault-5", type: "vault", x: 5760, w: 24, h: 48 },
-        { id: "d04-t1b-vault-4", type: "vault", x: 6360, w: 24, h: 48 },
-        { id: "d04-ramp", type: "ramp", x: 7200, w: 180, h: 74 },
-        { id: "d04-t1b-pallet-3", type: "pallet", x: 8330, y: 405, w: 210, h: 22, minX: 8200, maxX: 8500, speed: 105 },
-        { id: "d04-t1b-pallet-1", type: "pallet", x: 9510, y: 405, w: 210, h: 22, minX: 9380, maxX: 9680, speed: 105 },
-        { id: "d04-t1b-slide-1", type: "slide", x: 10340, w: 56, h: 160 },
-      ],
-      coins: makeCoins("D04", COINS.D04),
+      length: 8169, finishX: 8029, checkpoints: [70,3919],
+      chief: { startX: 3919 }, movementProfile: "vector-v1",
+      catchableSurfaces: [{id:"d04-v-03"},{id:"d04-v-05"},{id:"d04-v-06"},{id:"d04-v-08"},{id:"d04-v-09"},{id:"d04-v-10"},{id:"d04-v-12"},{id:"d04-v-15"},{id:"d04-v-17"},{id:"d04-v-18"},{id:"d04-v-21"},{id:"d04-v-26"}], highJumpZones: [], diveZones: [{id:"d04-dz-01",x1:3276,x2:3396,landX:3846.4,landY:-83.8},{id:"d04-dz-02",x1:4809.6,x2:4686.67,landX:4922.8,landY:-155.8},{id:"d04-dz-03",x1:6974.4,x2:7094.4,landX:7634.8,landY:455}],
+      groundSegments: [{id:"d04-v-01",x:0,y:-376.6,w:1368,h:72,kind:"ground"},{id:"d04-v-02",x:0,y:-448.6,w:240,h:72,kind:"ground"},{id:"d04-v-03",x:379.2,y:-448.6,w:312,h:72,kind:"ground"},{id:"d04-v-05",x:830.4,y:-448.6,w:543.6,h:72,kind:"ground"},{id:"d04-v-06",x:1058.16,y:-520.6,w:144,h:72,kind:"ground"},{id:"d04-v-07",x:1656,y:-131.8,w:360,h:240,kind:"ground"},{id:"d04-v-08",x:1656,y:-203.8,w:121.2,h:72,kind:"ground"},{id:"d04-v-09",x:1873.2,y:-203.8,w:48,h:72,kind:"ground"},{id:"d04-v-10",x:2016,y:-203.8,w:1380,h:240,kind:"ground"},{id:"d04-v-12",x:2600.4,y:-225.4,w:72,h:21.6,kind:"ground"},{id:"d04-v-13",x:3806.4,y:-83.8,w:504,h:240,kind:"ground"},{id:"d04-v-14",x:3829.68,y:-297.4,w:42,h:120,kind:"ground"},{id:"d04-v-15",x:4086,y:-105.4,w:72,h:21.6,kind:"ground"},{id:"d04-v-16",x:4310.4,y:-15.4,w:620.4,h:171.6,kind:"ground"},{id:"d04-v-17",x:4358.4,y:-83.8,w:168,h:68.4,kind:"ground"},{id:"d04-v-18",x:4617.6,y:-83.8,w:192,h:68.4,kind:"ground"},{id:"d04-v-19",x:4882.8,y:-155.8,w:48,h:140.4,kind:"ground"},{id:"d04-v-20",x:4930.8,y:-83.8,w:129.6,h:240,kind:"ground"},{id:"d04-v-21",x:5060.4,y:-155.8,w:240,h:312,kind:"ground"},{id:"d04-v-22",x:5372.4,y:-88.6,w:240,h:240,kind:"ground"},{id:"d04-v-23",x:6273.6,y:270.2,w:820.8,h:240,kind:"ground"},{id:"d04-v-24",x:7593.6,y:276.2,w:150,h:87.6,kind:"ground"},{id:"d04-v-25",x:7594.8,y:455,w:1327.2,h:308.4,kind:"ground"},{id:"d04-v-26",x:7879.2,y:433.4,w:87.6,h:21.6,kind:"ground"},{id:"d04-v-27",x:8131.92,y:265.16,w:12,h:120,kind:"ground"},{id:"d04-u-1",x:117.6,y:-413.08,w:28.8,h:21.6,kind:"ground"},{id:"d04-u-2",x:930,y:-382.6,w:28.8,h:21.6,kind:"ground"},{id:"d04-u-3",x:2163.6,y:-44.68,w:72,h:21.6,kind:"ground"},{id:"d04-slope-1",x:1374,w:40.29,y:-403.34,h:45.26,kind:"ground",role:"zemin"},{id:"d04-slope-2",x:1414.29,w:40.29,y:-358.09,h:45.26,kind:"ground",role:"zemin"},{id:"d04-slope-3",x:1454.57,w:40.29,y:-312.83,h:45.26,kind:"ground",role:"zemin"},{id:"d04-slope-4",x:1494.86,w:40.29,y:-267.57,h:45.26,kind:"ground",role:"zemin"},{id:"d04-slope-5",x:1535.14,w:40.29,y:-222.31,h:45.26,kind:"ground",role:"zemin"},{id:"d04-slope-6",x:1575.43,w:40.29,y:-177.06,h:45.26,kind:"ground",role:"zemin"},{id:"d04-slope-7",x:1615.71,w:40.29,y:-131.8,h:45.26,kind:"ground",role:"zemin"},{id:"d04-long-1",x:5612.4,w:82.65,y:-43.75,h:44.85,kind:"ground",role:"zemin"},{id:"d04-long-2",x:5695.05,w:82.65,y:1.1,h:44.85,kind:"ground",role:"zemin"},{id:"d04-long-3",x:5777.7,w:82.65,y:45.95,h:44.85,kind:"ground",role:"zemin"},{id:"d04-long-4",x:5860.35,w:82.65,y:90.8,h:44.85,kind:"ground",role:"zemin"},{id:"d04-long-5",x:5943,w:82.65,y:135.65,h:44.85,kind:"ground",role:"zemin"},{id:"d04-long-6",x:6025.65,w:82.65,y:180.5,h:44.85,kind:"ground",role:"zemin"},{id:"d04-long-7",x:6108.3,w:82.65,y:225.35,h:44.85,kind:"ground",role:"zemin"},{id:"d04-long-8",x:6190.95,w:82.65,y:270.2,h:44.85,kind:"ground",role:"zemin"}], obstacles: [{id:"d04-slide-01",type:"slide",x:552.72,w:48,h:86.4,baseY:-448.6},{id:"d04-vault-01",type:"vault",x:877.2,w:24,h:48,baseY:-448.6},{id:"d04-vault-02",type:"vault",x:2397.6,w:28.8,h:21.6,baseY:-203.8}], coins: [{id:"D04-c01",n:0,move_id:"d04-dz-01",kind:"CJ",x:3617.2,y:-279.8,skill:false},{id:"D04-c02",n:1,move_id:"d04-dz-02",kind:"CJ",x:4898.8,y:-231.8,skill:false},{id:"D04-c03",n:2,move_id:"d04-v-06",kind:"CC",x:1074.16,y:-560.6,skill:true},{id:"D04-c04",n:3,move_id:"d04-dz-03",kind:"CJ",x:7360.6,y:194.2,skill:false},{id:"D04-c05",n:4,move_id:"d04-slide-01",kind:"CS",x:576.72,y:-575,skill:true},{id:"D04-c06",n:5,move_id:"d04-dz-02",kind:"CJ",x:4898.8,y:-231.8,skill:false},{id:"D04-c07",n:6,move_id:"d04-tr-32",kind:"CJ",x:5352.4,y:-231.8,skill:false},{id:"D04-c08",n:7,move_id:"d04-dz-03",kind:"CJ",x:7360.6,y:194.2,skill:false},{id:"D04-c09",n:8,move_id:"d04-v-17",kind:"CC",x:4374.4,y:-123.8,skill:true},{id:"D04-c10",n:9,move_id:"d04-dz-02",kind:"CJ",x:4898.8,y:-231.8,skill:false},{id:"D04-c11",n:10,move_id:"d04-v-21",kind:"CC",x:5076.4,y:-195.8,skill:true},{id:"D04-c12",n:11,move_id:"d04-slide-01",kind:"CS",x:576.72,y:-575,skill:true}],
     },
     D05: {
       routeId: "D05", worldId: "dock31", version: 1, name: "CLEAN CHAIN",
