@@ -867,234 +867,8 @@
       "skill": false
     }
   ],
-  "M01": [
-    {
-      "n": 0,
-      "move_id": "m01-m-01",
-      "kind": "CJ",
-      "x": 1765,
-      "y": 355,
-      "skill": false
-    },
-    {
-      "n": 1,
-      "move_id": "m01-m-02",
-      "kind": "CC",
-      "x": 2750,
-      "y": 350,
-      "skill": true
-    },
-    {
-      "n": 2,
-      "move_id": "m01-m-03",
-      "kind": "CS",
-      "x": 3718,
-      "y": 440,
-      "skill": true
-    },
-    {
-      "n": 3,
-      "move_id": "m01-m-04",
-      "kind": "CJ",
-      "x": 4615,
-      "y": 355,
-      "skill": false
-    },
-    {
-      "n": 4,
-      "move_id": "m01-m-05",
-      "kind": "CC",
-      "x": 5600,
-      "y": 350,
-      "skill": true
-    },
-    {
-      "n": 5,
-      "move_id": "m01-m-06",
-      "kind": "CJ",
-      "x": 6515,
-      "y": 355,
-      "skill": false
-    },
-    {
-      "n": 6,
-      "move_id": "m01-m-07",
-      "kind": "CS",
-      "x": 7518,
-      "y": 440,
-      "skill": true
-    },
-    {
-      "n": 7,
-      "move_id": "m01-m-08",
-      "kind": "CC",
-      "x": 8450,
-      "y": 350,
-      "skill": true
-    },
-    {
-      "n": 8,
-      "move_id": "m01-m-09",
-      "kind": "CJ",
-      "x": 9365,
-      "y": 355,
-      "skill": false
-    },
-    {
-      "n": 9,
-      "move_id": "m01-m-10",
-      "kind": "CJ",
-      "x": 10315,
-      "y": 355,
-      "skill": false
-    },
-    {
-      "n": 10,
-      "move_id": "m01-m-11",
-      "kind": "CC",
-      "x": 11300,
-      "y": 350,
-      "skill": true
-    },
-    {
-      "n": 11,
-      "move_id": "m01-m-12",
-      "kind": "CJ",
-      "x": 12215,
-      "y": 355,
-      "skill": false
-    },
-    {
-      "n": 12,
-      "move_id": "m01-m-13",
-      "kind": "CJ",
-      "x": 13165,
-      "y": 355,
-      "skill": false
-    },
-    {
-      "n": 13,
-      "move_id": "m01-m-14",
-      "kind": "CJ",
-      "x": 14115,
-      "y": 355,
-      "skill": false
-    }
-  ],
-  "M02": [
-    {
-      "n": 0,
-      "move_id": "m02-m-01",
-      "kind": "CC",
-      "x": 1800,
-      "y": 370,
-      "skill": true
-    },
-    {
-      "n": 1,
-      "move_id": "m02-m-02",
-      "kind": "CJ",
-      "x": 2715,
-      "y": 355,
-      "skill": false
-    },
-    {
-      "n": 2,
-      "move_id": "m02-m-03",
-      "kind": "CS",
-      "x": 3718,
-      "y": 440,
-      "skill": true
-    },
-    {
-      "n": 3,
-      "move_id": "m02-m-04",
-      "kind": "CC",
-      "x": 4650,
-      "y": 350,
-      "skill": true
-    },
-    {
-      "n": 4,
-      "move_id": "m02-m-05",
-      "kind": "CJ",
-      "x": 5565,
-      "y": 355,
-      "skill": false
-    },
-    {
-      "n": 5,
-      "move_id": "m02-m-06",
-      "kind": "CC",
-      "x": 6550,
-      "y": 370,
-      "skill": true
-    },
-    {
-      "n": 6,
-      "move_id": "m02-m-07",
-      "kind": "CJ",
-      "x": 7465,
-      "y": 355,
-      "skill": false
-    },
-    {
-      "n": 7,
-      "move_id": "m02-m-08",
-      "kind": "CC",
-      "x": 8450,
-      "y": 350,
-      "skill": true
-    },
-    {
-      "n": 8,
-      "move_id": "m02-m-09",
-      "kind": "CS",
-      "x": 9418,
-      "y": 440,
-      "skill": true
-    },
-    {
-      "n": 9,
-      "move_id": "m02-m-10",
-      "kind": "CC",
-      "x": 10350,
-      "y": 370,
-      "skill": true
-    },
-    {
-      "n": 10,
-      "move_id": "m02-m-11",
-      "kind": "CJ",
-      "x": 11265,
-      "y": 355,
-      "skill": false
-    },
-    {
-      "n": 11,
-      "move_id": "m02-m-12",
-      "kind": "CC",
-      "x": 12250,
-      "y": 350,
-      "skill": true
-    },
-    {
-      "n": 12,
-      "move_id": "m02-m-13",
-      "kind": "CJ",
-      "x": 13165,
-      "y": 355,
-      "skill": false
-    },
-    {
-      "n": 13,
-      "move_id": "m02-m-14",
-      "kind": "CJ",
-      "x": 14115,
-      "y": 355,
-      "skill": false
-    }
-  ],
+  "M01": [{"id":"M01-c01","type":"CJ","move_id":"m01-dz-01","x":488,"y":-963},{"id":"M01-c02","type":"CJ","move_id":"m01-dz-02","x":1456,"y":-1140},{"id":"M01-c03","type":"CJ","move_id":"m01-dz-03","x":1999,"y":-1122},{"id":"M01-c04","type":"CJ","move_id":"m01-dz-04","x":2388,"y":-1144},{"id":"M01-c05","type":"CJ","move_id":"m01-dz-05","x":2861,"y":-921},{"id":"M01-c06","type":"CJ","move_id":"m01-dz-06","x":3842,"y":-852},{"id":"M01-c07","type":"CJ","move_id":"m01-dz-07","x":4821.2,"y":-943.25},{"id":"M01-c08","type":"CJ","move_id":"m01-dz-08","x":6085,"y":-486},{"id":"M01-c09","type":"CC","move_id":"m01-v-03","x":715.6,"y":-1015.25},{"id":"M01-c10","type":"CC","move_id":"m01-v-06","x":1544.8,"y":-1028.5},{"id":"M01-c11","type":"CC","move_id":"m01-deadend-i11-step-1","x":2374.8,"y":-1169.625},{"id":"M01-c12","type":"CC","move_id":"m01-deadend-i11-step-2","x":2410.8,"y":-1240.125},{"id":"M01-c13","type":"CS","move_id":"m01-vault-06","x":1136.4,"y":-979.25},{"id":"M01-c14","type":"CS","move_id":"m01-vault-08","x":5266.8,"y":-445}],
+  "M02": [{"id":"M02-c01","type":"CJ","move_id":"m02-dz-01","x":408,"y":-402},{"id":"M02-c02","type":"CJ","move_id":"m02-dz-02","x":870,"y":-380},{"id":"M02-c03","type":"CJ","move_id":"m02-dz-03","x":1203,"y":-570},{"id":"M02-c04","type":"CJ","move_id":"m02-dz-04","x":2028,"y":-419},{"id":"M02-c05","type":"CJ","move_id":"m02-dz-07","x":4498,"y":-22},{"id":"M02-c06","type":"CJ","move_id":"m02-dz-06","x":3328,"y":-212},{"id":"M02-c07","type":"CC","move_id":"m02-v-03","x":496,"y":-290.25},{"id":"M02-c08","type":"CC","move_id":"m02-v-04","x":620.8,"y":-347.75},{"id":"M02-c09","type":"CC","move_id":"m02-v-06","x":1050.4,"y":-370.625},{"id":"M02-c10","type":"CC","move_id":"m02-v-17","x":3418.24,"y":-99.375},{"id":"M02-c11","type":"CC","move_id":"m02-v-08","x":1303.6,"y":-464.25},{"id":"M02-c12","type":"CC","move_id":"m02-v-13","x":2258.8,"y":-381.375},{"id":"M02-c13","type":"CS","move_id":"m02-slide-01","x":3113.89,"y":-22},{"id":"M02-c14","type":"CS","move_id":"m02-vault-03","x":114,"y":-268.625}],
   "D01": [
     {
       "n": 0,
@@ -1491,8 +1265,8 @@
 "A01":{"routeId": "A01", "worldId": "aftermath", "version": 1, "name": "BROKEN RECEIVING", "length": 16600, "finishX": 16460, "checkpoints": [70, 3000, 6000, 9000, 12000, 15800], "obstacles": [{"id": "a01-m-intro", "type": "slide", "x": 300, "w": 56, "h": 160}, {"id": "a01-m-01", "type": "vault", "x": 1750, "w": 24, "h": 48}, {"id": "a01-m-02", "type": "slide", "x": 2670, "w": 56, "h": 160}, {"id": "a01-m-03", "type": "vault", "x": 3540, "w": 24, "h": 48}, {"id": "a01-m-04", "type": "platform", "x": 4570, "w": 320, "h": 24, "y": 370}, {"id": "a01-m-05", "type": "vault", "x": 5490, "w": 24, "h": 48}, {"id": "a01-m-06", "type": "slide", "x": 6360, "w": 56, "h": 160}, {"id": "a01-m-07", "type": "platform", "x": 7390, "w": 320, "h": 24, "y": 370}, {"id": "a01-m-08", "type": "vault", "x": 8310, "w": 24, "h": 48}, {"id": "a01-m-09", "type": "platform", "x": 9180, "w": 320, "h": 24, "y": 370}, {"id": "a01-m-10", "type": "vault", "x": 10210, "w": 24, "h": 48}, {"id": "a01-m-11", "type": "slide", "x": 11130, "w": 56, "h": 160}, {"id": "a01-m-12", "type": "vault", "x": 12000, "w": 24, "h": 48}, {"id": "a01-m-13", "type": "platform", "x": 13030, "w": 320, "h": 24, "y": 370}, {"id": "a01-m-14", "type": "vault", "x": 13950, "w": 24, "h": 48}, {"id": "a01-m-upper-entry", "type": "platform", "x": 14700, "y": 370, "w": 260, "h": 24}, {"id": "a01-m-collapse", "type": "collapse", "x": 14960, "y": 370, "w": 200, "h": 24, "warning": 0.6}, {"id": "a01-m-upper-exit", "type": "platform", "x": 15160, "y": 370, "w": 300, "h": 24}],"coins":makeCoins("A01",COINS.A01)},"A02":{"routeId": "A02", "worldId": "aftermath", "version": 1, "name": "EMERGENCY CARGO", "length": 16600, "finishX": 16460, "checkpoints": [70, 3000, 6000, 9000, 12000, 15800], "obstacles": [{"id": "a02-m-intro", "type": "slide", "x": 300, "w": 56, "h": 160}, {"id": "a02-m-01", "type": "crane", "x": 1750, "w": 230, "h": 24, "y": 390, "minX": 1750, "maxX": 1810, "speed": 40}, {"id": "a02-m-02", "type": "slide", "x": 2620, "w": 56, "h": 160}, {"id": "a02-m-03", "type": "vault", "x": 3650, "w": 24, "h": 48}, {"id": "a02-m-04", "type": "platform", "x": 4570, "w": 320, "h": 24, "y": 370}, {"id": "a02-m-05", "type": "slide", "x": 5440, "w": 56, "h": 160}, {"id": "a02-m-06", "type": "vault", "x": 6470, "w": 24, "h": 48}, {"id": "a02-m-07", "type": "pallet", "x": 7390, "w": 230, "h": 24, "y": 390, "minX": 7390, "maxX": 7450, "speed": 40}, {"id": "a02-m-08", "type": "vault", "x": 8260, "w": 24, "h": 48}, {"id": "a02-m-09", "type": "slide", "x": 9290, "w": 56, "h": 160}, {"id": "a02-m-10", "type": "platform", "x": 10210, "w": 320, "h": 24, "y": 370}, {"id": "a02-m-11", "type": "vault", "x": 11080, "w": 24, "h": 48}, {"id": "a02-m-12", "type": "crane", "x": 12110, "w": 230, "h": 24, "y": 390, "minX": 12110, "maxX": 12170, "speed": 40}, {"id": "a02-m-13", "type": "vault", "x": 13030, "w": 24, "h": 48}, {"id": "a02-m-14", "type": "vault", "x": 13900, "w": 24, "h": 48}, {"id": "a02-m-worker", "type": "worker", "x": 15400, "w": 44, "h": 84}, {"id": "a02-m-rescue-overpass", "type": "overpass", "x": 14050, "y": 370, "w": 1800, "h": 24}],"coins":makeCoins("A02",COINS.A02)},
 "M03":{"routeId":"M03","worldId":"magma","version":1,"name":"FURNACE AISLE","length":17200,"finishX":17060,"checkpoints":[70,6100,11000,16300],"obstacles":[{"id":"m03-m-intro","type":"slide","x":300,"w":56,"h":160},{"id":"m03-m-01","type":"vault","x":1800,"w":24,"h":48},{"id":"m03-m-02","type":"slide","x":2750,"w":56,"h":160},{"id":"m03-m-03","type":"platform","x":3700,"w":320,"h":24,"y":370},{"id":"m03-m-04","type":"vault","x":4650,"w":24,"h":48},{"id":"m03-m-05","type":"slide","x":5600,"w":56,"h":160},{"id":"m03-m-06","type":"vault","x":6550,"w":24,"h":48},{"id":"m03-m-07","type":"platform","x":7500,"w":320,"h":24,"y":370},{"id":"m03-m-08","type":"vault","x":8450,"w":24,"h":48},{"id":"m03-m-09","type":"slide","x":9400,"w":56,"h":160},{"id":"m03-m-10","type":"platform","x":10350,"w":320,"h":24,"y":370},{"id":"m03-m-11","type":"vault","x":11300,"w":24,"h":48},{"id":"m03-m-12","type":"vault","x":12250,"w":24,"h":48},{"id":"m03-m-13","type":"platform","x":13200,"w":320,"h":24,"y":370},{"id":"m03-m-14","type":"vault","x":14150,"w":24,"h":48},{"id":"m03-m-worker","type":"worker","x":5150,"w":48,"h":70},{"id":"m03-m-ramp","type":"ramp","x":14600,"w":220,"h":74},{"id":"m03-m-overpass","type":"overpass","x":14760,"y":238,"w":1200,"h":24},{"id":"m03-m-door","type":"containerDoor","x":15470,"y":275,"w":76,"h":180,"openY":135,"prepare":1,"close":0.65,"closed":80,"open":4}],"coins":makeCoins("M03",COINS.M03)},
 "M04":{"routeId":"M04","worldId":"magma","version":1,"name":"MAGMA LIFT","length":16300,"finishX":16160,"checkpoints":[70,6100,11000,15500],"obstacles":[{"id":"m04-m-intro","type":"slide","x":300,"w":56,"h":160},{"id":"m04-m-ramp","type":"ramp","x":650,"w":220,"h":90},{"id":"m04-m-01","type":"platform","x":1800,"w":320,"h":24,"y":370},{"id":"m04-m-02","type":"vault","x":2750,"w":24,"h":48},{"id":"m04-m-03","type":"crane","x":3700,"w":230,"h":24,"y":390,"minX":3700,"maxX":3760,"speed":40},{"id":"m04-m-04","type":"vault","x":4650,"w":24,"h":48},{"id":"m04-m-05","type":"slide","x":5600,"w":56,"h":160},{"id":"m04-m-06","type":"platform","x":6550,"w":320,"h":24,"y":370},{"id":"m04-m-07","type":"vault","x":7500,"w":24,"h":48},{"id":"m04-m-08","type":"pallet","x":8450,"w":230,"h":24,"y":390,"minX":8450,"maxX":8510,"speed":65},{"id":"m04-m-09","type":"vault","x":9400,"w":24,"h":48},{"id":"m04-m-10","type":"slide","x":10350,"w":56,"h":160},{"id":"m04-m-11","type":"platform","x":11300,"w":320,"h":24,"y":370},{"id":"m04-m-12","type":"vault","x":12250,"w":24,"h":48},{"id":"m04-m-13","type":"vault","x":13200,"w":24,"h":48},{"id":"m04-m-14","type":"vault","x":14150,"w":24,"h":48}],"coins":makeCoins("M04",COINS.M04)},
-"M01":{"routeId": "M01", "worldId": "magma", "version": 1, "name": "FOUNDRY WALK", "length": 16300, "finishX": 16160, "checkpoints": [70, 5200, 10400, 15500], "obstacles": [{"id":"m01-m-gap-bridge","type":"platform","x":880,"y":395,"w":410,"h":24},{"id": "m01-m-intro", "type": "slide", "x": 300, "w": 56, "h": 160}, {"id": "m01-m-ramp", "type": "ramp", "x": 650, "w": 220, "h": 62}, {"id": "m01-m-01", "type": "vault", "x": 1800, "w": 24, "h": 48}, {"id": "m01-m-02", "type": "platform", "x": 2750, "w": 320, "h": 24, "y": 370}, {"id": "m01-m-03", "type": "slide", "x": 3700, "w": 56, "h": 160}, {"id": "m01-m-04", "type": "vault", "x": 4650, "w": 24, "h": 48}, {"id": "m01-m-05", "type": "platform", "x": 5600, "w": 320, "h": 24, "y": 370}, {"id": "m01-m-06", "type": "vault", "x": 6550, "w": 24, "h": 48}, {"id": "m01-m-07", "type": "slide", "x": 7500, "w": 56, "h": 160}, {"id": "m01-m-08", "type": "platform", "x": 8450, "w": 320, "h": 24, "y": 370}, {"id": "m01-m-09", "type": "vault", "x": 9400, "w": 24, "h": 48}, {"id": "m01-m-10", "type": "vault", "x": 10350, "w": 24, "h": 48}, {"id": "m01-m-11", "type": "platform", "x": 11300, "w": 320, "h": 24, "y": 370}, {"id": "m01-m-12", "type": "vault", "x": 12250, "w": 24, "h": 48}, {"id": "m01-m-13", "type": "vault", "x": 13200, "w": 24, "h": 48}, {"id": "m01-m-14", "type": "vault", "x": 14150, "w": 24, "h": 48}, {"id": "m01-m-upper-entry", "type": "platform", "x": 14500, "y": 370, "w": 260, "h": 24}, {"id": "m01-m-collapse", "type": "collapse", "x": 14760, "y": 370, "w": 200, "h": 24, "warning": 0.6}, {"id": "m01-m-upper-exit", "type": "platform", "x": 14960, "y": 370, "w": 300, "h": 24}], "groundSegments": [{"x": 0, "y": 455, "w": 1030, "h": 100, "kind": "ground"}, {"x": 1160, "y": 455, "w": 15140, "h": 100, "kind": "ground"}], "voidEdges": [1030, 1160],"coins":makeCoins("M01",COINS.M01)},
-"M02":{"routeId": "M02", "worldId": "magma", "version": 1, "name": "CASTING CRANE", "length": 16300, "finishX": 16160, "checkpoints": [70, 5200, 10400, 15500], "obstacles": [{"id": "m02-m-intro", "type": "slide", "x": 300, "w": 56, "h": 160}, {"id": "m02-m-ramp", "type": "ramp", "x": 650, "w": 220, "h": 62}, {"id": "m02-m-01", "type": "crane", "x": 1800, "w": 230, "h": 24, "y": 390, "minX": 1730, "maxX": 2160, "speed": 88}, {"id": "m02-m-02", "type": "vault", "x": 2750, "w": 24, "h": 48}, {"id": "m02-m-03", "type": "slide", "x": 3700, "w": 56, "h": 160}, {"id": "m02-m-04", "type": "platform", "x": 4650, "w": 320, "h": 24, "y": 370}, {"id": "m02-m-05", "type": "vault", "x": 5600, "w": 24, "h": 48}, {"id": "m02-m-06", "type": "pallet", "x": 6550, "w": 230, "h": 24, "y": 390, "minX": 6480, "maxX": 6910, "speed": 102}, {"id": "m02-m-07", "type": "vault", "x": 7500, "w": 24, "h": 48}, {"id": "m02-m-08", "type": "platform", "x": 8450, "w": 320, "h": 24, "y": 370}, {"id": "m02-m-09", "type": "slide", "x": 9400, "w": 56, "h": 160}, {"id": "m02-m-10", "type": "crane", "x": 10350, "w": 230, "h": 24, "y": 390, "minX": 10350, "maxX": 10410, "speed": 40}, {"id": "m02-m-11", "type": "vault", "x": 11300, "w": 24, "h": 48}, {"id": "m02-m-12", "type": "platform", "x": 12250, "w": 320, "h": 24, "y": 370}, {"id": "m02-m-13", "type": "vault", "x": 13200, "w": 24, "h": 48}, {"id": "m02-m-14", "type": "vault", "x": 14150, "w": 24, "h": 48}],"coins":makeCoins("M02",COINS.M02)},
+"M01":{"routeId":"M01","worldId":"magma","version":1,"name":"FOUNDRY WALK","length":9920,"finishX":9780,"checkpoints":[70,3655,7110,9435],"movementProfile":"vector-v1","catchableSurfaces":[{"id":"m01-v-03"},{"id":"m01-v-06"},{"id":"m01-v-09"},{"id":"m01-v-10"},{"id":"m01-deadend-i11-step-1"},{"id":"m01-deadend-i11-step-2"},{"id":"m01-deadend-i11-step-3"},{"id":"m01-tunnel-floor"},{"id":"m01-v-20"},{"id":"m01-v-21"},{"id":"m01-v-28"},{"id":"m01-slope2-2"},{"id":"m01-v-30"},{"id":"m01-v-33"}],"highJumpZones":[],"diveZones":[{"id":"m01-dz-01","x1":189.05,"x2":309.05,"landX":492.4,"landY":-907.25},{"id":"m01-dz-02","x1":1282.95,"x2":1322.95,"landX":1544.8,"landY":-1004.5},{"id":"m01-dz-03","x1":1712.8,"x2":1795.05,"landX":2004.4,"landY":-1066.875},{"id":"m01-dz-04","x1":2316.8,"x2":2356.8,"landX":2396.8,"landY":-1145.625},{"id":"m01-dz-05","x1":2608.8,"x2":2715.55,"landX":2927.2,"landY":-828,"peakY":-925.7},{"id":"m01-dz-06","x1":3574.8,"x2":3694.8,"landX":3862,"landY":-828,"peakY":-925.7},{"id":"m01-dz-07","x1":4351.2,"x2":4407.13,"landX":4841.2,"landY":-919.25},{"id":"m01-dz-08","x1":5874,"x2":5994,"landX":6330.4,"landY":-25},{"id":"m01-dz-09","x1":7186.8,"x2":7306.8,"landX":8447.44,"landY":455},{"id":"m01-dz-10","x1":9037.44,"x2":9157.44,"landX":9405.04,"landY":275.75}],"groundSegments":[{"id":"m01-v-01","x":0,"y":-906,"w":372,"h":205.2,"kind":"ground"},{"id":"m01-v-02","x":452.4,"y":-907.25,"w":960,"h":240,"kind":"ground"},{"id":"m01-v-03","x":675.6,"y":-991.25,"w":144,"h":84,"kind":"ground"},{"id":"m01-v-06","x":1504.8,"y":-1004.5,"w":890.4,"h":72,"kind":"ground"},{"id":"m01-v-09","x":1964.4,"y":-1066.875,"w":66,"h":62.4,"kind":"ground"},{"id":"m01-v-10","x":2030.4,"y":-1120.875,"w":314.4,"h":116.4,"kind":"ground"},{"id":"m01-v-11","x":2344.8,"y":-1075.25,"w":121.2,"h":70.8,"kind":"ground"},{"id":"m01-v-13","x":2464.8,"y":-1286.5,"w":72,"h":254.4,"kind":"ground"},{"id":"m01-v-14","x":2608.8,"y":-643.25,"w":278.4,"h":144,"kind":"ground"},{"id":"m01-v-17","x":3642,"y":-1257.625,"w":42,"h":301.2,"kind":"ground"},{"id":"m01-v-18","x":3822,"y":-828,"w":144,"h":567.6,"kind":"ground"},{"id":"m01-v-19","x":3966,"y":-780,"w":441.13,"h":519.6,"kind":"ground"},{"id":"m01-v-20","x":4086,"y":-828,"w":72,"h":48,"kind":"ground"},{"id":"m01-v-21","x":4230,"y":-828,"w":121.2,"h":48,"kind":"ground"},{"id":"m01-v-22","x":4393.2,"y":-439.25,"w":532.8,"h":178.8,"kind":"ground"},{"id":"m01-v-24","x":4801.2,"y":-919.25,"w":124.8,"h":91.2,"kind":"ground"},{"id":"m01-v-25","x":5034,"y":-373,"w":960,"h":48,"kind":"ground"},{"id":"m01-v-27","x":6290.4,"y":-25,"w":541.2,"h":628.8,"kind":"ground"},{"id":"m01-v-28","x":6759.12,"y":-68.25,"w":72,"h":43.2,"kind":"ground"},{"id":"m01-v-29","x":6831.6,"y":55.375,"w":450,"h":80.4,"kind":"ground"},{"id":"m01-v-30","x":7040.4,"y":8.625,"w":266.4,"h":46.8,"kind":"ground"},{"id":"m01-v-32","x":8407.44,"y":455,"w":957.6,"h":448.8,"kind":"ground"},{"id":"m01-v-33","x":9365.04,"y":275.75,"w":555.6,"h":393.6,"kind":"ground"},{"id":"m01-tunnel-floor","x":2887.2,"y":-828,"w":807.6,"h":328.8,"kind":"ground"},{"id":"m01-slope1-1","x":4605.6,"y":26.375,"w":138.24,"h":45.6,"kind":"ground"},{"id":"m01-slope1-2","x":4743.84,"y":-19.25,"w":138.24,"h":45.6,"kind":"ground"},{"id":"m01-slope2-1","x":6831.12,"y":8.625,"w":104.4,"h":38.4,"kind":"ground"},{"id":"m01-slope2-2","x":6935.52,"y":-29.75,"w":104.4,"h":38.4,"kind":"ground"},{"id":"m01-deadend-i11-step-1","x":2356.8,"y":-1145.625,"w":36,"h":70.42,"kind":"ground"},{"id":"m01-deadend-i11-step-2","x":2392.8,"y":-1216.125,"w":36,"h":70.42,"kind":"ground"},{"id":"m01-deadend-i11-step-3","x":2428.8,"y":-1286.5,"w":36,"h":70.42,"kind":"ground"}],"obstacles":[{"id":"m01-slide-02","type":"slide","x":7282.32,"w":588,"h":60,"baseY":8.625},{"id":"m01-vault-02","type":"vault","x":4839.84,"w":24,"h":48,"baseY":-439.25},{"id":"m01-vault-03","type":"vault","x":4638,"w":24,"h":48,"baseY":-439.25},{"id":"m01-vault-04","type":"vault","x":2685.84,"w":72,"h":48,"baseY":-956.5},{"id":"m01-vault-05","type":"vault","x":1640.8,"w":72,"h":48,"baseY":-1004.5},{"id":"m01-vault-06","type":"vault","x":1100.4,"w":72,"h":48,"baseY":-907.25},{"id":"m01-vault-07","type":"vault","x":1683.05,"w":72,"h":48,"baseY":-1004.5},{"id":"m01-vault-08","type":"vault","x":5230.8,"w":72,"h":48,"baseY":-373}],"voidEdges":[],"coins":makeCoins("M01", COINS.M01)},
+"M02":{"routeId":"M02","worldId":"magma","version":1,"name":"CASTING CRANE","length":7142,"finishX":7002,"checkpoints":[70,1858,3600,5599],"movementProfile":"vector-v1","catchableSurfaces":[{"id":"m02-v-03"},{"id":"m02-v-04"},{"id":"m02-v-06"},{"id":"m02-v-07"},{"id":"m02-v-08"},{"id":"m02-v-13"},{"id":"m02-v-17"},{"id":"m02-v-22"},{"id":"m02-v-25"},{"id":"m02-v-29"},{"id":"m02-v-24"},{"id":"m02-v-12"}],"highJumpZones":[],"diveZones":[{"id":"m02-dz-01","x1":243.84,"x2":283.84,"landX":496,"landY":-266.25},{"id":"m02-dz-02","x1":580.8,"x2":691.86,"landX":875.2,"landY":-325},{"id":"m02-dz-03","x1":955.63,"x2":1075.63,"landX":1303.6,"landY":-440.25},{"id":"m02-dz-04","x1":1888.02,"x2":1928.02,"landX":2120.8,"landY":-283},{"id":"m02-dz-05","x1":2378.86,"x2":2498.86,"landX":2730.4,"landY":-135.375},{"id":"m02-dz-06","x1":3168.89,"x2":3208.89,"landX":3418.24,"landY":-75.375},{"id":"m02-dz-07","x1":4258.8,"x2":4378.8,"landX":4746.4,"landY":299},{"id":"m02-dz-08","x1":5242.8,"x2":5285.32,"landX":5487.28,"landY":347},{"id":"m02-dz-09","x1":6179.28,"x2":6299.28,"landX":6608.08,"landY":336.25}],"groundSegments":[{"id":"m02-v-01","x":0,"y":-196.625,"w":718.8,"h":232.8,"kind":"ground"},{"id":"m02-v-03","x":456,"y":-266.25,"w":262.8,"h":69.6,"kind":"ground"},{"id":"m02-v-04","x":580.8,"y":-323.75,"w":138,"h":57.6,"kind":"ground"},{"id":"m02-v-05","x":835.2,"y":-325,"w":620.4,"h":301.2,"kind":"ground"},{"id":"m02-v-06","x":1010.4,"y":-346.625,"w":208.8,"h":21.6,"kind":"ground"},{"id":"m02-v-07","x":1131.6,"y":-368.25,"w":79.44,"h":21.6,"kind":"ground"},{"id":"m02-v-08","x":1263.6,"y":-440.25,"w":192,"h":115.2,"kind":"ground"},{"id":"m02-v-10","x":1788,"y":-261.375,"w":769.2,"h":301.2,"kind":"ground"},{"id":"m02-v-12","x":2080.8,"y":-283,"w":88.8,"h":21.6,"kind":"ground"},{"id":"m02-v-13","x":2218.8,"y":-357.375,"w":154.8,"h":96,"kind":"ground"},{"id":"m02-v-14","x":2690.4,"y":-135.375,"w":240,"h":507.6,"kind":"ground"},{"id":"m02-v-15","x":2930.4,"y":-13,"w":573.6,"h":385.2,"kind":"ground"},{"id":"m02-v-17","x":3378.24,"y":-75.375,"w":66,"h":62.4,"kind":"ground"},{"id":"m02-v-18","x":3504,"y":113,"w":874.8,"h":259.2,"kind":"ground"},{"id":"m02-v-20","x":4706.4,"y":299,"w":188.4,"h":871.2,"kind":"ground"},{"id":"m02-v-21","x":4894.8,"y":455,"w":450,"h":69.6,"kind":"ground"},{"id":"m02-v-22","x":5242.8,"y":390.25,"w":322.8,"h":64.8,"kind":"ground"},{"id":"m02-v-24","x":5447.28,"y":347,"w":118.8,"h":43.2,"kind":"ground"},{"id":"m02-v-25","x":5528.88,"y":294.25,"w":770.4,"h":52.8,"kind":"ground"},{"id":"m02-v-28","x":6568.08,"y":336.25,"w":1327.2,"h":308.4,"kind":"ground"},{"id":"m02-v-29","x":6852.48,"y":314.625,"w":87.6,"h":21.6,"kind":"ground"},{"id":"m02-slope-1","x":1455.6,"y":-421.75,"w":66.48,"h":40.08,"kind":"ground"},{"id":"m02-slope-2","x":1522.08,"y":-381.625,"w":66.48,"h":40.08,"kind":"ground"},{"id":"m02-slope-3","x":1588.56,"y":-341.5,"w":66.48,"h":40.08,"kind":"ground"},{"id":"m02-slope-4","x":1655.04,"y":-301.5,"w":66.48,"h":40.08,"kind":"ground"},{"id":"m02-slope-5","x":1721.52,"y":-261.375,"w":66.48,"h":40.08,"kind":"ground"}],"obstacles":[{"id":"m02-slide-01","type":"slide","x":3089.89,"w":48,"h":86.4,"baseY":-13},{"id":"m02-vault-03","type":"vault","x":102,"w":24,"h":48,"baseY":-196.625},{"id":"m02-vault-05","type":"vault","x":5662.08,"w":24,"h":48,"baseY":294.25},{"id":"m02-vault-07","type":"vault","x":5668.92,"w":72,"h":48,"baseY":294.25}],"voidEdges":[],"coins":makeCoins("M02", COINS.M02)},
     D01: {
       routeId: "D01",
       worldId: "dock31",
@@ -2366,7 +2140,7 @@
     if(route.movementProfile==="vector-v1"&&vectorJumpPending&&player.vy<0&&!player.onGround){
       if(vectorJumpPending.kind==="dive"){
         const z=vectorJumpPending.diveZone,dir=player.facing>=0?1:-1,startX=player.x,startY=player.y;
-        const endX=dir>0?z.landX:z.landX-player.w,landY=z.landY-player.h,dx=Math.abs(endX-startX),top=Math.min(startY,landY)-93;
+        const endX=dir>0?z.landX:z.landX-player.w,landY=z.landY-player.h,dx=Math.abs(endX-startX),top=z.peakY??Math.min(startY,landY)-93;
         const Tb=Math.sqrt(2*(startY-top)/1450)+Math.sqrt(2*(landY-top)/1450),vx=Math.max(dx/Tb,Math.abs(player.vx)),duration=dx>0?dx/vx:Tb;
         const vy0=(landY-startY-725*duration*duration)/duration;
         diveRun={elapsed:0,duration,vy0,startX,startY,endX,landY,dir};

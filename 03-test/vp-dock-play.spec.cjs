@@ -7,7 +7,7 @@ const path = require('path');
 // tutunma B.x0-[58,2], vault x-[55,18], slide gap [2,36]. O-4 esikleri 0.8 s ve 1.0 s,
 // M-1 viewportlari 390x844 / 844x390; esikler ilk kosumdan once sabittir.
 const root = path.join(__dirname, '..');
-const dataRoots = {D01:'E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/dock-d01d02',D02:'E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/dock-d01d02',D03:'E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/dock-d03d04',D04:'E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/dock-d03d04',D05:'E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/dock-d05d06',D06:'E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/dock-d05d06',F01:'E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/frozen-f01f02',F02:'E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/frozen-f01f02',F03:'E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/frozen-f03f04',F04:'E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/frozen-f03f04'};
+const dataRoots = {D01:'E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/dock-d01d02',D02:'E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/dock-d01d02',D03:'E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/dock-d03d04',D04:'E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/dock-d03d04',D05:'E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/dock-d05d06',D06:'E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/dock-d05d06',F01:'E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/frozen-f01f02',F02:'E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/frozen-f01f02',F03:'E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/frozen-f03f04',F04:'E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/frozen-f03f04',M01:'E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/magma-m01m02',M02:'E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/magma-m01m02'};
 const transitions = Object.fromEntries(Object.keys(dataRoots).map(id => [id, JSON.parse(fs.readFileSync(`${dataRoots[id]}/transitions-${id}.json`, 'utf8'))]));
 let server, base;
 
@@ -37,6 +37,10 @@ async function boot(page, id, viewport = {width:1280,height:720}) {
       if(['F02','F03','F04'].includes(id)){ __TMB_A12__.startRoute('F01'); __TMB_A12__.finish(); }
       if(['F03','F04'].includes(id)){ __TMB_A12__.startRoute('F02'); __TMB_A12__.finish(); }
       if(id==='F04'){ __TMB_A12__.startRoute('F03'); __TMB_A12__.finish(); }
+    } else if(id[0]==='M'){
+      await __TMB_A12__.setWallet(1000); await __TMB_A12__.purchaseWorld('magma'); await __TMB_A12__.purchaseWorld('magma');
+      __TMB_A12__.renderWorldOnRoute('magma','M01');
+      if(id==='M02'){ __TMB_A12__.startRoute('M01'); __TMB_A12__.finish(); }
     } else __TMB_A12__.renderWorldOnRoute('dock31',id);
     __TMB_A12__.startRoute(id);
   }, id);
@@ -60,7 +64,7 @@ async function jump(page, touch) {
 
 async function drive(page, id, {touch=false, stopAfter, omitDives=[]} = {}) {
   const fired = new Set(), pending = new Map(), lastPress = new Map(), trace = [], tr = transitions[id], started = Date.now();
-  const d05d06 = ['D05','D06','F01','F02','F03','F04'].includes(id);
+  const d05d06 = ['D05','D06','F01','F02','F03','F04','M01','M02'].includes(id);
   let diveSeen = false, catchSeen = false, deaths = 0, retries = 0, end, stuckSince = null, c07Y = null, previousSample = null, lastGroundAt = -Infinity, chainClimbSeconds = 0;
   while (Date.now() - started < 115000) {
     const s = await page.evaluate(() => __TMB_A12__.getState());
@@ -119,7 +123,8 @@ async function drive(page, id, {touch=false, stopAfter, omitDives=[]} = {}) {
     }
     let target = null;
     for (const t of d05d06 ? tr : []) {
-      const fallbackCatch = /^F0[1-4]$/.test(id) && -t.D > 52 && t.gap <= 96;
+      const fallbackCatch = (/^F0[1-4]$/.test(id) && -t.D > 52 && t.gap <= 96)
+        || (/^M0[12]$/.test(id) && -t.D > 0 && -t.D <= 100 && t.gap <= 96);
       if (t.mech !== 'tutunma' && !fallbackCatch) continue;
       const key = `${t.mech}-${t.i}`;
       const braced = p.onGround && !s.edgeClimb && s.parkour.state !== 'climb' && right >= t.B.x0 - 8 && right <= t.B.x0;
@@ -189,7 +194,7 @@ async function drive(page, id, {touch=false, stopAfter, omitDives=[]} = {}) {
   return {end, deaths, retries, elapsed:(Date.now()-started)/1000, diveSeen, catchSeen, trace, c07Y};
 }
 
-for (const id of ['D01','D02','D03','D04','D05','D06','F01','F02','F03','F04']) test(`O-1 B-5 ${id} ideal keyboard route`, async ({page}) => {
+for (const id of ['D01','D02','D03','D04','D05','D06','F01','F02','F03','F04','M01','M02']) test(`O-1 B-5 ${id} ideal keyboard route`, async ({page}) => {
   test.setTimeout(120000); await boot(page,id); const r=await drive(page,id);
   const collected=r.end.economy.collectedCoinIds.length, expected=r.end.route.coins.length;
   const pass=!!r.end.result || r.end.player.x+r.end.hitbox.w>=r.end.route.finishX;
@@ -248,7 +253,7 @@ for (const pitId of ['d06-v-07','d06-v-09']) test(`O-4c D06 ${pitId} keyboard pi
   console.log(`O-4c ${pitId} | attemptSame=${s.economy.attemptId===setup.attempt}, x=${s.player.x.toFixed(2)}, feet=${(s.player.y+s.hitbox.h).toFixed(2)} | keyboard escape to B x>=${setup.bx}, feet<=${setup.by+4} | ${escaped?'PASS':'FAIL'}`); expect(escaped).toBeTruthy();
 });
 
-for (const id of ['D01','D03','D04','D05','D06','F01','F02','F03','F04']) for (const viewport of [{width:390,height:844},{width:844,height:390}]) test(`M-1 ${id} touch ${viewport.width}x${viewport.height}`, async ({browser}) => {
+for (const id of ['D01','D03','D04','D05','D06','F01','F02','F03','F04','M01','M02']) for (const viewport of [{width:390,height:844},{width:844,height:390}]) test(`M-1 ${id} touch ${viewport.width}x${viewport.height}`, async ({browser}) => {
   test.setTimeout(120000);
   const context=await browser.newContext({viewport,hasTouch:true,isMobile:true,deviceScaleFactor:1}),page=await context.newPage();
   try {
