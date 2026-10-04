@@ -1311,7 +1311,16 @@
     const q=a[lo],n=a[hi],u=(t-q[0])/(n[0]-q[0]);return {x:q[1]+(n[1]-q[1])*u,y:q[2]+(n[2]-q[2])*u,pose:u<.5?q[3]:n[3],facing:u<.5?q[4]:n[4]};
   }
   function chiefTimeAtX(path,x){const q=path.samples.find(v=>v[1]>=x)||path.samples[path.samples.length-1];return q[0]}
-  function resetRecordedChief(x){if(!campaignChief?.path)return;campaignChief.chiefT=chiefTimeAtX(campaignChief.path,x)-campaignChief.delay;const q=chiefSample(campaignChief.path,campaignChief.chiefT);campaignChief.x=campaignChief.chiefT<0?campaignChief.path.samples[0][1]-41:q.x;campaignChief.y=q.y;campaignChief.pose=q.pose;campaignChief.facing=q.facing}
+  function matchPlayerToChiefPath(c){
+    const a=c.path.samples,start=c.playerIndex??0,limitT=c.playerT+1;let end=start;
+    while(end+1<a.length&&a[end+1][0]<=limitT)end++;
+    let best=start,bestD=Infinity,minY=Infinity;
+    for(let i=start;i<=end;i++){const dy=Math.abs(a[i][2]-player.y);minY=Math.min(minY,dy);const d=Math.hypot(a[i][1]-player.x,dy);if(d<bestD){bestD=d;best=i}}
+    c.matchMode=minY>72?"x":"xy";
+    if(c.matchMode==="x"){best=start;bestD=Infinity;for(let i=start;i<=end;i++){const d=Math.abs(a[i][1]-player.x);if(d<bestD){bestD=d;best=i}}}
+    c.playerIndex=Math.max(start,best);c.playerT=Math.max(c.playerT,a[c.playerIndex][0]);
+  }
+  function resetRecordedChief(x){if(!campaignChief?.path)return;const t=chiefTimeAtX(campaignChief.path,x);campaignChief.chiefT=t-campaignChief.delay;campaignChief.playerT=t;campaignChief.playerIndex=Math.max(0,campaignChief.path.samples.findIndex(v=>v[0]>=t));campaignChief.matchMode="xy";const q=chiefSample(campaignChief.path,campaignChief.chiefT);campaignChief.x=campaignChief.chiefT<0?campaignChief.path.samples[0][1]-41:q.x;campaignChief.y=q.y;campaignChief.pose=q.pose;campaignChief.facing=q.facing}
   function obstacleSeed(r=route) {
     const key=`${r.routeId}@${r.version}`;
     if(!obstacleSeedCache.has(key))obstacleSeedCache.set(key,sha256(canonical({length:r.length,finishX:r.finishX,checkpoints:r.checkpoints,obstacles:r.obstacles,groundSegments:r.groundSegments||null,voidEdges:r.voidEdges||null})));
@@ -1470,7 +1479,7 @@
     document.dispatchEvent(new CustomEvent("tmb:campaign-audio", { detail: { worldId: route.worldId, routeId } }));
     for (const p of movingPlatforms) sfx(p.type === "crane" ? "crane" : "pallet");
     const recordedChiefPath=chiefPathFor(route);
-    campaignChief = recordedChiefPath ? {active:true,x:recordedChiefPath.samples[0][1]-41,y:recordedChiefPath.samples[0][2],w:32,h:48,catches:0,caughtT:0,lastReturnX:null,path:recordedChiefPath,delay:recordedChiefPath.delay,chiefT:-recordedChiefPath.delay,pose:recordedChiefPath.samples[0][3],facing:recordedChiefPath.samples[0][4]}
+    campaignChief = recordedChiefPath ? {active:true,x:recordedChiefPath.samples[0][1]-41,y:recordedChiefPath.samples[0][2],w:32,h:48,catches:0,caughtT:0,regrabT:0,lastReturnX:null,path:recordedChiefPath,delay:recordedChiefPath.delay,chiefT:-recordedChiefPath.delay,playerT:chiefTimeAtX(recordedChiefPath,70),playerIndex:0,matchMode:"xy",pose:recordedChiefPath.samples[0][3],facing:recordedChiefPath.samples[0][4]}
       : (routeId === "D06" || route.chief) ? {active:false,x:-400,y:routeGroundYAt(route.chief?.startX ?? 70)-48,w:32,h:48,speed:205,catches:0,caughtT:0,lastReturnX:null} : null;
     campaignDeaths = 0;
     gameClock = 0;
@@ -1866,7 +1875,7 @@
     staggerT = Math.max(0, staggerT - dt);
     flowFlash = Math.max(0, flowFlash - dt);
     if (campaignChief) {
-      campaignChief.caughtT=Math.max(0,campaignChief.caughtT-dt);
+      campaignChief.caughtT=Math.max(0,campaignChief.caughtT-dt);campaignChief.regrabT=Math.max(0,(campaignChief.regrabT||0)-dt);
       if (!campaignChief.active && player.x>=1800) {
         if (!route.chief || player.x>=route.chief.startX) {
         campaignChief.active=true;
@@ -1875,11 +1884,11 @@
         }
       }
       if (campaignChief.active) {
-        if(campaignChief.path){campaignChief.chiefT+=dt;const q=chiefSample(campaignChief.path,campaignChief.chiefT);campaignChief.x=campaignChief.chiefT<0?campaignChief.path.samples[0][1]-41:q.x;campaignChief.y=q.y;campaignChief.pose=q.pose;campaignChief.facing=q.facing}else campaignChief.x+=campaignChief.speed*dt;
-        if (campaignChief.caughtT<=0 && (!campaignChief.path||campaignChief.chiefT>=0) && campaignChief.x+campaignChief.w>=player.x+4 && campaignChief.x<=player.x+player.w-4) {
+        if(campaignChief.path){campaignChief.chiefT+=dt;matchPlayerToChiefPath(campaignChief);const q=chiefSample(campaignChief.path,campaignChief.chiefT);campaignChief.x=campaignChief.chiefT<0?campaignChief.path.samples[0][1]-41:q.x;campaignChief.y=q.y;campaignChief.pose=q.pose;campaignChief.facing=q.facing}else campaignChief.x+=campaignChief.speed*dt;
+        if (campaignChief.caughtT<=0 && (!campaignChief.path ? campaignChief.x+campaignChief.w>=player.x+4 && campaignChief.x<=player.x+player.w-4 : campaignChief.regrabT<=0 && campaignChief.chiefT>=0 && campaignChief.chiefT>=campaignChief.playerT-.05)) {
           campaignChief.catches++;
           campaignDeaths++;
-          campaignChief.caughtT=campaignChief.path?2:.35;
+          campaignChief.caughtT=.35;if(campaignChief.path)campaignChief.regrabT=2;
           campaignChief.lastReturnX=run.checkpointX;
           engine.reset(run.checkpointX,routeGroundYAt(run.checkpointX)-player.h);
           if(campaignChief.path)resetRecordedChief(run.checkpointX);else{campaignChief.x=run.checkpointX-380;campaignChief.y=routeGroundYAt(run.checkpointX)-campaignChief.h}
@@ -3077,6 +3086,8 @@
       };
       window.__TMB_A12__ = Object.freeze({
         getState: debugState,
+        disableChief: ()=>{campaignChief=null},
+        placePlayerAtChiefTime: (t,dy=0)=>{if(!campaignChief?.path)return false;const q=chiefSample(campaignChief.path,t);engine.reset(q.x,q.y+dy);campaignChief.playerT=t;campaignChief.playerIndex=Math.max(0,campaignChief.path.samples.findIndex(v=>v[0]>=t));campaignChief.chiefT=t-campaignChief.delay;return true},
         routeDefinition: (id)=>clone(ROUTES[id]),
         chiefRouteHash: (id)=>chiefRouteHash(ROUTES[id]),
         chiefPathStatus: (id, deltaX=0)=>{const r=clone(ROUTES[id]);if(deltaX&&r.groundSegments?.length)r.groundSegments[0].x+=deltaX;return {stored:window.TMB_CHIEF_PATHS?.[id]?.routeHash||null,current:chiefRouteHash(r),valid:window.TMB_CHIEF_PATHS?.[id]?.routeHash===chiefRouteHash(r)}},
