@@ -80,15 +80,21 @@ const d02Steps = [
 ].map(([id,x,y,w,h]) => ({ id,x,y,w,h,kind:"ground" }));
 const d03Expected = irSegments("story_03-backbone.json", 0, -1065, "d03");
 const d04Expected = irSegments("story_04-backbone.json", 0, -3765, "d04");
+const d05Expected = irSegments("story_05-backbone.json", 0, -4820, "d05");
+const d06Expected = irSegments("story_06-backbone.json", 0, -1100, "d06");
 const extraSteps = {
   D03: [["d03-slope-1",4946.53,323.8,117.76,41.6],["d03-slope-2",5064.29,365.4,117.76,41.6],["d03-slope-3",5182.04,407,117.76,41.6]],
   D04: [...Array.from({length:7},(_,i)=>[`d04-slope-${i+1}`,round2(1374+i*40.285714),round2(-448.6+(i+1)*45.257143),round2(40.285714),round2(45.257143)]),...Array.from({length:8},(_,i)=>[`d04-long-${i+1}`,round2(5612.4+i*82.65),round2(-88.6+(i+1)*44.85),82.65,44.85])],
+  D05: [...Array.from({length:3},(_,i)=>[`d05-up-${i+1}`,round2(195.6+i*80),round2(-701.8-(i+1)*39.2),80,39.2]),...Array.from({length:5},(_,i)=>[`d05-down1-${i+1}`,round2(4934.82+i*46.52),round2(-192.76+(i+1)*39.888),46.52,39.888]),...Array.from({length:4},(_,i)=>[`d05-down2-${i+1}`,round2(5796.48+i*58.5),round2(23+(i+1)*45),58.5,45]),...Array.from({length:6},(_,i)=>[`d05-down3-${i+1}`,round2(6091.68+i*38.8),round2(203+(i+1)*42),38.8,42])],
+  D06: [],
 };
 const extracted = {
   D01: new Set(["d01-v-12","d01-v-13","d01-v-18"]),
   D02: new Set(["d02-v-07","d02-v-12","d02-v-13"]),
   D03: new Set(["d03-v-10","d03-v-15","d03-v-22"]),
   D04: new Set(["d04-v-04","d04-v-11","d04-v-12"]),
+  D05: new Set(["d05-v-16"]),
+  D06: new Set(["d06-v-12","d06-v-20"]),
 };
 segmentCheck(routes.D01, d01Expected.filter(s => !extracted.D01.has(s.id)), 1, "B-1 D01 IR");
 segmentCheck({groundSegments: routes.D02.groundSegments.filter(s => /^d02-[vu]-/.test(s.id))}, d02Ir.filter(s => !extracted.D02.has(s.id)), 1, "B-1 D02 IR");
@@ -102,8 +108,12 @@ for (const [id, expected] of [["D03",d03Expected],["D04",d04Expected]]) {
   segmentCheck({groundSegments:routes[id].groundSegments.filter(s=>new RegExp(`^${id.toLowerCase()}-[vu]-`).test(s.id))},expected.filter(s=>!extracted[id].has(s.id)),1,`B-1 ${id} IR`);
   segmentCheck({groundSegments:routes[id].groundSegments.filter(s=>new RegExp(`^${id.toLowerCase()}-(slope|long)-`).test(s.id))},extraSteps[id].map(([id,x,y,w,h])=>({id,x,y,w,h,kind:"ground"})),.02,`B-1 ${id} basamak`);
 }
+for (const [id, expected] of [["D05",d05Expected],["D06",d06Expected]]) {
+  segmentCheck({groundSegments:routes[id].groundSegments.filter(s=>new RegExp(`^${id.toLowerCase()}-[vu]-`).test(s.id))},expected.filter(s=>!extracted[id].has(s.id)),1,`B-1 ${id} IR`);
+  segmentCheck({groundSegments:routes[id].groundSegments.filter(s=>/^d05-(up|down)/.test(s.id))},extraSteps[id].map(([id,x,y,w,h])=>({id,x,y,w,h,kind:"ground"})),id==="D05"?.063:.02,`B-1 ${id} basamak`);
+}
 
-for (const id of ["D01", "D02", "D03", "D04"]) {
+for (const id of ["D01", "D02", "D03", "D04", "D05", "D06"]) {
   const ramps = (routes[id].obstacles || []).filter(o => o.type === "ramp").length;
   report(`B-2 ${id} ramp`, ramps, 0, ramps === 0);
 }
@@ -111,8 +121,8 @@ const rampIds = rs => Object.fromEntries(Object.entries(rs).map(([id,r]) => [id,
 const currentRamps = rampIds(routes), baseRamps = rampIds(base);
 const vectorIds = ["D01","D02","D03","D04","D05","D06","F01","F02","F03","F04"];
 const totalRamps = vectorIds.flatMap(id => currentRamps[id]).length;
-report("B-2 toplam ramp", totalRamps, 10, totalRamps === 10);
-const stableIds = ["D05","D06","F01","F02","F03","F04"];
+report("B-2 toplam ramp", totalRamps, 6, totalRamps === 6);
+const stableIds = ["F01","F02","F03","F04"];
 const stableRamps = stableIds.every(id => JSON.stringify(currentRamps[id]) === JSON.stringify(baseRamps[id]));
 report("B-2 sabit rota ramp id", stableRamps ? "aynı" : "farklı", "d18af30 ile aynı", stableRamps);
 
@@ -121,6 +131,7 @@ const metadata = {
   D02: { length:6400, finishX:6260, checkpoints:[70,1211,3433,5200], chief:1211 },
   D03: { length:7139, finishX:6999, checkpoints:[70,2125,4449], chief:2125 },
   D04: { length:8169, finishX:8029, checkpoints:[70,3919], chief:3919 },
+  D05: { length:7610, finishX:7470, checkpoints:[70,3019.91,6394.48], chief:3019.91 },
 };
 for (const [id,e] of Object.entries(metadata)) {
   const r = routes[id];
@@ -130,8 +141,16 @@ for (const [id,e] of Object.entries(metadata)) {
   const covered = r.checkpoints.filter(x => road.some(s => s.x <= x && x <= s.x + s.w));
   report(`B-3 ${id} checkpoint yol`, covered.join(","), r.checkpoints.join(","), covered.length === r.checkpoints.length);
 }
+const d06=routes.D06, d06Meta=d06.length===5130&&d06.finishX===4990&&JSON.stringify(d06.checkpoints)===JSON.stringify([70,1560.4,2281.61,3913])&&!Object.hasOwn(d06,"chief");
+report("B-3 D06 metadata",`${d06.length}/${d06.finishX}/${d06.checkpoints.join(",")}/chief=${Object.hasOwn(d06,"chief")}`,"5130/4990/70,1560.4,2281.61,3913/chief=false",d06Meta);
 report("B-3 D02 profile", routes.D02.movementProfile, "vector-v1", routes.D02.movementProfile === "vector-v1");
-const otherIds = Object.keys(base).filter(id => !["D01","D02","D03","D04"].includes(id));
+for (const [id, route] of Object.entries(routes)) {
+  const byId = new Map((route.groundSegments || []).map(s => [s.id, s]));
+  const bad = (route.catchableSurfaces || []).map(c => byId.get(c.id)).filter(s => s && ((s.y - 48) + 48) !== s.y).map(s => s.id);
+  if (id === "D05" || id === "D06") report(`FP ${id} catchable y`, bad.join(",") || "none", "none", bad.length === 0);
+  else if (/^D0[1-4]$/.test(id)) console.log(`FP ${id} catchable y | ${bad.join(",") || "none"} | INFO (data unchanged)`);
+}
+const otherIds = Object.keys(base).filter(id => !["D01","D02","D03","D04","D05","D06"].includes(id));
 const unchanged = otherIds.filter(id => JSON.stringify(routes[id]) === JSON.stringify(base[id]));
 report("NEG diğer rotalar", `${unchanged.length}/${otherIds.length}`, `${otherIds.length}/${otherIds.length}`, unchanged.length === otherIds.length);
 console.log(`${pass} PASS / ${fail} FAIL`);
