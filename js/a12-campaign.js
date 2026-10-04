@@ -1295,6 +1295,23 @@
   function movementProfile() {
     return movementProfileCache||(movementProfileCache=sha256(canonical({movementSources:engine?.movementSources||{},engineConstants:engine?.constants||{}})));
   }
+  const chiefRouteHashCache=new WeakMap();
+  function chiefRouteHash(r=route) {
+    if(!chiefRouteHashCache.has(r))chiefRouteHashCache.set(r,sha256(canonical({groundSegments:r.groundSegments||null,slopes:r.slopes||null,obstacles:r.obstacles||[],diveZones:r.diveZones||[],catchableSurfaces:r.catchableSurfaces||[],highJumpZones:r.highJumpZones||[],checkpoints:r.checkpoints||[],finishX:r.finishX})));
+    return chiefRouteHashCache.get(r);
+  }
+  function chiefPathFor(r=route) {
+    const path=window.TMB_CHIEF_PATHS?.[r.routeId];
+    return path&&path.routeHash===chiefRouteHash(r)&&Array.isArray(path.samples)&&path.samples.length>1?path:null;
+  }
+  function chiefSample(path,t) {
+    const a=path.samples;if(t<=a[0][0])return {x:a[0][1],y:a[0][2],pose:a[0][3],facing:a[0][4]};
+    if(t>=a[a.length-1][0]){const q=a[a.length-1];return {x:q[1],y:q[2],pose:q[3],facing:q[4]}}
+    let lo=0,hi=a.length-1;while(hi-lo>1){const m=(lo+hi)>>1;if(a[m][0]<=t)lo=m;else hi=m}
+    const q=a[lo],n=a[hi],u=(t-q[0])/(n[0]-q[0]);return {x:q[1]+(n[1]-q[1])*u,y:q[2]+(n[2]-q[2])*u,pose:u<.5?q[3]:n[3],facing:u<.5?q[4]:n[4]};
+  }
+  function chiefTimeAtX(path,x){const q=path.samples.find(v=>v[1]>=x)||path.samples[path.samples.length-1];return q[0]}
+  function resetRecordedChief(x){if(!campaignChief?.path)return;campaignChief.chiefT=chiefTimeAtX(campaignChief.path,x)-campaignChief.delay;const q=chiefSample(campaignChief.path,campaignChief.chiefT);campaignChief.x=campaignChief.chiefT<0?campaignChief.path.samples[0][1]-41:q.x;campaignChief.y=q.y;campaignChief.pose=q.pose;campaignChief.facing=q.facing}
   function obstacleSeed(r=route) {
     const key=`${r.routeId}@${r.version}`;
     if(!obstacleSeedCache.has(key))obstacleSeedCache.set(key,sha256(canonical({length:r.length,finishX:r.finishX,checkpoints:r.checkpoints,obstacles:r.obstacles,groundSegments:r.groundSegments||null,voidEdges:r.voidEdges||null})));
@@ -1452,7 +1469,9 @@
     containerDoors = route.obstacles.filter(o=>o.type === "containerDoor").map(o=>({...o,state:"OPEN",timer:0,currentY:o.openY,preparingElapsed:null,pushes:0}));
     document.dispatchEvent(new CustomEvent("tmb:campaign-audio", { detail: { worldId: route.worldId, routeId } }));
     for (const p of movingPlatforms) sfx(p.type === "crane" ? "crane" : "pallet");
-    campaignChief = (routeId === "D06" || route.chief) ? {active:false,x:-400,y:routeGroundYAt(route.chief?.startX ?? 70)-48,w:32,h:48,speed:205,catches:0,caughtT:0,lastReturnX:null} : null;
+    const recordedChiefPath=chiefPathFor(route);
+    campaignChief = recordedChiefPath ? {active:true,x:recordedChiefPath.samples[0][1]-41,y:recordedChiefPath.samples[0][2],w:32,h:48,catches:0,caughtT:0,lastReturnX:null,path:recordedChiefPath,delay:recordedChiefPath.delay,chiefT:-recordedChiefPath.delay,pose:recordedChiefPath.samples[0][3],facing:recordedChiefPath.samples[0][4]}
+      : (routeId === "D06" || route.chief) ? {active:false,x:-400,y:routeGroundYAt(route.chief?.startX ?? 70)-48,w:32,h:48,speed:205,catches:0,caughtT:0,lastReturnX:null} : null;
     campaignDeaths = 0;
     gameClock = 0;
     platformOrder = { colliderFrame: 0, landingFrame: 0, carryFrame: 0 };
@@ -1597,6 +1616,7 @@
     const resetX=full ? 70 : run.checkpointX;
     engine.reset(resetX, routeGroundYAt(resetX) - player.h);
     if(full)gameClock=0;
+    resetRecordedChief(resetX);
     barrels = [];
     workerClock = 0;
     workerDisabled = false;
@@ -1855,15 +1875,14 @@
         }
       }
       if (campaignChief.active) {
-        campaignChief.x+=campaignChief.speed*dt;
-        if (campaignChief.x+campaignChief.w>=player.x+4 && campaignChief.x<=player.x+player.w-4) {
+        if(campaignChief.path){campaignChief.chiefT+=dt;const q=chiefSample(campaignChief.path,campaignChief.chiefT);campaignChief.x=campaignChief.chiefT<0?campaignChief.path.samples[0][1]-41:q.x;campaignChief.y=q.y;campaignChief.pose=q.pose;campaignChief.facing=q.facing}else campaignChief.x+=campaignChief.speed*dt;
+        if (campaignChief.caughtT<=0 && (!campaignChief.path||campaignChief.chiefT>=0) && campaignChief.x+campaignChief.w>=player.x+4 && campaignChief.x<=player.x+player.w-4) {
           campaignChief.catches++;
           campaignDeaths++;
-          campaignChief.caughtT=.35;
+          campaignChief.caughtT=campaignChief.path?2:.35;
           campaignChief.lastReturnX=run.checkpointX;
           engine.reset(run.checkpointX,routeGroundYAt(run.checkpointX)-player.h);
-          campaignChief.x=run.checkpointX-380;
-          campaignChief.y=routeGroundYAt(run.checkpointX)-campaignChief.h;
+          if(campaignChief.path)resetRecordedChief(run.checkpointX);else{campaignChief.x=run.checkpointX-380;campaignChief.y=routeGroundYAt(run.checkpointX)-campaignChief.h}
           emitGame("chief_catch",{routeId,checkpointX:run.checkpointX});
         }
       }
@@ -2644,6 +2663,7 @@
       diveRun: diveRun ? {elapsed:diveRun.elapsed,duration:diveRun.duration,startX:diveRun.startX,endX:diveRun.endX,landY:diveRun.landY} : null,
       parkour: {state:diveRun?"dive":engine.parkour.state,timer:diveRun?Math.max(0,diveRun.duration-diveRun.elapsed):engine.parkour.timer,dir:engine.parkour.dir},
       obstacleSeed: obstacleSeed(route),
+      chiefRouteHash: chiefRouteHash(route),
       runnerId: profile.runnerId,
       hitbox: { w: player.w, h: player.h },
       viewport: { w: engine.W, h: engine.H },
@@ -2713,7 +2733,7 @@
       campaignDeaths,
       collapsing: collapsing.map(c=>({id:c.id,state:c.state,timer:c.timer,fallY:c.fallY,warning:c.warning,warningStartedAt:c.warningStartedAt,warningElapsed:c.warningElapsed})),
       containerDoors: containerDoors.map(d=>({id:d.id,state:d.state,timer:d.timer,x:d.x,y:d.currentY,w:d.w,h:d.h,preparingElapsed:d.preparingElapsed,pushes:d.pushes})),
-      chief: campaignChief ? {...campaignChief,distance:player.x-campaignChief.x} : null,
+      chief: campaignChief ? {...campaignChief,path:undefined,distance:player.x-campaignChief.x} : null,
       deaths: campaignDeaths,
       dead: engine.isDead() || !!campaignChief?.caughtT,
       shop: { open: shopOpen, tab:shopTab, previewOutfitId, previewWorldId, purchaseBusy, saveStatus },
@@ -2886,7 +2906,7 @@
       c.save();
       c.fillStyle="#fff2a51c";c.beginPath();c.moveTo(campaignChief.x+22,campaignChief.y+18);c.lineTo(campaignChief.x+175,campaignChief.y-28);c.lineTo(campaignChief.x+175,campaignChief.y+65);c.closePath();c.fill();
       if(magma){c.fillStyle="#8e969f";c.fillRect(campaignChief.x-4,campaignChief.y-5,34,48);c.fillStyle="#d6dadd";c.fillRect(campaignChief.x-6,campaignChief.y-14,38,22);c.fillStyle="#202a36";c.fillRect(campaignChief.x,campaignChief.y-10,26,12);c.fillStyle="#404954";c.fillRect(campaignChief.x-2,campaignChief.y+35,12,18);c.fillRect(campaignChief.x+17,campaignChief.y+35,12,18);} else if (CHIEF_SPRITE.complete && CHIEF_SPRITE.naturalWidth) {
-        const fw=CHIEF_SPRITE.naturalWidth/4,fh=CHIEF_SPRITE.naturalHeight,frame=Math.floor(gameClock*8)%4;
+        const fw=CHIEF_SPRITE.naturalWidth/4,fh=CHIEF_SPRITE.naturalHeight,frame=campaignChief.path&&campaignChief.pose!=="run"?0:Math.floor(gameClock*8)%4;
         c.imageSmoothingEnabled=false;c.drawImage(CHIEF_SPRITE,frame*fw,0,fw,fh,campaignChief.x-8,campaignChief.y-16,48,64);
       } else { c.fillStyle="#111820";c.fillRect(campaignChief.x,campaignChief.y,campaignChief.w,campaignChief.h); }
       c.restore();
@@ -3058,6 +3078,8 @@
       window.__TMB_A12__ = Object.freeze({
         getState: debugState,
         routeDefinition: (id)=>clone(ROUTES[id]),
+        chiefRouteHash: (id)=>chiefRouteHash(ROUTES[id]),
+        chiefPathStatus: (id, deltaX=0)=>{const r=clone(ROUTES[id]);if(deltaX&&r.groundSegments?.length)r.groundSegments[0].x+=deltaX;return {stored:window.TMB_CHIEF_PATHS?.[id]?.routeHash||null,current:chiefRouteHash(r),valid:window.TMB_CHIEF_PATHS?.[id]?.routeHash===chiefRouteHash(r)}},
         migrateV36: (v, p) => migrateV36(v, p),
         startRoute: (id, fresh = true, fullD06 = false) => startRoute(id, fresh, fullD06),
         placePlayer: (x,y=GROUND-player.h) => { player.x=x; player.y=y; player.vx=player.vy=0; player.onGround=false; },
