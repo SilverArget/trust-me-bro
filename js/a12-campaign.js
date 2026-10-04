@@ -84,7 +84,7 @@
       wallet: "WALLET",
       shop: "SHOP",
       outfits: "OUTFITS",
-      buy: "BUY & WEAR â€” {price}",
+      buy: "BUY & WEAR — {price}",
       wear: "WEAR",
       worn: "WORN",
       preview: "LIVE PREVIEW",
@@ -98,88 +98,88 @@
       safe: "SAFE LINE",
       skill: "SKILL LINE",
       checkpoint: "CHECKPOINT",
-      help: "A/D or â†/â†’ â€¢ SPACE/W/â†‘ â€¢ R restart",
+      help: "A/D or ←/→ • SPACE/W/↑ • R restart",
       complete: "COMPLETE",
       defaultOutfit: "DEFAULT COURIER",
-      dockCrew: "DOCK CREW Â· HELMET + VEST",
+      dockCrew: "DOCK CREW · HELMET + VEST",
       nightShift: "Night Shift",
       hazardRunner: "Hazard Runner",
-      saveFailed: "SAVE FAILED â€” RETRY",
-      noCharge: "LIVE PREVIEW Â· NO CHARGE",
-      worlds: "WORLDS", buyWorld: "BUY â€” {price}", select: "SELECT", selected: "SELECTED", planned: "PLANNED", insufficient: "INSUFFICIENT COINS",
+      saveFailed: "SAVE FAILED — RETRY",
+      noCharge: "LIVE PREVIEW · NO CHARGE",
+      worlds: "WORLDS", buyWorld: "BUY — {price}", select: "SELECT", selected: "SELECTED", planned: "PLANNED", insufficient: "INSUFFICIENT COINS",
       idle: "IDLE", motionRun: "RUN", flip: "FLIP", language: "LANGUAGE", samePhysics: "Same physics. Shared wallet. Your runner.", ghostOn: "GHOST ON", ghostOff: "GHOST OFF", effectsFull: "EFFECTS FULL", effectsReduced: "EFFECTS REDUCED", flow: "FLOW", localBest: "LOCAL BEST", newRecord: "NEW", clean: "CLEAN", mastery: "MASTERY", style: "STYLE",
     },
     tr: {
-      M01: "DÃ–KÃœMHANE YOLU", M02: "DÃ–KÃœM VÄ°NCÄ°", M03: "FIRIN KORÄ°DORU", M04: "MAGMA ASANSÃ–RÃœ",
-      A01: "HASARLI KABUL", A02: "ACÄ°L DURUM YÃœKÃœ", A03: "SON KURYE", A04: "SON SEVKÄ°YAT",
-      choose: "KOÅUCUNU SEÃ‡",
-      male: "ERKEK KOÅUCU",
-      female: "KADIN KOÅUCU",
+      M01: "DÖKÜMHANE YOLU", M02: "DÖKÜM VİNCİ", M03: "FIRIN KORİDORU", M04: "MAGMA ASANSÖRÜ",
+      A01: "HASARLI KABUL", A02: "ACİL DURUM YÜKÜ", A03: "SON KURYE", A04: "SON SEVKİYAT",
+      choose: "KOŞUCUNU SEÇ",
+      male: "ERKEK KOŞUCU",
+      female: "KADIN KOŞUCU",
       route: "ROTA",
-      run: "KOÅU",
-      wallet: "CÃœZDAN",
-      shop: "MAÄAZA",
+      run: "KOŞU",
+      wallet: "CÜZDAN",
+      shop: "MAĞAZA",
       outfits: "KIYAFETLER",
-      buy: "SATIN AL VE GÄ°Y â€” {price}",
-      wear: "GÄ°Y",
-      worn: "GÄ°YÄ°LÄ°",
-      preview: "CANLI Ã–NÄ°ZLEME",
-      next: "SONRAKÄ°",
-      retry: "YENÄ°DEN DENE",
-      earned: "KAZANÃ‡",
+      buy: "SATIN AL VE GİY — {price}",
+      wear: "GİY",
+      worn: "GİYİLİ",
+      preview: "CANLI ÖNİZLEME",
+      next: "SONRAKİ",
+      retry: "YENİDEN DENE",
+      earned: "KAZANÇ",
       goals: "HEDEFLER",
       record: "REKOR FARKI",
-      first: "Ä°LK TAMAMLAMA",
-      finish: "BÄ°TÄ°Å",
-      safe: "GÃœVENLÄ° HAT",
-      skill: "BECERÄ° HATTI",
+      first: "İLK TAMAMLAMA",
+      finish: "BİTİŞ",
+      safe: "GÜVENLİ HAT",
+      skill: "BECERİ HATTI",
       checkpoint: "KONTROL NOKTASI",
-      help: "A/D veya â†/â†’ â€¢ SPACE/W/â†‘ â€¢ R yeniden baÅŸlat",
+      help: "A/D veya ←/→ • SPACE/W/↑ • R yeniden başlat",
       complete: "TAMAMLANDI",
       defaultOutfit: "VARSAYILAN KURYE",
-      dockCrew: "LÄ°MAN EKÄ°BÄ° Â· BARET + YELEK",
-      nightShift: "GECE VARDÄ°YASI",
-      hazardRunner: "TEHLÄ°KE KOÅUCUSU",
-      saveFailed: "KAYIT BAÅARISIZ â€” YENÄ°DEN DENE",
-      noCharge: "CANLI Ã–NÄ°ZLEME Â· ÃœCRETSÄ°Z",
-      worlds: "DÃœNYALAR", buyWorld: "SATIN AL â€” {price}", select: "SEÃ‡", selected: "SEÃ‡Ä°LÄ°", planned: "PLANLANDI", insufficient: "Yetersiz jeton",
-      idle: "BEKLE", motionRun: "KOÅ", flip: "TAKLA", language: "DÄ°L", samePhysics: "AynÄ± fizik. Ortak cÃ¼zdan. Senin koÅŸucun.", ghostOn: "HAYALET AÃ‡IK", ghostOff: "HAYALET KAPALI", effectsFull: "EFEKTLER TAM", effectsReduced: "EFEKTLER AZALTILDI", flow: "AKIÅ", localBest: "YEREL EN Ä°YÄ°", newRecord: "YENÄ°", clean: "TEMÄ°Z", mastery: "USTALIK", style: "STÄ°L",
+      dockCrew: "LİMAN EKİBİ · BARET + YELEK",
+      nightShift: "GECE VARDİYASI",
+      hazardRunner: "TEHLİKE KOŞUCUSU",
+      saveFailed: "KAYIT BAŞARISIZ — YENİDEN DENE",
+      noCharge: "CANLI ÖNİZLEME · ÜCRETSİZ",
+      worlds: "DÜNYALAR", buyWorld: "SATIN AL — {price}", select: "SEÇ", selected: "SEÇİLİ", planned: "PLANLANDI", insufficient: "Yetersiz jeton",
+      idle: "BEKLE", motionRun: "KOŞ", flip: "TAKLA", language: "DİL", samePhysics: "Aynı fizik. Ortak cüzdan. Senin koşucun.", ghostOn: "HAYALET AÇIK", ghostOff: "HAYALET KAPALI", effectsFull: "EFEKTLER TAM", effectsReduced: "EFEKTLER AZALTILDI", flow: "AKIŞ", localBest: "YEREL EN İYİ", newRecord: "YENİ", clean: "TEMİZ", mastery: "USTALIK", style: "STİL",
     },
     ru: {
-      M01: "Ğ›Ğ˜Ğ¢Ğ•Ğ™ĞĞ«Ğ™ ĞŸĞ£Ğ¢Ğ¬", M02: "Ğ›Ğ˜Ğ¢Ğ•Ğ™ĞĞ«Ğ™ ĞšĞ ĞĞ", M03: "ĞŸĞ•Ğ§ĞĞĞ™ ĞŸĞ ĞĞ¥ĞĞ”", M04: "ĞœĞĞ“ĞœĞĞ’Ğ«Ğ™ Ğ›Ğ˜Ğ¤Ğ¢",
-      A01: "ĞŸĞĞ’Ğ Ğ•Ğ–Ğ”ĞĞĞĞĞ¯ ĞŸĞ Ğ˜ĞĞœĞšĞ", A02: "ĞĞ’ĞĞ Ğ˜Ğ™ĞĞ«Ğ™ Ğ“Ğ Ğ£Ğ—", A03: "ĞŸĞĞ¡Ğ›Ğ•Ğ”ĞĞ˜Ğ™ ĞšĞ£Ğ Ğ¬Ğ•Ğ ", A04: "Ğ¤Ğ˜ĞĞĞ›Ğ¬ĞĞĞ¯ ĞĞ¢ĞŸĞ ĞĞ’ĞšĞ",
-      choose: "Ğ’Ğ«Ğ‘Ğ•Ğ Ğ˜ Ğ‘Ğ•Ğ“Ğ£ĞĞ",
-      male: "ĞœĞ£Ğ–Ğ¡ĞšĞĞ™ Ğ‘Ğ•Ğ“Ğ£Ğ",
-      female: "Ğ–Ğ•ĞĞ¡ĞšĞ˜Ğ™ Ğ‘Ğ•Ğ“Ğ£Ğ",
-      route: "ĞœĞĞ Ğ¨Ğ Ğ£Ğ¢",
-      run: "Ğ—ĞĞ‘Ğ•Ğ“",
-      wallet: "ĞšĞĞ¨Ğ•Ğ›ĞĞš",
-      shop: "ĞœĞĞ“ĞĞ—Ğ˜Ğ",
-      outfits: "ĞšĞĞ¡Ğ¢Ğ®ĞœĞ«",
-      buy: "ĞšĞ£ĞŸĞ˜Ğ¢Ğ¬ Ğ˜ ĞĞĞ”Ğ•Ğ¢Ğ¬ â€” {price}",
-      wear: "ĞĞĞ”Ğ•Ğ¢Ğ¬",
-      worn: "ĞĞĞ”Ğ•Ğ¢Ğ",
-      preview: "ĞŸĞ Ğ˜ĞœĞ•Ğ ĞšĞ",
-      next: "Ğ”ĞĞ›Ğ•Ğ•",
-      retry: "Ğ•Ğ©Ğ Ğ ĞĞ—",
-      earned: "ĞĞĞ“Ğ ĞĞ”Ğ",
-      goals: "Ğ¦Ğ•Ğ›Ğ˜",
-      record: "Ğ ĞĞ—ĞĞ˜Ğ¦Ğ Ğ Ğ•ĞšĞĞ Ğ”Ğ",
-      first: "ĞŸĞ•Ğ Ğ’ĞĞ• ĞŸĞ ĞĞ¥ĞĞ–Ğ”Ğ•ĞĞ˜Ğ•",
-      finish: "Ğ¤Ğ˜ĞĞ˜Ğ¨",
-      safe: "Ğ‘Ğ•Ğ—ĞĞŸĞĞ¡ĞĞ«Ğ™ ĞŸĞ£Ğ¢Ğ¬",
-      skill: "Ğ›Ğ˜ĞĞ˜Ğ¯ ĞœĞĞ¡Ğ¢Ğ•Ğ Ğ¡Ğ¢Ğ’Ğ",
-      checkpoint: "ĞšĞĞĞ¢Ğ ĞĞ›Ğ¬ĞĞĞ¯ Ğ¢ĞĞ§ĞšĞ",
-      help: "A/D Ğ¸Ğ»Ğ¸ â†/â†’ â€¢ SPACE/W/â†‘ â€¢ R Ğ·Ğ°Ğ½Ğ¾Ğ²Ğ¾",
-      complete: "Ğ—ĞĞ’Ğ•Ğ Ğ¨ĞĞ",
-      defaultOutfit: "ĞĞ‘Ğ«Ğ§ĞĞ«Ğ™ ĞšĞ£Ğ Ğ¬Ğ•Ğ ",
-      dockCrew: "ĞŸĞĞ Ğ¢ĞĞ’ĞĞ¯ Ğ‘Ğ Ğ˜Ğ“ĞĞ”Ğ Â· ĞšĞĞ¡ĞšĞ + Ğ–Ğ˜Ğ›Ğ•Ğ¢",
-      nightShift: "ĞĞĞ§ĞĞĞ¯ Ğ¡ĞœĞ•ĞĞ",
-      hazardRunner: "ĞĞŸĞĞ¡ĞĞ«Ğ™ Ğ‘Ğ•Ğ“Ğ£Ğ",
-      saveFailed: "ĞĞ¨Ğ˜Ğ‘ĞšĞ Ğ¡ĞĞ¥Ğ ĞĞĞ•ĞĞ˜Ğ¯ â€” ĞŸĞĞ’Ğ¢ĞĞ Ğ˜Ğ¢Ğ¬",
-      noCharge: "Ğ–Ğ˜Ğ’ĞĞ™ ĞŸĞ ĞĞ¡ĞœĞĞ¢Ğ  Â· Ğ‘Ğ•Ğ¡ĞŸĞ›ĞĞ¢ĞĞ",
-      worlds: "ĞœĞ˜Ğ Ğ«", buyWorld: "ĞšĞ£ĞŸĞ˜Ğ¢Ğ¬ â€” {price}", select: "Ğ’Ğ«Ğ‘Ğ ĞĞ¢Ğ¬", selected: "Ğ’Ğ«Ğ‘Ğ ĞĞĞ", planned: "Ğ—ĞĞŸĞ›ĞĞĞ˜Ğ ĞĞ’ĞĞĞ", insufficient: "ĞĞ•Ğ”ĞĞ¡Ğ¢ĞĞ¢ĞĞ§ĞĞ ĞœĞĞĞ•Ğ¢",
-      idle: "ĞĞ–Ğ˜Ğ”ĞĞĞ˜Ğ•", motionRun: "Ğ‘Ğ•Ğ“", flip: "Ğ¡ĞĞ›Ğ¬Ğ¢Ğ", language: "Ğ¯Ğ—Ğ«Ğš", samePhysics: "Ğ¢Ğ° Ğ¶Ğµ Ñ„Ğ¸Ğ·Ğ¸ĞºĞ°. ĞĞ±Ñ‰Ğ¸Ğ¹ ĞºĞ¾ÑˆĞµĞ»Ñ‘Ğº. Ğ¢Ğ²Ğ¾Ğ¹ Ğ±ĞµĞ³ÑƒĞ½.", ghostOn: "ĞŸĞ Ğ˜Ğ—Ğ ĞĞš Ğ’ĞšĞ›", ghostOff: "ĞŸĞ Ğ˜Ğ—Ğ ĞĞš Ğ’Ğ«ĞšĞ›", effectsFull: "Ğ­Ğ¤Ğ¤Ğ•ĞšĞ¢Ğ« ĞŸĞĞ›ĞĞ«Ğ•", effectsReduced: "Ğ­Ğ¤Ğ¤Ğ•ĞšĞ¢Ğ« Ğ¡ĞĞ˜Ğ–Ğ•ĞĞ«", flow: "ĞŸĞĞ¢ĞĞš", localBest: "Ğ›Ğ£Ğ§Ğ¨Ğ˜Ğ™ Ğ Ğ•Ğ—Ğ£Ğ›Ğ¬Ğ¢ĞĞ¢", newRecord: "ĞĞĞ’Ğ«Ğ™", clean: "Ğ§Ğ˜Ğ¡Ğ¢Ğ", mastery: "ĞœĞĞ¡Ğ¢Ğ•Ğ Ğ¡Ğ¢Ğ’Ğ", style: "Ğ¡Ğ¢Ğ˜Ğ›Ğ¬",
+      M01: "ЛИТЕЙНЫЙ ПУТЬ", M02: "ЛИТЕЙНЫЙ КРАН", M03: "ПЕЧНОЙ ПРОХОД", M04: "МАГМОВЫЙ ЛИФТ",
+      A01: "ПОВРЕЖДЁННАЯ ПРИЁМКА", A02: "АВАРИЙНЫЙ ГРУЗ", A03: "ПОСЛЕДНИЙ КУРЬЕР", A04: "ФИНАЛЬНАЯ ОТПРАВКА",
+      choose: "ВЫБЕРИ БЕГУНА",
+      male: "МУЖСКОЙ БЕГУН",
+      female: "ЖЕНСКИЙ БЕГУН",
+      route: "МАРШРУТ",
+      run: "ЗАБЕГ",
+      wallet: "КОШЕЛЁК",
+      shop: "МАГАЗИН",
+      outfits: "КОСТЮМЫ",
+      buy: "КУПИТЬ И НАДЕТЬ — {price}",
+      wear: "НАДЕТЬ",
+      worn: "НАДЕТО",
+      preview: "ПРИМЕРКА",
+      next: "ДАЛЕЕ",
+      retry: "ЕЩЁ РАЗ",
+      earned: "НАГРАДА",
+      goals: "ЦЕЛИ",
+      record: "РАЗНИЦА РЕКОРДА",
+      first: "ПЕРВОЕ ПРОХОЖДЕНИЕ",
+      finish: "ФИНИШ",
+      safe: "БЕЗОПАСНЫЙ ПУТЬ",
+      skill: "ЛИНИЯ МАСТЕРСТВА",
+      checkpoint: "КОНТРОЛЬНАЯ ТОЧКА",
+      help: "A/D или ←/→ • SPACE/W/↑ • R заново",
+      complete: "ЗАВЕРШЁН",
+      defaultOutfit: "ОБЫЧНЫЙ КУРЬЕР",
+      dockCrew: "ПОРТОВАЯ БРИГАДА · КАСКА + ЖИЛЕТ",
+      nightShift: "НОЧНАЯ СМЕНА",
+      hazardRunner: "ОПАСНЫЙ БЕГУН",
+      saveFailed: "ОШИБКА СОХРАНЕНИЯ — ПОВТОРИТЬ",
+      noCharge: "ЖИВОЙ ПРОСМОТР · БЕСПЛАТНО",
+      worlds: "МИРЫ", buyWorld: "КУПИТЬ — {price}", select: "ВЫБРАТЬ", selected: "ВЫБРАНО", planned: "ЗАПЛАНИРОВАНО", insufficient: "НЕДОСТАТОЧНО МОНЕТ",
+      idle: "ОЖИДАНИЕ", motionRun: "БЕГ", flip: "САЛЬТО", language: "ЯЗЫК", samePhysics: "Та же физика. Общий кошелёк. Твой бегун.", ghostOn: "ПРИЗРАК ВКЛ", ghostOff: "ПРИЗРАК ВЫКЛ", effectsFull: "ЭФФЕКТЫ ПОЛНЫЕ", effectsReduced: "ЭФФЕКТЫ СНИЖЕНЫ", flow: "ПОТОК", localBest: "ЛУЧШИЙ РЕЗУЛЬТАТ", newRecord: "НОВЫЙ", clean: "ЧИСТО", mastery: "МАСТЕРСТВО", style: "СТИЛЬ",
     },
   });
   const COINS = Object.freeze({
@@ -2976,7 +2976,7 @@
         ctx.stroke();
         ctx.fillStyle = "#142735";
         ctx.font = "900 20px system-ui";
-        ctx.fillText("âœ", o.x + 75, GROUND - 20);
+        ctx.fillText("➜", o.x + 75, GROUND - 20);
       }
       if (o.type === "worker") {
         ctx.fillStyle = "#152b38";
@@ -2987,14 +2987,14 @@
         ctx.fill();
         ctx.fillStyle = "#fff";
         ctx.font = "900 15px system-ui";
-        ctx.fillText(workerClock > 1.65 ? "!" : "â€¦", o.x - 4, GROUND - 91);
+        ctx.fillText(workerClock > 1.65 ? "!" : "…", o.x - 4, GROUND - 91);
       }
     }
     for(const p of movingPlatforms){
       if(p.type==="crane"){c.strokeStyle="#c7d8df";c.lineWidth=3;c.beginPath();c.moveTo(p.x+p.w/2,115);c.lineTo(p.x+p.w/2,p.y);c.stroke();}
       c.fillStyle="#0005";c.beginPath();c.ellipse(p.x+p.w/2,GROUND-3,p.w*.48,8,0,0,Math.PI*2);c.fill();
       c.fillStyle=p.type==="pallet"?"#91613b":"#d28a2c";c.fillRect(p.x,p.y,p.w,p.h);c.strokeStyle="#ffe190";c.strokeRect(p.x+2,p.y+2,p.w-4,p.h-4);
-      c.fillStyle=p.type==="pallet"?"#f2c84b":"#ff5148";c.font="950 18px system-ui";c.fillText(p.type==="pallet"?"â†”":"!",p.x+p.w/2-8,p.y-10);
+      c.fillStyle=p.type==="pallet"?"#f2c84b":"#ff5148";c.font="950 18px system-ui";c.fillText(p.type==="pallet"?"↔":"!",p.x+p.w/2-8,p.y-10);
     }
     for (const coin of route.coins)
       if (!run?.collectedCoinIds.includes(coin.id)) {
@@ -3077,8 +3077,8 @@
   let shopReturnToCharacter = false;
   function rewardedText(amount, claimed=false) {
     const language=profile.settings.language;
-    if(claimed)return language==="tr"?"ALINDI":language==="ru"?"ĞŸĞĞ›Ğ£Ğ§Ğ•ĞĞ":"CLAIMED";
-    return language==="tr"?`REKLAM Ä°ZLE Â· +${amount} COIN`:language==="ru"?`Ğ Ğ•ĞšĞ›ĞĞœĞ Â· +${amount} ĞœĞĞĞ•Ğ¢Ğ«`:`WATCH AD Â· +${amount} COINS`;
+    if(claimed)return language==="tr"?"ALINDI":language==="ru"?"ПОЛУЧЕНО":"CLAIMED";
+    return language==="tr"?`REKLAM İZLE · +${amount} COIN`:language==="ru"?`РЕКЛАМА · +${amount} МОНЕТЫ`:`WATCH AD · +${amount} COINS`;
   }
   function rewardedAvailable() { const detail={available:false};document.dispatchEvent(new CustomEvent("tmb:rewarded-capability",{detail}));return detail.available===true; }
   function interstitialAvailable() { const detail={available:false};document.dispatchEvent(new CustomEvent("tmb:interstitial-capability",{detail}));return detail.available===true; }
@@ -3129,11 +3129,11 @@
     rr(14, 14, 360, 54, 14);
     ctx.fillStyle = "#fff";
     ctx.font = "900 14px system-ui";
-    ctx.fillText(`${t("route")} ${routeId} Â· ${(["magma","aftermath"].includes(route.worldId) ? t(route.routeId) : route.name)}`, 29, 36);
+    ctx.fillText(`${t("route")} ${routeId} · ${(["magma","aftermath"].includes(route.worldId) ? t(route.routeId) : route.name)}`, 29, 36);
     ctx.fillStyle = "#ffd43d";
-    ctx.fillText(`${t("run")} â—‰ ${run?.runCoins || 0}/40`, 29, 57);
+    ctx.fillText(`${t("run")} ◉ ${run?.runCoins || 0}/40`, 29, 57);
     ctx.fillStyle = "#7cecc0";
-    ctx.fillText(`${t("wallet")} â—‰ ${profile.walletBalance}`, 180, 57);
+    ctx.fillText(`${t("wallet")} ◉ ${profile.walletBalance}`, 180, 57);
     ctx.fillStyle = "#fff";
     ctx.fillText(`${t("flow")} ${flow}`, 300, 57);
     if(flowFlash>0){ctx.fillStyle=`rgba(255,222,80,${Math.min(1,flowFlash*2)})`;ctx.font="950 18px system-ui";ctx.fillText(`+ ${t("flow")}`,390,42)}
@@ -3151,7 +3151,7 @@
     ctx.font = "800 18px system-ui";
     ctx.fillText(`${t("earned")} +${result.amount}`, W / 2, H / 2 - 70);
     ctx.fillText(
-      `${t("goals")} Â· ${run.runCoins}/${route.coins.length} Â· ${t("flow")} ${flow}`,
+      `${t("goals")} · ${run.runCoins}/${route.coins.length} · ${t("flow")} ${flow}`,
       W / 2,
       H / 2 - 34,
     );
@@ -3160,10 +3160,10 @@
       W / 2,
       H / 2 + 2,
     );
-    ctx.fillText("â˜…".repeat(result.stars) + "â˜†".repeat(3 - result.stars), W/2, H/2+58);
+    ctx.fillText("★".repeat(result.stars) + "☆".repeat(3 - result.stars), W/2, H/2+58);
     const gs=result.goals||{};
     ctx.font="800 13px system-ui";
-    ctx.fillText(`${t("clean")} ${gs.clean?.earned?"âœ“":"â—‹"} Â· ${t("mastery")} ${gs.mastery?.earned?"âœ“":"â—‹"} Â· ${t("style")} ${gs.style?.earned?"âœ“":"â—‹"}`,W/2,H/2+34);
+    ctx.fillText(`${t("clean")} ${gs.clean?.earned?"✓":"○"} · ${t("mastery")} ${gs.mastery?.earned?"✓":"○"} · ${t("style")} ${gs.style?.earned?"✓":"○"}`,W/2,H/2+34);
     ctx.textAlign = "left";
   }
   function installUI() {
@@ -3191,7 +3191,7 @@
     const shop = document.createElement("section");
     shop.id = "a12Shop";
     shop.setAttribute("aria-hidden", "true");
-    shop.innerHTML = `<div id="a12Preview"><canvas width="480" height="320" aria-label="Runner preview"></canvas><p id="a12WorldWarning" data-world-insufficient hidden></p><div class="previewControls"><button data-preview-runner="male"></button><button data-preview-runner="female"></button></div><div class="previewControls"><button data-preview-motion="idle"></button><button data-preview-motion="run"></button><button data-preview-motion="frontFlip"></button></div></div><div id="a12Products"><div id="a12ShopTop"><h2></h2><button data-close>Ã—</button></div><div class="a12Tabs"><button data-tab="outfits"></button><button data-tab="worlds"></button></div><div data-list="outfits"><article data-item="default"><h3></h3><button data-action></button></article><article data-item="dockCrew"><h3></h3><button data-action></button></article></div><div data-list="worlds"></div><div id="a12ShopBottom"><button data-shop-back></button><button data-shop-buy></button></div><p data-save></p></div>`;
+    shop.innerHTML = `<div id="a12Preview"><canvas width="480" height="320" aria-label="Runner preview"></canvas><p id="a12WorldWarning" data-world-insufficient hidden></p><div class="previewControls"><button data-preview-runner="male"></button><button data-preview-runner="female"></button></div><div class="previewControls"><button data-preview-motion="idle"></button><button data-preview-motion="run"></button><button data-preview-motion="frontFlip"></button></div></div><div id="a12Products"><div id="a12ShopTop"><h2></h2><button data-close>×</button></div><div class="a12Tabs"><button data-tab="outfits"></button><button data-tab="worlds"></button></div><div data-list="outfits"><article data-item="default"><h3></h3><button data-action></button></article><article data-item="dockCrew"><h3></h3><button data-action></button></article></div><div data-list="worlds"></div><div id="a12ShopBottom"><button data-shop-back></button><button data-shop-buy></button></div><p data-save></p></div>`;
     shop.querySelector('[data-list="outfits"]').innerHTML = Object.keys(OUTFITS).map(id=>`<article data-item="${id}"><h3></h3><button data-action></button></article>`).join("");
     document.body.appendChild(shop);
     shop.addEventListener("click", async (e) => {
@@ -3221,7 +3221,7 @@
       if (shopOpen) drawShopPreview();
     }, 80);
     const card = document.getElementById("characterCard");
-    card.querySelector(".eyebrow").textContent = "TRUST ME BRO Â· DOCK 31";
+    card.querySelector(".eyebrow").textContent = "TRUST ME BRO · DOCK 31";
     card.querySelector("h2").textContent = t("choose");
     card.querySelector("p").textContent = t("samePhysics");
     const choices = [...document.querySelectorAll(".characterChoice")];
@@ -3232,7 +3232,7 @@
       }
       el.querySelector(":scope > canvas")?.insertAdjacentHTML(
         "beforebegin",
-        `<span class="runnerSymbol">${i ? "â™€" : "â™‚"}</span>`,
+        `<span class="runnerSymbol">${i ? "♀" : "♂"}</span>`,
       );
       el.lastChild.textContent = i ? t("female") : t("male");
       el.addEventListener("click", () => selectRunner(i ? "female" : "male"));
@@ -3241,7 +3241,7 @@
     syncRunnerChoice();
     document.getElementById("characterShop")?.addEventListener("click",()=>{shopReturnToCharacter=true;openShop();});
     const change = document.getElementById("characterChange");
-    change.textContent = "â†”";
+    change.textContent = "↔";
     change.title = t("choose");
     applyLanguage();
     addEventListener("keydown", (e) => {
@@ -3314,7 +3314,7 @@
     const motionLabels=[t("idle"),t("motionRun"),t("flip")];
     s.querySelectorAll('[data-preview-runner]').forEach(b=>{b.textContent=t(b.dataset.previewRunner);b.setAttribute('aria-pressed',String(b.dataset.previewRunner===previewRunnerId));});
     s.querySelectorAll('[data-preview-motion]').forEach((b,i)=>{b.textContent=motionLabels[i];b.setAttribute('aria-pressed',String(b.dataset.previewMotion===previewMotion));});
-    s.querySelector("h2").textContent = `${t("shop")} Â· ${t(shopTab)} Â· ${t("wallet")} ${profile.walletBalance}`;
+    s.querySelector("h2").textContent = `${t("shop")} · ${t(shopTab)} · ${t("wallet")} ${profile.walletBalance}`;
     s.querySelector('[data-tab="outfits"]').textContent=t("outfits");
     s.querySelector('[data-tab="worlds"]').textContent=t("worlds");
     s.querySelector('[data-list="outfits"]').hidden=shopTab!=="outfits";
@@ -3333,14 +3333,14 @@
         ? t("worn")
         : owned
           ? t("wear")
-          : `${short?"ğŸ”’ ":""}â—‰ ${OUTFITS[id].price}`;
+          : `${short?"🔒 ":""}◉ ${OUTFITS[id].price}`;
       a.querySelector("button").disabled = worn || purchaseBusy || short;
       a.querySelector('.priceBadge')?.remove();
     }
     const worlds=s.querySelector('[data-list="worlds"]');
     worlds.innerHTML=Object.values(WORLD_REGISTRY).map(w=>`<article data-item="${w.id}"><h3>${w.id.toUpperCase()}</h3><button data-action></button></article>`).join("");
-    for(const a of worlds.querySelectorAll("article")){const w=WORLD_REGISTRY[a.dataset.item],owned=profile.ownedWorldIds.includes(w.id),selected=profile.selectedWorldId===w.id,b=a.querySelector("button"),short=!owned&&profile.walletBalance<w.price;a.dataset.owned=String(owned);a.dataset.price=String(w.price);a.style.outline=previewWorldId===w.id?"2px solid #79e9ba":"none";b.textContent=!w.enabled?t("planned"):selected?t("selected"):owned?t("select"):`${short?"ğŸ”’ ":""}â—‰ ${w.price}`;b.disabled=!w.enabled||selected||purchaseBusy||short;}
-    const back=s.querySelector('[data-shop-back]'),buy=s.querySelector('[data-shop-buy]'),selected=s.querySelector(`${shopTab==="worlds"?'[data-list="worlds"]':'[data-list="outfits"]'} [data-item="${shopTab==="worlds"?previewWorldId:previewOutfitId}"] [data-action]`),previewWorld=WORLD_REGISTRY[previewWorldId],worldOwned=!!previewWorld&&profile.ownedWorldIds.includes(previewWorldId),worldSelected=profile.selectedWorldId===previewWorldId,worldShort=!!previewWorld&&!worldOwned&&profile.walletBalance<previewWorld.price,warning=s.querySelector('[data-world-insufficient]');back.textContent=profile.settings.language==='tr'?'GERÄ°':profile.settings.language==='ru'?'ĞĞĞ—ĞĞ”':'BACK';if(shopTab==="worlds"&&previewWorld){buy.textContent=!previewWorld.enabled?t("planned"):worldSelected?t("selected"):worldOwned?t("select"):t("buyWorld").replace("{price}",previewWorld.price);buy.disabled=!previewWorld.enabled||worldSelected||purchaseBusy||worldShort}else{buy.textContent=selected?.textContent||t('selected');buy.disabled=!!selected?.disabled}warning.hidden=!(shopTab==="worlds"&&previewWorld?.enabled&&worldShort);warning.textContent=warning.hidden?"":t("insufficient");
+    for(const a of worlds.querySelectorAll("article")){const w=WORLD_REGISTRY[a.dataset.item],owned=profile.ownedWorldIds.includes(w.id),selected=profile.selectedWorldId===w.id,b=a.querySelector("button"),short=!owned&&profile.walletBalance<w.price;a.dataset.owned=String(owned);a.dataset.price=String(w.price);a.style.outline=previewWorldId===w.id?"2px solid #79e9ba":"none";b.textContent=!w.enabled?t("planned"):selected?t("selected"):owned?t("select"):`${short?"🔒 ":""}◉ ${w.price}`;b.disabled=!w.enabled||selected||purchaseBusy||short;}
+    const back=s.querySelector('[data-shop-back]'),buy=s.querySelector('[data-shop-buy]'),selected=s.querySelector(`${shopTab==="worlds"?'[data-list="worlds"]':'[data-list="outfits"]'} [data-item="${shopTab==="worlds"?previewWorldId:previewOutfitId}"] [data-action]`),previewWorld=WORLD_REGISTRY[previewWorldId],worldOwned=!!previewWorld&&profile.ownedWorldIds.includes(previewWorldId),worldSelected=profile.selectedWorldId===previewWorldId,worldShort=!!previewWorld&&!worldOwned&&profile.walletBalance<previewWorld.price,warning=s.querySelector('[data-world-insufficient]');back.textContent=profile.settings.language==='tr'?'GERİ':profile.settings.language==='ru'?'НАЗАД':'BACK';if(shopTab==="worlds"&&previewWorld){buy.textContent=!previewWorld.enabled?t("planned"):worldSelected?t("selected"):worldOwned?t("select"):t("buyWorld").replace("{price}",previewWorld.price);buy.disabled=!previewWorld.enabled||worldSelected||purchaseBusy||worldShort}else{buy.textContent=selected?.textContent||t('selected');buy.disabled=!!selected?.disabled}warning.hidden=!(shopTab==="worlds"&&previewWorld?.enabled&&worldShort);warning.textContent=warning.hidden?"":t("insufficient");
     s.querySelector("[data-save]").textContent = saveFailure ? t("saveFailed") : t("noCharge");
     drawShopPreview();
   }
@@ -3421,10 +3421,10 @@
     for(const s of routeSurfaces(route).filter(v=>v.kind!=='ground')){
       aftermathSurface(c,s.x,s.y,s.w,s.h);
       if(s.parkour==='vault'){c.strokeStyle='#c6c9af';c.lineWidth=3;c.beginPath();c.moveTo(s.x+4,s.y+8);c.lineTo(s.x+s.w*.6,s.y+s.h*.6);c.lineTo(s.x+s.w-4,s.y+11);c.stroke();c.fillStyle='#262c29';c.fillRect(s.x+s.w*.2,s.y+s.h*.6,s.w*.6,8);}
-      if(s.parkour==='slide'){c.fillStyle='#eff0cc';c.fillRect(s.x-5,s.y+s.h-6,s.w+10,6);c.fillStyle='#e9c04b';c.font='bold 17px system-ui';c.fillText('â†“',s.x+s.w/2-7,s.y+s.h+17);}
+      if(s.parkour==='slide'){c.fillStyle='#eff0cc';c.fillRect(s.x-5,s.y+s.h-6,s.w+10,6);c.fillStyle='#e9c04b';c.font='bold 17px system-ui';c.fillText('↓',s.x+s.w/2-7,s.y+s.h+17);}
     }
     for(const o of route.obstacles){if(o.type==='ramp'){c.fillStyle='#73796b';c.beginPath();c.moveTo(o.x,GROUND);c.lineTo(o.x+o.w,GROUND-o.h);c.lineTo(o.x+o.w,GROUND);c.closePath();c.fill();c.strokeStyle='#edf1cd';c.lineWidth=6;c.stroke();c.strokeStyle='#333d35';c.lineWidth=3;c.beginPath();c.moveTo(o.x+o.w*.5,GROUND-o.h*.5+7);c.lineTo(o.x+o.w*.6,GROUND-10);c.stroke();}else if(o.type==='worker'){aftermathRescuer(c,o.x,GROUND);if(!workerDisabled&&workerClock>1.65){c.fillStyle='#ff6551';c.font='bold 22px system-ui';c.fillText('!',o.x-3,GROUND-97);}}}
-    if(!debugHideMovingPlatforms)for(const p of movingPlatforms){if(p.type==='crane'){c.strokeStyle='#d5d7b9';c.lineWidth=4;c.beginPath();c.moveTo(p.x+p.w*.3-35,115);c.quadraticCurveTo(p.x+p.w*.3+20,190,p.x+p.w*.3,p.y);c.moveTo(p.x+p.w*.75+22,115);c.lineTo(p.x+p.w*.75,p.y);c.stroke();}aftermathSurface(c,p.x,p.y,p.w,p.h);c.fillStyle='#ecbd55';c.fillRect(p.x+7,p.y+7,Math.max(4,p.w*.24),6);c.fillStyle='#eff2d5';c.font='bold 18px system-ui';c.fillText(p.type==='pallet'?'â†”':'!',p.x+p.w/2-7,p.y-9);}
+    if(!debugHideMovingPlatforms)for(const p of movingPlatforms){if(p.type==='crane'){c.strokeStyle='#d5d7b9';c.lineWidth=4;c.beginPath();c.moveTo(p.x+p.w*.3-35,115);c.quadraticCurveTo(p.x+p.w*.3+20,190,p.x+p.w*.3,p.y);c.moveTo(p.x+p.w*.75+22,115);c.lineTo(p.x+p.w*.75,p.y);c.stroke();}aftermathSurface(c,p.x,p.y,p.w,p.h);c.fillStyle='#ecbd55';c.fillRect(p.x+7,p.y+7,Math.max(4,p.w*.24),6);c.fillStyle='#eff2d5';c.font='bold 18px system-ui';c.fillText(p.type==='pallet'?'↔':'!',p.x+p.w/2-7,p.y-9);}
     for(const p of collapsing){if(p.state==='ABSENT')continue;c.save();if(p.state==='CONTACT_WARNING')c.translate(Math.sin(p.timer*55)*3,0);const y=p.y+p.fallY;aftermathSurface(c,p.x,y,p.w,p.h);c.strokeStyle='#17251d';c.lineWidth=4;c.beginPath();c.moveTo(p.x+10,y+5);c.lineTo(p.x+p.w*.4,y+19);c.lineTo(p.x+p.w*.7,y+5);c.lineTo(p.x+p.w-10,y+20);c.stroke();c.fillStyle='#f3c54b';c.fillRect(p.x,y,p.w,4);c.restore();}
     for(const d of containerDoors){aftermathSurface(c,d.x,d.currentY,d.w,d.h);c.strokeStyle='#d5c8a0';c.lineWidth=6;c.beginPath();c.moveTo(d.x-8,d.currentY+d.h);c.lineTo(d.x-3,d.currentY-12);c.lineTo(d.x+d.w+9,d.currentY-5);c.stroke();c.fillStyle=d.state==='OPEN'?'#63f2a5':d.state==='PREPARING'?'#ffd34d':'#ff5b55';c.beginPath();c.arc(d.x+d.w/2,d.currentY-26,9,0,7);c.fill();}
     for(const b of barrels){c.fillStyle='#343c32';c.strokeStyle='#c6bd94';c.lineWidth=3;c.beginPath();c.moveTo(b.x+5,b.y);c.lineTo(b.x+27,b.y+4);c.lineTo(b.x+24,b.y+27);c.lineTo(b.x,b.y+22);c.closePath();c.fill();c.stroke();c.beginPath();c.moveTo(b.x+3,b.y+9);c.lineTo(b.x+23,b.y+17);c.stroke();}
@@ -3700,7 +3700,7 @@
       }
       if (s.parkour === "slide") {
         c.fillStyle = frozen?"#bdeff7":magma?"#b9b9b4":"#f2c230"; c.fillRect(s.x - 16, s.y + s.h - 7, s.w + 32, 7);
-        c.fillStyle = "#17252d"; c.font = "900 10px system-ui"; c.fillText("â†“", s.x + s.w / 2 - 4, s.y + s.h + 15);
+        c.fillStyle = "#17252d"; c.font = "900 10px system-ui"; c.fillText("↓", s.x + s.w / 2 - 4, s.y + s.h + 15);
       }
     }
     for(const s of route.slopes||[]){c.fillStyle="#30383f";c.beginPath();c.moveTo(s.x1,s.y1);c.lineTo(s.x2,s.y2);c.lineTo(s.x2,s.y2+100);c.lineTo(s.x1,s.y1+100);c.closePath();c.fill();c.strokeStyle="#8b98a1";c.lineWidth=3;c.beginPath();c.moveTo(s.x1,s.y1);c.lineTo(s.x2,s.y2);c.stroke()}
@@ -3715,7 +3715,7 @@
         c.closePath(); c.fill(); c.shadowBlur = 0; c.strokeStyle = frozen?"#effcff":magma?"#eee8dc":"#fff0a0"; c.lineWidth = magma?9:5; c.stroke();
         if(magma){c.strokeStyle="#adb5bb";c.lineWidth=2;for(let q=24;q<o.w;q+=36){c.beginPath();c.moveTo(o.x+q,baseY-5);c.lineTo(o.x+q,baseY-o.h*(q/o.w)+7);c.stroke();}}
         if(frozen){c.fillStyle="#eafaff";for(let q=18;q<o.w;q+=34)c.fillRect(o.x+q,baseY-o.h*(q/o.w)-5,22,5);}
-        c.fillStyle = "#17252d"; c.font = "950 26px system-ui"; c.fillText("â†—", o.x + o.w * .52, GROUND - 20); c.restore();
+        c.fillStyle = "#17252d"; c.font = "950 26px system-ui"; c.fillText("↗", o.x + o.w * .52, GROUND - 20); c.restore();
       } else if (o.type === "worker" && magma) {
         // Aluminized heat suit: hood, dark visor, separated gauntlets and boots.
         if(!drawNpcWorkerSprite(c,o.x,GROUND)){
@@ -3757,7 +3757,7 @@
         c.fillStyle="#6b4b38";c.fillRect(p.x,p.y+8,p.w,p.h-8);c.fillStyle="#f4fdff";c.beginPath();c.moveTo(p.x,p.y+10);for(let q=0;q<=p.w;q+=28)c.lineTo(p.x+q,p.y+2+(q/28%2)*5);c.lineTo(p.x+p.w,p.y+14);c.lineTo(p.x,p.y+14);c.closePath();c.fill();
         c.strokeStyle="#dffaff";c.lineWidth=3;c.strokeRect(p.x+2,p.y+2,p.w-4,p.h-4);
       }
-      c.fillStyle=p.type==="pallet"?"#f2c84b":"#ff5148";c.font="950 18px system-ui";c.fillText(p.type==="pallet"?"â†”":"!",p.x+p.w/2-8,p.y-10);
+      c.fillStyle=p.type==="pallet"?"#f2c84b":"#ff5148";c.font="950 18px system-ui";c.fillText(p.type==="pallet"?"↔":"!",p.x+p.w/2-8,p.y-10);
       c.restore();
     }
     for (const p of collapsing) {
@@ -3906,18 +3906,18 @@
     c.fillRect(14, 14, 360, 54);
     c.fillStyle = "#fff";
     c.font = "900 14px system-ui";
-    c.fillText(`${t("route")} ${routeId} Â· ${(["magma","aftermath"].includes(route.worldId) ? t(route.routeId) : route.name)}`, 29, 36);
+    c.fillText(`${t("route")} ${routeId} · ${(["magma","aftermath"].includes(route.worldId) ? t(route.routeId) : route.name)}`, 29, 36);
     c.fillStyle = "#ffd43d";
-    c.fillText(`${t("run")} â—‰ ${run?.runCoins || 0}/40`, 29, 57);
+    c.fillText(`${t("run")} ◉ ${run?.runCoins || 0}/40`, 29, 57);
     c.fillStyle = "#7cecc0";
-    c.fillText(`${t("wallet")} â—‰ ${profile.walletBalance}`, 180, 57);
+    c.fillText(`${t("wallet")} ◉ ${profile.walletBalance}`, 180, 57);
     if (result) {
       c.fillStyle = "#06111be8";
       c.fillRect(0, 0, w, h);
       c.fillStyle = "#7cecc0";
       c.textAlign = "center";
       c.font = "950 30px system-ui";
-      c.fillText(`${routeId} ${t("complete")} Â· +${result.amount}`, w / 2, h / 2);
+      c.fillText(`${routeId} ${t("complete")} · +${result.amount}`, w / 2, h / 2);
       c.textAlign = "left";
     }
     syncActionVisibility();

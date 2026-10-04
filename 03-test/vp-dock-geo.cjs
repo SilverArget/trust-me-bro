@@ -68,6 +68,12 @@ function segmentCheck(route, expected, tolerance, id) {
 }
 
 const currentSource = fs.readFileSync(sourcePath, "utf8");
+const indexSource = fs.readFileSync(path.join(root, "index.html"), "utf8");
+const mojibakePattern = /Ã|Å|Ä|â€|Â·|Ð[\x80-\xBF]/g;
+const mojibakeMatches = text => text.match(mojibakePattern) || [];
+report("UTF8-a12", `${mojibakeMatches(currentSource).length} mojibake`, "0 mojibake", mojibakeMatches(currentSource).length === 0);
+report("UTF8-index", `${mojibakeMatches(indexSource).length} mojibake`, "0 mojibake", mojibakeMatches(indexSource).length === 0);
+report("UTF8-negative", `${mojibakeMatches("BUY â€” 10").length} detected`, ">0 detected", mojibakeMatches("BUY â€” 10").length > 0);
 const baseSource = cp.execFileSync("git", ["show", "67224ac:js/a12-campaign.js"], { cwd: root, encoding: "utf8" });
 const routes = loadRoutes(currentSource), base = loadRoutes(baseSource);
 const d01Expected = irSegments("story_01-backbone.json", 905, -4329.375, "d01");
