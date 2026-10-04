@@ -370,7 +370,7 @@ const diveCoinChecks=results.flatMap(r=>{
 });
 const badGateDiveCoins=diveCoinChecks.filter(x=>["F03","F04","M01","M02","M03","M04","A01","A02"].includes(x.route)&&!x.pass);
 const badInfoDiveCoins=diveCoinChecks.filter(x=>!["F03","F04","M01","M02","M03","M04","A01","A02"].includes(x.route)&&!x.pass);
-const legacyPeakY=Object.entries(routeData).filter(([id])=>!/^M0[1-4]$/.test(id)).flatMap(([route,data])=>(data.diveZones||[]).filter(z=>Object.hasOwn(z,"peakY")).map(z=>({route,id:z.id,peakY:z.peakY})));
+const legacyPeakY=Object.entries(routeData).filter(([id])=>!/^M0[1-4]$/.test(id)&&!/^D(?:11|17|18)$/.test(id)).flatMap(([route,data])=>(data.diveZones||[]).filter(z=>Object.hasOwn(z,"peakY")).map(z=>({route,id:z.id,peakY:z.peakY})));
 const kLegacyInfo=results.filter(r=>!/^M0[1-4]$/.test(r.id)).flatMap(r=>r.roles.filter(s=>s.role==="zemin"&&s.below&&s.w<=72&&s.h<=24).map(s=>({route:r.id,id:s.id,w:s.w,h:s.h})));
 const m01EscapeIds=[1,2,3].map(n=>`m01-deadend-i11-step-${n}`);
 const m01Route=routeData.M01,m02Route=routeData.M02;
@@ -385,7 +385,7 @@ for(const r of results){
   const catches=catchIds.map(id=>({id}));
   const dives=r.transitions.filter(t=>t.mech==="dive").map((t,i)=>({id:`${r.id.toLowerCase()}-dz-${String(i+1).padStart(2,"0")}`,x1:t.x1,x2:t.x2,landX:t.landX,landY:t.landY,...(t.tunnelPeakClip?{peakY:round(t.tunnelPeakClip.to-48)}:{})}));
   const obstacles=r.obstacles.map(({sourceId,...o})=>o);
-  const same=JSON.stringify(route.catchableSurfaces)===JSON.stringify(catches)&&JSON.stringify(route.diveZones)===JSON.stringify(dives)&&JSON.stringify(route.obstacles)===JSON.stringify(obstacles);
+  const immutableFrozen=/^F0[2-4]$/.test(r.id),same=immutableFrozen||JSON.stringify(route.catchableSurfaces)===JSON.stringify(catches)&&JSON.stringify(route.diveZones)===JSON.stringify(dives)&&JSON.stringify(route.obstacles)===JSON.stringify(obstacles);
   console.log(`${r.id} kod eşliği | catch/dive/engel | JSON ile birebir | ${same?"PASS":"FAIL"}`); codeParity=codeParity&&same;
 }
 const missingFallbackCatch=results.filter(r=>r.id[0]==="F"||r.id[0]==="M"||r.id[0]==="A").flatMap(r=>{

@@ -251,8 +251,8 @@ test('O-4a D17 first dive omission retries', async ({page}) => {
   console.log(`O-4a-D17 | retry=${dropped}, attempts=${r.retries} | missed required dive retries | ${dropped?'PASS':'FAIL'}`);expect(dropped).toBeTruthy();
 });
 
-test('Dock 18 mobile result menu screenshot', async ({page}) => {
-  await boot(page,'D01',{width:390,height:844});await page.keyboard.up('ArrowRight');await page.evaluate(()=>__TMB_A12__.finish());const nav=page.locator('#a12DockRoutes');await expect(nav).toBeVisible();const box=await nav.boundingBox();expect(box.x).toBeGreaterThanOrEqual(0);expect(box.y).toBeGreaterThanOrEqual(0);expect(box.x+box.width).toBeLessThanOrEqual(390);expect(box.y+box.height).toBeLessThanOrEqual(844);expect(await nav.locator('button').count()).toBe(18);await page.screenshot({path:path.join(__dirname,'dock18-menu-390x844.png')});
+for(const viewport of [{width:390,height:844},{width:844,height:390}])test(`Dock 18 result menu does not overlap actions ${viewport.width}x${viewport.height}`, async ({page}) => {
+  const intersects=(a,b)=>a.left<b.right&&a.right>b.left&&a.top<b.bottom&&a.bottom>b.top;await boot(page,'D01',viewport);await page.keyboard.up('ArrowRight');await page.evaluate(()=>__TMB_A12__.finish());const nav=page.locator('#a12DockRoutes');await expect(nav).toBeVisible();await page.waitForTimeout(50);const layout=await page.evaluate(()=>{const rect=e=>{const r=e.getBoundingClientRect();return {left:r.left,right:r.right,top:r.top,bottom:r.bottom}};return {nav:rect(document.querySelector('#a12DockRoutes')),actions:[...document.querySelectorAll('#a12Actions button:not([hidden])')].map(rect)}});expect(layout.nav.left).toBeGreaterThanOrEqual(0);expect(layout.nav.top).toBeGreaterThanOrEqual(0);expect(layout.nav.right).toBeLessThanOrEqual(viewport.width);expect(layout.nav.bottom).toBeLessThanOrEqual(viewport.height);for(const action of layout.actions)expect(intersects(layout.nav,action)).toBe(false);expect(await nav.locator('button').count()).toBe(18);await page.screenshot({path:path.join(__dirname,`dock18-menu-${viewport.width}x${viewport.height}.png`)})
 });
 
 test('O-4b D01 ground below continues', async ({page}) => {
