@@ -93,7 +93,7 @@ async function drive(page, id, {touch=false, stopAfter, omitDives=[]} = {}) {
     if (previousSample && previousSample.playerX - p.x > 150) {
       retries++;
       trace.push(`[DBG-B2] ${s.gameClock.toFixed(2)} retry player=${previousSample.playerX.toFixed(2)} chief=${previousSample.chiefX?.toFixed(2) ?? 'n/a'} chainClimb=${chainClimbSeconds.toFixed(2)}s`);
-      if (/^F0[1-4]$/.test(id)||/^M0[34]$/.test(id)) {
+      if (id === 'D07' || /^F0[1-4]$/.test(id)||/^M0[34]$/.test(id)) {
         const checkpointX = p.x;
         for (const key of [...fired]) {
           const ti = /^(?:normal|dive|tutunma)-(\d+)$/.exec(key);
