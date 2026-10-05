@@ -1,4 +1,5695 @@
 {
+  "F03": {
+    "parts": [
+      {
+        "id": "D09",
+        "side": "left",
+        "fraction": 0.106269,
+        "cut": 814.8
+      },
+      {
+        "id": "D10",
+        "side": "left",
+        "fraction": 0.488962,
+        "cut": 4440.48
+      },
+      {
+        "id": "D12",
+        "side": "left",
+        "fraction": 0.30378,
+        "cut": 2169.6
+      }
+    ],
+    "partBounds": [
+      {
+        "part": 1,
+        "source": "D09",
+        "minX": 70,
+        "maxX": 884.8
+      },
+      {
+        "part": 2,
+        "source": "D10",
+        "minX": 892.8,
+        "maxX": 5333.28
+      },
+      {
+        "part": 3,
+        "source": "D12",
+        "minX": 5341.28,
+        "maxX": 7898.48
+      }
+    ],
+    "length": 8038.48,
+    "movements": 36,
+    "addedObstacles": 4,
+    "transportedDeviations": [
+      {
+        "id": "f03-p1-d09-vault-06",
+        "from": 740.8,
+        "to": null,
+        "reason": "R2/R3/recovery"
+      },
+      {
+        "id": "f03-p2-d10-vault-04",
+        "from": 1012.02,
+        "to": 1076.02,
+        "reason": "R2/R3/recovery"
+      },
+      {
+        "id": "f03-p2-d10-vault-01",
+        "from": 1423.2,
+        "to": null,
+        "reason": "R2/R3/recovery"
+      },
+      {
+        "id": "f03-p3-d12-vault-03",
+        "from": 5443.28,
+        "to": 5627.28,
+        "reason": "R2/R3/recovery"
+      }
+    ],
+    "hardCandidateAudit": [
+      {
+        "surface": "f03-p2-d10-v-01",
+        "x": 1080.8,
+        "reasons": [
+          "overlap"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-01",
+        "x": 1088.8,
+        "reasons": [
+          "overlap"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-01",
+        "x": 1096.8,
+        "reasons": [
+          "overlap"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-01",
+        "x": 1104.8,
+        "reasons": [
+          "R2:124",
+          "previous:4.78"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-01",
+        "x": 1112.8,
+        "reasons": [
+          "R2:116",
+          "previous:12.78"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-01",
+        "x": 1120.8,
+        "reasons": [
+          "R2:108",
+          "previous:20.78"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-01",
+        "x": 1128.8,
+        "reasons": [
+          "R2:100",
+          "previous:28.78"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-01",
+        "x": 1136.8,
+        "reasons": [
+          "R2:92",
+          "previous:36.78"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-01",
+        "x": 1144.8,
+        "reasons": [
+          "R2:84",
+          "previous:44.78"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-01",
+        "x": 1152.8,
+        "reasons": [
+          "R2:76",
+          "previous:52.78"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-01",
+        "x": 1160.8,
+        "reasons": [
+          "R2:68",
+          "previous:60.78"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-01",
+        "x": 1168.8,
+        "reasons": [
+          "R2:60",
+          "previous:68.78"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-01",
+        "x": 1176.8,
+        "reasons": [
+          "R2:52",
+          "previous:76.78"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-01",
+        "x": 1184.8,
+        "reasons": [
+          "R2:44",
+          "previous:84.78"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-01",
+        "x": 1192.8,
+        "reasons": [
+          "R2:36",
+          "previous:92.78"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-01",
+        "x": 1200.8,
+        "reasons": [
+          "R2:28",
+          "previous:100.78"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-01",
+        "x": 1208.8,
+        "reasons": [
+          "R2:20",
+          "previous:108.78"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-01",
+        "x": 1216.8,
+        "reasons": [
+          "R2:12",
+          "previous:116.78"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-01",
+        "x": 1224.8,
+        "reasons": [
+          "R2:4",
+          "previous:124.78"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-01",
+        "x": 1232.8,
+        "reasons": [
+          "R2:-4",
+          "previous:132.78",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-01",
+        "x": 1240.8,
+        "reasons": [
+          "R2:-12",
+          "previous:140.78",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-01",
+        "x": 1248.8,
+        "reasons": [
+          "R2:-20",
+          "previous:148.78",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-01",
+        "x": 1256.8,
+        "reasons": [
+          "R2:-28",
+          "previous:156.78",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-01",
+        "x": 1264.8,
+        "reasons": [
+          "R2:-36",
+          "previous:164.78",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-01",
+        "x": 1272.8,
+        "reasons": [
+          "R3:4",
+          "R2:-44",
+          "previous:172.78",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-01",
+        "x": 1280.8,
+        "reasons": [
+          "R3:12",
+          "R2:-52",
+          "previous:180.78",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-01",
+        "x": 1288.8,
+        "reasons": [
+          "R3:20",
+          "R2:-60",
+          "previous:188.78",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-01",
+        "x": 1296.8,
+        "reasons": [
+          "R3:28",
+          "R2:-68",
+          "previous:196.78",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-01",
+        "x": 1304.8,
+        "reasons": [
+          "R3:4",
+          "R2:118.4",
+          "previous:204.78"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-01",
+        "x": 1312.8,
+        "reasons": [
+          "R3:12",
+          "R2:110.4",
+          "previous:212.78"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-01",
+        "x": 1320.8,
+        "reasons": [
+          "R3:20",
+          "R2:102.4"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-01",
+        "x": 1328.8,
+        "reasons": [
+          "R3:28",
+          "R2:94.4"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-01",
+        "x": 1336.8,
+        "reasons": [
+          "R3:36",
+          "R2:86.4"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-01",
+        "x": 1344.8,
+        "reasons": [
+          "R3:44",
+          "R2:78.4"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-01",
+        "x": 1352.8,
+        "reasons": [
+          "R3:52",
+          "R2:70.4"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-01",
+        "x": 1360.8,
+        "reasons": [
+          "R3:60",
+          "R2:62.4"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-01",
+        "x": 1368.8,
+        "reasons": [
+          "R3:68",
+          "R2:54.4"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-01",
+        "x": 1376.8,
+        "reasons": [
+          "R3:76",
+          "R2:46.4"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-01",
+        "x": 1384.8,
+        "reasons": [
+          "R3:84",
+          "R2:38.4"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-01",
+        "x": 1392.8,
+        "reasons": [
+          "R3:92",
+          "R2:30.4"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-01",
+        "x": 1400.8,
+        "reasons": [
+          "R2:22.4"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-01",
+        "x": 1408.8,
+        "reasons": [
+          "R2:14.4"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-05",
+        "x": 1958.24,
+        "reasons": [
+          "R2:6.4"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-05",
+        "x": 1966.24,
+        "reasons": [
+          "R2:-1.6",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-05",
+        "x": 1974.24,
+        "reasons": [
+          "R2:-9.6",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-05",
+        "x": 1982.24,
+        "reasons": [
+          "R2:-17.6",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-05",
+        "x": 1990.24,
+        "reasons": [
+          "R2:-25.6",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-05",
+        "x": 1998.24,
+        "reasons": [
+          "R2:-33.6",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-05",
+        "x": 2006.24,
+        "reasons": [
+          "R2:-41.6",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-05",
+        "x": 2014.24,
+        "reasons": [
+          "R2:-49.6",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-05",
+        "x": 2022.24,
+        "reasons": [
+          "R2:-57.6",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-05",
+        "x": 2030.24,
+        "reasons": [
+          "R2:-65.6",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-05",
+        "x": 2038.24,
+        "reasons": [
+          "R3:1.6",
+          "R2:21.2"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-05",
+        "x": 2046.24,
+        "reasons": [
+          "R3:9.6",
+          "R2:13.2"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-05",
+        "x": 2054.24,
+        "reasons": [
+          "R3:17.6",
+          "R2:5.2"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-05",
+        "x": 2062.24,
+        "reasons": [
+          "R3:25.6",
+          "R2:-2.8",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-05",
+        "x": 2070.24,
+        "reasons": [
+          "R3:33.6",
+          "R2:-10.8",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-05",
+        "x": 2078.24,
+        "reasons": [
+          "R3:41.6",
+          "R2:-18.8",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-05",
+        "x": 2086.24,
+        "reasons": [
+          "R3:49.6",
+          "R2:-26.8",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-05",
+        "x": 2094.24,
+        "reasons": [
+          "R3:57.6",
+          "R2:-34.8",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-05",
+        "x": 2102.24,
+        "reasons": [
+          "R3:65.6",
+          "R2:-42.8",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-05",
+        "x": 2110.24,
+        "reasons": [
+          "R3:73.6",
+          "R2:-50.8",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-05",
+        "x": 2118.24,
+        "reasons": [
+          "R3:81.6",
+          "R2:-58.8",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-05",
+        "x": 2126.24,
+        "reasons": [
+          "R3:89.6",
+          "R2:-66.8",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-05",
+        "x": 2134.24,
+        "reasons": [
+          "R3:2.8",
+          "R2:-26.8",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-05",
+        "x": 2142.24,
+        "reasons": [
+          "R3:10.8",
+          "R2:-34.8",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-05",
+        "x": 2150.24,
+        "reasons": [
+          "R3:18.8",
+          "R2:-42.8",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-05",
+        "x": 2158.24,
+        "reasons": [
+          "R3:26.8",
+          "R2:-50.8",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-05",
+        "x": 2166.24,
+        "reasons": [
+          "R3:34.8",
+          "R2:-58.8",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-05",
+        "x": 2174.24,
+        "reasons": [
+          "R3:42.8",
+          "R2:-66.8",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-05",
+        "x": 2182.24,
+        "reasons": [
+          "R3:2.8",
+          "R2:2"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-05",
+        "x": 2190.24,
+        "reasons": [
+          "R3:10.8",
+          "R2:-6",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-05",
+        "x": 2198.24,
+        "reasons": [
+          "R3:18.8",
+          "R2:-14",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-05",
+        "x": 2206.24,
+        "reasons": [
+          "R3:26.8",
+          "R2:-22",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-05",
+        "x": 2214.24,
+        "reasons": [
+          "R3:34.8",
+          "R2:-30",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-05",
+        "x": 2222.24,
+        "reasons": [
+          "R3:42.8",
+          "R2:-38",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-05",
+        "x": 2230.24,
+        "reasons": [
+          "R3:50.8",
+          "R2:-46",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-05",
+        "x": 2238.24,
+        "reasons": [
+          "R3:58.8",
+          "R2:-54",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-05",
+        "x": 2246.24,
+        "reasons": [
+          "R3:66.8",
+          "R2:-62",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-05",
+        "x": 2254.24,
+        "reasons": [
+          "R3:74.8",
+          "R2:-70",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-05",
+        "x": 2262.24,
+        "reasons": [
+          "R3:6",
+          "R2:-30",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-05",
+        "x": 2270.24,
+        "reasons": [
+          "R3:14",
+          "R2:-38",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-05",
+        "x": 2278.24,
+        "reasons": [
+          "R3:22",
+          "R2:-46",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-05",
+        "x": 2286.24,
+        "reasons": [
+          "R3:30",
+          "R2:-54",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-05",
+        "x": 2294.24,
+        "reasons": [
+          "R3:38",
+          "R2:-62",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-05",
+        "x": 2302.24,
+        "reasons": [
+          "R3:46",
+          "R2:-70",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-05",
+        "x": 2310.24,
+        "reasons": [
+          "R3:6",
+          "R2:30"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-05",
+        "x": 2318.24,
+        "reasons": [
+          "R3:14",
+          "R2:22"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-05",
+        "x": 2326.24,
+        "reasons": [
+          "R3:22",
+          "R2:14"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-05",
+        "x": 2334.24,
+        "reasons": [
+          "R3:30",
+          "R2:6"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-05",
+        "x": 2342.24,
+        "reasons": [
+          "R3:38",
+          "R2:-2",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-05",
+        "x": 2350.24,
+        "reasons": [
+          "R3:46",
+          "R2:-10",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-05",
+        "x": 2358.24,
+        "reasons": [
+          "R3:54",
+          "R2:-18",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-05",
+        "x": 2366.24,
+        "reasons": [
+          "R3:62",
+          "R2:-26",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-05",
+        "x": 2374.24,
+        "reasons": [
+          "R3:70",
+          "R2:-34",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-05",
+        "x": 2382.24,
+        "reasons": [
+          "R3:78",
+          "R2:-42",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-05",
+        "x": 2390.24,
+        "reasons": [
+          "R3:86",
+          "R2:-50",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-05",
+        "x": 2398.24,
+        "reasons": [
+          "R3:94",
+          "R2:-58",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-05",
+        "x": 2406.24,
+        "reasons": [
+          "R2:-66",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-05",
+        "x": 2414.24,
+        "reasons": [
+          "R3:2",
+          "R2:-40.4",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-05",
+        "x": 2422.24,
+        "reasons": [
+          "R3:10",
+          "R2:-48.4",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-05",
+        "x": 2430.24,
+        "reasons": [
+          "R3:18",
+          "R2:-56.4",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-05",
+        "x": 2438.24,
+        "reasons": [
+          "R3:26",
+          "R2:-64.4",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-05",
+        "x": 2446.24,
+        "reasons": [
+          "R3:0.4",
+          "R2:34.4"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-05",
+        "x": 2454.24,
+        "reasons": [
+          "R3:8.4",
+          "R2:26.4"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-05",
+        "x": 2462.24,
+        "reasons": [
+          "R3:16.4",
+          "R2:18.4"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-05",
+        "x": 2470.24,
+        "reasons": [
+          "R3:24.4",
+          "R2:10.4"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-05",
+        "x": 2478.24,
+        "reasons": [
+          "R3:32.4",
+          "R2:2.4"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-05",
+        "x": 2486.24,
+        "reasons": [
+          "R3:40.4",
+          "R2:-5.6",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-05",
+        "x": 2494.24,
+        "reasons": [
+          "R3:48.4",
+          "R2:-13.6",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-05",
+        "x": 2502.24,
+        "reasons": [
+          "R3:56.4",
+          "R2:-21.6",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-05",
+        "x": 2510.24,
+        "reasons": [
+          "R3:64.4",
+          "R2:-29.6",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-05",
+        "x": 2518.24,
+        "reasons": [
+          "R3:72.4",
+          "R2:-37.6",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-05",
+        "x": 2526.24,
+        "reasons": [
+          "R3:80.4",
+          "R2:-45.6",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-05",
+        "x": 2534.24,
+        "reasons": [
+          "R3:88.4",
+          "R2:-53.6",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-05",
+        "x": 2542.24,
+        "reasons": [
+          "R2:-61.6",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-05",
+        "x": 2550.24,
+        "reasons": [
+          "R2:-69.6",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-05",
+        "x": 2558.24,
+        "reasons": [
+          "R3:5.6",
+          "R2:-35.6",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-05",
+        "x": 2566.24,
+        "reasons": [
+          "R3:13.6",
+          "R2:-43.6",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-05",
+        "x": 2574.24,
+        "reasons": [
+          "R3:21.6",
+          "R2:-51.6",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-05",
+        "x": 2582.24,
+        "reasons": [
+          "R3:29.6",
+          "R2:-59.6",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-05",
+        "x": 2590.24,
+        "reasons": [
+          "R3:37.6",
+          "R2:-67.6",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-05",
+        "x": 2598.24,
+        "reasons": [
+          "R3:3.6",
+          "R2:-0.13",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-05",
+        "x": 2606.24,
+        "reasons": [
+          "R3:11.6",
+          "R2:-8.13",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-05",
+        "x": 2614.24,
+        "reasons": [
+          "R3:19.6",
+          "R2:-16.13",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-05",
+        "x": 2622.24,
+        "reasons": [
+          "R3:27.6",
+          "R2:-24.13",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-14",
+        "x": 3449.12,
+        "reasons": [
+          "R3:37.04",
+          "R2:57.28"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-14",
+        "x": 3457.12,
+        "reasons": [
+          "R3:45.04",
+          "R2:49.28"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-14",
+        "x": 3465.12,
+        "reasons": [
+          "R3:53.04",
+          "R2:41.28"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-14",
+        "x": 3473.12,
+        "reasons": [
+          "R3:61.04",
+          "R2:33.28"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-14",
+        "x": 3481.12,
+        "reasons": [
+          "R3:69.04",
+          "R2:25.28"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-14",
+        "x": 3489.12,
+        "reasons": [
+          "R3:77.04",
+          "R2:17.28"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-14",
+        "x": 3497.12,
+        "reasons": [
+          "R3:85.04",
+          "R2:9.28"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-14",
+        "x": 3505.12,
+        "reasons": [
+          "R3:93.04",
+          "R2:1.28"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-14",
+        "x": 3513.12,
+        "reasons": [
+          "R2:-6.72",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-14",
+        "x": 3521.12,
+        "reasons": [
+          "R2:-14.72",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-14",
+        "x": 3529.12,
+        "reasons": [
+          "R2:-22.72",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-14",
+        "x": 3537.12,
+        "reasons": [
+          "R2:-30.72",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-14",
+        "x": 3545.12,
+        "reasons": [
+          "R2:-38.72",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-14",
+        "x": 3553.12,
+        "reasons": [
+          "R2:-46.72",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-14",
+        "x": 3561.12,
+        "reasons": [
+          "R2:-54.72",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-14",
+        "x": 3569.12,
+        "reasons": [
+          "R2:-62.72",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-14",
+        "x": 3577.12,
+        "reasons": [
+          "R2:-70.72",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-14",
+        "x": 3585.12,
+        "reasons": [
+          "R3:6.72",
+          "R2:-6.72",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-14",
+        "x": 3593.12,
+        "reasons": [
+          "R3:14.72",
+          "R2:-14.72",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-14",
+        "x": 3601.12,
+        "reasons": [
+          "R3:22.72",
+          "R2:-22.72",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-14",
+        "x": 3609.12,
+        "reasons": [
+          "R3:30.72",
+          "R2:-30.72",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-14",
+        "x": 3617.12,
+        "reasons": [
+          "R3:38.72",
+          "R2:-38.72",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-14",
+        "x": 3625.12,
+        "reasons": [
+          "R3:46.72",
+          "R2:-46.72",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-14",
+        "x": 3633.12,
+        "reasons": [
+          "R3:54.72",
+          "R2:-54.72",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-14",
+        "x": 3641.12,
+        "reasons": [
+          "R3:62.72",
+          "R2:-62.72",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-14",
+        "x": 3649.12,
+        "reasons": [
+          "R3:70.72",
+          "R2:-70.72",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-14",
+        "x": 3657.12,
+        "reasons": [
+          "R3:6.72",
+          "R2:30.96"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-14",
+        "x": 3665.12,
+        "reasons": [
+          "R3:14.72",
+          "R2:22.96"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-14",
+        "x": 3673.12,
+        "reasons": [
+          "R3:22.72",
+          "R2:14.96"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-14",
+        "x": 3681.12,
+        "reasons": [
+          "R3:30.72",
+          "R2:6.96"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-14",
+        "x": 3689.12,
+        "reasons": [
+          "R3:38.72",
+          "R2:-1.04",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-14",
+        "x": 3697.12,
+        "reasons": [
+          "R3:46.72",
+          "R2:-9.04",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-14",
+        "x": 3705.12,
+        "reasons": [
+          "R3:54.72",
+          "R2:-17.04",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-14",
+        "x": 3713.12,
+        "reasons": [
+          "R3:62.72",
+          "R2:-25.04",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-14",
+        "x": 3721.12,
+        "reasons": [
+          "R3:70.72",
+          "R2:-33.04",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-14",
+        "x": 3729.12,
+        "reasons": [
+          "R3:78.72",
+          "R2:-41.04",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-14",
+        "x": 3737.12,
+        "reasons": [
+          "R3:86.72",
+          "R2:-49.04",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-14",
+        "x": 3745.12,
+        "reasons": [
+          "R3:94.72",
+          "R2:-57.04",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-14",
+        "x": 3753.12,
+        "reasons": [
+          "R2:-65.04",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-14",
+        "x": 3761.12,
+        "reasons": [
+          "R3:1.04",
+          "R2:48.4"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-14",
+        "x": 3769.12,
+        "reasons": [
+          "R3:9.04",
+          "R2:40.4"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-14",
+        "x": 3777.12,
+        "reasons": [
+          "R3:17.04",
+          "R2:32.4"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-14",
+        "x": 3785.12,
+        "reasons": [
+          "R3:25.04",
+          "R2:24.4"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-14",
+        "x": 3793.12,
+        "reasons": [
+          "R3:33.04",
+          "R2:16.4"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-14",
+        "x": 3801.12,
+        "reasons": [
+          "R3:41.04",
+          "R2:8.4"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-14",
+        "x": 3809.12,
+        "reasons": [
+          "R3:49.04",
+          "R2:0.4"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-14",
+        "x": 3817.12,
+        "reasons": [
+          "R3:57.04",
+          "R2:-7.6",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-14",
+        "x": 3825.12,
+        "reasons": [
+          "R3:65.04",
+          "R2:-15.6",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-14",
+        "x": 3833.12,
+        "reasons": [
+          "R3:73.04",
+          "R2:-23.6",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-14",
+        "x": 3841.12,
+        "reasons": [
+          "R3:81.04",
+          "R2:-31.6",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-14",
+        "x": 3849.12,
+        "reasons": [
+          "R3:89.04",
+          "R2:-39.6",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-14",
+        "x": 3857.12,
+        "reasons": [
+          "R2:-47.6",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-14",
+        "x": 3865.12,
+        "reasons": [
+          "R2:-55.6",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-14",
+        "x": 3873.12,
+        "reasons": [
+          "R2:-63.6",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-14",
+        "x": 3881.12,
+        "reasons": [
+          "R2:-71.6",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-14",
+        "x": 3889.12,
+        "reasons": [
+          "R3:7.6",
+          "R2:40.16"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-14",
+        "x": 3897.12,
+        "reasons": [
+          "R3:15.6",
+          "R2:32.16"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-14",
+        "x": 3905.12,
+        "reasons": [
+          "R3:23.6",
+          "R2:24.16"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-14",
+        "x": 3913.12,
+        "reasons": [
+          "R3:31.6",
+          "R2:16.16"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-14",
+        "x": 3921.12,
+        "reasons": [
+          "R3:39.6",
+          "R2:8.16"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-14",
+        "x": 3929.12,
+        "reasons": [
+          "R3:47.6",
+          "R2:0.16"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-14",
+        "x": 3937.12,
+        "reasons": [
+          "R3:55.6",
+          "R2:-7.84",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-14",
+        "x": 3945.12,
+        "reasons": [
+          "R3:63.6",
+          "R2:-15.84",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-14",
+        "x": 3953.12,
+        "reasons": [
+          "R3:71.6",
+          "R2:-23.84",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-14",
+        "x": 3961.12,
+        "reasons": [
+          "R3:79.6",
+          "R2:-31.84",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-14",
+        "x": 3969.12,
+        "reasons": [
+          "R3:87.6",
+          "R2:-39.84",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-14",
+        "x": 3977.12,
+        "reasons": [
+          "R3:95.6",
+          "R2:-47.84",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-14",
+        "x": 3985.12,
+        "reasons": [
+          "R2:-55.84",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-14",
+        "x": 3993.12,
+        "reasons": [
+          "R2:-63.84",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-14",
+        "x": 4001.12,
+        "reasons": [
+          "R2:-71.84",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-14",
+        "x": 4009.12,
+        "reasons": [
+          "R3:7.84",
+          "R2:18.56"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-14",
+        "x": 4017.12,
+        "reasons": [
+          "R3:15.84",
+          "R2:10.56"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-14",
+        "x": 4025.12,
+        "reasons": [
+          "R3:23.84",
+          "R2:2.56"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-14",
+        "x": 4033.12,
+        "reasons": [
+          "R3:31.84",
+          "R2:-5.44",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-21",
+        "x": 4561.28,
+        "reasons": [
+          "R2:-63.2",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-21",
+        "x": 4569.28,
+        "reasons": [
+          "R2:-71.2",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-21",
+        "x": 4577.28,
+        "reasons": [
+          "R3:7.2",
+          "R2:-7.2",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-21",
+        "x": 4585.28,
+        "reasons": [
+          "R3:15.2",
+          "R2:-15.2",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-21",
+        "x": 4593.28,
+        "reasons": [
+          "R3:23.2",
+          "R2:-23.2",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-21",
+        "x": 4601.28,
+        "reasons": [
+          "R3:31.2",
+          "R2:-31.2",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-21",
+        "x": 4609.28,
+        "reasons": [
+          "R3:39.2",
+          "R2:-39.2",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-21",
+        "x": 4617.28,
+        "reasons": [
+          "R3:47.2",
+          "R2:-47.2",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-21",
+        "x": 4625.28,
+        "reasons": [
+          "R3:55.2",
+          "R2:-55.2",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-21",
+        "x": 4633.28,
+        "reasons": [
+          "R3:63.2",
+          "R2:-63.2",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-21",
+        "x": 4641.28,
+        "reasons": [
+          "R3:71.2",
+          "R2:-71.2",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-21",
+        "x": 4649.28,
+        "reasons": [
+          "R3:7.2"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-21",
+        "x": 4657.28,
+        "reasons": [
+          "R3:15.2"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-21",
+        "x": 4665.28,
+        "reasons": [
+          "R3:23.2"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-21",
+        "x": 4673.28,
+        "reasons": [
+          "R3:31.2"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-21",
+        "x": 4681.28,
+        "reasons": [
+          "R3:39.2"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-21",
+        "x": 4689.28,
+        "reasons": [
+          "R3:47.2"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-21",
+        "x": 4697.28,
+        "reasons": [
+          "R3:55.2"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-21",
+        "x": 4705.28,
+        "reasons": [
+          "R3:63.2"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-21",
+        "x": 4713.28,
+        "reasons": [
+          "R3:71.2"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-21",
+        "x": 4721.28,
+        "reasons": [
+          "R3:79.2"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-21",
+        "x": 4729.28,
+        "reasons": [
+          "R3:87.2"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-21",
+        "x": 4737.28,
+        "reasons": [
+          "R3:95.2"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-21",
+        "x": 4745.28,
+        "reasons": []
+      },
+      {
+        "surface": "f03-p2-d10-v-21",
+        "x": 5005.28,
+        "reasons": [
+          "previous:188"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-21",
+        "x": 5013.28,
+        "reasons": [
+          "previous:196"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-21",
+        "x": 5021.28,
+        "reasons": [
+          "previous:204"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-21",
+        "x": 5029.28,
+        "reasons": [
+          "previous:212"
+        ]
+      },
+      {
+        "surface": "f03-p2-d10-v-21",
+        "x": 5037.28,
+        "reasons": []
+      },
+      {
+        "surface": "f03-p3-d12-v-01",
+        "x": 5529.28,
+        "reasons": [
+          "R2:-16.16",
+          "next:26",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f03-p3-d12-v-01",
+        "x": 5537.28,
+        "reasons": [
+          "R2:-24.16",
+          "next:18",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f03-p3-d12-v-01",
+        "x": 5545.28,
+        "reasons": [
+          "R2:-32.16",
+          "next:10",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f03-p3-d12-v-01",
+        "x": 5553.28,
+        "reasons": [
+          "R2:-40.16",
+          "next:2",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f03-p3-d12-v-01",
+        "x": 5561.28,
+        "reasons": [
+          "R2:-48.16",
+          "overlap",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f03-p3-d12-v-01",
+        "x": 5569.28,
+        "reasons": [
+          "R2:-56.16",
+          "overlap",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f03-p3-d12-v-01",
+        "x": 5577.28,
+        "reasons": [
+          "R2:-64.16",
+          "overlap",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f03-p3-d12-v-01",
+        "x": 5585.28,
+        "reasons": [
+          "overlap",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f03-p3-d12-v-01",
+        "x": 5593.28,
+        "reasons": [
+          "overlap",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f03-p3-d12-v-01",
+        "x": 5601.28,
+        "reasons": [
+          "overlap",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f03-p3-d12-v-01",
+        "x": 5609.28,
+        "reasons": [
+          "overlap",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f03-p3-d12-v-01",
+        "x": 5617.28,
+        "reasons": [
+          "overlap",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f03-p3-d12-v-01",
+        "x": 5625.28,
+        "reasons": [
+          "overlap"
+        ]
+      },
+      {
+        "surface": "f03-p3-d12-v-01",
+        "x": 5633.28,
+        "reasons": [
+          "overlap"
+        ]
+      },
+      {
+        "surface": "f03-p3-d12-v-01",
+        "x": 5641.28,
+        "reasons": [
+          "overlap"
+        ]
+      },
+      {
+        "surface": "f03-p3-d12-v-01",
+        "x": 5649.28,
+        "reasons": [
+          "overlap"
+        ]
+      },
+      {
+        "surface": "f03-p3-d12-v-01",
+        "x": 5657.28,
+        "reasons": [
+          "previous:6"
+        ]
+      },
+      {
+        "surface": "f03-p3-d12-v-01",
+        "x": 5665.28,
+        "reasons": [
+          "previous:14"
+        ]
+      },
+      {
+        "surface": "f03-p3-d12-v-01",
+        "x": 5673.28,
+        "reasons": [
+          "previous:22"
+        ]
+      },
+      {
+        "surface": "f03-p3-d12-v-01",
+        "x": 5681.28,
+        "reasons": [
+          "previous:30"
+        ]
+      },
+      {
+        "surface": "f03-p3-d12-v-01",
+        "x": 5689.28,
+        "reasons": [
+          "previous:38"
+        ]
+      },
+      {
+        "surface": "f03-p3-d12-v-01",
+        "x": 5697.28,
+        "reasons": [
+          "previous:46"
+        ]
+      },
+      {
+        "surface": "f03-p3-d12-v-01",
+        "x": 5705.28,
+        "reasons": [
+          "previous:54"
+        ]
+      },
+      {
+        "surface": "f03-p3-d12-v-01",
+        "x": 5713.28,
+        "reasons": [
+          "previous:62"
+        ]
+      },
+      {
+        "surface": "f03-p3-d12-v-01",
+        "x": 5721.28,
+        "reasons": [
+          "previous:70"
+        ]
+      },
+      {
+        "surface": "f03-p3-d12-v-01",
+        "x": 5729.28,
+        "reasons": [
+          "R2:120.8",
+          "previous:78"
+        ]
+      },
+      {
+        "surface": "f03-p3-d12-v-01",
+        "x": 5737.28,
+        "reasons": [
+          "R2:112.8",
+          "previous:86"
+        ]
+      },
+      {
+        "surface": "f03-p3-d12-v-01",
+        "x": 5745.28,
+        "reasons": [
+          "R2:104.8",
+          "previous:94"
+        ]
+      },
+      {
+        "surface": "f03-p3-d12-v-01",
+        "x": 5753.28,
+        "reasons": [
+          "R2:96.8",
+          "previous:102"
+        ]
+      },
+      {
+        "surface": "f03-p3-d12-v-01",
+        "x": 5761.28,
+        "reasons": [
+          "R2:88.8",
+          "previous:110"
+        ]
+      },
+      {
+        "surface": "f03-p3-d12-v-01",
+        "x": 5769.28,
+        "reasons": [
+          "R2:80.8",
+          "previous:118"
+        ]
+      },
+      {
+        "surface": "f03-p3-d12-v-01",
+        "x": 5777.28,
+        "reasons": [
+          "R2:72.8",
+          "previous:126"
+        ]
+      },
+      {
+        "surface": "f03-p3-d12-v-01",
+        "x": 5785.28,
+        "reasons": [
+          "R2:64.8",
+          "previous:134"
+        ]
+      },
+      {
+        "surface": "f03-p3-d12-v-01",
+        "x": 5793.28,
+        "reasons": [
+          "R2:56.8",
+          "previous:142"
+        ]
+      },
+      {
+        "surface": "f03-p3-d12-v-01",
+        "x": 5801.28,
+        "reasons": [
+          "R2:48.8",
+          "previous:150"
+        ]
+      },
+      {
+        "surface": "f03-p3-d12-v-01",
+        "x": 5809.28,
+        "reasons": [
+          "R2:40.8",
+          "previous:158"
+        ]
+      },
+      {
+        "surface": "f03-p3-d12-v-01",
+        "x": 5817.28,
+        "reasons": [
+          "R2:32.8",
+          "previous:166"
+        ]
+      },
+      {
+        "surface": "f03-p3-d12-v-01",
+        "x": 5825.28,
+        "reasons": [
+          "R2:24.8",
+          "previous:174"
+        ]
+      },
+      {
+        "surface": "f03-p3-d12-v-01",
+        "x": 5833.28,
+        "reasons": [
+          "R2:16.8",
+          "previous:182"
+        ]
+      },
+      {
+        "surface": "f03-p3-d12-v-01",
+        "x": 5841.28,
+        "reasons": [
+          "R3:4",
+          "R2:8.8",
+          "previous:190"
+        ]
+      },
+      {
+        "surface": "f03-p3-d12-v-01",
+        "x": 5849.28,
+        "reasons": [
+          "R3:12",
+          "R2:0.8",
+          "previous:198"
+        ]
+      },
+      {
+        "surface": "f03-p3-d12-v-01",
+        "x": 5857.28,
+        "reasons": [
+          "R3:20",
+          "R2:-7.2",
+          "previous:206",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f03-p3-d12-v-05",
+        "x": 6364.48,
+        "reasons": [
+          "R3:12.8",
+          "R2:36.4"
+        ]
+      },
+      {
+        "surface": "f03-p3-d12-v-05",
+        "x": 6372.48,
+        "reasons": [
+          "R3:20.8",
+          "R2:28.4"
+        ]
+      },
+      {
+        "surface": "f03-p3-d12-v-05",
+        "x": 6380.48,
+        "reasons": [
+          "R3:28.8",
+          "R2:20.4"
+        ]
+      },
+      {
+        "surface": "f03-p3-d12-v-05",
+        "x": 6388.48,
+        "reasons": [
+          "R3:36.8",
+          "R2:12.4"
+        ]
+      },
+      {
+        "surface": "f03-p3-d12-v-05",
+        "x": 6396.48,
+        "reasons": [
+          "R3:44.8",
+          "R2:4.4"
+        ]
+      },
+      {
+        "surface": "f03-p3-d12-v-05",
+        "x": 6404.48,
+        "reasons": [
+          "R3:52.8",
+          "R2:-3.6",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f03-p3-d12-v-05",
+        "x": 6412.48,
+        "reasons": [
+          "R3:60.8",
+          "R2:-11.6",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f03-p3-d12-v-05",
+        "x": 6420.48,
+        "reasons": [
+          "R3:68.8",
+          "R2:-19.6",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f03-p3-d12-v-05",
+        "x": 6428.48,
+        "reasons": [
+          "R3:76.8",
+          "R2:-27.6",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f03-p3-d12-v-05",
+        "x": 6436.48,
+        "reasons": [
+          "R3:84.8",
+          "R2:-35.6",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f03-p3-d12-v-05",
+        "x": 6444.48,
+        "reasons": [
+          "R3:92.8",
+          "R2:-43.6",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f03-p3-d12-v-05",
+        "x": 6452.48,
+        "reasons": [
+          "R2:-51.6",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f03-p3-d12-v-05",
+        "x": 6460.48,
+        "reasons": [
+          "R2:-59.6",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f03-p3-d12-v-05",
+        "x": 6468.48,
+        "reasons": [
+          "R2:-67.6",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f03-p3-d12-v-05",
+        "x": 6476.48,
+        "reasons": [
+          "R3:3.6",
+          "R2:3.84"
+        ]
+      },
+      {
+        "surface": "f03-p3-d12-v-05",
+        "x": 6484.48,
+        "reasons": [
+          "R3:11.6",
+          "R2:-4.16",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f03-p3-d12-v-05",
+        "x": 6492.48,
+        "reasons": [
+          "R3:19.6",
+          "R2:-12.16",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f03-p3-d12-v-05",
+        "x": 6500.48,
+        "reasons": [
+          "R3:27.6",
+          "R2:-20.16",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f03-p3-d12-v-05",
+        "x": 6508.48,
+        "reasons": [
+          "R3:35.6",
+          "R2:-28.16",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f03-p3-d12-v-05",
+        "x": 6516.48,
+        "reasons": [
+          "R3:43.6",
+          "R2:-36.16",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f03-p3-d12-v-05",
+        "x": 6524.48,
+        "reasons": [
+          "R3:51.6",
+          "R2:-44.16",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f03-p3-d12-v-05",
+        "x": 6532.48,
+        "reasons": [
+          "R3:59.6",
+          "R2:-52.16",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f03-p3-d12-v-05",
+        "x": 6540.48,
+        "reasons": [
+          "R3:67.6",
+          "R2:-60.16",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f03-p3-d12-v-05",
+        "x": 6548.48,
+        "reasons": [
+          "R3:75.6",
+          "R2:-68.16",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f03-p3-d12-v-05",
+        "x": 6556.48,
+        "reasons": [
+          "R3:4.16",
+          "R2:-68",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f03-p3-d12-v-05",
+        "x": 6564.48,
+        "reasons": [
+          "R3:4"
+        ]
+      },
+      {
+        "surface": "f03-p3-d12-v-05",
+        "x": 6572.48,
+        "reasons": [
+          "R3:12"
+        ]
+      },
+      {
+        "surface": "f03-p3-d12-v-05",
+        "x": 6580.48,
+        "reasons": [
+          "R3:20"
+        ]
+      },
+      {
+        "surface": "f03-p3-d12-v-05",
+        "x": 6588.48,
+        "reasons": [
+          "R3:28"
+        ]
+      },
+      {
+        "surface": "f03-p3-d12-v-05",
+        "x": 6596.48,
+        "reasons": [
+          "R3:36"
+        ]
+      },
+      {
+        "surface": "f03-p3-d12-v-10",
+        "x": 7317.28,
+        "reasons": []
+      },
+      {
+        "surface": "f03-p3-d12-v-10",
+        "x": 7577.28,
+        "reasons": [
+          "previous:188"
+        ]
+      },
+      {
+        "surface": "f03-p3-d12-v-10",
+        "x": 7585.28,
+        "reasons": [
+          "previous:196"
+        ]
+      },
+      {
+        "surface": "f03-p3-d12-v-10",
+        "x": 7593.28,
+        "reasons": [
+          "previous:204"
+        ]
+      },
+      {
+        "surface": "f03-p3-d12-v-10",
+        "x": 7601.28,
+        "reasons": [
+          "previous:212"
+        ]
+      },
+      {
+        "surface": "f03-p3-d12-v-10",
+        "x": 7609.28,
+        "reasons": []
+      }
+    ],
+    "coins": 14
+  },
+  "F04": {
+    "parts": [
+      {
+        "id": "D02",
+        "side": "left",
+        "fraction": 0.487247,
+        "cut": 3118.38
+      },
+      {
+        "id": "D03",
+        "side": "left",
+        "fraction": 0.274475,
+        "cut": 1959.48
+      },
+      {
+        "id": "D01",
+        "side": "left",
+        "fraction": 0.289519,
+        "cut": 2424.72
+      }
+    ],
+    "partBounds": [
+      {
+        "part": 1,
+        "source": "D02",
+        "minX": 70,
+        "maxX": 3368.38
+      },
+      {
+        "part": 2,
+        "source": "D03",
+        "minX": 3376.38,
+        "maxX": 5938.38
+      },
+      {
+        "part": 3,
+        "source": "D01",
+        "minX": 5946.38,
+        "maxX": 8274.380000000001
+      }
+    ],
+    "length": 8414.38,
+    "movements": 31,
+    "addedObstacles": 3,
+    "transportedDeviations": [
+      {
+        "id": "f04-p1-d02-vault-01",
+        "from": 2672.38,
+        "to": 3216.38,
+        "reason": "R2/R3/recovery"
+      }
+    ],
+    "hardCandidateAudit": [
+      {
+        "surface": "f04-p1-d02-v-01",
+        "x": 258,
+        "reasons": [
+          "R3:48",
+          "R2:-40",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-01",
+        "x": 266,
+        "reasons": [
+          "R3:56",
+          "R2:-48",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-01",
+        "x": 274,
+        "reasons": [
+          "R3:64",
+          "R2:-56",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-01",
+        "x": 282,
+        "reasons": [
+          "R3:72",
+          "R2:-64",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-01",
+        "x": 290,
+        "reasons": [
+          "R3:0",
+          "R2:-72"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-01",
+        "x": 298,
+        "reasons": [
+          "R3:8",
+          "R2:80"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-01",
+        "x": 306,
+        "reasons": [
+          "R3:16",
+          "R2:72"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-01",
+        "x": 314,
+        "reasons": [
+          "R3:24",
+          "R2:64"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-01",
+        "x": 322,
+        "reasons": [
+          "R3:32",
+          "R2:56"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-01",
+        "x": 330,
+        "reasons": [
+          "R3:40",
+          "R2:48"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-01",
+        "x": 338,
+        "reasons": [
+          "R3:48",
+          "R2:40"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-01",
+        "x": 346,
+        "reasons": [
+          "R3:56",
+          "R2:32"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-01",
+        "x": 354,
+        "reasons": [
+          "R3:64",
+          "R2:24"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-01",
+        "x": 362,
+        "reasons": [
+          "R3:72",
+          "R2:16"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-01",
+        "x": 370,
+        "reasons": [
+          "R3:80",
+          "R2:8"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-01",
+        "x": 378,
+        "reasons": [
+          "R3:88",
+          "R2:0"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-01",
+        "x": 386,
+        "reasons": [
+          "R2:-8",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-01",
+        "x": 394,
+        "reasons": [
+          "R2:-16",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-01",
+        "x": 402,
+        "reasons": [
+          "R2:-24",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-01",
+        "x": 410,
+        "reasons": [
+          "R2:-32",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-01",
+        "x": 418,
+        "reasons": [
+          "R2:-40",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-01",
+        "x": 426,
+        "reasons": [
+          "R2:-48",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-01",
+        "x": 434,
+        "reasons": [
+          "R2:-56",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-01",
+        "x": 442,
+        "reasons": [
+          "R2:-64",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-01",
+        "x": 450,
+        "reasons": [
+          "R3:0",
+          "R2:-72"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-01",
+        "x": 458,
+        "reasons": [
+          "R3:8",
+          "R2:0"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-01",
+        "x": 466,
+        "reasons": [
+          "R3:16",
+          "R2:-8",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-01",
+        "x": 474,
+        "reasons": [
+          "R3:24",
+          "R2:-16",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-01",
+        "x": 482,
+        "reasons": [
+          "R3:32",
+          "R2:-24",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-01",
+        "x": 490,
+        "reasons": [
+          "R3:40",
+          "R2:-32",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-01",
+        "x": 498,
+        "reasons": [
+          "R3:48",
+          "R2:-40",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-01",
+        "x": 506,
+        "reasons": [
+          "R3:56",
+          "R2:-48",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-01",
+        "x": 514,
+        "reasons": [
+          "R3:64",
+          "R2:-56",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-01",
+        "x": 522,
+        "reasons": [
+          "R3:72",
+          "R2:-64",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-01",
+        "x": 530,
+        "reasons": [
+          "R3:0",
+          "R2:-72"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-01",
+        "x": 538,
+        "reasons": [
+          "R3:8",
+          "R2:0"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-01",
+        "x": 546,
+        "reasons": [
+          "R3:16",
+          "R2:-8",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-01",
+        "x": 554,
+        "reasons": [
+          "R3:24",
+          "R2:-16",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-01",
+        "x": 562,
+        "reasons": [
+          "R3:32",
+          "R2:-24",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-01",
+        "x": 570,
+        "reasons": [
+          "R3:40",
+          "R2:-32",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-01",
+        "x": 578,
+        "reasons": [
+          "R3:48",
+          "R2:-40",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-01",
+        "x": 586,
+        "reasons": [
+          "R3:56",
+          "R2:-48",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-01",
+        "x": 594,
+        "reasons": [
+          "R3:64",
+          "R2:-56",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-01",
+        "x": 602,
+        "reasons": [
+          "R3:72",
+          "R2:-64",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-01",
+        "x": 610,
+        "reasons": [
+          "R3:0",
+          "R2:-72",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-01",
+        "x": 618,
+        "reasons": [
+          "R3:8",
+          "R2:-21.44",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-01",
+        "x": 626,
+        "reasons": [
+          "R3:16",
+          "R2:-29.44",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-01",
+        "x": 634,
+        "reasons": [
+          "R3:24",
+          "R2:-37.44",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-01",
+        "x": 642,
+        "reasons": [
+          "R3:32",
+          "R2:-45.44",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-01",
+        "x": 650,
+        "reasons": [
+          "R3:40",
+          "R2:-53.44",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-01",
+        "x": 658,
+        "reasons": [
+          "R3:48",
+          "R2:-61.44",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-01",
+        "x": 666,
+        "reasons": [
+          "R3:56",
+          "R2:-69.44",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-01",
+        "x": 674,
+        "reasons": [
+          "R3:5.44",
+          "R2:2.56"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-01",
+        "x": 682,
+        "reasons": [
+          "R3:13.44",
+          "R2:-5.44",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-01",
+        "x": 690,
+        "reasons": [
+          "R3:21.44",
+          "R2:-13.44",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-01",
+        "x": 698,
+        "reasons": [
+          "R3:29.44",
+          "R2:-21.44",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-01",
+        "x": 706,
+        "reasons": [
+          "R3:37.44",
+          "R2:-29.44",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-01",
+        "x": 714,
+        "reasons": [
+          "R3:45.44",
+          "R2:-37.44",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-01",
+        "x": 722,
+        "reasons": [
+          "R3:53.44",
+          "R2:-45.44",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-01",
+        "x": 730,
+        "reasons": [
+          "R3:61.44",
+          "R2:-53.44",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-01",
+        "x": 738,
+        "reasons": [
+          "R3:69.44",
+          "R2:-61.44",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-01",
+        "x": 746,
+        "reasons": [
+          "R3:77.44",
+          "R2:-69.44",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-01",
+        "x": 754,
+        "reasons": [
+          "R3:5.44",
+          "R2:2.56"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-01",
+        "x": 762,
+        "reasons": [
+          "R3:13.44",
+          "R2:-5.44",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-01",
+        "x": 770,
+        "reasons": [
+          "R3:21.44",
+          "R2:-13.44",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-01",
+        "x": 778,
+        "reasons": [
+          "R3:29.44",
+          "R2:-21.44",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-01",
+        "x": 786,
+        "reasons": [
+          "R3:37.44",
+          "R2:-29.44",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-01",
+        "x": 794,
+        "reasons": [
+          "R3:45.44",
+          "R2:-37.44",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-01",
+        "x": 802,
+        "reasons": [
+          "R3:53.44",
+          "R2:-45.44",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-01",
+        "x": 810,
+        "reasons": [
+          "R3:61.44",
+          "R2:-53.44",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-01",
+        "x": 818,
+        "reasons": [
+          "R3:69.44",
+          "R2:-61.44",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-01",
+        "x": 826,
+        "reasons": [
+          "R3:77.44",
+          "R2:-69.44",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-01",
+        "x": 834,
+        "reasons": [
+          "R3:5.44",
+          "R2:82.56"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-01",
+        "x": 842,
+        "reasons": [
+          "R3:13.44",
+          "R2:74.56"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-01",
+        "x": 850,
+        "reasons": [
+          "R3:21.44",
+          "R2:66.56"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-01",
+        "x": 858,
+        "reasons": [
+          "R3:29.44",
+          "R2:58.56"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-01",
+        "x": 866,
+        "reasons": [
+          "R3:37.44",
+          "R2:50.56"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-01",
+        "x": 874,
+        "reasons": [
+          "R3:45.44",
+          "R2:42.56"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-01",
+        "x": 882,
+        "reasons": [
+          "R3:53.44",
+          "R2:34.56"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-01",
+        "x": 890,
+        "reasons": [
+          "R3:61.44",
+          "R2:26.56"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-01",
+        "x": 898,
+        "reasons": [
+          "R3:69.44",
+          "R2:18.56"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-01",
+        "x": 906,
+        "reasons": [
+          "R3:77.44",
+          "R2:10.56"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-01",
+        "x": 914,
+        "reasons": [
+          "R3:85.44",
+          "R2:2.56"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-01",
+        "x": 922,
+        "reasons": [
+          "R3:93.44",
+          "R2:-5.44",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-01",
+        "x": 930,
+        "reasons": [
+          "R2:-13.44",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-01",
+        "x": 938,
+        "reasons": [
+          "R2:-21.44",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-01",
+        "x": 946,
+        "reasons": [
+          "R2:-29.44",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-01",
+        "x": 954,
+        "reasons": [
+          "R2:-37.44",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-01",
+        "x": 962,
+        "reasons": [
+          "R2:-45.44",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-01",
+        "x": 970,
+        "reasons": [
+          "R2:-53.44",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-01",
+        "x": 978,
+        "reasons": [
+          "R2:-61.44",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-01",
+        "x": 986,
+        "reasons": [
+          "R2:-69.44",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-01",
+        "x": 994,
+        "reasons": [
+          "R3:5.44",
+          "R2:2.56"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-01",
+        "x": 1002,
+        "reasons": [
+          "R3:13.44",
+          "R2:-5.44",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-01",
+        "x": 1010,
+        "reasons": [
+          "R3:21.44",
+          "R2:-13.44",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-01",
+        "x": 1018,
+        "reasons": [
+          "R3:29.44",
+          "R2:-21.44",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-01",
+        "x": 1026,
+        "reasons": [
+          "R3:37.44",
+          "R2:-29.44",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-01",
+        "x": 1034,
+        "reasons": [
+          "R3:45.44",
+          "R2:-37.44",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-01",
+        "x": 1042,
+        "reasons": [
+          "R3:53.44",
+          "R2:-45.44",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-01",
+        "x": 1050,
+        "reasons": [
+          "R3:61.44",
+          "R2:-53.44",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-01",
+        "x": 1058,
+        "reasons": [
+          "R3:69.44",
+          "R2:-61.44",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-01",
+        "x": 1066,
+        "reasons": [
+          "R3:77.44",
+          "R2:-69.44",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-01",
+        "x": 1074,
+        "reasons": [
+          "R3:5.44",
+          "R2:2.56"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-01",
+        "x": 1082,
+        "reasons": [
+          "R3:13.44",
+          "R2:-5.44",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-01",
+        "x": 1090,
+        "reasons": [
+          "R3:21.44",
+          "R2:-13.44",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-01",
+        "x": 1098,
+        "reasons": [
+          "R3:29.44",
+          "R2:-21.44",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-01",
+        "x": 1106,
+        "reasons": [
+          "R3:37.44",
+          "R2:-29.44",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-01",
+        "x": 1114,
+        "reasons": [
+          "R3:45.44",
+          "R2:-37.44",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-01",
+        "x": 1122,
+        "reasons": [
+          "R3:53.44",
+          "R2:-45.44",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-01",
+        "x": 1130,
+        "reasons": [
+          "R3:61.44",
+          "R2:-53.44",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-01",
+        "x": 1138,
+        "reasons": [
+          "R3:69.44",
+          "R2:-61.44",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-01",
+        "x": 1146,
+        "reasons": [
+          "R3:77.44",
+          "R2:-69.44",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-06",
+        "x": 2543.58,
+        "reasons": [
+          "overlap"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-06",
+        "x": 2551.58,
+        "reasons": [
+          "overlap"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-06",
+        "x": 2559.58,
+        "reasons": [
+          "overlap"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-06",
+        "x": 2567.58,
+        "reasons": [
+          "overlap"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-06",
+        "x": 2575.58,
+        "reasons": [
+          "overlap"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-06",
+        "x": 2583.58,
+        "reasons": [
+          "overlap"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-06",
+        "x": 2591.58,
+        "reasons": [
+          "overlap"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-06",
+        "x": 2599.58,
+        "reasons": [
+          "previous:6.4"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-06",
+        "x": 2607.58,
+        "reasons": [
+          "previous:14.4"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-06",
+        "x": 2615.58,
+        "reasons": [
+          "previous:22.4"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-06",
+        "x": 2623.58,
+        "reasons": [
+          "previous:30.4"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-06",
+        "x": 2631.58,
+        "reasons": [
+          "previous:38.4"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-06",
+        "x": 2639.58,
+        "reasons": [
+          "R2:120.34",
+          "previous:46.4"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-06",
+        "x": 2647.58,
+        "reasons": [
+          "R2:112.34",
+          "previous:54.4"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-06",
+        "x": 2655.58,
+        "reasons": [
+          "R2:104.34",
+          "previous:62.4"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-06",
+        "x": 2663.58,
+        "reasons": [
+          "R2:96.34",
+          "previous:70.4"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-06",
+        "x": 2671.58,
+        "reasons": [
+          "R2:88.34",
+          "previous:78.4"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-06",
+        "x": 2679.58,
+        "reasons": [
+          "R2:80.34",
+          "previous:86.4"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-06",
+        "x": 2687.58,
+        "reasons": [
+          "R2:72.34",
+          "previous:94.4"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-06",
+        "x": 2695.58,
+        "reasons": [
+          "R2:64.34",
+          "previous:102.4"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-06",
+        "x": 2703.58,
+        "reasons": [
+          "R2:56.34",
+          "previous:110.4"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-06",
+        "x": 2711.58,
+        "reasons": [
+          "R2:48.34",
+          "previous:118.4"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-06",
+        "x": 2719.58,
+        "reasons": [
+          "R2:40.34",
+          "previous:126.4"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-06",
+        "x": 2727.58,
+        "reasons": [
+          "R2:32.34",
+          "previous:134.4"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-06",
+        "x": 2735.58,
+        "reasons": [
+          "R2:24.34",
+          "previous:142.4"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-06",
+        "x": 2743.58,
+        "reasons": [
+          "R2:16.34",
+          "previous:150.4"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-06",
+        "x": 2751.58,
+        "reasons": [
+          "R2:8.34",
+          "previous:158.4"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-06",
+        "x": 2759.58,
+        "reasons": [
+          "R2:0.34",
+          "previous:166.4"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-06",
+        "x": 2767.58,
+        "reasons": [
+          "R2:-7.66",
+          "previous:174.4",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-06",
+        "x": 2775.58,
+        "reasons": [
+          "R2:-15.66",
+          "previous:182.4",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-06",
+        "x": 2783.58,
+        "reasons": [
+          "R2:-23.66",
+          "previous:190.4",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-06",
+        "x": 2791.58,
+        "reasons": [
+          "R2:-31.66",
+          "previous:198.4",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-06",
+        "x": 2799.58,
+        "reasons": [
+          "R2:-39.66",
+          "previous:206.4",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-06",
+        "x": 2807.58,
+        "reasons": [
+          "R2:-47.66",
+          "previous:214.4",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-06",
+        "x": 2815.58,
+        "reasons": [
+          "R2:-55.66",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-06",
+        "x": 2823.58,
+        "reasons": [
+          "R2:-63.66",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-06",
+        "x": 2831.58,
+        "reasons": [
+          "R2:-71.66",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-06",
+        "x": 2839.58,
+        "reasons": [
+          "R3:7.66",
+          "R2:-7.66",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-06",
+        "x": 2847.58,
+        "reasons": [
+          "R3:15.66",
+          "R2:-15.66",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-06",
+        "x": 2855.58,
+        "reasons": [
+          "R3:23.66",
+          "R2:-23.66",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-06",
+        "x": 2863.58,
+        "reasons": [
+          "R3:31.66",
+          "R2:-31.66",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-06",
+        "x": 2871.58,
+        "reasons": [
+          "R3:39.66",
+          "R2:-39.66",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-06",
+        "x": 2879.58,
+        "reasons": [
+          "R3:47.66",
+          "R2:-47.66",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-06",
+        "x": 2887.58,
+        "reasons": [
+          "R3:55.66",
+          "R2:-55.66",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-06",
+        "x": 2895.58,
+        "reasons": [
+          "R3:63.66",
+          "R2:-63.66",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-06",
+        "x": 2903.58,
+        "reasons": [
+          "R3:71.66",
+          "R2:-71.66",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-06",
+        "x": 2911.58,
+        "reasons": [
+          "R3:7.66"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-06",
+        "x": 2919.58,
+        "reasons": [
+          "R3:15.66",
+          "R2:124.8"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-06",
+        "x": 2927.58,
+        "reasons": [
+          "R3:23.66",
+          "R2:116.8",
+          "next:216.8"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-06",
+        "x": 2935.58,
+        "reasons": [
+          "R3:31.66",
+          "R2:108.8",
+          "next:208.8"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-06",
+        "x": 2943.58,
+        "reasons": [
+          "R3:39.66",
+          "R2:100.8",
+          "next:200.8"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-06",
+        "x": 2951.58,
+        "reasons": [
+          "R3:47.66",
+          "R2:92.8",
+          "next:192.8"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-06",
+        "x": 2959.58,
+        "reasons": [
+          "R3:55.66",
+          "R2:84.8",
+          "next:184.8"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-06",
+        "x": 2967.58,
+        "reasons": [
+          "R3:63.66",
+          "R2:76.8",
+          "next:176.8"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-06",
+        "x": 2975.58,
+        "reasons": [
+          "R3:71.66",
+          "R2:68.8",
+          "next:168.8"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-06",
+        "x": 2983.58,
+        "reasons": [
+          "R3:79.66",
+          "R2:60.8",
+          "next:160.8"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-06",
+        "x": 2991.58,
+        "reasons": [
+          "R3:87.66",
+          "R2:52.8",
+          "next:152.8"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-06",
+        "x": 2999.58,
+        "reasons": [
+          "R3:95.66",
+          "R2:44.8",
+          "next:144.8"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-06",
+        "x": 3007.58,
+        "reasons": [
+          "R2:36.8",
+          "next:136.8"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-06",
+        "x": 3015.58,
+        "reasons": [
+          "R2:28.8",
+          "next:128.8"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-06",
+        "x": 3023.58,
+        "reasons": [
+          "R2:20.8",
+          "next:120.8"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-06",
+        "x": 3031.58,
+        "reasons": [
+          "R2:12.8",
+          "next:112.8"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-06",
+        "x": 3039.58,
+        "reasons": [
+          "R2:4.8",
+          "next:104.8"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-06",
+        "x": 3047.58,
+        "reasons": [
+          "R2:-3.2",
+          "next:96.8",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-06",
+        "x": 3055.58,
+        "reasons": [
+          "R2:-11.2",
+          "next:88.8",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-06",
+        "x": 3063.58,
+        "reasons": [
+          "R2:-19.2",
+          "next:80.8",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-06",
+        "x": 3071.58,
+        "reasons": [
+          "R2:-27.2",
+          "next:72.8",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-06",
+        "x": 3079.58,
+        "reasons": [
+          "R2:-35.2",
+          "next:64.8",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-06",
+        "x": 3087.58,
+        "reasons": [
+          "R2:-43.2",
+          "next:56.8",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-06",
+        "x": 3095.58,
+        "reasons": [
+          "R2:-51.2",
+          "next:48.8",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-06",
+        "x": 3103.58,
+        "reasons": [
+          "R2:-59.2",
+          "next:40.8",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-06",
+        "x": 3111.58,
+        "reasons": [
+          "R2:-67.2",
+          "next:32.8",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-06",
+        "x": 3119.58,
+        "reasons": [
+          "R3:3.2",
+          "next:24.8"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-06",
+        "x": 3127.58,
+        "reasons": [
+          "R3:11.2",
+          "next:16.8"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-06",
+        "x": 3135.58,
+        "reasons": [
+          "R3:19.2",
+          "next:8.8"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-06",
+        "x": 3143.58,
+        "reasons": [
+          "R3:27.2",
+          "next:0.8"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-06",
+        "x": 3151.58,
+        "reasons": [
+          "R3:35.2",
+          "overlap"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-06",
+        "x": 3159.58,
+        "reasons": [
+          "R3:43.2",
+          "overlap"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-v-06",
+        "x": 3167.58,
+        "reasons": [
+          "R3:51.2",
+          "overlap"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-roof1-1",
+        "x": 318,
+        "reasons": [
+          "R3:28",
+          "R2:60"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-roof1-1",
+        "x": 326,
+        "reasons": [
+          "R3:36",
+          "R2:52"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-roof1-1",
+        "x": 334,
+        "reasons": [
+          "R3:44",
+          "R2:44"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-roof1-1",
+        "x": 342,
+        "reasons": [
+          "R3:52",
+          "R2:36"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-roof1-1",
+        "x": 350,
+        "reasons": [
+          "R3:60",
+          "R2:28"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-roof1-1",
+        "x": 358,
+        "reasons": [
+          "R3:68",
+          "R2:20"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-roof1-1",
+        "x": 366,
+        "reasons": [
+          "R3:76",
+          "R2:12"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-roof1-1",
+        "x": 374,
+        "reasons": [
+          "R3:84",
+          "R2:4"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-roof1-1",
+        "x": 382,
+        "reasons": [
+          "R3:92",
+          "R2:-4",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-roof1-1",
+        "x": 390,
+        "reasons": [
+          "R2:-12",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-roof1-1",
+        "x": 398,
+        "reasons": [
+          "R2:-20",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-roof1-1",
+        "x": 406,
+        "reasons": [
+          "R2:-28",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-roof2-1",
+        "x": 856.56,
+        "reasons": [
+          "R3:28",
+          "R2:60"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-roof2-1",
+        "x": 864.56,
+        "reasons": [
+          "R3:36",
+          "R2:52"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-roof2-1",
+        "x": 872.56,
+        "reasons": [
+          "R3:44",
+          "R2:44"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-roof2-1",
+        "x": 880.56,
+        "reasons": [
+          "R3:52",
+          "R2:36"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-roof2-1",
+        "x": 888.56,
+        "reasons": [
+          "R3:60",
+          "R2:28"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-roof2-1",
+        "x": 896.56,
+        "reasons": [
+          "R3:68",
+          "R2:20"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-roof2-1",
+        "x": 904.56,
+        "reasons": [
+          "R3:76",
+          "R2:12"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-roof2-1",
+        "x": 912.56,
+        "reasons": [
+          "R3:84",
+          "R2:4"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-roof2-1",
+        "x": 920.56,
+        "reasons": [
+          "R3:92",
+          "R2:-4",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-roof2-1",
+        "x": 928.56,
+        "reasons": [
+          "R2:-12",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-roof2-1",
+        "x": 936.56,
+        "reasons": [
+          "R2:-20",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f04-p1-d02-roof2-1",
+        "x": 944.56,
+        "reasons": [
+          "R2:-28",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f04-p2-d03-v-01",
+        "x": 3564.38,
+        "reasons": [
+          "R2:-34.7",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f04-p2-d03-v-01",
+        "x": 3572.38,
+        "reasons": [
+          "R2:-42.7",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f04-p2-d03-v-01",
+        "x": 3580.38,
+        "reasons": [
+          "R2:-50.7",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f04-p2-d03-v-01",
+        "x": 3588.38,
+        "reasons": [
+          "R2:-58.7",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f04-p2-d03-v-01",
+        "x": 3596.38,
+        "reasons": [
+          "R2:-66.7",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f04-p2-d03-v-01",
+        "x": 3604.38,
+        "reasons": [
+          "R3:2.4",
+          "R2:-4.8",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f04-p2-d03-v-01",
+        "x": 3612.38,
+        "reasons": [
+          "R3:10.4",
+          "R2:-12.8",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f04-p2-d03-v-01",
+        "x": 3620.38,
+        "reasons": [
+          "R3:18.4",
+          "R2:-20.8",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f04-p2-d03-v-01",
+        "x": 3628.38,
+        "reasons": [
+          "R3:26.4",
+          "R2:-28.8",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f04-p2-d03-v-01",
+        "x": 3636.38,
+        "reasons": [
+          "R3:34.4",
+          "R2:-36.8",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f04-p2-d03-v-01",
+        "x": 3644.38,
+        "reasons": [
+          "R3:42.4",
+          "R2:-44.8",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f04-p2-d03-v-01",
+        "x": 3652.38,
+        "reasons": [
+          "R3:50.4",
+          "R2:-52.8",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f04-p2-d03-v-01",
+        "x": 3660.38,
+        "reasons": [
+          "R3:58.4",
+          "R2:-60.8",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f04-p2-d03-v-01",
+        "x": 3668.38,
+        "reasons": [
+          "R3:66.4",
+          "R2:-68.8",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f04-p2-d03-v-01",
+        "x": 3676.38,
+        "reasons": [
+          "R3:4.8",
+          "R2:91.68"
+        ]
+      },
+      {
+        "surface": "f04-p2-d03-v-01",
+        "x": 3684.38,
+        "reasons": [
+          "R3:12.8",
+          "R2:83.68"
+        ]
+      },
+      {
+        "surface": "f04-p2-d03-v-01",
+        "x": 3692.38,
+        "reasons": [
+          "R3:20.8",
+          "R2:75.68"
+        ]
+      },
+      {
+        "surface": "f04-p2-d03-v-01",
+        "x": 3700.38,
+        "reasons": [
+          "R3:28.8",
+          "R2:67.68"
+        ]
+      },
+      {
+        "surface": "f04-p2-d03-v-01",
+        "x": 3708.38,
+        "reasons": [
+          "R3:36.8",
+          "R2:59.68"
+        ]
+      },
+      {
+        "surface": "f04-p2-d03-v-01",
+        "x": 3716.38,
+        "reasons": [
+          "R3:44.8",
+          "R2:51.68"
+        ]
+      },
+      {
+        "surface": "f04-p2-d03-v-01",
+        "x": 3724.38,
+        "reasons": [
+          "R3:52.8",
+          "R2:43.68"
+        ]
+      },
+      {
+        "surface": "f04-p2-d03-v-01",
+        "x": 3732.38,
+        "reasons": [
+          "R3:60.8",
+          "R2:35.68"
+        ]
+      },
+      {
+        "surface": "f04-p2-d03-v-01",
+        "x": 3740.38,
+        "reasons": [
+          "R3:68.8",
+          "R2:27.68"
+        ]
+      },
+      {
+        "surface": "f04-p2-d03-v-01",
+        "x": 3748.38,
+        "reasons": [
+          "R3:76.8",
+          "R2:19.68"
+        ]
+      },
+      {
+        "surface": "f04-p2-d03-v-01",
+        "x": 3756.38,
+        "reasons": [
+          "R3:84.8",
+          "R2:11.68"
+        ]
+      },
+      {
+        "surface": "f04-p2-d03-v-01",
+        "x": 3764.38,
+        "reasons": [
+          "R3:92.8",
+          "R2:3.68"
+        ]
+      },
+      {
+        "surface": "f04-p2-d03-v-01",
+        "x": 3772.38,
+        "reasons": [
+          "R2:-4.32",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f04-p2-d03-v-01",
+        "x": 3780.38,
+        "reasons": [
+          "R2:-12.32",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f04-p2-d03-v-01",
+        "x": 3788.38,
+        "reasons": [
+          "R2:-20.32",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f04-p2-d03-v-01",
+        "x": 3796.38,
+        "reasons": [
+          "R2:-28.32",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f04-p2-d03-v-05",
+        "x": 4184.78,
+        "reasons": [
+          "R3:31.22",
+          "R2:60.4"
+        ]
+      },
+      {
+        "surface": "f04-p2-d03-v-05",
+        "x": 4192.78,
+        "reasons": [
+          "R3:39.22",
+          "R2:52.4"
+        ]
+      },
+      {
+        "surface": "f04-p2-d03-v-05",
+        "x": 4200.78,
+        "reasons": [
+          "R3:47.22",
+          "R2:44.4"
+        ]
+      },
+      {
+        "surface": "f04-p2-d03-v-05",
+        "x": 4208.78,
+        "reasons": [
+          "R3:55.22",
+          "R2:36.4"
+        ]
+      },
+      {
+        "surface": "f04-p2-d03-v-05",
+        "x": 4216.78,
+        "reasons": [
+          "R3:63.22",
+          "R2:28.4"
+        ]
+      },
+      {
+        "surface": "f04-p2-d03-v-05",
+        "x": 4224.78,
+        "reasons": [
+          "R3:71.22",
+          "R2:20.4"
+        ]
+      },
+      {
+        "surface": "f04-p2-d03-v-05",
+        "x": 4232.78,
+        "reasons": [
+          "R3:79.22",
+          "R2:12.4"
+        ]
+      },
+      {
+        "surface": "f04-p2-d03-v-05",
+        "x": 4240.78,
+        "reasons": [
+          "R3:87.22",
+          "R2:4.4"
+        ]
+      },
+      {
+        "surface": "f04-p2-d03-v-05",
+        "x": 4248.78,
+        "reasons": [
+          "R3:95.22",
+          "R2:-3.6",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f04-p2-d03-v-05",
+        "x": 4256.78,
+        "reasons": [
+          "R2:-11.6",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f04-p2-d03-v-05",
+        "x": 4264.78,
+        "reasons": [
+          "R2:-19.6",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f04-p2-d03-v-05",
+        "x": 4272.78,
+        "reasons": [
+          "R2:-27.6",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f04-p2-d03-v-05",
+        "x": 4280.78,
+        "reasons": [
+          "R2:-35.6",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f04-p2-d03-v-05",
+        "x": 4288.78,
+        "reasons": [
+          "R2:-43.6",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f04-p2-d03-v-05",
+        "x": 4296.78,
+        "reasons": [
+          "R2:-51.6",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f04-p2-d03-v-05",
+        "x": 4304.78,
+        "reasons": [
+          "R2:-59.6",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f04-p2-d03-v-09",
+        "x": 4866.38,
+        "reasons": [
+          "previous:18.8"
+        ]
+      },
+      {
+        "surface": "f04-p2-d03-v-09",
+        "x": 4874.38,
+        "reasons": [
+          "previous:26.8"
+        ]
+      },
+      {
+        "surface": "f04-p2-d03-v-09",
+        "x": 4882.38,
+        "reasons": [
+          "previous:34.8"
+        ]
+      },
+      {
+        "surface": "f04-p2-d03-v-09",
+        "x": 4890.38,
+        "reasons": [
+          "previous:42.8"
+        ]
+      },
+      {
+        "surface": "f04-p2-d03-v-09",
+        "x": 4898.38,
+        "reasons": [
+          "previous:50.8"
+        ]
+      },
+      {
+        "surface": "f04-p2-d03-v-09",
+        "x": 4906.38,
+        "reasons": [
+          "previous:58.8"
+        ]
+      },
+      {
+        "surface": "f04-p2-d03-v-09",
+        "x": 4914.38,
+        "reasons": [
+          "previous:66.8"
+        ]
+      },
+      {
+        "surface": "f04-p2-d03-v-09",
+        "x": 4922.38,
+        "reasons": [
+          "previous:74.8"
+        ]
+      },
+      {
+        "surface": "f04-p2-d03-v-09",
+        "x": 4930.38,
+        "reasons": [
+          "previous:82.8"
+        ]
+      },
+      {
+        "surface": "f04-p2-d03-v-09",
+        "x": 4938.38,
+        "reasons": [
+          "previous:90.8"
+        ]
+      },
+      {
+        "surface": "f04-p2-d03-v-09",
+        "x": 4946.38,
+        "reasons": [
+          "previous:98.8"
+        ]
+      },
+      {
+        "surface": "f04-p2-d03-v-09",
+        "x": 4954.38,
+        "reasons": [
+          "previous:106.8"
+        ]
+      },
+      {
+        "surface": "f04-p2-d03-v-09",
+        "x": 4962.38,
+        "reasons": [
+          "previous:114.8"
+        ]
+      },
+      {
+        "surface": "f04-p2-d03-v-09",
+        "x": 4970.38,
+        "reasons": [
+          "previous:122.8"
+        ]
+      },
+      {
+        "surface": "f04-p2-d03-v-09",
+        "x": 4978.38,
+        "reasons": [
+          "previous:130.8"
+        ]
+      },
+      {
+        "surface": "f04-p2-d03-v-09",
+        "x": 4986.38,
+        "reasons": [
+          "previous:138.8"
+        ]
+      },
+      {
+        "surface": "f04-p2-d03-v-09",
+        "x": 4994.38,
+        "reasons": [
+          "previous:146.8"
+        ]
+      },
+      {
+        "surface": "f04-p2-d03-v-09",
+        "x": 5002.38,
+        "reasons": [
+          "previous:154.8"
+        ]
+      },
+      {
+        "surface": "f04-p2-d03-v-09",
+        "x": 5010.38,
+        "reasons": [
+          "previous:162.8"
+        ]
+      },
+      {
+        "surface": "f04-p2-d03-v-09",
+        "x": 5018.38,
+        "reasons": [
+          "previous:170.8"
+        ]
+      },
+      {
+        "surface": "f04-p2-d03-v-09",
+        "x": 5026.38,
+        "reasons": [
+          "previous:178.8"
+        ]
+      },
+      {
+        "surface": "f04-p2-d03-v-09",
+        "x": 5034.38,
+        "reasons": [
+          "previous:186.8"
+        ]
+      },
+      {
+        "surface": "f04-p2-d03-v-09",
+        "x": 5042.38,
+        "reasons": [
+          "previous:194.8"
+        ]
+      },
+      {
+        "surface": "f04-p2-d03-v-09",
+        "x": 5050.38,
+        "reasons": [
+          "previous:202.8"
+        ]
+      },
+      {
+        "surface": "f04-p2-d03-v-09",
+        "x": 5058.38,
+        "reasons": [
+          "previous:210.8"
+        ]
+      },
+      {
+        "surface": "f04-p2-d03-v-09",
+        "x": 5066.38,
+        "reasons": [
+          "R2:125.48",
+          "previous:218.8"
+        ]
+      },
+      {
+        "surface": "f04-p2-d03-v-09",
+        "x": 5074.38,
+        "reasons": [
+          "R2:117.48"
+        ]
+      },
+      {
+        "surface": "f04-p2-d03-v-09",
+        "x": 5082.38,
+        "reasons": [
+          "R2:109.48"
+        ]
+      },
+      {
+        "surface": "f04-p2-d03-v-09",
+        "x": 5090.38,
+        "reasons": [
+          "R2:101.48"
+        ]
+      },
+      {
+        "surface": "f04-p2-d03-v-09",
+        "x": 5098.38,
+        "reasons": [
+          "R2:93.48"
+        ]
+      },
+      {
+        "surface": "f04-p2-d03-v-09",
+        "x": 5106.38,
+        "reasons": [
+          "R2:85.48"
+        ]
+      },
+      {
+        "surface": "f04-p2-d03-v-09",
+        "x": 5114.38,
+        "reasons": [
+          "R2:77.48"
+        ]
+      },
+      {
+        "surface": "f04-p2-d03-v-09",
+        "x": 5122.38,
+        "reasons": [
+          "R2:69.48"
+        ]
+      },
+      {
+        "surface": "f04-p2-d03-v-09",
+        "x": 5130.38,
+        "reasons": [
+          "R2:61.48"
+        ]
+      },
+      {
+        "surface": "f04-p2-d03-v-09",
+        "x": 5138.38,
+        "reasons": [
+          "R2:53.48"
+        ]
+      },
+      {
+        "surface": "f04-p2-d03-v-09",
+        "x": 5146.38,
+        "reasons": [
+          "R2:45.48"
+        ]
+      },
+      {
+        "surface": "f04-p2-d03-v-09",
+        "x": 5154.38,
+        "reasons": [
+          "R2:37.48"
+        ]
+      },
+      {
+        "surface": "f04-p2-d03-v-09",
+        "x": 5162.38,
+        "reasons": [
+          "R2:29.48"
+        ]
+      },
+      {
+        "surface": "f04-p2-d03-v-09",
+        "x": 5170.38,
+        "reasons": [
+          "R2:21.48"
+        ]
+      },
+      {
+        "surface": "f04-p2-d03-v-09",
+        "x": 5178.38,
+        "reasons": [
+          "R2:13.48"
+        ]
+      },
+      {
+        "surface": "f04-p2-d03-v-09",
+        "x": 5186.38,
+        "reasons": [
+          "R2:5.48"
+        ]
+      },
+      {
+        "surface": "f04-p2-d03-v-09",
+        "x": 5194.38,
+        "reasons": [
+          "R2:-2.52",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f04-p2-d03-v-09",
+        "x": 5202.38,
+        "reasons": [
+          "R2:-10.52",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f04-p2-d03-v-09",
+        "x": 5210.38,
+        "reasons": [
+          "R2:-18.52",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f04-p2-d03-v-09",
+        "x": 5218.38,
+        "reasons": [
+          "R2:-26.52",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f04-p2-d03-v-09",
+        "x": 5226.38,
+        "reasons": [
+          "R2:-34.52",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f04-p2-d03-v-09",
+        "x": 5234.38,
+        "reasons": [
+          "R2:-42.52",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f04-p2-d03-v-09",
+        "x": 5242.38,
+        "reasons": [
+          "R2:-50.52",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f04-p2-d03-v-09",
+        "x": 5250.38,
+        "reasons": [
+          "R2:-58.52",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f04-p2-d03-v-09",
+        "x": 5258.38,
+        "reasons": [
+          "R2:-66.52",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f04-p2-d03-v-09",
+        "x": 5266.38,
+        "reasons": [
+          "R3:2.52"
+        ]
+      },
+      {
+        "surface": "f04-p2-d03-v-09",
+        "x": 5274.38,
+        "reasons": [
+          "R3:10.52"
+        ]
+      },
+      {
+        "surface": "f04-p2-d03-v-09",
+        "x": 5282.38,
+        "reasons": [
+          "R3:18.52"
+        ]
+      },
+      {
+        "surface": "f04-p2-d03-v-09",
+        "x": 5290.38,
+        "reasons": [
+          "R3:26.52"
+        ]
+      },
+      {
+        "surface": "f04-p2-d03-v-09",
+        "x": 5298.38,
+        "reasons": [
+          "R3:34.52"
+        ]
+      },
+      {
+        "surface": "f04-p2-d03-v-09",
+        "x": 5306.38,
+        "reasons": [
+          "R3:42.52"
+        ]
+      },
+      {
+        "surface": "f04-p2-d03-v-09",
+        "x": 5314.38,
+        "reasons": [
+          "R3:50.52"
+        ]
+      },
+      {
+        "surface": "f04-p2-d03-v-09",
+        "x": 5322.38,
+        "reasons": [
+          "R3:58.52"
+        ]
+      },
+      {
+        "surface": "f04-p2-d03-v-09",
+        "x": 5330.38,
+        "reasons": [
+          "R3:66.52"
+        ]
+      },
+      {
+        "surface": "f04-p2-d03-v-09",
+        "x": 5338.38,
+        "reasons": [
+          "R3:74.52"
+        ]
+      },
+      {
+        "surface": "f04-p2-d03-v-09",
+        "x": 5346.38,
+        "reasons": [
+          "R3:82.52"
+        ]
+      },
+      {
+        "surface": "f04-p2-d03-v-09",
+        "x": 5354.38,
+        "reasons": [
+          "R3:90.52"
+        ]
+      },
+      {
+        "surface": "f04-p2-d03-v-09",
+        "x": 5362.38,
+        "reasons": []
+      },
+      {
+        "surface": "f04-p2-d03-v-09",
+        "x": 5622.38,
+        "reasons": [
+          "previous:188"
+        ]
+      },
+      {
+        "surface": "f04-p2-d03-v-09",
+        "x": 5630.38,
+        "reasons": [
+          "previous:196"
+        ]
+      },
+      {
+        "surface": "f04-p2-d03-v-09",
+        "x": 5638.38,
+        "reasons": [
+          "previous:204"
+        ]
+      },
+      {
+        "surface": "f04-p2-d03-v-09",
+        "x": 5646.38,
+        "reasons": [
+          "previous:212"
+        ]
+      },
+      {
+        "surface": "f04-p2-d03-v-09",
+        "x": 5654.38,
+        "reasons": []
+      },
+      {
+        "surface": "f04-p2-d03-u-1",
+        "x": 4734.38,
+        "reasons": [
+          "R3:56",
+          "overlap"
+        ]
+      },
+      {
+        "surface": "f04-p2-d03-u-1",
+        "x": 4742.38,
+        "reasons": [
+          "R3:64",
+          "overlap"
+        ]
+      },
+      {
+        "surface": "f04-p2-d03-u-1",
+        "x": 4750.38,
+        "reasons": [
+          "R3:72",
+          "overlap"
+        ]
+      },
+      {
+        "surface": "f04-p2-d03-u-1",
+        "x": 4758.38,
+        "reasons": [
+          "R3:80",
+          "overlap"
+        ]
+      },
+      {
+        "surface": "f04-p2-d03-u-1",
+        "x": 4766.38,
+        "reasons": [
+          "R3:88",
+          "overlap"
+        ]
+      },
+      {
+        "surface": "f04-p2-d03-u-1",
+        "x": 4774.38,
+        "reasons": [
+          "overlap"
+        ]
+      },
+      {
+        "surface": "f04-p2-d03-u-1",
+        "x": 4782.38,
+        "reasons": [
+          "overlap"
+        ]
+      },
+      {
+        "surface": "f04-p2-d03-u-1",
+        "x": 4790.38,
+        "reasons": [
+          "overlap"
+        ]
+      },
+      {
+        "surface": "f04-p2-d03-u-1",
+        "x": 4798.38,
+        "reasons": [
+          "overlap"
+        ]
+      },
+      {
+        "surface": "f04-p2-d03-u-1",
+        "x": 4806.38,
+        "reasons": [
+          "overlap"
+        ]
+      },
+      {
+        "surface": "f04-p2-d03-u-1",
+        "x": 4814.38,
+        "reasons": [
+          "overlap"
+        ]
+      },
+      {
+        "surface": "f04-p2-d03-u-1",
+        "x": 4822.38,
+        "reasons": [
+          "overlap"
+        ]
+      },
+      {
+        "surface": "f04-p2-d03-u-1",
+        "x": 4830.38,
+        "reasons": [
+          "overlap"
+        ]
+      },
+      {
+        "surface": "f04-p2-d03-u-1",
+        "x": 4838.38,
+        "reasons": [
+          "overlap"
+        ]
+      },
+      {
+        "surface": "f04-p2-d03-u-1",
+        "x": 4846.38,
+        "reasons": [
+          "overlap"
+        ]
+      },
+      {
+        "surface": "f04-p2-d03-u-1",
+        "x": 4854.38,
+        "reasons": [
+          "previous:6.8"
+        ]
+      },
+      {
+        "surface": "f04-p2-d03-u-1",
+        "x": 4862.38,
+        "reasons": [
+          "previous:14.8"
+        ]
+      },
+      {
+        "surface": "f04-p2-d03-u-1",
+        "x": 4870.38,
+        "reasons": [
+          "previous:22.8"
+        ]
+      },
+      {
+        "surface": "f04-p2-d03-u-1",
+        "x": 4878.38,
+        "reasons": [
+          "previous:30.8"
+        ]
+      },
+      {
+        "surface": "f04-p2-d03-u-1",
+        "x": 4886.38,
+        "reasons": [
+          "previous:38.8"
+        ]
+      },
+      {
+        "surface": "f04-p2-d03-u-1",
+        "x": 4894.38,
+        "reasons": [
+          "previous:46.8"
+        ]
+      },
+      {
+        "surface": "f04-p2-d03-u-1",
+        "x": 4902.38,
+        "reasons": [
+          "previous:54.8"
+        ]
+      },
+      {
+        "surface": "f04-p2-d03-u-1",
+        "x": 4910.38,
+        "reasons": [
+          "previous:62.8"
+        ]
+      },
+      {
+        "surface": "f04-p2-d03-u-1",
+        "x": 4918.38,
+        "reasons": [
+          "previous:70.8"
+        ]
+      },
+      {
+        "surface": "f04-p2-d03-u-1",
+        "x": 4926.38,
+        "reasons": [
+          "previous:78.8"
+        ]
+      },
+      {
+        "surface": "f04-p2-d03-u-1",
+        "x": 4934.38,
+        "reasons": [
+          "previous:86.8"
+        ]
+      },
+      {
+        "surface": "f04-p2-d03-u-1",
+        "x": 4942.38,
+        "reasons": [
+          "previous:94.8"
+        ]
+      },
+      {
+        "surface": "f04-p2-d03-u-1",
+        "x": 4950.38,
+        "reasons": [
+          "previous:102.8"
+        ]
+      },
+      {
+        "surface": "f04-p2-d03-u-1",
+        "x": 4958.38,
+        "reasons": [
+          "previous:110.8"
+        ]
+      },
+      {
+        "surface": "f04-p2-d03-u-1",
+        "x": 4966.38,
+        "reasons": [
+          "previous:118.8"
+        ]
+      },
+      {
+        "surface": "f04-p2-d03-u-1",
+        "x": 4974.38,
+        "reasons": [
+          "previous:126.8"
+        ]
+      },
+      {
+        "surface": "f04-p2-d03-u-1",
+        "x": 4982.38,
+        "reasons": [
+          "previous:134.8"
+        ]
+      },
+      {
+        "surface": "f04-p2-d03-u-1",
+        "x": 4990.38,
+        "reasons": [
+          "previous:142.8"
+        ]
+      },
+      {
+        "surface": "f04-p3-d01-v-01",
+        "x": 6134.38,
+        "reasons": [
+          "R2:45.6"
+        ]
+      },
+      {
+        "surface": "f04-p3-d01-v-01",
+        "x": 6142.38,
+        "reasons": [
+          "R2:37.6"
+        ]
+      },
+      {
+        "surface": "f04-p3-d01-v-01",
+        "x": 6150.38,
+        "reasons": [
+          "R2:29.6"
+        ]
+      },
+      {
+        "surface": "f04-p3-d01-v-01",
+        "x": 6158.38,
+        "reasons": [
+          "R2:21.6"
+        ]
+      },
+      {
+        "surface": "f04-p3-d01-v-01",
+        "x": 6166.38,
+        "reasons": [
+          "R2:13.6"
+        ]
+      },
+      {
+        "surface": "f04-p3-d01-v-01",
+        "x": 6174.38,
+        "reasons": [
+          "R2:5.6"
+        ]
+      },
+      {
+        "surface": "f04-p3-d01-v-01",
+        "x": 6182.38,
+        "reasons": [
+          "R2:-2.4",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f04-p3-d01-v-03",
+        "x": 7382.38,
+        "reasons": [
+          "R2:-45.2",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f04-p3-d01-v-03",
+        "x": 7390.38,
+        "reasons": [
+          "R2:-53.2",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f04-p3-d01-v-03",
+        "x": 7398.38,
+        "reasons": [
+          "R2:-61.2",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f04-p3-d01-v-03",
+        "x": 7406.38,
+        "reasons": [
+          "R2:-69.2",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f04-p3-d01-v-03",
+        "x": 7414.38,
+        "reasons": [
+          "R3:5.2",
+          "R2:-4",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f04-p3-d01-v-03",
+        "x": 7422.38,
+        "reasons": [
+          "R3:13.2",
+          "R2:-12",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f04-p3-d01-v-08",
+        "x": 7814.38,
+        "reasons": [
+          "R3:80.06"
+        ]
+      },
+      {
+        "surface": "f04-p3-d01-v-08",
+        "x": 7822.38,
+        "reasons": [
+          "R3:88.06"
+        ]
+      },
+      {
+        "surface": "f04-p3-d01-v-08",
+        "x": 7830.38,
+        "reasons": []
+      }
+    ],
+    "coins": 14
+  },
   "F01": {
     "parts": [
       {
@@ -12,9 +5703,1505 @@
         "fraction": 0.5
       }
     ],
+    "partBounds": [
+      {
+        "part": 1,
+        "source": "D07",
+        "minX": 70,
+        "maxX": 4271.2
+      },
+      {
+        "part": 2,
+        "source": "D13",
+        "minX": 4271.2,
+        "maxX": 9276.4
+      }
+    ],
     "length": 9416.4,
-    "movements": 20,
+    "movements": 27,
     "addedObstacles": 7,
+    "transportedDeviations": [
+      {
+        "id": "f01-p1-d07-vault-04",
+        "from": 2527.6,
+        "to": null,
+        "reason": "R2/R3/recovery"
+      },
+      {
+        "id": "f01-p1-d07-vault-02",
+        "from": 2645.2,
+        "to": null,
+        "reason": "R2/R3/recovery"
+      },
+      {
+        "id": "f01-p2-d13-slide-06",
+        "from": 8160.4,
+        "to": null,
+        "reason": "R2/R3/recovery"
+      }
+    ],
+    "hardCandidateAudit": [
+      {
+        "surface": "f01-p1-d07-v-01",
+        "x": 258,
+        "reasons": [
+          "R2:29.2"
+        ]
+      },
+      {
+        "surface": "f01-p1-d07-v-01",
+        "x": 266,
+        "reasons": [
+          "R2:21.2"
+        ]
+      },
+      {
+        "surface": "f01-p1-d07-v-01",
+        "x": 274,
+        "reasons": [
+          "R2:13.2"
+        ]
+      },
+      {
+        "surface": "f01-p1-d07-v-01",
+        "x": 282,
+        "reasons": [
+          "R2:5.2"
+        ]
+      },
+      {
+        "surface": "f01-p1-d07-v-01",
+        "x": 290,
+        "reasons": [
+          "R2:-2.8",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f01-p1-d07-v-01",
+        "x": 298,
+        "reasons": [
+          "R2:-10.8",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f01-p1-d07-v-01",
+        "x": 306,
+        "reasons": [
+          "R2:-18.8",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f01-p1-d07-v-01",
+        "x": 314,
+        "reasons": [
+          "R2:-26.8",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f01-p1-d07-v-01",
+        "x": 322,
+        "reasons": [
+          "R2:-34.8",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f01-p1-d07-v-01",
+        "x": 330,
+        "reasons": [
+          "R2:-42.8",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f01-p1-d07-v-01",
+        "x": 338,
+        "reasons": [
+          "R2:-50.8",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f01-p1-d07-v-01",
+        "x": 346,
+        "reasons": [
+          "R2:-58.8",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f01-p1-d07-v-04",
+        "x": 870,
+        "reasons": [
+          "overlap"
+        ]
+      },
+      {
+        "surface": "f01-p1-d07-v-04",
+        "x": 878,
+        "reasons": [
+          "overlap"
+        ]
+      },
+      {
+        "surface": "f01-p1-d07-v-04",
+        "x": 886,
+        "reasons": [
+          "overlap"
+        ]
+      },
+      {
+        "surface": "f01-p1-d07-v-04",
+        "x": 894,
+        "reasons": [
+          "overlap"
+        ]
+      },
+      {
+        "surface": "f01-p1-d07-v-04",
+        "x": 902,
+        "reasons": [
+          "previous:6.4"
+        ]
+      },
+      {
+        "surface": "f01-p1-d07-v-04",
+        "x": 910,
+        "reasons": [
+          "previous:14.4"
+        ]
+      },
+      {
+        "surface": "f01-p1-d07-v-04",
+        "x": 918,
+        "reasons": [
+          "previous:22.4"
+        ]
+      },
+      {
+        "surface": "f01-p1-d07-v-04",
+        "x": 926,
+        "reasons": [
+          "previous:30.4"
+        ]
+      },
+      {
+        "surface": "f01-p1-d07-v-04",
+        "x": 934,
+        "reasons": [
+          "previous:38.4"
+        ]
+      },
+      {
+        "surface": "f01-p1-d07-v-04",
+        "x": 942,
+        "reasons": [
+          "previous:46.4"
+        ]
+      },
+      {
+        "surface": "f01-p1-d07-v-04",
+        "x": 950,
+        "reasons": [
+          "previous:54.4"
+        ]
+      },
+      {
+        "surface": "f01-p1-d07-v-04",
+        "x": 958,
+        "reasons": [
+          "previous:62.4"
+        ]
+      },
+      {
+        "surface": "f01-p1-d07-v-04",
+        "x": 966,
+        "reasons": [
+          "previous:70.4"
+        ]
+      },
+      {
+        "surface": "f01-p1-d07-v-04",
+        "x": 974,
+        "reasons": [
+          "previous:78.4"
+        ]
+      },
+      {
+        "surface": "f01-p1-d07-v-04",
+        "x": 982,
+        "reasons": [
+          "previous:86.4"
+        ]
+      },
+      {
+        "surface": "f01-p1-d07-v-04",
+        "x": 990,
+        "reasons": [
+          "previous:94.4"
+        ]
+      },
+      {
+        "surface": "f01-p1-d07-v-04",
+        "x": 998,
+        "reasons": [
+          "previous:102.4"
+        ]
+      },
+      {
+        "surface": "f01-p1-d07-v-04",
+        "x": 1006,
+        "reasons": [
+          "previous:110.4"
+        ]
+      },
+      {
+        "surface": "f01-p1-d07-v-04",
+        "x": 1014,
+        "reasons": [
+          "previous:118.4"
+        ]
+      },
+      {
+        "surface": "f01-p1-d07-v-04",
+        "x": 1022,
+        "reasons": [
+          "previous:126.4"
+        ]
+      },
+      {
+        "surface": "f01-p1-d07-v-04",
+        "x": 1030,
+        "reasons": [
+          "previous:134.4"
+        ]
+      },
+      {
+        "surface": "f01-p1-d07-v-04",
+        "x": 1038,
+        "reasons": [
+          "previous:142.4"
+        ]
+      },
+      {
+        "surface": "f01-p1-d07-v-04",
+        "x": 1046,
+        "reasons": [
+          "previous:150.4"
+        ]
+      },
+      {
+        "surface": "f01-p1-d07-v-04",
+        "x": 1054,
+        "reasons": [
+          "previous:158.4"
+        ]
+      },
+      {
+        "surface": "f01-p1-d07-v-04",
+        "x": 1062,
+        "reasons": [
+          "previous:166.4"
+        ]
+      },
+      {
+        "surface": "f01-p1-d07-v-04",
+        "x": 1070,
+        "reasons": [
+          "previous:174.4"
+        ]
+      },
+      {
+        "surface": "f01-p1-d07-v-04",
+        "x": 1078,
+        "reasons": [
+          "previous:182.4"
+        ]
+      },
+      {
+        "surface": "f01-p1-d07-v-04",
+        "x": 1086,
+        "reasons": [
+          "R2:124",
+          "previous:190.4"
+        ]
+      },
+      {
+        "surface": "f01-p1-d07-v-04",
+        "x": 1094,
+        "reasons": [
+          "R2:116",
+          "previous:198.4"
+        ]
+      },
+      {
+        "surface": "f01-p1-d07-v-04",
+        "x": 1102,
+        "reasons": [
+          "R2:108",
+          "previous:206.4"
+        ]
+      },
+      {
+        "surface": "f01-p1-d07-v-04",
+        "x": 1110,
+        "reasons": [
+          "R2:100",
+          "previous:214.4"
+        ]
+      },
+      {
+        "surface": "f01-p1-d07-v-04",
+        "x": 1118,
+        "reasons": [
+          "R2:92"
+        ]
+      },
+      {
+        "surface": "f01-p1-d07-v-04",
+        "x": 1126,
+        "reasons": [
+          "R2:84"
+        ]
+      },
+      {
+        "surface": "f01-p1-d07-v-04",
+        "x": 1134,
+        "reasons": [
+          "R2:76"
+        ]
+      },
+      {
+        "surface": "f01-p1-d07-v-04",
+        "x": 1142,
+        "reasons": [
+          "R2:68"
+        ]
+      },
+      {
+        "surface": "f01-p1-d07-v-04",
+        "x": 1150,
+        "reasons": [
+          "R2:60"
+        ]
+      },
+      {
+        "surface": "f01-p1-d07-v-04",
+        "x": 1158,
+        "reasons": [
+          "R2:52"
+        ]
+      },
+      {
+        "surface": "f01-p1-d07-v-04",
+        "x": 1166,
+        "reasons": [
+          "R2:44"
+        ]
+      },
+      {
+        "surface": "f01-p1-d07-v-04",
+        "x": 1174,
+        "reasons": [
+          "R2:36"
+        ]
+      },
+      {
+        "surface": "f01-p1-d07-v-04",
+        "x": 1182,
+        "reasons": [
+          "R2:28"
+        ]
+      },
+      {
+        "surface": "f01-p1-d07-v-04",
+        "x": 1190,
+        "reasons": [
+          "R2:20"
+        ]
+      },
+      {
+        "surface": "f01-p1-d07-v-04",
+        "x": 1198,
+        "reasons": [
+          "R2:12"
+        ]
+      },
+      {
+        "surface": "f01-p1-d07-v-07",
+        "x": 2262,
+        "reasons": [
+          "R2:42.4"
+        ]
+      },
+      {
+        "surface": "f01-p1-d07-v-07",
+        "x": 2270,
+        "reasons": [
+          "R2:34.4"
+        ]
+      },
+      {
+        "surface": "f01-p1-d07-v-07",
+        "x": 2278,
+        "reasons": [
+          "R2:26.4"
+        ]
+      },
+      {
+        "surface": "f01-p1-d07-v-07",
+        "x": 2286,
+        "reasons": [
+          "R2:18.4"
+        ]
+      },
+      {
+        "surface": "f01-p1-d07-v-07",
+        "x": 2294,
+        "reasons": [
+          "R2:10.4"
+        ]
+      },
+      {
+        "surface": "f01-p1-d07-v-07",
+        "x": 2302,
+        "reasons": [
+          "R2:2.4"
+        ]
+      },
+      {
+        "surface": "f01-p1-d07-v-07",
+        "x": 2310,
+        "reasons": [
+          "R2:-5.6",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f01-p1-d07-v-07",
+        "x": 2318,
+        "reasons": [
+          "R2:-13.6",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f01-p1-d07-v-07",
+        "x": 2326,
+        "reasons": [
+          "R2:-21.6",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f01-p1-d07-v-07",
+        "x": 2334,
+        "reasons": [
+          "R2:-29.6",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f01-p1-d07-v-07",
+        "x": 2342,
+        "reasons": [
+          "R2:-37.6",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f01-p1-d07-v-07",
+        "x": 2350,
+        "reasons": [
+          "R2:-45.6",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f01-p1-d07-v-07",
+        "x": 2358,
+        "reasons": [
+          "R2:-53.6",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f01-p1-d07-v-07",
+        "x": 2366,
+        "reasons": [
+          "R2:-61.6",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f01-p1-d07-v-07",
+        "x": 2374,
+        "reasons": [
+          "R2:-69.6",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f01-p1-d07-v-07",
+        "x": 2382,
+        "reasons": [
+          "R3:5.6"
+        ]
+      },
+      {
+        "surface": "f01-p1-d07-v-07",
+        "x": 2390,
+        "reasons": [
+          "R3:13.6"
+        ]
+      },
+      {
+        "surface": "f01-p1-d07-v-07",
+        "x": 2398,
+        "reasons": [
+          "R3:21.6"
+        ]
+      },
+      {
+        "surface": "f01-p1-d07-v-07",
+        "x": 2406,
+        "reasons": [
+          "R3:29.6"
+        ]
+      },
+      {
+        "surface": "f01-p1-d07-v-07",
+        "x": 2414,
+        "reasons": [
+          "R3:37.6"
+        ]
+      },
+      {
+        "surface": "f01-p1-d07-v-07",
+        "x": 2422,
+        "reasons": [
+          "R3:45.6"
+        ]
+      },
+      {
+        "surface": "f01-p1-d07-v-07",
+        "x": 2430,
+        "reasons": [
+          "R3:53.6"
+        ]
+      },
+      {
+        "surface": "f01-p1-d07-v-07",
+        "x": 2438,
+        "reasons": [
+          "R3:61.6"
+        ]
+      },
+      {
+        "surface": "f01-p1-d07-v-07",
+        "x": 2446,
+        "reasons": [
+          "R3:69.6"
+        ]
+      },
+      {
+        "surface": "f01-p1-d07-v-07",
+        "x": 2454,
+        "reasons": [
+          "R3:77.6"
+        ]
+      },
+      {
+        "surface": "f01-p1-d07-v-07",
+        "x": 2462,
+        "reasons": [
+          "R3:85.6"
+        ]
+      },
+      {
+        "surface": "f01-p1-d07-v-07",
+        "x": 2470,
+        "reasons": [
+          "R3:93.6"
+        ]
+      },
+      {
+        "surface": "f01-p1-d07-v-07",
+        "x": 2478,
+        "reasons": []
+      },
+      {
+        "surface": "f01-p1-d07-v-11",
+        "x": 3150,
+        "reasons": [
+          "R2:-33.2",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f01-p1-d07-v-11",
+        "x": 3158,
+        "reasons": [
+          "R2:-41.2",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f01-p1-d07-v-11",
+        "x": 3166,
+        "reasons": [
+          "R2:-49.2",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f01-p1-d07-v-11",
+        "x": 3174,
+        "reasons": [
+          "R2:-57.2",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f01-p1-d07-v-11",
+        "x": 3182,
+        "reasons": [
+          "R2:-65.2",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f01-p1-d07-v-11",
+        "x": 3190,
+        "reasons": [
+          "R3:1.2"
+        ]
+      },
+      {
+        "surface": "f01-p1-d07-v-11",
+        "x": 3198,
+        "reasons": [
+          "R3:9.2"
+        ]
+      },
+      {
+        "surface": "f01-p1-d07-v-11",
+        "x": 3206,
+        "reasons": [
+          "R3:17.2"
+        ]
+      },
+      {
+        "surface": "f01-p1-d07-v-11",
+        "x": 3214,
+        "reasons": [
+          "R3:25.2"
+        ]
+      },
+      {
+        "surface": "f01-p1-d07-v-11",
+        "x": 3222,
+        "reasons": [
+          "R3:33.2"
+        ]
+      },
+      {
+        "surface": "f01-p1-d07-v-11",
+        "x": 3230,
+        "reasons": [
+          "R3:41.2"
+        ]
+      },
+      {
+        "surface": "f01-p1-d07-v-11",
+        "x": 3238,
+        "reasons": [
+          "R3:49.2"
+        ]
+      },
+      {
+        "surface": "f01-p1-d07-v-11",
+        "x": 3246,
+        "reasons": [
+          "R3:57.2"
+        ]
+      },
+      {
+        "surface": "f01-p1-d07-v-11",
+        "x": 3254,
+        "reasons": [
+          "R3:65.2"
+        ]
+      },
+      {
+        "surface": "f01-p1-d07-v-11",
+        "x": 3262,
+        "reasons": [
+          "R3:73.2"
+        ]
+      },
+      {
+        "surface": "f01-p1-d07-v-11",
+        "x": 3270,
+        "reasons": [
+          "R3:81.2"
+        ]
+      },
+      {
+        "surface": "f01-p1-d07-v-11",
+        "x": 3278,
+        "reasons": [
+          "R3:89.2"
+        ]
+      },
+      {
+        "surface": "f01-p1-d07-v-11",
+        "x": 3286,
+        "reasons": []
+      },
+      {
+        "surface": "f01-p1-d07-v-11",
+        "x": 3546,
+        "reasons": [
+          "previous:188"
+        ]
+      },
+      {
+        "surface": "f01-p1-d07-v-11",
+        "x": 3554,
+        "reasons": [
+          "previous:196"
+        ]
+      },
+      {
+        "surface": "f01-p1-d07-v-11",
+        "x": 3562,
+        "reasons": [
+          "previous:204"
+        ]
+      },
+      {
+        "surface": "f01-p1-d07-v-11",
+        "x": 3570,
+        "reasons": [
+          "previous:212"
+        ]
+      },
+      {
+        "surface": "f01-p1-d07-v-11",
+        "x": 3578,
+        "reasons": []
+      },
+      {
+        "surface": "f01-p1-d07-v-11",
+        "x": 3838,
+        "reasons": [
+          "previous:188"
+        ]
+      },
+      {
+        "surface": "f01-p1-d07-v-11",
+        "x": 3846,
+        "reasons": [
+          "previous:196"
+        ]
+      },
+      {
+        "surface": "f01-p1-d07-v-11",
+        "x": 3854,
+        "reasons": [
+          "previous:204"
+        ]
+      },
+      {
+        "surface": "f01-p1-d07-v-11",
+        "x": 3862,
+        "reasons": [
+          "previous:212"
+        ]
+      },
+      {
+        "surface": "f01-p1-d07-v-11",
+        "x": 3870,
+        "reasons": []
+      },
+      {
+        "surface": "f01-p2-d13-v-20",
+        "x": 4666.8,
+        "reasons": [
+          "R3:8",
+          "R2:-45.2",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f01-p2-d13-v-20",
+        "x": 4674.8,
+        "reasons": [
+          "R3:16",
+          "R2:-53.2",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f01-p2-d13-v-20",
+        "x": 4682.8,
+        "reasons": [
+          "R3:24",
+          "R2:-61.2",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f01-p2-d13-v-20",
+        "x": 4690.8,
+        "reasons": [
+          "R3:32",
+          "R2:-69.2",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f01-p2-d13-v-20",
+        "x": 4698.8,
+        "reasons": [
+          "R3:5.2",
+          "R2:-2.8",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f01-p2-d13-v-20",
+        "x": 4706.8,
+        "reasons": [
+          "R3:13.2",
+          "R2:-10.8",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f01-p2-d13-v-20",
+        "x": 4714.8,
+        "reasons": [
+          "R3:21.2",
+          "R2:-18.8",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f01-p2-d13-v-20",
+        "x": 4722.8,
+        "reasons": [
+          "R3:29.2",
+          "R2:-26.8",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f01-p2-d13-v-20",
+        "x": 4730.8,
+        "reasons": [
+          "R3:37.2",
+          "R2:-34.8",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f01-p2-d13-v-20",
+        "x": 4738.8,
+        "reasons": [
+          "R3:45.2",
+          "R2:-42.8",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f01-p2-d13-v-20",
+        "x": 4746.8,
+        "reasons": [
+          "R3:53.2",
+          "R2:-50.8",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f01-p2-d13-v-20",
+        "x": 4754.8,
+        "reasons": [
+          "R3:61.2",
+          "R2:-58.8",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f01-p2-d13-v-20",
+        "x": 4762.8,
+        "reasons": [
+          "R3:69.2",
+          "R2:-66.8",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f01-p2-d13-v-20",
+        "x": 4770.8,
+        "reasons": [
+          "R3:2.8",
+          "R2:-22",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f01-p2-d13-v-20",
+        "x": 4778.8,
+        "reasons": [
+          "R3:10.8",
+          "R2:-30",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f01-p2-d13-v-26",
+        "x": 5310,
+        "reasons": [
+          "previous:6.8"
+        ]
+      },
+      {
+        "surface": "f01-p2-d13-v-26",
+        "x": 5318,
+        "reasons": [
+          "previous:14.8"
+        ]
+      },
+      {
+        "surface": "f01-p2-d13-v-26",
+        "x": 5326,
+        "reasons": [
+          "previous:22.8"
+        ]
+      },
+      {
+        "surface": "f01-p2-d13-v-26",
+        "x": 5334,
+        "reasons": [
+          "previous:30.8"
+        ]
+      },
+      {
+        "surface": "f01-p2-d13-v-26",
+        "x": 5342,
+        "reasons": [
+          "previous:38.8"
+        ]
+      },
+      {
+        "surface": "f01-p2-d13-v-26",
+        "x": 5350,
+        "reasons": [
+          "previous:46.8"
+        ]
+      },
+      {
+        "surface": "f01-p2-d13-v-26",
+        "x": 5358,
+        "reasons": [
+          "previous:54.8"
+        ]
+      },
+      {
+        "surface": "f01-p2-d13-v-26",
+        "x": 5366,
+        "reasons": [
+          "previous:62.8"
+        ]
+      },
+      {
+        "surface": "f01-p2-d13-v-26",
+        "x": 5374,
+        "reasons": [
+          "previous:70.8"
+        ]
+      },
+      {
+        "surface": "f01-p2-d13-v-26",
+        "x": 5382,
+        "reasons": [
+          "previous:78.8"
+        ]
+      },
+      {
+        "surface": "f01-p2-d13-v-26",
+        "x": 5390,
+        "reasons": [
+          "previous:86.8"
+        ]
+      },
+      {
+        "surface": "f01-p2-d13-v-26",
+        "x": 5398,
+        "reasons": [
+          "previous:94.8"
+        ]
+      },
+      {
+        "surface": "f01-p2-d13-v-26",
+        "x": 5406,
+        "reasons": [
+          "previous:102.8"
+        ]
+      },
+      {
+        "surface": "f01-p2-d13-v-26",
+        "x": 5414,
+        "reasons": [
+          "previous:110.8"
+        ]
+      },
+      {
+        "surface": "f01-p2-d13-v-26",
+        "x": 5422,
+        "reasons": [
+          "previous:118.8"
+        ]
+      },
+      {
+        "surface": "f01-p2-d13-v-26",
+        "x": 5430,
+        "reasons": [
+          "previous:126.8"
+        ]
+      },
+      {
+        "surface": "f01-p2-d13-v-26",
+        "x": 5438,
+        "reasons": [
+          "previous:134.8"
+        ]
+      },
+      {
+        "surface": "f01-p2-d13-v-26",
+        "x": 5446,
+        "reasons": [
+          "previous:142.8"
+        ]
+      },
+      {
+        "surface": "f01-p2-d13-v-26",
+        "x": 5454,
+        "reasons": [
+          "previous:150.8"
+        ]
+      },
+      {
+        "surface": "f01-p2-d13-v-26",
+        "x": 5462,
+        "reasons": [
+          "previous:158.8"
+        ]
+      },
+      {
+        "surface": "f01-p2-d13-v-26",
+        "x": 5470,
+        "reasons": [
+          "previous:166.8"
+        ]
+      },
+      {
+        "surface": "f01-p2-d13-v-26",
+        "x": 5478,
+        "reasons": [
+          "previous:174.8"
+        ]
+      },
+      {
+        "surface": "f01-p2-d13-v-26",
+        "x": 5486,
+        "reasons": [
+          "previous:182.8"
+        ]
+      },
+      {
+        "surface": "f01-p2-d13-v-26",
+        "x": 5494,
+        "reasons": [
+          "previous:190.8"
+        ]
+      },
+      {
+        "surface": "f01-p2-d13-v-26",
+        "x": 5502,
+        "reasons": [
+          "previous:198.8"
+        ]
+      },
+      {
+        "surface": "f01-p2-d13-v-26",
+        "x": 5510,
+        "reasons": [
+          "previous:206.8"
+        ]
+      },
+      {
+        "surface": "f01-p2-d13-v-26",
+        "x": 5518,
+        "reasons": [
+          "previous:214.8"
+        ]
+      },
+      {
+        "surface": "f01-p2-d13-v-26",
+        "x": 5526,
+        "reasons": []
+      },
+      {
+        "surface": "f01-p2-d13-v-28",
+        "x": 6610.8,
+        "reasons": [
+          "next:34"
+        ]
+      },
+      {
+        "surface": "f01-p2-d13-v-28",
+        "x": 6618.8,
+        "reasons": [
+          "next:26"
+        ]
+      },
+      {
+        "surface": "f01-p2-d13-v-28",
+        "x": 6626.8,
+        "reasons": [
+          "next:18"
+        ]
+      },
+      {
+        "surface": "f01-p2-d13-v-28",
+        "x": 6634.8,
+        "reasons": [
+          "next:10"
+        ]
+      },
+      {
+        "surface": "f01-p2-d13-v-28",
+        "x": 6642.8,
+        "reasons": [
+          "next:2"
+        ]
+      },
+      {
+        "surface": "f01-p2-d13-v-28",
+        "x": 6650.8,
+        "reasons": [
+          "overlap"
+        ]
+      },
+      {
+        "surface": "f01-p2-d13-v-28",
+        "x": 6658.8,
+        "reasons": [
+          "overlap"
+        ]
+      },
+      {
+        "surface": "f01-p2-d13-v-28",
+        "x": 6666.8,
+        "reasons": [
+          "overlap"
+        ]
+      },
+      {
+        "surface": "f01-p2-d13-v-28",
+        "x": 6674.8,
+        "reasons": [
+          "overlap"
+        ]
+      },
+      {
+        "surface": "f01-p2-d13-v-28",
+        "x": 6682.8,
+        "reasons": [
+          "overlap"
+        ]
+      },
+      {
+        "surface": "f01-p2-d13-v-28",
+        "x": 6690.8,
+        "reasons": [
+          "overlap"
+        ]
+      },
+      {
+        "surface": "f01-p2-d13-v-28",
+        "x": 6698.8,
+        "reasons": [
+          "overlap"
+        ]
+      },
+      {
+        "surface": "f01-p2-d13-v-28",
+        "x": 6706.8,
+        "reasons": [
+          "overlap"
+        ]
+      },
+      {
+        "surface": "f01-p2-d13-v-28",
+        "x": 6714.8,
+        "reasons": [
+          "overlap"
+        ]
+      },
+      {
+        "surface": "f01-p2-d13-v-28",
+        "x": 6722.8,
+        "reasons": [
+          "overlap"
+        ]
+      },
+      {
+        "surface": "f01-p2-d13-v-34",
+        "x": 7918.8,
+        "reasons": [
+          "overlap"
+        ]
+      },
+      {
+        "surface": "f01-p2-d13-v-34",
+        "x": 7926.8,
+        "reasons": [
+          "overlap"
+        ]
+      },
+      {
+        "surface": "f01-p2-d13-v-34",
+        "x": 7934.8,
+        "reasons": [
+          "overlap"
+        ]
+      },
+      {
+        "surface": "f01-p2-d13-v-34",
+        "x": 7942.8,
+        "reasons": [
+          "overlap"
+        ]
+      },
+      {
+        "surface": "f01-p2-d13-v-34",
+        "x": 7950.8,
+        "reasons": [
+          "overlap"
+        ]
+      },
+      {
+        "surface": "f01-p2-d13-v-34",
+        "x": 7958.8,
+        "reasons": [
+          "overlap"
+        ]
+      },
+      {
+        "surface": "f01-p2-d13-v-34",
+        "x": 7966.8,
+        "reasons": [
+          "overlap"
+        ]
+      },
+      {
+        "surface": "f01-p2-d13-v-34",
+        "x": 7974.8,
+        "reasons": [
+          "overlap"
+        ]
+      },
+      {
+        "surface": "f01-p2-d13-v-34",
+        "x": 7982.8,
+        "reasons": [
+          "overlap"
+        ]
+      },
+      {
+        "surface": "f01-p2-d13-v-34",
+        "x": 7990.8,
+        "reasons": [
+          "overlap"
+        ]
+      },
+      {
+        "surface": "f01-p2-d13-v-34",
+        "x": 7998.8,
+        "reasons": [
+          "overlap"
+        ]
+      },
+      {
+        "surface": "f01-p2-d13-v-34",
+        "x": 8006.8,
+        "reasons": [
+          "overlap"
+        ]
+      },
+      {
+        "surface": "f01-p2-d13-v-34",
+        "x": 8014.8,
+        "reasons": [
+          "overlap"
+        ]
+      },
+      {
+        "surface": "f01-p2-d13-v-34",
+        "x": 8022.8,
+        "reasons": [
+          "previous:4"
+        ]
+      },
+      {
+        "surface": "f01-p2-d13-v-34",
+        "x": 8030.8,
+        "reasons": [
+          "previous:12"
+        ]
+      },
+      {
+        "surface": "f01-p2-d13-v-34",
+        "x": 8038.8,
+        "reasons": [
+          "previous:20"
+        ]
+      },
+      {
+        "surface": "f01-p2-d13-v-34",
+        "x": 8046.8,
+        "reasons": [
+          "R2:120.6",
+          "previous:28"
+        ]
+      },
+      {
+        "surface": "f01-p2-d13-v-34",
+        "x": 8054.8,
+        "reasons": [
+          "R2:112.6",
+          "previous:36"
+        ]
+      },
+      {
+        "surface": "f01-p2-d13-v-34",
+        "x": 8062.8,
+        "reasons": [
+          "R2:104.6",
+          "previous:44"
+        ]
+      },
+      {
+        "surface": "f01-p2-d13-v-34",
+        "x": 8070.8,
+        "reasons": [
+          "R2:96.6",
+          "previous:52"
+        ]
+      },
+      {
+        "surface": "f01-p2-d13-v-34",
+        "x": 8078.8,
+        "reasons": [
+          "R2:88.6",
+          "previous:60"
+        ]
+      },
+      {
+        "surface": "f01-p2-d13-v-34",
+        "x": 8086.8,
+        "reasons": [
+          "R2:80.6",
+          "previous:68"
+        ]
+      },
+      {
+        "surface": "f01-p2-d13-v-34",
+        "x": 8094.8,
+        "reasons": [
+          "R2:72.6",
+          "previous:76"
+        ]
+      },
+      {
+        "surface": "f01-p2-d13-v-34",
+        "x": 8102.8,
+        "reasons": [
+          "R2:64.6",
+          "previous:84"
+        ]
+      },
+      {
+        "surface": "f01-p2-d13-v-34",
+        "x": 8110.8,
+        "reasons": [
+          "R2:56.6",
+          "previous:92"
+        ]
+      },
+      {
+        "surface": "f01-p2-d13-v-34",
+        "x": 8118.8,
+        "reasons": [
+          "R2:48.6",
+          "previous:100"
+        ]
+      },
+      {
+        "surface": "f01-p2-d13-v-34",
+        "x": 8126.8,
+        "reasons": [
+          "R2:40.6",
+          "previous:108"
+        ]
+      },
+      {
+        "surface": "f01-p2-d13-v-37",
+        "x": 8624.4,
+        "reasons": []
+      },
+      {
+        "surface": "f01-p2-d13-v-37",
+        "x": 8884.4,
+        "reasons": [
+          "previous:188"
+        ]
+      },
+      {
+        "surface": "f01-p2-d13-v-37",
+        "x": 8892.4,
+        "reasons": [
+          "previous:196"
+        ]
+      },
+      {
+        "surface": "f01-p2-d13-v-37",
+        "x": 8900.4,
+        "reasons": [
+          "previous:204"
+        ]
+      },
+      {
+        "surface": "f01-p2-d13-v-37",
+        "x": 8908.4,
+        "reasons": [
+          "previous:212"
+        ]
+      },
+      {
+        "surface": "f01-p2-d13-v-37",
+        "x": 8916.4,
+        "reasons": []
+      }
+    ],
     "coins": 14
   },
   "F02": {
@@ -30,9 +7217,2621 @@
         "fraction": 0.5
       }
     ],
+    "partBounds": [
+      {
+        "part": 1,
+        "source": "D08",
+        "minX": 70,
+        "maxX": 4357.6
+      },
+      {
+        "part": 2,
+        "source": "D14",
+        "minX": 4357.6,
+        "maxX": 9498.4
+      }
+    ],
     "length": 9638.4,
-    "movements": 21,
+    "movements": 28,
     "addedObstacles": 4,
+    "transportedDeviations": [
+      {
+        "id": "f02-p1-d08-slide-01",
+        "from": 2837.61,
+        "to": null,
+        "reason": "R2/R3/recovery"
+      },
+      {
+        "id": "f02-p2-d14-vault-04",
+        "from": 5084.56,
+        "to": null,
+        "reason": "R2/R3/recovery"
+      },
+      {
+        "id": "f02-p2-d14-vault-05",
+        "from": 8164.96,
+        "to": null,
+        "reason": "R2/R3/recovery"
+      },
+      {
+        "id": "f02-p2-d14-vault-09",
+        "from": 8369.14,
+        "to": null,
+        "reason": "R2/R3/recovery"
+      }
+    ],
+    "hardCandidateAudit": [
+      {
+        "surface": "f02-p1-d08-v-06",
+        "x": 914.4,
+        "reasons": [
+          "R3:30.4",
+          "R2:-5.6",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f02-p1-d08-v-06",
+        "x": 922.4,
+        "reasons": [
+          "R3:38.4",
+          "R2:-13.6",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f02-p1-d08-v-06",
+        "x": 930.4,
+        "reasons": [
+          "R3:46.4",
+          "R2:-21.6",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f02-p1-d08-v-06",
+        "x": 938.4,
+        "reasons": [
+          "R3:54.4",
+          "R2:-29.6",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f02-p1-d08-v-06",
+        "x": 946.4,
+        "reasons": [
+          "R3:62.4",
+          "R2:-37.6",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f02-p1-d08-v-06",
+        "x": 954.4,
+        "reasons": [
+          "R3:70.4",
+          "R2:-45.6",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f02-p1-d08-v-06",
+        "x": 962.4,
+        "reasons": [
+          "R3:78.4",
+          "R2:-53.6",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f02-p1-d08-v-06",
+        "x": 970.4,
+        "reasons": [
+          "R3:86.4",
+          "R2:-61.6",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f02-p1-d08-v-06",
+        "x": 978.4,
+        "reasons": [
+          "R3:94.4",
+          "R2:-69.6",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f02-p1-d08-v-06",
+        "x": 986.4,
+        "reasons": [
+          "R3:5.6",
+          "R2:46"
+        ]
+      },
+      {
+        "surface": "f02-p1-d08-v-06",
+        "x": 994.4,
+        "reasons": [
+          "R3:13.6",
+          "R2:38"
+        ]
+      },
+      {
+        "surface": "f02-p1-d08-v-06",
+        "x": 1002.4,
+        "reasons": [
+          "R3:21.6",
+          "R2:30"
+        ]
+      },
+      {
+        "surface": "f02-p1-d08-v-06",
+        "x": 1010.4,
+        "reasons": [
+          "R3:29.6",
+          "R2:22"
+        ]
+      },
+      {
+        "surface": "f02-p1-d08-v-06",
+        "x": 1018.4,
+        "reasons": [
+          "R3:37.6",
+          "R2:14"
+        ]
+      },
+      {
+        "surface": "f02-p1-d08-v-06",
+        "x": 1026.4,
+        "reasons": [
+          "R3:45.6",
+          "R2:6"
+        ]
+      },
+      {
+        "surface": "f02-p1-d08-v-06",
+        "x": 1034.4,
+        "reasons": [
+          "R3:53.6",
+          "R2:-2",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f02-p1-d08-v-06",
+        "x": 1042.4,
+        "reasons": [
+          "R3:61.6",
+          "R2:-10",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f02-p1-d08-v-09",
+        "x": 1530,
+        "reasons": [
+          "R3:51.2",
+          "R2:19.6"
+        ]
+      },
+      {
+        "surface": "f02-p1-d08-v-09",
+        "x": 1538,
+        "reasons": [
+          "R3:59.2",
+          "R2:11.6"
+        ]
+      },
+      {
+        "surface": "f02-p1-d08-v-09",
+        "x": 1546,
+        "reasons": [
+          "R3:67.2",
+          "R2:3.6"
+        ]
+      },
+      {
+        "surface": "f02-p1-d08-v-09",
+        "x": 1554,
+        "reasons": [
+          "R3:75.2",
+          "R2:-4.4",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f02-p1-d08-v-09",
+        "x": 1562,
+        "reasons": [
+          "R3:83.2",
+          "R2:-12.4",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f02-p1-d08-v-09",
+        "x": 1570,
+        "reasons": [
+          "R3:91.2",
+          "R2:-20.4",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f02-p1-d08-v-09",
+        "x": 1578,
+        "reasons": [
+          "R2:-28.4",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f02-p1-d08-v-09",
+        "x": 1586,
+        "reasons": [
+          "R2:-36.4",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f02-p1-d08-v-09",
+        "x": 1594,
+        "reasons": [
+          "R2:-44.4",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f02-p1-d08-v-09",
+        "x": 1602,
+        "reasons": [
+          "R2:-52.4",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f02-p1-d08-v-09",
+        "x": 1610,
+        "reasons": [
+          "R2:-60.4",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f02-p1-d08-v-09",
+        "x": 1618,
+        "reasons": [
+          "R2:-68.4",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f02-p1-d08-v-09",
+        "x": 1626,
+        "reasons": [
+          "R3:4.4",
+          "R2:60.4"
+        ]
+      },
+      {
+        "surface": "f02-p1-d08-v-09",
+        "x": 1634,
+        "reasons": [
+          "R3:12.4",
+          "R2:52.4"
+        ]
+      },
+      {
+        "surface": "f02-p1-d08-v-09",
+        "x": 1642,
+        "reasons": [
+          "R3:20.4",
+          "R2:44.4"
+        ]
+      },
+      {
+        "surface": "f02-p1-d08-v-09",
+        "x": 1650,
+        "reasons": [
+          "R3:28.4",
+          "R2:36.4"
+        ]
+      },
+      {
+        "surface": "f02-p1-d08-v-09",
+        "x": 1658,
+        "reasons": [
+          "R3:36.4",
+          "R2:28.4"
+        ]
+      },
+      {
+        "surface": "f02-p1-d08-v-09",
+        "x": 1666,
+        "reasons": [
+          "R3:44.4",
+          "R2:20.4"
+        ]
+      },
+      {
+        "surface": "f02-p1-d08-v-09",
+        "x": 1674,
+        "reasons": [
+          "R3:52.4",
+          "R2:12.4"
+        ]
+      },
+      {
+        "surface": "f02-p1-d08-v-09",
+        "x": 1682,
+        "reasons": [
+          "R3:60.4",
+          "R2:4.4"
+        ]
+      },
+      {
+        "surface": "f02-p1-d08-v-09",
+        "x": 1690,
+        "reasons": [
+          "R3:68.4",
+          "R2:-3.6",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f02-p1-d08-v-09",
+        "x": 1698,
+        "reasons": [
+          "R3:76.4",
+          "R2:-11.6",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f02-p1-d08-v-09",
+        "x": 1706,
+        "reasons": [
+          "R3:84.4",
+          "R2:-19.6",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f02-p1-d08-v-09",
+        "x": 1714,
+        "reasons": [
+          "R3:92.4",
+          "R2:-27.6",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f02-p1-d08-v-09",
+        "x": 1722,
+        "reasons": [
+          "R2:-35.6",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f02-p1-d08-v-09",
+        "x": 1730,
+        "reasons": [
+          "R2:-43.6",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f02-p1-d08-v-09",
+        "x": 1738,
+        "reasons": [
+          "R2:-51.6",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f02-p1-d08-v-09",
+        "x": 1746,
+        "reasons": [
+          "R2:-59.6",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f02-p1-d08-v-09",
+        "x": 1754,
+        "reasons": [
+          "R2:-67.6",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f02-p1-d08-v-09",
+        "x": 1762,
+        "reasons": [
+          "R3:3.6",
+          "R2:-3.84",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f02-p1-d08-v-09",
+        "x": 1770,
+        "reasons": [
+          "R3:11.6",
+          "R2:-11.84",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f02-p1-d08-v-09",
+        "x": 1778,
+        "reasons": [
+          "R3:19.6",
+          "R2:-19.84",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f02-p1-d08-v-09",
+        "x": 1786,
+        "reasons": [
+          "R3:27.6",
+          "R2:-27.84",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f02-p1-d08-v-09",
+        "x": 1794,
+        "reasons": [
+          "R3:35.6",
+          "R2:-35.84",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f02-p1-d08-v-09",
+        "x": 1802,
+        "reasons": [
+          "R3:43.6",
+          "R2:-43.84",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f02-p1-d08-v-09",
+        "x": 1810,
+        "reasons": [
+          "R3:51.6",
+          "R2:-51.84",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f02-p1-d08-v-09",
+        "x": 1818,
+        "reasons": [
+          "R3:59.6",
+          "R2:-59.84",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f02-p1-d08-v-09",
+        "x": 1826,
+        "reasons": [
+          "R3:67.6",
+          "R2:-67.84",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f02-p1-d08-v-09",
+        "x": 1834,
+        "reasons": [
+          "R3:3.84",
+          "R2:-3.84",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f02-p1-d08-v-09",
+        "x": 1842,
+        "reasons": [
+          "R3:11.84",
+          "R2:-11.84",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f02-p1-d08-v-09",
+        "x": 1850,
+        "reasons": [
+          "R3:19.84",
+          "R2:-19.84",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f02-p1-d08-v-09",
+        "x": 1858,
+        "reasons": [
+          "R3:27.84",
+          "R2:-27.84",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f02-p1-d08-v-09",
+        "x": 1866,
+        "reasons": [
+          "R3:35.84",
+          "R2:-35.84",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f02-p1-d08-v-09",
+        "x": 1874,
+        "reasons": [
+          "R3:43.84",
+          "R2:-43.84",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f02-p1-d08-v-09",
+        "x": 1882,
+        "reasons": [
+          "R3:51.84",
+          "R2:-51.84",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f02-p1-d08-v-09",
+        "x": 1890,
+        "reasons": [
+          "R3:59.84",
+          "R2:-59.84",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f02-p1-d08-v-09",
+        "x": 1898,
+        "reasons": [
+          "R3:67.84",
+          "R2:-67.84",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f02-p1-d08-v-09",
+        "x": 1906,
+        "reasons": [
+          "R3:3.84",
+          "R2:28.8"
+        ]
+      },
+      {
+        "surface": "f02-p1-d08-v-09",
+        "x": 1914,
+        "reasons": [
+          "R3:11.84",
+          "R2:20.8"
+        ]
+      },
+      {
+        "surface": "f02-p1-d08-v-09",
+        "x": 1922,
+        "reasons": [
+          "R3:19.84",
+          "R2:12.8"
+        ]
+      },
+      {
+        "surface": "f02-p1-d08-v-09",
+        "x": 1930,
+        "reasons": [
+          "R3:27.84",
+          "R2:4.8"
+        ]
+      },
+      {
+        "surface": "f02-p1-d08-v-09",
+        "x": 1938,
+        "reasons": [
+          "R3:35.84",
+          "R2:-3.2",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f02-p1-d08-v-09",
+        "x": 1946,
+        "reasons": [
+          "R3:43.84",
+          "R2:-11.2",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f02-p1-d08-v-09",
+        "x": 1954,
+        "reasons": [
+          "R3:51.84",
+          "R2:-19.2",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f02-p1-d08-v-09",
+        "x": 1962,
+        "reasons": [
+          "R3:59.84",
+          "R2:-27.2",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f02-p1-d08-v-09",
+        "x": 1970,
+        "reasons": [
+          "R3:67.84",
+          "R2:-35.2",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f02-p1-d08-v-09",
+        "x": 1978,
+        "reasons": [
+          "R3:75.84",
+          "R2:-43.2",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f02-p1-d08-v-09",
+        "x": 1986,
+        "reasons": [
+          "R3:83.84",
+          "R2:-51.2",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f02-p1-d08-v-09",
+        "x": 1994,
+        "reasons": [
+          "R3:91.84",
+          "R2:-59.2",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f02-p1-d08-v-09",
+        "x": 2002,
+        "reasons": [
+          "R2:-67.2",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f02-p1-d08-v-09",
+        "x": 2010,
+        "reasons": [
+          "R3:3.2",
+          "R2:67.6"
+        ]
+      },
+      {
+        "surface": "f02-p1-d08-v-09",
+        "x": 2018,
+        "reasons": [
+          "R3:11.2",
+          "R2:59.6"
+        ]
+      },
+      {
+        "surface": "f02-p1-d08-v-09",
+        "x": 2026,
+        "reasons": [
+          "R3:19.2",
+          "R2:51.6"
+        ]
+      },
+      {
+        "surface": "f02-p1-d08-v-09",
+        "x": 2034,
+        "reasons": [
+          "R3:27.2",
+          "R2:43.6"
+        ]
+      },
+      {
+        "surface": "f02-p1-d08-v-09",
+        "x": 2042,
+        "reasons": [
+          "R3:35.2",
+          "R2:35.6"
+        ]
+      },
+      {
+        "surface": "f02-p1-d08-v-09",
+        "x": 2050,
+        "reasons": [
+          "R3:43.2",
+          "R2:27.6"
+        ]
+      },
+      {
+        "surface": "f02-p1-d08-v-09",
+        "x": 2058,
+        "reasons": [
+          "R3:51.2",
+          "R2:19.6"
+        ]
+      },
+      {
+        "surface": "f02-p1-d08-v-09",
+        "x": 2066,
+        "reasons": [
+          "R3:59.2",
+          "R2:11.6"
+        ]
+      },
+      {
+        "surface": "f02-p1-d08-v-09",
+        "x": 2074,
+        "reasons": [
+          "R3:67.2",
+          "R2:3.6"
+        ]
+      },
+      {
+        "surface": "f02-p1-d08-v-09",
+        "x": 2082,
+        "reasons": [
+          "R3:75.2",
+          "R2:-4.4",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f02-p1-d08-v-09",
+        "x": 2090,
+        "reasons": [
+          "R3:83.2",
+          "R2:-12.4",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f02-p1-d08-v-09",
+        "x": 2098,
+        "reasons": [
+          "R3:91.2",
+          "R2:-20.4",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f02-p1-d08-v-09",
+        "x": 2106,
+        "reasons": [
+          "R2:-28.4",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f02-p1-d08-v-09",
+        "x": 2114,
+        "reasons": [
+          "R2:-36.4",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f02-p1-d08-v-09",
+        "x": 2122,
+        "reasons": [
+          "R2:-44.4",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f02-p1-d08-v-09",
+        "x": 2130,
+        "reasons": [
+          "R2:-52.4",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f02-p1-d08-v-09",
+        "x": 2138,
+        "reasons": [
+          "R2:-60.4",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f02-p1-d08-v-09",
+        "x": 2146,
+        "reasons": [
+          "R2:-68.4",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f02-p1-d08-v-09",
+        "x": 2154,
+        "reasons": [
+          "R3:4.4",
+          "R2:-20",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f02-p1-d08-v-09",
+        "x": 2162,
+        "reasons": [
+          "R3:12.4",
+          "R2:-28",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f02-p1-d08-v-09",
+        "x": 2170,
+        "reasons": [
+          "R3:20.4",
+          "R2:-36",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f02-p1-d08-v-09",
+        "x": 2178,
+        "reasons": [
+          "R3:28.4",
+          "R2:-44",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f02-p1-d08-v-09",
+        "x": 2186,
+        "reasons": [
+          "R3:36.4",
+          "R2:-52",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f02-p1-d08-v-09",
+        "x": 2194,
+        "reasons": [
+          "R3:44.4",
+          "R2:-60",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f02-p1-d08-v-09",
+        "x": 2202,
+        "reasons": [
+          "R3:52.4",
+          "R2:-68",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f02-p1-d08-v-09",
+        "x": 2210,
+        "reasons": [
+          "R3:4",
+          "R2:-23.2",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f02-p1-d08-v-09",
+        "x": 2218,
+        "reasons": [
+          "R3:12",
+          "R2:-31.2",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f02-p1-d08-v-09",
+        "x": 2226,
+        "reasons": [
+          "R3:20",
+          "R2:-39.2",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f02-p1-d08-v-09",
+        "x": 2234,
+        "reasons": [
+          "R3:28",
+          "R2:-47.2",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f02-p1-d08-v-09",
+        "x": 2242,
+        "reasons": [
+          "R3:36",
+          "R2:-55.2",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f02-p1-d08-v-09",
+        "x": 2250,
+        "reasons": [
+          "R3:44",
+          "R2:-63.2",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f02-p1-d08-v-09",
+        "x": 2258,
+        "reasons": [
+          "R3:52",
+          "R2:-71.2",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f02-p1-d08-v-09",
+        "x": 2266,
+        "reasons": [
+          "R3:7.2",
+          "R2:-62.4",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f02-p1-d08-v-09",
+        "x": 2274,
+        "reasons": [
+          "R3:15.2",
+          "R2:-70.4",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f02-p1-d08-v-09",
+        "x": 2282,
+        "reasons": [
+          "R3:6.4",
+          "R2:-1.6",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f02-p1-d08-v-09",
+        "x": 2290,
+        "reasons": [
+          "R3:14.4",
+          "R2:-9.6",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f02-p1-d08-v-09",
+        "x": 2298,
+        "reasons": [
+          "R3:22.4",
+          "R2:-17.6",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f02-p1-d08-v-09",
+        "x": 2306,
+        "reasons": [
+          "R3:30.4",
+          "R2:-25.6",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f02-p1-d08-v-09",
+        "x": 2314,
+        "reasons": [
+          "R3:38.4",
+          "R2:-33.6",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f02-p1-d08-v-09",
+        "x": 2322,
+        "reasons": [
+          "R3:46.4",
+          "R2:-41.6",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f02-p1-d08-v-09",
+        "x": 2330,
+        "reasons": [
+          "R3:54.4",
+          "R2:-49.6",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f02-p1-d08-v-09",
+        "x": 2338,
+        "reasons": [
+          "R3:62.4",
+          "R2:-57.6",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f02-p1-d08-v-09",
+        "x": 2346,
+        "reasons": [
+          "R3:70.4",
+          "R2:-65.6",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f02-p1-d08-v-09",
+        "x": 2354,
+        "reasons": [
+          "R3:1.6",
+          "R2:-1.6",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f02-p1-d08-v-09",
+        "x": 2362,
+        "reasons": [
+          "R3:9.6",
+          "R2:-9.6",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f02-p1-d08-v-09",
+        "x": 2370,
+        "reasons": [
+          "R3:17.6",
+          "R2:-17.6",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f02-p1-d08-v-09",
+        "x": 2378,
+        "reasons": [
+          "R3:25.6",
+          "R2:-25.6",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f02-p1-d08-v-09",
+        "x": 2386,
+        "reasons": [
+          "R3:33.6",
+          "R2:-33.6",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f02-p1-d08-v-09",
+        "x": 2394,
+        "reasons": [
+          "R3:41.6",
+          "R2:-41.6",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f02-p1-d08-v-09",
+        "x": 2402,
+        "reasons": [
+          "R3:49.6",
+          "R2:-49.6",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f02-p1-d08-v-11",
+        "x": 1666.8,
+        "reasons": [
+          "R3:45.2",
+          "R2:19.6"
+        ]
+      },
+      {
+        "surface": "f02-p1-d08-v-11",
+        "x": 1674.8,
+        "reasons": [
+          "R3:53.2",
+          "R2:11.6"
+        ]
+      },
+      {
+        "surface": "f02-p1-d08-v-11",
+        "x": 1682.8,
+        "reasons": [
+          "R3:61.2",
+          "R2:3.6"
+        ]
+      },
+      {
+        "surface": "f02-p1-d08-v-11",
+        "x": 1690.8,
+        "reasons": [
+          "R3:69.2",
+          "R2:-4.4",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f02-p1-d08-v-11",
+        "x": 1698.8,
+        "reasons": [
+          "R3:77.2",
+          "R2:-12.4",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f02-p1-d08-v-11",
+        "x": 1706.8,
+        "reasons": [
+          "R3:85.2",
+          "R2:-20.4",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f02-p1-d08-v-11",
+        "x": 1714.8,
+        "reasons": [
+          "R3:93.2",
+          "R2:-28.4",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f02-p1-d08-v-11",
+        "x": 1722.8,
+        "reasons": [
+          "R2:-36.4",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f02-p1-d08-v-11",
+        "x": 1730.8,
+        "reasons": [
+          "R2:-44.4",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f02-p1-d08-v-11",
+        "x": 1738.8,
+        "reasons": [
+          "R2:-52.4",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f02-p1-d08-v-11",
+        "x": 1746.8,
+        "reasons": [
+          "R2:-60.4",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f02-p1-d08-v-11",
+        "x": 1754.8,
+        "reasons": [
+          "R2:-68.4",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f02-p1-d08-v-11",
+        "x": 1762.8,
+        "reasons": [
+          "R3:4.4",
+          "R2:-4.64",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f02-p1-d08-v-11",
+        "x": 1770.8,
+        "reasons": [
+          "R3:12.4",
+          "R2:-12.64",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f02-p1-d08-v-11",
+        "x": 1778.8,
+        "reasons": [
+          "R3:20.4",
+          "R2:-20.64",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f02-p1-d08-v-11",
+        "x": 1786.8,
+        "reasons": [
+          "R3:28.4",
+          "R2:-28.64",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f02-p1-d08-v-11",
+        "x": 1794.8,
+        "reasons": [
+          "R3:36.4",
+          "R2:-36.64",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f02-p1-d08-v-11",
+        "x": 1802.8,
+        "reasons": [
+          "R3:44.4",
+          "R2:-44.64",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f02-p1-d08-v-18",
+        "x": 2905.2,
+        "reasons": [
+          "R2:-60.59",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f02-p1-d08-v-18",
+        "x": 2913.2,
+        "reasons": [
+          "R2:-68.59",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f02-p1-d08-v-18",
+        "x": 2921.2,
+        "reasons": [
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f02-p1-d08-v-21",
+        "x": 3361.2,
+        "reasons": []
+      },
+      {
+        "surface": "f02-p1-d08-v-21",
+        "x": 3621.2,
+        "reasons": [
+          "R3:16",
+          "R2:116",
+          "previous:188"
+        ]
+      },
+      {
+        "surface": "f02-p1-d08-v-21",
+        "x": 3629.2,
+        "reasons": [
+          "R3:24",
+          "R2:108",
+          "previous:196"
+        ]
+      },
+      {
+        "surface": "f02-p1-d08-v-21",
+        "x": 3637.2,
+        "reasons": [
+          "R3:32",
+          "R2:100",
+          "previous:204"
+        ]
+      },
+      {
+        "surface": "f02-p1-d08-v-21",
+        "x": 3645.2,
+        "reasons": [
+          "R3:40",
+          "R2:92",
+          "previous:212"
+        ]
+      },
+      {
+        "surface": "f02-p1-d08-v-21",
+        "x": 3653.2,
+        "reasons": [
+          "R3:48",
+          "R2:84"
+        ]
+      },
+      {
+        "surface": "f02-p1-d08-v-21",
+        "x": 3661.2,
+        "reasons": [
+          "R3:56",
+          "R2:76"
+        ]
+      },
+      {
+        "surface": "f02-p1-d08-v-21",
+        "x": 3669.2,
+        "reasons": [
+          "R3:64",
+          "R2:68"
+        ]
+      },
+      {
+        "surface": "f02-p1-d08-v-21",
+        "x": 3677.2,
+        "reasons": [
+          "R3:72",
+          "R2:60"
+        ]
+      },
+      {
+        "surface": "f02-p1-d08-v-21",
+        "x": 3685.2,
+        "reasons": [
+          "R3:80",
+          "R2:52"
+        ]
+      },
+      {
+        "surface": "f02-p1-d08-v-21",
+        "x": 3693.2,
+        "reasons": [
+          "R3:88",
+          "R2:44"
+        ]
+      },
+      {
+        "surface": "f02-p1-d08-v-21",
+        "x": 3701.2,
+        "reasons": [
+          "R2:36"
+        ]
+      },
+      {
+        "surface": "f02-p1-d08-v-21",
+        "x": 3709.2,
+        "reasons": [
+          "R2:28"
+        ]
+      },
+      {
+        "surface": "f02-p1-d08-v-21",
+        "x": 3717.2,
+        "reasons": [
+          "R2:20"
+        ]
+      },
+      {
+        "surface": "f02-p1-d08-v-21",
+        "x": 3725.2,
+        "reasons": [
+          "R2:12"
+        ]
+      },
+      {
+        "surface": "f02-p2-d14-v-20",
+        "x": 4904.4,
+        "reasons": [
+          "overlap"
+        ]
+      },
+      {
+        "surface": "f02-p2-d14-v-20",
+        "x": 4912.4,
+        "reasons": [
+          "overlap"
+        ]
+      },
+      {
+        "surface": "f02-p2-d14-v-20",
+        "x": 4920.4,
+        "reasons": [
+          "overlap"
+        ]
+      },
+      {
+        "surface": "f02-p2-d14-v-20",
+        "x": 4928.4,
+        "reasons": [
+          "previous:4"
+        ]
+      },
+      {
+        "surface": "f02-p2-d14-v-20",
+        "x": 4936.4,
+        "reasons": [
+          "previous:12"
+        ]
+      },
+      {
+        "surface": "f02-p2-d14-v-20",
+        "x": 4944.4,
+        "reasons": [
+          "previous:20"
+        ]
+      },
+      {
+        "surface": "f02-p2-d14-v-20",
+        "x": 4952.4,
+        "reasons": [
+          "previous:28"
+        ]
+      },
+      {
+        "surface": "f02-p2-d14-v-20",
+        "x": 4960.4,
+        "reasons": [
+          "previous:36"
+        ]
+      },
+      {
+        "surface": "f02-p2-d14-v-20",
+        "x": 4968.4,
+        "reasons": [
+          "previous:44"
+        ]
+      },
+      {
+        "surface": "f02-p2-d14-v-20",
+        "x": 4976.4,
+        "reasons": [
+          "previous:52"
+        ]
+      },
+      {
+        "surface": "f02-p2-d14-v-20",
+        "x": 4984.4,
+        "reasons": [
+          "previous:60"
+        ]
+      },
+      {
+        "surface": "f02-p2-d14-v-20",
+        "x": 4992.4,
+        "reasons": [
+          "previous:68"
+        ]
+      },
+      {
+        "surface": "f02-p2-d14-v-20",
+        "x": 5000.4,
+        "reasons": [
+          "previous:76"
+        ]
+      },
+      {
+        "surface": "f02-p2-d14-v-20",
+        "x": 5008.4,
+        "reasons": [
+          "previous:84"
+        ]
+      },
+      {
+        "surface": "f02-p2-d14-v-20",
+        "x": 5016.4,
+        "reasons": [
+          "previous:92"
+        ]
+      },
+      {
+        "surface": "f02-p2-d14-v-20",
+        "x": 5024.4,
+        "reasons": [
+          "previous:100"
+        ]
+      },
+      {
+        "surface": "f02-p2-d14-v-20",
+        "x": 5032.4,
+        "reasons": [
+          "previous:108"
+        ]
+      },
+      {
+        "surface": "f02-p2-d14-v-20",
+        "x": 5040.4,
+        "reasons": [
+          "previous:116"
+        ]
+      },
+      {
+        "surface": "f02-p2-d14-v-20",
+        "x": 5048.4,
+        "reasons": [
+          "previous:124"
+        ]
+      },
+      {
+        "surface": "f02-p2-d14-v-20",
+        "x": 5056.4,
+        "reasons": [
+          "previous:132"
+        ]
+      },
+      {
+        "surface": "f02-p2-d14-v-20",
+        "x": 5064.4,
+        "reasons": [
+          "previous:140"
+        ]
+      },
+      {
+        "surface": "f02-p2-d14-v-20",
+        "x": 5072.4,
+        "reasons": [
+          "previous:148"
+        ]
+      },
+      {
+        "surface": "f02-p2-d14-v-20",
+        "x": 5080.4,
+        "reasons": [
+          "previous:156"
+        ]
+      },
+      {
+        "surface": "f02-p2-d14-v-20",
+        "x": 5088.4,
+        "reasons": [
+          "previous:164"
+        ]
+      },
+      {
+        "surface": "f02-p2-d14-v-20",
+        "x": 5096.4,
+        "reasons": [
+          "previous:172"
+        ]
+      },
+      {
+        "surface": "f02-p2-d14-v-20",
+        "x": 5104.4,
+        "reasons": [
+          "previous:180"
+        ]
+      },
+      {
+        "surface": "f02-p2-d14-v-20",
+        "x": 5112.4,
+        "reasons": [
+          "previous:188"
+        ]
+      },
+      {
+        "surface": "f02-p2-d14-v-25",
+        "x": 5985.6,
+        "reasons": [
+          "R3:24.8",
+          "R2:-8",
+          "next:203.2",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f02-p2-d14-v-25",
+        "x": 5993.6,
+        "reasons": [
+          "R3:32.8",
+          "R2:-16",
+          "next:195.2",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f02-p2-d14-v-25",
+        "x": 6001.6,
+        "reasons": [
+          "R3:40.8",
+          "R2:-24",
+          "next:187.2",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f02-p2-d14-v-25",
+        "x": 6009.6,
+        "reasons": [
+          "R3:48.8",
+          "R2:-32",
+          "next:179.2",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f02-p2-d14-v-25",
+        "x": 6017.6,
+        "reasons": [
+          "R3:56.8",
+          "R2:-40",
+          "next:171.2",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f02-p2-d14-v-25",
+        "x": 6025.6,
+        "reasons": [
+          "R3:64.8",
+          "R2:-48",
+          "next:163.2",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f02-p2-d14-v-25",
+        "x": 6033.6,
+        "reasons": [
+          "R3:72.8",
+          "R2:-56",
+          "next:155.2",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f02-p2-d14-v-25",
+        "x": 6041.6,
+        "reasons": [
+          "R3:80.8",
+          "R2:-64",
+          "next:147.2",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f02-p2-d14-v-25",
+        "x": 6049.6,
+        "reasons": [
+          "R3:0",
+          "R2:-72",
+          "next:139.2"
+        ]
+      },
+      {
+        "surface": "f02-p2-d14-v-25",
+        "x": 6057.6,
+        "reasons": [
+          "R3:8",
+          "next:131.2"
+        ]
+      },
+      {
+        "surface": "f02-p2-d14-v-25",
+        "x": 6065.6,
+        "reasons": [
+          "R3:16",
+          "next:123.2"
+        ]
+      },
+      {
+        "surface": "f02-p2-d14-v-25",
+        "x": 6073.6,
+        "reasons": [
+          "R3:24",
+          "next:115.2"
+        ]
+      },
+      {
+        "surface": "f02-p2-d14-v-25",
+        "x": 6081.6,
+        "reasons": [
+          "R3:32",
+          "next:107.2"
+        ]
+      },
+      {
+        "surface": "f02-p2-d14-v-25",
+        "x": 6089.6,
+        "reasons": [
+          "R3:40",
+          "next:99.2"
+        ]
+      },
+      {
+        "surface": "f02-p2-d14-v-25",
+        "x": 6097.6,
+        "reasons": [
+          "R3:48",
+          "next:91.2"
+        ]
+      },
+      {
+        "surface": "f02-p2-d14-v-25",
+        "x": 6105.6,
+        "reasons": [
+          "R3:56",
+          "next:83.2"
+        ]
+      },
+      {
+        "surface": "f02-p2-d14-v-25",
+        "x": 6113.6,
+        "reasons": [
+          "R3:64",
+          "next:75.2"
+        ]
+      },
+      {
+        "surface": "f02-p2-d14-v-25",
+        "x": 6121.6,
+        "reasons": [
+          "R3:72",
+          "next:67.2"
+        ]
+      },
+      {
+        "surface": "f02-p2-d14-v-25",
+        "x": 6129.6,
+        "reasons": [
+          "R3:80",
+          "next:59.2"
+        ]
+      },
+      {
+        "surface": "f02-p2-d14-v-25",
+        "x": 6137.6,
+        "reasons": [
+          "R3:88",
+          "next:51.2"
+        ]
+      },
+      {
+        "surface": "f02-p2-d14-v-25",
+        "x": 6145.6,
+        "reasons": [
+          "next:43.2"
+        ]
+      },
+      {
+        "surface": "f02-p2-d14-v-25",
+        "x": 6153.6,
+        "reasons": [
+          "next:35.2"
+        ]
+      },
+      {
+        "surface": "f02-p2-d14-v-25",
+        "x": 6161.6,
+        "reasons": [
+          "next:27.2"
+        ]
+      },
+      {
+        "surface": "f02-p2-d14-v-25",
+        "x": 6169.6,
+        "reasons": [
+          "next:19.2"
+        ]
+      },
+      {
+        "surface": "f02-p2-d14-v-25",
+        "x": 6177.6,
+        "reasons": [
+          "next:11.2"
+        ]
+      },
+      {
+        "surface": "f02-p2-d14-v-25",
+        "x": 6185.6,
+        "reasons": [
+          "next:3.2"
+        ]
+      },
+      {
+        "surface": "f02-p2-d14-v-25",
+        "x": 6193.6,
+        "reasons": [
+          "overlap"
+        ]
+      },
+      {
+        "surface": "f02-p2-d14-v-25",
+        "x": 6201.6,
+        "reasons": [
+          "overlap"
+        ]
+      },
+      {
+        "surface": "f02-p2-d14-v-25",
+        "x": 6209.6,
+        "reasons": [
+          "overlap"
+        ]
+      },
+      {
+        "surface": "f02-p2-d14-v-25",
+        "x": 6217.6,
+        "reasons": [
+          "overlap"
+        ]
+      },
+      {
+        "surface": "f02-p2-d14-v-25",
+        "x": 6225.6,
+        "reasons": [
+          "overlap"
+        ]
+      },
+      {
+        "surface": "f02-p2-d14-v-25",
+        "x": 6233.6,
+        "reasons": [
+          "overlap"
+        ]
+      },
+      {
+        "surface": "f02-p2-d14-v-25",
+        "x": 6241.6,
+        "reasons": [
+          "overlap"
+        ]
+      },
+      {
+        "surface": "f02-p2-d14-v-25",
+        "x": 6249.6,
+        "reasons": [
+          "overlap"
+        ]
+      },
+      {
+        "surface": "f02-p2-d14-v-25",
+        "x": 6257.6,
+        "reasons": [
+          "overlap"
+        ]
+      },
+      {
+        "surface": "f02-p2-d14-v-25",
+        "x": 6265.6,
+        "reasons": [
+          "overlap"
+        ]
+      },
+      {
+        "surface": "f02-p2-d14-v-25",
+        "x": 6273.6,
+        "reasons": [
+          "overlap"
+        ]
+      },
+      {
+        "surface": "f02-p2-d14-v-25",
+        "x": 6281.6,
+        "reasons": [
+          "overlap"
+        ]
+      },
+      {
+        "surface": "f02-p2-d14-v-25",
+        "x": 6289.6,
+        "reasons": [
+          "overlap"
+        ]
+      },
+      {
+        "surface": "f02-p2-d14-v-25",
+        "x": 6297.6,
+        "reasons": [
+          "overlap"
+        ]
+      },
+      {
+        "surface": "f02-p2-d14-v-25",
+        "x": 6305.6,
+        "reasons": [
+          "overlap"
+        ]
+      },
+      {
+        "surface": "f02-p2-d14-v-25",
+        "x": 6313.6,
+        "reasons": [
+          "overlap"
+        ]
+      },
+      {
+        "surface": "f02-p2-d14-v-28",
+        "x": 6764.4,
+        "reasons": [
+          "overlap"
+        ]
+      },
+      {
+        "surface": "f02-p2-d14-v-28",
+        "x": 6772.4,
+        "reasons": [
+          "previous:7.6"
+        ]
+      },
+      {
+        "surface": "f02-p2-d14-v-28",
+        "x": 6780.4,
+        "reasons": [
+          "previous:15.6"
+        ]
+      },
+      {
+        "surface": "f02-p2-d14-v-28",
+        "x": 6788.4,
+        "reasons": [
+          "previous:23.6"
+        ]
+      },
+      {
+        "surface": "f02-p2-d14-v-28",
+        "x": 6796.4,
+        "reasons": [
+          "previous:31.6"
+        ]
+      },
+      {
+        "surface": "f02-p2-d14-v-28",
+        "x": 6804.4,
+        "reasons": [
+          "previous:39.6"
+        ]
+      },
+      {
+        "surface": "f02-p2-d14-v-28",
+        "x": 6812.4,
+        "reasons": [
+          "previous:47.6"
+        ]
+      },
+      {
+        "surface": "f02-p2-d14-v-28",
+        "x": 6820.4,
+        "reasons": [
+          "previous:55.6"
+        ]
+      },
+      {
+        "surface": "f02-p2-d14-v-28",
+        "x": 6828.4,
+        "reasons": [
+          "previous:63.6"
+        ]
+      },
+      {
+        "surface": "f02-p2-d14-v-28",
+        "x": 6836.4,
+        "reasons": [
+          "previous:71.6"
+        ]
+      },
+      {
+        "surface": "f02-p2-d14-v-28",
+        "x": 6844.4,
+        "reasons": [
+          "previous:79.6"
+        ]
+      },
+      {
+        "surface": "f02-p2-d14-v-28",
+        "x": 6852.4,
+        "reasons": [
+          "previous:87.6"
+        ]
+      },
+      {
+        "surface": "f02-p2-d14-v-28",
+        "x": 6860.4,
+        "reasons": [
+          "previous:95.6"
+        ]
+      },
+      {
+        "surface": "f02-p2-d14-v-28",
+        "x": 6868.4,
+        "reasons": [
+          "previous:103.6"
+        ]
+      },
+      {
+        "surface": "f02-p2-d14-v-28",
+        "x": 6876.4,
+        "reasons": [
+          "previous:111.6"
+        ]
+      },
+      {
+        "surface": "f02-p2-d14-v-28",
+        "x": 6884.4,
+        "reasons": [
+          "previous:119.6"
+        ]
+      },
+      {
+        "surface": "f02-p2-d14-v-28",
+        "x": 6892.4,
+        "reasons": [
+          "previous:127.6"
+        ]
+      },
+      {
+        "surface": "f02-p2-d14-v-28",
+        "x": 6900.4,
+        "reasons": [
+          "previous:135.6"
+        ]
+      },
+      {
+        "surface": "f02-p2-d14-v-28",
+        "x": 6908.4,
+        "reasons": [
+          "previous:143.6"
+        ]
+      },
+      {
+        "surface": "f02-p2-d14-v-28",
+        "x": 6916.4,
+        "reasons": [
+          "previous:151.6"
+        ]
+      },
+      {
+        "surface": "f02-p2-d14-v-28",
+        "x": 6924.4,
+        "reasons": [
+          "previous:159.6"
+        ]
+      },
+      {
+        "surface": "f02-p2-d14-v-28",
+        "x": 6932.4,
+        "reasons": [
+          "previous:167.6"
+        ]
+      },
+      {
+        "surface": "f02-p2-d14-v-28",
+        "x": 6940.4,
+        "reasons": [
+          "previous:175.6"
+        ]
+      },
+      {
+        "surface": "f02-p2-d14-v-28",
+        "x": 6948.4,
+        "reasons": [
+          "previous:183.6"
+        ]
+      },
+      {
+        "surface": "f02-p2-d14-v-28",
+        "x": 6956.4,
+        "reasons": [
+          "previous:191.6"
+        ]
+      },
+      {
+        "surface": "f02-p2-d14-v-28",
+        "x": 6964.4,
+        "reasons": [
+          "previous:199.6"
+        ]
+      },
+      {
+        "surface": "f02-p2-d14-v-28",
+        "x": 6972.4,
+        "reasons": [
+          "previous:207.6"
+        ]
+      },
+      {
+        "surface": "f02-p2-d14-v-28",
+        "x": 6980.4,
+        "reasons": [
+          "previous:215.6"
+        ]
+      },
+      {
+        "surface": "f02-p2-d14-v-28",
+        "x": 6988.4,
+        "reasons": []
+      },
+      {
+        "surface": "f02-p2-d14-v-28",
+        "x": 7248.4,
+        "reasons": [
+          "R2:96",
+          "previous:188"
+        ]
+      },
+      {
+        "surface": "f02-p2-d14-v-28",
+        "x": 7256.4,
+        "reasons": [
+          "R2:88",
+          "previous:196"
+        ]
+      },
+      {
+        "surface": "f02-p2-d14-v-28",
+        "x": 7264.4,
+        "reasons": [
+          "R2:80",
+          "previous:204"
+        ]
+      },
+      {
+        "surface": "f02-p2-d14-v-28",
+        "x": 7272.4,
+        "reasons": [
+          "R2:72",
+          "previous:212"
+        ]
+      },
+      {
+        "surface": "f02-p2-d14-v-28",
+        "x": 7280.4,
+        "reasons": [
+          "R2:64"
+        ]
+      },
+      {
+        "surface": "f02-p2-d14-v-28",
+        "x": 7288.4,
+        "reasons": [
+          "R2:56"
+        ]
+      },
+      {
+        "surface": "f02-p2-d14-v-28",
+        "x": 7296.4,
+        "reasons": [
+          "R2:48"
+        ]
+      },
+      {
+        "surface": "f02-p2-d14-v-28",
+        "x": 7304.4,
+        "reasons": [
+          "R2:40"
+        ]
+      },
+      {
+        "surface": "f02-p2-d14-v-28",
+        "x": 7312.4,
+        "reasons": [
+          "R2:32"
+        ]
+      },
+      {
+        "surface": "f02-p2-d14-v-28",
+        "x": 7320.4,
+        "reasons": [
+          "R2:24"
+        ]
+      },
+      {
+        "surface": "f02-p2-d14-v-28",
+        "x": 7328.4,
+        "reasons": [
+          "R2:16"
+        ]
+      },
+      {
+        "surface": "f02-p2-d14-v-28",
+        "x": 7336.4,
+        "reasons": [
+          "R2:8"
+        ]
+      },
+      {
+        "surface": "f02-p2-d14-v-30",
+        "x": 8077.2,
+        "reasons": [
+          "R2:-59.6",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f02-p2-d14-v-30",
+        "x": 8085.2,
+        "reasons": [
+          "R2:-67.6",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f02-p2-d14-v-30",
+        "x": 8093.2,
+        "reasons": [
+          "R3:3.6",
+          "R2:116.4"
+        ]
+      },
+      {
+        "surface": "f02-p2-d14-v-30",
+        "x": 8101.2,
+        "reasons": [
+          "R3:11.6",
+          "R2:108.4"
+        ]
+      },
+      {
+        "surface": "f02-p2-d14-v-30",
+        "x": 8109.2,
+        "reasons": [
+          "R3:19.6",
+          "R2:100.4"
+        ]
+      },
+      {
+        "surface": "f02-p2-d14-v-30",
+        "x": 8117.2,
+        "reasons": [
+          "R3:27.6",
+          "R2:92.4"
+        ]
+      },
+      {
+        "surface": "f02-p2-d14-v-30",
+        "x": 8125.2,
+        "reasons": [
+          "R3:35.6",
+          "R2:84.4"
+        ]
+      },
+      {
+        "surface": "f02-p2-d14-v-30",
+        "x": 8133.2,
+        "reasons": [
+          "R3:43.6",
+          "R2:76.4"
+        ]
+      },
+      {
+        "surface": "f02-p2-d14-v-30",
+        "x": 8141.2,
+        "reasons": [
+          "R3:51.6",
+          "R2:68.4"
+        ]
+      },
+      {
+        "surface": "f02-p2-d14-v-30",
+        "x": 8149.2,
+        "reasons": [
+          "R3:59.6",
+          "R2:60.4"
+        ]
+      },
+      {
+        "surface": "f02-p2-d14-v-30",
+        "x": 8157.2,
+        "reasons": [
+          "R3:67.6",
+          "R2:52.4"
+        ]
+      },
+      {
+        "surface": "f02-p2-d14-v-30",
+        "x": 8165.2,
+        "reasons": [
+          "R3:75.6",
+          "R2:44.4"
+        ]
+      },
+      {
+        "surface": "f02-p2-d14-v-30",
+        "x": 8173.2,
+        "reasons": [
+          "R3:83.6",
+          "R2:36.4"
+        ]
+      },
+      {
+        "surface": "f02-p2-d14-v-30",
+        "x": 8181.2,
+        "reasons": [
+          "R3:91.6",
+          "R2:28.4"
+        ]
+      },
+      {
+        "surface": "f02-p2-d14-v-30",
+        "x": 8189.2,
+        "reasons": [
+          "R2:20.4"
+        ]
+      },
+      {
+        "surface": "f02-p2-d14-v-30",
+        "x": 8197.2,
+        "reasons": [
+          "R2:12.4"
+        ]
+      },
+      {
+        "surface": "f02-p2-d14-v-30",
+        "x": 8205.2,
+        "reasons": [
+          "R2:4.4"
+        ]
+      },
+      {
+        "surface": "f02-p2-d14-v-30",
+        "x": 8213.2,
+        "reasons": [
+          "R2:-3.6",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f02-p2-d14-v-30",
+        "x": 8221.2,
+        "reasons": [
+          "R2:-11.6",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f02-p2-d14-v-30",
+        "x": 8229.2,
+        "reasons": [
+          "R2:-19.6",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f02-p2-d14-v-30",
+        "x": 8237.2,
+        "reasons": [
+          "R2:-27.6",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f02-p2-d14-v-30",
+        "x": 8245.2,
+        "reasons": [
+          "R2:-35.6",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f02-p2-d14-v-30",
+        "x": 8253.2,
+        "reasons": [
+          "R2:-43.6",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f02-p2-d14-v-30",
+        "x": 8261.2,
+        "reasons": [
+          "R2:-51.6",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f02-p2-d14-v-30",
+        "x": 8269.2,
+        "reasons": [
+          "R2:-59.6",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f02-p2-d14-v-30",
+        "x": 8277.2,
+        "reasons": [
+          "R2:-67.6",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f02-p2-d14-v-30",
+        "x": 8285.2,
+        "reasons": [
+          "R3:3.6",
+          "R2:83.94"
+        ]
+      },
+      {
+        "surface": "f02-p2-d14-v-30",
+        "x": 8293.2,
+        "reasons": [
+          "R3:11.6",
+          "R2:75.94"
+        ]
+      },
+      {
+        "surface": "f02-p2-d14-v-30",
+        "x": 8301.2,
+        "reasons": [
+          "R3:19.6",
+          "R2:67.94"
+        ]
+      },
+      {
+        "surface": "f02-p2-d14-v-30",
+        "x": 8309.2,
+        "reasons": [
+          "R3:27.6",
+          "R2:59.94"
+        ]
+      },
+      {
+        "surface": "f02-p2-d14-v-30",
+        "x": 8317.2,
+        "reasons": [
+          "R3:35.6",
+          "R2:51.94"
+        ]
+      },
+      {
+        "surface": "f02-p2-d14-v-30",
+        "x": 8325.2,
+        "reasons": [
+          "R3:43.6",
+          "R2:43.94"
+        ]
+      },
+      {
+        "surface": "f02-p2-d14-v-30",
+        "x": 8333.2,
+        "reasons": [
+          "R3:51.6",
+          "R2:35.94"
+        ]
+      },
+      {
+        "surface": "f02-p2-d14-v-30",
+        "x": 8341.2,
+        "reasons": [
+          "R3:59.6",
+          "R2:27.94"
+        ]
+      },
+      {
+        "surface": "f02-p2-d14-v-30",
+        "x": 8349.2,
+        "reasons": [
+          "R3:67.6",
+          "R2:19.94"
+        ]
+      },
+      {
+        "surface": "f02-p2-d14-v-30",
+        "x": 8357.2,
+        "reasons": [
+          "R3:75.6",
+          "R2:11.94"
+        ]
+      },
+      {
+        "surface": "f02-p2-d14-v-30",
+        "x": 8365.2,
+        "reasons": [
+          "R3:83.6",
+          "R2:3.94"
+        ]
+      },
+      {
+        "surface": "f02-p2-d14-v-30",
+        "x": 8373.2,
+        "reasons": [
+          "R3:91.6",
+          "R2:-4.06",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f02-p2-d14-v-30",
+        "x": 8381.2,
+        "reasons": [
+          "R2:-12.06",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f02-p2-d14-v-30",
+        "x": 8389.2,
+        "reasons": [
+          "R2:-20.06",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f02-p2-d14-v-30",
+        "x": 8397.2,
+        "reasons": [
+          "R2:-28.06",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f02-p2-d14-v-30",
+        "x": 8405.2,
+        "reasons": [
+          "R2:-36.06",
+          "transition-overlap"
+        ]
+      },
+      {
+        "surface": "f02-p2-d14-v-34",
+        "x": 8846.4,
+        "reasons": []
+      },
+      {
+        "surface": "f02-p2-d14-v-34",
+        "x": 9106.4,
+        "reasons": [
+          "previous:188"
+        ]
+      },
+      {
+        "surface": "f02-p2-d14-v-34",
+        "x": 9114.4,
+        "reasons": [
+          "previous:196"
+        ]
+      },
+      {
+        "surface": "f02-p2-d14-v-34",
+        "x": 9122.4,
+        "reasons": [
+          "previous:204"
+        ]
+      },
+      {
+        "surface": "f02-p2-d14-v-34",
+        "x": 9130.4,
+        "reasons": [
+          "previous:212"
+        ]
+      },
+      {
+        "surface": "f02-p2-d14-v-34",
+        "x": 9138.4,
+        "reasons": []
+      }
+    ],
     "coins": 14
   }
 }

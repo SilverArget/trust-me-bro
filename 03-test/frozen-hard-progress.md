@@ -274,3 +274,26 @@
 - Ideal keyboard and both touch viewports passed (3/3). F01 and D01-D18 ROUTES/COINS remain byte-identical to c3707e3; existing non-ASCII lines remain byte-identical; product mojibake sentinels are zero.
 - F03/F04 WIP remains outside this commit.
 - Next exact step: exhaustive D01-D18 interval/composition search, reserve non-overlapping F03-F06 winners, then F03/F04 trace -> coins -> chief -> matrix.
+
+## 2026-10-05 systematic search continuation
+
+- F02 isolated commit: 0ce6024. Post-commit guard: F01 and D01-D18 ROUTES/COINS byte-equal to c3707e3; non-ASCII lines byte-equal; mojibake 0.
+- Added search-hard-compositions.cjs. It scanned 120 interval pieces and 275 exact 8-10k compositions from the densest viable pool using production compose+harden gates. Full result: hard-composition-search.json.
+- F03 selected D10 left .40 + D10 right .60: 9028.56 px / 35 static moves = 3.877, threshold 3.755; coinless 60 Hz PASS at 33.47 s, deaths=0, retries=0.
+- F04 static candidates were dynamically rejected: D12 L.20 + D17 R.30 stuck x=3565.76; D17 L.30 + D11 L.50 reached x=6282.26 then repeated dive 34 until timeout; D12 L.20 + D17 L.60 + D09 L.20 stuck x=1829.60; D17 L.40 + D11 L.30 stuck x=374.00.
+- Current WIP is the last candidate and is intentionally not commit-eligible. No rollback, push, or stash operation.
+- Next exact step: add dynamic viability to the search evaluator (or pre-reject truncated source transitions whose transported A/B movement cannot complete), then select the next highest disjoint F04 candidate; after a coinless PASS rebuild measured CJ8/CC4/CS2, record 1.2 s chief, run matrix, and commit F03+F04.
+
+## 2026-10-05 corrected mixed-source F03/F04 green
+
+- Search gates now require 2-3 distinct Dock sources per route, <=50% from each source, no overlap with reserved world intervals, and cuts snapped to source transition boundaries. The 10% boundary search evaluated 119 unique pieces / 15,261 exact 8-10k compositions; static products were accepted only after coinless 60 Hz play.
+- F03: D09 left to x=814.8 + D10 left to x=4440.48 + D12 left to x=2169.6; 8038.48 px, 34 static movements, 4.230/1000 >= source-max threshold 3.874. Coinless ideal 30.89 s; final 14/14 CJ8/CC4/CS2; chief min gap 0.750 s, catches 0.
+- F04: D02 left to x=3118.38 + D03 left to x=1959.48 + D01 left to x=2424.72; 8414.38 px, 31 static movements, 3.684/1000 >= source-max threshold 3.236. Coinless ideal 32.04 s; final 14/14 CJ8/CC4/CS2; chief min gap 0.533 s, catches 0.
+- Composite H seams use an 8 px horizontal runway, vertical alignment, and an explicit catch/jump transition. Shallow zero-gap dives that became timing-unstable under vertical composition are normalized to catch/jump and their stale dive windows are removed.
+- Static mutable-route gates: part order [], obstacle overlap [], obstacle-transition overlap []; F03/F04 transition parity PASS; dive coin three-launch guard []. F01 remains byte-immutable and its pre-existing hard-5/source-vault overlap is reserved for the final review pass.
+- Dynamic F03/F04 matrix: ideal keyboard x2, F03 missed-dive fallback, and touch 390x844 / 844x390 x4 = 7 passed. Chief records regenerated at 1.2 s.
+
+### Next exact step
+
+1. Stage only F03/F04 product, shared reproducible compose/search/hardening gates, generated transitions/meta, chief records, tests, and this progress entry; verify D01-D18 and F01 bytes, non-ASCII lines, mojibake, hunk list; commit F03+F04.
+2. Generate F05/F06 from the next two disjoint search winners, trace -> measured coins -> chief -> matrix, then registry/menu and Frozen completion commit.

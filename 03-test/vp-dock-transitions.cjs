@@ -69,7 +69,7 @@ const configs = {
   A01: { story: "bonus_04", start: 0, topMin: -195 },
   A02: { story: "bonus_07", start: 0, topMin: -7620 },
 };
-const hardCompositeIds=["F01","F02"].filter(id=>routeData[id]?.mode==="hard");
+const hardCompositeIds=["F01","F02","F03","F04"].filter(id=>routeData[id]?.mode==="hard");
 for(const id of hardCompositeIds) delete configs[id];
 const vaultNames = new Set(["TriggerSpeedVault", "TriggerHurdleJump", "TriggerThiefVault"]);
 
@@ -405,6 +405,7 @@ for(const r of results){
   const hard=hardCompositeIds.includes(r.id);
   const hardCatches=hard&&catches.every(c=>route.catchableSurfaces.some(x=>x.id===c.id));
   const hardDives=hard&&r.transitions.filter(t=>t.mech==="dive").every(t=>route.diveZones.some(z=>Math.abs(z.x1-t.x1)<.02&&Math.abs(z.x2-z.x1-40)<.02&&Math.abs(z.landX-t.landX)<.02&&Math.abs(z.landY-t.landY)<.02));
+  if(hard&&(!hardCatches||!hardDives))console.log(`${r.id} hard parity detail catches=${hardCatches} dives=${hardDives} missingCatch=${JSON.stringify(catches.filter(c=>!route.catchableSurfaces.some(x=>x.id===c.id)).map(c=>c.id))} missingDive=${JSON.stringify(r.transitions.filter(t=>t.mech==="dive"&&!route.diveZones.some(z=>Math.abs(z.x1-t.x1)<.02&&Math.abs(z.x2-z.x1-40)<.02&&Math.abs(z.landX-t.landX)<.02&&Math.abs(z.landY-t.landY)<.02)).map(t=>t.i))}`);
   const immutableFrozen=/^F0[2-4]$/.test(r.id)&&!hard,same=hard?(hardCatches&&hardDives):immutableFrozen||JSON.stringify(route.catchableSurfaces)===JSON.stringify(catches)&&JSON.stringify(route.diveZones)===JSON.stringify(dives)&&JSON.stringify(route.obstacles)===JSON.stringify(obstacles);
   console.log(`${r.id} kod eşliği | catch/dive/engel | JSON ile birebir | ${same?"PASS":"FAIL"}`); codeParity=codeParity&&same;
 }
@@ -423,7 +424,7 @@ console.log(`D01-D04 short dive report | ${JSON.stringify(shortLegacyDives)} | d
 console.log(`D05/D06 catchable FP guard | ${JSON.stringify(badNewCatchableY)} | exact | ${badNewCatchableY.length===0?"PASS":"FAIL"}`);
 console.log(`D01-D04 catchable FP report | ${JSON.stringify(badLegacyCatchableY)} | data unchanged | INFO`);
 console.log(`F01/F02 fallback catchable | ${JSON.stringify(missingFallbackCatch)} | H>52 gap<=96 all catchable | ${missingFallbackCatch.length===0?"PASS":"FAIL"}`);
-console.log(`F01/F02 hard R2/R3 | ${JSON.stringify(hardR2R3)} | no violation | ${hardR2R3.length===0?"PASS":"FAIL"}`);
+console.log(`Frozen hard R2/R3 | ${JSON.stringify(hardR2R3)} | no violation | ${hardR2R3.length===0?"PASS":"FAIL"}`);
 console.log(`F03-A02 dive coin 60Hz guard | ${JSON.stringify(badGateDiveCoins)} | 3 launches x >=3 frames | ${badGateDiveCoins.length===0?"PASS":"FAIL"}`);
 console.log(`D05-F02 dive coin 60Hz report | ${JSON.stringify(badInfoDiveCoins)} | unchanged | INFO`);
 console.log(`Legacy peakY absence | ${JSON.stringify(legacyPeakY)} | expected [] | ${legacyPeakY.length===0?"PASS":"FAIL"}`);

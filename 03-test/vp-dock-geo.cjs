@@ -129,7 +129,27 @@ for (const [id, expected] of [["D01",d01Expected],["D02",d02Ir]]) {
 }
 const hardMetaPath=path.join(root,"03-test/frozen-hard-meta.json");
 const hardMeta=fs.existsSync(hardMetaPath)?JSON.parse(fs.readFileSync(hardMetaPath,"utf8")):{};
-for (const id of ["F01","F02"]) {
+// F01 is immutable in this phase; its pre-existing overlap is reserved for
+// the final review pass. Apply the new construction gates to mutable routes.
+const hardCompositeIds=["F02","F03","F04"].filter(id=>routes[id]?.mode==="hard");
+const hardPartOrder=[],hardObstacleOverlap=[],hardTransitionOverlap=[];
+for(const id of hardCompositeIds){
+  const bounds=hardMeta[id]?.partBounds||[];
+  for(let i=1;i<bounds.length;i++)if(bounds[i].minX+0.011<bounds[i-1].maxX)hardPartOrder.push({route:id,previous:bounds[i-1],current:bounds[i]});
+  const obstacles=(routes[id].obstacles||[]).slice().sort((a,b)=>a.x-b.x);
+  for(let i=0;i<obstacles.length;i++)for(let j=i+1;j<obstacles.length&&obstacles[j].x<obstacles[i].x+obstacles[i].w;j++)hardObstacleOverlap.push({route:id,a:obstacles[i].id,b:obstacles[j].id});
+  const tf=path.join(root,"03-test/frozen-hard-generated",`transitions-${id}.json`);
+  const transitions=fs.existsSync(tf)?JSON.parse(fs.readFileSync(tf,"utf8")):[];
+  for(const o of obstacles)for(const t of transitions){
+    const window=t.mech==="dive"?[t.x1,t.x2]:t.mech==="tutunma"?[t.A.x1,t.B.x0]:null;
+    if(window&&o.x<Math.max(...window)&&o.x+o.w>Math.min(...window))hardTransitionOverlap.push({route:id,obstacle:o.id,transition:t.i,mech:t.mech,window});
+  }
+}
+report("HARD parca sirasi",JSON.stringify(hardPartOrder),"[]",hardPartOrder.length===0);
+report("HARD engel ortusmesi",JSON.stringify(hardObstacleOverlap),"[]",hardObstacleOverlap.length===0);
+report("HARD engel/gecis ortusmesi",JSON.stringify(hardTransitionOverlap),"[]",hardTransitionOverlap.length===0);
+if(hardPartOrder.length||hardObstacleOverlap.length||hardTransitionOverlap.length)process.exitCode=1;
+for (const id of ["F01","F02","F03","F04"]) {
   if(routes[id].mode!=="hard") {
     const expected=id==="F01"?f01Expected:f02Expected;
     segmentCheck({groundSegments:routes[id].groundSegments.filter(s=>new RegExp(`^${id.toLowerCase()}-[vu]-`).test(s.id))},expected.filter(s=>!extracted[id].has(s.id)),1,`B-1 ${id} IR`);
@@ -147,6 +167,7 @@ for (const id of ["F01","F02"]) {
   }
 }
 for (const [id, expected] of [["F03",f03Expected],["F04",f04Expected]]) {
+  if(routes[id].mode==="hard") continue;
   const actual=routes[id].groundSegments.filter(s=>new RegExp(`^${id.toLowerCase()}-v-`).test(s.id));
   segmentCheck({groundSegments:actual},expected.filter(s=>actual.some(a=>a.id===s.id)),1,`B-1 ${id} IR`);
   segmentCheck({groundSegments:routes[id].groundSegments.filter(s=>new RegExp(`^${id.toLowerCase()}-(up|down)-`).test(s.id))},extraSteps[id].map(([id,x,y,w,h])=>({id,x,y,w,h,kind:"ground"})),.063,`B-1 ${id} basamak`);
