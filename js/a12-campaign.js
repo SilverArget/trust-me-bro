@@ -2783,6 +2783,31 @@
     else if(verticalParallax<0){c.fillStyle=`rgb(${edges.bottom.join(',')})`;c.fillRect(0,h+verticalParallax,w,-verticalParallax)}
     window.__tmbBackgroundDraw={calls:backdropCalls,offset:verticalParallax,fillBoundary:verticalParallax>0?verticalParallax:verticalParallax<0?h+verticalParallax:null};
   }
+  function drawVectorJumpPads(c) {
+    const zones = [...(route.diveZones || []), ...(route.highJumpZones || [])];
+    if (!zones.length) return;
+    for (const z of zones) {
+      const x = z.x1, w = Math.max(36, z.x2 - z.x1), y = routeGroundYAt((z.x1 + z.x2) / 2) - 7;
+      c.save();
+      c.shadowColor = "#ffb12b";
+      c.shadowBlur = 16;
+      const g = c.createLinearGradient(x, y - 8, x, y + 12);
+      g.addColorStop(0, "rgba(255, 242, 138, .92)");
+      g.addColorStop(.55, "rgba(255, 177, 43, .78)");
+      g.addColorStop(1, "rgba(255, 112, 36, .12)");
+      c.fillStyle = g;
+      c.beginPath();
+      c.ellipse(x + w / 2, y, w / 2, 9, 0, 0, Math.PI * 2);
+      c.fill();
+      c.shadowBlur = 0;
+      c.strokeStyle = "rgba(255, 250, 184, .95)";
+      c.lineWidth = 2;
+      c.beginPath();
+      c.ellipse(x + w / 2, y, w / 2 - 3, 6, 0, 0, Math.PI * 2);
+      c.stroke();
+      c.restore();
+    }
+  }
   function drawWorldIntegrated(c) {
     if(profile.selectedWorldId==="aftermath"){drawAftermathWorld(c,true,gameClock,effectsGain());return;}
     ctx = c;
@@ -2810,6 +2835,7 @@
     }
     const groundSurfaces=routeSurfaces(route).filter(v=>v.kind==="ground");
     for(const g of groundSurfaces){if(frozen) frozenSurface(c,g.x,g.y,g.w,g.h,"ground");else if(magma)magmaSurface(c,g.x,g.y,g.w,g.h,"ground");else engine.drawMetal(g.x,g.y,g.w,g.h)}
+    drawVectorJumpPads(c);
     if(magma)for(const x of (route.voidEdges||[])){c.strokeStyle="#eef1e9";c.lineWidth=4;c.beginPath();c.moveTo(x,GROUND-36);c.lineTo(x,GROUND+8);c.stroke();c.fillStyle="#c8ced2";c.fillText("!",x-4,GROUND-44);}
     if(frozen)for(let x=210;x<route.length;x+=480){const top=GROUND-92;c.strokeStyle="#203944";c.lineWidth=5;c.beginPath();c.moveTo(x,top);c.lineTo(x,GROUND);c.stroke();c.fillStyle="#ffd27a";c.fillRect(x-13,top-5,26,8);const glow=c.createLinearGradient(x,top,x,top+50);glow.addColorStop(0,"#ffd98a77");glow.addColorStop(1,"#ffd98a00");c.fillStyle=glow;c.beginPath();c.moveTo(x-15,top+3);c.lineTo(x+15,top+3);c.lineTo(x+31,top+50);c.lineTo(x-31,top+50);c.closePath();c.fill();}
     for (const s of routeSurfaces(route).filter((v) => v.kind !== "ground")) {
