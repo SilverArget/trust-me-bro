@@ -1420,6 +1420,19 @@
     if (worldId!=="frozen") return "D01";
     return ["F04","F03","F02","F01"].find(id=>ROUTES[id]&&routeUnlocked(id)) || "F01";
   }
+  function routeOrderForWorld(worldId=profile.selectedWorldId) {
+    if (worldId==="aftermath") return WORLD_REGISTRY.aftermath.routes;
+    if (worldId==="magma") return ["M01","M02","M03","M04"];
+    if (worldId==="frozen") return ["F01","F02","F03","F04"];
+    return WORLD_REGISTRY.dock31.routes;
+  }
+  function startNextRoute() {
+    const order=routeOrderForWorld(),start=Math.max(0,order.indexOf(routeId)),candidates=[];
+    for(let i=1;i<=order.length;i++)candidates.push(order[(start+i)%order.length]);
+    for(const id of candidates)if(ROUTES[id]&&routeUnlocked(id)&&startRoute(id,true,id==="D06"))return id;
+    openShop();
+    return null;
+  }
   function startRoute(id, newEconomy = true, fullD06 = false) {
     if (pendingWorldId && profile.ownedWorldIds.includes(pendingWorldId)) {
       if (pendingWorldId === "aftermath" && !/^A0/.test(id || "")) id = firstRouteForWorld("aftermath");
@@ -2333,7 +2346,7 @@
       const a = e.target.dataset.act;
       if (!a) return;
       if (a === "rewarded") { void claimRewardedResult(); return; }
-      if (a === "next") { const order=profile.selectedWorldId==="aftermath"?WORLD_REGISTRY.aftermath.routes:profile.selectedWorldId==="magma"?["M01","M02","M03","M04"]:profile.selectedWorldId==="frozen"?["F01","F02","F03","F04"]:WORLD_REGISTRY.dock31.routes, next=order[order.indexOf(routeId)+1]||order[0]; await requestRouteInterstitial();startRoute(ROUTES[next]?next:order[0], true, next==="D06"); }
+      if (a === "next") { await requestRouteInterstitial();startNextRoute(); }
       if (a === "retry") startRoute(routeId, true, routeId === "D06");
       if (a === "shop") openShop();
     });
