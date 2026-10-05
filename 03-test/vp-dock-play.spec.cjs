@@ -93,7 +93,7 @@ async function drive(page, id, {touch=false, stopAfter, omitDives=[]} = {}) {
     if (previousSample && previousSample.playerX - p.x > 150) {
       retries++;
       trace.push(`[DBG-B2] ${s.gameClock.toFixed(2)} retry player=${previousSample.playerX.toFixed(2)} chief=${previousSample.chiefX?.toFixed(2) ?? 'n/a'} chainClimb=${chainClimbSeconds.toFixed(2)}s`);
-      if (id === 'D07' || /^F0[1-4]$/.test(id)||/^M0[34]$/.test(id)) {
+      if (['D07','D08','D10'].includes(id) || /^F0[1-4]$/.test(id)||/^M0[34]$/.test(id)) {
         const checkpointX = p.x;
         for (const key of [...fired]) {
           const ti = /^(?:normal|dive|tutunma)-(\d+)$/.exec(key);
@@ -153,7 +153,7 @@ async function drive(page, id, {touch=false, stopAfter, omitDives=[]} = {}) {
       const normalLead = /^F0[1-4]$/.test(id) ? 12 : 25;
       if (t.mech === 'normal' && !pending.has(key) && coyote && right >= t.A.x1 - normalLead && right <= t.A.x1 - 2) target = [key, t];
       const d03d04 = id === 'D03' || id === 'D04';
-      if (t.mech === 'dive' && !omitDives.includes(t.i) && (id[0]==='A'?p.onGround:(d03d04 || d05d06 ? !s.edgeClimb : p.onGround)) && center >= t.x1 + (id==='D06'?0:4) && center <= t.x2 - (id==='D06'?0:4) && (!lastPress.has(key) || s.gameClock-lastPress.get(key)>=(id[0]==='A'?.3:(d03d04 || d05d06)?.1:.2))) target=[key,t];
+      if (t.mech === 'dive' && !(id === 'D08' && t.i === 31) && !omitDives.includes(t.i) && (id[0]==='A'?p.onGround:(d03d04 || d05d06 ? !s.edgeClimb : p.onGround)) && center >= t.x1 + (id==='D06'?0:4) && center <= t.x2 - (id==='D06'?0:4) && (!['D08','D10'].includes(id) || s.parkour.state !== 'slide') && (!lastPress.has(key) || s.gameClock-lastPress.get(key)>=(id[0]==='A'?.3:(d03d04 || d05d06)?.1:.2))) target=[key,t];
       const d03LowStep = t.mech === 'tutunma' && id === 'D03' && t.B.id === 'd03-v-16';
       const d05LowStep = t.mech === 'tutunma' && id === 'D05' && ['d05-v-15','d05-v-20','d05-v-21','d05-v-22'].includes(t.B.id);
       const lowStep = d03LowStep || d05LowStep;
@@ -165,6 +165,20 @@ async function drive(page, id, {touch=false, stopAfter, omitDives=[]} = {}) {
         : p.onGround && p.vx <= 1 && right >= t.B.x0 - 4 && right <= t.B.x0 + 4;
       if (t.mech === 'tutunma' && !lowStep && !pending.has(key) && (catchWindow || braced) && (!lastPress.has(key) || s.gameClock-lastPress.get(key)>=.1)) target = [key, t];
       if (target) break;
+    }
+    if (!target) {
+      const assistZones = [
+        ...(s.route.diveZones || []).filter(z => /-assist$/.test(z.id)),
+        ...(id === 'D08' ? [{id:'d08-dz-05-assist',x1:2940,x2:3042},{id:'d08-dz-05b-assist',x1:3380,x2:3460},{id:'d08-dz-06-assist',x1:4288,x2:4320},{id:'d08-dz-07-assist',x1:6950,x2:7010}] : []),
+        ...(id === 'D10' ? [{id:'d10-dz-06-assist',x1:5100,x2:5162},{id:'d10-dz-07-assist',x1:5460,x2:5536}] : []),
+      ];
+      for (const z of assistZones) {
+        const key = `dive-${z.id}`;
+        if (!fired.has(key) && !pending.has(key) && coyote && center >= z.x1 && center <= z.x2 && (!lastPress.has(key) || s.gameClock - lastPress.get(key) >= .1)) {
+          target = [key, {mech:'dive'}];
+          break;
+        }
+      }
     }
     if (!target) {
       const key=`a02-s-wall-${Math.floor(s.gameClock*3)}`;
