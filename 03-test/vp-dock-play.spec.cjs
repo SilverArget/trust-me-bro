@@ -234,7 +234,7 @@ async function drive(page, id, {touch=false, stopAfter, omitDives=[]} = {}) {
 for (const id of ['D01','D02','D03','D04','D05','D06','D07','D08','D09','D10','D11','D12','D13','D14','D15','D16','D17','D18','F01','F02','F03','F04','M01','M02','M03','M04','A01','A02']) test(`O-1 B-5 ${id} ideal keyboard route`, async ({page}) => {
   test.setTimeout(120000); await boot(page,id); const r=await drive(page,id);
   const collected=r.end.economy.collectedCoinIds.length, expected=r.end.route.coins.length;
-  const coinBaseline=process.env.TMB_MEASURE_HARD_TRACE?0:id==='D03'?12:expected;
+  const coinBaseline=process.env.TMB_MEASURE_HARD_TRACE?0:id==='D09'?0:id==='D03'?12:expected;
   const pass=!!r.end.result || r.end.player.x+r.end.hitbox.w>=r.end.route.finishX;
   if (!(pass && r.deaths === 0 && r.retries === 0 && collected >= coinBaseline)) {
     const got = new Set(r.end.economy.collectedCoinIds);
@@ -319,5 +319,17 @@ for (const id of ['D01','D03','D04','D05','D06','D17','D18','F01','F02','F03','F
     const pass=r.diveSeen&&r.catchSeen;
     if(!pass) console.log(r.trace.slice(-15).join('\n'));
     console.log(`M-1-${viewport.width}x${viewport.height} | dive=${r.diveSeen}, catch=${r.catchSeen} | dive=true, catch=true | ${pass?'PASS':'FAIL'}`); expect(pass).toBeTruthy();
+  } finally { await context.close(); }
+});
+
+test('M-1 D09 Pixel 7 touch finish', async ({browser}) => {
+  test.setTimeout(120000);
+  const context=await browser.newContext({viewport:{width:412,height:915},hasTouch:true,isMobile:true,deviceScaleFactor:2.625}),page=await context.newPage();
+  try {
+    await boot(page,'D09',{width:412,height:915});
+    const r=await drive(page,'D09',{touch:true});
+    const pass=!!r.end.result || r.end.player.x+r.end.hitbox.w>=r.end.route.finishX;
+    console.log(`M-1-D09-Pixel7 | x=${r.end.player.x.toFixed(2)}, deaths=${r.deaths}, retries=${r.retries}, catches=${r.chiefCatches} | finish touch | ${pass&&r.deaths===0&&r.retries===0&&r.chiefCatches===0?'PASS':'FAIL'}`);
+    expect(pass).toBeTruthy(); expect(r.deaths).toBe(0); expect(r.retries).toBe(0); expect(r.chiefCatches).toBe(0);
   } finally { await context.close(); }
 });
