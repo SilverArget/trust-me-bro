@@ -994,11 +994,37 @@
   "D18":{"routeId":"D18","worldId":"dock31","version":1,"name":"LAST MANIFEST","movementProfile":"vector-v1","highJumpZones":[],"groundSegments":[{"id":"d18-p1-a01-v-20","x":3479.2,"y":177.75,"w":1086,"h":369.6,"kind":"ground"},{"id":"d18-p1-a01-v-16","x":2852.8,"y":243.75,"w":600,"h":240,"kind":"ground"},{"id":"d18-p1-a01-v-19","x":3283.84,"y":179,"w":96,"h":64.8,"kind":"ground"},{"id":"d18-p1-a01-v-18","x":3102.4,"y":200.63,"w":88.8,"h":43.2,"kind":"ground"},{"id":"d18-p1-a01-v-17","x":2969.2,"y":222.25,"w":79.2,"h":21.6,"kind":"ground"},{"id":"d18-p1-a01-v-14","x":2536,"y":318.25,"w":316.8,"h":240,"kind":"ground"},{"id":"d18-p1-a01-v-10","x":1871.2,"y":413,"w":664.8,"h":240,"kind":"ground"},{"id":"d18-p1-a01-v-13","x":2366.8,"y":391.38,"w":169.2,"h":21.6,"kind":"ground"},{"id":"d18-p1-a01-v-07","x":1291.6,"y":289.38,"w":484.8,"h":240,"kind":"ground"},{"id":"d18-p1-a01-v-06","x":1164.4,"y":219.38,"w":127.2,"h":148.8,"kind":"ground"},{"id":"d18-p1-a01-v-04","x":656.8,"y":337.88,"w":354,"h":240,"kind":"ground"},{"id":"d18-p1-a01-v-02","x":280,"y":336.25,"w":240,"h":240,"kind":"ground"},{"id":"d18-p1-a01-v-01","x":70,"y":408.25,"w":210,"h":240,"kind":"ground"},{"id":"d18-p2-f03-v-23","x":4565.2,"y":177.75,"w":134.46,"h":21.6,"kind":"ground"},{"id":"d18-p2-f03-v-24","x":4699.6,"y":124.88,"w":480,"h":120,"kind":"ground"},{"id":"d18-p2-f03-v-25","x":5185.6,"y":289.25,"w":214.8,"h":196.8,"kind":"ground"},{"id":"d18-p2-f03-v-26","x":5400.4,"y":246.13,"w":600,"h":240,"kind":"ground"},{"id":"d18-p2-f03-v-28","x":5713.6,"y":91,"w":48,"h":49.2,"kind":"ground"},{"id":"d18-p2-f03-v-30","x":6068.8,"y":194.5,"w":331.2,"h":374.4,"kind":"ground"},{"id":"d18-p2-f03-v-31","x":6400,"y":105.75,"w":354,"h":240,"kind":"ground"},{"id":"d18-p2-f03-v-32","x":6634,"y":33.75,"w":120,"h":72,"kind":"ground"},{"id":"d18-p2-f03-down-1","x":6754,"y":78.5,"w":75,"h":44.79,"kind":"ground"},{"id":"d18-p2-f03-down-2","x":6829,"y":123.38,"w":75,"h":44.79,"kind":"ground"},{"id":"d18-p2-f03-down-3","x":6904,"y":168.13,"w":75,"h":44.79,"kind":"ground"},{"id":"d18-p2-f03-down-4","x":6979,"y":212.88,"w":75,"h":44.79,"kind":"ground"},{"id":"d18-p2-f03-down-5","x":7054,"y":257.75,"w":75,"h":44.79,"kind":"ground"},{"id":"d18-p2-f03-v-33","x":7084,"y":302.5,"w":632.4,"h":132,"kind":"ground"},{"id":"d18-p2-f03-down-6","x":7129,"y":302.5,"w":75,"h":44.79,"kind":"ground"},{"id":"d18-p2-f03-v-36","x":7616.8,"y":259.25,"w":88.8,"h":43.2,"kind":"ground"},{"id":"d18-p2-f03-v-37","x":7716.4,"y":194.5,"w":360,"h":240,"kind":"ground"},{"id":"d18-p2-f03-v-39","x":8182,"y":194.5,"w":840,"h":463.2,"kind":"ground"}],"catchableSurfaces":[{"id":"d18-p1-a01-v-02"},{"id":"d18-p1-a01-v-14"},{"id":"d18-p1-a01-v-16"},{"id":"d18-p1-a01-v-17"},{"id":"d18-p1-a01-v-18"},{"id":"d18-p1-a01-v-19"},{"id":"d18-p1-a01-v-20"},{"id":"d18-p1-a01-v-13"},{"id":"d18-p2-f03-v-24"},{"id":"d18-p2-f03-v-26"},{"id":"d18-p2-f03-v-28"},{"id":"d18-p2-f03-v-31"},{"id":"d18-p2-f03-v-32"},{"id":"d18-p2-f03-v-37"}],"diveZones":[{"id":"d18-p1-a01-dz-01","x1":412.96,"x2":513.45,"landX":696.8,"landY":337.88},{"id":"d18-p1-a01-dz-02","x1":871.8,"x2":975.41,"landX":1204.4,"landY":219.38},{"id":"d18-p1-a01-dz-03","x1":2174.02,"x2":2214.02,"landX":2406.8,"landY":391.38},{"id":"d18-p1-a01-dz-04","x1":2558.86,"x2":2678.86,"landX":2892.8,"landY":243.75},{"id":"d18-p2-f03-dz-07","x1":5400.4,"x2":5513.13,"landX":5753.6,"landY":91},{"id":"d18-p2-f03-dz-08","x1":5783.53,"x2":5903.53,"landX":6108.8,"landY":194.5},{"id":"d18-p2-f03-dz-09","x1":6400,"x2":6461.08,"landX":6674,"landY":33.75},{"id":"d18-p2-f03-dz-10","x1":7379,"x2":7454.84,"landX":7656.8,"landY":259.25},{"id":"d18-p2-f03-dz-11","x1":7676.4,"x2":7716.4,"landX":7756.4,"landY":194.5},{"id":"d18-p2-f03-dz-12","x1":7924.4,"x2":8039.42,"landX":8222,"landY":194.5}],"obstacles":[{"id":"d18-p1-a01-slide-01","type":"slide","x":792.8,"w":48,"h":86.4,"baseY":337.88},{"id":"d18-p1-a01-slide-02","type":"slide","x":1712.8,"w":48,"h":86.4,"baseY":289.38},{"id":"d18-p1-a01-slide-04","type":"slide","x":3596.8,"w":48,"h":86.4,"baseY":177.75},{"id":"d18-p1-a01-vault-01","type":"vault","x":3798.4,"w":72,"h":48,"baseY":177.75},{"id":"d18-p1-a01-vault-03","type":"vault","x":1536.4,"w":72,"h":48,"baseY":289.38},{"id":"d18-p1-a01-vault-04","type":"vault","x":340.96,"w":72,"h":48,"baseY":336.25},{"id":"d18-p1-a01-vault-05","type":"vault","x":2006.8,"w":72,"h":48,"baseY":413},{"id":"d18-p2-f03-slide-04","type":"slide","x":7300,"w":48,"h":86.4,"baseY":302.5},{"id":"d18-p2-f03-slide-05","type":"slide","x":7335.84,"w":48,"h":86.4,"baseY":302.5},{"id":"d18-p2-f03-vault-04","type":"vault","x":7852.4,"w":72,"h":48,"baseY":194.5},{"id":"d18-p2-f03-vault-07","type":"vault","x":5612.56,"w":24,"h":48,"baseY":246.13}],"length":9162,"finishX":9022,"checkpoints":[70,2255.5,4511,6766.5],"chief":{"startX":2255.5},"coins":makeCoins("D18", COINS.D18)}
 });
 const D09_OPENING_FIX=ROUTES.D09;
+let jumpHintZoneSets=new Map();
 if(D09_OPENING_FIX){
   D09_OPENING_FIX.highJumpZones=D09_OPENING_FIX.highJumpZones.filter(z=>z.id!=="d09-highjump500-01");
   D09_OPENING_FIX.highJumpZones=D09_OPENING_FIX.highJumpZones.filter(z=>z.id!=="d09-highjump500-03");
   D09_OPENING_FIX.diveZones=D09_OPENING_FIX.diveZones.filter(z=>z.id!=="d09-divingkong-02");
   D09_OPENING_FIX.scriptedMoveZones=D09_OPENING_FIX.scriptedMoveZones.filter(z=>!["d09-highjump500-01","d09-divingkong-02","d09-highjump500-03"].includes(z.id));
+  const JUMP_HINT_ZONE_IDS=Object.freeze({
+    D01:["d01-dz-02"],
+    D02:["d02-dz-01"],
+    D03:["d03-dz-01","d03-dz-02","d03-dz-03"],
+    D04:["d04-dz-01","d04-dz-02","d04-dz-03"],
+    D05:["d05-dz-01","d05-dz-02","d05-dz-03"],
+    D06:["d06-dz-01","d06-dz-02","d06-dz-03","d06-dz-04"],
+    D07:["d07-dz-01","d07-dz-02","d07-hj-01","d07-dz-03","d07-dz-04a","d07-dz-04"],
+    D08:["d08-dz-01","d08-dz-02","d08-dz-03","d08-dz-04","d08-dz-05-assist","d08-dz-05b-assist","d08-dz-05","d08-dz-06-assist","d08-dz-06","d08-dz-07-assist","d08-dz-07"],
+    D09:["d09-highjump500-06","d09-highjump500-11","d09-highjump500-25","d09-highjump500-29","d09-highjump500-33"],
+    D10:["d10-dz-02","d10-dz-03","d10-dz-05","d10-dz-06","d10-dz-06-assist","d10-dz-07","d10-dz-07-assist","d10-dz-08","d10-dz-09","d10-dz-10","d10-dz-11"],
+    D11:["d11-dz-02","d11-dz-03","d11-dz-04","d11-dz-06","d11-dz-07","d11-dz-08","d11-dz-09","d11-dz-10"],
+    D12:["d12-dz-02","d12-dz-03","d12-dz-04","d12-dz-06","d12-dz-07","d12-dz-08","d12-dz-09"],
+    D13:["d13-dz-02","d13-dz-03","d13-dz-04","d13-dz-05","d13-dz-06","d13-dz-07","d13-dz-08","d13-dz-10"],
+    D14:["d14-dz-01","d14-dz-02","d14-dz-03","d14-dz-04","d14-dz-05","d14-dz-06","d14-dz-07"],
+    D15:["d15-dz-02","d15-dz-03","d15-dz-04","d15-dz-05","d15-dz-06","d15-dz-07","d15-dz-08"],
+    D16:["d16-dz-01","d16-dz-02","d16-dz-03","d16-dz-04","d16-dz-05","d16-dz-06","d16-dz-08","d16-dz-09"],
+    D17:["d17-p1-f04-dz-02","d17-p1-f04-dz-03","d17-p2-m03-dz-08","d17-p2-m03-dz-09","d17-p2-m03-dz-10"],
+    D18:["d18-p1-a01-dz-01","d18-p1-a01-dz-02","d18-p1-a01-dz-03","d18-p1-a01-dz-04","d18-p2-f03-dz-07","d18-p2-f03-dz-08","d18-p2-f03-dz-09","d18-p2-f03-dz-10","d18-p2-f03-dz-11","d18-p2-f03-dz-12"],
+    F01:["f01-p1-d07-dz-01","f01-p1-d07-dz-02","f01-p1-d07-dz-03","f01-p2-d13-dz-08","f01-p2-d13-dz-09","f01-p2-d13-dz-10"],
+    F02:["f02-p1-d08-dz-01","f02-p1-d08-dz-02","f02-p1-d08-dz-03","f02-p1-d08-dz-04","f02-p1-d08-dz-05","f02-p1-d08-dz-06","f02-p1-d08-dz-07","f02-p2-d14-dz-05","f02-p2-d14-dz-06","f02-p2-d14-dz-07"],
+    F03:["f03-p2-d10-dz-01","f03-p2-d10-dz-02","f03-p2-d10-dz-03","f03-p3-d12-dz-01","f03-p3-d12-dz-02","f03-p3-d12-dz-03","f03-p3-d12-dz-04"],
+    F04:["f04-p1-d02-dz-01","f04-p3-d01-dz-01"],
+  });
+  jumpHintZoneSets=new Map(Object.entries(JUMP_HINT_ZONE_IDS).map(([id,zones])=>[id,new Set(zones)]));
   const D09_OPENING_POST=D09_OPENING_FIX.groundSegments.find(s=>s.id==="d09-ir-03");
   if(D09_OPENING_POST)D09_OPENING_POST.w=132.96;
   D09_OPENING_FIX.groundSegments.push(
@@ -2975,28 +3001,50 @@ if(D09_OPENING_FIX){
     c.save();c.beginPath();c.rect(x0,y-pad,x1-x0,h+pad*2);c.clip();draw();c.restore();
   }
   function drawVectorJumpPads(c,bounds=null) {
-    const zones = [...(route.diveZones || []), ...(route.highJumpZones || [])];
+    const marked=jumpHintZoneSets.get(routeId);
+    const zones = [
+      ...(route.diveZones || []).map(z=>({...z,hintKind:"dive"})),
+      ...(route.highJumpZones || []).map(z=>({...z,hintKind:"high"})),
+    ].filter(z=>marked?.has(z.id)&&z.x1>=370);
     if (!zones.length) return;
     for (const z of zones) {
-      const x = z.x1, w = Math.max(36, z.x2 - z.x1), y = routeGroundYAt((z.x1 + z.x2) / 2) - 7;
+      const centerX=(z.x1+z.x2)/2;
+      const supports=routeSurfaces(route).filter(s=>s.x<=centerX&&centerX<=s.x+s.w);
+      const x = z.x1, w = Math.max(36, z.x2 - z.x1), surfaceY = supports.length?Math.min(...supports.map(s=>s.y)):routeGroundYAt(centerX);
       if(bounds&&!visibleX(bounds,x,w,80))continue;
+      const px=player?player.x+player.w/2:x-999,approach=1-Math.max(0,Math.min(1,(x-px)/260)),near=px>=x-260&&px<=z.x2+44;
+      const pulse=near?(.84+.16*Math.sin(gameClock*7)):1;
+      const alpha=(near?(.42+.46*approach):.28)*pulse;
+      const stripeY=surfaceY-9,stripeH=8,step=18;
       c.save();
-      c.shadowColor = "#ffb12b";
-      c.shadowBlur = 16;
-      const g = c.createLinearGradient(x, y - 8, x, y + 12);
-      g.addColorStop(0, "rgba(255, 242, 138, .92)");
-      g.addColorStop(.55, "rgba(255, 177, 43, .78)");
-      g.addColorStop(1, "rgba(255, 112, 36, .12)");
-      c.fillStyle = g;
+      c.globalAlpha=alpha;
+      c.fillStyle="#15130d";
+      c.fillRect(x,stripeY,w,stripeH);
       c.beginPath();
-      c.ellipse(x + w / 2, y, w / 2, 9, 0, 0, Math.PI * 2);
-      c.fill();
-      c.shadowBlur = 0;
-      c.strokeStyle = "rgba(255, 250, 184, .95)";
-      c.lineWidth = 2;
-      c.beginPath();
-      c.ellipse(x + w / 2, y, w / 2 - 3, 6, 0, 0, Math.PI * 2);
-      c.stroke();
+      c.rect(x,stripeY,w,stripeH);
+      c.clip();
+      c.fillStyle=near?"#ffe45c":"#d6a921";
+      for(let sx=x-step;sx<x+w+step;sx+=step){
+        c.beginPath();
+        c.moveTo(sx,stripeY+stripeH);
+        c.lineTo(sx+7,stripeY+stripeH);
+        c.lineTo(sx+20,stripeY);
+        c.lineTo(sx+13,stripeY);
+        c.closePath();
+        c.fill();
+      }
+      c.restore();
+      c.save();
+      c.globalAlpha=Math.min(1,alpha+.12);
+      c.fillStyle=near?"#fff0a6":"#dcb53e";
+      c.strokeStyle="rgba(14,16,18,.72)";
+      c.lineWidth=3;
+      c.font="900 22px system-ui";
+      c.textAlign="center";
+      c.textBaseline="alphabetic";
+      const arrow=z.hintKind==="dive"?"\u2198":"\u2197",ax=x+Math.min(w-14,Math.max(14,w*.55)),ay=stripeY-9;
+      c.strokeText(arrow,ax,ay);
+      c.fillText(arrow,ax,ay);
       c.restore();
     }
   }
@@ -3034,7 +3082,6 @@ if(D09_OPENING_FIX){
       else if(magma) drawClippedSurface(c,bounds,()=>magmaSurface(c,g.x,g.y,g.w,g.h,"ground"),g.x,g.y,g.w,g.h,24);
       else engine.drawMetal(g.x,g.y,g.w,g.h)
     }
-    drawVectorJumpPads(c,bounds);
     for(const z of route.wallJumpZones||[]){
       const x=z.x1,w=z.x2-z.x1,y0=z.yTop,y1=z.yBottom;if(bounds&&!visibleX(bounds,x,w,120))continue;
       c.save();c.strokeStyle="#ffd34dcc";c.lineWidth=4;c.setLineDash([10,8]);
@@ -3061,6 +3108,7 @@ if(D09_OPENING_FIX){
         c.fillStyle = "#17252d"; c.font = "900 10px system-ui"; c.fillText("↓", s.x + s.w / 2 - 4, s.y + s.h + 15);
       }
     }
+    drawVectorJumpPads(c,bounds);
     for(const s of route.slopes||[]){if(bounds&&!visibleX(bounds,Math.min(s.x1,s.x2),Math.abs(s.x2-s.x1),100))continue;c.fillStyle="#30383f";c.beginPath();c.moveTo(s.x1,s.y1);c.lineTo(s.x2,s.y2);c.lineTo(s.x2,s.y2+100);c.lineTo(s.x1,s.y1+100);c.closePath();c.fill();c.strokeStyle="#8b98a1";c.lineWidth=3;c.beginPath();c.moveTo(s.x1,s.y1);c.lineTo(s.x2,s.y2);c.stroke()}
     for (const o of route.obstacles)
       if (o.type === "ramp") {
