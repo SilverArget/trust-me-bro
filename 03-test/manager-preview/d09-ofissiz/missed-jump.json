@@ -1,0 +1,7 @@
+[
+  {
+    "status": "RED",
+    "command": "npx.cmd --no-install playwright test --workers=1 --reporter=line 03-test/d09-missed-jump.spec.cjs",
+    "result": "timeout at 120000ms before full table"
+  }
+]
