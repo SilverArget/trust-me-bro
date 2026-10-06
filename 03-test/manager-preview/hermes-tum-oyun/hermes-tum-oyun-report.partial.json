@@ -1,0 +1,31 @@
+{
+  "generatedAt": "2026-10-06T18:45:27.704Z",
+  "rows": [
+    {
+      "route": "D01",
+      "mode": "nojump",
+      "shoes": 12,
+      "reset": 2,
+      "death": 0,
+      "finished": false,
+      "endX": 4230,
+      "endY": -225.25,
+      "finishX": 8235,
+      "state": "normal",
+      "dead": false
+    },
+    {
+      "route": "D01",
+      "mode": "normal",
+      "shoes": 12,
+      "reset": 2,
+      "death": 0,
+      "finished": false,
+      "endX": 4230,
+      "endY": -225.25,
+      "finishX": 8235,
+      "state": "normal",
+      "dead": false
+    }
+  ]
+}
