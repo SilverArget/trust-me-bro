@@ -28,6 +28,7 @@ for (const id of ids) {
       for(const sample of stuns){const last=ranges.at(-1);if(last&&sample[0]-last[1]<=.051)last[1]=sample[0];else ranges.push([sample[0],sample[0]])}
       console.log(`STUN-INFO ${id}: ${ranges.map(([a,b])=>`${a.toFixed(3)}-${b.toFixed(3)}s`).join(', ')}`);
     }
+    if (id === 'D09') record.delay = 2.5;
     out[id] = record;
   }
 }
