@@ -126,6 +126,7 @@ async function drive(page, id, {touch=false, stopAfter, omitDives=[]} = {}) {
         : q.mech === 'tutunma' ? (s.parkour.state === 'catch' || s.parkour.state === 'climb')
         : q.mech === 'slide' ? s.parkour.state === 'slide'
         : q.mech === 'vault' ? (s.parkour.state === 'vault' || (q.wasOnGround && !p.onGround))
+        : q.mech === 'wallJump' ? s.parkour.state === 'wallJump'
         : q.wasOnGround && !p.onGround;
       if (happened) { fired.add(key); pending.delete(key); }
       else if (s.gameClock - q.at >= .6) pending.delete(key);
@@ -178,6 +179,16 @@ async function drive(page, id, {touch=false, stopAfter, omitDives=[]} = {}) {
         const key = `dive-${z.id}`;
         if (!fired.has(key) && !pending.has(key) && coyote && center >= z.x1 && center <= z.x2 && (!lastPress.has(key) || s.gameClock - lastPress.get(key) >= .1)) {
           target = [key, {mech:'dive'}];
+          break;
+        }
+      }
+    }
+    if (!target) {
+      for (const z of s.wallJumpZones || []) {
+        const key = `walljump-${z.id}-${Math.floor(s.gameClock * 2)}`;
+        const feet = p.y + s.hitbox.h;
+        if (center >= z.x1 - 8 && center <= z.x2 + 8 && feet >= z.yTop - 16 && feet <= z.yBottom + 64 && !pending.has(key)) {
+          target = [key, {mech:'wallJump'}];
           break;
         }
       }
