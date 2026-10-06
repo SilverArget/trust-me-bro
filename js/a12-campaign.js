@@ -3119,7 +3119,8 @@ if(D09_OPENING_FIX){
       if (s.parkour === "slide") {
         const suspended=!frozen&&!magma&&route.visualAttachments?.some(a=>a.targetId===s.id&&a.type==="suspend");
         if(suspended){
-          const cx=s.x+s.w/2,beamY=Math.min(s.y-92,78),hookY=s.y+7;
+          const m=c.getTransform(),topWorld=(m.d?(-28-m.f)/m.d:s.y-260);
+          const cx=s.x+s.w/2,beamY=topWorld,hookY=s.y+7;
           c.save();
           c.strokeStyle="#1b2a33";c.lineWidth=8;c.beginPath();c.moveTo(cx-56,beamY);c.lineTo(cx+56,beamY);c.stroke();
           c.strokeStyle="#253a45";c.lineWidth=5;c.beginPath();c.moveTo(cx-46,beamY+7);c.lineTo(cx+46,beamY+7);c.stroke();
