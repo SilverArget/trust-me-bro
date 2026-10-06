@@ -96,14 +96,14 @@ async function drive(page, id, {touch=false, stopAfter, omitDives=[]} = {}) {
       if (['D07','D08','D10'].includes(id) || /^F0[1-4]$/.test(id)||/^M0[34]$/.test(id)) {
         const checkpointX = p.x;
         for (const key of [...fired]) {
-          const ti = /^(?:normal|dive|tutunma)-(\d+)$/.exec(key);
+          const ti = /^(?:normal|dive|high|tutunma)-(\d+)$/.exec(key);
           const oi = /^(?:vault|slide)-(.+)$/.exec(key);
           const x = ti ? (tr.find(t => t.i === Number(ti[1]))?.B.x0 ?? -Infinity)
             : oi ? (s.route.obstacles.find(o => o.id === oi[1])?.x ?? -Infinity) : -Infinity;
           if (x > checkpointX) fired.delete(key);
         }
         for (const [key,q] of [...pending]) {
-          const ti = /^(?:normal|dive|tutunma)-(\d+)$/.exec(key);
+          const ti = /^(?:normal|dive|high|tutunma)-(\d+)$/.exec(key);
           const oi = /^(?:vault|slide)-(.+)$/.exec(key);
           const x = ti ? (tr.find(t => t.i === Number(ti[1]))?.B.x0 ?? -Infinity)
             : oi ? (s.route.obstacles.find(o => o.id === oi[1])?.x ?? -Infinity) : -Infinity;
@@ -122,6 +122,7 @@ async function drive(page, id, {touch=false, stopAfter, omitDives=[]} = {}) {
     previousSample = {x:center, y:centerY, playerX:p.x,chiefX:s.chief?.x,parkour:s.parkour.state,clock:s.gameClock};
     for (const [key, q] of pending) {
       const happened = q.mech === 'dive' ? (!!s.diveRun || s.parkour.state === 'dive')
+        : q.mech === 'high' ? q.wasOnGround && !p.onGround
         : q.mech === 'tutunma' ? (s.parkour.state === 'catch' || s.parkour.state === 'climb')
         : q.mech === 'slide' ? s.parkour.state === 'slide'
         : q.mech === 'vault' ? (s.parkour.state === 'vault' || (q.wasOnGround && !p.onGround))
@@ -152,6 +153,7 @@ async function drive(page, id, {touch=false, stopAfter, omitDives=[]} = {}) {
       if (fired.has(key)) continue;
       const normalLead = /^F0[1-4]$/.test(id) ? 12 : 25;
       if (t.mech === 'normal' && !pending.has(key) && coyote && right >= t.A.x1 - normalLead && right <= t.A.x1 - 2) target = [key, t];
+      if (t.mech === 'high' && !pending.has(key) && coyote && center >= t.x1 && center <= t.x2 && (!lastPress.has(key) || s.gameClock-lastPress.get(key)>=.1)) target = [key, t];
       const d03d04 = id === 'D03' || id === 'D04';
       if (t.mech === 'dive' && !(id === 'D08' && t.i === 31) && !omitDives.includes(t.i) && (id[0]==='A'?p.onGround:(d03d04 || d05d06 ? !s.edgeClimb : p.onGround)) && center >= t.x1 + (id==='D06'?0:4) && center <= t.x2 - (id==='D06'?0:4) && (!['D08','D10'].includes(id) || s.parkour.state !== 'slide') && (!lastPress.has(key) || s.gameClock-lastPress.get(key)>=(id[0]==='A'?.3:(d03d04 || d05d06)?.1:.2))) target=[key,t];
       const d03LowStep = t.mech === 'tutunma' && id === 'D03' && t.B.id === 'd03-v-16';
@@ -332,4 +334,34 @@ test('M-1 D09 Pixel 7 touch finish', async ({browser}) => {
     console.log(`M-1-D09-Pixel7 | x=${r.end.player.x.toFixed(2)}, deaths=${r.deaths}, retries=${r.retries}, catches=${r.chiefCatches} | finish touch | ${pass&&r.deaths===0&&r.retries===0&&r.chiefCatches===0?'PASS':'FAIL'}`);
     expect(pass).toBeTruthy(); expect(r.deaths).toBe(0); expect(r.retries).toBe(0); expect(r.chiefCatches).toBe(0);
   } finally { await context.close(); }
+});
+
+test('D09 has only Vector story_09 movement zones', async ({page}) => {
+  await boot(page, 'D09');
+  const zones = await page.evaluate(() => {
+    const r = __TMB_A12__.routeDefinition('D09');
+    return [...(r.highJumpZones || []), ...(r.diveZones || [])].map(z => ({id:z.id,x1:z.x1,x2:z.x2,landX:z.landX})).sort((a,b) => a.x1 - b.x1);
+  });
+  console.log(`D09-ZONES | ${zones.map(z => `${z.id}:${z.x1}-${z.x2}->${z.landX}`).join(', ')}`);
+  expect(zones).toHaveLength(8);
+  expect(zones.every(z => z.landX > z.x2)).toBeTruthy();
+  expect(zones.some(z => /traversal|assist/.test(z.id))).toBeFalsy();
+  for (let i = 0; i < zones.length - 1; i++) expect(zones[i].x2).toBeLessThanOrEqual(zones[i + 1].x1);
+});
+
+for (const delay of [0, 300, 600]) test(`D09 start jump guard ${delay}ms`, async ({page}) => {
+  await boot(page, 'D09');
+  let minX = Infinity;
+  await page.keyboard.down('ArrowRight');
+  await page.waitForTimeout(delay);
+  await jump(page, false);
+  const started = Date.now();
+  while (Date.now() - started < 3000) {
+    const s = await page.evaluate(() => __TMB_A12__.getState());
+    minX = Math.min(minX, s.player.x);
+    await page.waitForTimeout(16);
+  }
+  await page.keyboard.up('ArrowRight');
+  console.log(`D09-START-GUARD-${delay} | minX=${minX.toFixed(2)} | x>=70 | ${minX >= 70 ? 'PASS' : 'FAIL'}`);
+  expect(minX).toBeGreaterThanOrEqual(70);
 });
