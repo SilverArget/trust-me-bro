@@ -1361,7 +1361,7 @@ if(D09_OPENING_FIX){
   }
   const chiefRouteHashCache=new WeakMap();
   function chiefRouteHash(r=route) {
-    if(!chiefRouteHashCache.has(r))chiefRouteHashCache.set(r,sha256(canonical({groundSegments:r.groundSegments||null,slopes:r.slopes||null,obstacles:r.obstacles||[],diveZones:r.diveZones||[],catchableSurfaces:r.catchableSurfaces||[],highJumpZones:r.highJumpZones||[],...(r.hermesLaunchZones?.length?{hermesLaunchZones:r.hermesLaunchZones}:{}),...(r.wallJumpZones?.length?{wallJumpZones:r.wallJumpZones}:{}),checkpoints:r.checkpoints||[],finishX:r.finishX})));
+    if(!chiefRouteHashCache.has(r))chiefRouteHashCache.set(r,sha256(canonical({groundSegments:r.groundSegments||null,slopes:r.slopes||null,obstacles:r.obstacles||[],diveZones:r.diveZones||[],catchableSurfaces:r.catchableSurfaces||[],highJumpZones:r.highJumpZones||[],...(r.wallJumpZones?.length?{wallJumpZones:r.wallJumpZones}:{}),checkpoints:r.checkpoints||[],finishX:r.finishX})));
     return chiefRouteHashCache.get(r);
   }
   function chiefPathFor(r=route) {
