@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-06T12:10:36.703Z",
+  "generatedAt": "2026-10-06T13:32:42.636Z",
   "routes": {
     "D01": [
       {
@@ -476,78 +476,6 @@
         "marked": true,
         "endX": 6073.6,
         "endY": -15.38,
-        "state": "normal"
-      }
-    ],
-    "D09": [
-      {
-        "id": "d09-highjump500-06",
-        "type": "high",
-        "x1": 950.64,
-        "x2": 1010.64,
-        "landX": 1281.84,
-        "startX": 860.64,
-        "targetX": 1361.84,
-        "reason": "stuck-before-next-surface",
-        "marked": true,
-        "endX": 1225.84,
-        "endY": 303.13,
-        "state": "normal"
-      },
-      {
-        "id": "d09-highjump500-11",
-        "type": "high",
-        "x1": 1695.84,
-        "x2": 1755.84,
-        "landX": 1962.64,
-        "startX": 1605.84,
-        "targetX": 2042.64,
-        "reason": "stuck-before-next-surface",
-        "marked": true,
-        "endX": 1481.44,
-        "endY": 185.5,
-        "state": "normal"
-      },
-      {
-        "id": "d09-highjump500-25",
-        "type": "high",
-        "x1": 4418.4,
-        "x2": 4478.4,
-        "landX": 4516.24,
-        "startX": 4328.4,
-        "targetX": 4698.4,
-        "reason": "stuck-before-next-surface",
-        "marked": true,
-        "endX": 4444.24,
-        "endY": 393.75,
-        "state": "normal"
-      },
-      {
-        "id": "d09-highjump500-29",
-        "type": "high",
-        "x1": 4988,
-        "x2": 5060,
-        "landX": 5515.84,
-        "startX": 4898,
-        "targetX": 5595.84,
-        "reason": "stuck-before-next-surface",
-        "marked": true,
-        "endX": 4998,
-        "endY": 350.63,
-        "state": "normal"
-      },
-      {
-        "id": "d09-highjump500-33",
-        "type": "high",
-        "x1": 5265.84,
-        "x2": 5325.84,
-        "landX": 5515.84,
-        "startX": 5175.84,
-        "targetX": 5595.84,
-        "reason": "stuck-before-next-surface",
-        "marked": true,
-        "endX": 5172.64,
-        "endY": 299,
         "state": "normal"
       }
     ],
@@ -2102,6 +2030,78 @@
         "endY": 128.63,
         "state": "normal"
       }
+    ],
+    "D09": [
+      {
+        "id": "d09-highjump500-06",
+        "type": "high",
+        "x1": 950.64,
+        "x2": 1010.64,
+        "landX": 1281.84,
+        "startX": 860.64,
+        "targetX": 1329.84,
+        "reason": "stuck-before-next-surface",
+        "marked": true,
+        "endX": 1225.84,
+        "endY": 303.13,
+        "state": "normal"
+      },
+      {
+        "id": "d09-highjump500-11",
+        "type": "high",
+        "x1": 1695.84,
+        "x2": 1755.84,
+        "landX": 1962.64,
+        "startX": 1605.84,
+        "targetX": 2010.64,
+        "reason": "stuck-before-next-surface",
+        "marked": true,
+        "endX": 1481.44,
+        "endY": 185.5,
+        "state": "normal"
+      },
+      {
+        "id": "d09-highjump500-25",
+        "type": "high",
+        "x1": 4418.4,
+        "x2": 4478.4,
+        "landX": 4516.24,
+        "startX": 4328.4,
+        "targetX": 4638.4,
+        "reason": "stuck-before-next-surface",
+        "marked": true,
+        "endX": 4444.24,
+        "endY": 393.75,
+        "state": "normal"
+      },
+      {
+        "id": "d09-highjump500-29",
+        "type": "high",
+        "x1": 4988,
+        "x2": 5060,
+        "landX": 5515.84,
+        "startX": 4898,
+        "targetX": 5563.84,
+        "reason": "stuck-before-next-surface",
+        "marked": true,
+        "endX": 4998,
+        "endY": 350.63,
+        "state": "normal"
+      },
+      {
+        "id": "d09-highjump500-33",
+        "type": "high",
+        "x1": 5265.84,
+        "x2": 5325.84,
+        "landX": 5515.84,
+        "startX": 5175.84,
+        "targetX": 5563.84,
+        "reason": "stuck-before-next-surface",
+        "marked": true,
+        "endX": 5172.64,
+        "endY": 299,
+        "state": "normal"
+      }
     ]
   },
   "counts": {
@@ -2136,10 +2136,6 @@
     "D08": {
       "before": 11,
       "after": 11
-    },
-    "D09": {
-      "before": 5,
-      "after": 5
     },
     "D10": {
       "before": 13,
@@ -2192,6 +2188,10 @@
     "F04": {
       "before": 2,
       "after": 2
+    },
+    "D09": {
+      "before": 5,
+      "after": 5
     }
   }
 }

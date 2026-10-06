@@ -271,7 +271,23 @@ const route = {
   coins: [],
   chief: { startX: 2176 },
 };
+route.groundSegments = route.groundSegments.filter(s => s.id !== "d09-ir-02" && s.id !== "d09-ir-41");
+const d09MergedBlock = route.groundSegments.find(s => s.id === "d09-ir-40");
+if (d09MergedBlock) d09MergedBlock.w = 300;
+route.visualSupports = [
+  "d09-ir-01", "d09-ir-03", "d09-ir-04", "d09-ir-05",
+  "d09-ir-25", "d09-ir-26", "d09-ir-30", "d09-ir-31",
+  "d09-ir-32", "d09-ir-37",
+].map(id => ({ id, type: "stack-to-ground" }));
+route.visualAttachments = route.obstacles
+  .filter(o => o.type === "slide")
+  .map(o => ({ targetId: o.id, type: "suspend" }));
 const coins = coinsForRoute(groundSegments, route.finishX);
+const d09Coin11 = coins.find(c => c.n === 10);
+if (d09Coin11) {
+  d09Coin11.x = 6460;
+  d09Coin11.y = 379;
+}
 
 const d09 = extractRouteObject(source, "D09");
 const routeNext = `${source.slice(0, d09.open)}${encode(route)}${source.slice(d09.close)}`;
