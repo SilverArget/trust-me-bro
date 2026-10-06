@@ -1027,6 +1027,8 @@ if(D09_OPENING_FIX){
   jumpHintZoneSets=new Map(Object.entries(JUMP_HINT_ZONE_IDS).map(([id,zones])=>[id,new Set(zones)]));
   const D09_OPENING_POST=D09_OPENING_FIX.groundSegments.find(s=>s.id==="d09-ir-03");
   if(D09_OPENING_POST)D09_OPENING_POST.w=132.96;
+  const D09_G2_BLOCK=D09_OPENING_FIX.groundSegments.find(s=>s.id==="d09-ir-40");
+  if(D09_G2_BLOCK)D09_G2_BLOCK.w=320;
   D09_OPENING_FIX.groundSegments.push(
     {id:"d09-start-catch-floor",x:314.16,y:151.875,w:205.44,h:360,kind:"ground",role:"opening-fallback"}
   );
@@ -1407,9 +1409,10 @@ if(D09_OPENING_FIX){
     for (const o of r.obstacles) {
       const baseY = o.baseY ?? GROUND;
       if (o.type === "vault")
-        out.push({ x: o.x, y: baseY - o.h, w: o.w, h: o.h, parkour: "vault" });
+        out.push({ id: o.id, x: o.x, y: baseY - o.h, w: o.w, h: o.h, parkour: "vault" });
       if (o.type === "slide")
         out.push({
+          id: o.id,
           x: o.x,
           y: baseY - o.h - 32,
           w: o.w,
@@ -3114,12 +3117,13 @@ if(D09_OPENING_FIX){
         c.beginPath(); c.moveTo(s.x + 5, s.y + 9); c.lineTo(s.x + s.w - 5, s.y + s.h - 5); c.stroke();
       }
       if (s.parkour === "slide") {
-        if(!frozen&&!magma&&route.visualAttachments?.some(a=>a.targetId===s.id&&a.type==="suspend")){
-          const cx=s.x+s.w/2,beamY=Math.min(s.y-84,80),hookY=s.y+6;
+        const suspended=!frozen&&!magma&&route.visualAttachments?.some(a=>a.targetId===s.id&&a.type==="suspend");
+        if(suspended){
+          const cx=s.x+s.w/2,beamY=Math.min(s.y-92,78),hookY=s.y+7;
           c.save();
-          c.strokeStyle="#1d3946";c.lineWidth=7;c.beginPath();c.moveTo(cx-44,beamY);c.lineTo(cx+44,beamY);c.stroke();
-          c.strokeStyle="#e3b93e";c.lineWidth=3;c.beginPath();c.moveTo(cx-40,beamY-5);c.lineTo(cx+40,beamY-5);c.stroke();
-          c.strokeStyle="#c7d8df";c.lineWidth=3;c.beginPath();c.moveTo(cx-14,beamY);c.lineTo(cx-14,hookY);c.moveTo(cx+14,beamY);c.lineTo(cx+14,hookY);c.stroke();
+          c.strokeStyle="#1b2a33";c.lineWidth=8;c.beginPath();c.moveTo(cx-56,beamY);c.lineTo(cx+56,beamY);c.stroke();
+          c.strokeStyle="#253a45";c.lineWidth=5;c.beginPath();c.moveTo(cx-46,beamY+7);c.lineTo(cx+46,beamY+7);c.stroke();
+          c.strokeStyle="#1b2a33";c.lineWidth=4;c.beginPath();c.moveTo(s.x+s.w*.25,beamY+2);c.lineTo(s.x+s.w*.25,hookY);c.moveTo(s.x+s.w*.75,beamY+2);c.lineTo(s.x+s.w*.75,hookY);c.stroke();
           c.fillStyle="#203846";c.fillRect(cx-53,beamY-10,106,10);
           c.fillStyle="#f0c544";c.fillRect(cx-46,beamY-15,92,5);
           c.restore();

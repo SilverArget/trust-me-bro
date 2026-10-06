@@ -65,6 +65,8 @@ function applyRuntimeRouteFixes(routes) {
   d09.scriptedMoveZones = (d09.scriptedMoveZones || []).filter(z => !["d09-highjump500-01", "d09-divingkong-02", "d09-highjump500-03"].includes(z.id));
   const openingPost = d09.groundSegments?.find(s => s.id === "d09-ir-03");
   if (openingPost) openingPost.w = 132.96;
+  const g2Block = d09.groundSegments?.find(s => s.id === "d09-ir-40");
+  if (g2Block) g2Block.w = 320;
   if (!d09.groundSegments?.some(s => s.id === "d09-start-catch-floor")) {
     d09.groundSegments.push({ id: "d09-start-catch-floor", x: 314.16, y: 151.875, w: 205.44, h: 360, kind: "ground", role: "opening-fallback" });
   }
@@ -121,19 +123,19 @@ function coinIssue(coin, route, solids) {
 }
 
 function narrowGaps(solids) {
-  const rows = new Map();
-  for (const s of solids) {
-    const key = Math.round(s.y * 8) / 8;
-    if (!rows.has(key)) rows.set(key, []);
-    rows.get(key).push(s);
-  }
   const gaps = [];
-  for (const row of rows.values()) {
-    row.sort((a, b) => a.x - b.x);
-    for (let i = 0; i < row.length - 1; i++) {
-      const left = row[i], right = row[i + 1];
+  const byX = [...solids].sort((a, b) => a.x - b.x || a.y - b.y);
+  const seen = new Set();
+  for (const left of byX) {
+    for (const right of byX) {
+      if (right === left || Math.abs(right.y - left.y) > 12) continue;
       const gap = right.x - (left.x + left.w);
-      if (gap > 0.5 && gap < MIN_MEANINGFUL_GAP) gaps.push({ left, right, gap });
+      if (gap <= 0.5 || gap >= MIN_MEANINGFUL_GAP) continue;
+      const key = `${left.id}/${right.id}`;
+      if (!seen.has(key)) {
+        seen.add(key);
+        gaps.push({ left, right, gap });
+      }
     }
   }
   return gaps;

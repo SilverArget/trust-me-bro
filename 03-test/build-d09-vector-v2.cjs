@@ -273,7 +273,7 @@ const route = {
 };
 route.groundSegments = route.groundSegments.filter(s => s.id !== "d09-ir-02" && s.id !== "d09-ir-41");
 const d09MergedBlock = route.groundSegments.find(s => s.id === "d09-ir-40");
-if (d09MergedBlock) d09MergedBlock.w = 300;
+if (d09MergedBlock) d09MergedBlock.w = 320;
 route.visualSupports = [
   "d09-ir-01", "d09-ir-03", "d09-ir-04", "d09-ir-05",
   "d09-ir-25", "d09-ir-26", "d09-ir-30", "d09-ir-31",

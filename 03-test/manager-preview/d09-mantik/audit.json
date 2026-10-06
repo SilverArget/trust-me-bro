@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-06T13:36:34.068Z",
+  "generatedAt": "2026-10-06T13:59:08.320Z",
   "summary": {
     "D01": {
       "issues": 28,
@@ -15,12 +15,14 @@
       "g2": []
     },
     "D03": {
-      "issues": 16,
+      "issues": 17,
       "g1": [
         "d03-slide-01",
         "d03-slide-02"
       ],
-      "g2": []
+      "g2": [
+        "d03-v-19/d03-slope-3"
+      ]
     },
     "D04": {
       "issues": 60,
@@ -570,6 +572,12 @@
         "route": "D03",
         "issue": "solid surface unsupported to ground",
         "decision": "fix: remove unused floating plate"
+      },
+      {
+        "id": "d03-v-19/d03-slope-3",
+        "route": "D03",
+        "issue": "same-height narrow gap 17.38px",
+        "decision": "fix: merge or widen; move trapped coin if present"
       },
       {
         "id": "D03-c03",
