@@ -2403,7 +2403,7 @@
   }
   function installUI() {
     const style = document.createElement("style");
-    style.textContent = `#a12Actions{position:fixed;z-index:31;left:50%;bottom:max(86px,calc(env(safe-area-inset-bottom) + 82px));transform:translateX(-50%);display:flex;gap:9px}#a12Actions[hidden]{display:none!important}#a12Actions button,#a12Shop button,#a12Language{border:1px solid #ffffff44;border-radius:12px;background:#153246;color:#fff;padding:11px 16px;font:900 13px system-ui}#a12LanguageWrap{display:flex;align-items:center;justify-content:center;gap:10px;min-height:44px;margin:8px auto 0;color:#fff;font:800 13px system-ui}#a12Language{min-height:44px;margin:0;padding:8px 14px}#a12Shop{position:fixed;inset:0;z-index:45;display:none;background:#06121bf2;color:#fff;padding:clamp(15px,4vw,38px)}#a12Shop.show{display:grid;grid-template-columns:minmax(230px,42%) 1fr;gap:25px}#a12Preview{display:grid;place-items:center;background:#102635;border-radius:18px;min-height:280px}#a12Preview canvas{width:180px;height:240px}#a12Products{overflow:auto;padding-bottom:48px}#a12Products article{padding:17px;margin:12px 0;background:#132b39;border:1px solid #ffffff30;border-radius:14px}.runnerSymbol{font-size:25px;display:block}.characterChoice[data-character="0"]{box-shadow:inset 0 0 0 2px #3aa2ff}.characterChoice[data-character="1"]{box-shadow:inset 0 0 0 2px #ff6aac}@media(max-width:540px) and (orientation:portrait){#a12Shop.show{grid-template-columns:1fr;grid-template-rows:35vh 1fr}#a12Preview{min-height:0}#a12Preview canvas{width:120px;height:160px}}`;
+    style.textContent = `#a12Actions{position:fixed;z-index:31;left:50%;bottom:max(86px,calc(env(safe-area-inset-bottom) + 82px));transform:translateX(-50%);display:flex;gap:9px}#a12Actions[hidden]{display:none!important}#a12Actions button,#a12Shop button,#a12Language{border:1px solid #ffffff44;border-radius:12px;background:#153246;color:#fff;padding:11px 16px;font:900 13px system-ui}#a12LanguageWrap{display:flex;align-items:center;justify-content:center;gap:10px;min-height:44px;margin:8px auto 0;color:#fff;font:800 13px system-ui}#a12Language{min-height:44px;margin:0;padding:8px 14px}#a12Shop{position:fixed;inset:0;z-index:45;display:none;background:#06121bf2;color:#fff;padding:clamp(15px,4vw,38px)}#a12Shop.show{display:grid;grid-template-columns:minmax(230px,42%) 1fr;gap:25px}#a12Preview{display:grid;place-items:center;background:#102635;border-radius:18px;min-height:280px}#a12Preview canvas{width:180px;height:240px}#a12Products{overflow:auto;padding-bottom:48px}#a12Products article{padding:17px;margin:12px 0;background:#132b39;border:1px solid #ffffff30;border-radius:14px}.runnerSymbol{font-size:15px;line-height:1;display:block;margin-bottom:2px;color:#dcecf5}.characterChoice[data-character="0"]{box-shadow:inset 0 0 0 2px #3aa2ff}.characterChoice[data-character="1"]{box-shadow:inset 0 0 0 2px #ff6aac}@media(max-width:540px) and (orientation:portrait){#a12Shop.show{grid-template-columns:1fr;grid-template-rows:35vh 1fr}#a12Preview{min-height:0}#a12Preview canvas{width:120px;height:160px}}`;
     style.textContent += `#a12Shop{box-sizing:border-box}#a12Shop.show{grid-template-columns:minmax(230px,40%) minmax(0,1fr);grid-template-rows:minmax(0,1fr);gap:18px}#a12Preview{display:flex;flex-direction:column;justify-content:center;gap:12px;min-width:0;min-height:0;overflow:hidden}#a12Preview canvas{width:min(100%,480px);height:auto;max-height:65%;aspect-ratio:3/2;object-fit:contain;image-rendering:pixelated}#a12WorldWarning{margin:0;padding:7px 10px;border:1px solid #ffcf5c88;border-radius:10px;background:#442b12;color:#ffe29a;text-align:center;font:900 12px/1.2 system-ui}#a12WorldWarning[hidden]{display:none}#a12Preview .previewControls{display:flex;flex-wrap:wrap;justify-content:center;gap:6px}#a12Preview button{padding:8px 10px}#a12Preview button[aria-pressed="true"]{background:#286650;border-color:#8ff1c8}#a12Products{min-height:0;min-width:0;overscroll-behavior:contain}@media(max-width:540px) and (orientation:portrait){#a12Shop.show{grid-template-columns:minmax(0,1fr);grid-template-rows:minmax(230px,40%) minmax(0,1fr);gap:12px}#a12Preview{gap:5px}#a12Preview canvas{max-height:62%;width:auto;max-width:100%}}`;
     style.textContent += `@media(orientation:landscape){#a12Shop{padding:max(12px,var(--safe-top)) max(14px,var(--safe-right)) max(12px,var(--safe-bottom)) max(14px,var(--safe-left))}#a12Shop.show{grid-template-columns:minmax(230px,38%) minmax(0,1fr);gap:14px}#a12Preview{min-height:35vh}#a12Preview canvas{max-height:72%}#a12Products{display:grid;grid-template-rows:auto auto minmax(0,1fr) auto;overflow:hidden;padding:0}#a12ShopTop{display:flex;align-items:center;justify-content:space-between;gap:8px}#a12ShopTop h2{font:900 clamp(15px,2.4vw,22px)/1 system-ui;margin:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}#a12ShopTop [data-close]{min-width:44px;min-height:44px;padding:0}#a12Products .a12Tabs{display:flex;gap:7px;margin:5px 0}#a12Products [data-list]{display:grid;grid-template-columns:repeat(4,minmax(96px,1fr));gap:8px;overflow-y:auto;min-height:0;align-content:start}#a12Products article{position:relative;min-width:96px;min-height:102px;margin:0;padding:10px 8px 54px;box-sizing:border-box}#a12Products article h3{margin:0;font:850 12px/1.15 system-ui}#a12Products article [data-action]{position:absolute;left:8px;right:8px;bottom:6px;min-width:0;width:calc(100% - 16px);height:44px;padding:4px 6px;border-radius:999px;background:#07131d;color:#ffd45c;border:1px solid #ffd45c88;font:900 11px/1.05 system-ui;box-shadow:0 2px 0 #0008;text-shadow:none}#a12Products article [data-action]:not(:disabled):active{transform:translateY(1px);box-shadow:0 1px 0 #0008}#a12Products article [data-action]:disabled{opacity:.55;color:#d9e2e8;border-color:#ffffff35;box-shadow:none}#a12ShopBottom{display:flex;gap:8px;padding-top:7px}#a12ShopBottom button{min-height:44px;flex:1}#a12Products [data-save]{display:none}}`;
     style.textContent += `@media(orientation:landscape){#a12Products [data-list][hidden]{display:none!important}#a12Products article [data-action]:disabled{opacity:1;color:#82919a;background:#0b171e;border-color:#52616a;box-shadow:none}}`;
@@ -2475,6 +2475,8 @@
       el.lastChild.textContent = i ? t("female") : t("male");
       el.addEventListener("click", () => selectRunner(i ? "female" : "male"));
     });
+    drawCharacterChoicePortraits();
+    runnerAtlasReady.then(drawCharacterChoicePortraits);
     const syncRunnerChoice=()=>choices.forEach((el,i)=>el.setAttribute("aria-pressed",String((i?"female":"male")===profile.runnerId)));
     syncRunnerChoice();
     document.getElementById("characterShop")?.addEventListener("click",()=>{shopReturnToCharacter=true;openShop();});
@@ -2772,6 +2774,7 @@
       purchaseBusy = false;
       if(ok){sfx("equip");emitGame("outfit_worn",{itemId:id,runnerId});}
       renderShop();
+      drawCharacterChoicePortraits();
       return ok;
     }
     const item = OUTFITS[id];
@@ -2791,6 +2794,7 @@
     });
     if(ok){sfx("equip");emitGame("outfit_worn",{itemId:id,runnerId});}
     renderShop();
+    drawCharacterChoicePortraits();
     return ok;
   }
   function debugState() {
@@ -3220,6 +3224,22 @@
     // Existing simulation clock and velocity; render does not advance a clock.
     const frame=motion==="jump"?Math.max(0,Math.min(7,Math.floor((player.vy+560)/140))):Math.floor(gameClock*(motion==="run"?16:8))%8;
     return {motion,frame};
+  }
+  function drawCharacterChoicePortraits(now=performance.now()) {
+    document.querySelectorAll(".characterChoice").forEach((el, i) => {
+      if (i > 1 || el.hidden) return;
+      const q = el.querySelector("canvas.portrait"), c = q?.getContext("2d");
+      if (!c) return;
+      const runner = i ? "female" : "male";
+      const outfit = profile.equippedOutfitByRunner[runner] || "default";
+      const frame = Math.floor(now / 160) % 8;
+      c.clearRect(0, 0, q.width, q.height);
+      c.save();
+      c.translate(q.width / 2, q.height - 18);
+      c.scale(3, 3);
+      drawRunnerAtlas(c, runner, outfit, { motion: "idle", frame }, 0, 0, 1);
+      c.restore();
+    });
   }
   function drawRunnerAtlas(c, runner, outfit, pose, x, feet, facing=1, omit=null) {
     c.save();c.translate(x,feet);c.scale(facing,1);c.imageSmoothingEnabled=false;
