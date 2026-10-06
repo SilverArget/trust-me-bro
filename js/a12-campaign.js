@@ -1014,7 +1014,7 @@ if(D09_OPENING_FIX){
     D05:["d05-dz-01","d05-dz-02","d05-dz-03"],
     D06:["d06-dz-01","d06-dz-02","d06-dz-03","d06-dz-04"],
     D07:["d07-dz-01","d07-dz-02","d07-hj-01","d07-dz-03","d07-dz-04a","d07-dz-04"],
-    D08:["d08-dz-01","d08-dz-02","d08-dz-03","d08-dz-04","d08-dz-05-assist","d08-dz-05b-assist","d08-dz-05","d08-dz-06","d08-dz-07-assist","d08-dz-07"],
+    D08:["d08-dz-01","d08-dz-02","d08-dz-03","d08-dz-04","d08-dz-05-assist","d08-dz-05b-assist","d08-dz-05","d08-dz-06-assist","d08-dz-06","d08-dz-07-assist","d08-dz-07"],
     D09:["d09-highjump500-06","d09-highjump500-11","d09-highjump500-25","d09-highjump500-29","d09-highjump500-33"],
     D10:["d10-dz-01","d10-dz-02","d10-dz-03","d10-dz-05","d10-dz-06","d10-dz-06-assist","d10-dz-07","d10-dz-07-assist","d10-dz-08","d10-dz-09","d10-dz-10","d10-dz-11"],
     D11:["d11-dz-01","d11-dz-02","d11-dz-03","d11-dz-04","d11-dz-06","d11-dz-07","d11-dz-08","d11-dz-09","d11-dz-10"],
@@ -1022,7 +1022,7 @@ if(D09_OPENING_FIX){
     D13:["d13-dz-01","d13-dz-02","d13-dz-03","d13-dz-04","d13-dz-05","d13-dz-06","d13-dz-07","d13-dz-08","d13-dz-10"],
     D14:["d14-dz-01","d14-dz-02","d14-dz-03","d14-dz-04","d14-dz-05","d14-dz-06","d14-dz-07"],
     D15:["d15-dz-01","d15-dz-02","d15-dz-03","d15-dz-04","d15-dz-05","d15-dz-06","d15-dz-07","d15-dz-08"],
-    D16:["d16-dz-01","d16-dz-02","d16-dz-03","d16-dz-04","d16-dz-05","d16-dz-06","d16-dz-08"],
+    D16:["d16-dz-01","d16-dz-02","d16-dz-03","d16-dz-04","d16-dz-05","d16-dz-06","d16-dz-08","d16-dz-09"],
     D17:["d17-p1-f04-dz-01","d17-p1-f04-dz-02","d17-p1-f04-dz-03","d17-p2-m03-dz-08","d17-p2-m03-dz-09","d17-p2-m03-dz-10"],
     D18:["d18-p1-a01-dz-01","d18-p1-a01-dz-02","d18-p1-a01-dz-03","d18-p1-a01-dz-04","d18-p2-f03-dz-07","d18-p2-f03-dz-08","d18-p2-f03-dz-09","d18-p2-f03-dz-10","d18-p2-f03-dz-11","d18-p2-f03-dz-12"],
     F01:["f01-p1-d07-dz-01","f01-p1-d07-dz-02","f01-p1-d07-dz-03","f01-p2-d13-dz-08","f01-p2-d13-dz-09","f01-p2-d13-dz-10"],
@@ -1864,7 +1864,7 @@ if(D09_OPENING_FIX){
     return !!started;
   }
   function tryHermesLaunch(){
-    if(engine.parkour.state!=="normal"||edgeClimb||wallJumpRun||diveRun||jumpRun)return false;
+    if(keys.jump||engine.parkour.state!=="normal"||edgeClimb||wallJumpRun||diveRun||jumpRun)return false;
     const center=player.x+player.w/2,z=(route.hermesLaunchZones||[]).find(v=>center>=v.x1&&center<=v.x2);
     if(!z)return false;
     return launchHermesArc(z);
@@ -2243,9 +2243,10 @@ if(D09_OPENING_FIX){
         saveRun();
       }
     collectPhysical();
-    if (route.movementProfile==="vector-v1"
+    const fallingOut=route.movementProfile==="vector-v1"
       ? player.y > deepestGroundYAt(player.x+player.w/2) + 120
-      : player.y > Math.max(H + 120,routeGroundYAt(player.x+player.w/2)+120)) retry(false);
+      : player.y > Math.max(H + 120,routeGroundYAt(player.x+player.w/2)+120);
+    if(fallingOut&&!jumpRun?.hermes)retry(false);
     if (player.x >= route.finishX) {
       player.x = route.finishX;
       player.vx = 0;

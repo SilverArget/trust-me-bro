@@ -43,7 +43,18 @@ async function boot(page, viewport = { width: 1280, height: 720 }) {
   await page.evaluate(async () => {
     await __TMB_A12__.setWallet(2000);
     await __TMB_A12__.purchaseWorld('frozen');
+    const p = __TMB_A12__.getState().profile;
+    p.selectedWorldId = 'frozen';
+    p.ownedWorldIds = Array.from(new Set([...(p.ownedWorldIds || []), 'frozen']));
+    for (const id of ['F01', 'F02', 'F03']) {
+      p.progressByRoute[id] = { ...(p.progressByRoute[id] || {}), completed: true, stars: 3 };
+    }
+    localStorage.setItem('trust_me_bro_campaign_profile_v1', JSON.stringify(p));
   });
+  await page.reload();
+  await page.waitForFunction(() => window.__TMB_A12__);
+  const choiceAfterReload = page.locator('.characterChoice:visible').first();
+  if (await choiceAfterReload.count()) await choiceAfterReload.click();
 }
 
 async function startRoute(page, id) {
@@ -72,7 +83,7 @@ async function captureApproach(page, id, z, name) {
   await page.evaluate(x => {
     __tmbSegmentStart(Math.max(70, x));
     __TMB_A12__.disableChief();
-  }, z.x1 - 165);
+  }, z.x1 - 95);
   await page.waitForTimeout(120);
   await page.screenshot({ path: path.join(outDir, name) });
 }
