@@ -1323,8 +1323,24 @@
     if(c.matchMode==="x"){best=start;bestD=Infinity;for(let i=start;i<=end;i++){const d=Math.abs(a[i][1]-player.x);if(d<bestD){bestD=d;best=i}}}
     c.playerIndex=Math.max(start,best);c.playerT=Math.max(c.playerT,a[c.playerIndex][0]);
   }
-  const CHIEF_ENTRY_X=-64;
-  function resetRecordedChief(x){if(!campaignChief?.path)return;const t=chiefTimeAtX(campaignChief.path,x);campaignChief.chiefT=t-campaignChief.delay;campaignChief.playerT=t;campaignChief.playerIndex=Math.max(0,campaignChief.path.samples.findIndex(v=>v[0]>=t));campaignChief.matchMode="xy";const q=chiefSample(campaignChief.path,campaignChief.chiefT);campaignChief.x=campaignChief.chiefT<0?CHIEF_ENTRY_X:q.x;campaignChief.y=q.y;campaignChief.pose=q.pose;campaignChief.facing=q.facing}
+  const CHIEF_ENTRY_X=-64,CHIEF_LADDER_FRACTION=.15,CHIEF_LADDER_HEIGHT=132,CHIEF_LADDER_CLIMB_T=.85;
+  function chiefLadderEntry(){
+    const x=Math.max(70,Math.min(route.finishX??route.length,(route.length||route.finishX||0)*CHIEF_LADDER_FRACTION));
+    const topY=routeGroundYAt(x);
+    return {x,topY,bottomY:topY+CHIEF_LADDER_HEIGHT,height:CHIEF_LADDER_HEIGHT,duration:CHIEF_LADDER_CLIMB_T};
+  }
+  function parkChiefAtLadder(c){
+    if(!c?.path)return;
+    c.entry=c.entry||chiefLadderEntry();c.active=false;c.entryPhase="waiting";c.climbElapsed=0;
+    c.playerT=chiefTimeAtX(c.path,70);c.playerIndex=0;c.matchMode="xy";c.chiefT=-c.delay;
+    c.x=c.entry.x-c.w*.5;c.y=c.entry.bottomY-c.h;c.pose="climb";c.facing=1;
+  }
+  function finishChiefLadder(c){
+    c.entryPhase="running";c.climbElapsed=c.entry.duration;matchPlayerToChiefPath(c);c.chiefT=c.playerT-c.delay;
+    const q=chiefSample(c.path,c.chiefT);c.x=q.x;c.y=q.y;c.pose=q.pose;c.facing=q.facing;
+    emitGame("chief_chase_started",{routeId,entry:"ladder"});
+  }
+  function resetRecordedChief(x){if(!campaignChief?.path)return;if(campaignChief.entry&&x<campaignChief.entry.x){parkChiefAtLadder(campaignChief);return}const t=chiefTimeAtX(campaignChief.path,x);campaignChief.active=true;campaignChief.entryPhase="running";campaignChief.climbElapsed=campaignChief.entry?.duration||0;campaignChief.playerT=t;campaignChief.chiefT=t-campaignChief.delay;campaignChief.playerIndex=Math.max(0,campaignChief.path.samples.findIndex(v=>v[0]>=t));campaignChief.matchMode="xy";const q=chiefSample(campaignChief.path,campaignChief.chiefT);campaignChief.x=campaignChief.chiefT<0?CHIEF_ENTRY_X:q.x;campaignChief.y=q.y;campaignChief.pose=q.pose;campaignChief.facing=q.facing}
   function obstacleSeed(r=route) {
     const key=`${r.routeId}@${r.version}`;
     if(!obstacleSeedCache.has(key))obstacleSeedCache.set(key,sha256(canonical({length:r.length,finishX:r.finishX,checkpoints:r.checkpoints,obstacles:r.obstacles,groundSegments:r.groundSegments||null,voidEdges:r.voidEdges||null})));
@@ -1497,8 +1513,9 @@
     document.dispatchEvent(new CustomEvent("tmb:campaign-audio", { detail: { worldId: route.worldId, routeId } }));
     for (const p of movingPlatforms) sfx(p.type === "crane" ? "crane" : "pallet");
     const recordedChiefPath=chiefPathFor(route);
-    campaignChief = recordedChiefPath ? {active:true,x:CHIEF_ENTRY_X,y:recordedChiefPath.samples[0][2],w:32,h:48,catches:0,caughtT:0,regrabT:0,lastReturnX:null,path:recordedChiefPath,delay:recordedChiefPath.delay,chiefT:-recordedChiefPath.delay,playerT:chiefTimeAtX(recordedChiefPath,70),playerIndex:0,matchMode:"xy",pose:recordedChiefPath.samples[0][3],facing:recordedChiefPath.samples[0][4]}
+    campaignChief = recordedChiefPath ? {active:false,x:CHIEF_ENTRY_X,y:recordedChiefPath.samples[0][2],w:32,h:48,catches:0,caughtT:0,regrabT:0,lastReturnX:null,path:recordedChiefPath,delay:recordedChiefPath.delay,chiefT:-recordedChiefPath.delay,playerT:chiefTimeAtX(recordedChiefPath,70),playerIndex:0,matchMode:"xy",pose:"climb",facing:1,entry:chiefLadderEntry(),entryPhase:"waiting",climbElapsed:0}
       : (routeId === "D06" || route.chief) ? {active:false,x:-400,y:routeGroundYAt(route.chief?.startX ?? 70)-48,w:32,h:48,speed:205,catches:0,caughtT:0,lastReturnX:null} : null;
+    if(recordedChiefPath)parkChiefAtLadder(campaignChief);
     campaignDeaths = 0;
     gameClock = 0;
     platformOrder = { colliderFrame: 0, landingFrame: 0, carryFrame: 0 };
@@ -1935,16 +1952,19 @@
     flowFlash = Math.max(0, flowFlash - dt);
     if (campaignChief) {
       campaignChief.caughtT=Math.max(0,campaignChief.caughtT-dt);campaignChief.regrabT=Math.max(0,(campaignChief.regrabT||0)-dt);
-      if (!campaignChief.active && player.x>=1800) {
+      if (campaignChief.path && campaignChief.entryPhase==="waiting" && player.x>=campaignChief.entry.x) {
+        campaignChief.active=true;campaignChief.entryPhase="climbing";campaignChief.climbElapsed=0;campaignChief.x=campaignChief.entry.x-campaignChief.w*.5;campaignChief.y=campaignChief.entry.bottomY-campaignChief.h;campaignChief.pose="climb";campaignChief.facing=1;
+      } else if (!campaignChief.path && !campaignChief.active && player.x>=1800) {
         if (!route.chief || player.x>=route.chief.startX) {
-        campaignChief.active=true;
-        campaignChief.x=player.x-380;
-        emitGame("chief_chase_started",{routeId});
+          campaignChief.active=true;
+          campaignChief.x=player.x-380;
+          emitGame("chief_chase_started",{routeId});
         }
       }
       if (campaignChief.active) {
-        if(campaignChief.path){campaignChief.chiefT+=dt;matchPlayerToChiefPath(campaignChief);const q=chiefSample(campaignChief.path,campaignChief.chiefT);campaignChief.x=campaignChief.chiefT<0?CHIEF_ENTRY_X+(q.x-campaignChief.path.samples[0][1]):q.x;campaignChief.y=q.y;campaignChief.pose=q.pose;campaignChief.facing=q.facing}else campaignChief.x+=campaignChief.speed*dt;
-        if (campaignChief.caughtT<=0 && (!campaignChief.path ? campaignChief.x+campaignChief.w>=player.x+4 && campaignChief.x<=player.x+player.w-4 : campaignChief.regrabT<=0 && campaignChief.chiefT>=0 && campaignChief.chiefT>=campaignChief.playerT-.05)) {
+        if(campaignChief.path&&campaignChief.entryPhase==="climbing"){campaignChief.climbElapsed=Math.min(campaignChief.entry.duration,campaignChief.climbElapsed+dt);const u=campaignChief.climbElapsed/campaignChief.entry.duration;campaignChief.x=campaignChief.entry.x-campaignChief.w*.5;campaignChief.y=campaignChief.entry.bottomY-campaignChief.h-(campaignChief.entry.height-campaignChief.h*.2)*u;campaignChief.pose="climb";if(u>=1)finishChiefLadder(campaignChief)}
+        else if(campaignChief.path){campaignChief.chiefT+=dt;matchPlayerToChiefPath(campaignChief);const q=chiefSample(campaignChief.path,campaignChief.chiefT);campaignChief.x=campaignChief.chiefT<0?CHIEF_ENTRY_X+(q.x-campaignChief.path.samples[0][1]):q.x;campaignChief.y=q.y;campaignChief.pose=q.pose;campaignChief.facing=q.facing}else campaignChief.x+=campaignChief.speed*dt;
+        if (campaignChief.caughtT<=0 && (!campaignChief.path ? campaignChief.x+campaignChief.w>=player.x+4 && campaignChief.x<=player.x+player.w-4 : campaignChief.entryPhase==="running"&&campaignChief.regrabT<=0 && campaignChief.chiefT>=0 && campaignChief.chiefT>=campaignChief.playerT-.05)) {
           campaignChief.catches++;
           campaignDeaths++;
           campaignChief.caughtT=.35;if(campaignChief.path)campaignChief.regrabT=2;
@@ -3056,6 +3076,12 @@
       c.strokeStyle = frozen?"#dffaff":magma?"#d4d2ca":"#5a321d";c.fillStyle = frozen?"#75bfd1":magma?"#aaa9a3":"#9e6338";c.lineWidth=3;
       if(magma){c.beginPath();c.moveTo(b.x+7,b.y);c.lineTo(b.x+21,b.y);c.lineTo(b.x+28,b.y+9);c.lineTo(b.x+28,b.y+22);c.lineTo(b.x+20,b.y+28);c.lineTo(b.x+7,b.y+28);c.lineTo(b.x,b.y+19);c.lineTo(b.x,b.y+8);c.closePath();c.fill();c.stroke();c.strokeStyle="#505c65";c.strokeRect(b.x+8,b.y+5,12,18);}else if(frozen){c.beginPath();c.moveTo(b.x+4,b.y+27);c.lineTo(b.x,b.y+10);c.lineTo(b.x+8,b.y);c.lineTo(b.x+24,b.y+3);c.lineTo(b.x+28,b.y+20);c.lineTo(b.x+20,b.y+28);c.closePath();c.fill();c.stroke();c.strokeStyle="#eefbff";c.beginPath();c.moveTo(b.x+5,b.y+8);c.lineTo(b.x+22,b.y+20);c.stroke();}else{c.beginPath();c.arc(b.x+14,b.y+14,14,0,Math.PI*2);c.fill();c.stroke();c.beginPath();c.moveTo(b.x+2,b.y+14);c.lineTo(b.x+26,b.y+14);c.stroke();}
     }
+    if (campaignChief?.path && campaignChief.entry && (!bounds||visibleX(bounds,campaignChief.entry.x-28,56,120))) {
+      const e=campaignChief.entry,x=e.x,top=e.topY,bottom=e.bottomY;
+      c.save();c.lineWidth=5;c.strokeStyle=frozen?"#8fd3e6":"#7b5435";c.beginPath();c.moveTo(x-18,top+4);c.lineTo(x-18,bottom);c.moveTo(x+18,top+4);c.lineTo(x+18,bottom);c.stroke();
+      c.lineWidth=4;c.strokeStyle=frozen?"#d7f6ff":"#c0915b";for(let y=top+18;y<bottom-6;y+=22){c.beginPath();c.moveTo(x-22,y);c.lineTo(x+22,y);c.stroke()}
+      c.fillStyle=frozen?"#6faaba":"#5c3b24";c.fillRect(x-32,top-7,64,9);c.fillStyle=frozen?"#bcefff":"#a06c3c";c.fillRect(x-26,top-11,52,5);c.restore();
+    }
     if (campaignChief?.active) {
       c.save();
       c.fillStyle="#fff2a51c";c.beginPath();c.moveTo(campaignChief.x+22,campaignChief.y+18);c.lineTo(campaignChief.x+175,campaignChief.y-28);c.lineTo(campaignChief.x+175,campaignChief.y+65);c.closePath();c.fill();
@@ -3236,7 +3262,7 @@
       window.__TMB_A12__ = Object.freeze({
         getState: debugState,
         disableChief: ()=>{campaignChief=null},
-        placePlayerAtChiefTime: (t,dy=0)=>{if(!campaignChief?.path)return false;const q=chiefSample(campaignChief.path,t);engine.reset(q.x,q.y+dy);campaignChief.playerT=t;campaignChief.playerIndex=Math.max(0,campaignChief.path.samples.findIndex(v=>v[0]>=t));campaignChief.chiefT=t-campaignChief.delay;return true},
+        placePlayerAtChiefTime: (t,dy=0)=>{if(!campaignChief?.path)return false;const q=chiefSample(campaignChief.path,t);engine.reset(q.x,q.y+dy);campaignChief.active=true;campaignChief.entryPhase="running";campaignChief.climbElapsed=campaignChief.entry?.duration||0;campaignChief.playerT=t;campaignChief.playerIndex=Math.max(0,campaignChief.path.samples.findIndex(v=>v[0]>=t));campaignChief.chiefT=t-campaignChief.delay;return true},
         routeDefinition: (id)=>clone(ROUTES[id]),
         chiefRouteHash: (id)=>chiefRouteHash(ROUTES[id]),
         chiefPathStatus: (id, deltaX=0)=>{const r=clone(ROUTES[id]);if(deltaX&&r.groundSegments?.length)r.groundSegments[0].x+=deltaX;return {stored:window.TMB_CHIEF_PATHS?.[id]?.routeHash||null,current:chiefRouteHash(r),valid:window.TMB_CHIEF_PATHS?.[id]?.routeHash===chiefRouteHash(r)}},
