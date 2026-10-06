@@ -1007,52 +1007,47 @@ if(D09_OPENING_FIX){
   if(D09_G2_BLOCK)D09_G2_BLOCK.w=320;
 }
   const JUMP_HINT_ZONE_IDS=Object.freeze({
-    D01:["d01-dz-02"],
+    D01:["d01-dz-01","d01-dz-02"],
     D02:["d02-dz-01"],
     D03:["d03-dz-01","d03-dz-02","d03-dz-03"],
     D04:["d04-dz-01","d04-dz-02","d04-dz-03"],
     D05:["d05-dz-01","d05-dz-02","d05-dz-03"],
     D06:["d06-dz-01","d06-dz-02","d06-dz-03","d06-dz-04"],
     D07:["d07-dz-01","d07-dz-02","d07-hj-01","d07-dz-03","d07-dz-04a","d07-dz-04"],
-    D08:["d08-dz-01","d08-dz-02","d08-dz-03","d08-dz-04","d08-dz-05-assist","d08-dz-05b-assist","d08-dz-05","d08-dz-06-assist","d08-dz-06","d08-dz-07-assist","d08-dz-07"],
-    D09:["d09-highjump500-11","d09-highjump500-25","d09-highjump500-29","d09-highjump500-33"],
-    D10:["d10-dz-02","d10-dz-03","d10-dz-05","d10-dz-06","d10-dz-06-assist","d10-dz-07","d10-dz-07-assist","d10-dz-08","d10-dz-09","d10-dz-10","d10-dz-11"],
-    D11:["d11-dz-02","d11-dz-03","d11-dz-04","d11-dz-06","d11-dz-07","d11-dz-08","d11-dz-09","d11-dz-10"],
-    D12:["d12-dz-02","d12-dz-03","d12-dz-04","d12-dz-06","d12-dz-07","d12-dz-08","d12-dz-09"],
-    D13:["d13-dz-02","d13-dz-03","d13-dz-04","d13-dz-05","d13-dz-06","d13-dz-07","d13-dz-08","d13-dz-10"],
+    D08:["d08-dz-01","d08-dz-02","d08-dz-03","d08-dz-04","d08-dz-05-assist","d08-dz-05b-assist","d08-dz-05","d08-dz-06","d08-dz-07-assist","d08-dz-07"],
+    D09:["d09-highjump500-06","d09-highjump500-11","d09-highjump500-25","d09-highjump500-29","d09-highjump500-33"],
+    D10:["d10-dz-01","d10-dz-02","d10-dz-03","d10-dz-05","d10-dz-06","d10-dz-06-assist","d10-dz-07","d10-dz-07-assist","d10-dz-08","d10-dz-09","d10-dz-10","d10-dz-11"],
+    D11:["d11-dz-01","d11-dz-02","d11-dz-03","d11-dz-04","d11-dz-06","d11-dz-07","d11-dz-08","d11-dz-09","d11-dz-10"],
+    D12:["d12-dz-01","d12-dz-02","d12-dz-03","d12-dz-04","d12-dz-06","d12-dz-07","d12-dz-08","d12-dz-09"],
+    D13:["d13-dz-01","d13-dz-02","d13-dz-03","d13-dz-04","d13-dz-05","d13-dz-06","d13-dz-07","d13-dz-08","d13-dz-10"],
     D14:["d14-dz-01","d14-dz-02","d14-dz-03","d14-dz-04","d14-dz-05","d14-dz-06","d14-dz-07"],
-    D15:["d15-dz-02","d15-dz-03","d15-dz-04","d15-dz-05","d15-dz-06","d15-dz-07","d15-dz-08"],
-    D16:["d16-dz-01","d16-dz-02","d16-dz-03","d16-dz-04","d16-dz-05","d16-dz-06","d16-dz-08","d16-dz-09"],
-    D17:["d17-p1-f04-dz-02","d17-p1-f04-dz-03","d17-p2-m03-dz-08","d17-p2-m03-dz-09","d17-p2-m03-dz-10"],
+    D15:["d15-dz-01","d15-dz-02","d15-dz-03","d15-dz-04","d15-dz-05","d15-dz-06","d15-dz-07","d15-dz-08"],
+    D16:["d16-dz-01","d16-dz-02","d16-dz-03","d16-dz-04","d16-dz-05","d16-dz-06","d16-dz-08"],
+    D17:["d17-p1-f04-dz-01","d17-p1-f04-dz-02","d17-p1-f04-dz-03","d17-p2-m03-dz-08","d17-p2-m03-dz-09","d17-p2-m03-dz-10"],
     D18:["d18-p1-a01-dz-01","d18-p1-a01-dz-02","d18-p1-a01-dz-03","d18-p1-a01-dz-04","d18-p2-f03-dz-07","d18-p2-f03-dz-08","d18-p2-f03-dz-09","d18-p2-f03-dz-10","d18-p2-f03-dz-11","d18-p2-f03-dz-12"],
     F01:["f01-p1-d07-dz-01","f01-p1-d07-dz-02","f01-p1-d07-dz-03","f01-p2-d13-dz-08","f01-p2-d13-dz-09","f01-p2-d13-dz-10"],
     F02:["f02-p1-d08-dz-01","f02-p1-d08-dz-02","f02-p1-d08-dz-03","f02-p1-d08-dz-04","f02-p1-d08-dz-05","f02-p1-d08-dz-06","f02-p1-d08-dz-07","f02-p2-d14-dz-05","f02-p2-d14-dz-06","f02-p2-d14-dz-07"],
-    F03:["f03-p2-d10-dz-01","f03-p2-d10-dz-02","f03-p2-d10-dz-03","f03-p3-d12-dz-01","f03-p3-d12-dz-02","f03-p3-d12-dz-03","f03-p3-d12-dz-04"],
+    F03:["f03-p1-d09-dz-01","f03-p2-d10-dz-01","f03-p2-d10-dz-02","f03-p2-d10-dz-03","f03-p3-d12-dz-01","f03-p3-d12-dz-02","f03-p3-d12-dz-03","f03-p3-d12-dz-04"],
     F04:["f04-p1-d02-dz-01","f04-p3-d01-dz-01"],
   });
   jumpHintZoneSets=new Map(Object.entries(JUMP_HINT_ZONE_IDS).map(([id,zones])=>[id,new Set(zones)]));
-  function hermesPeakForZone(z,kind){return z.peakY??(kind==="high"?Math.min(z.landY??455,455)-122:Math.min(z.landY??455,455)-93)}
+  function hermesPeakForZone(z,kind){
+    if(z.peakY!=null)return z.peakY;
+    const longDive=kind==="dive"&&Number.isFinite(z.landX)&&Number.isFinite(z.x1)&&z.landX-z.x1>780;
+    return kind==="high"?Math.min(z.landY??455,455)-122:Math.min(z.landY??455,455)-(longDive?220:93);
+  }
   function toHermesZone(z,kind){
-    const landX=kind==="wall"?(z.exitX??z.x2):z.landX, landY=kind==="wall"?(z.exitY??z.yTop):z.landY;
+    const landX=z.landX, landY=z.landY;
     if(!Number.isFinite(z.x1)||!Number.isFinite(z.x2)||!Number.isFinite(landX)||!Number.isFinite(landY))return null;
     return {id:`hermes-${z.id}`,sourceId:z.id,kind,x1:z.x1,x2:z.x2,landX,landY,peakY:hermesPeakForZone({...z,landY},kind)};
   }
   function buildHermesLaunchZones(routeId,route){
     if(!HERMES_ROUTE_IDS.has(routeId))return [];
+    const ids=new Set(JUMP_HINT_ZONE_IDS[routeId]||[]);
     const zones=[
-      ...(route.diveZones||[]).map(z=>toHermesZone(z,"dive")),
-      ...(route.highJumpZones||[]).map(z=>toHermesZone(z,"high")),
-      ...(route.wallJumpZones||[]).map(z=>toHermesZone(z,"wall")),
+      ...(route.diveZones||[]).filter(z=>ids.has(z.id)).map(z=>toHermesZone(z,"dive")),
+      ...(route.highJumpZones||[]).filter(z=>ids.has(z.id)).map(z=>toHermesZone(z,"high")),
     ].filter(Boolean);
-    const surfaces=(route.groundSegments||[]).filter(s=>s.kind==="ground"&&Number.isFinite(s.x)&&Number.isFinite(s.w)&&Number.isFinite(s.y)&&s.w>=18).sort((a,b)=>a.x-b.x);
-    for(const s of surfaces){
-      const end=s.x+s.w;
-      const next=surfaces.find(n=>n.x>end+12&&n.x-end<=760&&Math.abs(n.y-s.y)<=560);
-      if(!next)continue;
-      const x1=Math.max(s.x+8,end-90),x2=end-8,landX=next.x+Math.min(44,Math.max(18,next.w*.35)),landY=next.y;
-      if(zones.some(z=>x1<=z.x2+90&&x2>=z.x1-90))continue;
-      zones.push({id:`hermes-gap-${routeId.toLowerCase()}-${s.id}-to-${next.id}`,sourceId:`${s.id}->${next.id}`,kind:"gap",x1,x2,landX,landY,peakY:Math.min(s.y,landY)-120});
-    }
     if(routeId==="D09")zones.unshift({id:"d09-hermes-opening-gap",sourceId:"d09-opening-gap",kind:"gap",x1:280,x2:324,landX:403.44,landY:151.875,peakY:58});
     const seen=new Set();
     return zones.filter(z=>{if(seen.has(z.id))return false;seen.add(z.id);return true}).sort((a,b)=>a.x1-b.x1);
@@ -1332,7 +1327,6 @@ if(D09_OPENING_FIX){
     diveRun = null,
     jumpRun = null,
     wallJumpRun = null,
-    hermesAssist = {x:0,t:0},
     slopeContact = null,
     routeStartedAt = 0,
     movingPlatforms = [],
@@ -1575,7 +1569,6 @@ if(D09_OPENING_FIX){
     diveRun = null;
     jumpRun = null;
     wallJumpRun = null;
-    hermesAssist = {x:0,t:0};
     slopeContact = null;
     flowFlash = 0;
     staggerT = 0;
@@ -1870,20 +1863,6 @@ if(D09_OPENING_FIX){
     if(started){keys.jump=false;vectorJumpPending=null;addFlow(o.id,z.kind,10);emitGame("movement_started",{routeId,obstacleId:o.id,kind:z.kind});}
     return !!started;
   }
-  function tryAutoObstacleMove(){
-    if(route.movementProfile!=="vector-v1"||!keys.right||engine.parkour.state!=="normal"||edgeClimb||wallJumpRun||diveRun||jumpRun)return false;
-    const center=player.x+player.w/2;
-    const o=(route.obstacles||[]).find(v=>(v.type==="vault"||v.type==="slide")&&center>=v.x-82&&center<=v.x+Math.max(v.w,42));
-    if(!o)return false;
-    if(o.type==="slide"&&!player.onGround)return false;
-    if(o.type==="vault"&&!player.onGround)return false;
-    const y=(o.baseY??routeGroundYAt(o.x))-o.h;
-    const cfg={x:o.x,y,w:o.w,endX:o.type==="vault"?o.x+20:o.x+Math.max(34,o.w+18),top:y-Math.max(44,Math.min(82,o.h+18))};
-    if(![cfg.x,cfg.y,cfg.w].every(finiteMove))return false;
-    const started=engine.startParkourMove?.(o.type,cfg);
-    if(started){keys.jump=false;vectorJumpPending=null;addFlow(o.id,o.type,8);emitGame("movement_started",{routeId,obstacleId:o.id,kind:o.type,auto:true});}
-    return !!started;
-  }
   function tryHermesLaunch(){
     if(engine.parkour.state!=="normal"||edgeClimb||wallJumpRun||diveRun||jumpRun)return false;
     const center=player.x+player.w/2,z=(route.hermesLaunchZones||[]).find(v=>center>=v.x1&&center<=v.x2);
@@ -1895,40 +1874,20 @@ if(D09_OPENING_FIX){
     const endX=(z.landX??((z.x1+z.x2)/2))-player.w/2,landY=(z.landY??routeGroundYAt(z.landX))-player.h;
     const dx=Math.abs(endX-startX),top=z.peakY??Math.min(startY,landY)-110;
     const Tb=Math.sqrt(Math.max(0,2*(startY-top)/1450))+Math.sqrt(Math.max(0,2*(landY-top)/1450));
-    const vx=Math.max(dx/Math.max(.001,Tb),Math.abs(player.vx),255),duration=dx>0?dx/vx:Tb;
+    const vx=Math.max(dx/Math.max(.001,Tb),Math.abs(player.vx),520),duration=dx>0?dx/vx:Tb;
     const vy0=(landY-startY-725*duration*duration)/Math.max(.001,duration);
     const nextJump={elapsed:0,duration,vy0,startX,startY,endX,landY,dir,hermes:true,zoneId:z.id};
     if(!validArcRun(nextJump))return false;
-    jumpRun=nextJump;player.onGround=false;player.vx=(endX-startX)/duration;player.vy=vy0;keys.jump=false;vectorJumpPending=null;frontFlip.active=false;
+    jumpRun=nextJump;player.onGround=false;player.vx=(endX-startX)/duration;player.vy=vy0;keys.jump=false;vectorJumpPending=null;frontFlip.active=false;invulnerableT=Math.max(invulnerableT,duration+.12);
     addFlow(z.id,"hermesLaunch",14);emitGame("movement_started",{routeId,obstacleId:z.id,kind:"hermesLaunch"});sfx("ramp");
     return true;
-  }
-  function tryHermesStuckAssist(dt){
-    const pk=engine.parkour.state, recoverParkour=pk==="vault"||pk==="slide";
-    if(route.movementProfile!=="vector-v1"||!keys.right||(!player.onGround&&!recoverParkour)||(pk!=="normal"&&!recoverParkour)||edgeClimb||wallJumpRun||diveRun||jumpRun){hermesAssist={x:player.x,t:0};return false;}
-    if(Math.abs(player.x-hermesAssist.x)>4){hermesAssist={x:player.x,t:0};return false;}
-    hermesAssist.t+=dt;
-    if(hermesAssist.t<(recoverParkour?.55:.32))return false;
-    const center=player.x+player.w/2;
-    const next=routeSurfaces(route).filter(s=>s.kind==="ground"&&s.x>center+14).sort((a,b)=>a.x-b.x)[0];
-    const z=next
-      ? {id:`hermes-assist-${routeId}-${Math.round(center)}`,x1:center-8,x2:center+8,landX:next.x+Math.min(44,Math.max(18,next.w*.35)),landY:next.y,peakY:Math.min(player.y+player.h,next.y)-120}
-      : route.finishX-center<260
-        ? {id:`hermes-assist-finish-${routeId}`,x1:center-8,x2:center+8,landX:route.finishX-8,landY:routeGroundYAt(route.finishX-8),peakY:Math.min(player.y+player.h,routeGroundYAt(route.finishX-8))-80}
-        : null;
-    if(!z){hermesAssist={x:player.x,t:0};return false;}
-    hermesAssist={x:player.x,t:0};
-    if(recoverParkour){engine.parkour.state="normal";engine.parkour.timer=0;}
-    return launchHermesArc(z);
   }
   function beforePhysicsIntegrated(dt) {
     if (!campaign || shopOpen || result) return;
     gameClock += dt;
     if(edgeClimb){engine.parkour.state="normal";engine.parkour.timer=0}
     tryHermesLaunch();
-    if(!(route.routeId==="D09"&&player.x+player.w/2<660&&tryScriptedMove(true)))tryScriptedMove();
-    tryAutoObstacleMove();
-    tryHermesStuckAssist(dt);
+    tryScriptedMove();
     const d07SlideJump=route.routeId==="D07"&&engine.parkour.state==="slide";
     beginWallJump();
     if(route.movementProfile==="vector-v1"&&keys.jump&&(player.onGround||d07SlideJump)&&!edgeClimb){
