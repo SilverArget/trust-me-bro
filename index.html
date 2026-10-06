@@ -14,7 +14,7 @@
 <style>
 :root{color-scheme:dark;--safe-top:env(safe-area-inset-top,0px);--safe-right:env(safe-area-inset-right,0px);--safe-bottom:env(safe-area-inset-bottom,0px);--safe-left:env(safe-area-inset-left,0px);--app-width:100vw;--app-height:100dvh}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-html,body{margin:0;width:100%;height:100%;min-height:var(--app-height);overflow:hidden;background:#081018;font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Arial,sans-serif;touch-action:none;overscroll-behavior:none;-webkit-user-select:none;user-select:none}
+html,body{margin:0;width:100%;height:100%;min-height:var(--app-height);overflow:hidden;background:#081018;font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Arial,sans-serif;touch-action:none;overscroll-behavior:none;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
 button,a,input,select{touch-action:manipulation}
 #wrap{position:fixed;left:0;top:0;width:var(--app-width);height:var(--app-height);background:#081018;display:flex;align-items:center;justify-content:center;overflow:hidden}
 canvas{display:block;width:var(--app-width);height:var(--app-height);touch-action:none;-webkit-touch-callout:none}
@@ -1124,24 +1124,31 @@ if(DEBUG){
 boot();
 addEventListener('keydown',e=>{if(systemPaused)return;primeAudio();if(e.key==='Escape'&&characterSelectOpen&&characterChosen){closeCharacterSelect();return}if(['ArrowLeft','a','A'].includes(e.key))keys.left=true;if(['ArrowRight','d','D'].includes(e.key))keys.right=true;if(['ArrowUp','w','W',' '].includes(e.key)){if(!e.repeat)keys.jump=true;e.preventDefault()}if((e.key==='1'||e.key==='j'||e.key==='J')&&upgradePending)chooseUpgrade('jump');if((e.key==='2'||e.key==='k'||e.key==='K')&&upgradePending)chooseUpgrade('speed');if(e.key==='r'||e.key==='R')hardRestart()});
 addEventListener('keyup',e=>{if(['ArrowLeft','a','A'].includes(e.key))keys.left=false;if(['ArrowRight','d','D'].includes(e.key))keys.right=false;if(['ArrowUp','w','W',' '].includes(e.key))keys.jump=false});
-const joyEl=document.getElementById('joystick'),joyKnob=document.getElementById('joystickKnob');
-function setJoystickXY(clientX,clientY){const r=joyEl.getBoundingClientRect(),cx=r.left+r.width/2,cy=r.top+r.height/2,dx=clientX-cx,dy=clientY-cy,maxR=r.width*.30,dist=Math.hypot(dx,dy)||1,clamp=Math.min(1,maxR/dist),px=dx*clamp,py=dy*clamp;joyKnob.style.transform=`translate(${px}px,${py}px)`;const raw=Math.max(-1,Math.min(1,dx/maxR));joystick.axis=Math.abs(raw)<.12?0:raw;}
-function releaseJoy(){joystick.active=false;joystick.pointerId=null;joystick.axis=0;joyKnob.style.transform='translate(0px,0px)'}
-if(window.PointerEvent){
- joyEl.addEventListener('pointerdown',e=>{e.preventDefault();if(performance.now()<characterInputGuardUntil)return;primeAudio();joystick.active=true;joystick.pointerId=e.pointerId;try{joyEl.setPointerCapture(e.pointerId)}catch(_){}setJoystickXY(e.clientX,e.clientY)},{passive:false});
- joyEl.addEventListener('pointermove',e=>{if(!joystick.active||e.pointerId!==joystick.pointerId)return;e.preventDefault();setJoystickXY(e.clientX,e.clientY)},{passive:false});
- joyEl.addEventListener('pointerup',e=>{if(joystick.pointerId===null||e.pointerId===joystick.pointerId)releaseJoy()},{passive:false});
- joyEl.addEventListener('pointercancel',releaseJoy,{passive:false});
-}else{
- joyEl.addEventListener('touchstart',e=>{if(!e.changedTouches.length)return;e.preventDefault();primeAudio();const t=e.changedTouches[0];joystick.active=true;joystick.pointerId=t.identifier;setJoystickXY(t.clientX,t.clientY)},{passive:false});
- joyEl.addEventListener('touchmove',e=>{if(!joystick.active)return;for(const t of e.changedTouches){if(t.identifier===joystick.pointerId){e.preventDefault();setJoystickXY(t.clientX,t.clientY);break}}},{passive:false});
- const touchEnd=e=>{for(const t of e.changedTouches){if(t.identifier===joystick.pointerId){e.preventDefault();releaseJoy();break}}};
- joyEl.addEventListener('touchend',touchEnd,{passive:false});joyEl.addEventListener('touchcancel',touchEnd,{passive:false});
-}
 const jumpBtn=document.querySelector('#jumpWrap button');
-function jumpPress(e){if(e&&e.preventDefault)e.preventDefault();if(performance.now()<characterInputGuardUntil)return;if(e&&e.pointerId!==undefined){if(jumpPointerId!==null)return;jumpPointerId=e.pointerId;try{jumpBtn.setPointerCapture(e.pointerId)}catch(_){}}else if(e&&e.changedTouches){if(jumpPointerId!==null)return;jumpPointerId=e.changedTouches[0].identifier}primeAudio();jumpBtn.classList.add('pressed');keys.jump=true;}
-function jumpRelease(e){if(e&&e.preventDefault)e.preventDefault();if(e&&e.pointerId!==undefined){if(jumpPointerId!==null&&e.pointerId!==jumpPointerId)return;jumpPointerId=null}else if(e&&e.changedTouches){let match=false;for(const t of e.changedTouches)if(t.identifier===jumpPointerId)match=true;if(!match)return;jumpPointerId=null}jumpBtn.classList.remove('pressed');keys.jump=false;}
-if(window.PointerEvent){jumpBtn.addEventListener('pointerdown',jumpPress,{passive:false});jumpBtn.addEventListener('pointerup',jumpRelease,{passive:false});jumpBtn.addEventListener('pointercancel',jumpRelease,{passive:false});jumpBtn.addEventListener('lostpointercapture',jumpRelease);}else{jumpBtn.addEventListener('touchstart',jumpPress,{passive:false});jumpBtn.addEventListener('touchend',jumpRelease,{passive:false});jumpBtn.addEventListener('touchcancel',jumpRelease,{passive:false});}
+const joyEl=document.getElementById('joystick'),joyKnob=document.getElementById('joystickKnob');
+let joyOriginX=0,joyOriginY=0,joyLastMoveAt=0;
+function inputNativeTarget(e){return e?.target?.closest?.('button,a,input,select,textarea,[role="button"],#a12Actions,#a12DockRoutes,#a12Shop,#characterSelect,#pauseOverlay,#mvpComplete')}
+function joyTarget(e){return !!e?.target?.closest?.('#joystick')}
+function jumpTarget(e){return !!e?.target?.closest?.('#jumpWrap')}
+function inJoyZone(x,y){return y>=innerHeight*.45&&x<=innerWidth*.45}
+function inJumpZone(x,y){return y>=innerHeight*.45&&x>=innerWidth*.60}
+function setJoystickXY(clientX,clientY){const r=joyEl.getBoundingClientRect(),dx=clientX-joyOriginX,dy=clientY-joyOriginY,maxR=Math.max(24,r.width*.44),dist=Math.hypot(dx,dy)||1,clamp=Math.min(1,maxR/dist),px=dx*clamp,py=dy*clamp;joyKnob.style.transform=`translate(${px}px,${py}px)`;const raw=Math.max(-1,Math.min(1,dx/maxR));joystick.axis=Math.abs(raw)<.12?0:raw;joyLastMoveAt=performance.now()}
+function startJoy(id,clientX,clientY,captureEl){if(performance.now()<characterInputGuardUntil)return false;if(joystick.active&&joystick.pointerId!==id)return false;primeAudio();joystick.active=true;joystick.pointerId=id;joyOriginX=clientX;joyOriginY=clientY;try{captureEl?.setPointerCapture?.(id)}catch(_){}setJoystickXY(clientX,clientY);return true}
+function releaseJoy(id){if(id!==undefined&&joystick.pointerId!==null&&id!==joystick.pointerId)return;joystick.active=false;joystick.pointerId=null;joystick.axis=0;joyKnob.style.transform='translate(0px,0px)'}
+function jumpPress(id,captureEl){if(performance.now()<characterInputGuardUntil)return false;if(jumpPointerId!==null&&jumpPointerId!==id)return false;jumpPointerId=id;try{captureEl?.setPointerCapture?.(id)}catch(_){}primeAudio();jumpBtn.classList.add('pressed');keys.jump=true;return true}
+function jumpRelease(id){if(id!==undefined&&jumpPointerId!==null&&id!==jumpPointerId)return;jumpPointerId=null;jumpBtn.classList.remove('pressed');keys.jump=false}
+if(window.PointerEvent){
+ document.addEventListener('pointerdown',e=>{if(e.pointerType==='mouse'&&e.button!==0)return;const isJoy=joyTarget(e),isJump=jumpTarget(e);if(!isJoy&&!isJump&&inputNativeTarget(e))return;if(isJoy||inJoyZone(e.clientX,e.clientY)){if(startJoy(e.pointerId,e.clientX,e.clientY,isJoy?joyEl:e.target))e.preventDefault();return}if(isJump||inJumpZone(e.clientX,e.clientY)){if(jumpPress(e.pointerId,isJump?jumpBtn:e.target))e.preventDefault()}},{passive:false,capture:true});
+ document.addEventListener('pointermove',e=>{if(!joystick.active||e.pointerId!==joystick.pointerId)return;e.preventDefault();setJoystickXY(e.clientX,e.clientY)},{passive:false,capture:true});
+ document.addEventListener('pointerup',e=>{releaseJoy(e.pointerId);jumpRelease(e.pointerId)},{passive:false,capture:true});
+ document.addEventListener('pointercancel',e=>{jumpRelease(e.pointerId)},{passive:false,capture:true});
+ addEventListener('blur',()=>{releaseJoy();jumpRelease()});addEventListener('pagehide',()=>{releaseJoy();jumpRelease()});
+}else{
+ document.addEventListener('touchstart',e=>{for(const t of e.changedTouches){const synthetic={target:document.elementFromPoint(t.clientX,t.clientY)},isJoy=joyTarget(synthetic),isJump=jumpTarget(synthetic);if(!isJoy&&!isJump&&inputNativeTarget(synthetic))continue;if(isJoy||inJoyZone(t.clientX,t.clientY)){if(startJoy(t.identifier,t.clientX,t.clientY,joyEl))e.preventDefault();continue}if(isJump||inJumpZone(t.clientX,t.clientY)){if(jumpPress(t.identifier,jumpBtn))e.preventDefault()}}},{passive:false,capture:true});
+ document.addEventListener('touchmove',e=>{for(const t of e.changedTouches){if(t.identifier===joystick.pointerId){e.preventDefault();setJoystickXY(t.clientX,t.clientY);break}}},{passive:false,capture:true});
+ const touchEnd=e=>{for(const t of e.changedTouches){releaseJoy(t.identifier);jumpRelease(t.identifier)}};
+ document.addEventListener('touchend',touchEnd,{passive:false,capture:true});document.addEventListener('touchcancel',touchEnd,{passive:false,capture:true});
+}
 // iOS Safari needs an actual user gesture before WebAudio is usable.
 // Keep keyboard controls responsive on macOS Safari after clicking the game.
 c.setAttribute('tabindex','0');c.style.outline='none';c.addEventListener('pointerdown',()=>{try{c.focus({preventScroll:true})}catch(_){c.focus()}},{passive:true});

@@ -1,0 +1,716 @@
+[
+  {
+    "label": "before",
+    "device": "webkit-iphone-portrait",
+    "viewport": "393x852",
+    "base": {
+      "axis": 0,
+      "active": false,
+      "jump": false,
+      "jumpPressed": false,
+      "vx": 0,
+      "vy": 0,
+      "onGround": true,
+      "knob": "translate(0px, 0px)",
+      "joy": {
+        "x": 22,
+        "y": 683.4,
+        "w": 74,
+        "h": 74,
+        "right": 96
+      },
+      "jumpRect": {
+        "x": 307,
+        "y": 693.4,
+        "w": 64,
+        "h": 64
+      }
+    },
+    "centerDrag": {
+      "name": "visible-center-drag",
+      "start": {
+        "x": 59,
+        "y": 720
+      },
+      "immediate": {
+        "axis": 1,
+        "active": true,
+        "jump": false,
+        "jumpPressed": false,
+        "vx": 0,
+        "vy": 0,
+        "onGround": true,
+        "knob": "translate(22.199993px, -0.017344px)",
+        "joy": {
+          "x": 22,
+          "y": 683.4,
+          "w": 74,
+          "h": 74,
+          "right": 96
+        },
+        "jumpRect": {
+          "x": 307,
+          "y": 693.4,
+          "w": 64,
+          "h": 64
+        }
+      },
+      "after": {
+        "axis": 1,
+        "active": true,
+        "jump": false,
+        "jumpPressed": false,
+        "vx": 96.2,
+        "vy": 0,
+        "onGround": true,
+        "knob": "translate(22.199993px, -0.017344px)",
+        "joy": {
+          "x": 22,
+          "y": 683.4,
+          "w": 74,
+          "h": 74,
+          "right": 96
+        },
+        "jumpRect": {
+          "x": 307,
+          "y": 693.4,
+          "w": 64,
+          "h": 64
+        }
+      },
+      "runMs": 93,
+      "released": {
+        "axis": 0,
+        "active": false,
+        "jump": false,
+        "jumpPressed": false,
+        "vx": 96.2,
+        "vy": 0,
+        "onGround": true,
+        "knob": "translate(0px, 0px)",
+        "joy": {
+          "x": 22,
+          "y": 683.4,
+          "w": 74,
+          "h": 74,
+          "right": 96
+        },
+        "jumpRect": {
+          "x": 307,
+          "y": 693.4,
+          "w": 64,
+          "h": 64
+        }
+      }
+    },
+    "edgeDrag": {
+      "name": "edge-outside-visible-pad",
+      "start": {
+        "x": 132,
+        "y": 720
+      },
+      "immediate": {
+        "axis": 0,
+        "active": false,
+        "jump": false,
+        "jumpPressed": false,
+        "vx": 0,
+        "vy": 0,
+        "onGround": true,
+        "knob": "translate(0px, 0px)",
+        "joy": {
+          "x": 22,
+          "y": 683.4,
+          "w": 74,
+          "h": 74,
+          "right": 96
+        },
+        "jumpRect": {
+          "x": 307,
+          "y": 693.4,
+          "w": 64,
+          "h": 64
+        }
+      },
+      "after": {
+        "axis": 0,
+        "active": false,
+        "jump": false,
+        "jumpPressed": false,
+        "vx": 0,
+        "vy": 0,
+        "onGround": true,
+        "knob": "translate(0px, 0px)",
+        "joy": {
+          "x": 22,
+          "y": 683.4,
+          "w": 74,
+          "h": 74,
+          "right": 96
+        },
+        "jumpRect": {
+          "x": 307,
+          "y": 693.4,
+          "w": 64,
+          "h": 64
+        }
+      },
+      "runMs": null,
+      "released": {
+        "axis": 0,
+        "active": false,
+        "jump": false,
+        "jumpPressed": false,
+        "vx": 0,
+        "vy": 0,
+        "onGround": true,
+        "knob": "translate(0px, 0px)",
+        "joy": {
+          "x": 22,
+          "y": 683.4,
+          "w": 74,
+          "h": 74,
+          "right": 96
+        },
+        "jumpRect": {
+          "x": 307,
+          "y": 693.4,
+          "w": 64,
+          "h": 64
+        }
+      }
+    },
+    "floatDrag": {
+      "name": "floating-left-zone",
+      "start": {
+        "x": 118,
+        "y": 596
+      },
+      "immediate": {
+        "axis": 0,
+        "active": false,
+        "jump": false,
+        "jumpPressed": false,
+        "vx": 0,
+        "vy": 0,
+        "onGround": true,
+        "knob": "translate(0px, 0px)",
+        "joy": {
+          "x": 22,
+          "y": 683.4,
+          "w": 74,
+          "h": 74,
+          "right": 96
+        },
+        "jumpRect": {
+          "x": 307,
+          "y": 693.4,
+          "w": 64,
+          "h": 64
+        }
+      },
+      "after": {
+        "axis": 0,
+        "active": false,
+        "jump": false,
+        "jumpPressed": false,
+        "vx": 0,
+        "vy": 0,
+        "onGround": true,
+        "knob": "translate(0px, 0px)",
+        "joy": {
+          "x": 22,
+          "y": 683.4,
+          "w": 74,
+          "h": 74,
+          "right": 96
+        },
+        "jumpRect": {
+          "x": 307,
+          "y": 693.4,
+          "w": 64,
+          "h": 64
+        }
+      },
+      "runMs": null,
+      "released": {
+        "axis": 0,
+        "active": false,
+        "jump": false,
+        "jumpPressed": false,
+        "vx": 0,
+        "vy": 0,
+        "onGround": true,
+        "knob": "translate(0px, 0px)",
+        "joy": {
+          "x": 22,
+          "y": 683.4,
+          "w": 74,
+          "h": 74,
+          "right": 96
+        },
+        "jumpRect": {
+          "x": 307,
+          "y": 693.4,
+          "w": 64,
+          "h": 64
+        }
+      }
+    },
+    "pointercancel": {
+      "beforeCancel": {
+        "axis": 1,
+        "active": true,
+        "jump": false,
+        "jumpPressed": false,
+        "vx": 0,
+        "vy": 0,
+        "onGround": true,
+        "knob": "translate(22.199993px, -0.017344px)",
+        "joy": {
+          "x": 22,
+          "y": 683.4,
+          "w": 74,
+          "h": 74,
+          "right": 96
+        },
+        "jumpRect": {
+          "x": 307,
+          "y": 693.4,
+          "w": 64,
+          "h": 64
+        }
+      },
+      "afterCancel80": {
+        "axis": 0,
+        "active": false,
+        "jump": false,
+        "jumpPressed": false,
+        "vx": 0,
+        "vy": 0,
+        "onGround": true,
+        "knob": "translate(0px, 0px)",
+        "joy": {
+          "x": 22,
+          "y": 683.4,
+          "w": 74,
+          "h": 74,
+          "right": 96
+        },
+        "jumpRect": {
+          "x": 307,
+          "y": 693.4,
+          "w": 64,
+          "h": 64
+        }
+      },
+      "afterCancelUp": {
+        "axis": 0,
+        "active": false,
+        "jump": false,
+        "jumpPressed": false,
+        "vx": 0,
+        "vy": 0,
+        "onGround": true,
+        "knob": "translate(0px, 0px)",
+        "joy": {
+          "x": 22,
+          "y": 683.4,
+          "w": 74,
+          "h": 74,
+          "right": 96
+        },
+        "jumpRect": {
+          "x": 307,
+          "y": 693.4,
+          "w": 64,
+          "h": 64
+        }
+      }
+    },
+    "combo": {
+      "axis": 0,
+      "active": false,
+      "jump": false,
+      "jumpPressed": false,
+      "vx": 0,
+      "vy": 0,
+      "onGround": true,
+      "knob": "translate(0px, 0px)",
+      "joy": {
+        "x": 22,
+        "y": 683.4,
+        "w": 74,
+        "h": 74,
+        "right": 96
+      },
+      "jumpRect": {
+        "x": 307,
+        "y": 693.4,
+        "w": 64,
+        "h": 64
+      }
+    },
+    "buttons": {
+      "pauseClicked": true,
+      "muteClicked": true
+    }
+  },
+  {
+    "label": "before",
+    "device": "webkit-iphone-landscape",
+    "viewport": "852x393",
+    "base": {
+      "axis": 0,
+      "active": false,
+      "jump": false,
+      "jumpPressed": false,
+      "vx": 0,
+      "vy": 0,
+      "onGround": true,
+      "knob": "translate(0px, 0px)",
+      "joy": {
+        "x": 22,
+        "y": 225.4,
+        "w": 124,
+        "h": 124,
+        "right": 146
+      },
+      "jumpRect": {
+        "x": 718,
+        "y": 237.4,
+        "w": 112,
+        "h": 112
+      }
+    },
+    "centerDrag": {
+      "name": "visible-center-drag",
+      "start": {
+        "x": 84,
+        "y": 287
+      },
+      "immediate": {
+        "axis": 0.818,
+        "active": true,
+        "jump": false,
+        "jumpPressed": false,
+        "vx": 0,
+        "vy": 0,
+        "onGround": true,
+        "knob": "translate(37.199999px, 0.007266px)",
+        "joy": {
+          "x": 22,
+          "y": 225.4,
+          "w": 124,
+          "h": 124,
+          "right": 146
+        },
+        "jumpRect": {
+          "x": 718,
+          "y": 237.4,
+          "w": 112,
+          "h": 112
+        }
+      },
+      "after": {
+        "axis": 0.818,
+        "active": true,
+        "jump": false,
+        "jumpPressed": false,
+        "vx": 78.7,
+        "vy": 0,
+        "onGround": true,
+        "knob": "translate(37.199999px, 0.007266px)",
+        "joy": {
+          "x": 22,
+          "y": 225.4,
+          "w": 124,
+          "h": 124,
+          "right": 146
+        },
+        "jumpRect": {
+          "x": 718,
+          "y": 237.4,
+          "w": 112,
+          "h": 112
+        }
+      },
+      "runMs": 83,
+      "released": {
+        "axis": 0,
+        "active": false,
+        "jump": false,
+        "jumpPressed": false,
+        "vx": 78.7,
+        "vy": 0,
+        "onGround": true,
+        "knob": "translate(0px, 0px)",
+        "joy": {
+          "x": 22,
+          "y": 225.4,
+          "w": 124,
+          "h": 124,
+          "right": 146
+        },
+        "jumpRect": {
+          "x": 718,
+          "y": 237.4,
+          "w": 112,
+          "h": 112
+        }
+      }
+    },
+    "edgeDrag": {
+      "name": "edge-outside-visible-pad",
+      "start": {
+        "x": 182,
+        "y": 287
+      },
+      "immediate": {
+        "axis": 0,
+        "active": false,
+        "jump": false,
+        "jumpPressed": false,
+        "vx": 0,
+        "vy": 0,
+        "onGround": true,
+        "knob": "translate(0px, 0px)",
+        "joy": {
+          "x": 22,
+          "y": 225.4,
+          "w": 124,
+          "h": 124,
+          "right": 146
+        },
+        "jumpRect": {
+          "x": 718,
+          "y": 237.4,
+          "w": 112,
+          "h": 112
+        }
+      },
+      "after": {
+        "axis": 0,
+        "active": false,
+        "jump": false,
+        "jumpPressed": false,
+        "vx": 0,
+        "vy": 0,
+        "onGround": true,
+        "knob": "translate(0px, 0px)",
+        "joy": {
+          "x": 22,
+          "y": 225.4,
+          "w": 124,
+          "h": 124,
+          "right": 146
+        },
+        "jumpRect": {
+          "x": 718,
+          "y": 237.4,
+          "w": 112,
+          "h": 112
+        }
+      },
+      "runMs": null,
+      "released": {
+        "axis": 0,
+        "active": false,
+        "jump": false,
+        "jumpPressed": false,
+        "vx": 0,
+        "vy": 0,
+        "onGround": true,
+        "knob": "translate(0px, 0px)",
+        "joy": {
+          "x": 22,
+          "y": 225.4,
+          "w": 124,
+          "h": 124,
+          "right": 146
+        },
+        "jumpRect": {
+          "x": 718,
+          "y": 237.4,
+          "w": 112,
+          "h": 112
+        }
+      }
+    },
+    "floatDrag": {
+      "name": "floating-left-zone",
+      "start": {
+        "x": 230,
+        "y": 275
+      },
+      "immediate": {
+        "axis": 0,
+        "active": false,
+        "jump": false,
+        "jumpPressed": false,
+        "vx": 0,
+        "vy": 0,
+        "onGround": true,
+        "knob": "translate(0px, 0px)",
+        "joy": {
+          "x": 22,
+          "y": 225.4,
+          "w": 124,
+          "h": 124,
+          "right": 146
+        },
+        "jumpRect": {
+          "x": 718,
+          "y": 237.4,
+          "w": 112,
+          "h": 112
+        }
+      },
+      "after": {
+        "axis": 0,
+        "active": false,
+        "jump": false,
+        "jumpPressed": false,
+        "vx": 0,
+        "vy": 0,
+        "onGround": true,
+        "knob": "translate(0px, 0px)",
+        "joy": {
+          "x": 22,
+          "y": 225.4,
+          "w": 124,
+          "h": 124,
+          "right": 146
+        },
+        "jumpRect": {
+          "x": 718,
+          "y": 237.4,
+          "w": 112,
+          "h": 112
+        }
+      },
+      "runMs": null,
+      "released": {
+        "axis": 0,
+        "active": false,
+        "jump": false,
+        "jumpPressed": false,
+        "vx": 0,
+        "vy": 0,
+        "onGround": true,
+        "knob": "translate(0px, 0px)",
+        "joy": {
+          "x": 22,
+          "y": 225.4,
+          "w": 124,
+          "h": 124,
+          "right": 146
+        },
+        "jumpRect": {
+          "x": 718,
+          "y": 237.4,
+          "w": 112,
+          "h": 112
+        }
+      }
+    },
+    "pointercancel": {
+      "beforeCancel": {
+        "axis": 0.818,
+        "active": true,
+        "jump": false,
+        "jumpPressed": false,
+        "vx": 39.2,
+        "vy": 0,
+        "onGround": true,
+        "knob": "translate(37.199999px, 0.007266px)",
+        "joy": {
+          "x": 22,
+          "y": 225.4,
+          "w": 124,
+          "h": 124,
+          "right": 146
+        },
+        "jumpRect": {
+          "x": 718,
+          "y": 237.4,
+          "w": 112,
+          "h": 112
+        }
+      },
+      "afterCancel80": {
+        "axis": 0,
+        "active": false,
+        "jump": false,
+        "jumpPressed": false,
+        "vx": 39.2,
+        "vy": 0,
+        "onGround": true,
+        "knob": "translate(0px, 0px)",
+        "joy": {
+          "x": 22,
+          "y": 225.4,
+          "w": 124,
+          "h": 124,
+          "right": 146
+        },
+        "jumpRect": {
+          "x": 718,
+          "y": 237.4,
+          "w": 112,
+          "h": 112
+        }
+      },
+      "afterCancelUp": {
+        "axis": 0,
+        "active": false,
+        "jump": false,
+        "jumpPressed": false,
+        "vx": 26.4,
+        "vy": 0,
+        "onGround": true,
+        "knob": "translate(0px, 0px)",
+        "joy": {
+          "x": 22,
+          "y": 225.4,
+          "w": 124,
+          "h": 124,
+          "right": 146
+        },
+        "jumpRect": {
+          "x": 718,
+          "y": 237.4,
+          "w": 112,
+          "h": 112
+        }
+      }
+    },
+    "combo": {
+      "axis": 0,
+      "active": false,
+      "jump": false,
+      "jumpPressed": false,
+      "vx": 0,
+      "vy": 0,
+      "onGround": true,
+      "knob": "translate(0px, 0px)",
+      "joy": {
+        "x": 22,
+        "y": 225.4,
+        "w": 124,
+        "h": 124,
+        "right": 146
+      },
+      "jumpRect": {
+        "x": 718,
+        "y": 237.4,
+        "w": 112,
+        "h": 112
+      }
+    },
+    "buttons": {
+      "pauseClicked": true,
+      "muteClicked": true
+    }
+  }
+]

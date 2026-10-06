@@ -2592,34 +2592,6 @@ if(D09_OPENING_FIX){
       if (["ArrowLeft", "a", "A"].includes(e.key)) keys.left = false;
       if (["ArrowRight", "d", "D"].includes(e.key)) keys.right = false;
     });
-    const joy = document.getElementById("joystick");
-    joy?.addEventListener("pointerdown", (e) => {
-      joystick.axis = Math.max(
-        -1,
-        Math.min(
-          1,
-          (e.clientX - joy.getBoundingClientRect().left - joy.clientWidth / 2) /
-            (joy.clientWidth / 2),
-        ),
-      );
-    });
-    joy?.addEventListener("pointermove", (e) => {
-      if (e.buttons)
-        joystick.axis = Math.max(
-          -1,
-          Math.min(
-            1,
-            (e.clientX -
-              joy.getBoundingClientRect().left -
-              joy.clientWidth / 2) /
-              (joy.clientWidth / 2),
-          ),
-        );
-    });
-    joy?.addEventListener("pointerup", () => (joystick.axis = 0));
-    document
-      .querySelector("#jumpWrap button")
-      ?.addEventListener("pointerdown", () => (keys.jump = true));
   }
   function selectRunner(id) {
     profile.runnerId = id;
