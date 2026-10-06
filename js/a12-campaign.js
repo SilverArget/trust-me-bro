@@ -1000,6 +1000,10 @@ if(D09_OPENING_FIX){
   D09_OPENING_FIX.highJumpZones=D09_OPENING_FIX.highJumpZones.filter(z=>z.id!=="d09-highjump500-03");
   D09_OPENING_FIX.diveZones=D09_OPENING_FIX.diveZones.filter(z=>z.id!=="d09-divingkong-02");
   D09_OPENING_FIX.scriptedMoveZones=D09_OPENING_FIX.scriptedMoveZones.filter(z=>!["d09-highjump500-01","d09-divingkong-02","d09-highjump500-03"].includes(z.id));
+  D09_OPENING_FIX.hermesLaunchZones=[
+    {id:"d09-hermes-opening-gap",x1:280,x2:324,landX:403.44,landY:151.875,peakY:58},
+    {id:"d09-hermes-highjump500-06",x1:950.64,x2:1010.64,landX:1281.84,landY:233.5,peakY:111.5}
+  ];
   const JUMP_HINT_ZONE_IDS=Object.freeze({
     D01:["d01-dz-02"],
     D02:["d02-dz-01"],
@@ -1009,7 +1013,7 @@ if(D09_OPENING_FIX){
     D06:["d06-dz-01","d06-dz-02","d06-dz-03","d06-dz-04"],
     D07:["d07-dz-01","d07-dz-02","d07-hj-01","d07-dz-03","d07-dz-04a","d07-dz-04"],
     D08:["d08-dz-01","d08-dz-02","d08-dz-03","d08-dz-04","d08-dz-05-assist","d08-dz-05b-assist","d08-dz-05","d08-dz-06-assist","d08-dz-06","d08-dz-07-assist","d08-dz-07"],
-    D09:["d09-highjump500-06","d09-highjump500-11","d09-highjump500-25","d09-highjump500-29","d09-highjump500-33"],
+    D09:["d09-highjump500-11","d09-highjump500-25","d09-highjump500-29","d09-highjump500-33"],
     D10:["d10-dz-02","d10-dz-03","d10-dz-05","d10-dz-06","d10-dz-06-assist","d10-dz-07","d10-dz-07-assist","d10-dz-08","d10-dz-09","d10-dz-10","d10-dz-11"],
     D11:["d11-dz-02","d11-dz-03","d11-dz-04","d11-dz-06","d11-dz-07","d11-dz-08","d11-dz-09","d11-dz-10"],
     D12:["d12-dz-02","d12-dz-03","d12-dz-04","d12-dz-06","d12-dz-07","d12-dz-08","d12-dz-09"],
@@ -1029,9 +1033,6 @@ if(D09_OPENING_FIX){
   if(D09_OPENING_POST)D09_OPENING_POST.w=132.96;
   const D09_G2_BLOCK=D09_OPENING_FIX.groundSegments.find(s=>s.id==="d09-ir-40");
   if(D09_G2_BLOCK)D09_G2_BLOCK.w=320;
-  D09_OPENING_FIX.groundSegments.push(
-    {id:"d09-start-catch-floor",x:314.16,y:151.875,w:205.44,h:360,kind:"ground",role:"opening-fallback"}
-  );
 }
   const CHIEF_SPRITE = new Image();
   CHIEF_SPRITE.src = "sprites/chief.png";
@@ -1341,7 +1342,7 @@ if(D09_OPENING_FIX){
   }
   const chiefRouteHashCache=new WeakMap();
   function chiefRouteHash(r=route) {
-    if(!chiefRouteHashCache.has(r))chiefRouteHashCache.set(r,sha256(canonical({groundSegments:r.groundSegments||null,slopes:r.slopes||null,obstacles:r.obstacles||[],diveZones:r.diveZones||[],catchableSurfaces:r.catchableSurfaces||[],highJumpZones:r.highJumpZones||[],...(r.wallJumpZones?.length?{wallJumpZones:r.wallJumpZones}:{}),checkpoints:r.checkpoints||[],finishX:r.finishX})));
+    if(!chiefRouteHashCache.has(r))chiefRouteHashCache.set(r,sha256(canonical({groundSegments:r.groundSegments||null,slopes:r.slopes||null,obstacles:r.obstacles||[],diveZones:r.diveZones||[],catchableSurfaces:r.catchableSurfaces||[],highJumpZones:r.highJumpZones||[],...(r.hermesLaunchZones?.length?{hermesLaunchZones:r.hermesLaunchZones}:{}),...(r.wallJumpZones?.length?{wallJumpZones:r.wallJumpZones}:{}),checkpoints:r.checkpoints||[],finishX:r.finishX})));
     return chiefRouteHashCache.get(r);
   }
   function chiefPathFor(r=route) {
@@ -1843,11 +1844,28 @@ if(D09_OPENING_FIX){
     if(started){keys.jump=false;vectorJumpPending=null;addFlow(o.id,z.kind,10);emitGame("movement_started",{routeId,obstacleId:o.id,kind:z.kind});}
     return !!started;
   }
+  function tryD09HermesLaunch(){
+    if(route.routeId!=="D09"||engine.parkour.state!=="normal"||edgeClimb||wallJumpRun||diveRun||jumpRun)return false;
+    const center=player.x+player.w/2,z=(route.hermesLaunchZones||[]).find(v=>center>=v.x1&&center<=v.x2);
+    if(!z)return false;
+    const dir=player.facing>=0?1:-1,startX=player.x,startY=player.y;
+    const endX=(z.landX??((z.x1+z.x2)/2))-player.w/2,landY=(z.landY??routeGroundYAt(z.landX))-player.h;
+    const dx=Math.abs(endX-startX),top=z.peakY??Math.min(startY,landY)-110;
+    const Tb=Math.sqrt(Math.max(0,2*(startY-top)/1450))+Math.sqrt(Math.max(0,2*(landY-top)/1450));
+    const vx=Math.max(dx/Math.max(.001,Tb),Math.abs(player.vx),255),duration=dx>0?dx/vx:Tb;
+    const vy0=(landY-startY-725*duration*duration)/Math.max(.001,duration);
+    const nextJump={elapsed:0,duration,vy0,startX,startY,endX,landY,dir,hermes:true,zoneId:z.id};
+    if(!validArcRun(nextJump))return false;
+    jumpRun=nextJump;player.onGround=false;player.vx=(endX-startX)/duration;player.vy=vy0;keys.jump=false;vectorJumpPending=null;frontFlip.active=false;
+    addFlow(z.id,"hermesLaunch",14);emitGame("movement_started",{routeId,obstacleId:z.id,kind:"hermesLaunch"});sfx("ramp");
+    return true;
+  }
   function beforePhysicsIntegrated(dt) {
     if (!campaign || shopOpen || result) return;
     gameClock += dt;
     if(edgeClimb){engine.parkour.state="normal";engine.parkour.timer=0}
-    tryD09ScriptedMove();
+    tryD09HermesLaunch();
+    if(!(route.routeId==="D09"&&player.x+player.w/2<660&&tryD09ScriptedMove(true)))tryD09ScriptedMove();
     const d07SlideJump=route.routeId==="D07"&&engine.parkour.state==="slide";
     beginWallJump();
     if(route.movementProfile==="vector-v1"&&keys.jump&&(player.onGround||d07SlideJump)&&!edgeClimb){
@@ -3051,6 +3069,38 @@ if(D09_OPENING_FIX){
       c.restore();
     }
   }
+  function drawHermesShoes(c,bounds=null) {
+    const zones=route.routeId==="D09"?(route.hermesLaunchZones||[]):null;
+    if(!zones?.length)return;
+    for(const z of zones){
+      const centerX=(z.x1+z.x2)/2,w=Math.max(42,z.x2-z.x1);
+      if(bounds&&!visibleX(bounds,centerX-w/2,w,120))continue;
+      const supports=routeSurfaces(route).filter(s=>s.x<=centerX&&centerX<=s.x+s.w);
+      const surfaceY=supports.length?Math.min(...supports.map(s=>s.y)):routeGroundYAt(centerX);
+      const px=player?player.x+player.w/2:centerX-999,near=px>=z.x1-230&&px<=z.x2+70;
+      const bob=Math.sin(gameClock*5.8+centerX*.03)*(near?2.5:1.3),glow=near?.62:.34;
+      const x=centerX,y=surfaceY-12+bob;
+      c.save();
+      c.globalAlpha=glow;
+      c.fillStyle="#ffd86a";
+      c.beginPath();c.ellipse(x,y+6,35,8,0,0,Math.PI*2);c.fill();
+      c.globalAlpha=1;
+      c.shadowColor="#ffe08a";c.shadowBlur=near?18:9;
+      c.strokeStyle="#5b3717";c.lineWidth=3;c.lineCap="round";c.lineJoin="round";
+      c.fillStyle="#c9822d";
+      c.beginPath();
+      c.moveTo(x-24,y+4);c.quadraticCurveTo(x-9,y-8,x+20,y-5);c.quadraticCurveTo(x+31,y-3,x+28,y+5);
+      c.quadraticCurveTo(x+8,y+13,x-22,y+12);c.quadraticCurveTo(x-29,y+9,x-24,y+4);c.closePath();c.fill();c.stroke();
+      c.strokeStyle="#f5c15d";c.lineWidth=4;
+      c.beginPath();c.moveTo(x-11,y+8);c.quadraticCurveTo(x-2,y-4,x+13,y-2);c.moveTo(x-2,y+9);c.quadraticCurveTo(x+7,y+0,x+23,y+1);c.stroke();
+      c.fillStyle="#fff6df";c.strokeStyle="#6f8ca0";c.lineWidth=2;
+      c.beginPath();c.moveTo(x-23,y-1);c.quadraticCurveTo(x-45,y-15,x-58,y-7);c.quadraticCurveTo(x-45,y-3,x-27,y+3);c.closePath();c.fill();c.stroke();
+      c.beginPath();c.moveTo(x-19,y-5);c.quadraticCurveTo(x-41,y-24,x-53,y-17);c.quadraticCurveTo(x-43,y-10,x-24,y-1);c.closePath();c.fill();c.stroke();
+      c.fillStyle="#fff2b0";
+      c.beginPath();c.arc(x+24,y-6,3.5,0,Math.PI*2);c.fill();
+      c.restore();
+    }
+  }
   function drawWorldIntegrated(c) {
     if(profile.selectedWorldId==="aftermath"){drawAftermathWorld(c,true,gameClock,effectsGain());return;}
     ctx = c;
@@ -3134,6 +3184,7 @@ if(D09_OPENING_FIX){
       }
     }
     drawVectorJumpPads(c,bounds);
+    drawHermesShoes(c,bounds);
     for(const s of route.slopes||[]){if(bounds&&!visibleX(bounds,Math.min(s.x1,s.x2),Math.abs(s.x2-s.x1),100))continue;c.fillStyle="#30383f";c.beginPath();c.moveTo(s.x1,s.y1);c.lineTo(s.x2,s.y2);c.lineTo(s.x2,s.y2+100);c.lineTo(s.x1,s.y1+100);c.closePath();c.fill();c.strokeStyle="#8b98a1";c.lineWidth=3;c.beginPath();c.moveTo(s.x1,s.y1);c.lineTo(s.x2,s.y2);c.stroke()}
     for (const o of route.obstacles)
       if (o.type === "ramp") {

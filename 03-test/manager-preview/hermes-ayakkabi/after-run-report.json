@@ -1,0 +1,109 @@
+{
+  "phase": "after",
+  "generatedAt": "2026-10-06T18:24:14.365Z",
+  "desktopNoJump": {
+    "label": "desktop-nojump",
+    "viewport": {
+      "width": 1280,
+      "height": 720
+    },
+    "resetCount": 0,
+    "deathCount": 0,
+    "endX": 1405.08,
+    "landings": [
+      {
+        "id": "d09-hermes-opening-gap",
+        "center": 407.7,
+        "feetY": 151.88,
+        "targetX": 403.44,
+        "targetY": 151.875
+      },
+      {
+        "id": "d09-hermes-highjump500-06",
+        "center": 1281.84,
+        "feetY": 233.5,
+        "targetX": 1281.84,
+        "targetY": 233.5
+      }
+    ],
+    "captures": [
+      "d09-hermes-opening-gap:approach",
+      "d09-hermes-opening-gap:launch",
+      "d09-hermes-opening-gap:land",
+      "d09-hermes-highjump500-06:approach",
+      "d09-hermes-highjump500-06:launch",
+      "d09-hermes-highjump500-06:land"
+    ],
+    "hermesZones": null
+  },
+  "desktopNormal": {
+    "label": "desktop-normal",
+    "viewport": {
+      "width": 1280,
+      "height": 720
+    },
+    "resetCount": 0,
+    "deathCount": 0,
+    "endX": 1405.08,
+    "landings": [
+      {
+        "id": "d09-hermes-opening-gap",
+        "center": 403.44,
+        "feetY": 151.88,
+        "targetX": 403.44,
+        "targetY": 151.875
+      },
+      {
+        "id": "d09-hermes-highjump500-06",
+        "center": 1286.1,
+        "feetY": 233.5,
+        "targetX": 1281.84,
+        "targetY": 233.5
+      }
+    ],
+    "captures": [
+      "d09-hermes-opening-gap:approach",
+      "d09-hermes-opening-gap:launch",
+      "d09-hermes-opening-gap:land",
+      "d09-hermes-highjump500-06:approach",
+      "d09-hermes-highjump500-06:launch",
+      "d09-hermes-highjump500-06:land"
+    ],
+    "hermesZones": null
+  },
+  "mobile": {
+    "label": "pixel7-nojump",
+    "viewport": {
+      "width": 412,
+      "height": 839
+    },
+    "resetCount": 0,
+    "deathCount": 0,
+    "endX": 1404.32,
+    "landings": [
+      {
+        "id": "d09-hermes-opening-gap",
+        "center": 403.44,
+        "feetY": 151.88,
+        "targetX": 403.44,
+        "targetY": 151.875
+      },
+      {
+        "id": "d09-hermes-highjump500-06",
+        "center": 1286.1,
+        "feetY": 233.5,
+        "targetX": 1281.84,
+        "targetY": 233.5
+      }
+    ],
+    "captures": [
+      "d09-hermes-opening-gap:approach",
+      "d09-hermes-opening-gap:launch",
+      "d09-hermes-opening-gap:land",
+      "d09-hermes-highjump500-06:approach",
+      "d09-hermes-highjump500-06:launch",
+      "d09-hermes-highjump500-06:land"
+    ],
+    "hermesZones": null
+  }
+}

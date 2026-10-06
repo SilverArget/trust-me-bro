@@ -63,13 +63,14 @@ function applyRuntimeRouteFixes(routes) {
   d09.highJumpZones = (d09.highJumpZones || []).filter(z => z.id !== "d09-highjump500-01" && z.id !== "d09-highjump500-03");
   d09.diveZones = (d09.diveZones || []).filter(z => z.id !== "d09-divingkong-02");
   d09.scriptedMoveZones = (d09.scriptedMoveZones || []).filter(z => !["d09-highjump500-01", "d09-divingkong-02", "d09-highjump500-03"].includes(z.id));
+  d09.hermesLaunchZones = [
+    { id: "d09-hermes-opening-gap", x1: 280, x2: 324, landX: 403.44, landY: 151.875, peakY: 58 },
+    { id: "d09-hermes-highjump500-06", x1: 950.64, x2: 1010.64, landX: 1281.84, landY: 233.5, peakY: 111.5 },
+  ];
   const openingPost = d09.groundSegments?.find(s => s.id === "d09-ir-03");
   if (openingPost) openingPost.w = 132.96;
   const g2Block = d09.groundSegments?.find(s => s.id === "d09-ir-40");
   if (g2Block) g2Block.w = 320;
-  if (!d09.groundSegments?.some(s => s.id === "d09-start-catch-floor")) {
-    d09.groundSegments.push({ id: "d09-start-catch-floor", x: 314.16, y: 151.875, w: 205.44, h: 360, kind: "ground", role: "opening-fallback" });
-  }
 }
 
 function routeSurfaces(route) {
