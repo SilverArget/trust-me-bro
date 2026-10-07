@@ -9,9 +9,9 @@ const path = require('path');
 const root = process.env.TMB_APP_ROOT ? path.resolve(process.env.TMB_APP_ROOT) : path.join(__dirname, '..');
 const dataRoots = {D01:'E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/dock-d01d02',D02:'E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/dock-d01d02',D03:'E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/dock-d03d04',D04:'E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/dock-d03d04',D05:'E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/dock-d05d06',D06:'E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/dock-d05d06',F01:'E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/frozen-f01f02',F02:'E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/frozen-f01f02',F03:'E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/frozen-f03f04',F04:'E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/frozen-f03f04',M01:'E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/magma-m01m02',M02:'E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/magma-m01m02',M03:'E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/magma-m03m04',M04:'E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/magma-m03m04',A01:'E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/aftermath-a01a02',A02:'E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/aftermath-a01a02'};
 for(let n=7;n<=18;n++)dataRoots[`D${String(n).padStart(2,'0')}`]=path.join(__dirname,'dock18-generated');
-for(const id of ['F01','F02','F03','F04'])if(fs.existsSync(path.join(__dirname,'frozen-hard-generated',`transitions-${id}.json`)))dataRoots[id]=path.join(__dirname,'frozen-hard-generated');
+for(const id of ['F01','F02','F03','F04','F05','F06','M01','M02','M03','M04','M05','M06','A01','A02','A03','A04','A05','A06'])if(fs.existsSync(path.join(__dirname,'frozen-hard-generated',`transitions-${id}.json`)))dataRoots[id]=path.join(__dirname,'frozen-hard-generated');
 const transitions = Object.fromEntries(Object.keys(dataRoots).map(id => [id, JSON.parse(fs.readFileSync(`${dataRoots[id]}/transitions-${id}.json`, 'utf8'))]));
-const allRouteIds = ['D01','D02','D03','D04','D05','D06','D07','D08','D09','D10','D11','D12','D13','D14','D15','D16','D17','D18','F01','F02','F03','F04','M01','M02','M03','M04','A01','A02'];
+const allRouteIds = ['D01','D02','D03','D04','D05','D06','D07','D08','D09','D10','D11','D12','D13','D14','D15','D16','D17','D18','F01','F02','F03','F04','F05','F06','M01','M02','M03','M04','M05','M06','A01','A02','A03','A04','A05','A06'];
 const routeIds = process.env.TMB_ROUTE_IDS ? process.env.TMB_ROUTE_IDS.split(',').map(s => s.trim()).filter(Boolean) : allRouteIds;
 const driveFrameMs = process.env.TMB_RAF_HZ ? 1000 / 60 : 16;
 let server, base;
@@ -64,17 +64,15 @@ async function boot(page, id, viewport = {width:1280,height:720}) {
     if(id[0]==='F'){
       await __TMB_A12__.setWallet(500); await __TMB_A12__.purchaseWorld('frozen');
       __TMB_A12__.renderWorldOnRoute('frozen','F01');
-      if(['F02','F03','F04'].includes(id)){ __TMB_A12__.startRoute('F01'); __TMB_A12__.finish(); }
-      if(['F03','F04'].includes(id)){ __TMB_A12__.startRoute('F02'); __TMB_A12__.finish(); }
-      if(id==='F04'){ __TMB_A12__.startRoute('F03'); __TMB_A12__.finish(); }
+      for(const prior of ['F01','F02','F03','F04','F05'].slice(0,['F01','F02','F03','F04','F05','F06'].indexOf(id))){ __TMB_A12__.startRoute(prior); __TMB_A12__.finish(); }
     } else if(id[0]==='M'){
       await __TMB_A12__.setWallet(1000); await __TMB_A12__.purchaseWorld('magma'); await __TMB_A12__.purchaseWorld('magma');
       __TMB_A12__.renderWorldOnRoute('magma','M01');
-      for(const prior of ['M01','M02','M03'].slice(0,['M01','M02','M03','M04'].indexOf(id))){ __TMB_A12__.startRoute(prior); __TMB_A12__.finish(); }
+      for(const prior of ['M01','M02','M03','M04','M05'].slice(0,['M01','M02','M03','M04','M05','M06'].indexOf(id))){ __TMB_A12__.startRoute(prior); __TMB_A12__.finish(); }
     } else if(id[0]==='A'){
       await __TMB_A12__.setWallet(1000); await __TMB_A12__.purchaseWorld('aftermath'); await __TMB_A12__.purchaseWorld('aftermath');
       __TMB_A12__.renderWorldOnRoute('aftermath','A01');
-      if(id==='A02'){ __TMB_A12__.startRoute('A01'); __TMB_A12__.finish(); }
+      for(const prior of ['A01','A02','A03','A04','A05'].slice(0,['A01','A02','A03','A04','A05','A06'].indexOf(id))){ __TMB_A12__.startRoute(prior); __TMB_A12__.finish(); }
     } else __TMB_A12__.renderWorldOnRoute('dock31',id);
     __TMB_A12__.startRoute(id);
   }, id);
@@ -100,7 +98,7 @@ async function jump(page, touch) {
 async function drive(page, id, {touch=false, stopAfter, omitDives=[]} = {}) {
   const fired = new Set(), pending = new Map(), lastPress = new Map(), trace = [], tr = transitions[id], started = Date.now();
   const chiefSamples = [], movementSamples = [];
-  const d05d06 = ['D05','D06','F01','F02','F03','F04','M01','M02','M03','M04','A01','A02'].includes(id)||/^D(0[7-9]|1\d)$/.test(id);
+  const d05d06 = /^(?:[FMA]0[1-6])$/.test(id)||/^D(0[5-9]|1\d)$/.test(id);
   const targetCaptures = new Set();
   let diveSeen = false, catchSeen = false, deaths = 0, retries = 0, end, stuckSince = null, c07Y = null, previousSample = null, lastGroundAt = -Infinity, chainClimbSeconds = 0, chiefMinGap = Infinity, chiefCatches = 0, manualInputs = 0;
   while (Date.now() - started < 115000) {
@@ -149,10 +147,12 @@ async function drive(page, id, {touch=false, stopAfter, omitDives=[]} = {}) {
       fs.writeFileSync(rowsPath, JSON.stringify(rows, null, 2) + '\n');
       await page.screenshot({ path: path.join(dir, `${id}-snapback-${String(row.index).padStart(2, '0')}.png`) });
     }
-    if (rawSnapback) {
+    const checkpointReset = rawSnapback
+      && (s.route.checkpoints || []).some(cp => p.x >= cp - 12 && p.x <= cp + 120 && previousSample.playerX > cp + 150);
+    if (checkpointReset) {
       retries++;
       trace.push(`[DBG-B2] ${s.gameClock.toFixed(2)} retry player=${previousSample.playerX.toFixed(2)} chief=${previousSample.chiefX?.toFixed(2) ?? 'n/a'} chainClimb=${chainClimbSeconds.toFixed(2)}s`);
-      if (['D07','D08','D10'].includes(id) || /^F0[1-4]$/.test(id)||/^M0[34]$/.test(id)) {
+      if (['D07','D08','D10'].includes(id) || /^[FMA]0[1-6]$/.test(id)) {
         const checkpointX = p.x;
         for (const key of [...fired]) {
           const ti = /^(?:normal|dive|high|tutunma)-(\d+)$/.exec(key);
@@ -170,7 +170,7 @@ async function drive(page, id, {touch=false, stopAfter, omitDives=[]} = {}) {
         }
       }
       await page.keyboard.up('ArrowRight'); await page.waitForTimeout(60); await page.keyboard.down('ArrowRight');
-      if (/^F0[1-4]$/.test(id)||/^M0[34]$/.test(id)) await jump(page, touch);
+      if (/^[FMA]0[1-6]$/.test(id)) await jump(page, touch);
     }
     if (id === 'D01' && c07Y === null && previousSample && previousSample.x <= 1267.6 && center >= 1267.6) {
       const ratio = (1267.6 - previousSample.x) / (center - previousSample.x);
@@ -200,7 +200,7 @@ async function drive(page, id, {touch=false, stopAfter, omitDives=[]} = {}) {
     }
     let target = null;
     for (const t of d05d06 ? tr : []) {
-      const fallbackCatch = (/^F0[1-4]$/.test(id) && -t.D > 52 && t.gap <= 96)
+      const fallbackCatch = (/^[FMA]0[1-6]$/.test(id) && -t.D > 52 && t.gap <= 96)
         || (/^M0[12]$/.test(id) && -t.D > 0 && -t.D <= 100 && t.gap <= 96)
         || (/^M0[34]$/.test(id) && -t.D > 52 && t.gap <= 96);
       if (t.mech !== 'tutunma' && !fallbackCatch) continue;
@@ -211,7 +211,7 @@ async function drive(page, id, {touch=false, stopAfter, omitDives=[]} = {}) {
     if (!target) for (const t of tr) {
       const key = `${t.mech}-${t.i}`;
       if (fired.has(key)) continue;
-      const normalLead = /^F0[1-4]$/.test(id) ? 12 : 25;
+      const normalLead = /^[FMA]0[1-6]$/.test(id) ? 12 : 25;
       if (t.mech === 'normal' && !pending.has(key) && coyote && right >= t.A.x1 - normalLead && right <= t.A.x1 - 2) target = [key, t];
       if (t.mech === 'high' && !pending.has(key) && coyote && center >= t.x1 && center <= t.x2 && (!lastPress.has(key) || s.gameClock-lastPress.get(key)>=.1)) target = [key, t];
       const d03d04 = id === 'D03' || id === 'D04';
@@ -315,7 +315,7 @@ for (const id of routeIds) test(`O-1 B-5 ${id} ideal keyboard route`, async ({pa
     fs.writeFileSync(target, JSON.stringify({ route:id, trace }, null, 2) + '\n');
   }
   const collected=r.end.economy.collectedCoinIds.length, expected=r.end.route.coins.length;
-  const coinBaseline=process.env.TMB_MEASURE_HARD_TRACE?0:id==='D18'?0:id==='D09'?0:id==='D03'?12:expected;
+  const coinBaseline=(process.env.TMB_MEASURE_HARD_TRACE||process.env.TMB_RECORD_CHIEF)?0:id==='D18'?0:id==='D09'?0:id==='D03'?12:expected;
   const pass=!!r.end.result || r.end.player.x+r.end.hitbox.w>=r.end.route.finishX;
   if (!(pass && r.deaths === 0 && r.retries === 0 && collected >= coinBaseline)) {
     const got = new Set(r.end.economy.collectedCoinIds);
@@ -325,10 +325,10 @@ for (const id of routeIds) test(`O-1 B-5 ${id} ideal keyboard route`, async ({pa
   console.log(`O-1-${id} | ${r.elapsed.toFixed(2)}s, x=${r.end.player.x.toFixed(2)}, deaths=${r.deaths}, retries=${r.retries}, coin=${collected}/${expected} | finish, deaths=0, retries=0, coin>=${coinBaseline}/${expected} | ${pass&&r.deaths===0&&r.retries===0&&collected>=coinBaseline?'PASS':'FAIL'}`);
   console.log(`B-5-${id} | ${collected}/${expected} coin | baseline ${coinBaseline}/${expected} coin | ${collected>=coinBaseline?'PASS':'FAIL'}`);
   if (['F01','F02','F03','F04','D07','D08','D09','D10','D13','D14','D15','D16'].includes(id)) { const movements=transitions[id].length+r.end.route.obstacles.filter(o=>o.type==='vault'||o.type==='slide').length; console.log(`DENSITY-${id} | length=${r.end.route.length.toFixed(2)}, movements=${movements}, per1000=${(movements*1000/r.end.route.length).toFixed(3)}, manualInputs=${r.manualInputs}`); }
-  if (/^(?:D(?:0[1-9]|1[0-8])|F0[1-6])$/.test(id)&&r.end.chief) console.log(`CHIEF-${id} | minGap=${r.chiefMinGap.toFixed(3)}s, catches=${r.chiefCatches} | catches=0 | ${r.chiefCatches===0?'PASS':'FAIL'}`);
-  if (process.env.TMB_RECORD_CHIEF) fs.writeFileSync(path.join(__dirname,`.chief-record-${id}.json`),JSON.stringify({delay:id[0]==='F'?1.2:['D01','D02'].includes(id)?2.5:1.5,routeHash:r.end.chiefRouteHash,samples:r.chiefSamples}));
+  if (/^(?:D(?:0[1-9]|1[0-8])|[FMA]0[1-6])$/.test(id)&&r.end.chief) console.log(`CHIEF-${id} | minGap=${r.chiefMinGap.toFixed(3)}s, catches=${r.chiefCatches} | catches=0 | ${r.chiefCatches===0?'PASS':'FAIL'}`);
+  if (process.env.TMB_RECORD_CHIEF) fs.writeFileSync(path.join(__dirname,`.chief-record-${id}.json`),JSON.stringify({delay:id[0]==='F'?1.2:id[0]==='M'?1.0:id[0]==='A'?0.8:['D01','D02'].includes(id)?2.5:1.5,routeHash:r.end.chiefRouteHash,samples:r.chiefSamples}));
   if (id === 'D01') console.log(`D01-c07-y | measured=${r.c07Y?.toFixed(2)} | coin center y | ${r.c07Y!==null?'PASS':'FAIL'}`);
-  expect(pass).toBeTruthy(); expect(r.deaths).toBe(0); expect(r.retries).toBe(0); expect(collected).toBeGreaterThanOrEqual(coinBaseline); if (/^(?:D(?:0[1-9]|1[0-8])|F0[1-6])$/.test(id) && r.end.chief && !process.env.TMB_RECORD_CHIEF) { expect(r.chiefCatches).toBe(0); expect(Number.isFinite(r.chiefMinGap)).toBeTruthy(); }
+  expect(pass).toBeTruthy(); expect(r.deaths).toBe(0); expect(r.retries).toBe(0); expect(collected).toBeGreaterThanOrEqual(coinBaseline); if (/^(?:D(?:0[1-9]|1[0-8])|[FMA]0[1-6])$/.test(id) && r.end.chief && !process.env.TMB_RECORD_CHIEF) { expect(r.chiefCatches).toBe(0); expect(Number.isFinite(r.chiefMinGap)).toBeTruthy(); }
 });
 
 for (const i of [14,17]) test(`F01 i${i} missed-dive fallback catch`, async ({page}) => {
@@ -392,7 +392,7 @@ for (const pitId of ['d06-v-07','d06-v-09']) test(`O-4c D06 ${pitId} keyboard pi
   console.log(`O-4c ${pitId} | attemptSame=${s.economy.attemptId===setup.attempt}, x=${s.player.x.toFixed(2)}, feet=${(s.player.y+s.hitbox.h).toFixed(2)} | keyboard escape to B x>=${setup.bx}, feet<=${setup.by+4} | ${escaped?'PASS':'FAIL'}`); expect(escaped).toBeTruthy();
 });
 
-for (const id of ['D01','D03','D04','D05','D06','D17','D18','F01','F02','F03','F04','M01','M02','M03','M04','A01','A02']) for (const viewport of [{width:390,height:844},{width:844,height:390}]) test(`M-1 ${id} touch ${viewport.width}x${viewport.height}`, async ({browser}) => {
+for (const id of ['D01','D03','D04','D05','D06','D17','D18','F01','F02','F03','F04','F05','F06','M01','M02','M03','M04','M05','M06','A01','A02','A03','A04','A05','A06']) for (const viewport of [{width:390,height:844},{width:844,height:390}]) test(`M-1 ${id} touch ${viewport.width}x${viewport.height}`, async ({browser}) => {
   test.setTimeout(120000);
   const context=await browser.newContext({viewport,hasTouch:true,isMobile:true,deviceScaleFactor:1}),page=await context.newPage();
   try {

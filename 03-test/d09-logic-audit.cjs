@@ -105,7 +105,7 @@ function applyRuntimeRouteFixes(routes) {
 }
 
 function applyGlobalLogicRules(routes) {
-  const selected = Object.keys(routes).filter(id => /^(?:D(?:0[1-9]|1[0-8])|F0[1-4])$/.test(id) && id !== "D09").sort();
+  const selected = Object.keys(routes).filter(id => /^(?:D(?:0[1-9]|1[0-8])|[FMA]0[1-6])$/.test(id) && id !== "D09").sort();
   for (const id of selected) {
     const route = routes[id];
     if (!route) continue;
@@ -490,7 +490,7 @@ function main() {
   const json = process.argv.includes("--json");
   const dumpRoute = process.argv.includes("--dump-route");
   const ids = process.argv.slice(2).filter(arg => !arg.startsWith("--"));
-  const selected = ids.length ? ids : Object.keys(routes).filter(id => /^(?:D(?:0[1-9]|1[0-8])|F0[1-4])$/.test(id)).sort();
+  const selected = ids.length ? ids : Object.keys(routes).filter(id => /^(?:D(?:0[1-9]|1[0-8])|[FMA]0[1-6])$/.test(id)).sort();
   if (dumpRoute) {
     console.log(JSON.stringify(Object.fromEntries(selected.map(id => [id, routes[id]])), null, 2));
     return;
