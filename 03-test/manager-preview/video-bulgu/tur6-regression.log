@@ -1,0 +1,494 @@
+
+Running 37 tests using 5 workers
+
+(node:3688) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+(node:25508) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+(node:33268) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+(node:9384) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+(node:8320) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1/37] 03-test\chief-runner.spec.cjs:11:1 › all recorded chief paths are fresh; an in-memory coordinate mutation is rejected
+[2/37] 03-test\hermes-tum-oyun.spec.cjs:172:1 › Hermes shoes replace jump hints locally
+[3/37] 03-test\host-lock.spec.cjs:48:1 › platform host can run inside an external partner iframe
+[4/37] 03-test\d09-sarkan.spec.cjs:71:1 › D09 hanging slide geometry is on flat ground, not the step transition
+[5/37] 03-test\ios-tamekran.spec.cjs:150:3 › iOS fullscreen help button › WebKit iPhone API yokken dugme ve TR kart; kart pause/resume yapar
+[6/37] 03-test\ios-tamekran.spec.cjs:175:3 › iOS fullscreen help button › standalone iPhone acilisinda dugme gizli
+[7/37] 03-test\ios-tamekran.spec.cjs:190:3 › iOS fullscreen help button › Chromium Pixel 7 eski requestFullscreen yolunu kullanir
+[8/37] 03-test\host-lock.spec.cjs:54:1 › CrazyGames app host is classified as a platform host
+[9/37] 03-test\host-lock.spec.cjs:64:1 › first-party Pages host is blocked inside an external iframe
+03-test\d09-sarkan.spec.cjs:71:1 › D09 hanging slide geometry is on flat ground, not the step transition
+D09-SARKAN-GEOMETRY sonra {"rows":[{"id":"d09-ir-slide-01","x":3820,"bar":{"x0":3804,"x1":3884},"baseY":277.375,"support":{"id":"d09-ir-26","x0":3775.44,"x1":4255.4400000000005,"y":277.375,"overlap":80}},{"id":"d09-ir-slide-02","x":3932,"bar":{"x0":3916,"x1":3996},"baseY":277.375,"support":{"id":"d09-ir-26","x0":3775.44,"x1":4255.4400000000005,"y":277.375,"overlap":80}},{"id":"d09-ir-slide-03","x":4044,"bar":{"x0":4028,"x1":4108},"baseY":277.375,"support":{"id":"d09-ir-26","x0":3775.44,"x1":4255.4400000000005,"y":277.375,"overlap":80}}],"transitionOverlap":[{"id":"d09-ir-slide-01","overlap":0},{"id":"d09-ir-slide-02","overlap":0},{"id":"d09-ir-slide-03","overlap":0}]}
+
+03-test\chief-runner.spec.cjs:11:1 › all recorded chief paths are fresh; an in-memory coordinate mutation is rejected
+HASH-D01 | b5042d812754789b314f870999cd306f914ba22bea67f52dbc762b288ea371f3 | PASS
+
+HASH-D02 | 7cfa1beabca7071a55b094b277d27f06f8a579bfd63f08d88d4158cc97a57fa9 | PASS
+
+HASH-D03 | 687c8752848d8c40feb76b8db20c60ac4537fa9c8fae4c389b03aa3dbd621239 | PASS
+
+[10/37] 03-test\d09-sarkan.spec.cjs:110:1 › D09 catchable step is a grounded column, not a floating block
+HASH-D04 | d470ee08d831ff674b2baee0f29d4c4b7d64cde84a8f8d785ab6999303c34eee | PASS
+
+HASH-D05 | d17e04d601aae3bc3bd520a75a66f87053dd2cbea3f11bd4cb5d5c202e506674 | PASS
+
+HASH-D06 | c81f979eae54b3c73206b1a71c9ca66fd7e3b76e979a447e0b87128f6ea83747 | PASS
+
+HASH-D07 | 1864388fa6142361717229eba4e3798e1753f96e68fd924d56e3ca0fe76d3f7b | PASS
+
+HASH-D08 | 66d0a2c121425d000e6842855357aee9b41a5bdcd7ecfa80a32b6c45d83779bb | PASS
+
+HASH-D09 | 6514cb0f6686ea5b0cbb49c6d13f81395f4445c71ea8e6d7da5b4f81dcf0cf2b | PASS
+
+HASH-D10 | 6532bb63a239caa88b8ae73186f87d19c3f1a00729b88638da8148fdefde26d4 | PASS
+
+HASH-D11 | 542476c36bf5cdbc1e9fba52e00dded4f456aa39454b28c181e033564f97aed4 | PASS
+
+HASH-D12 | de3ada4d3826d5032400c610e117e35cfe38cb6dde9a5fa4d68ce79da790795a | PASS
+
+HASH-D13 | bc66081459119bc6d9b5791d6732200fe5ea6ad5cb7a02b2749b2d0a7e8a15db | PASS
+
+HASH-D14 | b44396a0db9331bfaba2093dc219a6bf75994681dad70f61a97be924e47f50a4 | PASS
+
+HASH-D15 | b4776506fab73d882917be60c4c929cb48d7b1863b7d74a7ec25aff6a44b3703 | PASS
+
+HASH-D16 | 07b339d9cd62096c2bc6d17b4c82249c3dfd371b1985b9c9ab0861b97dbf867c | PASS
+
+HASH-D17 | 00c4e26ab981c54f5089b5afa66255461c8689fc7d0b2d8cba7310379723ed93 | PASS
+
+HASH-D18 | ae7870cea44cf35ae8f411a0d6ca674f843efd77ce7646bcf6f67b5be157e416 | PASS
+
+HASH-F01 | 53544d26c537ddd7b13d61a659934553ee1dd488fc894dd00b42f43e4f68075b | PASS
+
+HASH-F02 | 3e633f8ef9ecfb1c361c1d5e6374dd4b1db00c9fe6aaee2b0de2b4dd56486d2d | PASS
+
+HASH-F03 | 9d3c9808e49a8b4c0cbe922d66d21380e4b8ec32714005b37e10cf9fa2314482 | PASS
+
+HASH-F04 | 9b3085e54a7dbfa2e4ce957840150b43328a1d67182b041ecaf28c47b877fe49 | PASS
+
+HASH-negative-D01 | stored=b5042d812754789b314f870999cd306f914ba22bea67f52dbc762b288ea371f3 current=c5ff0c9e64d9c163a4db8b67fab941507dc574034a6840e31c39f1223ccd94bf | RED-as-expected
+
+[11/37] 03-test\host-lock.spec.cjs:69:1 › unlisted copied host is always blocked
+[12/37] 03-test\chief-runner.spec.cjs:14:3 › D01 post-ladder joins recorded route with configured gap
+[13/37] 03-test\host-lock.spec.cjs:75:1 › browser translation is disabled without changing language menu options
+[14/37] 03-test\ios-tamekran.spec.cjs:212:3 › iOS fullscreen help button › platform iframe dugme ve iOS karti gostermez, dokunusta fullscreen istemez
+03-test\d09-sarkan.spec.cjs:110:1 › D09 catchable step is a grounded column, not a floating block
+D09-SARKAN-STEP sonra {"step":{"id":"d09-ir-23","x":3266.64,"y":234.625,"w":48,"h":303.675,"kind":"ground"},"bottom":538.3,"touches":[],"reachesGround":true}
+
+[15/37] 03-test\d09-sarkan.spec.cjs:131:1 › D09 player clears the hanging slides with normal right plus slide input
+03-test\hermes-tum-oyun.spec.cjs:172:1 › Hermes shoes replace jump hints locally
+HERMES-SHOE {"route":"D01","id":"hermes-d01-dz-01","sourceId":"d01-dz-01","kind":"dive","landX":1048,"landY":-256.45,"endX":1060.72,"endY":-256.45,"reset":0,"death":0,"launched":true,"landed":true,"reason":"landed"}
+
+03-test\chief-runner.spec.cjs:14:3 › D01 post-ladder joins recorded route with configured gap
+JOIN-D01 post-ladder | phase=running, delay=2.5, gap=2.517, catches=0 | PASS
+
+[16/37] 03-test\chief-runner.spec.cjs:15:3 › D01 post-ladder never rewinds behind ladder x
+03-test\hermes-tum-oyun.spec.cjs:172:1 › Hermes shoes replace jump hints locally
+HERMES-SHOE {"route":"D01","id":"hermes-d01-dz-02","sourceId":"d01-dz-02","kind":"dive","landX":5985.67,"landY":145.43,"endX":5989.93,"endY":145.43,"reset":0,"death":0,"launched":true,"landed":true,"reason":"landed"}
+
+HERMES-SHOE {"route":"D02","id":"hermes-d02-dz-01","sourceId":"d02-dz-01","kind":"dive","landX":2184.7,"landY":362.36,"endX":2200.94,"endY":362.36,"reset":0,"death":0,"launched":true,"landed":true,"reason":"landed"}
+
+HERMES-SHOE {"route":"D03","id":"hermes-d03-dz-01","sourceId":"d03-dz-01","kind":"dive","landX":3029.08,"landY":301.4,"endX":3041.09,"endY":301.4,"reset":0,"death":0,"launched":true,"landed":true,"reason":"landed"}
+
+03-test\chief-runner.spec.cjs:15:3 › D01 post-ladder never rewinds behind ladder x
+NO-REWIND-D01 | entryX=1256.25, minX=1268.94, maxDx=8.57 | PASS
+
+[17/37] 03-test\chief-runner.spec.cjs:16:3 › D01 pre-ladder pause delay-0.5 has no visible/catching chief
+03-test\hermes-tum-oyun.spec.cjs:172:1 › Hermes shoes replace jump hints locally
+HERMES-SHOE {"route":"D03","id":"hermes-d03-dz-02","sourceId":"d03-dz-02","kind":"dive","landX":4168.12,"landY":347,"endX":4176.53,"endY":347,"reset":0,"death":0,"launched":true,"landed":true,"reason":"crossed-land-x"}
+
+HERMES-SHOE {"route":"D03","id":"hermes-d03-dz-03","sourceId":"d03-dz-03","kind":"dive","landX":4576.12,"landY":282.2,"endX":4575.49,"endY":283.76,"reset":0,"death":0,"launched":true,"landed":true,"reason":"crossed-land-x"}
+
+HERMES-SHOE {"route":"D04","id":"hermes-d04-dz-01","sourceId":"d04-dz-01","kind":"dive","landX":3846.4,"landY":-83.8,"endX":3854.89,"endY":-83.8,"reset":0,"death":0,"launched":true,"landed":true,"reason":"landed"}
+
+HERMES-SHOE {"route":"D04","id":"hermes-d04-dz-02","sourceId":"d04-dz-02","kind":"dive","landX":4922.8,"landY":-155.8,"endX":4927.08,"endY":-155.8,"reset":0,"death":0,"launched":true,"landed":true,"reason":"landed"}
+
+03-test\d09-sarkan.spec.cjs:131:1 › D09 player clears the hanging slides with normal right plus slide input
+D09-SARKAN-RUN | x=4118.35, deaths=0, moves=, slides=slide-d09-ir-slide-01,slide-d09-ir-slide-02,slide-d09-ir-slide-03 | right+jump+slide through cluster | PASS
+
+[18/37] 03-test\d09-sarkan.spec.cjs:195:1 › D09 manager screenshots for hanging slide point
+03-test\hermes-tum-oyun.spec.cjs:172:1 › Hermes shoes replace jump hints locally
+HERMES-SHOE {"route":"D04","id":"hermes-d04-dz-03","sourceId":"d04-dz-03","kind":"dive","landX":7634.8,"landY":455,"endX":7643.32,"endY":455,"reset":0,"death":0,"launched":true,"landed":true,"reason":"landed"}
+
+HERMES-SHOE {"route":"D05","id":"hermes-d05-dz-01","sourceId":"d05-dz-01","kind":"dive","landX":2598.4,"landY":-489.63,"endX":2602.63,"endY":-489.63,"reset":0,"death":0,"launched":true,"landed":true,"reason":"landed"}
+
+HERMES-SHOE {"route":"D05","id":"hermes-d05-dz-02","sourceId":"d05-dz-02","kind":"dive","landX":3952.24,"landY":-265,"endX":3960.73,"endY":-265,"reset":0,"death":0,"launched":true,"landed":true,"reason":"landed"}
+
+HERMES-SHOE {"route":"D05","id":"hermes-d05-dz-03","sourceId":"d05-dz-03","kind":"dive","landX":7240.96,"landY":365,"endX":7240.96,"endY":365,"reset":0,"death":0,"launched":true,"landed":true,"reason":"crossed-land-x"}
+
+03-test\chief-runner.spec.cjs:16:3 › D01 pre-ladder pause delay-0.5 has no visible/catching chief
+PRE-LADDER-D01 delay-0.5 | active=false, phase=waiting, catches=0 | PASS
+
+[19/37] 03-test\chief-runner.spec.cjs:14:3 › D05 post-ladder joins recorded route with configured gap
+03-test\hermes-tum-oyun.spec.cjs:172:1 › Hermes shoes replace jump hints locally
+HERMES-SHOE {"route":"D06","id":"hermes-d06-dz-01","sourceId":"d06-dz-01","kind":"dive","landX":1206.4,"landY":117.75,"endX":1218.49,"endY":110.05,"reset":0,"death":0,"launched":true,"landed":true,"reason":"crossed-land-x"}
+
+HERMES-SHOE {"route":"D06","id":"hermes-d06-dz-02","sourceId":"d06-dz-02","kind":"dive","landX":1423.6,"landY":44.63,"endX":1431.32,"endY":44.63,"reset":0,"death":0,"launched":true,"landed":true,"reason":"crossed-land-x"}
+
+HERMES-SHOE {"route":"D06","id":"hermes-d06-dz-03","sourceId":"d06-dz-03","kind":"dive","landX":2057.8,"landY":291.75,"endX":2062.03,"endY":291.75,"reset":0,"death":0,"launched":true,"landed":true,"reason":"landed"}
+
+03-test\chief-runner.spec.cjs:14:3 › D05 post-ladder joins recorded route with configured gap
+JOIN-D05 post-ladder | phase=running, delay=2.5, gap=2.533, catches=0 | PASS
+
+03-test\hermes-tum-oyun.spec.cjs:172:1 › Hermes shoes replace jump hints locally
+HERMES-SHOE {"route":"D06","id":"hermes-d06-dz-04","sourceId":"d06-dz-04","kind":"dive","landX":4760.2,"landY":434.63,"endX":4764.43,"endY":434.63,"reset":0,"death":0,"launched":true,"landed":true,"reason":"landed"}
+
+[20/37] 03-test\chief-runner.spec.cjs:15:3 › D05 post-ladder never rewinds behind ladder x
+HERMES-SHOE {"route":"D07","id":"hermes-d07-dz-01","sourceId":"d07-dz-01","kind":"dive","landX":652,"landY":-7,"endX":656.26,"endY":-7,"reset":0,"death":0,"launched":true,"landed":true,"reason":"landed"}
+
+HERMES-SHOE {"route":"D07","id":"hermes-d07-dz-02","sourceId":"d07-dz-02","kind":"dive","landX":1804,"landY":151.38,"endX":1808.28,"endY":151.38,"reset":0,"death":0,"launched":true,"landed":true,"reason":"landed"}
+
+HERMES-SHOE {"route":"D07","id":"hermes-d07-hj-01","sourceId":"d07-hj-01","kind":"high","landX":2932,"landY":231.75,"endX":2933.55,"endY":231.75,"reset":0,"death":0,"launched":true,"landed":true,"reason":"crossed-land-x"}
+
+03-test\chief-runner.spec.cjs:15:3 › D05 post-ladder never rewinds behind ladder x
+NO-REWIND-D05 | entryX=1141.50, minX=1179.68, maxDx=8.53 | PASS
+
+[21/37] 03-test\chief-runner.spec.cjs:16:3 › D05 pre-ladder pause delay-0.5 has no visible/catching chief
+03-test\hermes-tum-oyun.spec.cjs:172:1 › Hermes shoes replace jump hints locally
+HERMES-SHOE {"route":"D07","id":"hermes-d07-dz-03","sourceId":"d07-dz-03","kind":"dive","landX":4619.2,"landY":318.25,"endX":4627.72,"endY":318.25,"reset":0,"death":0,"launched":true,"landed":true,"reason":"landed"}
+
+HERMES-SHOE {"route":"D07","id":"hermes-d07-dz-04a","sourceId":"d07-dz-04a","kind":"dive","landX":5117.2,"landY":207.75,"endX":5124.97,"endY":207.75,"reset":0,"death":0,"launched":true,"landed":true,"reason":"landed"}
+
+HERMES-SHOE {"route":"D07","id":"hermes-d07-dz-04","sourceId":"d07-dz-04","kind":"dive","landX":5974,"landY":455,"endX":5985.99,"endY":455,"reset":0,"death":0,"launched":true,"landed":true,"reason":"landed"}
+
+HERMES-SHOE {"route":"D08","id":"hermes-d08-dz-01","sourceId":"d08-dz-01","kind":"dive","landX":559.6,"landY":-421,"endX":563.88,"endY":-421,"reset":0,"death":0,"launched":true,"landed":true,"reason":"crossed-land-x"}
+
+HERMES-SHOE {"route":"D08","id":"hermes-d08-dz-02","sourceId":"d08-dz-02","kind":"dive","landX":814,"landY":-469,"endX":814,"endY":-469,"reset":0,"death":0,"launched":true,"landed":true,"reason":"crossed-land-x"}
+
+HERMES-SHOE {"route":"D08","id":"hermes-d08-dz-03","sourceId":"d08-dz-03","kind":"dive","landX":1312,"landY":-447.38,"endX":1312,"endY":-447.38,"reset":0,"death":0,"launched":true,"landed":true,"reason":"crossed-land-x"}
+
+HERMES-SHOE {"route":"D08","id":"hermes-d08-dz-04","sourceId":"d08-dz-04","kind":"dive","landX":2687.2,"landY":-327.38,"endX":2687.2,"endY":-327.38,"reset":0,"death":0,"launched":true,"landed":true,"reason":"crossed-land-x"}
+
+HERMES-SHOE {"route":"D08","id":"hermes-d08-dz-05-assist","sourceId":"d08-dz-05-assist","kind":"dive","landX":3095.2,"landY":-387.38,"endX":3102.93,"endY":-387.38,"reset":0,"death":0,"launched":true,"landed":true,"reason":"landed"}
+
+HERMES-SHOE {"route":"D08","id":"hermes-d08-dz-05b-assist","sourceId":"d08-dz-05b-assist","kind":"dive","landX":4043.2,"landY":-231.38,"endX":4051.72,"endY":-231.38,"reset":0,"death":0,"launched":true,"landed":true,"reason":"landed"}
+
+03-test\chief-runner.spec.cjs:16:3 › D05 pre-ladder pause delay-0.5 has no visible/catching chief
+PRE-LADDER-D05 delay-0.5 | active=false, phase=waiting, catches=0 | PASS
+
+[22/37] 03-test\chief-runner.spec.cjs:14:3 › D09 post-ladder joins recorded route with configured gap
+03-test\hermes-tum-oyun.spec.cjs:172:1 › Hermes shoes replace jump hints locally
+HERMES-SHOE {"route":"D08","id":"hermes-d08-dz-05","sourceId":"d08-dz-05","kind":"dive","landX":4043.2,"landY":-231.38,"endX":4051.72,"endY":-231.38,"reset":0,"death":0,"launched":true,"landed":true,"reason":"landed"}
+
+HERMES-SHOE {"route":"D08","id":"hermes-d08-dz-06-assist","sourceId":"d08-dz-06-assist","kind":"dive","landX":4367.2,"landY":-205,"endX":4374.92,"endY":-205,"reset":0,"death":0,"launched":true,"landed":true,"reason":"landed"}
+
+HERMES-SHOE {"route":"D08","id":"hermes-d08-dz-06","sourceId":"d08-dz-06","kind":"dive","landX":6043.6,"landY":32.63,"endX":6056.35,"endY":32.63,"reset":0,"death":0,"launched":true,"landed":true,"reason":"landed"}
+
+HERMES-SHOE {"route":"D08","id":"hermes-d08-dz-07-assist","sourceId":"d08-dz-07-assist","kind":"dive","landX":7032.4,"landY":11,"endX":7036.63,"endY":11,"reset":0,"death":0,"launched":true,"landed":true,"reason":"crossed-land-x"}
+
+HERMES-SHOE {"route":"D08","id":"hermes-d08-dz-07","sourceId":"d08-dz-07","kind":"dive","landX":8234.8,"landY":455,"endX":8242.52,"endY":455,"reset":0,"death":0,"launched":true,"landed":true,"reason":"landed"}
+
+03-test\chief-runner.spec.cjs:14:3 › D09 post-ladder joins recorded route with configured gap
+JOIN-D09 post-ladder | phase=running, delay=2.5, gap=2.567, catches=0 | PASS
+
+[23/37] 03-test\chief-runner.spec.cjs:15:3 › D09 post-ladder never rewinds behind ladder x
+03-test\hermes-tum-oyun.spec.cjs:172:1 › Hermes shoes replace jump hints locally
+HERMES-SHOE {"route":"D09","id":"d09-hermes-opening-gap","sourceId":"d09-opening-gap","kind":"gap","landX":403.44,"landY":151.88,"endX":411.16,"endY":151.88,"reset":0,"death":0,"launched":true,"landed":true,"reason":"landed"}
+
+HERMES-SHOE {"route":"D09","id":"hermes-d09-highjump500-06","sourceId":"d09-highjump500-06","kind":"high","landX":1281.84,"landY":233.5,"endX":1281.84,"endY":233.5,"reset":0,"death":0,"launched":true,"landed":true,"reason":"crossed-land-x"}
+
+HERMES-SHOE {"route":"D09","id":"hermes-d09-highjump500-11","sourceId":"d09-highjump500-11","kind":"high","landX":1962.64,"landY":106.25,"endX":1964.1,"endY":106.25,"reset":0,"death":0,"launched":true,"landed":true,"reason":"crossed-land-x"}
+
+HERMES-SHOE {"route":"D09","id":"hermes-d09-highjump500-25","sourceId":"d09-highjump500-25","kind":"high","landX":4516.24,"landY":398.63,"endX":4526.18,"endY":398.63,"reset":0,"death":0,"launched":true,"landed":true,"reason":"landed"}
+
+03-test\chief-runner.spec.cjs:15:3 › D09 post-ladder never rewinds behind ladder x
+NO-REWIND-D09 | entryX=1208.78, minX=1243.41, maxDx=14.75 | PASS
+
+[24/37] 03-test\chief-runner.spec.cjs:16:3 › D09 pre-ladder pause delay-0.5 has no visible/catching chief
+03-test\hermes-tum-oyun.spec.cjs:172:1 › Hermes shoes replace jump hints locally
+HERMES-SHOE {"route":"D09","id":"hermes-d09-highjump500-29","sourceId":"d09-highjump500-29","kind":"high","landX":5515.84,"landY":258.25,"endX":5514.79,"endY":257.37,"reset":0,"death":0,"launched":true,"landed":true,"reason":"crossed-land-x"}
+
+HERMES-SHOE {"route":"D09","id":"hermes-d09-highjump500-33","sourceId":"d09-highjump500-33","kind":"high","landX":5515.84,"landY":258.25,"endX":5520.96,"endY":258.25,"reset":0,"death":0,"launched":true,"landed":true,"reason":"landed"}
+
+HERMES-SHOE {"route":"D10","id":"hermes-d10-dz-01","sourceId":"d10-dz-01","kind":"dive","landX":376,"landY":-112.63,"endX":388,"endY":-112.63,"reset":0,"death":0,"launched":true,"landed":true,"reason":"landed"}
+
+HERMES-SHOE {"route":"D10","id":"hermes-d10-dz-02","sourceId":"d10-dz-02","kind":"dive","landX":911.68,"landY":-91,"endX":915.96,"endY":-91,"reset":0,"death":0,"launched":true,"landed":true,"reason":"landed"}
+
+HERMES-SHOE {"route":"D10","id":"hermes-d10-dz-03","sourceId":"d10-dz-03","kind":"dive","landX":2102.08,"landY":24.25,"endX":2118.35,"endY":24.25,"reset":0,"death":0,"launched":true,"landed":true,"reason":"landed"}
+
+HERMES-SHOE {"route":"D10","id":"hermes-d10-dz-05","sourceId":"d10-dz-05","kind":"dive","landX":4848.88,"landY":213.5,"endX":4861.63,"endY":213.5,"reset":0,"death":0,"launched":true,"landed":true,"reason":"landed"}
+
+03-test\chief-runner.spec.cjs:16:3 › D09 pre-ladder pause delay-0.5 has no visible/catching chief
+PRE-LADDER-D09 delay-0.5 | active=false, phase=waiting, catches=0 | PASS
+
+[25/37] 03-test\chief-runner.spec.cjs:14:3 › D12 post-ladder joins recorded route with configured gap
+03-test\hermes-tum-oyun.spec.cjs:172:1 › Hermes shoes replace jump hints locally
+HERMES-SHOE {"route":"D10","id":"hermes-d10-dz-06","sourceId":"d10-dz-06","kind":"dive","landX":5230.48,"landY":192,"endX":5242.46,"endY":192,"reset":0,"death":0,"launched":true,"landed":true,"reason":"landed"}
+
+HERMES-SHOE {"route":"D10","id":"hermes-d10-dz-06-assist","sourceId":"d10-dz-06-assist","kind":"dive","landX":5230.48,"landY":192,"endX":5234.74,"endY":192,"reset":0,"death":0,"launched":true,"landed":true,"reason":"landed"}
+
+HERMES-SHOE {"route":"D10","id":"hermes-d10-dz-07","sourceId":"d10-dz-07","kind":"dive","landX":5602.48,"landY":141.5,"endX":5606.47,"endY":141.5,"reset":0,"death":0,"launched":true,"landed":true,"reason":"crossed-land-x"}
+
+HERMES-SHOE {"route":"D10","id":"hermes-d10-dz-07-assist","sourceId":"d10-dz-07-assist","kind":"dive","landX":5602.48,"landY":141.5,"endX":5602.48,"endY":141.5,"reset":0,"death":0,"launched":true,"landed":true,"reason":"crossed-land-x"}
+
+HERMES-SHOE {"route":"D10","id":"hermes-d10-dz-08","sourceId":"d10-dz-08","kind":"dive","landX":6189.52,"landY":334.25,"endX":6197.24,"endY":334.25,"reset":0,"death":0,"launched":true,"landed":true,"reason":"landed"}
+
+HERMES-SHOE {"route":"D10","id":"hermes-d10-dz-09","sourceId":"d10-dz-09","kind":"dive","landX":7710.64,"landY":455,"endX":7726.88,"endY":455,"reset":0,"death":0,"launched":true,"landed":true,"reason":"landed"}
+
+03-test\chief-runner.spec.cjs:14:3 › D12 post-ladder joins recorded route with configured gap
+JOIN-D12 post-ladder | phase=running, delay=2.5, gap=2.501, catches=0 | PASS
+
+[26/37] 03-test\chief-runner.spec.cjs:15:3 › D12 post-ladder never rewinds behind ladder x
+03-test\hermes-tum-oyun.spec.cjs:172:1 › Hermes shoes replace jump hints locally
+HERMES-SHOE {"route":"D10","id":"hermes-d10-dz-10","sourceId":"d10-dz-10","kind":"dive","landX":8053.84,"landY":433.38,"endX":8058.07,"endY":433.38,"reset":0,"death":0,"launched":true,"landed":true,"reason":"crossed-land-x"}
+
+HERMES-SHOE {"route":"D10","id":"hermes-d10-dz-11","sourceId":"d10-dz-11","kind":"dive","landX":8606.56,"landY":454.25,"endX":8607.56,"endY":454.25,"reset":0,"death":0,"launched":true,"landed":true,"reason":"crossed-land-x"}
+
+HERMES-SHOE {"route":"D11","id":"hermes-d11-dz-01","sourceId":"d11-dz-01","kind":"dive","landX":492.4,"landY":-907.25,"endX":500.15,"endY":-907.25,"reset":0,"death":0,"launched":true,"landed":true,"reason":"landed"}
+
+03-test\chief-runner.spec.cjs:15:3 › D12 post-ladder never rewinds behind ladder x
+NO-REWIND-D12 | entryX=1071.30, minX=1104.55, maxDx=17.43 | PASS
+
+[27/37] 03-test\chief-runner.spec.cjs:16:3 › D12 pre-ladder pause delay-0.5 has no visible/catching chief
+03-test\hermes-tum-oyun.spec.cjs:172:1 › Hermes shoes replace jump hints locally
+HERMES-SHOE {"route":"D11","id":"hermes-d11-dz-02","sourceId":"d11-dz-02","kind":"dive","landX":1544.8,"landY":-1004.5,"endX":1537.52,"endY":-1004.5,"reset":0,"death":0,"launched":true,"landed":true,"reason":"landed"}
+
+HERMES-SHOE {"route":"D11","id":"hermes-d11-dz-03","sourceId":"d11-dz-03","kind":"dive","landX":2004.4,"landY":-1066.88,"endX":2008.66,"endY":-1066.88,"reset":0,"death":0,"launched":true,"landed":true,"reason":"landed"}
+
+HERMES-SHOE {"route":"D11","id":"hermes-d11-dz-04","sourceId":"d11-dz-04","kind":"dive","landX":2396.8,"landY":-1145.63,"endX":2396.8,"endY":-1145.63,"reset":0,"death":0,"launched":true,"landed":true,"reason":"crossed-land-x"}
+
+HERMES-SHOE {"route":"D11","id":"hermes-d11-dz-06","sourceId":"d11-dz-06","kind":"dive","landX":3862,"landY":-828,"endX":3873.98,"endY":-828,"reset":0,"death":0,"launched":true,"landed":true,"reason":"landed"}
+
+HERMES-SHOE {"route":"D11","id":"hermes-d11-dz-07","sourceId":"d11-dz-07","kind":"dive","landX":4841.2,"landY":-919.25,"endX":4839.13,"endY":-920.53,"reset":0,"death":0,"launched":true,"landed":true,"reason":"crossed-land-x"}
+
+HERMES-SHOE {"route":"D11","id":"hermes-d11-dz-08","sourceId":"d11-dz-08","kind":"dive","landX":6330.4,"landY":-25,"endX":6338.89,"endY":-25,"reset":0,"death":0,"launched":true,"landed":true,"reason":"landed"}
+
+HERMES-SHOE {"route":"D11","id":"hermes-d11-dz-09","sourceId":"d11-dz-09","kind":"dive","landX":8447.44,"landY":455,"endX":8451.7,"endY":455,"reset":0,"death":0,"launched":true,"landed":true,"reason":"landed"}
+
+03-test\chief-runner.spec.cjs:16:3 › D12 pre-ladder pause delay-0.5 has no visible/catching chief
+PRE-LADDER-D12 delay-0.5 | active=false, phase=waiting, catches=0 | PASS
+
+[28/37] 03-test\chief-runner.spec.cjs:19:31 › D15 t~4s pause delay-0.5 does not catch
+03-test\hermes-tum-oyun.spec.cjs:172:1 › Hermes shoes replace jump hints locally
+HERMES-SHOE {"route":"D11","id":"hermes-d11-dz-10","sourceId":"d11-dz-10","kind":"dive","landX":9405.04,"landY":275.75,"endX":9405.04,"endY":275.75,"reset":0,"death":0,"launched":true,"landed":true,"reason":"crossed-land-x"}
+
+HERMES-SHOE {"route":"D12","id":"hermes-d12-dz-01","sourceId":"d12-dz-01","kind":"dive","landX":496,"landY":-266.25,"endX":500.23,"endY":-266.25,"reset":0,"death":0,"launched":true,"landed":true,"reason":"crossed-land-x"}
+
+HERMES-SHOE {"route":"D12","id":"hermes-d12-dz-02","sourceId":"d12-dz-02","kind":"dive","landX":875.2,"landY":-325,"endX":887.18,"endY":-325,"reset":0,"death":0,"launched":true,"landed":true,"reason":"landed"}
+
+HERMES-SHOE {"route":"D12","id":"hermes-d12-dz-03","sourceId":"d12-dz-03","kind":"dive","landX":1303.6,"landY":-440.25,"endX":1291.32,"endY":-440.25,"reset":0,"death":0,"launched":true,"landed":true,"reason":"landed"}
+
+03-test\chief-runner.spec.cjs:19:31 › D15 t~4s pause delay-0.5 does not catch
+PAUSE-D15-T4 delay-0.5 | playerT=4.000, chiefT=-2.500, catches=0 | PASS
+
+[29/37] 03-test\chief-runner.spec.cjs:19:31 › D18 t~4s pause delay-0.5 does not catch
+03-test\hermes-tum-oyun.spec.cjs:172:1 › Hermes shoes replace jump hints locally
+HERMES-SHOE {"route":"D12","id":"hermes-d12-dz-04","sourceId":"d12-dz-04","kind":"dive","landX":2120.8,"landY":-283,"endX":2125.06,"endY":-283,"reset":0,"death":0,"launched":true,"landed":true,"reason":"landed"}
+
+HERMES-SHOE {"route":"D12","id":"hermes-d12-dz-06","sourceId":"d12-dz-06","kind":"dive","landX":3418.24,"landY":-75.38,"endX":3418.24,"endY":-75.38,"reset":0,"death":0,"launched":true,"landed":true,"reason":"crossed-land-x"}
+
+HERMES-SHOE {"route":"D12","id":"hermes-d12-dz-07","sourceId":"d12-dz-07","kind":"dive","landX":4746.4,"landY":299,"endX":4754.89,"endY":299,"reset":0,"death":0,"launched":true,"landed":true,"reason":"landed"}
+
+HERMES-SHOE {"route":"D12","id":"hermes-d12-dz-08","sourceId":"d12-dz-08","kind":"dive","landX":5487.28,"landY":347,"endX":5487.28,"endY":347,"reset":0,"death":0,"launched":true,"landed":true,"reason":"crossed-land-x"}
+
+HERMES-SHOE {"route":"D12","id":"hermes-d12-dz-09","sourceId":"d12-dz-09","kind":"dive","landX":6608.08,"landY":336.25,"endX":6612.31,"endY":336.25,"reset":0,"death":0,"launched":true,"landed":true,"reason":"landed"}
+
+03-test\chief-runner.spec.cjs:19:31 › D18 t~4s pause delay-0.5 does not catch
+PAUSE-D18-T4 delay-0.5 | playerT=4.033, chiefT=-2.500, catches=0 | PASS
+
+[30/37] 03-test\chief-runner.spec.cjs:21:1 › mid-climb vertical offset uses monotonic x fallback without early catch
+03-test\hermes-tum-oyun.spec.cjs:172:1 › Hermes shoes replace jump hints locally
+HERMES-SHOE {"route":"D13","id":"hermes-d13-dz-01","sourceId":"d13-dz-01","kind":"dive","landX":415.6,"landY":-237.38,"endX":423.31,"endY":-237.38,"reset":0,"death":0,"launched":true,"landed":true,"reason":"landed"}
+
+HERMES-SHOE {"route":"D13","id":"hermes-d13-dz-02","sourceId":"d13-dz-02","kind":"dive","landX":876.4,"landY":-316.63,"endX":880.66,"endY":-316.63,"reset":0,"death":0,"launched":true,"landed":true,"reason":"crossed-land-x"}
+
+HERMES-SHOE {"route":"D13","id":"hermes-d13-dz-03","sourceId":"d13-dz-03","kind":"dive","landX":1198,"landY":-391,"endX":1202.23,"endY":-391,"reset":0,"death":0,"launched":true,"landed":true,"reason":"crossed-land-x"}
+
+HERMES-SHOE {"route":"D13","id":"hermes-d13-dz-04","sourceId":"d13-dz-04","kind":"dive","landX":1723.6,"landY":-218.25,"endX":1735.58,"endY":-218.25,"reset":0,"death":0,"launched":true,"landed":true,"reason":"landed"}
+
+HERMES-SHOE {"route":"D13","id":"hermes-d13-dz-05","sourceId":"d13-dz-05","kind":"dive","landX":3112,"landY":174.25,"endX":3120.52,"endY":174.25,"reset":0,"death":0,"launched":true,"landed":true,"reason":"landed"}
+
+HERMES-SHOE {"route":"D13","id":"hermes-d13-dz-06","sourceId":"d13-dz-06","kind":"dive","landX":3924.4,"landY":123.75,"endX":3924.4,"endY":123.75,"reset":0,"death":0,"launched":true,"landed":true,"reason":"crossed-land-x"}
+
+03-test\chief-runner.spec.cjs:21:1 › mid-climb vertical offset uses monotonic x fallback without early catch
+CLIMB-X-FALLBACK | mode=x, gap=2.484, catches=0 | PASS
+
+[31/37] 03-test\chief-runner.spec.cjs:23:37 › D01 keyboard ladder entry: hidden before 15%, climb after route-delay schedule, then 2.5s gap
+03-test\hermes-tum-oyun.spec.cjs:172:1 › Hermes shoes replace jump hints locally
+HERMES-SHOE {"route":"D13","id":"hermes-d13-dz-07","sourceId":"d13-dz-07","kind":"dive","landX":4508.8,"landY":66.25,"endX":4493.03,"endY":66.25,"reset":0,"death":0,"launched":true,"landed":true,"reason":"landed"}
+
+HERMES-SHOE {"route":"D13","id":"hermes-d13-dz-08","sourceId":"d13-dz-08","kind":"dive","landX":6660.4,"landY":319.38,"endX":6672.38,"endY":319.38,"reset":0,"death":0,"launched":true,"landed":true,"reason":"landed"}
+
+HERMES-SHOE {"route":"D13","id":"hermes-d13-dz-10","sourceId":"d13-dz-10","kind":"dive","landX":8674,"landY":334.25,"endX":8674.95,"endY":334.25,"reset":0,"death":0,"launched":true,"landed":true,"reason":"crossed-land-x"}
+
+HERMES-SHOE {"route":"D14","id":"hermes-d14-dz-01","sourceId":"d14-dz-01","kind":"dive","landX":1776.4,"landY":263.88,"endX":1780.66,"endY":263.88,"reset":0,"death":0,"launched":true,"landed":true,"reason":"landed"}
+
+03-test\chief-runner.spec.cjs:23:37 › D01 keyboard ladder entry: hidden before 15%, climb after route-delay schedule, then 2.5s gap
+LADDER-D01-KEYBOARD | beforeActive=false, scheduledWait=waiting, climbPose=climb, gap=2.517 | PASS
+
+[32/37] 03-test\chief-runner.spec.cjs:23:37 › D09 keyboard ladder entry: hidden before 15%, climb after route-delay schedule, then 2.5s gap
+03-test\hermes-tum-oyun.spec.cjs:172:1 › Hermes shoes replace jump hints locally
+HERMES-SHOE {"route":"D14","id":"hermes-d14-dz-02","sourceId":"d14-dz-02","kind":"dive","landX":2344,"landY":99.75,"endX":2352.01,"endY":99.75,"reset":0,"death":0,"launched":true,"landed":true,"reason":"crossed-land-x"}
+
+HERMES-SHOE {"route":"D14","id":"hermes-d14-dz-03","sourceId":"d14-dz-03","kind":"dive","landX":2867.2,"landY":30.25,"endX":2867.2,"endY":30.25,"reset":0,"death":0,"launched":true,"landed":true,"reason":"crossed-land-x"}
+
+HERMES-SHOE {"route":"D14","id":"hermes-d14-dz-04","sourceId":"d14-dz-04","kind":"dive","landX":4054,"landY":83,"endX":4070.24,"endY":83,"reset":0,"death":0,"launched":true,"landed":true,"reason":"landed"}
+
+HERMES-SHOE {"route":"D14","id":"hermes-d14-dz-05","sourceId":"d14-dz-05","kind":"dive","landX":4772.8,"landY":114.25,"endX":4778.33,"endY":114.25,"reset":0,"death":0,"launched":true,"landed":true,"reason":"crossed-land-x"}
+
+HERMES-SHOE {"route":"D14","id":"hermes-d14-dz-06","sourceId":"d14-dz-06","kind":"dive","landX":7945.6,"landY":455,"endX":7949.88,"endY":455,"reset":0,"death":0,"launched":true,"landed":true,"reason":"landed"}
+
+03-test\chief-runner.spec.cjs:23:37 › D09 keyboard ladder entry: hidden before 15%, climb after route-delay schedule, then 2.5s gap
+LADDER-D09-KEYBOARD | beforeActive=false, scheduledWait=waiting, climbPose=climb, gap=2.567 | PASS
+
+[33/37] 03-test\chief-runner.spec.cjs:23:37 › D12 keyboard ladder entry: hidden before 15%, climb after route-delay schedule, then 2.5s gap
+03-test\hermes-tum-oyun.spec.cjs:172:1 › Hermes shoes replace jump hints locally
+HERMES-SHOE {"route":"D14","id":"hermes-d14-dz-07","sourceId":"d14-dz-07","kind":"dive","landX":8714.8,"landY":371,"endX":8707.52,"endY":371,"reset":0,"death":0,"launched":true,"landed":true,"reason":"landed"}
+
+HERMES-SHOE {"route":"D15","id":"hermes-d15-dz-01","sourceId":"d15-dz-01","kind":"dive","landX":626.8,"landY":337.88,"endX":635.29,"endY":337.88,"reset":0,"death":0,"launched":true,"landed":true,"reason":"landed"}
+
+03-test\chief-runner.spec.cjs:23:37 › D12 keyboard ladder entry: hidden before 15%, climb after route-delay schedule, then 2.5s gap
+LADDER-D12-KEYBOARD | beforeActive=false, scheduledWait=waiting, climbPose=climb, gap=2.517 | PASS
+
+[34/37] 03-test\chief-runner.spec.cjs:25:37 › D01 touch 390x844 ladder entry
+03-test\hermes-tum-oyun.spec.cjs:172:1 › Hermes shoes replace jump hints locally
+HERMES-SHOE {"route":"D15","id":"hermes-d15-dz-02","sourceId":"d15-dz-02","kind":"dive","landX":1134.4,"landY":219.38,"endX":1134.4,"endY":219.38,"reset":0,"death":0,"launched":true,"landed":true,"reason":"crossed-land-x"}
+
+HERMES-SHOE {"route":"D15","id":"hermes-d15-dz-03","sourceId":"d15-dz-03","kind":"dive","landX":2336.8,"landY":391.38,"endX":2341.06,"endY":391.38,"reset":0,"death":0,"launched":true,"landed":true,"reason":"crossed-land-x"}
+
+HERMES-SHOE {"route":"D15","id":"hermes-d15-dz-04","sourceId":"d15-dz-04","kind":"dive","landX":2822.8,"landY":243.75,"endX":2829.98,"endY":243.75,"reset":0,"death":0,"launched":true,"landed":true,"reason":"landed"}
+
+HERMES-SHOE {"route":"D15","id":"hermes-d15-dz-05","sourceId":"d15-dz-05","kind":"dive","landX":4937.2,"landY":293,"endX":4947.14,"endY":293,"reset":0,"death":0,"launched":true,"landed":true,"reason":"landed"}
+
+03-test\chief-runner.spec.cjs:25:37 › D01 touch 390x844 ladder entry
+LADDER-D01-TOUCH-390x844 | phase=running, delay=2.5, gap=2.500 | PASS
+
+[35/37] 03-test\chief-runner.spec.cjs:25:37 › D09 touch 390x844 ladder entry
+03-test\hermes-tum-oyun.spec.cjs:172:1 › Hermes shoes replace jump hints locally
+HERMES-SHOE {"route":"D15","id":"hermes-d15-dz-06","sourceId":"d15-dz-06","kind":"dive","landX":6355.6,"landY":433.38,"endX":6371.82,"endY":433.38,"reset":0,"death":0,"launched":true,"landed":true,"reason":"landed"}
+
+HERMES-SHOE {"route":"D15","id":"hermes-d15-dz-07","sourceId":"d15-dz-07","kind":"dive","landX":7904.32,"landY":326.38,"endX":7912.05,"endY":326.38,"reset":0,"death":0,"launched":true,"landed":true,"reason":"landed"}
+
+HERMES-SHOE {"route":"D15","id":"hermes-d15-dz-08","sourceId":"d15-dz-08","kind":"dive","landX":8276.56,"landY":274.75,"endX":8260.79,"endY":274.75,"reset":0,"death":0,"launched":true,"landed":true,"reason":"landed"}
+
+03-test\chief-runner.spec.cjs:25:37 › D09 touch 390x844 ladder entry
+LADDER-D09-TOUCH-390x844 | phase=running, delay=2.5, gap=2.500 | PASS
+
+[36/37] 03-test\chief-runner.spec.cjs:25:37 › D12 touch 390x844 ladder entry
+03-test\hermes-tum-oyun.spec.cjs:172:1 › Hermes shoes replace jump hints locally
+HERMES-SHOE {"route":"D16","id":"hermes-d16-dz-01","sourceId":"d16-dz-01","kind":"dive","landX":1141.6,"landY":-1373.75,"endX":1149.34,"endY":-1373.75,"reset":0,"death":0,"launched":true,"landed":true,"reason":"landed"}
+
+HERMES-SHOE {"route":"D16","id":"hermes-d16-dz-02","sourceId":"d16-dz-02","kind":"dive","landX":2413.6,"landY":-929.75,"endX":2417.86,"endY":-929.75,"reset":0,"death":0,"launched":true,"landed":true,"reason":"landed"}
+
+HERMES-SHOE {"route":"D16","id":"hermes-d16-dz-03","sourceId":"d16-dz-03","kind":"dive","landX":2972.8,"landY":-860.25,"endX":2977.06,"endY":-860.25,"reset":0,"death":0,"launched":true,"landed":true,"reason":"crossed-land-x"}
+
+HERMES-SHOE {"route":"D16","id":"hermes-d16-dz-04","sourceId":"d16-dz-04","kind":"dive","landX":3424,"landY":-889,"endX":3424,"endY":-889,"reset":0,"death":0,"launched":true,"landed":true,"reason":"crossed-land-x"}
+
+HERMES-SHOE {"route":"D16","id":"hermes-d16-dz-05","sourceId":"d16-dz-05","kind":"dive","landX":3727.6,"landY":-910.63,"endX":3726.97,"endY":-908.27,"reset":0,"death":0,"launched":true,"landed":true,"reason":"crossed-land-x"}
+
+03-test\chief-runner.spec.cjs:25:37 › D12 touch 390x844 ladder entry
+LADDER-D12-TOUCH-390x844 | phase=running, delay=2.5, gap=2.500 | PASS
+
+[37/37] 03-test\chief-runner.spec.cjs:27:1 › F01 uses the recorded Frozen 1.2s chief after ladder entry
+03-test\hermes-tum-oyun.spec.cjs:172:1 › Hermes shoes replace jump hints locally
+HERMES-SHOE {"route":"D16","id":"hermes-d16-dz-06","sourceId":"d16-dz-06","kind":"dive","landX":4216,"landY":-1082.25,"endX":4224.49,"endY":-1082.25,"reset":0,"death":0,"launched":true,"landed":true,"reason":"landed"}
+
+HERMES-SHOE {"route":"D16","id":"hermes-d16-dz-08","sourceId":"d16-dz-08","kind":"dive","landX":4736.8,"landY":-755.75,"endX":4736.8,"endY":-755.75,"reset":0,"death":0,"launched":true,"landed":true,"reason":"crossed-land-x"}
+
+03-test\chief-runner.spec.cjs:27:1 › F01 uses the recorded Frozen 1.2s chief after ladder entry
+RECORDED-F01-LADDER | active=true, phase=running, delay=1.2 | PASS
+
+03-test\hermes-tum-oyun.spec.cjs:172:1 › Hermes shoes replace jump hints locally
+HERMES-SHOE {"route":"D16","id":"hermes-d16-dz-09","sourceId":"d16-dz-09","kind":"dive","landX":6654.4,"landY":89,"endX":6654.4,"endY":89,"reset":0,"death":0,"launched":true,"landed":true,"reason":"crossed-land-x"}
+
+HERMES-SHOE {"route":"D17","id":"hermes-d17-p1-f04-dz-01","sourceId":"d17-p1-f04-dz-01","kind":"dive","landX":446,"landY":-112.62,"endX":450.23,"endY":-112.62,"reset":0,"death":0,"launched":true,"landed":true,"reason":"crossed-land-x"}
+
+HERMES-SHOE {"route":"D17","id":"hermes-d17-p1-f04-dz-02","sourceId":"d17-p1-f04-dz-02","kind":"dive","landX":981.68,"landY":-91,"endX":981.68,"endY":-91,"reset":0,"death":0,"launched":true,"landed":true,"reason":"crossed-land-x"}
+
+HERMES-SHOE {"route":"D17","id":"hermes-d17-p1-f04-dz-03","sourceId":"d17-p1-f04-dz-03","kind":"dive","landX":2172.08,"landY":24.25,"endX":2176.34,"endY":24.25,"reset":0,"death":0,"launched":true,"landed":true,"reason":"landed"}
+
+HERMES-SHOE {"route":"D17","id":"hermes-d17-p2-m03-dz-08","sourceId":"d17-p2-m03-dz-08","kind":"dive","landX":6702.08,"landY":346.51,"endX":6709.83,"endY":346.51,"reset":0,"death":0,"launched":true,"landed":true,"reason":"landed"}
+
+HERMES-SHOE {"route":"D17","id":"hermes-d17-p2-m03-dz-09","sourceId":"d17-p2-m03-dz-09","kind":"dive","landX":7363.28,"landY":364.51,"endX":7363.28,"endY":364.51,"reset":0,"death":0,"launched":true,"landed":true,"reason":"crossed-land-x"}
+
+HERMES-SHOE {"route":"D17","id":"hermes-d17-p2-m03-dz-10","sourceId":"d17-p2-m03-dz-10","kind":"dive","landX":8715.68,"landY":361.38,"endX":8720.83,"endY":361.38,"reset":0,"death":0,"launched":true,"landed":true,"reason":"landed"}
+
+HERMES-SHOE {"route":"D18","id":"hermes-d18-p1-a01-dz-01","sourceId":"d18-p1-a01-dz-01","kind":"dive","landX":696.8,"landY":337.88,"endX":696.8,"endY":337.88,"reset":0,"death":0,"launched":true,"landed":true,"reason":"crossed-land-x"}
+
+HERMES-SHOE {"route":"D18","id":"hermes-d18-p1-a01-dz-02","sourceId":"d18-p1-a01-dz-02","kind":"dive","landX":1204.4,"landY":219.38,"endX":1212.89,"endY":219.38,"reset":0,"death":0,"launched":true,"landed":true,"reason":"landed"}
+
+HERMES-SHOE {"route":"D18","id":"hermes-d18-p1-a01-dz-03","sourceId":"d18-p1-a01-dz-03","kind":"dive","landX":2406.8,"landY":391.38,"endX":2414.52,"endY":391.38,"reset":0,"death":0,"launched":true,"landed":true,"reason":"landed"}
+
+HERMES-SHOE {"route":"D18","id":"hermes-d18-p1-a01-dz-04","sourceId":"d18-p1-a01-dz-04","kind":"dive","landX":2892.8,"landY":243.75,"endX":2891.54,"endY":243.45,"reset":0,"death":0,"launched":true,"landed":true,"reason":"crossed-land-x"}
+
+HERMES-SHOE {"route":"D18","id":"hermes-d18-p2-f03-dz-07","sourceId":"d18-p2-f03-dz-07","kind":"dive","landX":5753.6,"landY":91,"endX":5763.82,"endY":91,"reset":0,"death":0,"launched":true,"landed":true,"reason":"landed"}
+
+HERMES-SHOE {"route":"D18","id":"hermes-d18-p2-f03-dz-08","sourceId":"d18-p2-f03-dz-08","kind":"dive","landX":6108.8,"landY":194.5,"endX":6107.53,"endY":194.11,"reset":0,"death":0,"launched":true,"landed":true,"reason":"crossed-land-x"}
+
+HERMES-SHOE {"route":"D18","id":"hermes-d18-p2-f03-dz-09","sourceId":"d18-p2-f03-dz-09","kind":"dive","landX":6674,"landY":33.75,"endX":6678,"endY":33.75,"reset":0,"death":0,"launched":true,"landed":true,"reason":"crossed-land-x"}
+
+HERMES-SHOE {"route":"D18","id":"hermes-d18-p2-f03-dz-10","sourceId":"d18-p2-f03-dz-10","kind":"dive","landX":7656.8,"landY":259.25,"endX":7656.8,"endY":259.25,"reset":0,"death":0,"launched":true,"landed":true,"reason":"crossed-land-x"}
+
+HERMES-SHOE {"route":"D18","id":"hermes-d18-p2-f03-dz-11","sourceId":"d18-p2-f03-dz-11","kind":"dive","landX":7756.4,"landY":194.5,"endX":7760.68,"endY":194.5,"reset":0,"death":0,"launched":true,"landed":true,"reason":"crossed-land-x"}
+
+HERMES-SHOE {"route":"D18","id":"hermes-d18-p2-f03-dz-12","sourceId":"d18-p2-f03-dz-12","kind":"dive","landX":8222,"landY":194.5,"endX":8226.26,"endY":194.5,"reset":0,"death":0,"launched":true,"landed":true,"reason":"landed"}
+
+HERMES-SHOE {"route":"F01","id":"hermes-f01-p1-d07-dz-01","sourceId":"f01-p1-d07-dz-01","kind":"dive","landX":722,"landY":-7,"endX":722,"endY":-7,"reset":0,"death":0,"launched":true,"landed":true,"reason":"crossed-land-x"}
+
+HERMES-SHOE {"route":"F01","id":"hermes-f01-p1-d07-dz-02","sourceId":"f01-p1-d07-dz-02","kind":"dive","landX":1874,"landY":151.38,"endX":1878.26,"endY":151.38,"reset":0,"death":0,"launched":true,"landed":true,"reason":"landed"}
+
+HERMES-SHOE {"route":"F01","id":"hermes-f01-p1-d07-dz-03","sourceId":"f01-p1-d07-dz-03","kind":"dive","landX":3002,"landY":231.75,"endX":3006.26,"endY":231.75,"reset":0,"death":0,"launched":true,"landed":true,"reason":"landed"}
+
+HERMES-SHOE {"route":"F01","id":"hermes-f01-p2-d13-dz-08","sourceId":"f01-p2-d13-dz-08","kind":"dive","landX":6462.8,"landY":484.88,"endX":6467.06,"endY":484.88,"reset":0,"death":0,"launched":true,"landed":true,"reason":"landed"}
+
+HERMES-SHOE {"route":"F01","id":"hermes-f01-p2-d13-dz-09","sourceId":"f01-p2-d13-dz-09","kind":"dive","landX":7124,"landY":502.88,"endX":7068,"endY":503.28,"reset":0,"death":0,"launched":true,"landed":true,"reason":"landed"}
+
+HERMES-SHOE {"route":"F01","id":"hermes-f01-p2-d13-dz-10","sourceId":"f01-p2-d13-dz-10","kind":"dive","landX":8476.4,"landY":499.75,"endX":8478.95,"endY":499.75,"reset":0,"death":0,"launched":true,"landed":true,"reason":"crossed-land-x"}
+
+HERMES-SHOE {"route":"F02","id":"hermes-f02-p1-d08-dz-01","sourceId":"f02-p1-d08-dz-01","kind":"dive","landX":629.6,"landY":-421,"endX":633.83,"endY":-421,"reset":0,"death":0,"launched":true,"landed":true,"reason":"crossed-land-x"}
+
+HERMES-SHOE {"route":"F02","id":"hermes-f02-p1-d08-dz-02","sourceId":"f02-p1-d08-dz-02","kind":"dive","landX":884,"landY":-469,"endX":883.77,"endY":-468.75,"reset":0,"death":0,"launched":true,"landed":true,"reason":"crossed-land-x"}
+
+HERMES-SHOE {"route":"F02","id":"hermes-f02-p1-d08-dz-03","sourceId":"f02-p1-d08-dz-03","kind":"dive","landX":1382,"landY":-447.37,"endX":1386.23,"endY":-447.37,"reset":0,"death":0,"launched":true,"landed":true,"reason":"landed"}
+
+HERMES-SHOE {"route":"F02","id":"hermes-f02-p1-d08-dz-04","sourceId":"f02-p1-d08-dz-04","kind":"dive","landX":2757.2,"landY":-327.37,"endX":2769.17,"endY":-327.37,"reset":0,"death":0,"launched":true,"landed":true,"reason":"landed"}
+
+HERMES-SHOE {"route":"F02","id":"hermes-f02-p1-d08-dz-05","sourceId":"f02-p1-d08-dz-05","kind":"dive","landX":3165.2,"landY":-387.37,"endX":3109.2,"endY":-386.97,"reset":0,"death":0,"launched":true,"landed":true,"reason":"landed"}
+
+HERMES-SHOE {"route":"F02","id":"hermes-f02-p1-d08-dz-06","sourceId":"f02-p1-d08-dz-06","kind":"dive","landX":3525.2,"landY":-315.37,"endX":3525.2,"endY":-315.37,"reset":0,"death":0,"launched":true,"landed":true,"reason":"crossed-land-x"}
+
+HERMES-SHOE {"route":"F02","id":"hermes-f02-p1-d08-dz-07","sourceId":"f02-p1-d08-dz-07","kind":"dive","landX":4113.2,"landY":-231.37,"endX":4117.43,"endY":-231.37,"reset":0,"death":0,"launched":true,"landed":true,"reason":"landed"}
+
+HERMES-SHOE {"route":"F02","id":"hermes-f02-p2-d14-dz-05","sourceId":"f02-p2-d14-dz-05","kind":"dive","landX":4756.4,"landY":-119.74,"endX":4760.66,"endY":-119.74,"reset":0,"death":0,"launched":true,"landed":true,"reason":"landed"}
+
+HERMES-SHOE {"route":"F02","id":"hermes-f02-p2-d14-dz-06","sourceId":"f02-p2-d14-dz-06","kind":"dive","landX":7929.2,"landY":221.01,"endX":7933.43,"endY":221.01,"reset":0,"death":0,"launched":true,"landed":true,"reason":"landed"}
+
+HERMES-SHOE {"route":"F02","id":"hermes-f02-p2-d14-dz-07","sourceId":"f02-p2-d14-dz-07","kind":"dive","landX":8698.4,"landY":137,"endX":8682.66,"endY":137,"reset":0,"death":0,"launched":true,"landed":true,"reason":"landed"}
+
+HERMES-SHOE {"route":"F03","id":"hermes-f03-p1-d09-dz-01","sourceId":"f03-p1-d09-dz-01","kind":"dive","landX":496.64,"landY":151.88,"endX":505.13,"endY":151.88,"reset":0,"death":0,"launched":true,"landed":true,"reason":"landed"}
+
+HERMES-SHOE {"route":"F03","id":"hermes-f03-p2-d10-dz-01","sourceId":"f03-p2-d10-dz-01","kind":"dive","landX":1268.8,"landY":249,"endX":1268.8,"endY":249,"reset":0,"death":0,"launched":true,"landed":true,"reason":"crossed-land-x"}
+
+HERMES-SHOE {"route":"F03","id":"hermes-f03-p2-d10-dz-02","sourceId":"f03-p2-d10-dz-02","kind":"dive","landX":1804.48,"landY":270.63,"endX":1804.48,"endY":270.63,"reset":0,"death":0,"launched":true,"landed":true,"reason":"crossed-land-x"}
+
+HERMES-SHOE {"route":"F03","id":"hermes-f03-p2-d10-dz-03","sourceId":"f03-p2-d10-dz-03","kind":"dive","landX":2994.88,"landY":385.88,"endX":3003.35,"endY":385.88,"reset":0,"death":0,"launched":true,"landed":true,"reason":"landed"}
+
+HERMES-SHOE {"route":"F03","id":"hermes-f03-p3-d12-dz-01","sourceId":"f03-p3-d12-dz-01","kind":"dive","landX":5837.28,"landY":385.38,"endX":5781.28,"endY":385.78,"reset":0,"death":0,"launched":true,"landed":true,"reason":"landed"}
+
+HERMES-SHOE {"route":"F03","id":"hermes-f03-p3-d12-dz-02","sourceId":"f03-p3-d12-dz-02","kind":"dive","landX":6216.48,"landY":326.64,"endX":6220.76,"endY":326.64,"reset":0,"death":0,"launched":true,"landed":true,"reason":"landed"}
+
+HERMES-SHOE {"route":"F03","id":"hermes-f03-p3-d12-dz-03","sourceId":"f03-p3-d12-dz-03","kind":"dive","landX":6644.88,"landY":211.38,"endX":6629.14,"endY":211.38,"reset":0,"death":0,"launched":true,"landed":true,"reason":"landed"}
+
+HERMES-SHOE {"route":"F03","id":"hermes-f03-p3-d12-dz-04","sourceId":"f03-p3-d12-dz-04","kind":"dive","landX":7462.08,"landY":368.63,"endX":7454.83,"endY":368.63,"reset":0,"death":0,"launched":true,"landed":true,"reason":"landed"}
+
+HERMES-SHOE {"route":"F04","id":"hermes-f04-p1-d02-dz-01","sourceId":"f04-p1-d02-dz-01","kind":"dive","landX":2254.7,"landY":362.36,"endX":2258.93,"endY":362.36,"reset":0,"death":0,"launched":true,"landed":true,"reason":"landed"}
+
+HERMES-SHOE {"route":"F04","id":"hermes-f04-p3-d01-dz-01","sourceId":"f04-p3-d01-dz-01","kind":"dive","landX":6994.38,"landY":504.2,"endX":7007.16,"endY":504.2,"reset":0,"death":0,"launched":true,"landed":true,"reason":"landed"}
+
+HERMES-COUNTS {"D01":2,"D02":1,"D03":3,"D04":3,"D05":3,"D06":4,"D07":6,"D08":11,"D09":6,"D10":12,"D11":9,"D12":8,"D13":9,"D14":7,"D15":8,"D16":8,"D17":6,"D18":10,"F01":6,"F02":10,"F03":8,"F04":2}
+
+  2 skipped
+  35 passed (1.3m)

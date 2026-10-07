@@ -1,0 +1,212 @@
+
+Running 22 tests using 1 worker
+
+(node:39832) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1/22] 03-test\vp-dock-play.spec.cjs:307:28 › O-1 B-5 D01 ideal keyboard route
+03-test\vp-dock-play.spec.cjs:307:28 › O-1 B-5 D01 ideal keyboard route
+O-1-D01 | 29.47s, x=8213.92, deaths=0, retries=0, coin=10/12 | finish, deaths=0, retries=0, coin>=0/12 | PASS
+
+B-5-D01 | 10/12 coin | baseline 0/12 coin | PASS
+
+CHIEF-D01 | minGap=2.301s, catches=0 | catches=0 | PASS
+
+D01-c07-y | measured=-334.34 | coin center y | PASS
+
+[2/22] 03-test\vp-dock-play.spec.cjs:307:28 › O-1 B-5 D02 ideal keyboard route
+03-test\vp-dock-play.spec.cjs:307:28 › O-1 B-5 D02 ideal keyboard route
+O-1-D02 | 23.65s, x=6230.50, deaths=0, retries=0, coin=9/10 | finish, deaths=0, retries=0, coin>=0/10 | PASS
+
+B-5-D02 | 9/10 coin | baseline 0/10 coin | PASS
+
+CHIEF-D02 | minGap=1.833s, catches=0 | catches=0 | PASS
+
+[3/22] 03-test\vp-dock-play.spec.cjs:307:28 › O-1 B-5 D03 ideal keyboard route
+03-test\vp-dock-play.spec.cjs:307:28 › O-1 B-5 D03 ideal keyboard route
+O-1-D03 | 25.57s, x=6977.02, deaths=0, retries=0, coin=13/13 | finish, deaths=0, retries=0, coin>=0/13 | PASS
+
+B-5-D03 | 13/13 coin | baseline 0/13 coin | PASS
+
+CHIEF-D03 | minGap=1.984s, catches=0 | catches=0 | PASS
+
+[4/22] 03-test\vp-dock-play.spec.cjs:307:28 › O-1 B-5 D04 ideal keyboard route
+03-test\vp-dock-play.spec.cjs:307:28 › O-1 B-5 D04 ideal keyboard route
+O-1-D04 | 27.23s, x=7997.07, deaths=0, retries=0, coin=9/12 | finish, deaths=0, retries=0, coin>=0/12 | PASS
+
+B-5-D04 | 9/12 coin | baseline 0/12 coin | PASS
+
+CHIEF-D04 | minGap=2.332s, catches=0 | catches=0 | PASS
+
+[5/22] 03-test\vp-dock-play.spec.cjs:307:28 › O-1 B-5 D05 ideal keyboard route
+03-test\vp-dock-play.spec.cjs:307:28 › O-1 B-5 D05 ideal keyboard route
+O-1-D05 | 26.39s, x=7450.20, deaths=0, retries=0, coin=10/13 | finish, deaths=0, retries=0, coin>=0/13 | PASS
+
+B-5-D05 | 10/13 coin | baseline 0/13 coin | PASS
+
+CHIEF-D05 | minGap=2.417s, catches=0 | catches=0 | PASS
+
+[6/22] 03-test\vp-dock-play.spec.cjs:307:28 › O-1 B-5 D06 ideal keyboard route
+03-test\vp-dock-play.spec.cjs:307:28 › O-1 B-5 D06 ideal keyboard route
+O-1-D06 | 18.66s, x=4965.21, deaths=0, retries=0, coin=10/13 | finish, deaths=0, retries=0, coin>=0/13 | PASS
+
+B-5-D06 | 10/13 coin | baseline 0/13 coin | PASS
+
+CHIEF-D06 | minGap=2.684s, catches=0 | catches=0 | PASS
+
+[7/22] 03-test\vp-dock-play.spec.cjs:307:28 › O-1 B-5 D07 ideal keyboard route
+03-test\vp-dock-play.spec.cjs:307:28 › O-1 B-5 D07 ideal keyboard route
+O-1-D07 | 17.00s, x=6174.72, deaths=0, retries=0, coin=13/14 | finish, deaths=0, retries=0, coin>=0/14 | PASS
+
+B-5-D07 | 13/14 coin | baseline 0/14 coin | PASS
+
+DENSITY-D07 | length=6343.52, movements=24, per1000=3.783, manualInputs=16
+
+CHIEF-D07 | minGap=1.317s, catches=0 | catches=0 | PASS
+
+[8/22] 03-test\vp-dock-play.spec.cjs:307:28 › O-1 B-5 D08 ideal keyboard route
+03-test\vp-dock-play.spec.cjs:307:28 › O-1 B-5 D08 ideal keyboard route
+O-1-D08 | 26.74s, x=8435.55, deaths=0, retries=0, coin=9/13 | finish, deaths=0, retries=0, coin>=0/13 | PASS
+
+B-5-D08 | 9/13 coin | baseline 0/13 coin | PASS
+
+DENSITY-D08 | length=8604.32, movements=49, per1000=5.695, manualInputs=34
+
+CHIEF-D08 | minGap=2.184s, catches=0 | catches=0 | PASS
+
+[9/22] 03-test\vp-dock-play.spec.cjs:307:28 › O-1 B-5 D09 ideal keyboard route
+03-test\vp-dock-play.spec.cjs:307:28 › O-1 B-5 D09 ideal keyboard route
+O-1-D09 | 30.10s, x=7952.69, deaths=0, retries=0, coin=6/13 | finish, deaths=0, retries=0, coin>=0/13 | PASS
+
+B-5-D09 | 6/13 coin | baseline 0/13 coin | PASS
+
+DENSITY-D09 | length=8058.56, movements=42, per1000=5.212, manualInputs=35
+
+CHIEF-D09 | minGap=2.350s, catches=0 | catches=0 | PASS
+
+[10/22] 03-test\vp-dock-play.spec.cjs:307:28 › O-1 B-5 D10 ideal keyboard route
+03-test\vp-dock-play.spec.cjs:307:28 › O-1 B-5 D10 ideal keyboard route
+O-1-D10 | 27.81s, x=8917.96, deaths=0, retries=0, coin=7/12 | finish, deaths=0, retries=0, coin>=0/12 | PASS
+
+B-5-D10 | 7/12 coin | baseline 0/12 coin | PASS
+
+DENSITY-D10 | length=9081.44, movements=51, per1000=5.616, manualInputs=34
+
+CHIEF-D10 | minGap=2.199s, catches=0 | catches=0 | PASS
+
+[11/22] 03-test\vp-dock-play.spec.cjs:307:28 › O-1 B-5 D11 ideal keyboard route
+03-test\vp-dock-play.spec.cjs:307:28 › O-1 B-5 D11 ideal keyboard route
+O-1-D11 | 29.01s, x=9748.04, deaths=0, retries=0, coin=12/14 | finish, deaths=0, retries=0, coin>=0/14 | PASS
+
+B-5-D11 | 12/14 coin | baseline 0/14 coin | PASS
+
+CHIEF-D11 | minGap=2.467s, catches=0 | catches=0 | PASS
+
+[12/22] 03-test\vp-dock-play.spec.cjs:307:28 › O-1 B-5 D12 ideal keyboard route
+03-test\vp-dock-play.spec.cjs:307:28 › O-1 B-5 D12 ideal keyboard route
+O-1-D12 | 21.32s, x=6974.37, deaths=0, retries=0, coin=8/14 | finish, deaths=0, retries=0, coin>=0/14 | PASS
+
+B-5-D12 | 8/14 coin | baseline 0/14 coin | PASS
+
+CHIEF-D12 | minGap=2.367s, catches=0 | catches=0 | PASS
+
+[13/22] 03-test\vp-dock-play.spec.cjs:307:28 › O-1 B-5 D13 ideal keyboard route
+03-test\vp-dock-play.spec.cjs:307:28 › O-1 B-5 D13 ideal keyboard route
+O-1-D13 | 28.00s, x=8875.12, deaths=0, retries=0, coin=10/14 | finish, deaths=0, retries=0, coin>=0/14 | PASS
+
+B-5-D13 | 10/14 coin | baseline 0/14 coin | PASS
+
+DENSITY-D13 | length=9043.52, movements=43, per1000=4.755, manualInputs=27
+
+CHIEF-D13 | minGap=2.066s, catches=0 | catches=0 | PASS
+
+[14/22] 03-test\vp-dock-play.spec.cjs:307:28 › O-1 B-5 D14 ideal keyboard route
+03-test\vp-dock-play.spec.cjs:307:28 › O-1 B-5 D14 ideal keyboard route
+O-1-D14 | 31.70s, x=8913.44, deaths=0, retries=0, coin=8/14 | finish, deaths=0, retries=0, coin>=0/14 | PASS
+
+B-5-D14 | 8/14 coin | baseline 0/14 coin | PASS
+
+DENSITY-D14 | length=9084.32, movements=39, per1000=4.293, manualInputs=27
+
+CHIEF-D14 | minGap=1.400s, catches=0 | catches=0 | PASS
+
+[15/22] 03-test\vp-dock-play.spec.cjs:307:28 › O-1 B-5 D15 ideal keyboard route
+03-test\vp-dock-play.spec.cjs:307:28 › O-1 B-5 D15 ideal keyboard route
+O-1-D15 | 28.02s, x=8481.87, deaths=0, retries=0, coin=7/14 | finish, deaths=0, retries=0, coin>=0/14 | PASS
+
+B-5-D15 | 7/14 coin | baseline 0/14 coin | PASS
+
+DENSITY-D15 | length=8646.08, movements=36, per1000=4.164, manualInputs=27
+
+CHIEF-D15 | minGap=1.900s, catches=0 | catches=0 | PASS
+
+[16/22] 03-test\vp-dock-play.spec.cjs:307:28 › O-1 B-5 D16 ideal keyboard route
+03-test\vp-dock-play.spec.cjs:307:28 › O-1 B-5 D16 ideal keyboard route
+O-1-D16 | 22.63s, x=7845.34, deaths=0, retries=0, coin=11/14 | finish, deaths=0, retries=0, coin>=0/14 | PASS
+
+B-5-D16 | 11/14 coin | baseline 0/14 coin | PASS
+
+DENSITY-D16 | length=8009.12, movements=29, per1000=3.621, manualInputs=27
+
+CHIEF-D16 | minGap=2.683s, catches=0 | catches=0 | PASS
+
+[17/22] 03-test\vp-dock-play.spec.cjs:307:28 › O-1 B-5 D17 ideal keyboard route
+03-test\vp-dock-play.spec.cjs:307:28 › O-1 B-5 D17 ideal keyboard route
+O-1-D17 | 32.34s, x=9494.81, deaths=0, retries=0, coin=11/14 | finish, deaths=0, retries=0, coin>=0/14 | PASS
+
+B-5-D17 | 11/14 coin | baseline 0/14 coin | PASS
+
+CHIEF-D17 | minGap=2.366s, catches=0 | catches=0 | PASS
+
+[18/22] 03-test\vp-dock-play.spec.cjs:307:28 › O-1 B-5 D18 ideal keyboard route
+03-test\vp-dock-play.spec.cjs:307:28 › O-1 B-5 D18 ideal keyboard route
+O-1-D18 | 32.32s, x=9000.77, deaths=0, retries=0, coin=7/14 | finish, deaths=0, retries=0, coin>=0/14 | PASS
+
+B-5-D18 | 7/14 coin | baseline 0/14 coin | PASS
+
+CHIEF-D18 | minGap=2.200s, catches=0 | catches=0 | PASS
+
+[19/22] 03-test\vp-dock-play.spec.cjs:307:28 › O-1 B-5 F01 ideal keyboard route
+03-test\vp-dock-play.spec.cjs:307:28 › O-1 B-5 F01 ideal keyboard route
+O-1-F01 | 30.53s, x=9248.10, deaths=0, retries=0, coin=10/14 | finish, deaths=0, retries=0, coin>=0/14 | PASS
+
+B-5-F01 | 10/14 coin | baseline 0/14 coin | PASS
+
+DENSITY-F01 | length=9416.40, movements=41, per1000=4.354, manualInputs=25
+
+CHIEF-F01 | minGap=1.049s, catches=0 | catches=0 | PASS
+
+[20/22] 03-test\vp-dock-play.spec.cjs:307:28 › O-1 B-5 F02 ideal keyboard route
+03-test\vp-dock-play.spec.cjs:307:28 › O-1 B-5 F02 ideal keyboard route
+O-1-F02 | 32.81s, x=9474.04, deaths=0, retries=0, coin=9/14 | finish, deaths=0, retries=0, coin>=0/14 | PASS
+
+B-5-F02 | 9/14 coin | baseline 0/14 coin | PASS
+
+DENSITY-F02 | length=9638.40, movements=52, per1000=5.395, manualInputs=27
+
+CHIEF-F02 | minGap=1.117s, catches=0 | catches=0 | PASS
+
+[21/22] 03-test\vp-dock-play.spec.cjs:307:28 › O-1 B-5 F03 ideal keyboard route
+03-test\vp-dock-play.spec.cjs:307:28 › O-1 B-5 F03 ideal keyboard route
+O-1-F03 | 27.13s, x=7872.30, deaths=0, retries=0, coin=14/14 | finish, deaths=0, retries=0, coin>=0/14 | PASS
+
+B-5-F03 | 14/14 coin | baseline 0/14 coin | PASS
+
+DENSITY-F03 | length=8038.48, movements=54, per1000=6.718, manualInputs=34
+
+CHIEF-F03 | minGap=1.134s, catches=0 | catches=0 | PASS
+
+[22/22] 03-test\vp-dock-play.spec.cjs:307:28 › O-1 B-5 F04 ideal keyboard route
+03-test\vp-dock-play.spec.cjs:307:28 › O-1 B-5 F04 ideal keyboard route
+O-1-F04 | 31.16s, x=8252.16, deaths=0, retries=0, coin=14/14 | finish, deaths=0, retries=0, coin>=0/14 | PASS
+
+B-5-F04 | 14/14 coin | baseline 0/14 coin | PASS
+
+DENSITY-F04 | length=8414.38, movements=56, per1000=6.655, manualInputs=32
+
+CHIEF-F04 | minGap=0.950s, catches=0 | catches=0 | PASS
+
+  Slow test file: 03-test\vp-dock-play.spec.cjs (10.5m)
+  Consider running tests from slow files in parallel. See: https://playwright.dev/docs/test-parallel
+  22 passed (10.5m)

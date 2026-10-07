@@ -2184,7 +2184,9 @@ applyD09LogicRulesToRoutes();
     if(diveRun&&validArcRun(diveRun)){
       const d=diveRun,tau=Math.min(d.elapsed+=dt,d.duration),t=tau/d.duration;
       engine.parkour.state="normal";engine.parkour.timer=0;engine.parkour.dir=d.dir;
-      player.x=d.startX+(d.endX-d.startX)*tau/d.duration;player.y=d.startY+d.vy0*tau+725*tau*tau;
+      let arcX=d.startX+(d.endX-d.startX)*tau/d.duration;
+      if(route.routeId==="D18"&&((d.dir>=0&&arcX<player.x)||(d.dir<0&&arcX>player.x))){const shift=player.x-arcX;d.startX+=shift;d.endX+=shift;arcX=player.x}
+      player.x=arcX;player.y=d.startY+d.vy0*tau+725*tau*tau;
       player.vx=(d.endX-d.startX)/d.duration;player.vy=d.vy0+1450*tau;player.onGround=false;
       if(tau===d.duration){
         player.x=d.endX;player.y=d.landY;player.vx=d.dir*Math.max(255,Math.abs(player.vx));player.vy=0;player.onGround=true;
@@ -2195,7 +2197,9 @@ applyD09LogicRulesToRoutes();
     if(jumpRun&&validArcRun(jumpRun)){
       const d=jumpRun,tau=Math.min(d.elapsed+=dt,d.duration);
       engine.parkour.state="normal";engine.parkour.timer=0;engine.parkour.dir=d.dir;
-      player.x=d.startX+(d.endX-d.startX)*tau/d.duration;player.y=d.startY+d.vy0*tau+725*tau*tau;
+      let arcX=d.startX+(d.endX-d.startX)*tau/d.duration;
+      if(route.routeId==="D18"&&((d.dir>=0&&arcX<player.x)||(d.dir<0&&arcX>player.x))){const shift=player.x-arcX;d.startX+=shift;d.endX+=shift;arcX=player.x}
+      player.x=arcX;player.y=d.startY+d.vy0*tau+725*tau*tau;
       player.vx=(d.endX-d.startX)/d.duration;player.vy=d.vy0+1450*tau;player.onGround=false;
       if(tau===d.duration){
         player.x=d.endX;player.y=d.landY;player.vx=d.dir*Math.max(255,Math.abs(player.vx));player.vy=0;player.onGround=true;
@@ -3543,7 +3547,7 @@ applyD09LogicRulesToRoutes();
       const suspendedGround=new Set(route.visualAttachments.filter(v=>v.type==="suspend").map(v=>v.targetId));
       for(const g of groundSurfaces.filter(v=>suspendedGround.has(v.id))){
         const m=c.getTransform(),topWorld=(m.d?(-28-m.f)/m.d:g.y-260);
-        const cx=g.x+g.w/2,beamY=Math.min(g.y-42,topWorld),hookY=g.y+8;
+        const cx=g.x+g.w/2,beamY=Math.min(g.y-42,topWorld),hookY=g.y-2;
         c.save();
         c.strokeStyle=frozen?"#203944":magma?"#28282d":"#1b2a33";c.lineWidth=8;c.beginPath();c.moveTo(cx-Math.max(32,g.w*.45),beamY);c.lineTo(cx+Math.max(32,g.w*.45),beamY);c.stroke();
         c.strokeStyle=frozen?"#356577":magma?"#4a4644":"#253a45";c.lineWidth=5;c.beginPath();c.moveTo(cx-Math.max(26,g.w*.35),beamY+7);c.lineTo(cx+Math.max(26,g.w*.35),beamY+7);c.stroke();
@@ -3586,7 +3590,7 @@ applyD09LogicRulesToRoutes();
         const suspended=route.visualAttachments?.some(a=>a.targetId===s.id&&a.type==="suspend");
         if(suspended){
           const m=c.getTransform(),topWorld=(m.d?(-28-m.f)/m.d:s.y-260);
-          const cx=s.x+s.w/2,beamY=topWorld,hookY=s.y+7;
+          const cx=s.x+s.w/2,beamY=Math.min(s.y-42,topWorld),hookY=s.y-2;
           c.save();
           c.strokeStyle=frozen?"#203944":magma?"#28282d":"#1b2a33";c.lineWidth=8;c.beginPath();c.moveTo(cx-56,beamY);c.lineTo(cx+56,beamY);c.stroke();
           c.strokeStyle=frozen?"#356577":magma?"#4a4644":"#253a45";c.lineWidth=5;c.beginPath();c.moveTo(cx-46,beamY+7);c.lineTo(cx+46,beamY+7);c.stroke();

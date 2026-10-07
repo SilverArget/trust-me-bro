@@ -1,0 +1,144 @@
+
+Running 23 tests using 1 worker
+
+(node:39924) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1/23] 03-test\chief-runner.spec.cjs:11:1 › all recorded chief paths are fresh; an in-memory coordinate mutation is rejected
+03-test\chief-runner.spec.cjs:11:1 › all recorded chief paths are fresh; an in-memory coordinate mutation is rejected
+HASH-D01 | b5042d812754789b314f870999cd306f914ba22bea67f52dbc762b288ea371f3 | PASS
+
+HASH-D02 | 7cfa1beabca7071a55b094b277d27f06f8a579bfd63f08d88d4158cc97a57fa9 | PASS
+
+HASH-D03 | 687c8752848d8c40feb76b8db20c60ac4537fa9c8fae4c389b03aa3dbd621239 | PASS
+
+HASH-D04 | d470ee08d831ff674b2baee0f29d4c4b7d64cde84a8f8d785ab6999303c34eee | PASS
+
+HASH-D05 | d17e04d601aae3bc3bd520a75a66f87053dd2cbea3f11bd4cb5d5c202e506674 | PASS
+
+HASH-D06 | c81f979eae54b3c73206b1a71c9ca66fd7e3b76e979a447e0b87128f6ea83747 | PASS
+
+HASH-D07 | 1864388fa6142361717229eba4e3798e1753f96e68fd924d56e3ca0fe76d3f7b | PASS
+
+HASH-D08 | 66d0a2c121425d000e6842855357aee9b41a5bdcd7ecfa80a32b6c45d83779bb | PASS
+
+HASH-D09 | 6514cb0f6686ea5b0cbb49c6d13f81395f4445c71ea8e6d7da5b4f81dcf0cf2b | PASS
+
+HASH-D10 | 6532bb63a239caa88b8ae73186f87d19c3f1a00729b88638da8148fdefde26d4 | PASS
+
+HASH-D11 | 542476c36bf5cdbc1e9fba52e00dded4f456aa39454b28c181e033564f97aed4 | PASS
+
+HASH-D12 | de3ada4d3826d5032400c610e117e35cfe38cb6dde9a5fa4d68ce79da790795a | PASS
+
+HASH-D13 | bc66081459119bc6d9b5791d6732200fe5ea6ad5cb7a02b2749b2d0a7e8a15db | PASS
+
+HASH-D14 | b44396a0db9331bfaba2093dc219a6bf75994681dad70f61a97be924e47f50a4 | PASS
+
+HASH-D15 | b4776506fab73d882917be60c4c929cb48d7b1863b7d74a7ec25aff6a44b3703 | PASS
+
+HASH-D16 | 07b339d9cd62096c2bc6d17b4c82249c3dfd371b1985b9c9ab0861b97dbf867c | PASS
+
+HASH-D17 | 00c4e26ab981c54f5089b5afa66255461c8689fc7d0b2d8cba7310379723ed93 | PASS
+
+HASH-D18 | ae7870cea44cf35ae8f411a0d6ca674f843efd77ce7646bcf6f67b5be157e416 | PASS
+
+HASH-F01 | 53544d26c537ddd7b13d61a659934553ee1dd488fc894dd00b42f43e4f68075b | PASS
+
+HASH-F02 | 3e633f8ef9ecfb1c361c1d5e6374dd4b1db00c9fe6aaee2b0de2b4dd56486d2d | PASS
+
+HASH-F03 | 9d3c9808e49a8b4c0cbe922d66d21380e4b8ec32714005b37e10cf9fa2314482 | PASS
+
+HASH-F04 | 9b3085e54a7dbfa2e4ce957840150b43328a1d67182b041ecaf28c47b877fe49 | PASS
+
+HASH-negative-D01 | stored=b5042d812754789b314f870999cd306f914ba22bea67f52dbc762b288ea371f3 current=c5ff0c9e64d9c163a4db8b67fab941507dc574034a6840e31c39f1223ccd94bf | RED-as-expected
+
+[2/23] 03-test\chief-runner.spec.cjs:14:3 › D01 post-ladder joins recorded route with configured gap
+03-test\chief-runner.spec.cjs:14:3 › D01 post-ladder joins recorded route with configured gap
+JOIN-D01 post-ladder | phase=running, delay=2.5, gap=2.517, catches=0 | PASS
+
+[3/23] 03-test\chief-runner.spec.cjs:15:3 › D01 post-ladder never rewinds behind ladder x
+03-test\chief-runner.spec.cjs:15:3 › D01 post-ladder never rewinds behind ladder x
+NO-REWIND-D01 | entryX=1256.25, minX=1264.76, maxDx=8.57 | PASS
+
+[4/23] 03-test\chief-runner.spec.cjs:16:3 › D01 pre-ladder pause delay-0.5 has no visible/catching chief
+03-test\chief-runner.spec.cjs:16:3 › D01 pre-ladder pause delay-0.5 has no visible/catching chief
+PRE-LADDER-D01 delay-0.5 | active=false, phase=waiting, catches=0 | PASS
+
+[5/23] 03-test\chief-runner.spec.cjs:14:3 › D05 post-ladder joins recorded route with configured gap
+03-test\chief-runner.spec.cjs:14:3 › D05 post-ladder joins recorded route with configured gap
+JOIN-D05 post-ladder | phase=running, delay=2.5, gap=2.533, catches=0 | PASS
+
+[6/23] 03-test\chief-runner.spec.cjs:15:3 › D05 post-ladder never rewinds behind ladder x
+03-test\chief-runner.spec.cjs:15:3 › D05 post-ladder never rewinds behind ladder x
+NO-REWIND-D05 | entryX=1141.50, minX=1171.12, maxDx=8.58 | PASS
+
+[7/23] 03-test\chief-runner.spec.cjs:16:3 › D05 pre-ladder pause delay-0.5 has no visible/catching chief
+03-test\chief-runner.spec.cjs:16:3 › D05 pre-ladder pause delay-0.5 has no visible/catching chief
+PRE-LADDER-D05 delay-0.5 | active=false, phase=waiting, catches=0 | PASS
+
+[8/23] 03-test\chief-runner.spec.cjs:14:3 › D09 post-ladder joins recorded route with configured gap
+03-test\chief-runner.spec.cjs:14:3 › D09 post-ladder joins recorded route with configured gap
+JOIN-D09 post-ladder | phase=running, delay=2.5, gap=2.551, catches=0 | PASS
+
+[9/23] 03-test\chief-runner.spec.cjs:15:3 › D09 post-ladder never rewinds behind ladder x
+03-test\chief-runner.spec.cjs:15:3 › D09 post-ladder never rewinds behind ladder x
+NO-REWIND-D09 | entryX=1208.78, minX=1250.83, maxDx=14.70 | PASS
+
+[10/23] 03-test\chief-runner.spec.cjs:16:3 › D09 pre-ladder pause delay-0.5 has no visible/catching chief
+03-test\chief-runner.spec.cjs:16:3 › D09 pre-ladder pause delay-0.5 has no visible/catching chief
+PRE-LADDER-D09 delay-0.5 | active=false, phase=waiting, catches=0 | PASS
+
+[11/23] 03-test\chief-runner.spec.cjs:14:3 › D12 post-ladder joins recorded route with configured gap
+03-test\chief-runner.spec.cjs:14:3 › D12 post-ladder joins recorded route with configured gap
+JOIN-D12 post-ladder | phase=running, delay=2.5, gap=2.517, catches=0 | PASS
+
+[12/23] 03-test\chief-runner.spec.cjs:15:3 › D12 post-ladder never rewinds behind ladder x
+03-test\chief-runner.spec.cjs:15:3 › D12 post-ladder never rewinds behind ladder x
+NO-REWIND-D12 | entryX=1071.30, minX=1104.57, maxDx=17.43 | PASS
+
+[13/23] 03-test\chief-runner.spec.cjs:16:3 › D12 pre-ladder pause delay-0.5 has no visible/catching chief
+03-test\chief-runner.spec.cjs:16:3 › D12 pre-ladder pause delay-0.5 has no visible/catching chief
+PRE-LADDER-D12 delay-0.5 | active=false, phase=waiting, catches=0 | PASS
+
+[14/23] 03-test\chief-runner.spec.cjs:19:31 › D15 t~4s pause delay-0.5 does not catch
+03-test\chief-runner.spec.cjs:19:31 › D15 t~4s pause delay-0.5 does not catch
+PAUSE-D15-T4 delay-0.5 | playerT=4.000, chiefT=-2.500, catches=0 | PASS
+
+[15/23] 03-test\chief-runner.spec.cjs:19:31 › D18 t~4s pause delay-0.5 does not catch
+03-test\chief-runner.spec.cjs:19:31 › D18 t~4s pause delay-0.5 does not catch
+PAUSE-D18-T4 delay-0.5 | playerT=4.033, chiefT=-2.500, catches=0 | PASS
+
+[16/23] 03-test\chief-runner.spec.cjs:21:1 › mid-climb vertical offset uses monotonic x fallback without early catch
+03-test\chief-runner.spec.cjs:21:1 › mid-climb vertical offset uses monotonic x fallback without early catch
+CLIMB-X-FALLBACK | mode=x, gap=2.467, catches=0 | PASS
+
+[17/23] 03-test\chief-runner.spec.cjs:23:37 › D01 keyboard ladder entry: hidden before 15%, climb after route-delay schedule, then 2.5s gap
+03-test\chief-runner.spec.cjs:23:37 › D01 keyboard ladder entry: hidden before 15%, climb after route-delay schedule, then 2.5s gap
+LADDER-D01-KEYBOARD | beforeActive=false, scheduledWait=waiting, climbPose=climb, gap=2.500 | PASS
+
+[18/23] 03-test\chief-runner.spec.cjs:23:37 › D09 keyboard ladder entry: hidden before 15%, climb after route-delay schedule, then 2.5s gap
+03-test\chief-runner.spec.cjs:23:37 › D09 keyboard ladder entry: hidden before 15%, climb after route-delay schedule, then 2.5s gap
+LADDER-D09-KEYBOARD | beforeActive=false, scheduledWait=waiting, climbPose=climb, gap=2.551 | PASS
+
+[19/23] 03-test\chief-runner.spec.cjs:23:37 › D12 keyboard ladder entry: hidden before 15%, climb after route-delay schedule, then 2.5s gap
+03-test\chief-runner.spec.cjs:23:37 › D12 keyboard ladder entry: hidden before 15%, climb after route-delay schedule, then 2.5s gap
+LADDER-D12-KEYBOARD | beforeActive=false, scheduledWait=waiting, climbPose=climb, gap=2.517 | PASS
+
+[20/23] 03-test\chief-runner.spec.cjs:25:37 › D01 touch 390x844 ladder entry
+03-test\chief-runner.spec.cjs:25:37 › D01 touch 390x844 ladder entry
+LADDER-D01-TOUCH-390x844 | phase=running, delay=2.5, gap=2.500 | PASS
+
+[21/23] 03-test\chief-runner.spec.cjs:25:37 › D09 touch 390x844 ladder entry
+03-test\chief-runner.spec.cjs:25:37 › D09 touch 390x844 ladder entry
+LADDER-D09-TOUCH-390x844 | phase=running, delay=2.5, gap=2.500 | PASS
+
+[22/23] 03-test\chief-runner.spec.cjs:25:37 › D12 touch 390x844 ladder entry
+03-test\chief-runner.spec.cjs:25:37 › D12 touch 390x844 ladder entry
+LADDER-D12-TOUCH-390x844 | phase=running, delay=2.5, gap=2.500 | PASS
+
+[23/23] 03-test\chief-runner.spec.cjs:27:1 › F01 uses the recorded Frozen 1.2s chief after ladder entry
+03-test\chief-runner.spec.cjs:27:1 › F01 uses the recorded Frozen 1.2s chief after ladder entry
+RECORDED-F01-LADDER | active=true, phase=running, delay=1.2 | PASS
+
+  23 passed (48.6s)

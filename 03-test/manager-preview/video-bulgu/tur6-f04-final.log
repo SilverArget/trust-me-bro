@@ -1,0 +1,18 @@
+
+Running 1 test using 1 worker
+
+(node:28300) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1/1] 03-test\vp-dock-play.spec.cjs:307:28 › O-1 B-5 F04 ideal keyboard route
+03-test\vp-dock-play.spec.cjs:307:28 › O-1 B-5 F04 ideal keyboard route
+O-1-F04 | 30.36s, x=8243.64, deaths=0, retries=0, coin=13/14 | finish, deaths=0, retries=0, coin>=0/14 | PASS
+
+B-5-F04 | 13/14 coin | baseline 0/14 coin | PASS
+
+DENSITY-F04 | length=8414.38, movements=56, per1000=6.655, manualInputs=31
+
+CHIEF-F04 | minGap=1.033s, catches=0 | catches=0 | PASS
+
+  1 passed (33.3s)

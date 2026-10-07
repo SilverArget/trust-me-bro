@@ -1,0 +1,1379 @@
+
+Running 28 tests using 1 worker
+
+(node:18344) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1/28] 03-test\vp-dock-play.spec.cjs:307:28 › O-1 B-5 D01 ideal keyboard route
+03-test\vp-dock-play.spec.cjs:307:28 › O-1 B-5 D01 ideal keyboard route
+[DBG-B2] 1.82 1167.99,-304.45 normal press tutunma-3
+[DBG-B2] 1.92 1193.49,-335.35 normal press tutunma-4
+[DBG-B2] 2.08 1235.97,-362.10 normal press tutunma-7
+[DBG-B2] 2.18 1267.60 normal c07-center-y -336.10
+[DBG-B2] 2.93 1452.72,-304.45 normal press tutunma-9
+[DBG-B2] 3.67 1639.74,-304.45 normal press tutunma-11
+[DBG-B2] 5.28 2051.97,-208.45 normal press tutunma-13
+[DBG-B2] 6.82 2276.02,-303.25 normal press normal-14
+[DBG-B2] 8.53 2713.60,-155.65 normal press slide-d01-slide-01
+[SLIDE-EXIT] D01 center=2848.58 player=2832.58
+[DBG-B2] 9.52 2964.31,-155.65 normal press slide-d01-slide-02
+[SLIDE-EXIT] D01 center=3107.79 player=3091.79
+[DBG-B2] 10.23 3147.05,-155.65 normal press tutunma-15
+[DBG-B2] 10.92 3321.31,-177.25 normal press tutunma-16
+[DBG-B2] 11.80 3464.38,-251.65 normal press tutunma-17
+[DBG-B2] 12.65 3681.10,-251.65 normal press tutunma-19
+[DBG-B2] 13.52 3902.09,-251.65 normal press vault-d01-vault-02
+[DBG-B2] 14.33 4110.34,-251.65 normal press tutunma-21
+[DBG-B2] 15.37 4373.84,-273.25 normal press tutunma-22
+[DBG-B2] 16.40 4554.37,-347.65 normal press normal-23
+[DBG-B2] 17.65 4873.12,-203.65 normal press tutunma-24
+[DBG-B2] 21.00 6058.92,97.43 normal press tutunma-27
+[DBG-B2] 24.10 6849.39,97.43 normal press normal-29
+[DBG-B2] 27.55 7729.12,334.04 normal press normal-30
+[DBG-B2] 28.40 7945.84,407.00 normal press vault-d01-vault-03
+
+[DBG-B2] missing D01-c01,D01-c05
+
+O-1-D01 | 29.35s, x=8205.08, deaths=0, retries=0, coin=10/12 | finish, deaths=0, retries=0, coin>=12/12 | FAIL
+
+B-5-D01 | 10/12 coin | baseline 12/12 coin | FAIL
+
+CHIEF-D01 | minGap=2.317s, catches=0 | catches=0 | PASS
+
+D01-c07-y | measured=-336.10 | coin center y | PASS
+
+  1) 03-test\vp-dock-play.spec.cjs:307:28 › O-1 B-5 D01 ideal keyboard route ───────────────────────
+
+    Error: expect(received).toBeGreaterThanOrEqual(expected)
+
+    Expected: >= 12
+    Received:    10
+
+      329 |   if (process.env.TMB_RECORD_CHIEF) fs.writeFileSync(path.join(__dirname,`.chief-record-${id}.json`),JSON.stringify({delay:id[0]==='F'?1.2:['D01','D02'].includes(id)?2.5:1.5,routeHash:r.end.chiefRouteHash,samples:r.chiefSamples}));
+      330 |   if (id === 'D01') console.log(`D01-c07-y | measured=${r.c07Y?.toFixed(2)} | coin center y | ${r.c07Y!==null?'PASS':'FAIL'}`);
+    > 331 |   expect(pass).toBeTruthy(); expect(r.deaths).toBe(0); expect(r.retries).toBe(0); expect(collected).toBeGreaterThanOrEqual(coinBaseline); if (/^(?:D(?:0[1-9]|1[0-8])|F0[1-6])$/.test(id) && r.end.chief && !process.env.TMB_RECORD_CHIEF) { expect(r.chiefCatches).toBe(0); expect(Number.isFinite(r.chiefMinGap)).toBeTruthy(); }
+          |                                                                                                     ^
+      332 | });
+      333 |
+      334 | for (const i of [14,17]) test(`F01 i${i} missed-dive fallback catch`, async ({page}) => {
+        at E:\oyunlar\TrustMeBro-wt\video-bulgu\03-test\vp-dock-play.spec.cjs:331:101
+
+    Error Context: test-results\03-test-vp-dock-play-O-1-B-5-D01-ideal-keyboard-route\error-context.md
+
+    Error Context: test-results\03-test-vp-dock-play-O-1-B-5-D01-ideal-keyboard-route\error-context.md
+
+
+(node:38372) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[2/28] 03-test\vp-dock-play.spec.cjs:307:28 › O-1 B-5 D02 ideal keyboard route
+03-test\vp-dock-play.spec.cjs:307:28 › O-1 B-5 D02 ideal keyboard route
+[DBG-B2] 0.12 70.40,-291.81 normal press tutunma-2
+[DBG-B2] 0.43 134.64,-339.50 normal press tutunma-3
+[DBG-B2] 1.93 517.14,-277.29 slide press tutunma-7
+[SLIDE-EXIT] D02 center=562.88 player=546.88
+[DBG-B2] 2.22 589.39,-332.21 normal press tutunma-8
+[DBG-B2] 2.55 674.38,-340.37 normal press tutunma-9
+[SLIDE-EXIT] D02 center=1098.35 player=1082.35
+[DBG-B2] 4.73 1231.12,-272.20 normal press normal-13
+[DBG-B2] 6.85 2202.69,314.36 normal press tutunma-20
+[DBG-B2] 8.28 2412.82,222.20 normal press vault-d02-vault-06
+[DBG-B2] 8.72 2523.31,178.14 normal press vault-d02-vault-01
+[DBG-B2] 9.47 2673.25,154.42 normal press tutunma-21
+[DBG-B2] 10.60 2962.27,222.20 normal press tutunma-23
+[DBG-B2] 11.80 3268.24,222.20 normal press vault-d02-vault-03
+[DBG-B2] 17.62 4751.45,222.20 normal press normal-25
+[DBG-B2] 19.70 5282.66,342.20 normal press vault-d02-vault-05
+[DBG-B2] 20.07 5376.15,287.88 normal press vault-d02-vault-04
+[DBG-B2] 20.17 5401.67,268.62 normal press vault-d02-vault-04
+[DBG-B2] 20.72 5541.90,226.42 normal press vault-d02-vault-02
+[DBG-B2] 20.82 5567.40,265.86 normal press vault-d02-vault-02
+[DBG-B2] 21.75 5805.41,342.20 normal press normal-26
+
+[DBG-B2] missing D02-c05
+
+O-1-D02 | 23.35s, x=6234.60, deaths=0, retries=0, coin=9/10 | finish, deaths=0, retries=0, coin>=10/10 | FAIL
+
+B-5-D02 | 9/10 coin | baseline 10/10 coin | FAIL
+
+CHIEF-D02 | minGap=2.316s, catches=0 | catches=0 | PASS
+
+  2) 03-test\vp-dock-play.spec.cjs:307:28 › O-1 B-5 D02 ideal keyboard route ───────────────────────
+
+    Error: expect(received).toBeGreaterThanOrEqual(expected)
+
+    Expected: >= 10
+    Received:    9
+
+      329 |   if (process.env.TMB_RECORD_CHIEF) fs.writeFileSync(path.join(__dirname,`.chief-record-${id}.json`),JSON.stringify({delay:id[0]==='F'?1.2:['D01','D02'].includes(id)?2.5:1.5,routeHash:r.end.chiefRouteHash,samples:r.chiefSamples}));
+      330 |   if (id === 'D01') console.log(`D01-c07-y | measured=${r.c07Y?.toFixed(2)} | coin center y | ${r.c07Y!==null?'PASS':'FAIL'}`);
+    > 331 |   expect(pass).toBeTruthy(); expect(r.deaths).toBe(0); expect(r.retries).toBe(0); expect(collected).toBeGreaterThanOrEqual(coinBaseline); if (/^(?:D(?:0[1-9]|1[0-8])|F0[1-6])$/.test(id) && r.end.chief && !process.env.TMB_RECORD_CHIEF) { expect(r.chiefCatches).toBe(0); expect(Number.isFinite(r.chiefMinGap)).toBeTruthy(); }
+          |                                                                                                     ^
+      332 | });
+      333 |
+      334 | for (const i of [14,17]) test(`F01 i${i} missed-dive fallback catch`, async ({page}) => {
+        at E:\oyunlar\TrustMeBro-wt\video-bulgu\03-test\vp-dock-play.spec.cjs:331:101
+
+    Error Context: test-results\03-test-vp-dock-play-O-1-B-5-D02-ideal-keyboard-route\error-context.md
+
+    Error Context: test-results\03-test-vp-dock-play-O-1-B-5-D02-ideal-keyboard-route\error-context.md
+
+
+(node:33624) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[3/28] 03-test\vp-dock-play.spec.cjs:307:28 › O-1 B-5 D03 ideal keyboard route
+03-test\vp-dock-play.spec.cjs:307:28 › O-1 B-5 D03 ideal keyboard route
+O-1-D03 | 25.31s, x=6968.53, deaths=0, retries=0, coin=13/13 | finish, deaths=0, retries=0, coin>=12/13 | PASS
+
+B-5-D03 | 13/13 coin | baseline 12/13 coin | PASS
+
+CHIEF-D03 | minGap=2.267s, catches=0 | catches=0 | PASS
+
+[4/28] 03-test\vp-dock-play.spec.cjs:307:28 › O-1 B-5 D04 ideal keyboard route
+03-test\vp-dock-play.spec.cjs:307:28 › O-1 B-5 D04 ideal keyboard route
+[DBG-B2] 0.98 292.51,-459.94 normal press tutunma-2
+[DBG-B2] 1.83 489.46,-496.60 normal press slide-d04-slide-01
+[SLIDE-EXIT] D04 center=628.70 player=612.70
+[DBG-B2] 2.85 748.69,-454.32 normal press tutunma-4
+[DBG-B2] 3.02 791.17,-454.68 normal press vault-d04-vault-01
+[DBG-B2] 3.13 798.40,-448.27 catch press vault-d04-vault-01
+[DBG-B2] 3.95 973.59,-524.89 normal press tutunma-5
+[DBG-B2] 6.35 1567.88,-292.00 normal press tutunma-14
+[DBG-B2] 7.20 1784.63,-245.40 normal press tutunma-16
+[DBG-B2] 7.85 1932.43,-249.38 normal press tutunma-18
+[DBG-B2] 9.33 2310.67,-251.80 normal press vault-d04-vault-02
+[DBG-B2] 10.15 2518.91,-251.80 normal press vault-d04-vault-03
+[DBG-B2] 13.10 3338.53,-240.97 normal press dive-19
+[DBG-B2] 13.98 4000.41,-131.80 normal press tutunma-20
+[DBG-B2] 15.06 4276.65,-131.80 normal press tutunma-23
+[DBG-B2] 16.06 4531.65,-130.59 normal press tutunma-25
+[DBG-B2] 17.20 4804.50,-139.82 normal press dive-27
+[DBG-B2] 17.65 4970.55,-203.40 roll press tutunma-29
+[DBG-B2] 18.81 5251.39,-203.80 normal press normal-30
+[DBG-B2] 19.91 5531.87,-136.60 normal press normal-d04-long-0-39
+[DBG-B2] 20.63 5714.60,-72.46 slide press normal-d04-long-2-41
+[DBG-B2] 20.88 5778.35,-37.87 slide press normal-d04-long-3-41
+[DBG-B2] 21.03 5816.60,-17.11 slide press normal-d04-long-3-42
+[DBG-B2] 21.21 5863.34,8.26 slide press normal-d04-long-4-42
+[DBG-B2] 21.51 5939.87,49.78 slide press normal-d04-long-4-43
+[DBG-B2] 21.61 5965.37,63.62 slide press normal-d04-long-5-43
+[DBG-B2] 21.88 6033.32,100.50 slide press normal-d04-long-6-43
+[DBG-B2] 22.01 6067.34,118.96 slide press normal-d04-long-6-44
+[DBG-B2] 22.18 6109.82,142.01 slide press normal-d04-long-7-44
+[DBG-B2] 25.55 7047.90,241.69 normal press dive-39
+[DBG-B2] 26.46 7797.30,407.00 normal press tutunma-40
+
+[DBG-B2] missing D04-c01,D04-c04,D04-c08,D04-c09
+
+O-1-D04 | 27.23s, x=8001.27, deaths=0, retries=0, coin=8/12 | finish, deaths=0, retries=0, coin>=12/12 | FAIL
+
+B-5-D04 | 8/12 coin | baseline 12/12 coin | FAIL
+
+CHIEF-D04 | minGap=2.365s, catches=0 | catches=0 | PASS
+
+  3) 03-test\vp-dock-play.spec.cjs:307:28 › O-1 B-5 D04 ideal keyboard route ───────────────────────
+
+    Error: expect(received).toBeGreaterThanOrEqual(expected)
+
+    Expected: >= 12
+    Received:    8
+
+      329 |   if (process.env.TMB_RECORD_CHIEF) fs.writeFileSync(path.join(__dirname,`.chief-record-${id}.json`),JSON.stringify({delay:id[0]==='F'?1.2:['D01','D02'].includes(id)?2.5:1.5,routeHash:r.end.chiefRouteHash,samples:r.chiefSamples}));
+      330 |   if (id === 'D01') console.log(`D01-c07-y | measured=${r.c07Y?.toFixed(2)} | coin center y | ${r.c07Y!==null?'PASS':'FAIL'}`);
+    > 331 |   expect(pass).toBeTruthy(); expect(r.deaths).toBe(0); expect(r.retries).toBe(0); expect(collected).toBeGreaterThanOrEqual(coinBaseline); if (/^(?:D(?:0[1-9]|1[0-8])|F0[1-6])$/.test(id) && r.end.chief && !process.env.TMB_RECORD_CHIEF) { expect(r.chiefCatches).toBe(0); expect(Number.isFinite(r.chiefMinGap)).toBeTruthy(); }
+          |                                                                                                     ^
+      332 | });
+      333 |
+      334 | for (const i of [14,17]) test(`F01 i${i} missed-dive fallback catch`, async ({page}) => {
+        at E:\oyunlar\TrustMeBro-wt\video-bulgu\03-test\vp-dock-play.spec.cjs:331:101
+
+    Error Context: test-results\03-test-vp-dock-play-O-1-B-5-D04-ideal-keyboard-route\error-context.md
+
+    Error Context: test-results\03-test-vp-dock-play-O-1-B-5-D04-ideal-keyboard-route\error-context.md
+
+
+(node:32296) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[5/28] 03-test\vp-dock-play.spec.cjs:307:28 › O-1 B-5 D05 ideal keyboard route
+03-test\vp-dock-play.spec.cjs:307:28 › O-1 B-5 D05 ideal keyboard route
+[DBG-B2] 0.35 113.40,-749.75 normal press tutunma-1
+[DBG-B2] 0.65 189.90,-807.92 normal press tutunma-2
+[DBG-B2] 1.07 279.60,-828.25 normal press tutunma-3
+[DBG-B2] 1.98 513.33,-867.38 normal press tutunma-4
+[DBG-B2] 2.83 730.08,-867.38 normal press tutunma-7
+[DBG-B2] 4.15 1065.82,-749.75 normal press tutunma-9
+[DBG-B2] 7.77 1914.80,-821.75 normal press normal-10
+[DBG-B2] 8.88 2243.50,-729.67 normal press dive-11
+[DBG-B2] 9.62 2714.13,-537.63 normal press tutunma-12
+[DBG-B2] 12.13 3426.30,-512.74 normal press dive-14
+[DBG-B2] 15.40 4713.96,-166.63 normal press tutunma-17
+[DBG-B2] 17.27 5108.62,-81.25 normal press normal-d05-v15-retry-34
+[DBG-B2] 17.57 5185.10,-139.02 normal press tutunma-24
+[DBG-B2] 17.93 5267.44,-41.75 normal press normal-d05-v15-retry-35
+[DBG-B2] 18.52 5323.12,-113.38 normal press vault-d05-vault-02
+[DBG-B2] 18.80 5351.12,-161.38 normal press vault-d05-vault-01
+[DBG-B2] 19.67 5551.76,-113.38 normal press normal-25
+[DBG-B2] 23.65 6567.47,407.00 normal press tutunma-36
+[DBG-B2] 24.45 6698.77,335.00 normal press tutunma-37
+[DBG-B2] 25.00 6838.99,313.38 normal press vault-d05-vault-03
+[DBG-B2] 25.17 6881.50,266.92 normal press tutunma-38
+[DBG-B2] 25.35 6977.48,260.37 normal press dive-41
+
+[DBG-B2] missing D05-c01,D05-c03,D05-c04
+
+O-1-D05 | 26.30s, x=7441.71, deaths=0, retries=0, coin=10/13 | finish, deaths=0, retries=0, coin>=13/13 | FAIL
+
+B-5-D05 | 10/13 coin | baseline 13/13 coin | FAIL
+
+CHIEF-D05 | minGap=2.383s, catches=0 | catches=0 | PASS
+
+  4) 03-test\vp-dock-play.spec.cjs:307:28 › O-1 B-5 D05 ideal keyboard route ───────────────────────
+
+    Error: expect(received).toBeGreaterThanOrEqual(expected)
+
+    Expected: >= 13
+    Received:    10
+
+      329 |   if (process.env.TMB_RECORD_CHIEF) fs.writeFileSync(path.join(__dirname,`.chief-record-${id}.json`),JSON.stringify({delay:id[0]==='F'?1.2:['D01','D02'].includes(id)?2.5:1.5,routeHash:r.end.chiefRouteHash,samples:r.chiefSamples}));
+      330 |   if (id === 'D01') console.log(`D01-c07-y | measured=${r.c07Y?.toFixed(2)} | coin center y | ${r.c07Y!==null?'PASS':'FAIL'}`);
+    > 331 |   expect(pass).toBeTruthy(); expect(r.deaths).toBe(0); expect(r.retries).toBe(0); expect(collected).toBeGreaterThanOrEqual(coinBaseline); if (/^(?:D(?:0[1-9]|1[0-8])|F0[1-6])$/.test(id) && r.end.chief && !process.env.TMB_RECORD_CHIEF) { expect(r.chiefCatches).toBe(0); expect(Number.isFinite(r.chiefMinGap)).toBeTruthy(); }
+          |                                                                                                     ^
+      332 | });
+      333 |
+      334 | for (const i of [14,17]) test(`F01 i${i} missed-dive fallback catch`, async ({page}) => {
+        at E:\oyunlar\TrustMeBro-wt\video-bulgu\03-test\vp-dock-play.spec.cjs:331:101
+
+    Error Context: test-results\03-test-vp-dock-play-O-1-B-5-D05-ideal-keyboard-route\error-context.md
+
+    Error Context: test-results\03-test-vp-dock-play-O-1-B-5-D05-ideal-keyboard-route\error-context.md
+
+
+(node:20304) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[6/28] 03-test\vp-dock-play.spec.cjs:307:28 › O-1 B-5 D06 ideal keyboard route
+03-test\vp-dock-play.spec.cjs:307:28 › O-1 B-5 D06 ideal keyboard route
+[DBG-B2] 0.12 24.40,143.00 normal press vault-d06-vault-03
+[DBG-B2] 0.95 168.04,143.00 normal press tutunma-1
+[DBG-B2] 2.05 448.54,143.00 normal press tutunma-3
+[DBG-B2] 2.80 639.77,121.38 normal press tutunma-5
+[DBG-B2] 3.33 775.79,99.75 normal press normal-6
+[DBG-B2] 3.93 933.21,95.26 normal press dive-7
+[DBG-B2] 4.37 1158.53,53.66 normal press dive-8
+[DBG-B2] 4.88 1415.52,-3.38 normal press tutunma-9
+[DBG-B2] 5.30 1497.52,-51.38 normal press vault-d06-vault-02
+[DBG-B2] 5.62 1568.16,-99.38 normal press vault-d06-vault-04
+[DBG-B2] 6.00 1671.58,-130.05 normal press dive-10
+[DBG-B2] 6.75 2173.53,243.75 normal press tutunma-11
+[DBG-B2] 7.35 2326.53,200.63 normal press normal-12
+[DBG-B2] 7.78 2437.02,156.51 normal press tutunma-13
+[DBG-B2] 8.40 2491.00,243.75 normal press tutunma-13
+[DBG-B2] 9.87 2823.39,243.75 normal press normal-15
+[DBG-B2] 10.82 3065.62,259.38 normal press tutunma-16
+[DBG-B2] 12.33 3342.13,177.75 normal press normal-17
+[DBG-B2] 13.23 3571.63,374.63 roll press vault-d06-vault-01
+[DBG-B2] 14.32 3804.13,374.63 normal press tutunma-19
+[DBG-B2] 15.35 4052.35,333.89 normal press tutunma-21
+[DBG-B2] 15.98 4109.80,407.00 normal press tutunma-21
+[DBG-B2] 16.95 4311.55,366.24 normal press tutunma-23
+[DBG-B2] 17.38 4400.20,336.25 normal press dive-24
+
+[DBG-B2] missing D06-c01,D06-c03,D06-c04
+
+O-1-D06 | 18.42s, x=4965.18, deaths=0, retries=0, coin=10/13 | finish, deaths=0, retries=0, coin>=13/13 | FAIL
+
+B-5-D06 | 10/13 coin | baseline 13/13 coin | FAIL
+
+CHIEF-D06 | minGap=2.684s, catches=0 | catches=0 | PASS
+
+  5) 03-test\vp-dock-play.spec.cjs:307:28 › O-1 B-5 D06 ideal keyboard route ───────────────────────
+
+    Error: expect(received).toBeGreaterThanOrEqual(expected)
+
+    Expected: >= 13
+    Received:    10
+
+      329 |   if (process.env.TMB_RECORD_CHIEF) fs.writeFileSync(path.join(__dirname,`.chief-record-${id}.json`),JSON.stringify({delay:id[0]==='F'?1.2:['D01','D02'].includes(id)?2.5:1.5,routeHash:r.end.chiefRouteHash,samples:r.chiefSamples}));
+      330 |   if (id === 'D01') console.log(`D01-c07-y | measured=${r.c07Y?.toFixed(2)} | coin center y | ${r.c07Y!==null?'PASS':'FAIL'}`);
+    > 331 |   expect(pass).toBeTruthy(); expect(r.deaths).toBe(0); expect(r.retries).toBe(0); expect(collected).toBeGreaterThanOrEqual(coinBaseline); if (/^(?:D(?:0[1-9]|1[0-8])|F0[1-6])$/.test(id) && r.end.chief && !process.env.TMB_RECORD_CHIEF) { expect(r.chiefCatches).toBe(0); expect(Number.isFinite(r.chiefMinGap)).toBeTruthy(); }
+          |                                                                                                     ^
+      332 | });
+      333 |
+      334 | for (const i of [14,17]) test(`F01 i${i} missed-dive fallback catch`, async ({page}) => {
+        at E:\oyunlar\TrustMeBro-wt\video-bulgu\03-test\vp-dock-play.spec.cjs:331:101
+
+    Error Context: test-results\03-test-vp-dock-play-O-1-B-5-D06-ideal-keyboard-route\error-context.md
+
+    Error Context: test-results\03-test-vp-dock-play-O-1-B-5-D06-ideal-keyboard-route\error-context.md
+
+
+(node:36368) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[7/28] 03-test\vp-dock-play.spec.cjs:307:28 › O-1 B-5 D07 ideal keyboard route
+  6) 03-test\vp-dock-play.spec.cjs:307:28 › O-1 B-5 D07 ideal keyboard route ───────────────────────
+
+    Error: D07 death before finish
+    [DBG-B2] 5.80 1984.15,103.38 normal press tutunma-7
+    [DBG-B2] 7.57 2638.20,109.82 normal press dive-9
+    [DBG-B2] 8.37 3039.24,183.75 normal press tutunma-10
+    [DBG-B2] 9.48 3323.97,183.75 normal press vault-d07-vault-03
+    [DBG-B2] 12.42 4103.39,186.71 normal press dive-12
+    [DBG-B2] 12.92 4671.18,270.25 normal press tutunma-13
+    [DBG-B2] 13.33 4781.87,211.11 normal press dive-14
+    [DBG-B2] 13.45 4842.54,159.33 normal press dive-14
+    [DBG-B2] 14.50 5198.99,263.00 normal press slide-d07-slide-02
+    [SLIDE-EXIT] D07 center=5307.32 player=5291.32
+    [DBG-B2] 15.03 5325.34,263.00 normal press slide-d07-slide-03
+    [DBG-B2] 15.13 5350.81,287.00 slide press dive-17
+    [DBG-B2] 15.45 retry player=5423.08 chief=1554.54 chainClimb=0.00s
+    [SLIDE-EXIT] D07 center=4841.60 player=4825.60
+    [DBG-B2] 15.45 4825.60 normal fail death
+
+      197 |     if (deaths) {
+      198 |       trace.push(`[DBG-B2] ${s.gameClock.toFixed(2)} ${p.x.toFixed(2)} ${s.parkour.state} fail death`);
+    > 199 |       throw new Error(`${id} death before finish\n${trace.slice(-15).join('\n')}`);
+          |             ^
+      200 |     }
+      201 |     let target = null;
+      202 |     for (const t of d05d06 ? tr : []) {
+        at drive (E:\oyunlar\TrustMeBro-wt\video-bulgu\03-test\vp-dock-play.spec.cjs:199:13)
+        at E:\oyunlar\TrustMeBro-wt\video-bulgu\03-test\vp-dock-play.spec.cjs:310:11
+
+    Error Context: test-results\03-test-vp-dock-play-O-1-B-5-D07-ideal-keyboard-route\error-context.md
+
+    Error Context: test-results\03-test-vp-dock-play-O-1-B-5-D07-ideal-keyboard-route\error-context.md
+
+
+(node:40364) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[8/28] 03-test\vp-dock-play.spec.cjs:307:28 › O-1 B-5 D08 ideal keyboard route
+03-test\vp-dock-play.spec.cjs:307:28 › O-1 B-5 D08 ideal keyboard route
+[DBG-B2] 0.62 177.47,-476.97 normal press tutunma-2
+[DBG-B2] 1.45 394.39,-453.90 normal press dive-4
+[DBG-B2] 2.33 659.95,-480.79 normal press dive-6
+[DBG-B2] 3.38 952.27,-494.84 normal press tutunma-8
+[DBG-B2] 3.67 1028.93,-416.73 normal press dive-9
+[DBG-B2] 4.77 1468.25,-453.10 normal press tutunma-11
+[DBG-B2] 5.38 1519.60,-327.38 normal press tutunma-11
+[DBG-B2] 6.30 1670.32,-397.00 normal press tutunma-13
+[DBG-B2] 7.57 1993.33,-285.06 normal press tutunma-16
+[DBG-B2] 8.02 2108.08,-322.63 normal press tutunma-18
+[DBG-B2] 8.35 2193.07,-379.65 normal press tutunma-20
+[DBG-B2] 9.02 2363.06,-298.58 normal press tutunma-22
+[DBG-B2] 9.75 2455.83,-380.36 normal press dive-23
+[DBG-B2] 10.83 2841.21,-375.38 normal press dive-24
+[DBG-B2] 11.62 3117.48,-431.34 normal press dive-26
+[DBG-B2] 11.77 3155.70,-489.49 normal press dive-26
+[DBG-B2] 11.88 3185.46,-521.00 normal press dive-26
+[DBG-B2] 12.88 3747.58,-323.20 normal press dive-28
+[DBG-B2] 14.08 4282.37,-166.14 normal press dive-d08-dz-06-assist
+[DBG-B2] 15.37 4518.19,-253.00 normal press tutunma-32
+[DBG-B2] 16.35 4768.93,-253.00 normal press normal-34
+[DBG-B2] 19.20 5527.34,-111.14 normal press dive-35
+[DBG-B2] 19.97 6163.62,-15.38 normal press vault-d08-vault-01
+[DBG-B2] 20.58 6320.88,-15.38 normal press vault-d08-vault-04
+[DBG-B2] 21.22 6482.37,-15.38 normal press vault-d08-vault-03
+[DBG-B2] 22.07 6699.09,-15.38 normal press vault-d08-vault-05
+[DBG-B2] 22.42 6788.34,-71.30 normal press dive-36
+[DBG-B2] 22.53 6818.07,-51.98 normal press dive-36
+[DBG-B2] 23.52 7108.59,-15.38 normal press vault-d08-vault-02
+[DBG-B2] 25.52 7654.58,159.81 normal press dive-43
+
+[DBG-B2] missing D08-c06,D08-c09,D08-c12
+
+O-1-D08 | 26.49s, x=8439.78, deaths=0, retries=0, coin=10/13 | finish, deaths=0, retries=0, coin>=13/13 | FAIL
+
+B-5-D08 | 10/13 coin | baseline 13/13 coin | FAIL
+
+DENSITY-D08 | length=8604.32, movements=49, per1000=5.695, manualInputs=30
+
+CHIEF-D08 | minGap=2.466s, catches=0 | catches=0 | PASS
+
+  7) 03-test\vp-dock-play.spec.cjs:307:28 › O-1 B-5 D08 ideal keyboard route ───────────────────────
+
+    Error: expect(received).toBeGreaterThanOrEqual(expected)
+
+    Expected: >= 13
+    Received:    10
+
+      329 |   if (process.env.TMB_RECORD_CHIEF) fs.writeFileSync(path.join(__dirname,`.chief-record-${id}.json`),JSON.stringify({delay:id[0]==='F'?1.2:['D01','D02'].includes(id)?2.5:1.5,routeHash:r.end.chiefRouteHash,samples:r.chiefSamples}));
+      330 |   if (id === 'D01') console.log(`D01-c07-y | measured=${r.c07Y?.toFixed(2)} | coin center y | ${r.c07Y!==null?'PASS':'FAIL'}`);
+    > 331 |   expect(pass).toBeTruthy(); expect(r.deaths).toBe(0); expect(r.retries).toBe(0); expect(collected).toBeGreaterThanOrEqual(coinBaseline); if (/^(?:D(?:0[1-9]|1[0-8])|F0[1-6])$/.test(id) && r.end.chief && !process.env.TMB_RECORD_CHIEF) { expect(r.chiefCatches).toBe(0); expect(Number.isFinite(r.chiefMinGap)).toBeTruthy(); }
+          |                                                                                                     ^
+      332 | });
+      333 |
+      334 | for (const i of [14,17]) test(`F01 i${i} missed-dive fallback catch`, async ({page}) => {
+        at E:\oyunlar\TrustMeBro-wt\video-bulgu\03-test\vp-dock-play.spec.cjs:331:101
+
+    Error Context: test-results\03-test-vp-dock-play-O-1-B-5-D08-ideal-keyboard-route\error-context.md
+
+    Error Context: test-results\03-test-vp-dock-play-O-1-B-5-D08-ideal-keyboard-route\error-context.md
+
+
+(node:9748) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[9/28] 03-test\vp-dock-play.spec.cjs:307:28 › O-1 B-5 D09 ideal keyboard route
+03-test\vp-dock-play.spec.cjs:307:28 › O-1 B-5 D09 ideal keyboard route
+O-1-D09 | 30.05s, x=7948.43, deaths=0, retries=0, coin=6/13 | finish, deaths=0, retries=0, coin>=0/13 | PASS
+
+B-5-D09 | 6/13 coin | baseline 0/13 coin | PASS
+
+DENSITY-D09 | length=8058.56, movements=42, per1000=5.212, manualInputs=35
+
+CHIEF-D09 | minGap=2.333s, catches=0 | catches=0 | PASS
+
+[10/28] 03-test\vp-dock-play.spec.cjs:307:28 › O-1 B-5 D10 ideal keyboard route
+03-test\vp-dock-play.spec.cjs:307:28 › O-1 B-5 D10 ideal keyboard route
+[DBG-B2] 0.27 87.22,-139.00 normal press vault-d10-vault-04
+[DBG-B2] 0.72 139.11,-190.68 normal press dive-1
+[DBG-B2] 1.53 476.82,-160.63 roll press vault-d10-vault-01
+[DBG-B2] 2.02 649.22,-245.05 normal press dive-3
+[DBG-B2] 3.22 1150.65,-137.80 normal press tutunma-5
+[DBG-B2] 3.78 1276.63,-139.00 normal press tutunma-7
+[DBG-B2] 4.53 1467.86,-117.38 normal press tutunma-10
+[DBG-B2] 5.73 1808.23,-72.71 normal press dive-13
+[DBG-B2] 6.00 2098.83,-23.75 normal press tutunma-14
+[DBG-B2] 6.78 2258.89,-88.63 normal press normal-15
+[DBG-B2] 6.93 2297.11,-131.73 normal press tutunma-16
+[DBG-B2] 8.15 2607.35,45.75 normal press tutunma-18
+[DBG-B2] 8.83 2781.61,32.71 normal press tutunma-20
+[DBG-B2] 9.40 2905.27,24.25 normal press tutunma-21
+[DBG-B2] 9.85 3020.02,-16.31 normal press tutunma-22
+[DBG-B2] 10.33 3120.97,-19.00 normal press tutunma-23
+[DBG-B2] 11.18 3312.88,-77.75 normal press dive-25
+[DBG-B2] 12.27 3593.38,45.38 normal press tutunma-26
+[DBG-B2] 15.10 4377.79,56.26 normal press dive-28
+[DBG-B2] 15.92 4985.91,165.50 normal press dive-29
+[DBG-B2] 16.78 5340.03,155.26 roll press dive-31
+[DBG-B2] 18.21 5756.09,165.50 normal press tutunma-33
+[DBG-B2] 18.50 5847.52,117.03 normal press dive-35
+[DBG-B2] 18.83 6199.05,286.25 normal press tutunma-36
+[DBG-B2] 19.35 6330.78,238.25 normal press tutunma-37
+[DBG-B2] 21.53 6887.52,216.63 normal press tutunma-39
+[DBG-B2] 22.30 7067.85,248.07 normal press tutunma-41
+[DBG-B2] 23.30 7365.17,297.18 normal press dive-43
+[DBG-B2] 23.51 7694.64,407.00 normal press vault-d10-vault-02
+[DBG-B2] 23.66 7740.25,363.05 normal press dive-44
+[DBG-B2] 23.78 7821.77,343.00 normal press dive-44
+[DBG-B2] 24.55 8152.59,407.00 normal press vault-d10-vault-05
+[DBG-B2] 25.20 8317.01,360.10 normal press dive-46
+[DBG-B2] 25.68 8676.53,267.80 dive press tutunma-47
+[DBG-B2] 26.31 8728.96,406.25 normal press tutunma-47
+
+[DBG-B2] missing D10-c01,D10-c02,D10-c03,D10-c06,D10-c08
+
+O-1-D10 | 27.55s, x=8917.93, deaths=0, retries=0, coin=7/12 | finish, deaths=0, retries=0, coin>=12/12 | FAIL
+
+B-5-D10 | 7/12 coin | baseline 12/12 coin | FAIL
+
+DENSITY-D10 | length=9081.44, movements=51, per1000=5.616, manualInputs=35
+
+CHIEF-D10 | minGap=2.166s, catches=0 | catches=0 | PASS
+
+  8) 03-test\vp-dock-play.spec.cjs:307:28 › O-1 B-5 D10 ideal keyboard route ───────────────────────
+
+    Error: expect(received).toBeGreaterThanOrEqual(expected)
+
+    Expected: >= 12
+    Received:    7
+
+      329 |   if (process.env.TMB_RECORD_CHIEF) fs.writeFileSync(path.join(__dirname,`.chief-record-${id}.json`),JSON.stringify({delay:id[0]==='F'?1.2:['D01','D02'].includes(id)?2.5:1.5,routeHash:r.end.chiefRouteHash,samples:r.chiefSamples}));
+      330 |   if (id === 'D01') console.log(`D01-c07-y | measured=${r.c07Y?.toFixed(2)} | coin center y | ${r.c07Y!==null?'PASS':'FAIL'}`);
+    > 331 |   expect(pass).toBeTruthy(); expect(r.deaths).toBe(0); expect(r.retries).toBe(0); expect(collected).toBeGreaterThanOrEqual(coinBaseline); if (/^(?:D(?:0[1-9]|1[0-8])|F0[1-6])$/.test(id) && r.end.chief && !process.env.TMB_RECORD_CHIEF) { expect(r.chiefCatches).toBe(0); expect(Number.isFinite(r.chiefMinGap)).toBeTruthy(); }
+          |                                                                                                     ^
+      332 | });
+      333 |
+      334 | for (const i of [14,17]) test(`F01 i${i} missed-dive fallback catch`, async ({page}) => {
+        at E:\oyunlar\TrustMeBro-wt\video-bulgu\03-test\vp-dock-play.spec.cjs:331:101
+
+    Error Context: test-results\03-test-vp-dock-play-O-1-B-5-D10-ideal-keyboard-route\error-context.md
+
+    Error Context: test-results\03-test-vp-dock-play-O-1-B-5-D10-ideal-keyboard-route\error-context.md
+
+
+(node:38028) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[11/28] 03-test\vp-dock-play.spec.cjs:307:28 › O-1 B-5 D11 ideal keyboard route
+03-test\vp-dock-play.spec.cjs:307:28 › O-1 B-5 D11 ideal keyboard route
+[DBG-B2] 0.62 183.30,-959.91 normal press dive-1
+[DBG-B2] 1.42 593.45,-955.25 roll press tutunma-2
+[DBG-B2] 3.57 1019.59,-955.25 normal press vault-d11-vault-06
+[DBG-B2] 4.57 1278.99,-964.33 normal press dive-4
+[DBG-B2] 5.45 1608.80,-1052.50 roll press vault-d11-vault-05
+[DBG-B2] 6.08 1707.92,-1107.19 normal press dive-5
+[DBG-B2] 6.55 1961.97,-1131.70 dive press tutunma-6
+[DBG-B2] 7.93 2319.47,-1177.17 normal press dive-8
+[DBG-B2] 8.05 2360.80,-1180.73 catch press tutunma-9
+[DBG-B2] 8.17 2360.80,-1183.52 climb press tutunma-10
+[DBG-B2] 8.63 2396.80,-1264.13 normal press tutunma-10
+[DBG-B2] 9.30 2483.77,-1334.50 normal press normal-11
+[DBG-B2] 9.77 2602.78,-1371.08 normal press dive-12
+[DBG-B2] 9.88 2632.54,-1331.99 normal press dive-12
+[DBG-B2] 10.02 2666.53,-1263.18 normal press dive-12
+[DBG-B2] 13.57 3586.41,-893.17 normal press dive-13
+[DBG-B2] 14.53 4004.24,-857.87 normal press tutunma-15
+[DBG-B2] 15.15 4141.00,-876.00 normal press tutunma-17
+[DBG-B2] 15.95 4360.32,-896.13 normal press dive-19
+[DBG-B2] 17.72 5160.10,-421.00 roll press vault-d11-vault-08
+[DBG-B2] 20.58 5888.98,-400.49 normal press dive-21
+[DBG-B2] 22.23 6675.63,-73.00 normal press tutunma-22
+[DBG-B2] 22.90 6845.62,-112.22 normal press tutunma-25
+[DBG-B2] 23.31 6951.87,-213.37 normal press tutunma-27
+[DBG-B2] 24.21 7259.16,-19.75 normal press dive-28
+[DBG-B2] 27.05 9048.17,370.53 normal press dive-29
+
+[DBG-B2] missing D11-c02,D11-c08
+
+O-1-D11 | 28.88s, x=9750.99, deaths=0, retries=0, coin=12/14 | finish, deaths=0, retries=0, coin>=14/14 | FAIL
+
+B-5-D11 | 12/14 coin | baseline 14/14 coin | FAIL
+
+CHIEF-D11 | minGap=3.067s, catches=0 | catches=0 | PASS
+
+  9) 03-test\vp-dock-play.spec.cjs:307:28 › O-1 B-5 D11 ideal keyboard route ───────────────────────
+
+    Error: expect(received).toBeGreaterThanOrEqual(expected)
+
+    Expected: >= 14
+    Received:    12
+
+      329 |   if (process.env.TMB_RECORD_CHIEF) fs.writeFileSync(path.join(__dirname,`.chief-record-${id}.json`),JSON.stringify({delay:id[0]==='F'?1.2:['D01','D02'].includes(id)?2.5:1.5,routeHash:r.end.chiefRouteHash,samples:r.chiefSamples}));
+      330 |   if (id === 'D01') console.log(`D01-c07-y | measured=${r.c07Y?.toFixed(2)} | coin center y | ${r.c07Y!==null?'PASS':'FAIL'}`);
+    > 331 |   expect(pass).toBeTruthy(); expect(r.deaths).toBe(0); expect(r.retries).toBe(0); expect(collected).toBeGreaterThanOrEqual(coinBaseline); if (/^(?:D(?:0[1-9]|1[0-8])|F0[1-6])$/.test(id) && r.end.chief && !process.env.TMB_RECORD_CHIEF) { expect(r.chiefCatches).toBe(0); expect(Number.isFinite(r.chiefMinGap)).toBeTruthy(); }
+          |                                                                                                     ^
+      332 | });
+      333 |
+      334 | for (const i of [14,17]) test(`F01 i${i} missed-dive fallback catch`, async ({page}) => {
+        at E:\oyunlar\TrustMeBro-wt\video-bulgu\03-test\vp-dock-play.spec.cjs:331:101
+
+    Error Context: test-results\03-test-vp-dock-play-O-1-B-5-D11-ideal-keyboard-route\error-context.md
+
+    Error Context: test-results\03-test-vp-dock-play-O-1-B-5-D11-ideal-keyboard-route\error-context.md
+
+
+(node:40040) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[12/28] 03-test\vp-dock-play.spec.cjs:307:28 › O-1 B-5 D12 ideal keyboard route
+03-test\vp-dock-play.spec.cjs:307:28 › O-1 B-5 D12 ideal keyboard route
+[DBG-B2] 0.13 70.00,-244.63 normal press vault-d12-vault-03
+[DBG-B2] 1.05 239.34,-252.65 normal press dive-1
+[DBG-B2] 1.58 500.30,-402.61 dive press tutunma-2
+[DBG-B2] 1.82 571.87,-336.08 dive press dive-3
+[DBG-B2] 2.17 581.00,-413.41 normal press dive-3
+[DBG-B2] 2.77 927.21,-373.00 normal press tutunma-4
+[DBG-B2] 2.88 974.59,-427.06 normal press dive-8
+[DBG-B2] 3.00 1035.22,-479.94 normal press dive-8
+[DBG-B2] 3.12 1095.96,-513.15 normal press tutunma-5
+[DBG-B2] 5.80 1881.75,-315.38 normal press dive-14
+[DBG-B2] 6.33 2136.12,-406.26 dive press tutunma-16
+[DBG-B2] 7.27 2367.31,-405.38 normal press dive-18
+[DBG-B2] 10.03 3182.15,-82.89 normal press dive-20
+[DBG-B2] 13.80 4309.31,84.59 normal press dive-23
+[DBG-B2] 15.70 5159.64,407.00 normal press tutunma-25
+[DBG-B2] 16.20 5246.80,342.25 normal press dive-26
+[DBG-B2] 16.58 5446.12,290.40 normal press tutunma-27
+[DBG-B2] 17.06 5579.62,246.25 normal press vault-d12-vault-05
+[DBG-B2] 19.38 6188.79,244.89 normal press dive-28
+[DBG-B2] 20.06 6774.56,211.02 dive press tutunma-29
+
+[DBG-B2] missing D12-c01,D12-c03,D12-c04,D12-c05,D12-c06,D12-c08,D12-c09
+
+O-1-D12 | 20.83s, x=6974.37, deaths=0, retries=0, coin=7/14 | finish, deaths=0, retries=0, coin>=14/14 | FAIL
+
+B-5-D12 | 7/14 coin | baseline 14/14 coin | FAIL
+
+CHIEF-D12 | minGap=2.384s, catches=0 | catches=0 | PASS
+
+  10) 03-test\vp-dock-play.spec.cjs:307:28 › O-1 B-5 D12 ideal keyboard route ──────────────────────
+
+    Error: expect(received).toBeGreaterThanOrEqual(expected)
+
+    Expected: >= 14
+    Received:    7
+
+      329 |   if (process.env.TMB_RECORD_CHIEF) fs.writeFileSync(path.join(__dirname,`.chief-record-${id}.json`),JSON.stringify({delay:id[0]==='F'?1.2:['D01','D02'].includes(id)?2.5:1.5,routeHash:r.end.chiefRouteHash,samples:r.chiefSamples}));
+      330 |   if (id === 'D01') console.log(`D01-c07-y | measured=${r.c07Y?.toFixed(2)} | coin center y | ${r.c07Y!==null?'PASS':'FAIL'}`);
+    > 331 |   expect(pass).toBeTruthy(); expect(r.deaths).toBe(0); expect(r.retries).toBe(0); expect(collected).toBeGreaterThanOrEqual(coinBaseline); if (/^(?:D(?:0[1-9]|1[0-8])|F0[1-6])$/.test(id) && r.end.chief && !process.env.TMB_RECORD_CHIEF) { expect(r.chiefCatches).toBe(0); expect(Number.isFinite(r.chiefMinGap)).toBeTruthy(); }
+          |                                                                                                     ^
+      332 | });
+      333 |
+      334 | for (const i of [14,17]) test(`F01 i${i} missed-dive fallback catch`, async ({page}) => {
+        at E:\oyunlar\TrustMeBro-wt\video-bulgu\03-test\vp-dock-play.spec.cjs:331:101
+
+    Error Context: test-results\03-test-vp-dock-play-O-1-B-5-D12-ideal-keyboard-route\error-context.md
+
+    Error Context: test-results\03-test-vp-dock-play-O-1-B-5-D12-ideal-keyboard-route\error-context.md
+
+
+(node:36444) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[13/28] 03-test\vp-dock-play.spec.cjs:307:28 › O-1 B-5 D13 ideal keyboard route
+03-test\vp-dock-play.spec.cjs:307:28 › O-1 B-5 D13 ideal keyboard route
+[DBG-B2] 0.17 71.17,-245.75 normal press vault-d13-vault-02
+[DBG-B2] 0.80 178.66,-303.40 normal press dive-1
+[DBG-B2] 1.15 361.02,-307.58 dive press tutunma-2
+[DBG-B2] 1.48 480.19,-340.55 dive press tutunma-3
+[DBG-B2] 1.75 418.40,-285.38 roll press tutunma-2
+[DBG-B2] 2.77 589.18,-380.87 normal press dive-4
+[DBG-B2] 4.03 1109.11,-306.72 normal press dive-6
+[DBG-B2] 8.28 2581.92,-42.20 normal press dive-13
+[DBG-B2] 8.75 3159.75,126.25 normal press vault-d13-vault-03
+[DBG-B2] 9.98 3474.24,126.25 normal press tutunma-14
+[DBG-B2] 10.62 3569.32,54.25 normal press vault-d13-vault-04
+[DBG-B2] 11.58 3824.65,54.04 normal press dive-16
+[DBG-B2] 12.28 4038.40,126.25 normal press vault-d13-vault-05
+[DBG-B2] 13.00 4158.85,70.38 normal press dive-18
+[DBG-B2] 14.03 4628.67,18.25 roll press tutunma-20
+[DBG-B2] 14.42 4726.42,-34.17 normal press tutunma-21
+[DBG-B2] 14.73 4807.17,18.25 normal press tutunma-23
+[DBG-B2] 15.03 4883.67,-39.92 normal press tutunma-24
+[DBG-B2] 16.40 5232.13,126.85 normal press tutunma-27
+[DBG-B2] 17.08 5387.32,90.25 normal press slide-d13-slide-04
+[SLIDE-EXIT] D13 center=5526.59 player=5510.59
+[DBG-B2] 19.53 6050.49,99.58 normal press dive-28
+[DBG-B2] 20.50 6831.39,271.38 normal press vault-d13-vault-06
+[DBG-B2] 21.62 7116.15,271.38 normal press dive-30
+[DBG-B2] 23.85 7691.77,396.25 normal press tutunma-34
+[DBG-B2] 24.13 7764.01,338.19 normal press tutunma-35
+[DBG-B2] 25.37 8062.00,301.88 normal press vault-d13-vault-01
+[DBG-B2] 26.80 8431.92,296.03 normal press dive-36
+
+[DBG-B2] missing D13-c01,D13-c02,D13-c04,D13-c05
+
+O-1-D13 | 27.92s, x=8875.15, deaths=0, retries=0, coin=10/14 | finish, deaths=0, retries=0, coin>=14/14 | FAIL
+
+B-5-D13 | 10/14 coin | baseline 14/14 coin | FAIL
+
+DENSITY-D13 | length=9043.52, movements=43, per1000=4.755, manualInputs=27
+
+CHIEF-D13 | minGap=2.416s, catches=0 | catches=0 | PASS
+
+  11) 03-test\vp-dock-play.spec.cjs:307:28 › O-1 B-5 D13 ideal keyboard route ──────────────────────
+
+    Error: expect(received).toBeGreaterThanOrEqual(expected)
+
+    Expected: >= 14
+    Received:    10
+
+      329 |   if (process.env.TMB_RECORD_CHIEF) fs.writeFileSync(path.join(__dirname,`.chief-record-${id}.json`),JSON.stringify({delay:id[0]==='F'?1.2:['D01','D02'].includes(id)?2.5:1.5,routeHash:r.end.chiefRouteHash,samples:r.chiefSamples}));
+      330 |   if (id === 'D01') console.log(`D01-c07-y | measured=${r.c07Y?.toFixed(2)} | coin center y | ${r.c07Y!==null?'PASS':'FAIL'}`);
+    > 331 |   expect(pass).toBeTruthy(); expect(r.deaths).toBe(0); expect(r.retries).toBe(0); expect(collected).toBeGreaterThanOrEqual(coinBaseline); if (/^(?:D(?:0[1-9]|1[0-8])|F0[1-6])$/.test(id) && r.end.chief && !process.env.TMB_RECORD_CHIEF) { expect(r.chiefCatches).toBe(0); expect(Number.isFinite(r.chiefMinGap)).toBeTruthy(); }
+          |                                                                                                     ^
+      332 | });
+      333 |
+      334 | for (const i of [14,17]) test(`F01 i${i} missed-dive fallback catch`, async ({page}) => {
+        at E:\oyunlar\TrustMeBro-wt\video-bulgu\03-test\vp-dock-play.spec.cjs:331:101
+
+    Error Context: test-results\03-test-vp-dock-play-O-1-B-5-D13-ideal-keyboard-route\error-context.md
+
+    Error Context: test-results\03-test-vp-dock-play-O-1-B-5-D13-ideal-keyboard-route\error-context.md
+
+
+(node:25472) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[14/28] 03-test\vp-dock-play.spec.cjs:307:28 › O-1 B-5 D14 ideal keyboard route
+03-test\vp-dock-play.spec.cjs:307:28 › O-1 B-5 D14 ideal keyboard route
+[DBG-B2] 1.72 466.17,183.38 normal press vault-d14-vault-07
+[DBG-B2] 3.37 886.90,255.38 normal press tutunma-4
+[DBG-B2] 4.72 1160.62,183.38 normal press normal-5
+[DBG-B2] 5.57 1377.34,255.38 normal press vault-d14-vault-08
+[DBG-B2] 6.17 1539.19,197.69 normal press dive-6
+[DBG-B2] 6.53 1730.30,197.76 dive press tutunma-7
+[DBG-B2] 6.87 1838.16,168.16 dive press tutunma-8
+[DBG-B2] 7.17 1771.60,215.88 roll press tutunma-7
+[DBG-B2] 8.37 1972.54,136.75 normal press tutunma-9
+[DBG-B2] 9.05 2059.60,61.38 normal press dive-10
+[DBG-B2] 9.18 2128.97,21.87 normal press dive-10
+[DBG-B2] 9.68 2357.76,51.75 normal press vault-d14-vault-01
+[DBG-B2] 10.37 2532.00,9.79 normal press dive-12
+[DBG-B2] 11.18 2931.20,-17.75 roll press vault-d14-vault-03
+[DBG-B2] 14.15 3669.16,-15.90 normal press dive-13
+[DBG-B2] 16.00 4459.77,73.90 normal press dive-15
+[DBG-B2] 16.77 4836.80,66.25 roll press vault-d14-vault-06
+[DBG-B2] 17.73 5016.19,66.25 normal press vault-d14-vault-04
+[DBG-B2] 19.12 5368.94,84.38 normal press tutunma-17
+[DBG-B2] 21.25 5890.84,297.75 normal press tutunma-23
+[DBG-B2] 22.43 6192.58,297.75 normal press vault-d14-vault-02
+[DBG-B2] 23.57 6481.57,297.75 normal press normal-25
+[DBG-B2] 24.32 6672.82,349.38 normal press slide-d14-slide-03
+[SLIDE-EXIT] D14 center=6803.55 player=6787.55
+[DBG-B2] 27.28 7488.98,351.88 normal press dive-26
+[DBG-B2] 27.87 8023.11,407.00 normal press tutunma-27
+[DBG-B2] 28.50 8114.26,335.00 normal press vault-d14-vault-05
+[DBG-B2] 29.58 8353.54,407.00 normal press vault-d14-vault-09
+[DBG-B2] 30.22 8452.37,352.04 normal press dive-29
+
+[DBG-B2] missing D14-c01,D14-c03,D14-c04,D14-c06,D14-c07,D14-c14
+
+O-1-D14 | 31.41s, x=8921.96, deaths=0, retries=0, coin=8/14 | finish, deaths=0, retries=0, coin>=14/14 | FAIL
+
+B-5-D14 | 8/14 coin | baseline 14/14 coin | FAIL
+
+DENSITY-D14 | length=9084.32, movements=39, per1000=4.293, manualInputs=28
+
+CHIEF-D14 | minGap=1.467s, catches=0 | catches=0 | PASS
+
+  12) 03-test\vp-dock-play.spec.cjs:307:28 › O-1 B-5 D14 ideal keyboard route ──────────────────────
+
+    Error: expect(received).toBeGreaterThanOrEqual(expected)
+
+    Expected: >= 14
+    Received:    8
+
+      329 |   if (process.env.TMB_RECORD_CHIEF) fs.writeFileSync(path.join(__dirname,`.chief-record-${id}.json`),JSON.stringify({delay:id[0]==='F'?1.2:['D01','D02'].includes(id)?2.5:1.5,routeHash:r.end.chiefRouteHash,samples:r.chiefSamples}));
+      330 |   if (id === 'D01') console.log(`D01-c07-y | measured=${r.c07Y?.toFixed(2)} | coin center y | ${r.c07Y!==null?'PASS':'FAIL'}`);
+    > 331 |   expect(pass).toBeTruthy(); expect(r.deaths).toBe(0); expect(r.retries).toBe(0); expect(collected).toBeGreaterThanOrEqual(coinBaseline); if (/^(?:D(?:0[1-9]|1[0-8])|F0[1-6])$/.test(id) && r.end.chief && !process.env.TMB_RECORD_CHIEF) { expect(r.chiefCatches).toBe(0); expect(Number.isFinite(r.chiefMinGap)).toBeTruthy(); }
+          |                                                                                                     ^
+      332 | });
+      333 |
+      334 | for (const i of [14,17]) test(`F01 i${i} missed-dive fallback catch`, async ({page}) => {
+        at E:\oyunlar\TrustMeBro-wt\video-bulgu\03-test\vp-dock-play.spec.cjs:331:101
+
+    Error Context: test-results\03-test-vp-dock-play-O-1-B-5-D14-ideal-keyboard-route\error-context.md
+
+    Error Context: test-results\03-test-vp-dock-play-O-1-B-5-D14-ideal-keyboard-route\error-context.md
+
+
+(node:35052) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[15/28] 03-test\vp-dock-play.spec.cjs:307:28 › O-1 B-5 D15 ideal keyboard route
+03-test\vp-dock-play.spec.cjs:307:28 › O-1 B-5 D15 ideal keyboard route
+[DBG-B2] 0.37 122.21,360.25 normal press tutunma-1
+[DBG-B2] 1.00 214.00,288.25 normal press vault-d15-vault-04
+[DBG-B2] 1.65 366.76,241.67 normal press dive-2
+[DBG-B2] 2.50 793.85,289.88 roll press dive-3
+[DBG-B2] 4.40 1388.09,241.38 normal press vault-d15-vault-03
+[DBG-B2] 5.52 1652.07,241.38 normal press normal-5
+[DBG-B2] 6.33 1860.30,365.00 normal press vault-d15-vault-05
+[DBG-B2] 7.33 2097.09,359.02 normal press dive-6
+[DBG-B2] 7.98 2389.01,304.43 dive press tutunma-7
+[DBG-B2] 8.40 2500.26,243.06 normal press dive-8
+[DBG-B2] 9.00 2810.11,195.75 dive press tutunma-9
+[DBG-B2] 9.63 2867.20,195.75 normal press tutunma-9
+[DBG-B2] 10.12 2948.85,163.55 normal press tutunma-11
+[DBG-B2] 10.90 3129.91,155.04 normal press tutunma-13
+[DBG-B2] 11.73 3319.81,133.41 normal press tutunma-15
+[DBG-B2] 12.37 3464.20,129.75 normal press slide-d15-slide-04
+[SLIDE-EXIT] D15 center=3607.70 player=3591.70
+[DBG-B2] 13.08 3646.93,129.75 normal press vault-d15-vault-01
+[DBG-B2] 15.90 4398.46,134.66 normal press dive-16
+[DBG-B2] 16.83 5099.67,259.47 normal press tutunma-18
+[DBG-B2] 19.60 5848.99,258.55 normal press dive-19
+[DBG-B2] 20.62 6543.57,385.38 normal press tutunma-21
+[DBG-B2] 20.88 6611.58,327.77 normal press tutunma-22
+[DBG-B2] 21.87 6862.32,407.00 normal press tutunma-25
+[DBG-B2] 23.17 7121.35,334.75 normal press vault-d15-vault-06
+[DBG-B2] 24.58 7457.94,395.00 normal press tutunma-27
+[DBG-B2] 25.35 7587.82,305.42 normal press dive-28
+[DBG-B2] 26.07 7949.71,260.44 dive press dive-30
+
+[DBG-B2] missing D15-c01,D15-c03,D15-c04,D15-c05,D15-c06,D15-c07,D15-c08
+
+O-1-D15 | 27.63s, x=8481.95, deaths=0, retries=0, coin=7/14 | finish, deaths=0, retries=0, coin>=14/14 | FAIL
+
+B-5-D15 | 7/14 coin | baseline 14/14 coin | FAIL
+
+DENSITY-D15 | length=8646.08, movements=36, per1000=4.164, manualInputs=27
+
+CHIEF-D15 | minGap=2.250s, catches=0 | catches=0 | PASS
+
+  13) 03-test\vp-dock-play.spec.cjs:307:28 › O-1 B-5 D15 ideal keyboard route ──────────────────────
+
+    Error: expect(received).toBeGreaterThanOrEqual(expected)
+
+    Expected: >= 14
+    Received:    7
+
+      329 |   if (process.env.TMB_RECORD_CHIEF) fs.writeFileSync(path.join(__dirname,`.chief-record-${id}.json`),JSON.stringify({delay:id[0]==='F'?1.2:['D01','D02'].includes(id)?2.5:1.5,routeHash:r.end.chiefRouteHash,samples:r.chiefSamples}));
+      330 |   if (id === 'D01') console.log(`D01-c07-y | measured=${r.c07Y?.toFixed(2)} | coin center y | ${r.c07Y!==null?'PASS':'FAIL'}`);
+    > 331 |   expect(pass).toBeTruthy(); expect(r.deaths).toBe(0); expect(r.retries).toBe(0); expect(collected).toBeGreaterThanOrEqual(coinBaseline); if (/^(?:D(?:0[1-9]|1[0-8])|F0[1-6])$/.test(id) && r.end.chief && !process.env.TMB_RECORD_CHIEF) { expect(r.chiefCatches).toBe(0); expect(Number.isFinite(r.chiefMinGap)).toBeTruthy(); }
+          |                                                                                                     ^
+      332 | });
+      333 |
+      334 | for (const i of [14,17]) test(`F01 i${i} missed-dive fallback catch`, async ({page}) => {
+        at E:\oyunlar\TrustMeBro-wt\video-bulgu\03-test\vp-dock-play.spec.cjs:331:101
+
+    Error Context: test-results\03-test-vp-dock-play-O-1-B-5-D15-ideal-keyboard-route\error-context.md
+
+    Error Context: test-results\03-test-vp-dock-play-O-1-B-5-D15-ideal-keyboard-route\error-context.md
+
+
+(node:40296) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[16/28] 03-test\vp-dock-play.spec.cjs:307:28 › O-1 B-5 D16 ideal keyboard route
+03-test\vp-dock-play.spec.cjs:307:28 › O-1 B-5 D16 ideal keyboard route
+[DBG-B2] 3.17 827.25,-1421.75 normal press dive-1
+[DBG-B2] 5.30 1625.71,-1402.41 normal press dive-2
+[DBG-B2] 6.72 2639.85,-966.49 normal press tutunma-4
+[DBG-B2] 7.48 2844.21,-978.74 normal press dive-6
+[DBG-B2] 7.60 2905.09,-949.01 normal press dive-6
+[DBG-B2] 7.88 3003.54,-984.32 normal press tutunma-8
+[DBG-B2] 9.15 3335.35,-895.76 normal press dive-10
+[DBG-B2] 9.65 3439.00,-937.00 normal press vault-d16-vault-07
+[DBG-B2] 10.43 3651.99,-968.52 normal press dive-12
+[DBG-B2] 10.55 3711.60,-958.63 normal press dive-13
+[DBG-B2] 10.67 3783.23,-1041.25 normal press dive-13
+[DBG-B2] 11.47 4229.76,-1130.25 normal press vault-d16-vault-06
+[DBG-B2] 12.42 4471.98,-1130.25 normal press dive-15
+[DBG-B2] 12.55 4505.97,-1169.69 normal press dive-15
+[DBG-B2] 12.65 4531.50,-1185.74 normal press dive-15
+[DBG-B2] 12.98 4625.34,-1098.48 normal press dive-16
+[DBG-B2] 13.57 4822.66,-782.25 normal press vault-d16-vault-03
+[DBG-B2] 14.53 5017.84,-782.25 normal press vault-d16-vault-02
+[DBG-B2] 15.23 5129.23,-829.04 normal press normal-18
+[DBG-B2] 15.52 5201.47,-922.39 normal press a02-s-wall-46
+[DBG-B2] 15.68 5243.95,-927.98 normal press a02-s-wall-47
+[DBG-B2] 15.78 5246.80,-924.88 catch press a02-s-wall-47
+[DBG-B2] 15.88 5246.80,-935.81 climb press a02-s-wall-47
+[DBG-B2] 16.02 5246.80,-984.17 normal press a02-s-wall-48
+[DBG-B2] 16.35 5285.97,-1037.91 normal press a02-s-wall-49
+[DBG-B2] 17.57 5659.52,-736.92 normal press dive-20
+[DBG-B2] 19.07 6901.89,41.00 normal press normal-21
+[DBG-B2] 21.10 7420.38,311.00 normal press normal-23
+
+[DBG-B2] missing D16-c01,D16-c02,D16-c12
+
+O-1-D16 | 22.64s, x=7841.11, deaths=0, retries=0, coin=11/14 | finish, deaths=0, retries=0, coin>=14/14 | FAIL
+
+B-5-D16 | 11/14 coin | baseline 14/14 coin | FAIL
+
+DENSITY-D16 | length=8009.12, movements=29, per1000=3.621, manualInputs=28
+
+CHIEF-D16 | minGap=2.683s, catches=0 | catches=0 | PASS
+
+  14) 03-test\vp-dock-play.spec.cjs:307:28 › O-1 B-5 D16 ideal keyboard route ──────────────────────
+
+    Error: expect(received).toBeGreaterThanOrEqual(expected)
+
+    Expected: >= 14
+    Received:    11
+
+      329 |   if (process.env.TMB_RECORD_CHIEF) fs.writeFileSync(path.join(__dirname,`.chief-record-${id}.json`),JSON.stringify({delay:id[0]==='F'?1.2:['D01','D02'].includes(id)?2.5:1.5,routeHash:r.end.chiefRouteHash,samples:r.chiefSamples}));
+      330 |   if (id === 'D01') console.log(`D01-c07-y | measured=${r.c07Y?.toFixed(2)} | coin center y | ${r.c07Y!==null?'PASS':'FAIL'}`);
+    > 331 |   expect(pass).toBeTruthy(); expect(r.deaths).toBe(0); expect(r.retries).toBe(0); expect(collected).toBeGreaterThanOrEqual(coinBaseline); if (/^(?:D(?:0[1-9]|1[0-8])|F0[1-6])$/.test(id) && r.end.chief && !process.env.TMB_RECORD_CHIEF) { expect(r.chiefCatches).toBe(0); expect(Number.isFinite(r.chiefMinGap)).toBeTruthy(); }
+          |                                                                                                     ^
+      332 | });
+      333 |
+      334 | for (const i of [14,17]) test(`F01 i${i} missed-dive fallback catch`, async ({page}) => {
+        at E:\oyunlar\TrustMeBro-wt\video-bulgu\03-test\vp-dock-play.spec.cjs:331:101
+
+    Error Context: test-results\03-test-vp-dock-play-O-1-B-5-D16-ideal-keyboard-route\error-context.md
+
+    Error Context: test-results\03-test-vp-dock-play-O-1-B-5-D16-ideal-keyboard-route\error-context.md
+
+
+(node:37636) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[17/28] 03-test\vp-dock-play.spec.cjs:307:28 › O-1 B-5 D17 ideal keyboard route
+03-test\vp-dock-play.spec.cjs:307:28 › O-1 B-5 D17 ideal keyboard route
+[DBG-B2] 0.35 109.14,-139.00 normal press vault-d17-p1-f04-vault-04
+[DBG-B2] 0.73 219.19,-199.94 normal press dive-0
+[DBG-B2] 1.42 516.55,-139.00 normal press vault-d17-p1-f04-vault-01
+[DBG-B2] 1.98 677.50,-186.60 normal press dive-2
+[DBG-B2] 3.02 1220.33,-137.79 roll press tutunma-4
+[DBG-B2] 3.60 1346.66,-139.00 normal press tutunma-6
+[DBG-B2] 4.35 1537.88,-117.37 normal press tutunma-9
+[DBG-B2] 5.53 1856.86,-73.68 normal press dive-12
+[DBG-B2] 5.82 2168.86,-23.75 normal press tutunma-13
+[DBG-B2] 6.60 2328.91,-88.62 normal press normal-14
+[DBG-B2] 6.73 2362.91,-128.08 normal press tutunma-15
+[DBG-B2] 7.93 2668.88,45.75 normal press tutunma-17
+[DBG-B2] 8.67 2855.87,35.53 normal press tutunma-19
+[DBG-B2] 9.23 2979.53,24.25 normal press tutunma-20
+[DBG-B2] 9.70 3098.54,-12.33 normal press tutunma-21
+[DBG-B2] 10.18 3199.46,-19.00 normal press tutunma-22
+[DBG-B2] 11.03 3382.88,-77.75 normal press dive-24
+[DBG-B2] 12.12 3663.41,45.38 normal press tutunma-25
+[DBG-B2] 16.05 4666.37,45.38 normal press tutunma-28
+[DBG-B2] 16.45 4768.37,-4.61 normal press tutunma-29
+[DBG-B2] 17.08 4818.08,94.51 normal press tutunma-29
+[DBG-B2] 17.47 4848.73,42.17 normal press tutunma-31
+[DBG-B2] 17.75 4920.95,-46.27 normal press tutunma-32
+[DBG-B2] 19.15 5277.95,159.66 normal press tutunma-35
+[DBG-B2] 19.85 5433.29,117.38 normal press slide-d17-p2-m03-slide-04
+[SLIDE-EXIT] D17 center=5568.27 player=5552.27
+[DBG-B2] 22.30 6134.60,136.38 normal press dive-36
+[DBG-B2] 23.25 6873.07,298.51 normal press vault-d17-p2-m03-vault-06
+[DBG-B2] 24.37 7162.26,295.01 normal press dive-38
+[DBG-B2] 26.27 7739.48,423.38 normal press tutunma-42
+[DBG-B2] 26.53 7807.46,365.72 normal press tutunma-43
+[DBG-B2] 27.78 8103.68,329.01 normal press vault-d17-p2-m03-vault-01
+[DBG-B2] 29.25 8490.89,312.76 normal press dive-44
+
+[DBG-B2] missing D17-c01,D17-c02,D17-c07
+
+O-1-D17 | 32.60s, x=9491.29, deaths=0, retries=0, coin=11/14 | finish, deaths=0, retries=0, coin>=14/14 | FAIL
+
+B-5-D17 | 11/14 coin | baseline 14/14 coin | FAIL
+
+CHIEF-D17 | minGap=2.283s, catches=0 | catches=0 | PASS
+
+  15) 03-test\vp-dock-play.spec.cjs:307:28 › O-1 B-5 D17 ideal keyboard route ──────────────────────
+
+    Error: expect(received).toBeGreaterThanOrEqual(expected)
+
+    Expected: >= 14
+    Received:    11
+
+      329 |   if (process.env.TMB_RECORD_CHIEF) fs.writeFileSync(path.join(__dirname,`.chief-record-${id}.json`),JSON.stringify({delay:id[0]==='F'?1.2:['D01','D02'].includes(id)?2.5:1.5,routeHash:r.end.chiefRouteHash,samples:r.chiefSamples}));
+      330 |   if (id === 'D01') console.log(`D01-c07-y | measured=${r.c07Y?.toFixed(2)} | coin center y | ${r.c07Y!==null?'PASS':'FAIL'}`);
+    > 331 |   expect(pass).toBeTruthy(); expect(r.deaths).toBe(0); expect(r.retries).toBe(0); expect(collected).toBeGreaterThanOrEqual(coinBaseline); if (/^(?:D(?:0[1-9]|1[0-8])|F0[1-6])$/.test(id) && r.end.chief && !process.env.TMB_RECORD_CHIEF) { expect(r.chiefCatches).toBe(0); expect(Number.isFinite(r.chiefMinGap)).toBeTruthy(); }
+          |                                                                                                     ^
+      332 | });
+      333 |
+      334 | for (const i of [14,17]) test(`F01 i${i} missed-dive fallback catch`, async ({page}) => {
+        at E:\oyunlar\TrustMeBro-wt\video-bulgu\03-test\vp-dock-play.spec.cjs:331:101
+
+    Error Context: test-results\03-test-vp-dock-play-O-1-B-5-D17-ideal-keyboard-route\error-context.md
+
+    Error Context: test-results\03-test-vp-dock-play-O-1-B-5-D17-ideal-keyboard-route\error-context.md
+
+
+(node:28872) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[18/28] 03-test\vp-dock-play.spec.cjs:307:28 › O-1 B-5 D18 ideal keyboard route
+03-test\vp-dock-play.spec.cjs:307:28 › O-1 B-5 D18 ideal keyboard route
+O-1-D18 | 31.17s, x=8991.61, deaths=0, retries=0, coin=7/14 | finish, deaths=0, retries=0, coin>=0/14 | PASS
+
+B-5-D18 | 7/14 coin | baseline 0/14 coin | PASS
+
+CHIEF-D18 | minGap=2.417s, catches=0 | catches=0 | PASS
+
+[19/28] 03-test\vp-dock-play.spec.cjs:307:28 › O-1 B-5 F01 ideal keyboard route
+03-test\vp-dock-play.spec.cjs:307:28 › O-1 B-5 F01 ideal keyboard route
+[DBG-B2] 0.98 274.89,-55.00 normal press tutunma-0
+[DBG-B2] 2.03 551.42,-62.16 normal press dive-3
+[DBG-B2] 2.70 791.60,-55.00 roll press vault-f01-p1-d07-vault-01
+[DBG-B2] 5.87 2057.74,103.38 normal press tutunma-6
+[DBG-B2] 7.40 2448.73,189.75 normal press vault-f01-p1-d07-vault-04
+[DBG-B2] 7.83 2559.25,141.75 normal press vault-f01-p1-d07-vault-02
+[DBG-B2] 8.42 2722.54,137.74 normal press dive-8
+[DBG-B2] 9.12 3104.98,183.75 normal press tutunma-9
+[DBG-B2] 9.73 3254.00,162.25 normal press vault-f01-hard-1
+[DBG-B2] 10.97 3522.64,183.75 normal press slide-f01-hard-2
+[SLIDE-EXIT] F01 center=3683.13 player=3667.13
+[DBG-B2] 12.07 3803.12,183.75 normal press vault-f01-hard-3
+[DBG-B2] 14.52 4427.77,183.75 normal press tutunma-11
+[DBG-B2] 14.90 4525.51,131.40 normal press tutunma-12
+[DBG-B2] 15.53 4578.80,232.88 normal press tutunma-12
+[DBG-B2] 15.90 4605.19,178.57 normal press tutunma-14
+[DBG-B2] 16.20 4681.69,92.08 normal press tutunma-15
+[DBG-B2] 17.58 5034.41,292.38 normal press tutunma-18
+[DBG-B2] 18.26 5189.72,255.75 normal press slide-f01-p2-d13-slide-04
+[SLIDE-EXIT] F01 center=5333.25 player=5317.25
+[DBG-B2] 19.35 5465.97,255.75 normal press slide-f01-hard-4
+[SLIDE-EXIT] F01 center=5626.47 player=5610.47
+[DBG-B2] 20.71 5843.10,261.44 normal press dive-19
+[DBG-B2] 21.65 6604.03,436.88 normal press vault-f01-hard-5
+[DBG-B2] 22.88 6922.92,433.40 normal press dive-21
+[DBG-B2] 24.78 7500.17,561.75 normal press tutunma-25
+[DBG-B2] 25.06 7572.41,503.64 normal press tutunma-26
+[DBG-B2] 26.28 7860.14,467.38 normal press vault-f01-p2-d13-vault-01
+[DBG-B2] 27.75 8242.95,456.13 normal press dive-27
+[DBG-B2] 28.78 8631.79,451.75 normal press slide-f01-hard-6
+[SLIDE-EXIT] F01 center=8796.53 player=8780.53
+[DBG-B2] 29.90 8916.52,451.75 normal press vault-f01-hard-7
+
+[DBG-B2] missing F01-c09,F01-c10
+
+O-1-F01 | 31.20s, x=9248.05, deaths=0, retries=0, coin=12/14 | finish, deaths=0, retries=0, coin>=14/14 | FAIL
+
+B-5-F01 | 12/14 coin | baseline 14/14 coin | FAIL
+
+DENSITY-F01 | length=9416.40, movements=41, per1000=4.354, manualInputs=28
+
+CHIEF-F01 | minGap=1.000s, catches=0 | catches=0 | PASS
+
+  16) 03-test\vp-dock-play.spec.cjs:307:28 › O-1 B-5 F01 ideal keyboard route ──────────────────────
+
+    Error: expect(received).toBeGreaterThanOrEqual(expected)
+
+    Expected: >= 14
+    Received:    12
+
+      329 |   if (process.env.TMB_RECORD_CHIEF) fs.writeFileSync(path.join(__dirname,`.chief-record-${id}.json`),JSON.stringify({delay:id[0]==='F'?1.2:['D01','D02'].includes(id)?2.5:1.5,routeHash:r.end.chiefRouteHash,samples:r.chiefSamples}));
+      330 |   if (id === 'D01') console.log(`D01-c07-y | measured=${r.c07Y?.toFixed(2)} | coin center y | ${r.c07Y!==null?'PASS':'FAIL'}`);
+    > 331 |   expect(pass).toBeTruthy(); expect(r.deaths).toBe(0); expect(r.retries).toBe(0); expect(collected).toBeGreaterThanOrEqual(coinBaseline); if (/^(?:D(?:0[1-9]|1[0-8])|F0[1-6])$/.test(id) && r.end.chief && !process.env.TMB_RECORD_CHIEF) { expect(r.chiefCatches).toBe(0); expect(Number.isFinite(r.chiefMinGap)).toBeTruthy(); }
+          |                                                                                                     ^
+      332 | });
+      333 |
+      334 | for (const i of [14,17]) test(`F01 i${i} missed-dive fallback catch`, async ({page}) => {
+        at E:\oyunlar\TrustMeBro-wt\video-bulgu\03-test\vp-dock-play.spec.cjs:331:101
+
+    Error Context: test-results\03-test-vp-dock-play-O-1-B-5-F01-ideal-keyboard-route\error-context.md
+
+    Error Context: test-results\03-test-vp-dock-play-O-1-B-5-F01-ideal-keyboard-route\error-context.md
+
+
+(node:23896) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[20/28] 03-test\vp-dock-play.spec.cjs:307:28 › O-1 B-5 F02 ideal keyboard route
+03-test\vp-dock-play.spec.cjs:307:28 › O-1 B-5 F02 ideal keyboard route
+[DBG-B2] 0.88 245.14,-478.58 normal press tutunma-1
+[DBG-B2] 1.72 462.03,-455.76 normal press dive-3
+[DBG-B2] 2.60 721.27,-475.10 normal press dive-5
+[DBG-B2] 3.68 1022.27,-494.81 normal press tutunma-7
+[DBG-B2] 3.98 1107.57,-425.25 normal press dive-8
+[DBG-B2] 5.05 1532.18,-458.74 roll press tutunma-10
+[DBG-B2] 5.65 1589.60,-327.37 normal press tutunma-10
+[DBG-B2] 6.58 1744.63,-397.00 normal press tutunma-12
+[DBG-B2] 7.85 2067.59,-279.37 normal press tutunma-15
+[DBG-B2] 8.27 2173.82,-326.73 normal press tutunma-17
+[DBG-B2] 8.70 2262.80,-339.38 normal press tutunma-19
+[DBG-B2] 9.37 2432.78,-296.83 normal press tutunma-21
+[DBG-B2] 10.25 2525.83,-380.36 normal press dive-22
+[DBG-B2] 11.32 2911.38,-383.02 normal press dive-23
+[DBG-B2] 11.87 3176.08,-519.41 dive press dive-25
+[DBG-B2] 14.32 3815.44,-290.63 normal press dive-27
+[DBG-B2] 16.00 4451.79,-166.38 normal press dive-30
+[DBG-B2] 16.78 4820.40,-167.74 roll press vault-f02-p2-d14-vault-06
+[DBG-B2] 19.13 5352.51,-149.61 normal press tutunma-32
+[DBG-B2] 21.25 5874.42,63.76 normal press tutunma-38
+[DBG-B2] 22.45 6180.42,63.76 normal press vault-f02-p2-d14-vault-02
+[DBG-B2] 23.60 6473.64,63.76 normal press normal-40
+[DBG-B2] 24.30 6652.11,115.38 normal press slide-f02-p2-d14-slide-03
+[SLIDE-EXIT] F02 center=6791.38 player=6775.38
+[DBG-B2] 25.38 6928.38,115.38 normal press slide-f02-hard-2
+[SLIDE-EXIT] F02 center=7088.86 player=7072.86
+[DBG-B2] 27.85 8002.45,173.01 normal press tutunma-42
+[DBG-B2] 29.81 8438.02,164.44 normal press dive-44
+[DBG-B2] 30.65 8791.36,89.00 roll press vault-f02-hard-3
+[DBG-B2] 31.93 9074.55,89.00 normal press slide-f02-hard-4
+[SLIDE-EXIT] F02 center=9235.04 player=9219.04
+
+[DBG-B2] missing F02-c03,F02-c06,F02-c07,F02-c08,F02-c10
+
+O-1-F02 | 33.38s, x=9469.80, deaths=0, retries=0, coin=9/14 | finish, deaths=0, retries=0, coin>=14/14 | FAIL
+
+B-5-F02 | 9/14 coin | baseline 14/14 coin | FAIL
+
+DENSITY-F02 | length=9638.40, movements=52, per1000=5.395, manualInputs=28
+
+CHIEF-F02 | minGap=0.917s, catches=0 | catches=0 | PASS
+
+  17) 03-test\vp-dock-play.spec.cjs:307:28 › O-1 B-5 F02 ideal keyboard route ──────────────────────
+
+    Error: expect(received).toBeGreaterThanOrEqual(expected)
+
+    Expected: >= 14
+    Received:    9
+
+      329 |   if (process.env.TMB_RECORD_CHIEF) fs.writeFileSync(path.join(__dirname,`.chief-record-${id}.json`),JSON.stringify({delay:id[0]==='F'?1.2:['D01','D02'].includes(id)?2.5:1.5,routeHash:r.end.chiefRouteHash,samples:r.chiefSamples}));
+      330 |   if (id === 'D01') console.log(`D01-c07-y | measured=${r.c07Y?.toFixed(2)} | coin center y | ${r.c07Y!==null?'PASS':'FAIL'}`);
+    > 331 |   expect(pass).toBeTruthy(); expect(r.deaths).toBe(0); expect(r.retries).toBe(0); expect(collected).toBeGreaterThanOrEqual(coinBaseline); if (/^(?:D(?:0[1-9]|1[0-8])|F0[1-6])$/.test(id) && r.end.chief && !process.env.TMB_RECORD_CHIEF) { expect(r.chiefCatches).toBe(0); expect(Number.isFinite(r.chiefMinGap)).toBeTruthy(); }
+          |                                                                                                     ^
+      332 | });
+      333 |
+      334 | for (const i of [14,17]) test(`F01 i${i} missed-dive fallback catch`, async ({page}) => {
+        at E:\oyunlar\TrustMeBro-wt\video-bulgu\03-test\vp-dock-play.spec.cjs:331:101
+
+    Error Context: test-results\03-test-vp-dock-play-O-1-B-5-F02-ideal-keyboard-route\error-context.md
+
+    Error Context: test-results\03-test-vp-dock-play-O-1-B-5-F02-ideal-keyboard-route\error-context.md
+
+
+(node:40148) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[21/28] 03-test\vp-dock-play.spec.cjs:307:28 › O-1 B-5 F03 ideal keyboard route
+03-test\vp-dock-play.spec.cjs:307:28 › O-1 B-5 F03 ideal keyboard route
+O-1-F03 | 27.16s, x=7876.59, deaths=0, retries=0, coin=14/14 | finish, deaths=0, retries=0, coin>=14/14 | PASS
+
+B-5-F03 | 14/14 coin | baseline 14/14 coin | PASS
+
+DENSITY-F03 | length=8038.48, movements=54, per1000=6.718, manualInputs=34
+
+CHIEF-F03 | minGap=1.134s, catches=0 | catches=0 | PASS
+
+[22/28] 03-test\vp-dock-play.spec.cjs:307:28 › O-1 B-5 F04 ideal keyboard route
+03-test\vp-dock-play.spec.cjs:307:28 › O-1 B-5 F04 ideal keyboard route
+[DBG-B2] 0.12 70.00,-272.20 normal press tutunma-0
+[DBG-B2] 0.42 126.15,-330.37 normal press tutunma-1
+[DBG-B2] 0.83 214.00,-351.38 normal press tutunma-2
+[DBG-B2] 2.27 579.47,-319.96 normal press tutunma-6
+[DBG-B2] 2.73 681.08,-311.75 normal press tutunma-7
+[DBG-B2] 3.05 738.70,-369.57 normal press tutunma-8
+[DBG-B2] 5.37 1312.80,-272.20 normal press normal-12
+[DBG-B2] 7.07 1775.51,-5.97 normal press dive-18
+[DBG-B2] 7.42 2268.43,314.36 normal press tutunma-19
+[DBG-B2] 8.87 2482.82,222.25 normal press vault-f04-p1-d02-vault-06
+[DBG-B2] 9.90 2746.34,222.25 normal press tutunma-20
+[DBG-B2] 11.02 3031.07,222.25 normal press tutunma-23
+[DBG-B2] 11.63 3184.38,200.63 normal press vault-f04-p1-d02-vault-01
+[DBG-B2] 12.25 3295.79,218.01 normal press tutunma-21
+[DBG-B2] 13.10 3512.52,179.00 normal press tutunma-25
+[DBG-B2] 14.03 3750.51,222.25 normal press tutunma-27
+[DBG-B2] 15.00 3997.02,222.65 normal press tutunma-30
+[DBG-B2] 15.98 4230.04,243.80 normal press tutunma-32
+[DBG-B2] 16.92 4468.03,222.25 normal press normal-33
+[DBG-B2] 17.40 4591.28,190.02 normal press tutunma-34
+[DBG-B2] 18.13 4733.38,128.63 normal press slide-f04-p2-d03-slide-01
+[SLIDE-EXIT] F04 center=4872.62 player=4856.62
+[DBG-B2] 19.88 5179.63,128.63 normal press tutunma-35
+[DBG-B2] 20.50 5330.38,107.00 normal press vault-f04-hard-1
+[DBG-B2] 21.70 5590.51,128.63 normal press slide-f04-hard-2
+[SLIDE-EXIT] F04 center=5746.76 player=5730.76
+[DBG-B2] 22.78 5866.75,128.63 normal press tutunma-36
+[DBG-B2] 25.11 7110.11,456.20 normal press tutunma-39
+[DBG-B2] 25.23 7139.85,420.80 normal press tutunma-40
+[DBG-B2] 25.40 7182.35,398.09 normal press tutunma-43
+[DBG-B2] 26.25 7399.10,456.25 normal press tutunma-45
+[DBG-B2] 26.96 7581.86,456.25 normal press tutunma-47
+[DBG-B2] 27.73 7777.35,552.20 normal press vault-f04-hard-3
+[DBG-B2] 28.76 7994.78,552.20 normal press tutunma-49
+
+[DBG-B2] missing F04-c12
+
+O-1-F04 | 30.31s, x=8247.87, deaths=0, retries=0, coin=13/14 | finish, deaths=0, retries=0, coin>=14/14 | FAIL
+
+B-5-F04 | 13/14 coin | baseline 14/14 coin | FAIL
+
+DENSITY-F04 | length=8414.38, movements=56, per1000=6.655, manualInputs=32
+
+CHIEF-F04 | minGap=1.067s, catches=0 | catches=0 | PASS
+
+  18) 03-test\vp-dock-play.spec.cjs:307:28 › O-1 B-5 F04 ideal keyboard route ──────────────────────
+
+    Error: expect(received).toBeGreaterThanOrEqual(expected)
+
+    Expected: >= 14
+    Received:    13
+
+      329 |   if (process.env.TMB_RECORD_CHIEF) fs.writeFileSync(path.join(__dirname,`.chief-record-${id}.json`),JSON.stringify({delay:id[0]==='F'?1.2:['D01','D02'].includes(id)?2.5:1.5,routeHash:r.end.chiefRouteHash,samples:r.chiefSamples}));
+      330 |   if (id === 'D01') console.log(`D01-c07-y | measured=${r.c07Y?.toFixed(2)} | coin center y | ${r.c07Y!==null?'PASS':'FAIL'}`);
+    > 331 |   expect(pass).toBeTruthy(); expect(r.deaths).toBe(0); expect(r.retries).toBe(0); expect(collected).toBeGreaterThanOrEqual(coinBaseline); if (/^(?:D(?:0[1-9]|1[0-8])|F0[1-6])$/.test(id) && r.end.chief && !process.env.TMB_RECORD_CHIEF) { expect(r.chiefCatches).toBe(0); expect(Number.isFinite(r.chiefMinGap)).toBeTruthy(); }
+          |                                                                                                     ^
+      332 | });
+      333 |
+      334 | for (const i of [14,17]) test(`F01 i${i} missed-dive fallback catch`, async ({page}) => {
+        at E:\oyunlar\TrustMeBro-wt\video-bulgu\03-test\vp-dock-play.spec.cjs:331:101
+
+    Error Context: test-results\03-test-vp-dock-play-O-1-B-5-F04-ideal-keyboard-route\error-context.md
+
+    Error Context: test-results\03-test-vp-dock-play-O-1-B-5-F04-ideal-keyboard-route\error-context.md
+
+
+(node:38412) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[23/28] 03-test\vp-dock-play.spec.cjs:307:28 › O-1 B-5 M01 ideal keyboard route
+03-test\vp-dock-play.spec.cjs:307:28 › O-1 B-5 M01 ideal keyboard route
+[DBG-B2] 0.62 177.13,-954.00 normal press dive-1
+[DBG-B2] 1.73 585.91,-955.25 normal press tutunma-2
+[DBG-B2] 3.92 1023.67,-955.25 normal press vault-m01-vault-06
+[DBG-B2] 5.00 1277.55,-955.25 normal press dive-4
+[DBG-B2] 5.93 1559.33,-1052.50 roll press vault-m01-vault-05
+[DBG-B2] 6.50 1703.81,-1100.50 normal press dive-5
+[DBG-B2] 7.12 1953.47,-1169.04 dive press tutunma-6
+[DBG-B2] 8.50 2306.38,-1168.88 normal press dive-8
+[DBG-B2] 8.60 2336.14,-1199.75 dive press tutunma-9
+[DBG-B2] 8.70 2360.80,-1201.99 dive press tutunma-10
+[DBG-B2] 8.95 2396.80,-1264.13 normal press tutunma-10
+[DBG-B2] 9.62 2483.80,-1334.50 normal press normal-11
+[DBG-B2] 10.07 2598.55,-1375.04 normal press dive-12
+[DBG-B2] 10.22 2636.77,-1324.83 normal press dive-12
+[DBG-B2] 10.33 2666.53,-1263.18 normal press dive-12
+[DBG-B2] 13.85 3563.24,-876.00 normal press dive-13
+[DBG-B2] 14.92 4002.22,-857.87 normal press tutunma-15
+[DBG-B2] 15.53 4140.97,-876.00 normal press tutunma-17
+[DBG-B2] 16.32 4340.74,-876.00 normal press dive-19
+[DBG-B2] 17.30 4870.93,-967.25 roll press normal-20
+[DBG-B2] 18.62 5198.80,-421.00 roll press vault-m01-vault-08
+[DBG-B2] 21.50 5866.90,-421.00 normal press dive-21
+[DBG-B2] 24.02 6674.65,-73.00 normal press tutunma-22
+[DBG-B2] 24.70 6848.87,-110.23 normal press tutunma-25
+[DBG-B2] 25.11 6955.12,-210.96 normal press tutunma-27
+[DBG-B2] 26.00 7180.39,-39.38 normal press dive-28
+[DBG-B2] 29.53 9029.66,407.00 normal press dive-29
+
+[DBG-B2] missing M01-c04
+
+O-1-M01 | 31.77s, x=9753.64, deaths=0, retries=0, coin=13/14 | finish, deaths=0, retries=0, coin>=14/14 | FAIL
+
+B-5-M01 | 13/14 coin | baseline 14/14 coin | FAIL
+
+  19) 03-test\vp-dock-play.spec.cjs:307:28 › O-1 B-5 M01 ideal keyboard route ──────────────────────
+
+    Error: expect(received).toBeGreaterThanOrEqual(expected)
+
+    Expected: >= 14
+    Received:    13
+
+      329 |   if (process.env.TMB_RECORD_CHIEF) fs.writeFileSync(path.join(__dirname,`.chief-record-${id}.json`),JSON.stringify({delay:id[0]==='F'?1.2:['D01','D02'].includes(id)?2.5:1.5,routeHash:r.end.chiefRouteHash,samples:r.chiefSamples}));
+      330 |   if (id === 'D01') console.log(`D01-c07-y | measured=${r.c07Y?.toFixed(2)} | coin center y | ${r.c07Y!==null?'PASS':'FAIL'}`);
+    > 331 |   expect(pass).toBeTruthy(); expect(r.deaths).toBe(0); expect(r.retries).toBe(0); expect(collected).toBeGreaterThanOrEqual(coinBaseline); if (/^(?:D(?:0[1-9]|1[0-8])|F0[1-6])$/.test(id) && r.end.chief && !process.env.TMB_RECORD_CHIEF) { expect(r.chiefCatches).toBe(0); expect(Number.isFinite(r.chiefMinGap)).toBeTruthy(); }
+          |                                                                                                     ^
+      332 | });
+      333 |
+      334 | for (const i of [14,17]) test(`F01 i${i} missed-dive fallback catch`, async ({page}) => {
+        at E:\oyunlar\TrustMeBro-wt\video-bulgu\03-test\vp-dock-play.spec.cjs:331:101
+
+    Error Context: test-results\03-test-vp-dock-play-O-1-B-5-M01-ideal-keyboard-route\error-context.md
+
+    Error Context: test-results\03-test-vp-dock-play-O-1-B-5-M01-ideal-keyboard-route\error-context.md
+
+
+(node:38316) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[24/28] 03-test\vp-dock-play.spec.cjs:307:28 › O-1 B-5 M02 ideal keyboard route
+  20) 03-test\vp-dock-play.spec.cjs:307:28 › O-1 B-5 M02 ideal keyboard route ──────────────────────
+
+    Error: M02 stuck without target at x=1231.60
+    [DBG-B2] 0.13 70.00,-244.63 normal press vault-m02-vault-03
+    [DBG-B2] 1.05 234.89,-244.63 normal press dive-1
+    [DBG-B2] 1.88 495.40,-315.26 dive press tutunma-2
+    [DBG-B2] 2.30 593.29,-371.75 normal press dive-3
+    [DBG-B2] 3.25 926.17,-373.00 roll press tutunma-4
+    [DBG-B2] 3.35 951.67,-403.90 normal press dive-8
+    [DBG-B2] 3.47 981.43,-426.86 normal press dive-8
+    [DBG-B2] 3.62 1019.68,-427.37 normal press dive-8
+    [DBG-B2] 3.72 1045.16,-409.61 normal press tutunma-5
+    [DBG-B2] 6.18 1231.60 normal fail stuck-no-target
+
+      294 |       if (s.gameClock - stuckSince >= 1.5) {
+      295 |         trace.push(`[DBG-B2] ${s.gameClock.toFixed(2)} ${p.x.toFixed(2)} ${s.parkour.state} fail stuck-no-target`);
+    > 296 |         throw new Error(`${id} stuck without target at x=${p.x.toFixed(2)}\n${trace.slice(-15).join('\n')}`);
+          |               ^
+      297 |       }
+      298 |     } else stuckSince = null;
+      299 |     if (process.env.TMB_RAF_HZ) await page.waitForFunction(t => __TMB_A12__.getState().gameClock >= t + 1 / 60 - .002, s.gameClock);
+        at drive (E:\oyunlar\TrustMeBro-wt\video-bulgu\03-test\vp-dock-play.spec.cjs:296:15)
+        at E:\oyunlar\TrustMeBro-wt\video-bulgu\03-test\vp-dock-play.spec.cjs:310:11
+
+    Error Context: test-results\03-test-vp-dock-play-O-1-B-5-M02-ideal-keyboard-route\error-context.md
+
+    Error Context: test-results\03-test-vp-dock-play-O-1-B-5-M02-ideal-keyboard-route\error-context.md
+
+
+(node:3132) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[25/28] 03-test\vp-dock-play.spec.cjs:307:28 › O-1 B-5 M03 ideal keyboard route
+03-test\vp-dock-play.spec.cjs:307:28 › O-1 B-5 M03 ideal keyboard route
+O-1-M03 | 32.08s, x=8882.54, deaths=0, retries=0, coin=14/14 | finish, deaths=0, retries=0, coin>=14/14 | PASS
+
+B-5-M03 | 14/14 coin | baseline 14/14 coin | PASS
+
+[26/28] 03-test\vp-dock-play.spec.cjs:307:28 › O-1 B-5 M04 ideal keyboard route
+03-test\vp-dock-play.spec.cjs:307:28 › O-1 B-5 M04 ideal keyboard route
+O-1-M04 | 32.41s, x=8914.54, deaths=0, retries=0, coin=14/14 | finish, deaths=0, retries=0, coin>=14/14 | PASS
+
+B-5-M04 | 14/14 coin | baseline 14/14 coin | PASS
+
+[27/28] 03-test\vp-dock-play.spec.cjs:307:28 › O-1 B-5 A01 ideal keyboard route
+03-test\vp-dock-play.spec.cjs:307:28 › O-1 B-5 A01 ideal keyboard route
+O-1-A01 | 30.20s, x=8477.50, deaths=0, retries=0, coin=14/14 | finish, deaths=0, retries=0, coin>=14/14 | PASS
+
+B-5-A01 | 14/14 coin | baseline 14/14 coin | PASS
+
+[28/28] 03-test\vp-dock-play.spec.cjs:307:28 › O-1 B-5 A02 ideal keyboard route
+03-test\vp-dock-play.spec.cjs:307:28 › O-1 B-5 A02 ideal keyboard route
+[DBG-B2] 3.13 827.35,-1421.75 normal press dive-1
+[DBG-B2] 5.60 1579.33,-1421.75 normal press dive-2
+[DBG-B2] 7.72 2638.84,-969.29 normal press tutunma-4
+[DBG-B2] 8.75 2900.80,-789.38 roll press dive-6
+[DBG-B2] 9.72 3003.93,-905.82 roll press tutunma-8
+[DBG-B2] 10.98 3326.89,-881.75 normal press dive-10
+[DBG-B2] 11.38 3433.15,-937.00 roll press vault-a02-vault-07
+[DBG-B2] 12.52 3655.60,-789.38 normal press dive-12
+[DBG-B2] 13.47 3744.96,-958.63 roll press dive-13
+[DBG-B2] 14.47 4227.79,-1130.25 roll press vault-a02-vault-06
+[DBG-B2] 15.40 4465.78,-1130.25 normal press dive-15
+[DBG-B2] 15.98 4618.76,-782.25 roll press dive-16
+[DBG-B2] 16.78 4827.01,-782.25 normal press vault-a02-vault-03
+[DBG-B2] 17.73 5017.84,-782.25 normal press vault-a02-vault-02
+[DBG-B2] 18.42 5129.23,-829.04 normal press normal-18
+[DBG-B2] 18.72 5205.73,-924.85 normal press a02-s-wall-56
+[DBG-B2] 18.92 5246.80,-926.94 catch press a02-s-wall-56
+[DBG-B2] 19.03 5246.80,-931.21 climb press a02-s-wall-57
+[DBG-B2] 19.37 5252.82,-1033.66 normal press a02-s-wall-58
+[DBG-B2] 20.72 5591.89,-782.25 normal press dive-20
+[DBG-B2] 23.15 6893.46,41.00 normal press normal-21
+[DBG-B2] 25.22 7420.44,311.00 normal press normal-23
+
+[DBG-B2] missing A02-c03,A02-c05,A02-c14
+
+O-1-A02 | 26.81s, x=7845.45, deaths=0, retries=0, coin=11/14 | finish, deaths=0, retries=0, coin>=14/14 | FAIL
+
+B-5-A02 | 11/14 coin | baseline 14/14 coin | FAIL
+
+  21) 03-test\vp-dock-play.spec.cjs:307:28 › O-1 B-5 A02 ideal keyboard route ──────────────────────
+
+    Error: expect(received).toBeGreaterThanOrEqual(expected)
+
+    Expected: >= 14
+    Received:    11
+
+      329 |   if (process.env.TMB_RECORD_CHIEF) fs.writeFileSync(path.join(__dirname,`.chief-record-${id}.json`),JSON.stringify({delay:id[0]==='F'?1.2:['D01','D02'].includes(id)?2.5:1.5,routeHash:r.end.chiefRouteHash,samples:r.chiefSamples}));
+      330 |   if (id === 'D01') console.log(`D01-c07-y | measured=${r.c07Y?.toFixed(2)} | coin center y | ${r.c07Y!==null?'PASS':'FAIL'}`);
+    > 331 |   expect(pass).toBeTruthy(); expect(r.deaths).toBe(0); expect(r.retries).toBe(0); expect(collected).toBeGreaterThanOrEqual(coinBaseline); if (/^(?:D(?:0[1-9]|1[0-8])|F0[1-6])$/.test(id) && r.end.chief && !process.env.TMB_RECORD_CHIEF) { expect(r.chiefCatches).toBe(0); expect(Number.isFinite(r.chiefMinGap)).toBeTruthy(); }
+          |                                                                                                     ^
+      332 | });
+      333 |
+      334 | for (const i of [14,17]) test(`F01 i${i} missed-dive fallback catch`, async ({page}) => {
+        at E:\oyunlar\TrustMeBro-wt\video-bulgu\03-test\vp-dock-play.spec.cjs:331:101
+
+    Error Context: test-results\03-test-vp-dock-play-O-1-B-5-A02-ideal-keyboard-route\error-context.md
+
+    Error Context: test-results\03-test-vp-dock-play-O-1-B-5-A02-ideal-keyboard-route\error-context.md
+
+
+  21 failed
+    03-test\vp-dock-play.spec.cjs:307:28 › O-1 B-5 D01 ideal keyboard route ────────────────────────
+    03-test\vp-dock-play.spec.cjs:307:28 › O-1 B-5 D02 ideal keyboard route ────────────────────────
+    03-test\vp-dock-play.spec.cjs:307:28 › O-1 B-5 D04 ideal keyboard route ────────────────────────
+    03-test\vp-dock-play.spec.cjs:307:28 › O-1 B-5 D05 ideal keyboard route ────────────────────────
+    03-test\vp-dock-play.spec.cjs:307:28 › O-1 B-5 D06 ideal keyboard route ────────────────────────
+    03-test\vp-dock-play.spec.cjs:307:28 › O-1 B-5 D07 ideal keyboard route ────────────────────────
+    03-test\vp-dock-play.spec.cjs:307:28 › O-1 B-5 D08 ideal keyboard route ────────────────────────
+    03-test\vp-dock-play.spec.cjs:307:28 › O-1 B-5 D10 ideal keyboard route ────────────────────────
+    03-test\vp-dock-play.spec.cjs:307:28 › O-1 B-5 D11 ideal keyboard route ────────────────────────
+    03-test\vp-dock-play.spec.cjs:307:28 › O-1 B-5 D12 ideal keyboard route ────────────────────────
+    03-test\vp-dock-play.spec.cjs:307:28 › O-1 B-5 D13 ideal keyboard route ────────────────────────
+    03-test\vp-dock-play.spec.cjs:307:28 › O-1 B-5 D14 ideal keyboard route ────────────────────────
+    03-test\vp-dock-play.spec.cjs:307:28 › O-1 B-5 D15 ideal keyboard route ────────────────────────
+    03-test\vp-dock-play.spec.cjs:307:28 › O-1 B-5 D16 ideal keyboard route ────────────────────────
+    03-test\vp-dock-play.spec.cjs:307:28 › O-1 B-5 D17 ideal keyboard route ────────────────────────
+    03-test\vp-dock-play.spec.cjs:307:28 › O-1 B-5 F01 ideal keyboard route ────────────────────────
+    03-test\vp-dock-play.spec.cjs:307:28 › O-1 B-5 F02 ideal keyboard route ────────────────────────
+    03-test\vp-dock-play.spec.cjs:307:28 › O-1 B-5 F04 ideal keyboard route ────────────────────────
+    03-test\vp-dock-play.spec.cjs:307:28 › O-1 B-5 M01 ideal keyboard route ────────────────────────
+    03-test\vp-dock-play.spec.cjs:307:28 › O-1 B-5 M02 ideal keyboard route ────────────────────────
+    03-test\vp-dock-play.spec.cjs:307:28 › O-1 B-5 A02 ideal keyboard route ────────────────────────
+  7 passed (13.6m)

@@ -115,7 +115,7 @@ async function drive(page, id, {touch=false, stopAfter, omitDives=[]} = {}) {
     const centerY = p.y + s.hitbox.h / 2;
     if (process.env.TMB_MEASURE_HARD_TRACE && (!movementSamples.length || s.gameClock-movementSamples.at(-1).t >= 1/60-.003)) {
       const camX = await page.evaluate(() => window.__tmb?.cam ?? null);
-      movementSamples.push({t:+s.gameClock.toFixed(4),x:+p.x.toFixed(3),y:+p.y.toFixed(3),cam:Number.isFinite(camX)?+camX.toFixed(3):null,screenX:Number.isFinite(camX)?+(p.x-camX).toFixed(3):null,w:s.hitbox.w,h:s.hitbox.h,state:s.parkour.state,onGround:p.onGround,vx:+p.vx.toFixed(3),vy:+p.vy.toFixed(3)});
+      movementSamples.push({t:+s.gameClock.toFixed(4),x:+p.x.toFixed(3),y:+p.y.toFixed(3),cam:Number.isFinite(camX)?+camX.toFixed(3):null,screenX:Number.isFinite(camX)?+(p.x-camX).toFixed(3):null,w:s.hitbox.w,h:s.hitbox.h,state:s.parkour.state,onGround:p.onGround,vx:+p.vx.toFixed(3),vy:+p.vy.toFixed(3),vectorJumpPending:s.vectorJumpPending?{kind:s.vectorJumpPending.kind,frames:s.vectorJumpPending.frames,diveZone:s.vectorJumpPending.diveZone?.id,highZone:s.vectorJumpPending.highZone?.id}:null,diveRun:s.diveRun?{elapsed:+s.diveRun.elapsed.toFixed(4),duration:+s.diveRun.duration.toFixed(4),startX:+s.diveRun.startX.toFixed(3),endX:+s.diveRun.endX.toFixed(3),landY:+s.diveRun.landY.toFixed(3)}:null,jumpRun:s.jumpRun?{elapsed:+s.jumpRun.elapsed.toFixed(4),duration:+s.jumpRun.duration.toFixed(4),startX:+s.jumpRun.startX.toFixed(3),endX:+s.jumpRun.endX.toFixed(3),landY:+s.jumpRun.landY.toFixed(3)}:null});
     }
     if (process.env.TMB_SNAPBACK_DIR && process.env.TMB_TARGET_CAPTURE_XS) {
       const targets = process.env.TMB_TARGET_CAPTURE_XS.split(',').map(Number).filter(Number.isFinite);
@@ -149,9 +149,7 @@ async function drive(page, id, {touch=false, stopAfter, omitDives=[]} = {}) {
       fs.writeFileSync(rowsPath, JSON.stringify(rows, null, 2) + '\n');
       await page.screenshot({ path: path.join(dir, `${id}-snapback-${String(row.index).padStart(2, '0')}.png`) });
     }
-    const checkpointReset = rawSnapback
-      && (s.route.checkpoints || []).some(cp => p.x >= cp - 12 && p.x <= cp + 120 && previousSample.playerX > cp + 150);
-    if (checkpointReset) {
+    if (rawSnapback) {
       retries++;
       trace.push(`[DBG-B2] ${s.gameClock.toFixed(2)} retry player=${previousSample.playerX.toFixed(2)} chief=${previousSample.chiefX?.toFixed(2) ?? 'n/a'} chainClimb=${chainClimbSeconds.toFixed(2)}s`);
       if (['D07','D08','D10'].includes(id) || /^F0[1-4]$/.test(id)||/^M0[34]$/.test(id)) {
