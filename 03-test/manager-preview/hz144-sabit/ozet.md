@@ -41,6 +41,42 @@ Trace komutu: `TMB_ROUTE_IDS=D03 TMB_INPUT_TRACE=...input-trace.json npx.cmd pla
 
 144 Hz kosularinda eksik coinler logda `D03-c07,D03-c11`. 60 Hz normal kosular da coin sayisi olarak oynuyor; kabul PASS esigi `>=12/13`.
 
+## Kisa kontrol turu
+
+### A) rAF emulasyon kontrol grubu
+
+Komut: `TMB_RAF_HZ=60 TMB_ROUTE_IDS=D03 npx.cmd playwright test 03-test/vp-dock-play.spec.cjs -g "O-1 B-5" --workers=1 --reporter=line`
+
+| Kosu | Sonuc | Coin | Eksik coin |
+|---:|---|---:|---|
+| 1 | FAIL | 11/13 | `D03-c07,D03-c11` |
+| 2 | PASS | 12/13 | logda eksik listesi basilmaz |
+| 3 | FAIL | 11/13 | `D03-c07,D03-c11` |
+
+Sonuc: D03, ayni rAF emulasyon harness'i `TMB_RAF_HZ=60` iken de 11/13 uretebiliyor. Bu, 144 Hz farkinin tek basina oyun fizik Hz'inden gelmedigini; harness/bot karar zamanlamasinin D03 icin hassas oldugunu gosteriyor.
+
+### B) Sabit-60 kaynak trace ve 144 replay
+
+Trace komutu: `TMB_RAF_HZ=60 TMB_RAF_FAST=1 TMB_ROUTE_IDS=D03 TMB_INPUT_TRACE=03-test/manager-preview/hz144-sabit/d03-raf60-fast-input-trace.json npx.cmd playwright test 03-test/vp-dock-play.spec.cjs -g "O-1 B-5" --workers=1 --reporter=line`
+
+- Kaynak trace: 1513 adim; `dt` min/max `0.016666667`; `dt != 1/60` adim sayisi `0`; sonuc `12/13 PASS`.
+- Replay komutu: `node 03-test/vp-dock-input-replay.cjs 03-test/manager-preview/hz144-sabit/d03-raf60-fast-input-trace-D03.json`
+- 144 Hz step-sayaci replay: ilk ayrisma `step 0`.
+- Beklenen kaynak ilk adim: `x=71.208, y=108.2, vx=48.333, vy=0, coins=[]`.
+- 144 replay ilk adim: `x=70.403, y=108.2, vx=24.167, vy=0, coins=[]`.
+- Son durum: kaynak `12/13`, replay `8/13`; replay `x=5350.41`.
+
+Yorum: Bu kontrol, sabit-60 trace kaynaginin temiz oldugunu dogruladi; ancak mevcut replay araci 144 Hz birikimli adim yolunda ilk adimdan ayrisiyor. Bu nedenle "1513/1513 birebir" kaniti alinmadi; ilk ayrisma `step 0` olarak raporlandi.
+
+### C) 144 Hz D03'te kacan coinler
+
+Route tanimina gore kacan iki coin:
+
+| Coin | x | y |
+|---|---:|---:|
+| `D03-c07` | 3889.24 | 304.60 |
+| `D03-c11` | 5788.60 | 345.40 |
+
 ## Regresyon
 
 - `chief-runner/hermes-tum-oyun/d09-sarkan/ios-tamekran/host-lock`: `35 passed, 2 skipped`.

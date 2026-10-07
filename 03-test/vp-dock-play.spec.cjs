@@ -33,7 +33,7 @@ test.afterAll(async () => new Promise(resolve => server.close(resolve)));
 async function boot(page, id, viewport = {width:1280,height:720}) {
   await page.setViewportSize(viewport);
   if (process.env.TMB_RAF_HZ) {
-    await page.addInitScript(hz => {
+    await page.addInitScript(({ hz, fastMode }) => {
       const frameMs = 1000 / Number(hz);
       if (!Number.isFinite(frameMs) || frameMs <= 0) return;
       let now = 0, nextId = 1;
@@ -46,7 +46,7 @@ async function boot(page, id, viewport = {width:1280,height:720}) {
           timers.delete(id);
           now += frameMs;
           callback(now);
-        }, frameMs);
+        }, fastMode ? 0 : frameMs);
         timers.set(id, timer);
         return id;
       };
@@ -55,7 +55,7 @@ async function boot(page, id, viewport = {width:1280,height:720}) {
         if (timer) clearTimeout(timer);
         timers.delete(id);
       };
-    }, Number(process.env.TMB_RAF_HZ));
+    }, { hz: Number(process.env.TMB_RAF_HZ), fastMode: !!process.env.TMB_RAF_FAST });
   }
   await page.goto(base + '#debug');
   await page.waitForFunction(() => window.__TMB_A12__);
