@@ -84,49 +84,70 @@
   "M05": {
     "parts": [
       {
-        "id": "D12",
+        "id": "D10",
         "side": "left",
-        "fraction": 0.203808,
-        "cut": 1455.6
+        "fraction": 0.488962,
+        "cut": 4440.48
       },
       {
         "id": "D05",
         "side": "left",
-        "fraction": 0.377819,
-        "cut": 2875.2
+        "fraction": 0.096662,
+        "cut": 735.6
       },
       {
-        "id": "D04",
+        "id": "D12",
         "side": "left",
-        "fraction": 0.415718,
-        "cut": 3396
+        "fraction": 0.30378,
+        "cut": 2169.6
       }
     ],
     "partBounds": [
       {
         "part": 1,
-        "source": "D12",
+        "source": "D10",
         "minX": 70,
-        "maxX": 1525.6
+        "maxX": 4510.48
       },
       {
         "part": 2,
         "source": "D05",
-        "minX": 1533.6,
-        "maxX": 5016
+        "minX": 4518.48,
+        "maxX": 5672.61
       },
       {
         "part": 3,
-        "source": "D04",
-        "minX": 5024,
-        "maxX": 8420
+        "source": "D12",
+        "minX": 5680.61,
+        "maxX": 8237.81
       }
     ],
-    "length": 8560,
-    "movements": 31,
-    "density": 3.621495327102804,
-    "coins": 14,
-    "addedObstacles": 6
+    "length": 8377.81,
+    "movements": 37,
+    "per1000": 3.946513972453333,
+    "threshold": 3.754911115417819,
+    "addedObstacles": 5,
+    "transportedDeviations": [
+      {
+        "id": "m05-p1-d10-vault-04",
+        "from": 189.22,
+        "to": 253.22,
+        "reason": "R2/R3/recovery"
+      },
+      {
+        "id": "m05-p1-d10-vault-01",
+        "from": 600.4,
+        "to": null,
+        "reason": "R2/R3/recovery"
+      },
+      {
+        "id": "m05-p3-d12-vault-03",
+        "from": 5782.61,
+        "to": 5966.61,
+        "reason": "R2/R3/recovery"
+      }
+    ],
+    "coins": 14
   },
   "M06": {
     "parts": [
@@ -178,49 +199,76 @@
   "A03": {
     "parts": [
       {
-        "id": "D09",
-        "side": "left",
-        "fraction": 0.106269,
-        "cut": 814.8
-      },
-      {
         "id": "D10",
         "side": "left",
-        "fraction": 0.488962,
-        "cut": 4440.48
+        "fraction": 0.404923,
+        "cut": 3677.28
       },
       {
-        "id": "D17",
+        "id": "D12",
         "side": "left",
-        "fraction": 0.395547,
-        "cut": 3819.28
+        "fraction": 0.30378,
+        "cut": 2169.6
+      },
+      {
+        "id": "D13",
+        "side": "left",
+        "fraction": 0.105755,
+        "cut": 956.4
       }
     ],
     "partBounds": [
       {
         "part": 1,
-        "source": "D09",
+        "source": "D10",
         "minX": 70,
-        "maxX": 884.8
+        "maxX": 4510.48
       },
       {
         "part": 2,
-        "source": "D10",
-        "minX": 892.8,
-        "maxX": 5333.28
+        "source": "D12",
+        "minX": 4518.48,
+        "maxX": 7075.679999999999
       },
       {
         "part": 3,
-        "source": "D17",
-        "minX": 5341.28,
-        "maxX": 9781.76
+        "source": "D13",
+        "minX": 7083.68,
+        "maxX": 8040.08
       }
     ],
-    "length": 9921.76,
-    "movements": 43,
-    "density": 4.33390850010482,
-    "coins": 14,
-    "addedObstacles": 4
+    "length": 8180.08,
+    "movements": 35,
+    "per1000": 3.7971210473194774,
+    "threshold": 3.754911115417819,
+    "addedObstacles": 4,
+    "transportedDeviations": [
+      {
+        "id": "a03-p1-d10-vault-04",
+        "from": 189.22,
+        "to": 253.22,
+        "reason": "R2/R3/recovery"
+      },
+      {
+        "id": "a03-p1-d10-vault-01",
+        "from": 600.4,
+        "to": null,
+        "reason": "R2/R3/recovery"
+      },
+      {
+        "id": "a03-p2-d12-vault-03",
+        "from": 4620.48,
+        "to": 4804.48,
+        "reason": "R2/R3/recovery"
+      },
+      {
+        "id": "a03-p3-d13-vault-02",
+        "from": 7186.85,
+        "to": null,
+        "reason": "R2/R3/recovery"
+      }
+    ],
+    "coins": 14
   },
   "A04": {
     "parts": [
@@ -272,11 +320,73 @@
   "A05": {
     "parts": [
       {
+        "id": "D10",
+        "side": "left",
+        "fraction": 0.488962,
+        "cut": 4440.48
+      },
+      {
+        "id": "D05",
+        "side": "left",
+        "fraction": 0.151127,
+        "cut": 1150.08
+      },
+      {
         "id": "D12",
         "side": "left",
-        "fraction": 0.203808,
-        "cut": 1455.6
+        "fraction": 0.30378,
+        "cut": 2169.6
+      }
+    ],
+    "partBounds": [
+      {
+        "part": 1,
+        "source": "D10",
+        "minX": 70,
+        "maxX": 4510.48
       },
+      {
+        "part": 2,
+        "source": "D05",
+        "minX": 4518.48,
+        "maxX": 5672.61
+      },
+      {
+        "part": 3,
+        "source": "D12",
+        "minX": 5680.61,
+        "maxX": 8237.81
+      }
+    ],
+    "length": 8377.81,
+    "movements": 37,
+    "per1000": 3.946513972453333,
+    "threshold": 3.754911115417819,
+    "addedObstacles": 4,
+    "transportedDeviations": [
+      {
+        "id": "a05-p1-d10-vault-04",
+        "from": 189.22,
+        "to": 253.22,
+        "reason": "R2/R3/recovery"
+      },
+      {
+        "id": "a05-p1-d10-vault-01",
+        "from": 600.4,
+        "to": null,
+        "reason": "R2/R3/recovery"
+      },
+      {
+        "id": "a05-p3-d12-vault-03",
+        "from": 5782.61,
+        "to": 5966.61,
+        "reason": "R2/R3/recovery"
+      }
+    ],
+    "coins": 14
+  },
+  "A06": {
+    "parts": [
       {
         "id": "D10",
         "side": "left",
@@ -284,83 +394,69 @@
         "cut": 4440.48
       },
       {
-        "id": "D02",
-        "side": "left",
-        "fraction": 0.487247,
-        "cut": 3118.38
-      }
-    ],
-    "partBounds": [
-      {
-        "part": 1,
-        "source": "D12",
-        "minX": 70,
-        "maxX": 1525.6
-      },
-      {
-        "part": 2,
-        "source": "D10",
-        "minX": 1533.6,
-        "maxX": 5974.08
-      },
-      {
-        "part": 3,
-        "source": "D02",
-        "minX": 5982.08,
-        "maxX": 9280.46
-      }
-    ],
-    "length": 9420.46,
-    "movements": 40,
-    "density": 4.246077155467993,
-    "coins": 14,
-    "addedObstacles": 2
-  },
-  "A06": {
-    "parts": [
-      {
         "id": "D12",
         "side": "left",
-        "fraction": 0.203808,
-        "cut": 1455.6
+        "fraction": 0.30378,
+        "cut": 2169.6
       },
       {
-        "id": "D17",
+        "id": "D13",
         "side": "left",
-        "fraction": 0.395547,
-        "cut": 3819.28
-      },
-      {
-        "id": "D03",
-        "side": "left",
-        "fraction": 0.418697,
-        "cut": 2989.08
+        "fraction": 0.105755,
+        "cut": 956.4
       }
     ],
     "partBounds": [
       {
         "part": 1,
-        "source": "D12",
+        "source": "D10",
         "minX": 70,
-        "maxX": 1525.6
+        "maxX": 4510.48
       },
       {
         "part": 2,
-        "source": "D17",
-        "minX": 1533.6,
-        "maxX": 5974.08
+        "source": "D12",
+        "minX": 4518.48,
+        "maxX": 7075.679999999999
       },
       {
         "part": 3,
-        "source": "D03",
-        "minX": 5982.08,
-        "maxX": 8544.08
+        "source": "D13",
+        "minX": 7083.68,
+        "maxX": 8040.08
       }
     ],
-    "length": 8684.08,
-    "movements": 37,
-    "density": 4.260670099768772,
-    "coins": 14,
-    "addedObstacles": 4
+    "length": 8180.08,
+    "movements": 36,
+    "per1000": 3.919608823039461,
+    "threshold": 3.754911115417819,
+    "addedObstacles": 4,
+    "transportedDeviations": [
+      {
+        "id": "a06-p1-d10-vault-04",
+        "from": 189.22,
+        "to": 253.22,
+        "reason": "R2/R3/recovery"
+      },
+      {
+        "id": "a06-p1-d10-vault-01",
+        "from": 600.4,
+        "to": null,
+        "reason": "R2/R3/recovery"
+      },
+      {
+        "id": "a06-p2-d12-vault-03",
+        "from": 4620.48,
+        "to": 4804.48,
+        "reason": "R2/R3/recovery"
+      },
+      {
+        "id": "a06-p3-d13-vault-02",
+        "from": 7186.85,
+        "to": null,
+        "reason": "R2/R3/recovery"
+      }
+    ],
+    "coins": 14
   }
 }
