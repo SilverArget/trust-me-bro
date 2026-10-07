@@ -928,16 +928,24 @@
         { id: "d02-u-4", x: 6054.78, y: 1553.18, w: 78, h: 69.6, kind: "ground" },
         { id: "d02-u-5", x: 6132.78, y: 1575.98, w: 301.2, h: 46.8, kind: "ground" },
         { id: "d02-u-6", x: 6216.78, y: 1505.18, w: 48, h: 70.8, kind: "ground" },
-        { id: "d02-roof1-1", x: 60, y: -263.8, w: 480, h: 39.6, kind: "ground" },
-        { id: "d02-roof1-2", x: 140, y: -303.4, w: 320, h: 39.6, kind: "ground" },
-        { id: "d02-roof1-3", x: 220, y: -343, w: 160, h: 39.6, kind: "ground" },
-        { id: "d02-roof2-1", x: 598.56, y: -263.8, w: 480, h: 39.6, kind: "ground" },
-        { id: "d02-roof2-2", x: 678.56, y: -303.4, w: 320, h: 39.6, kind: "ground" },
-        { id: "d02-roof2-3", x: 758.56, y: -343, w: 160, h: 39.6, kind: "ground" },
+        { id: "d02-roof1-1", x: 60, y: -263.8, w: 480, h: 39.6, kind: "ground", solid: false },
+        { id: "d02-roof1-2", x: 140, y: -303.4, w: 320, h: 39.6, kind: "ground", solid: false },
+        { id: "d02-roof1-3", x: 220, y: -343, w: 160, h: 39.6, kind: "ground", solid: false },
+        { id: "d02-roof2-1", x: 598.56, y: -263.8, w: 480, h: 39.6, kind: "ground", solid: false },
+        { id: "d02-roof2-2", x: 678.56, y: -303.4, w: 320, h: 39.6, kind: "ground", solid: false },
+        { id: "d02-roof2-3", x: 758.56, y: -343, w: 160, h: 39.6, kind: "ground", solid: false },
         { id: "d02-slope-1", x: 1412.4, y: -65.5, w: 85.8, h: 43.5, kind: "ground" },
         { id: "d02-slope-2", x: 1498.2, y: -22, w: 85.8, h: 43.5, kind: "ground" },
         { id: "d02-slope-3", x: 1584, y: 21.5, w: 85.8, h: 43.5, kind: "ground" },
         { id: "d02-slope-4", x: 1669.8, y: 65, w: 85.8, h: 43.5, kind: "ground" },
+      ],
+      slopes: [
+        { id: "d02-roof1-up", x1: 60, y1: -224.2, x2: 220, y2: -343, visible: false },
+        { id: "d02-roof1-flat", x1: 220, y1: -343, x2: 380, y2: -343, visible: false },
+        { id: "d02-roof1-down", x1: 380, y1: -343, x2: 540, y2: -224.2, visible: false },
+        { id: "d02-roof2-up", x1: 598.56, y1: -224.2, x2: 758.56, y2: -343, visible: false },
+        { id: "d02-roof2-flat", x1: 758.56, y1: -343, x2: 918.56, y2: -343, visible: false },
+        { id: "d02-roof2-down", x1: 918.56, y1: -343, x2: 1078.56, y2: -224.2, visible: false },
       ],
       obstacles: [
         {id:"d02-vault-01",type:"vault",x:2602.38,w:24,h:48,baseY:270.2},
@@ -3293,7 +3301,7 @@ applyD09LogicRulesToRoutes();
     }
     const surfaces=routeSurfaces(route);
     const visualOnlySurfaces=(route.groundSegments||[]).filter(s=>s.solid===false).map(s=>({...s}));
-    const groundSurfaces=[...surfaces,...visualOnlySurfaces].filter(v=>v.kind==="ground"&&(!bounds||visibleX(bounds,v.x,v.w,80)));
+    const groundSurfaces=[...surfaces,...visualOnlySurfaces].filter(v=>v.kind==="ground"&&v.visible!==false&&(!bounds||visibleX(bounds,v.x,v.w,80)));
     if(route.visualSupports?.length){
       const supported=new Set(route.visualSupports.filter(v=>v.type==="stack-to-ground").map(v=>v.id));
       for(const g of groundSurfaces.filter(v=>supported.has(v.id))){
