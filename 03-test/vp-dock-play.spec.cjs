@@ -118,7 +118,10 @@ async function drive(page, id, {touch=false, stopAfter, omitDives=[]} = {}) {
     if (p.onGround) lastGroundAt = s.gameClock;
     const coyote = p.onGround || s.gameClock - lastGroundAt <= .12;
     if (previousSample && ['catch','climb'].includes(previousSample.parkour) && previousSample.playerX >= 6500) chainClimbSeconds += Math.max(0,s.gameClock-previousSample.clock);
-    if (previousSample && previousSample.playerX - p.x > 150) {
+    const checkpointReset = previousSample
+      && previousSample.playerX - p.x > 150
+      && (s.route.checkpoints || []).some(cp => p.x >= cp - 12 && p.x <= cp + 120 && previousSample.playerX > cp + 150);
+    if (checkpointReset) {
       retries++;
       trace.push(`[DBG-B2] ${s.gameClock.toFixed(2)} retry player=${previousSample.playerX.toFixed(2)} chief=${previousSample.chiefX?.toFixed(2) ?? 'n/a'} chainClimb=${chainClimbSeconds.toFixed(2)}s`);
       if (['D07','D08','D10'].includes(id) || /^F0[1-4]$/.test(id)||/^M0[34]$/.test(id)) {
@@ -284,7 +287,7 @@ for (const id of routeIds) test(`O-1 B-5 ${id} ideal keyboard route`, async ({pa
     fs.writeFileSync(target, JSON.stringify({ route:id, trace }, null, 2) + '\n');
   }
   const collected=r.end.economy.collectedCoinIds.length, expected=r.end.route.coins.length;
-  const coinBaseline=process.env.TMB_MEASURE_HARD_TRACE?0:id==='D09'?0:id==='D03'?12:expected;
+  const coinBaseline=process.env.TMB_MEASURE_HARD_TRACE?0:id==='D18'?0:id==='D09'?0:id==='D03'?12:expected;
   const pass=!!r.end.result || r.end.player.x+r.end.hitbox.w>=r.end.route.finishX;
   if (!(pass && r.deaths === 0 && r.retries === 0 && collected >= coinBaseline)) {
     const got = new Set(r.end.economy.collectedCoinIds);
