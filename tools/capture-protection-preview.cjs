@@ -54,7 +54,7 @@ function snippet(text, needle, radius = 520) {
 
     const blocked = await browser.newPage({ viewport: { width: 1280, height: 720 } });
     await blocked.goto(`http://bad.localhost:${port}/index.html`, { waitUntil: "commit", timeout: 10000 }).catch(() => {});
-    await blocked.waitForSelector("text=Bu oyun yalnız resmi sitelerde oynanabilir.", { timeout: 10000 });
+    await blocked.getByText(/resmi sitelerde oynanabilir\./).waitFor({ timeout: 10000 });
     await blocked.screenshot({ path: path.join(outDir, "izinsiz-host.png"), fullPage: true });
 
     const src = fs.readFileSync(path.join(root, "index.html"), "utf8");
