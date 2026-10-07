@@ -1,11 +1,11 @@
 # D02 Basamak
 
-- Kök neden: D02 başlangıcındaki `d02-roof1-*` ve `d02-roof2-*` görsel basamak blokları solid gövdeydi. Oyuncu sağa koşarken bir sonraki basamağın sol yüzüne çarpıyor, `vx=0` ile yerinde koşuyordu; bu ölüm, chief yakalaması, checkpoint/reset veya vault/catch değil, D04 ile aynı sınıf step-face collision idi.
-- Ölçüm: eski davranışta ilk kilit `x=188` civarında `d02-roof1-3` sol yüzünde görülüyordu. Yeni `03-test/d02-basamak.spec.cjs` koşusunda bitiş örneği `x=1163.154`, `maxBack=0`, `stuckFrames=0`, `chiefCaught=false`, `deaths=0`.
-- Fix: `d02-roof1-*` ve `d02-roof2-*` blokları görsel/support olarak kaldı ama `solid:false` yapıldı. Oyuncu çarpışması için görünmez `d02-roof1-up/flat/down` ve `d02-roof2-up/flat/down` slope yüzeyleri eklendi; slope yüzeyi çizilmiyor.
-- Diğer rota taraması: aynı statik risk sınıfı F04 içindeki `f04-p1-d02-roof*` kopyasında da aday olarak görünüyor. Bu komitte dokunulmadı; composite route/chief zamanlaması riski nedeniyle ayrı ölçümlü iş olmalı. Diğer eski `*-slope/down/up/step*` blokları da statik adaydır, fakat bu D02 videosundaki nokta için dinamik repro D02 başlangıcıdır.
-- Chief path: D02 yeniden kaydedildi, route hash `7cfa1beabca7071a55b094b277d27f06f8a579bfd63f08d88d4158cc97a57fa9`. Dock lead 2.5 s ve chief 15% ladder davranışı değişmedi.
-- Commit: ilk fix commitinden sonra doldurulacak.
+- Kok neden: D02 basindaki `d02-roof1-*` ve `d02-roof2-*` gorsel basamak bloklari solid govdeydi. Oyuncu saga kosarken bir sonraki basamagin sol yuzune carpiyor, `vx=0` ile yerinde kosuyordu. Bu olum, chief yakalamasi, checkpoint/reset veya vault/catch degil; D04 ile ayni sinif step-face collision idi.
+- Olcum: eski davranista ilk kilit `x=188` civarinda `d02-roof1-3` sol yuzunde goruldu. Yeni `03-test/d02-basamak.spec.cjs` kosusunda bitis ornegi `x=1163.154`, `maxBack=0`, `stuckFrames=0`, `chiefCaught=false`, `deaths=0`.
+- Fix: `d02-roof1-*` ve `d02-roof2-*` bloklari gorsel/support olarak kaldi ama `solid:false` yapildi. Oyuncu carpisma yuzeyi icin gorunmez `d02-roof1-up/flat/down` ve `d02-roof2-up/flat/down` slope yuzeyleri eklendi; slope yuzeyi cizilmiyor.
+- Diger rota taramasi: ayni statik risk sinifi F04 icindeki `f04-p1-d02-roof*` kopyasinda da aday olarak gorunuyor. Bu komitte dokunulmadi; composite route/chief zamanlamasi riski nedeniyle ayri olcumlu is olmali. Diger eski `*-slope/down/up/step*` bloklari da statik adaydir, fakat bu video icin dinamik repro D02 baslangicidir.
+- Chief path: D02 yeniden kaydedildi, route hash `7cfa1beabca7071a55b094b277d27f06f8a579bfd63f08d88d4158cc97a57fa9`. Dock lead 2.5 s ve chief 15% ladder davranisi degismedi.
+- Commit: `2733c3d` (`Fix D02 opening step collision`).
 
 ## Testler
 
