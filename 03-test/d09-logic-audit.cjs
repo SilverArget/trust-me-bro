@@ -53,9 +53,51 @@ function loadRoutes() {
     id: c.id || `${id}-c${String((c.n ?? i) + 1).padStart(2, "0")}`,
   }));
   const routes = vm.runInNewContext(`(${objectLiteral(source, "const ROUTES = Object.freeze(")})`, { COINS: coins, makeCoins });
-  applyRuntimeRouteFixes(routes);
+  markRawAuditFindings(routes);
   applyGlobalLogicRules(routes);
   return routes;
+}
+
+function markRawAuditFindings(routes) {
+  for (const route of Object.values(routes)) route.__auditFlags = [];
+  const d09 = routes.D09;
+  if (d09) {
+    const sarkanStep = d09.groundSegments?.find(s => s.id === "d09-ir-23");
+    const badSlides = (d09.obstacles || []).filter(o =>
+      o.type === "slide" &&
+      o.x >= 3200 && o.x <= 3340 &&
+      (o.baseY ?? GROUND) > 330 &&
+      (!sarkanStep || sarkanStep.h < 200)
+    );
+    for (const o of badSlides) {
+      d09.__auditFlags.push({
+        id: o.id,
+        issue: "D09 slide hangs over narrow pit/step transition",
+        decision: "fix: move to flat supported surface or remove",
+      });
+    }
+  }
+  const requiredSupports = {
+    D03: ["d03-v-13"],
+    D04: ["d04-v-02", "d04-v-03", "d04-v-05"],
+    D05: ["d05-v-08"],
+    D08: ["d08-v-31"],
+    D11: ["d11-v-28"],
+  };
+  for (const [id, supportIds] of Object.entries(requiredSupports)) {
+    const route = routes[id];
+    if (!route) continue;
+    const supported = new Set((route.visualSupports || []).filter(v => v.type === "stack-to-ground").map(v => v.id));
+    for (const supportId of supportIds) {
+      if (!supported.has(supportId)) {
+        route.__auditFlags.push({
+          id: supportId,
+          issue: "video evidence target is visually unsupported",
+          decision: "fix: add visible support to ground or remove",
+        });
+      }
+    }
+  }
 }
 
 function applyRuntimeRouteFixes(routes) {
@@ -330,6 +372,10 @@ function auditRoute(id, route) {
   const surfaces = routeSurfaces(route);
   const solids = surfaces.filter(s => s.kind === "ground" || s.kind === "platform" || s.kind === "movingPlatform" || s.parkour);
   const rows = [];
+
+  for (const flag of route.__auditFlags || []) {
+    rows.push({ route: id, ...flag });
+  }
 
   for (const s of surfaces.filter(s => s.parkour === "slide")) {
     const hasAttachment = !!s.suspended || !!(route.visualAttachments || []).some(a => a.targetId === s.id && a.type === "suspend");
