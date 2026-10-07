@@ -1467,10 +1467,13 @@ applyD09LogicRulesToRoutes();
     previewMotion = "idle",
     previewStartedAt = 0,
     purchaseBusy = false,
+    nextRouteInFlight = false,
+    finishAdvance = null,
     sceneCache = new Map(),
     staggerT = 0,
     invulnerableT = 0,
     respawnT = 0,
+    finishGate = { phase: "open", t: 0, closeS: .52, holdS: .28, playerAlpha: 1 },
     frontFlip = { active: false, angle: 0 },
     barrels = [],
     workerClock = 0,
@@ -1686,6 +1689,12 @@ applyD09LogicRulesToRoutes();
     if (worldId==="frozen") return ["F01","F02","F03","F04"];
     return WORLD_REGISTRY.dock31.routes;
   }
+  function nextRouteAfterCurrent() {
+    const order=routeOrderForWorld(),i=order.indexOf(routeId);
+    if(i<0||i>=order.length-1)return null;
+    const id=order[i+1];
+    return ROUTES[id]&&routeUnlocked(id)?id:null;
+  }
   function startNextRoute() {
     const order=routeOrderForWorld(),start=Math.max(0,order.indexOf(routeId)),candidates=[];
     for(let i=1;i<=order.length;i++)candidates.push(order[(start+i)%order.length]);
@@ -1713,6 +1722,8 @@ applyD09LogicRulesToRoutes();
     route = ROUTES[routeId];
     run = newEconomy ? freshRun(routeId) : restoreRun(routeId);
     result = null;
+    finishAdvance = null;
+    finishGate = { phase: "open", t: 0, closeS: .52, holdS: .28, playerAlpha: 1 };
     syncActionVisibility();
     shopOpen = false;
     barrels = [];
@@ -2049,6 +2060,7 @@ applyD09LogicRulesToRoutes();
   function beforePhysicsIntegrated(dt) {
     if (!campaign || shopOpen || result) return;
     gameClock += dt;
+    if (finishGate.phase !== "open") return;
     if(edgeClimb){engine.parkour.state="normal";engine.parkour.timer=0}
     tryHermesLaunch();
     tryScriptedMove();
@@ -2086,6 +2098,10 @@ applyD09LogicRulesToRoutes();
   }
   function updateIntegrated(dt, state, input={}) {
     if (!campaign || shopOpen || result) return;
+    if (finishGate.phase !== "open") {
+      updateFinishGate(dt);
+      return;
+    }
     edgeCatchCooldown=Math.max(0,edgeCatchCooldown-dt);
     if(route.movementProfile==="vector-v1"&&input.bufferedJump&&!vectorJumpPending&&!wallJumpRun){
       const center=player.x+player.w/2,diveZone=(route.diveZones||[]).find(z=>center>=z.x1&&center<=z.x2);
@@ -2411,19 +2427,180 @@ applyD09LogicRulesToRoutes();
       ? player.y > deepestGroundYAt(player.x+player.w/2) + 120
       : player.y > Math.max(H + 120,routeGroundYAt(player.x+player.w/2)+120);
     if(fallingOut&&!jumpRun?.hermes)retry(false);
-    if (player.x >= route.finishX) {
-      player.x = route.finishX;
-      player.vx = 0;
-      result = bankRun();
-      sfx("finish");
-      engine.setWon(true);
-      emitGame("run_complete", { routeId, elapsed_s: result.elapsed });
-    }
+    if (player.x >= route.finishX) startFinishGateEntry();
+  }
+  function startFinishGateEntry() {
+    if (finishGate.phase !== "open") return;
+    finishGate.phase = "closing";
+    finishGate.t = 0;
+    finishGate.playerAlpha = 1;
+    player.x = route.finishX - 28;
+    player.vx = 0;
+    player.vy = 0;
+    player.onGround = true;
+    engine.parkour.state = "normal";
+    engine.parkour.timer = 0;
+    diveRun = null;
+    jumpRun = null;
+    wallJumpRun = null;
+    edgeClimb = null;
+    keys.left = keys.right = keys.jump = false;
+    joystick.axis = 0;
+    sfx("door");
+    emitGame("finish_gate_enter", { routeId, x: route.finishX });
+  }
+  function updateFinishGate(dt) {
+    const holdS = finishGate.holdS ?? .28;
+    finishGate.t = Math.min(finishGate.closeS + holdS, finishGate.t + dt);
+    const k = finishGate.t / finishGate.closeS;
+    const feet = routeGroundYAt(route.finishX);
+    player.x += (route.finishX - 28 - player.x) * Math.min(1, dt * 8);
+    player.y += (feet - player.h - player.y) * Math.min(1, dt * 10);
+    player.vx = 0;
+    player.vy = 0;
+    player.onGround = true;
+    finishGate.playerAlpha = Math.max(0, 1 - Math.max(0, (k - .2) / .55));
+    if (finishGate.t >= finishGate.closeS) finishGate.phase = "closed";
+    if (finishGate.t >= finishGate.closeS + holdS) finishGateEntry();
+  }
+  function finishGateEntry() {
+    if (result) return;
+    finishGate.phase = "closed";
+    finishGate.playerAlpha = 0;
+    result = bankRun();
+    sfx("finish");
+    engine.setWon(true);
+    emitGame("run_complete", { routeId, elapsed_s: result.elapsed });
+    emitGame("finish_gate_closed", { routeId, x: route.finishX });
+    beginFinishAdvance();
+  }
+  function beginFinishAdvance() {
+    const nextId=nextRouteAfterCurrent();
+    if(!nextId)return;
+    const token=uid("finish-advance");
+    finishAdvance={active:true,token,routeId,amount:result.amount,nextId};
+    document.body.dataset.campaignPhase="transition";
+    syncActionVisibility();
+    setTimeout(async()=>{
+      if(!finishAdvance||finishAdvance.token!==token||routeId!==finishAdvance.routeId)return;
+      await requestRouteInterstitial();
+      if(!finishAdvance||finishAdvance.token!==token||routeId!==finishAdvance.routeId)return;
+      startRoute(nextId,true,nextId==="D06");
+    },1250);
   }
   function rr(x, y, w, h, r = 6) {
     ctx.beginPath();
     ctx.roundRect(x, y, w, h, r);
     ctx.fill();
+  }
+  function drawFinishDoor(c, x, y, opts = {}) {
+    const tGate = opts.gate || finishGate;
+    const closeK = tGate.phase === "closed" ? 1 : tGate.phase === "closing" ? Math.min(1, tGate.t / tGate.closeS) : 0;
+    const left = x - 74, top = y - 142, w = 112, h = 142;
+    c.save();
+    if (opts.shutterOnly) {
+      drawFinishDoorShutter(c, left, top, w, h, closeK);
+      c.restore();
+      return;
+    }
+    const interior = c.createLinearGradient(left + 11, top + 25, left + w - 11, y);
+    interior.addColorStop(0, closeK >= 1 ? "#101820" : "#fff3bb");
+    interior.addColorStop(.42, closeK >= 1 ? "#18252d" : "#ffd16d");
+    interior.addColorStop(1, closeK >= 1 ? "#05090d" : "#1d2a2f");
+    c.fillStyle = interior;
+    c.fillRect(left + 11, top + 25, w - 22, h - 25);
+    if (closeK < .98) {
+      const glow = c.createRadialGradient(left + 56, top + 48, 8, left + 56, top + 62, 70);
+      glow.addColorStop(0, "rgba(255,247,198,.92)");
+      glow.addColorStop(.55, "rgba(255,195,89,.34)");
+      glow.addColorStop(1, "rgba(255,195,89,0)");
+      c.fillStyle = glow;
+      c.fillRect(left + 11, top + 25, w - 22, h - 25);
+      c.fillStyle = "rgba(255,222,132,.56)";
+      c.beginPath();
+      c.moveTo(left + 45, y - 15);
+      c.lineTo(left + 72, y - 15);
+      c.lineTo(left + 103, y - 2);
+      c.lineTo(left + 12, y - 2);
+      c.closePath();
+      c.fill();
+      c.strokeStyle = "rgba(255,255,221,.75)";
+      c.lineWidth = 2;
+      c.beginPath();
+      c.moveTo(left + 52, y - 58);
+      c.lineTo(left + 22, y - 5);
+      c.stroke();
+    }
+    const frame = c.createLinearGradient(left, top, left + w, top);
+    frame.addColorStop(0, "#61707a");
+    frame.addColorStop(.5, "#b0bbc0");
+    frame.addColorStop(1, "#3f4b53");
+    c.fillStyle = frame;
+    c.fillRect(left, top + 14, 13, h - 14);
+    c.fillRect(left + w - 13, top + 14, 13, h - 14);
+    c.fillRect(left, top, w, 18);
+    c.fillStyle = "#17232a";
+    c.fillRect(left + 13, top + 18, w - 26, 10);
+    drawFinishDoorShutter(c, left, top, w, h, closeK);
+    c.fillStyle = "#244a35";
+    c.fillRect(left + 34, top - 19, 44, 15);
+    c.fillStyle = closeK >= 1 ? "#ff5148" : "#80ffc0";
+    c.font = closeK >= 1 ? "900 8px system-ui" : "900 10px system-ui";
+    c.textAlign = "center";
+    c.fillText(closeK >= 1 ? "KAPANDI" : "EXIT", left + 56, top - 8);
+    c.textAlign = "left";
+    c.fillStyle = "#111820";
+    c.fillRect(left - 7, y - 8, w + 14, 8);
+    c.restore();
+  }
+  function drawFinishDoorShutter(c, left, top, w, h, closeK) {
+    const shutterH = (h - 31) * closeK;
+    if (shutterH <= 0) return;
+    const sy = top + 28;
+    const panelW = w - 30;
+    const g = c.createLinearGradient(left + 15, sy, left + w - 15, sy);
+    g.addColorStop(0, "#6f7d84");
+    g.addColorStop(.18, "#d5dde1");
+    g.addColorStop(.48, "#9facb3");
+    g.addColorStop(.72, "#eef3f4");
+    g.addColorStop(1, "#56646c");
+    c.fillStyle = g;
+    c.fillRect(left + 15, sy, panelW, shutterH);
+    c.strokeStyle = "rgba(39,52,60,.8)";
+    c.lineWidth = 1.4;
+    for (let yy = sy + 8; yy < sy + shutterH; yy += 10) {
+      c.beginPath();
+      c.moveTo(left + 17, yy);
+      c.lineTo(left + w - 17, yy);
+      c.stroke();
+      c.strokeStyle = "rgba(255,255,255,.45)";
+      c.beginPath();
+      c.moveTo(left + 17, yy + 2);
+      c.lineTo(left + w - 17, yy + 2);
+      c.stroke();
+      c.strokeStyle = "rgba(39,52,60,.8)";
+    }
+    const bottomY = sy + shutterH - 9;
+    if (shutterH >= 12) {
+      c.fillStyle = "#f5c542";
+      c.fillRect(left + 15, bottomY, panelW, 9);
+      c.save();
+      c.beginPath();
+      c.rect(left + 15, bottomY, panelW, 9);
+      c.clip();
+      c.strokeStyle = "#1a1f22";
+      c.lineWidth = 5;
+      for (let sx = left - 4; sx < left + w; sx += 16) {
+        c.beginPath();
+        c.moveTo(sx, bottomY + 11);
+        c.lineTo(sx + 18, bottomY - 2);
+        c.stroke();
+      }
+      c.restore();
+    }
+    c.strokeStyle = "#24323a";
+    c.lineWidth = 2;
+    c.strokeRect(left + 15, sy, panelW, shutterH);
   }
   function drawCampaign() {
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
@@ -2530,22 +2707,17 @@ applyD09LogicRulesToRoutes();
       ctx.fill();
     }
     const finishY=routeGroundYAt(route.finishX);
-    ctx.fillStyle = "#19242b";
-    ctx.fillRect(route.finishX, finishY - 120, 16, 120);
-    ctx.fillStyle = "#79f0bc";
-    ctx.fillRect(route.finishX + 16, finishY - 118, 88, 48);
-    ctx.fillStyle = "#10252b";
-    ctx.font = "900 15px system-ui";
-    ctx.fillText(t("finish"), route.finishX + 28, finishY - 88);
+    drawFinishDoor(ctx, route.finishX, finishY);
     if (run)
-      drawRunner(
+      {ctx.save();ctx.globalAlpha*=finishGate.playerAlpha;drawRunner(
         player.x + player.w / 2,
         player.y + player.h,
         1,
         profile.runnerId,
         profile.equippedOutfitByRunner[profile.runnerId],
         frontFlip.active ? frontFlip.angle : 0,
-      );
+      );ctx.restore();}
+    drawFinishDoor(ctx, route.finishX, finishY, { shutterOnly: true });
     ctx.restore();
     drawHud();
     if (respawnT > 0) {
@@ -2556,7 +2728,8 @@ applyD09LogicRulesToRoutes();
       ctx.font = "900 24px system-ui";
       ctx.fillText(t("checkpoint"), W / 2, H / 2);
     }
-    if (result) drawResult();
+    if (finishAdvance) drawFinishAdvanceBanner();
+    else if (result) drawResult();
   }
   function t(k) {
     return (I18N[profile.settings.language] || I18N.en)[k] || I18N.en[k] || k;
@@ -2566,7 +2739,7 @@ applyD09LogicRulesToRoutes();
   function syncActionVisibility() {
     const a = document.getElementById("a12Actions");
     if (!a) return;
-    const show = !!result && !shopOpen;
+    const show = !!result && !finishAdvance && !shopOpen;
     a.hidden = !show;
     a.setAttribute("aria-hidden", String(!show));
     syncRewardedButton();
@@ -2664,6 +2837,17 @@ applyD09LogicRulesToRoutes();
     ctx.fillText(`${t("clean")} ${gs.clean?.earned?"✓":"○"} · ${t("mastery")} ${gs.mastery?.earned?"✓":"○"} · ${t("style")} ${gs.style?.earned?"✓":"○"}`,W/2,H/2+34);
     ctx.textAlign = "left";
   }
+  function drawFinishAdvanceBanner() {
+    if(!finishAdvance||!result)return;
+    ctx.save();
+    ctx.fillStyle="#06111be8";
+    rr(W/2-178,H*.16,356,52,10);
+    ctx.fillStyle="#7cecc0";
+    ctx.textAlign="center";
+    ctx.font="950 19px system-ui";
+    ctx.fillText(`${finishAdvance.routeId} ${t("complete")} · +${finishAdvance.amount}`,W/2,H*.16+32);
+    ctx.restore();
+  }
   function installUI() {
     const style = document.createElement("style");
     style.textContent = `#a12Actions{position:fixed;z-index:31;left:50%;bottom:max(86px,calc(env(safe-area-inset-bottom) + 82px));transform:translateX(-50%);display:flex;gap:9px}#a12Actions[hidden]{display:none!important}#a12Actions button,#a12Shop button,#a12Language{border:1px solid #ffffff44;border-radius:12px;background:#153246;color:#fff;padding:11px 16px;font:900 13px system-ui}#a12LanguageWrap{display:flex;align-items:center;justify-content:center;gap:10px;min-height:44px;margin:8px auto 0;color:#fff;font:800 13px system-ui}#a12Language{min-height:44px;margin:0;padding:8px 14px}#a12Shop{position:fixed;inset:0;z-index:45;display:none;background:#06121bf2;color:#fff;padding:clamp(15px,4vw,38px)}#a12Shop.show{display:grid;grid-template-columns:minmax(230px,42%) 1fr;gap:25px}#a12Preview{display:grid;place-items:center;background:#102635;border-radius:18px;min-height:280px}#a12Preview canvas{width:180px;height:240px}#a12Products{overflow:auto;padding-bottom:48px}#a12Products article{padding:17px;margin:12px 0;background:#132b39;border:1px solid #ffffff30;border-radius:14px}.runnerSymbol{font-size:15px;line-height:1;display:block;margin-bottom:2px;color:#dcecf5}.characterChoice[data-character="0"]{box-shadow:inset 0 0 0 2px #3aa2ff}.characterChoice[data-character="1"]{box-shadow:inset 0 0 0 2px #ff6aac}@media(max-width:540px) and (orientation:portrait){#a12Shop.show{grid-template-columns:1fr;grid-template-rows:35vh 1fr}#a12Preview{min-height:0}#a12Preview canvas{width:120px;height:160px}}`;
@@ -2685,7 +2869,12 @@ applyD09LogicRulesToRoutes();
       const a = e.target.dataset.act;
       if (!a) return;
       if (a === "rewarded") { void claimRewardedResult(); return; }
-      if (a === "next") { await requestRouteInterstitial();startNextRoute(); }
+      if (a === "next") {
+        if (nextRouteInFlight) return;
+        nextRouteInFlight = true;
+        try { await requestRouteInterstitial();startNextRoute(); }
+        finally { nextRouteInFlight = false; }
+      }
       if (a === "retry") startRoute(routeId, true, routeId === "D06");
       if (a === "shop") openShop();
     });
@@ -2904,7 +3093,7 @@ applyD09LogicRulesToRoutes();
     for(const d of containerDoors){aftermathSurface(c,d.x,d.currentY,d.w,d.h);c.strokeStyle='#d5c8a0';c.lineWidth=6;c.beginPath();c.moveTo(d.x-8,d.currentY+d.h);c.lineTo(d.x-3,d.currentY-12);c.lineTo(d.x+d.w+9,d.currentY-5);c.stroke();c.fillStyle=d.state==='OPEN'?'#63f2a5':d.state==='PREPARING'?'#ffd34d':'#ff5b55';c.beginPath();c.arc(d.x+d.w/2,d.currentY-26,9,0,7);c.fill();}
     for(const b of barrels){c.fillStyle='#343c32';c.strokeStyle='#c6bd94';c.lineWidth=3;c.beginPath();c.moveTo(b.x+5,b.y);c.lineTo(b.x+27,b.y+4);c.lineTo(b.x+24,b.y+27);c.lineTo(b.x,b.y+22);c.closePath();c.fill();c.stroke();c.beginPath();c.moveTo(b.x+3,b.y+9);c.lineTo(b.x+23,b.y+17);c.stroke();}
     if(campaignChief?.active)aftermathRescuer(c,campaignChief.x+14,campaignChief.y+48,true);
-    c.strokeStyle='#c1c9ad';c.lineWidth=8;c.strokeRect(route.finishX,GROUND-126,112,126);c.fillStyle='#44be82';c.fillRect(route.finishX+8,GROUND-120,96,35);c.fillStyle='#102a20';c.font='bold 14px system-ui';c.fillText(t('finish'),route.finishX+17,GROUND-97);
+    drawFinishDoor(c, route.finishX, routeGroundYAt(route.finishX));
     aftermathLights(c,time,light,gain);
     for(const coin of route.coins)if(!run?.collectedCoinIds.includes(coin.id))drawCoin(c,coin);
   }
@@ -3089,6 +3278,8 @@ applyD09LogicRulesToRoutes();
       worker: { disabled:workerDisabled, clock:workerClock },
       checkpointX: run?.checkpointX,
       result: result ? clone(result) : null,
+      finishAdvance: finishAdvance ? { ...finishAdvance } : null,
+      finishGate: { ...finishGate },
       engine: {
         singleLoop: !document.getElementById("a12Canvas"),
         renderFrameCount,
@@ -3467,14 +3658,7 @@ applyD09LogicRulesToRoutes();
       c.restore();
     }
     const finishY=routeGroundYAt(route.finishX);
-    c.fillStyle = "#19242b";
-    c.fillRect(route.finishX, finishY - 120, 16, 120);
-    c.fillStyle = magma?"#bec6cc":"#79f0bc";
-    c.fillRect(route.finishX + 16, finishY - 118, 88, 48);
-    if(magma){c.fillStyle="#68717b";c.fillRect(route.finishX+99,finishY-120,10,120);c.strokeStyle="#eff1eb";c.lineWidth=3;c.strokeRect(route.finishX+20,finishY-113,76,38);}
-    c.fillStyle = "#10252b";
-    c.font = "900 15px system-ui";
-    c.fillText(t("finish"), route.finishX + 28, finishY - 88);
+      drawFinishDoor(c, route.finishX, finishY);
   }
   // A5b decorative layer: no RNG, collisions, profile or simulation writes.
   function presentationNpcs() {
@@ -3582,7 +3766,10 @@ applyD09LogicRulesToRoutes();
     if(debugHidePlayer)return;
     const runner=profile.runnerId||"male",outfit=profile.equippedOutfitByRunner[runner]||"default";
     const poseState=diveRun?{...state,state:"dive",timer:Math.max(0,diveRun.duration-diveRun.elapsed),duration:diveRun.duration}:wallJumpRun?{...state,state:"wallRun",timer:Math.max(0,wallJumpRun.duration-wallJumpRun.elapsed),duration:wallJumpRun.duration}:state;
+    c.save();
+    c.globalAlpha *= finishGate.playerAlpha;
     drawRunnerAtlas(c,runner,outfit,runnerAtlasPose(poseState),player.x+player.w/2,player.y+player.h,player.facing);
+    c.restore();
   }
   function drawRunnerLayerIntegrated(c) { ctx=c; }
   function drawOverlayIntegrated(c, w, h) {
@@ -3598,7 +3785,15 @@ applyD09LogicRulesToRoutes();
     c.fillText(`${t("run")} ◉ ${run?.runCoins || 0}/40`, 29, 57);
     c.fillStyle = "#7cecc0";
     c.fillText(`${t("wallet")} ◉ ${profile.walletBalance}`, 180, 57);
-    if (result) {
+    if (finishAdvance&&result) {
+      c.fillStyle = "#06111be8";
+      c.fillRect(w/2-178, h*.16, 356, 52);
+      c.fillStyle = "#7cecc0";
+      c.textAlign = "center";
+      c.font = "950 19px system-ui";
+      c.fillText(`${finishAdvance.routeId} ${t("complete")} · +${finishAdvance.amount}`, w / 2, h*.16+32);
+      c.textAlign = "left";
+    } else if (result) {
       c.fillStyle = "#06111be8";
       c.fillRect(0, 0, w, h);
       c.fillStyle = "#7cecc0";
