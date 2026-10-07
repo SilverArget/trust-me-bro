@@ -5,7 +5,7 @@
 - Kabul duzeltmesi: D04 uzun merdiven gorseli tekrar eski gibi basamakli ve destekli. `d04-long-1..8` ekranda gorunen ama `solid:false` olan basamak govdeleri olarak duruyor. Fizik icin yalnizca gorunmez `d04-long-run` slope collision kullaniliyor; slope yuzeyi cizilmiyor.
 - Hermes karsilastirma: `a2e3e66` uzerinde `hermes-tum-oyun` full PASS ve `d09-hermes-opening-gap` PASS. Branch uzerinde de full PASS; D09 regresyonu yok.
 - Chief path: D04 routeHash degistigi icin D04 chief path yeniden kaydedildi. Hermes routeHash'e girmiyor.
-- Commit: `49cb3ea`.
+- Commit: `9c7ae7d`.
 
 ## Test Sonuclari
 
