@@ -274,7 +274,15 @@ async function drive(page, id, {touch=false, stopAfter, omitDives=[]} = {}) {
 }
 
 for (const id of routeIds) test(`O-1 B-5 ${id} ideal keyboard route`, async ({page}) => {
-  test.setTimeout(120000); await boot(page,id); const r=await drive(page,id);
+  test.setTimeout(120000); await boot(page,id);
+  if (process.env.TMB_INPUT_TRACE) await page.evaluate(() => { window.__tmbInputTrace = []; });
+  const r=await drive(page,id);
+  if (process.env.TMB_INPUT_TRACE) {
+    const trace = await page.evaluate(() => window.__tmbInputTrace || []);
+    const target = process.env.TMB_INPUT_TRACE.replace(/\.json$/i, `-${id}.json`);
+    fs.mkdirSync(path.dirname(target), { recursive: true });
+    fs.writeFileSync(target, JSON.stringify({ route:id, trace }, null, 2) + '\n');
+  }
   const collected=r.end.economy.collectedCoinIds.length, expected=r.end.route.coins.length;
   const coinBaseline=process.env.TMB_MEASURE_HARD_TRACE?0:id==='D09'?0:id==='D03'?12:expected;
   const pass=!!r.end.result || r.end.player.x+r.end.hitbox.w>=r.end.route.finishX;

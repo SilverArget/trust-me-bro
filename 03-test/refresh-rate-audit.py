@@ -8,7 +8,13 @@ from playwright.sync_api import sync_playwright
 
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / "03-test" / "manager-preview" / "crazy-sart"
-RATES = [60, 120, 144, 165]
+RATES = [
+    {"label": "60", "hz": 60},
+    {"label": "120", "hz": 120},
+    {"label": "144", "hz": 144},
+    {"label": "144-stutter", "hz": 144, "stutterEvery": 18, "stutterDt": 1 / 72},
+    {"label": "165", "hz": 165},
+]
 
 
 class Handler(SimpleHTTPRequestHandler):
@@ -27,8 +33,16 @@ def run_server():
 
 
 AUDIT_JS = r"""
-(hz) => {
-  const dt = 1 / hz;
+(profile) => {
+  const hz = typeof profile === "number" ? profile : profile.hz;
+  const label = typeof profile === "number" ? String(profile) : (profile.label || String(profile.hz));
+  const baseDt = 1 / hz;
+  let dt = baseDt, stepCalls = 0;
+  const nextDt = () => {
+    stepCalls++;
+    if (profile && profile.stutterEvery && stepCalls % profile.stutterEvery === 0) return profile.stutterDt || 1 / 72;
+    return baseDt;
+  };
   const round = n => Math.round((Number(n) || 0) * 100) / 100;
   const key = (name, down) => {
     const code = name === "ArrowRight" ? "ArrowRight" : name === "ArrowUp" ? "ArrowUp" : name;
@@ -42,7 +56,7 @@ AUDIT_JS = r"""
   const center = s => s.player.x + s.hitbox.w / 2;
   const feet = s => s.player.y + s.hitbox.h;
   const rawJumpArc = () => {
-    const h = 1 / 60, g = 1450, v0 = -560, cap = 900, simDt = dt <= 1 / 90 ? h : dt;
+    const h = 1 / 60, g = 1450, v0 = -560, cap = 900, simDt = baseDt <= 1 / 90 ? h : baseDt;
     let y = 0, vy = v0, t = 0, minY = 0, landed = false;
     for (let i = 0; i < Math.round(3 / simDt); i++) {
       const oldVy = vy;
@@ -92,9 +106,11 @@ AUDIT_JS = r"""
     if (window.__tmbParkour) window.__tmbParkour.manual();
     if (window.__tmbResetFixedStep) window.__tmbResetFixedStep();
     simT = 0;
+    stepCalls = 0;
     return __TMB_A12__.routeDefinition(id);
   };
   const step = () => {
+    dt = nextDt();
     const advanced = Number(__tmbCampaignStep(dt)) || 0;
     simT += advanced;
     return advanced;
@@ -106,7 +122,7 @@ AUDIT_JS = r"""
     simT = 0;
     key("ArrowRight", true);
     const startX = center(state());
-    for (let i = 0; i < Math.round(2 / dt); i++) step();
+    for (let wallT = 0; wallT < 2; wallT += dt) step();
     release();
     const s = state();
     return { outcome: s.dead ? "dead" : "ok", distancePx: round(center(s) - startX), endX: round(center(s)), deaths: s.deaths };
@@ -121,7 +137,7 @@ AUDIT_JS = r"""
     key("ArrowUp", true);
     const startX = center(state()), bodyW = state().hitbox.w;
     let minFeet = ground, wasAir = false, landing = null, apexT = 0;
-    for (let i = 0, t = 0; i < Math.round(3 / dt); i++, t += dt) {
+    for (let t = 0; t < 3; t += dt) {
       if (t >= 0.245 && t < 0.245 + dt) key("ArrowUp", false);
       step();
       const s = state(), f = feet(s);
@@ -146,7 +162,7 @@ AUDIT_JS = r"""
       landingX,
       landingFeet: landing?.feet ?? round(feet(s)),
       landingVX,
-      oneFrameHorizontalPx: round(Math.abs(landingVX) * dt),
+      oneFrameHorizontalPx: round(Math.abs(landingVX) * baseDt),
       widestGapPx: round(Math.max(0, landingX - startX - bodyW)),
       deaths: s.deaths
     };
@@ -159,7 +175,7 @@ AUDIT_JS = r"""
     simT = 0;
     key("ArrowRight", true);
     let launched = false, landing = null, minFeet = feet(state());
-    for (let i = 0; i < Math.round(4 / dt); i++) {
+    for (let t = 0; t < 4; t += dt) {
       step();
       const s = state(), c = center(s), f = feet(s);
       minFeet = Math.min(minFeet, f);
@@ -183,11 +199,11 @@ AUDIT_JS = r"""
     key("ArrowUp", true);
     let top = false, maxRise = 0, wallFrames = 0;
     const startFeet = feet(state());
-    for (let i = 0, t = 0; i < Math.round(4.2 / dt); i++, t += dt) {
+    for (let t = 0; t < 4.2; t += dt) {
       if (t >= 0.045 && t < 0.045 + dt) key("ArrowUp", false);
       const advanced = step();
       const s = state(), f = feet(s);
-      if (advanced > 0 && s.parkour.state === "wallJump") wallFrames++;
+      if (advanced > 0 && s.parkour.state === "wallJump") wallFrames += Math.round(advanced / (1 / 60));
       maxRise = Math.max(maxRise, startFeet - f);
       if (f <= z.exitY + 2 && s.player.x >= z.exitX - 44 && s.parkour.state !== "wallJump") { top = true; break; }
     }
@@ -204,7 +220,7 @@ AUDIT_JS = r"""
     simT = 0;
     let released = false, diveSeen = false, landing = null;
     key("ArrowUp", true);
-    for (let i = 0, t = 0; i < Math.round(3 / dt); i++, t += dt) {
+    for (let t = 0; t < 3; t += dt) {
       if (!released && t >= 0.045) {
         key("ArrowUp", false);
         released = true;
@@ -222,7 +238,7 @@ AUDIT_JS = r"""
     return { outcome: landing ? "landed" : s.dead ? "dead" : "timeout", diveSeen, targetX: round(z.landX), landingX: landing?.x ?? round(center(s)), landingFeet: landing?.feet ?? round(feet(s)), deaths: s.deaths };
   };
 
-  return { hz, dtMs: round(dt * 1000), rawJumpArc: rawJumpArc(), runSpeed: runSpeed(), jumpArc: jumpArc(), hermesArc: hermesArc(), wallJump: wallJump(), dive: dive() };
+  return { hz, label, dtMs: round(baseDt * 1000), rawJumpArc: rawJumpArc(), runSpeed: runSpeed(), jumpArc: jumpArc(), hermesArc: hermesArc(), wallJump: wallJump(), dive: dive() };
 }
 """
 
