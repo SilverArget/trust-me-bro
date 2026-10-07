@@ -2796,8 +2796,6 @@ applyD09LogicRulesToRoutes();
       dpr * viewOffsetX,
       dpr * viewOffsetY,
     );
-    ctx.fillStyle = "#07151dd9";
-    rr(14, 14, 360, 54, 14);
     ctx.fillStyle = "#fff";
     ctx.font = "900 14px system-ui";
     ctx.fillText(`${t("route")} ${routeId} · ${(["magma","aftermath"].includes(route.worldId) ? t(route.routeId) : route.name)}`, 29, 36);
@@ -3776,8 +3774,6 @@ applyD09LogicRulesToRoutes();
     ctx = c;
     renderFrameCount++;
     document.body.dataset.playerX = String(Math.round(player.x));
-    c.fillStyle = "#07151dd9";
-    c.fillRect(14, 14, 360, 54);
     c.fillStyle = "#fff";
     c.font = "900 14px system-ui";
     c.fillText(`${t("route")} ${routeId} · ${(["magma","aftermath"].includes(route.worldId) ? t(route.routeId) : route.name)}`, 29, 36);
