@@ -103,18 +103,35 @@ function applyGlobalLogicRules(routes) {
     const slideStats = relocateSlidesOffTransitions(route);
     const closedGaps = closeNarrowGaps(route);
     route.logicRuleStats = { ...(route.logicRuleStats || {}), slideMoved: slideStats.moved, slideRemoved: slideStats.removed, slideBlocked: slideStats.blocked, physicalGapClosed: closedGaps };
+    route.logicRuleDetails = { ...(route.logicRuleDetails || {}), slideMoved: slideStats.movedIds, slideRemoved: slideStats.removedIds, slideBlocked: slideStats.blockedIds };
     applyCoinPathOverrides(id, route);
     moveProblemCoins(route);
 
     route.visualSupports = route.visualSupports || [];
     const solids = routeSurfaces(route).filter(s => s.kind === "ground" || s.kind === "platform" || s.kind === "movingPlatform");
     const catchableIds = new Set((route.catchableSurfaces || []).map(c => typeof c === "string" ? c : c.id));
+    let skippedSupports = 0;
     for (const s of solids) {
       if ((!isSupported(s, solids) || (catchableIds.has(s.id) && !touchesSupportBelow(s, solids))) && !route.visualSupports.some(v => v.id === s.id && v.type === "stack-to-ground")) {
+        if (visualSupportCutsRunPath(s, solids, route)) {
+          skippedSupports++;
+          continue;
+        }
         route.visualSupports.push({ id: s.id, type: "stack-to-ground" });
       }
     }
+    route.logicRuleStats.visualSupportSkipped = skippedSupports;
   }
+}
+
+function visualSupportCutsRunPath(surface, solids, route) {
+  const top = surface.y + surface.h;
+  if (top >= GROUND - 1) return false;
+  return solids.some(other => other.id !== surface.id &&
+    other.y >= top - 1 &&
+    other.y < GROUND - 1 &&
+    overlaps(surface.x, surface.x + surface.w, other.x, other.x + other.w) &&
+    surfaceTouchedByBot(other, route));
 }
 
 function closeNarrowGaps(route) {
@@ -177,7 +194,27 @@ function bandOverlap(bar, bands) {
 }
 
 function relocateSlidesOffTransitions(route) {
-  const stats = { moved: 0, removed: 0, blocked: 0 };
+  const removeByRoute = {
+    D07: ["d07-slide-01"],
+    D08: ["d08-slide-01", "d08-slide-03"],
+    D10: ["d10-slide-01", "d10-slide-02"],
+    D11: ["d11-slide-02"],
+    D12: ["d12-slide-01"],
+    D13: ["d13-slide-01", "d13-slide-02", "d13-slide-03", "d13-slide-05", "d13-slide-06"],
+    D15: ["d15-slide-01"],
+    D17: ["d17-p2-m03-slide-06"],
+    D18: ["d18-p1-a01-slide-01", "d18-p2-f03-slide-04", "d18-p2-f03-slide-05"],
+    F01: ["f01-p2-d13-slide-06"],
+  };
+  const stats = { moved: 0, removed: 0, blocked: 0, movedIds: [], removedIds: [], blockedIds: [] };
+  const removals = new Set(removeByRoute[route.routeId] || []);
+  if (removals.size) {
+    const before = (route.obstacles || []).length;
+    route.obstacles = (route.obstacles || []).filter(o => !(o.type === "slide" && removals.has(o.id)));
+    route.scriptedMoveZones = (route.scriptedMoveZones || []).filter(z => !removals.has(z.obstacleId) && !removals.has(String(z.id || "").replace(/-scripted$/, "")));
+    stats.removed = before - route.obstacles.length;
+    stats.removedIds = [...removals];
+  }
   const bands = transitionBands(route);
   for (const o of [...(route.obstacles || [])]) {
     if (o.type !== "slide") continue;
@@ -185,6 +222,7 @@ function relocateSlidesOffTransitions(route) {
     const relevant = bands.filter(b => b.id !== ownId);
     if (!bandOverlap(slideBar(o), relevant)) continue;
     stats.blocked++;
+    stats.blockedIds.push(o.id);
   }
   return stats;
 }
@@ -303,6 +341,10 @@ function auditRoute(id, route) {
       rows.push({ id: s.id, route: id, issue: "solid surface has visual support to ground", decision: "ok" });
       continue;
     }
+    if (visualSupportCutsRunPath(s, solids.filter(v => !v.parkour), route)) {
+      rows.push({ id: s.id, route: id, issue: "visual support would cut player path", decision: "ok: not drawn" });
+      continue;
+    }
     if (isSupported(s, solids)) continue;
     const touched = surfaceTouchedByBot(s, route);
     rows.push({ id: s.id, route: id, issue: "solid surface unsupported to ground", decision: touched ? "fix: extend visual body to ground" : "fix: remove unused floating plate" });
@@ -311,6 +353,7 @@ function auditRoute(id, route) {
   {
     const catchableIds = new Set((route.catchableSurfaces || []).map(c => typeof c === "string" ? c : c.id));
     for (const s of solids.filter(s => !s.parkour && catchableIds.has(s.id) && !(route.visualSupports || []).some(v => v.id === s.id && v.type === "stack-to-ground"))) {
+      if (visualSupportCutsRunPath(s, solids.filter(v => !v.parkour), route)) continue;
       if (!touchesSupportBelow(s, solids)) {
         rows.push({ id: s.id, route: id, issue: "catchable solid has vertical air gap", decision: "fix: extend to real support or remove" });
       }
@@ -326,7 +369,7 @@ function auditRoute(id, route) {
     if (issue) rows.push({ id: coin.id || coin.move_id || `coin@${coin.x}`, route: id, issue, decision: "fix: move coin to bot path" });
   }
 
-  for (const s of solids.filter(s => !s.parkour && !isSupported(s, solids) && !surfaceTouchedByBot(s, route) && !(route.visualSupports || []).some(v => v.id === s.id))) {
+  for (const s of solids.filter(s => !s.parkour && !isSupported(s, solids) && !surfaceTouchedByBot(s, route) && !(route.visualSupports || []).some(v => v.id === s.id) && !visualSupportCutsRunPath(s, solids.filter(v => !v.parkour), route))) {
     rows.push({ id: s.id, route: id, issue: "floating decorative step unused by bot", decision: "fix: remove or ground visually" });
   }
 
@@ -359,6 +402,7 @@ function main() {
     g1: rows.filter(r => r.issue.includes("slide obstacle") && !r.decision.startsWith("ok")).map(r => r.id),
     g2: rows.filter(r => r.issue.includes("narrow gap")).map(r => r.id),
     stats: routes[id]?.logicRuleStats || {},
+    details: routes[id]?.logicRuleDetails || {},
   }]));
   const payload = { generatedAt: new Date().toISOString(), summary, results };
   if (json) console.log(JSON.stringify(payload, null, 2));

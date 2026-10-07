@@ -1047,7 +1047,27 @@ function applyD09LogicRulesToRoutes(){
   const slideBar=(o)=>({x0:o.x-16,x1:o.x+o.w+16});
   const bandOverlap=(bar,bands)=>bands.reduce((n,b)=>n+Math.max(0,Math.min(bar.x1,b.x1)-Math.max(bar.x0,b.x0)),0);
   const relocateSlidesOffTransitions=(r)=>{
-    const stats={moved:0,removed:0,blocked:0};
+    const removeByRoute={
+      D07:["d07-slide-01"],
+      D08:["d08-slide-01","d08-slide-03"],
+      D10:["d10-slide-01","d10-slide-02"],
+      D11:["d11-slide-02"],
+      D12:["d12-slide-01"],
+      D13:["d13-slide-01","d13-slide-02","d13-slide-03","d13-slide-05","d13-slide-06"],
+      D15:["d15-slide-01"],
+      D17:["d17-p2-m03-slide-06"],
+      D18:["d18-p1-a01-slide-01","d18-p2-f03-slide-04","d18-p2-f03-slide-05"],
+      F01:["f01-p2-d13-slide-06"],
+    };
+    const stats={moved:0,removed:0,blocked:0,removedIds:[],movedIds:[],blockedIds:[]};
+    const removals=new Set(removeByRoute[r.routeId]||[]);
+    if(removals.size){
+      const before=(r.obstacles||[]).length;
+      r.obstacles=(r.obstacles||[]).filter(o=>!(o.type==="slide"&&removals.has(o.id)));
+      r.scriptedMoveZones=(r.scriptedMoveZones||[]).filter(z=>!removals.has(z.obstacleId)&&!removals.has(String(z.id||"").replace(/-scripted$/,"")));
+      stats.removed=before-r.obstacles.length;
+      stats.removedIds=[...removals];
+    }
     const bands=transitionBands(r);
     for(const o of [...(r.obstacles||[])]){
       if(o.type!=="slide")continue;
@@ -1055,6 +1075,7 @@ function applyD09LogicRulesToRoutes(){
       const relevant=bands.filter(b=>b.id!==ownId);
       if(!bandOverlap(slideBar(o),relevant))continue;
       stats.blocked++;
+      stats.blockedIds.push(o.id);
     }
     return stats;
   };
@@ -1105,6 +1126,7 @@ function applyD09LogicRulesToRoutes(){
     const slideStats=relocateSlidesOffTransitions(r);
     const closedGaps=closeNarrowGaps(r);
     r.logicRuleStats={...(r.logicRuleStats||{}),slideMoved:slideStats.moved,slideRemoved:slideStats.removed,slideBlocked:slideStats.blocked,physicalGapClosed:closedGaps};
+    r.logicRuleDetails={...(r.logicRuleDetails||{}),slideMoved:slideStats.movedIds,slideRemoved:slideStats.removedIds,slideBlocked:slideStats.blockedIds};
     r.visualAttachments=r.visualAttachments||[];
     for(const o of r.obstacles||[])if(o.type==="slide"&&!r.visualAttachments.some(a=>a.targetId===o.id&&a.type==="suspend"))r.visualAttachments.push({targetId:o.id,type:"suspend"});
     const coinFix=coinPathFixes[id];
@@ -1124,7 +1146,19 @@ function applyD09LogicRulesToRoutes(){
     const solids=surfaces(r).filter(s=>s.kind==="ground"||s.kind==="platform"||s.kind==="movingPlatform");
     const catchableIds=new Set((r.catchableSurfaces||[]).map(c=>typeof c==="string"?c:c.id));
     const touchesBelow=(s)=>s.y+s.h>=GROUND-1||solids.some(v=>v.id!==s.id&&Math.abs(v.y-(s.y+s.h))<=1.5&&overlaps(s.x,s.x+s.w,v.x,v.x+v.w,4));
-    for(const s of solids)if((!isSupported(s,solids)||(catchableIds.has(s.id)&&!touchesBelow(s)))&&!r.visualSupports.some(v=>v.id===s.id&&v.type==="stack-to-ground"))r.visualSupports.push({id:s.id,type:"stack-to-ground"});
+    const bodyCutsRunPath=(s)=>{
+      const top=s.y+s.h;
+      if(top>=GROUND-1)return false;
+      return solids.some(v=>v.id!==s.id&&v.y>=top-1&&v.y<GROUND-1&&overlaps(s.x,s.x+s.w,v.x,v.x+v.w,0)&&surfaceTouched(v,r));
+    };
+    let skipped=0;
+    for(const s of solids){
+      if(!(!isSupported(s,solids)||(catchableIds.has(s.id)&&!touchesBelow(s))))continue;
+      if(r.visualSupports.some(v=>v.id===s.id&&v.type==="stack-to-ground"))continue;
+      if(bodyCutsRunPath(s)){skipped++;continue}
+      r.visualSupports.push({id:s.id,type:"stack-to-ground"});
+    }
+    r.logicRuleStats.visualSupportSkipped=skipped;
   }
 }
 applyD09LogicRulesToRoutes();
