@@ -1,0 +1,366 @@
+{
+  "F05": {
+    "parts": [
+      {
+        "id": "D02",
+        "side": "left",
+        "fraction": 0.487247,
+        "cut": 3118.38
+      },
+      {
+        "id": "D01",
+        "side": "right",
+        "fraction": 0.501149,
+        "cut": 4197.12
+      }
+    ],
+    "partBounds": [
+      {
+        "part": 1,
+        "source": "D02",
+        "minX": 70,
+        "maxX": 3368.38
+      },
+      {
+        "part": 2,
+        "source": "D01",
+        "minX": 3376.38,
+        "maxX": 8947.47
+      }
+    ],
+    "length": 9087.47,
+    "movements": 28,
+    "density": 3.0811656049483522,
+    "coins": 14,
+    "addedObstacles": 8
+  },
+  "F06": {
+    "parts": [
+      {
+        "id": "D12",
+        "side": "left",
+        "fraction": 0.203808,
+        "cut": 1455.6
+      },
+      {
+        "id": "D17",
+        "side": "left",
+        "fraction": 0.395547,
+        "cut": 3819.28
+      },
+      {
+        "id": "D02",
+        "side": "left",
+        "fraction": 0.487247,
+        "cut": 3118.38
+      }
+    ],
+    "partBounds": [
+      {
+        "part": 1,
+        "source": "D12",
+        "minX": 70,
+        "maxX": 1525.6
+      },
+      {
+        "part": 2,
+        "source": "D17",
+        "minX": 1533.6,
+        "maxX": 5974.08
+      },
+      {
+        "part": 3,
+        "source": "D02",
+        "minX": 5982.08,
+        "maxX": 9280.46
+      }
+    ],
+    "length": 9420.46,
+    "movements": 40,
+    "density": 4.246077155467993,
+    "coins": 14,
+    "addedObstacles": 2
+  },
+  "M05": {
+    "parts": [
+      {
+        "id": "D12",
+        "side": "left",
+        "fraction": 0.203808,
+        "cut": 1455.6
+      },
+      {
+        "id": "D05",
+        "side": "left",
+        "fraction": 0.377819,
+        "cut": 2875.2
+      },
+      {
+        "id": "D04",
+        "side": "left",
+        "fraction": 0.415718,
+        "cut": 3396
+      }
+    ],
+    "partBounds": [
+      {
+        "part": 1,
+        "source": "D12",
+        "minX": 70,
+        "maxX": 1525.6
+      },
+      {
+        "part": 2,
+        "source": "D05",
+        "minX": 1533.6,
+        "maxX": 5016
+      },
+      {
+        "part": 3,
+        "source": "D04",
+        "minX": 5024,
+        "maxX": 8420
+      }
+    ],
+    "length": 8560,
+    "movements": 31,
+    "density": 3.621495327102804,
+    "coins": 14,
+    "addedObstacles": 6
+  },
+  "M06": {
+    "parts": [
+      {
+        "id": "D17",
+        "side": "left",
+        "fraction": 0.395547,
+        "cut": 3819.28
+      },
+      {
+        "id": "D13",
+        "side": "left",
+        "fraction": 0.105755,
+        "cut": 956.4
+      },
+      {
+        "id": "D11",
+        "side": "left",
+        "fraction": 0.291048,
+        "cut": 2887.2
+      }
+    ],
+    "partBounds": [
+      {
+        "part": 1,
+        "source": "D17",
+        "minX": 70,
+        "maxX": 4510.48
+      },
+      {
+        "part": 2,
+        "source": "D13",
+        "minX": 4518.48,
+        "maxX": 5474.88
+      },
+      {
+        "part": 3,
+        "source": "D11",
+        "minX": 5482.88,
+        "maxX": 8370.08
+      }
+    ],
+    "length": 8510.08,
+    "movements": 35,
+    "density": 4.112769797698729,
+    "coins": 14,
+    "addedObstacles": 3
+  },
+  "A03": {
+    "parts": [
+      {
+        "id": "D09",
+        "side": "left",
+        "fraction": 0.106269,
+        "cut": 814.8
+      },
+      {
+        "id": "D10",
+        "side": "left",
+        "fraction": 0.488962,
+        "cut": 4440.48
+      },
+      {
+        "id": "D17",
+        "side": "left",
+        "fraction": 0.395547,
+        "cut": 3819.28
+      }
+    ],
+    "partBounds": [
+      {
+        "part": 1,
+        "source": "D09",
+        "minX": 70,
+        "maxX": 884.8
+      },
+      {
+        "part": 2,
+        "source": "D10",
+        "minX": 892.8,
+        "maxX": 5333.28
+      },
+      {
+        "part": 3,
+        "source": "D17",
+        "minX": 5341.28,
+        "maxX": 9781.76
+      }
+    ],
+    "length": 9921.76,
+    "movements": 43,
+    "density": 4.33390850010482,
+    "coins": 14,
+    "addedObstacles": 4
+  },
+  "A04": {
+    "parts": [
+      {
+        "id": "D10",
+        "side": "left",
+        "fraction": 0.488962,
+        "cut": 4440.48
+      },
+      {
+        "id": "D17",
+        "side": "left",
+        "fraction": 0.395547,
+        "cut": 3819.28
+      },
+      {
+        "id": "D06",
+        "side": "left",
+        "fraction": 0.10386,
+        "cut": 532.8
+      }
+    ],
+    "partBounds": [
+      {
+        "part": 1,
+        "source": "D10",
+        "minX": 70,
+        "maxX": 4510.48
+      },
+      {
+        "part": 2,
+        "source": "D17",
+        "minX": 4518.48,
+        "maxX": 8958.96
+      },
+      {
+        "part": 3,
+        "source": "D06",
+        "minX": 8966.96,
+        "maxX": 9619.759999999998
+      }
+    ],
+    "length": 9759.76,
+    "movements": 43,
+    "density": 4.405846045394559,
+    "coins": 14,
+    "addedObstacles": 5
+  },
+  "A05": {
+    "parts": [
+      {
+        "id": "D12",
+        "side": "left",
+        "fraction": 0.203808,
+        "cut": 1455.6
+      },
+      {
+        "id": "D10",
+        "side": "left",
+        "fraction": 0.488962,
+        "cut": 4440.48
+      },
+      {
+        "id": "D02",
+        "side": "left",
+        "fraction": 0.487247,
+        "cut": 3118.38
+      }
+    ],
+    "partBounds": [
+      {
+        "part": 1,
+        "source": "D12",
+        "minX": 70,
+        "maxX": 1525.6
+      },
+      {
+        "part": 2,
+        "source": "D10",
+        "minX": 1533.6,
+        "maxX": 5974.08
+      },
+      {
+        "part": 3,
+        "source": "D02",
+        "minX": 5982.08,
+        "maxX": 9280.46
+      }
+    ],
+    "length": 9420.46,
+    "movements": 40,
+    "density": 4.246077155467993,
+    "coins": 14,
+    "addedObstacles": 2
+  },
+  "A06": {
+    "parts": [
+      {
+        "id": "D12",
+        "side": "left",
+        "fraction": 0.203808,
+        "cut": 1455.6
+      },
+      {
+        "id": "D17",
+        "side": "left",
+        "fraction": 0.395547,
+        "cut": 3819.28
+      },
+      {
+        "id": "D03",
+        "side": "left",
+        "fraction": 0.418697,
+        "cut": 2989.08
+      }
+    ],
+    "partBounds": [
+      {
+        "part": 1,
+        "source": "D12",
+        "minX": 70,
+        "maxX": 1525.6
+      },
+      {
+        "part": 2,
+        "source": "D17",
+        "minX": 1533.6,
+        "maxX": 5974.08
+      },
+      {
+        "part": 3,
+        "source": "D03",
+        "minX": 5982.08,
+        "maxX": 8544.08
+      }
+    ],
+    "length": 8684.08,
+    "movements": 37,
+    "density": 4.260670099768772,
+    "coins": 14,
+    "addedObstacles": 4
+  }
+}
