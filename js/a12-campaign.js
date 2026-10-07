@@ -1005,6 +1005,18 @@ if(D09_OPENING_FIX){
   if(D09_OPENING_POST)D09_OPENING_POST.w=132.96;
   const D09_G2_BLOCK=D09_OPENING_FIX.groundSegments.find(s=>s.id==="d09-ir-40");
   if(D09_G2_BLOCK)D09_G2_BLOCK.w=320;
+  if(!D09_OPENING_FIX.catchableSurfaces.some(s=>(typeof s==="string"?s:s.id)==="d09-ir-23"))D09_OPENING_FIX.catchableSurfaces.push({id:"d09-ir-23"});
+  const D09_SARKAN_SLIDES=[
+    ["d09-ir-slide-01",3820,277.375],
+    ["d09-ir-slide-02",3932,277.375],
+    ["d09-ir-slide-03",4044,277.375],
+  ];
+  for(const [id,x,baseY] of D09_SARKAN_SLIDES){
+    const obstacle=D09_OPENING_FIX.obstacles.find(o=>o.id===id);
+    if(obstacle){obstacle.x=x;obstacle.baseY=baseY}
+    const scripted=D09_OPENING_FIX.scriptedMoveZones.find(z=>z.id===`${id}-scripted`);
+    if(scripted){scripted.x=x;scripted.x1=x-60;scripted.x2=x-16}
+  }
 }
   const JUMP_HINT_ZONE_IDS=Object.freeze({
     D01:["d01-dz-01","d01-dz-02"],

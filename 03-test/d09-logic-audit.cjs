@@ -71,6 +71,18 @@ function applyRuntimeRouteFixes(routes) {
   if (openingPost) openingPost.w = 132.96;
   const g2Block = d09.groundSegments?.find(s => s.id === "d09-ir-40");
   if (g2Block) g2Block.w = 320;
+  if (!d09.catchableSurfaces?.some(s => (typeof s === "string" ? s : s.id) === "d09-ir-23")) d09.catchableSurfaces.push({ id: "d09-ir-23" });
+  const sarkanSlides = [
+    ["d09-ir-slide-01", 3820, 277.375],
+    ["d09-ir-slide-02", 3932, 277.375],
+    ["d09-ir-slide-03", 4044, 277.375],
+  ];
+  for (const [id, x, baseY] of sarkanSlides) {
+    const obstacle = d09.obstacles?.find(o => o.id === id);
+    if (obstacle) { obstacle.x = x; obstacle.baseY = baseY; }
+    const scripted = d09.scriptedMoveZones?.find(z => z.id === `${id}-scripted`);
+    if (scripted) { scripted.x = x; scripted.x1 = x - 60; scripted.x2 = x - 16; }
+  }
 }
 
 function routeSurfaces(route) {
