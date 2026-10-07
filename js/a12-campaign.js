@@ -1038,7 +1038,26 @@ function applyD09LogicRulesToRoutes(){
     if(s.y+s.h>=GROUND-1)return true;
     return solids.some(v=>v.id!==s.id&&v.y>=s.y+s.h-1&&overlaps(s.x,s.x+s.w,v.x,v.x+v.w,4)&&isSupported(v,solids));
   };
-  const actionWindows=(r)=>[...(r.highJumpZones||[]).map(z=>({x1:z.x1,x2:z.x2,landX:z.landX})),...(r.diveZones||[]).map(z=>({x1:z.x1,x2:z.x2,landX:z.landX})),...(r.scriptedMoveZones||[]).map(z=>({x1:z.x1,x2:z.x2,landX:z.endX}))].filter(z=>Number.isFinite(z.x1)&&Number.isFinite(z.x2));
+  const actionWindows=(r)=>[...(r.highJumpZones||[]).map(z=>({x1:z.x1,x2:z.x2,landX:z.landX})),...(r.diveZones||[]).map(z=>({x1:z.x1,x2:z.x2,landX:z.landX})),...(r.scriptedMoveZones||[]).map(z=>({x1:z.x1,x2:z.x2,landX:z.endX,id:z.id}))].filter(z=>Number.isFinite(z.x1)&&Number.isFinite(z.x2));
+  const transitionBands=(r)=>actionWindows(r).flatMap(z=>{
+    const out=[{x0:z.x1-16,x1:z.x2+16,id:z.id}];
+    if(Number.isFinite(z.landX))out.push({x0:z.landX-40,x1:z.landX+40,id:z.id});
+    return out;
+  });
+  const slideBar=(o)=>({x0:o.x-16,x1:o.x+o.w+16});
+  const bandOverlap=(bar,bands)=>bands.reduce((n,b)=>n+Math.max(0,Math.min(bar.x1,b.x1)-Math.max(bar.x0,b.x0)),0);
+  const relocateSlidesOffTransitions=(r)=>{
+    const stats={moved:0,removed:0,blocked:0};
+    const bands=transitionBands(r);
+    for(const o of [...(r.obstacles||[])]){
+      if(o.type!=="slide")continue;
+      const ownId=`${o.id}-scripted`;
+      const relevant=bands.filter(b=>b.id!==ownId);
+      if(!bandOverlap(slideBar(o),relevant))continue;
+      stats.blocked++;
+    }
+    return stats;
+  };
   const surfaceTouched=(s,r)=>{
     const zones=actionWindows(r);
     if(zones.some(z=>overlaps(s.x,s.x+s.w,z.x1-80,z.x2+120)))return true;
@@ -1063,6 +1082,19 @@ function applyD09LogicRulesToRoutes(){
     if(narrowGaps(solids).some(g=>coin.x>g.left.x+g.left.w&&coin.x<g.right.x))return true;
     return false;
   };
+  const closeNarrowGaps=(r)=>{
+    let closed=0;
+    for(let guard=0;guard<24;guard++){
+      const gap=narrowGaps(surfaces(r).filter(s=>s.kind==="ground"||s.kind==="platform"||s.kind==="movingPlatform"))[0];
+      if(!gap)break;
+      const left=(r.groundSegments||[]).find(s=>s.id===gap.left.id);
+      const right=(r.groundSegments||[]).find(s=>s.id===gap.right.id);
+      if(!left||!right)break;
+      left.w=Number((right.x-left.x).toFixed(3));
+      closed++;
+    }
+    return closed;
+  };
   const coinPathFixes={
     D03:{"D03-c04":[4138.22,291.03],"D03-c08":[2506.16,78.73]},
     F03:{"F03-c06":[441.62,83.47],"F03-c07":[1492.53,216.83],"F03-c08":[2679.66,287.95],"F03-c10":[6385.24,165.69]},
@@ -1070,12 +1102,11 @@ function applyD09LogicRulesToRoutes(){
   };
   for(const id of routeIds){
     const r=ROUTES[id];
+    const slideStats=relocateSlidesOffTransitions(r);
+    const closedGaps=closeNarrowGaps(r);
+    r.logicRuleStats={...(r.logicRuleStats||{}),slideMoved:slideStats.moved,slideRemoved:slideStats.removed,slideBlocked:slideStats.blocked,physicalGapClosed:closedGaps};
     r.visualAttachments=r.visualAttachments||[];
     for(const o of r.obstacles||[])if(o.type==="slide"&&!r.visualAttachments.some(a=>a.targetId===o.id&&a.type==="suspend"))r.visualAttachments.push({targetId:o.id,type:"suspend"});
-    r.visualGapFills=r.visualGapFills||[];
-    for(const gap of narrowGaps(surfaces(r).filter(s=>s.kind==="ground"||s.kind==="platform"||s.kind==="movingPlatform"))){
-      if(!r.visualGapFills.some(v=>v.leftId===gap.left.id&&v.rightId===gap.right.id))r.visualGapFills.push({leftId:gap.left.id,rightId:gap.right.id,x:Number((gap.left.x+gap.left.w).toFixed(3)),y:gap.left.y,w:Number(gap.gap.toFixed(3)),h:Math.max(gap.left.h,gap.right.h)});
-    }
     const coinFix=coinPathFixes[id];
     if(coinFix&&r.coins)for(const c of r.coins){const xy=coinFix[c.id];if(xy){c.x=xy[0];c.y=xy[1]}}
     for(let i=0;i<24&&r.coins?.length;i++){
@@ -3237,12 +3268,6 @@ applyD09LogicRulesToRoutes();
         c.fillStyle=frozen?"#82c7d8":magma?"#4a4644":"#314f5d";for(let yy=g.y+14;yy<GROUND-12;yy+=42)c.fillRect(g.x+4,yy,Math.max(0,g.w-8),4);
         c.strokeStyle=frozen?"#8edbea":magma?"#b49e72":"#f1be31";c.lineWidth=3;c.strokeRect(g.x+2,g.y+2,Math.max(0,g.w-4),Math.max(0,bodyH-4));
       }
-    }
-    for(const g of route.visualGapFills||[]){
-      if(bounds&&!visibleX(bounds,g.x,g.w,80))continue;
-      if(frozen) frozenSurface(c,g.x,g.y,g.w,g.h,"ground");
-      else if(magma) magmaSurface(c,g.x,g.y,g.w,g.h,"ground");
-      else engine.drawMetal(g.x,g.y,g.w,g.h);
     }
     for(const g of groundSurfaces){
       if(frozen) drawClippedSurface(c,bounds,()=>frozenSurface(c,g.x,g.y,g.w,g.h,"ground"),g.x,g.y,g.w,g.h,44);

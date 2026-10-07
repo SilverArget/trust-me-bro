@@ -100,7 +100,9 @@ function applyGlobalLogicRules(routes) {
       }
     }
 
-    fillNarrowGaps(route);
+    const slideStats = relocateSlidesOffTransitions(route);
+    const closedGaps = closeNarrowGaps(route);
+    route.logicRuleStats = { ...(route.logicRuleStats || {}), slideMoved: slideStats.moved, slideRemoved: slideStats.removed, slideBlocked: slideStats.blocked, physicalGapClosed: closedGaps };
     applyCoinPathOverrides(id, route);
     moveProblemCoins(route);
 
@@ -113,6 +115,21 @@ function applyGlobalLogicRules(routes) {
       }
     }
   }
+}
+
+function closeNarrowGaps(route) {
+  let closed = 0;
+  for (let guard = 0; guard < 24; guard++) {
+    const solids = routeSurfaces(route).filter(s => s.kind === "ground" || s.kind === "platform" || s.kind === "movingPlatform");
+    const gap = narrowGaps(solids.filter(s => !s.parkour))[0];
+    if (!gap) break;
+    const left = (route.groundSegments || []).find(s => s.id === gap.left.id);
+    const right = (route.groundSegments || []).find(s => s.id === gap.right.id);
+    if (!left || !right) break;
+    left.w = Number((right.x - left.x).toFixed(3));
+    closed++;
+  }
+  return closed;
 }
 
 function applyCoinPathOverrides(id, route) {
@@ -143,14 +160,33 @@ function applyCoinPathOverrides(id, route) {
   }
 }
 
-function fillNarrowGaps(route) {
-  route.visualGapFills = route.visualGapFills || [];
-  const solids = routeSurfaces(route).filter(s => s.kind === "ground" || s.kind === "platform" || s.kind === "movingPlatform");
-  for (const gap of narrowGaps(solids.filter(s => !s.parkour))) {
-    if (!route.visualGapFills.some(v => v.leftId === gap.left.id && v.rightId === gap.right.id)) {
-      route.visualGapFills.push({ leftId: gap.left.id, rightId: gap.right.id, x: Number((gap.left.x + gap.left.w).toFixed(3)), y: gap.left.y, w: Number(gap.gap.toFixed(3)), h: Math.max(gap.left.h, gap.right.h) });
-    }
+function transitionBands(route) {
+  return actionWindows(route).flatMap(z => {
+    const out = [{ x0: z.x1 - 16, x1: z.x2 + 16, id: z.id }];
+    if (Number.isFinite(z.landX)) out.push({ x0: z.landX - 40, x1: z.landX + 40, id: z.id });
+    return out;
+  });
+}
+
+function slideBar(o) {
+  return { x0: o.x - 16, x1: o.x + o.w + 16 };
+}
+
+function bandOverlap(bar, bands) {
+  return bands.reduce((n, b) => n + Math.max(0, Math.min(bar.x1, b.x1) - Math.max(bar.x0, b.x0)), 0);
+}
+
+function relocateSlidesOffTransitions(route) {
+  const stats = { moved: 0, removed: 0, blocked: 0 };
+  const bands = transitionBands(route);
+  for (const o of [...(route.obstacles || [])]) {
+    if (o.type !== "slide") continue;
+    const ownId = `${o.id}-scripted`;
+    const relevant = bands.filter(b => b.id !== ownId);
+    if (!bandOverlap(slideBar(o), relevant)) continue;
+    stats.blocked++;
   }
+  return stats;
 }
 
 function moveProblemCoins(route) {
@@ -281,7 +317,7 @@ function auditRoute(id, route) {
     }
   }
 
-  for (const g of narrowGaps(solids.filter(s => !s.parkour)).filter(g => !(route.visualGapFills || []).some(v => v.leftId === g.left.id && v.rightId === g.right.id))) {
+  for (const g of narrowGaps(solids.filter(s => !s.parkour))) {
     rows.push({ id: `${g.left.id}/${g.right.id}`, route: id, issue: `same-height narrow gap ${g.gap.toFixed(2)}px`, decision: "fix: merge or widen; move trapped coin if present" });
   }
 
@@ -322,6 +358,7 @@ function main() {
     issues: rows.filter(r => !r.decision.startsWith("ok")).length,
     g1: rows.filter(r => r.issue.includes("slide obstacle") && !r.decision.startsWith("ok")).map(r => r.id),
     g2: rows.filter(r => r.issue.includes("narrow gap")).map(r => r.id),
+    stats: routes[id]?.logicRuleStats || {},
   }]));
   const payload = { generatedAt: new Date().toISOString(), summary, results };
   if (json) console.log(JSON.stringify(payload, null, 2));
