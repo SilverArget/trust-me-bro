@@ -39,6 +39,37 @@ async function noFullscreenApi(page) {
   });
 }
 
+function contentTypeFor(rel) {
+  if (rel.endsWith('.html')) return 'text/html';
+  if (rel.endsWith('.js')) return 'text/javascript';
+  if (rel.endsWith('.png')) return 'image/png';
+  if (rel.endsWith('.json') || rel.endsWith('.webmanifest')) return 'application/json';
+  if (rel.endsWith('.mp3')) return 'audio/mpeg';
+  return 'application/octet-stream';
+}
+
+async function installVirtualHostRoutes(page) {
+  await page.route('**/*', async route => {
+    const url = new URL(route.request().url());
+    if (url.pathname === '/frame') {
+      const target = url.searchParams.get('target');
+      return route.fulfill({
+        contentType: 'text/html',
+        body: `<!doctype html><html><body style="margin:0"><iframe id="gameFrame" src="${target}" style="width:100vw;height:100vh;border:0"></iframe></body></html>`
+      });
+    }
+    const rel = decodeURIComponent(url.pathname).replace(/^\/+/, '') || 'index.html';
+    if (rel === 'playgama-bridge.js') {
+      return route.fulfill({ contentType: 'text/javascript', body: '' });
+    }
+    try {
+      return route.fulfill({ contentType: contentTypeFor(rel), body: fs.readFileSync(path.join(root, rel)) });
+    } catch (_) {
+      return route.fulfill({ status: 404, body: 'missing' });
+    }
+  });
+}
+
 async function boot(page) {
   await page.goto(`${base}#debug`);
   await page.waitForFunction(() => window.__tmb && window.__TMB_A12__);
@@ -112,6 +143,34 @@ test.describe('iOS fullscreen help button', () => {
     await page.locator('#fullscreenBtn').tap();
     await expect.poll(() => page.evaluate(() => window.__requestFullscreenCalls)).toBe(1);
     await expect(page.locator('#iosFullscreenHelp.show')).toHaveCount(0);
+    await context.close();
+  });
+
+  test('platform iframe dugme ve iOS karti gostermez, dokunusta fullscreen istemez', async ({ browser }) => {
+    const iphone = devices['iPhone 14 Pro'] || devices['iPhone 13'];
+    const context = await browser.newContext({ ...iphone, viewport: { width: 852, height: 393 }, isMobile: true, hasTouch: true });
+    await context.addInitScript(() => {
+      window.__requestFullscreenCalls = 0;
+      Object.defineProperty(document, 'fullscreenEnabled', { configurable: true, value: true });
+      Object.defineProperty(document, 'webkitFullscreenEnabled', { configurable: true, value: true });
+      Element.prototype.requestFullscreen = function requestFullscreen() {
+        window.__requestFullscreenCalls += 1;
+        return Promise.resolve();
+      };
+      Element.prototype.webkitRequestFullscreen = Element.prototype.requestFullscreen;
+    });
+    const page = await context.newPage();
+    await installVirtualHostRoutes(page);
+    await page.goto(`http://partner.example/frame?target=${encodeURIComponent('http://app-1001.games.s3.yandex.net/index.html#debug')}`);
+    const gameFrame = page.frameLocator('#gameFrame');
+    await expect(gameFrame.locator('#game')).toBeVisible({ timeout: 10000 });
+    await expect(gameFrame.locator('#fullscreenBtn.show')).toHaveCount(0);
+    await expect(gameFrame.locator('#iosFullscreenHelp.show')).toHaveCount(0);
+    await gameFrame.locator('.characterChoice:visible').first().tap();
+    await expect.poll(() => page.frame({ url: /app-1001\.games\.s3\.yandex\.net/ }).evaluate(() => window.__requestFullscreenCalls)).toBe(0);
+    await expect(gameFrame.locator('#missionBrief.show')).toHaveCount(0, { timeout: 3000 });
+    await gameFrame.locator('#game').tap({ position: { x: 120, y: 120 }, force: true });
+    await expect.poll(() => page.frame({ url: /app-1001\.games\.s3\.yandex\.net/ }).evaluate(() => window.__requestFullscreenCalls)).toBe(0);
     await context.close();
   });
 });
