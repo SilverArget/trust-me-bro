@@ -1,6 +1,6 @@
 # CrazyGames sart 1007 kabul ozeti
 
-Final commit: `4a72f19`
+Final code commit: `fcfebcb` (`Finalize CrazyGames acceptance check`)
 Branch/worktree: `crazy-sart-1007` / `E:/oyunlar/TrustMeBro-wt/crazy-sart`
 
 ## Karar
