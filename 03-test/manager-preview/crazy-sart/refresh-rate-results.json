@@ -1,0 +1,174 @@
+{
+  "rates": [
+    60,
+    120,
+    144,
+    165
+  ],
+  "results": [
+    {
+      "hz": 60,
+      "dtMs": 16.67,
+      "runSpeed": {
+        "outcome": "ok",
+        "distancePx": 1166,
+        "endX": 1286,
+        "deaths": 0
+      },
+      "jumpArc": {
+        "outcome": "landed",
+        "jumpHeightPx": 58.15,
+        "landingX": 244.15,
+        "landingFeet": -584.05,
+        "deaths": 0
+      },
+      "hermesArc": {
+        "outcome": "landed",
+        "targetX": 403.44,
+        "landingX": 403.44,
+        "landingDeltaPx": 0,
+        "apexRisePx": 5.6,
+        "deaths": 0
+      },
+      "wallJump": {
+        "outcome": "top",
+        "endX": 4613.2,
+        "endFeet": -734.25,
+        "risePx": 86,
+        "wallFrames": 133,
+        "deaths": 0
+      },
+      "dive": {
+        "outcome": "timeout",
+        "diveSeen": false,
+        "targetX": 2184.7,
+        "landingX": 2208.31,
+        "landingFeet": 362.36,
+        "deaths": 0
+      }
+    },
+    {
+      "hz": 120,
+      "dtMs": 8.33,
+      "runSpeed": {
+        "outcome": "ok",
+        "distancePx": 1166,
+        "endX": 1286,
+        "deaths": 0
+      },
+      "jumpArc": {
+        "outcome": "landed",
+        "jumpHeightPx": 55.4,
+        "landingX": 238.89,
+        "landingFeet": -584.05,
+        "deaths": 0
+      },
+      "hermesArc": {
+        "outcome": "landed",
+        "targetX": 403.44,
+        "landingX": 403.44,
+        "landingDeltaPx": 0,
+        "apexRisePx": 6.62,
+        "deaths": 0
+      },
+      "wallJump": {
+        "outcome": "top",
+        "endX": 4613.2,
+        "endFeet": -734.25,
+        "risePx": 86,
+        "wallFrames": 267,
+        "deaths": 0
+      },
+      "dive": {
+        "outcome": "timeout",
+        "diveSeen": false,
+        "targetX": 2184.7,
+        "landingX": 2207.2,
+        "landingFeet": 362.36,
+        "deaths": 0
+      }
+    },
+    {
+      "hz": 144,
+      "dtMs": 6.94,
+      "runSpeed": {
+        "outcome": "ok",
+        "distancePx": 1167.06,
+        "endX": 1287.06,
+        "deaths": 0
+      },
+      "jumpArc": {
+        "outcome": "landed",
+        "jumpHeightPx": 54.92,
+        "landingX": 238.35,
+        "landingFeet": -584.05,
+        "deaths": 0
+      },
+      "hermesArc": {
+        "outcome": "landed",
+        "targetX": 403.44,
+        "landingX": 403.44,
+        "landingDeltaPx": 0,
+        "apexRisePx": 6.63,
+        "deaths": 0
+      },
+      "wallJump": {
+        "outcome": "top",
+        "endX": 4613.2,
+        "endFeet": -734.25,
+        "risePx": 86,
+        "wallFrames": 321,
+        "deaths": 0
+      },
+      "dive": {
+        "outcome": "timeout",
+        "diveSeen": false,
+        "targetX": 2184.7,
+        "landingX": 2207.01,
+        "landingFeet": 362.36,
+        "deaths": 0
+      }
+    },
+    {
+      "hz": 165,
+      "dtMs": 6.06,
+      "runSpeed": {
+        "outcome": "ok",
+        "distancePx": 1164.45,
+        "endX": 1284.45,
+        "deaths": 0
+      },
+      "jumpArc": {
+        "outcome": "landed",
+        "jumpHeightPx": 54.61,
+        "landingX": 238.99,
+        "landingFeet": -584.05,
+        "deaths": 0
+      },
+      "hermesArc": {
+        "outcome": "landed",
+        "targetX": 403.44,
+        "landingX": 403.44,
+        "landingDeltaPx": 0,
+        "apexRisePx": 6.63,
+        "deaths": 0
+      },
+      "wallJump": {
+        "outcome": "top",
+        "endX": 4613.2,
+        "endFeet": -734.25,
+        "risePx": 86,
+        "wallFrames": 367,
+        "deaths": 0
+      },
+      "dive": {
+        "outcome": "timeout",
+        "diveSeen": false,
+        "targetX": 2184.7,
+        "landingX": 2206.9,
+        "landingFeet": 362.36,
+        "deaths": 0
+      }
+    }
+  ]
+}

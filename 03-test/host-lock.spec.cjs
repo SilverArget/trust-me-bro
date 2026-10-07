@@ -51,6 +51,16 @@ test("platform host can run inside an external partner iframe", async ({ page })
   await expect(frame.getByText(blockText)).toHaveCount(0);
 });
 
+test("CrazyGames app host is classified as a platform host", async ({ page }) => {
+  await installRoutes(page);
+  await page.goto("http://app.crazygames.com/index.html#debug");
+  await expect(page.locator("#game")).toBeVisible({ timeout: 10000 });
+  await expect(page.getByText(blockText)).toHaveCount(0);
+  await expect.poll(async () => page.evaluate(() =>
+    window.TMB_ALLOWED_HOSTS.some(e => e.rule === "app.crazygames.com" && e.scope === "platform")
+  )).toBe(true);
+});
+
 test("first-party Pages host is blocked inside an external iframe", async ({ page }) => {
   const frame = await framed(page, `http://${pagesHost}/index.html#debug`);
   await expect(frame.getByText(blockText)).toBeVisible({ timeout: 10000 });
