@@ -1,6 +1,6 @@
 const {test,expect}=require('playwright/test');
 const fs=require('fs'),http=require('http'),path=require('path');
-const root=path.join(__dirname,'..');let server,base;
+const root=process.env.TMB_ROOT||path.join(__dirname,'..');let server,base;
 test.beforeAll(async()=>{server=http.createServer((req,res)=>{const rel=decodeURIComponent(new URL(req.url,'http://x').pathname).replace(/^\/+/, '')||'index.html';fs.readFile(path.join(root,rel),(e,b)=>{if(e){res.statusCode=404;return res.end('missing')}res.setHeader('Content-Type',rel.endsWith('.js')?'text/javascript':rel.endsWith('.html')?'text/html':'application/octet-stream');res.end(b)})});await new Promise(r=>server.listen(0,'127.0.0.1',r));base=`http://127.0.0.1:${server.address().port}/index.html`});
 test.afterAll(async()=>new Promise(r=>server.close(r)));
 async function boot(page,id='D01',viewport={width:1280,height:720}){await page.setViewportSize(viewport);await page.goto(base+'#debug');await page.waitForFunction(()=>window.__TMB_A12__);await page.locator('.characterChoice:visible').first().click();await page.evaluate(id=>{__TMB_A12__.renderWorldOnRoute(id[0]==='F'?'frozen':'dock31',id);__TMB_A12__.startRoute(id)},id);await page.waitForFunction(id=>__TMB_A12__.getState().route.id===id,id)}

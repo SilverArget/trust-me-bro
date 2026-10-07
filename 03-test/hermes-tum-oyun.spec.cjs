@@ -3,8 +3,8 @@ const fs = require('fs');
 const http = require('http');
 const path = require('path');
 
-const root = path.join(__dirname, '..');
-const outDir = path.join(__dirname, 'manager-preview', 'hermes-tum-oyun');
+const root = process.env.TMB_ROOT || path.join(__dirname, '..');
+const outDir = process.env.TMB_OUT || path.join(__dirname, 'manager-preview', 'hermes-tum-oyun');
 const routeIds = [
   'D01','D02','D03','D04','D05','D06','D07','D08','D09','D10','D11','D12','D13','D14','D15','D16','D17','D18',
   'F01','F02','F03','F04',
