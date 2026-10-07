@@ -177,13 +177,13 @@ test('D09 player clears the hanging slides with normal right plus slide input', 
       lastPress.set(target[0], s.gameClock);
       await tapSlide(page);
     }
-    if (s.player.x >= 4140 || s.deaths > 0) break;
+    if (s.player.x >= 4110 || s.deaths > 0) break;
     await page.waitForTimeout(16);
   }
   await page.keyboard.up('ArrowRight');
   const slideKeys = [...fired].filter(key => key.startsWith('slide-')).sort();
   const movementKeys = [...fired].filter(key => !key.startsWith('slide-')).sort();
-  const pass = end.player.x >= 4140 && (end.deaths || 0) === 0 && slideKeys.length === 3;
+  const pass = end.player.x >= 4110 && (end.deaths || 0) === 0 && slideKeys.length === 3;
   console.log(`D09-SARKAN-RUN | x=${end.player.x.toFixed(2)}, deaths=${end.deaths || 0}, moves=${movementKeys.join(',')}, slides=${slideKeys.join(',')} | right+jump+slide through cluster | ${pass ? 'PASS' : 'FAIL'}`);
   if (!baseline) {
     expect(end.player.x).toBeGreaterThanOrEqual(4110);

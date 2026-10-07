@@ -1143,6 +1143,11 @@ function applyD09LogicRulesToRoutes(){
   };
   if(ROUTES.D09)moveSlide(ROUTES.D09,"d09-ir-slide-04",4156,277.375);
   if(ROUTES.D18)removeSlides(ROUTES.D18,["d18-p1-a01-slide-02","d18-p1-a01-slide-04"]);
+  if(ROUTES.D14){
+    moveSlide(ROUTES.D14,"d14-slide-01",1050,231.375);
+    removeSlides(ROUTES.D14,["d14-slide-02"]);
+  }
+  if(ROUTES.D15)moveSlide(ROUTES.D15,"d15-slide-02",1280,289.375);
   for(const id of routeIds){
     const r=ROUTES[id];
     const slideStats=relocateSlidesOffTransitions(r);
@@ -1182,6 +1187,7 @@ function applyD09LogicRulesToRoutes(){
     }
     r.logicRuleStats.visualSupportSkipped=skipped;
   }
+  if(ROUTES.D04&&!ROUTES.D04.visualSupports.some(v=>v.id==="d04-v-06"&&v.type==="stack-to-ground"))ROUTES.D04.visualSupports.push({id:"d04-v-06",type:"stack-to-ground"});
 }
 applyD09LogicRulesToRoutes();
   const JUMP_HINT_ZONE_IDS=Object.freeze({

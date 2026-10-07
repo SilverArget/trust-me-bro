@@ -13,10 +13,11 @@ const shots = [
   { name: 'd18-vault-basamak', route: 'D18', x: 1650 },
   { name: 'd18-inis-yayi', route: 'D18', x: 3500 },
   { name: 'd03-asili', route: 'D03', supportId: 'd03-v-13' },
-  { name: 'd04-asili', route: 'D04', supportId: 'd04-v-03' },
+  { name: 'd04-asili-000005', route: 'D04', supportId: 'd04-v-03' },
+  { name: 'd04-asili-000236', route: 'D04', supportId: 'd04-v-06' },
   { name: 'd05-asili', route: 'D05', supportId: 'd05-v-08' },
   { name: 'd08-asili', route: 'D08', supportId: 'd08-v-31' },
-  { name: 'd11-asili', route: 'D11', supportId: 'd11-v-28' },
+  { name: 'd11-asili', route: 'D11', x: 1120 },
 ];
 
 function serve(rootDir) {

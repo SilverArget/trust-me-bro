@@ -136,7 +136,7 @@
     "file": "E:\\oyunlar\\TrustMeBro-wt\\video-bulgu\\03-test\\manager-preview\\video-bulgu\\d03-asili-yanyana.png"
   },
   {
-    "name": "d04-asili",
+    "name": "d04-asili-000005",
     "route": "D04",
     "supportId": "d04-v-03",
     "before": {
@@ -167,7 +167,41 @@
       },
       "cameraWorldY": 783.4000000000001
     },
-    "file": "E:\\oyunlar\\TrustMeBro-wt\\video-bulgu\\03-test\\manager-preview\\video-bulgu\\d04-asili-yanyana.png"
+    "file": "E:\\oyunlar\\TrustMeBro-wt\\video-bulgu\\03-test\\manager-preview\\video-bulgu\\d04-asili-000005-yanyana.png"
+  },
+  {
+    "name": "d04-asili-000236",
+    "route": "D04",
+    "supportId": "d04-v-06",
+    "before": {
+      "route": "D04",
+      "x": 1130.16,
+      "y": -520.6,
+      "player": {
+        "x": 1130.16,
+        "y": -568.6,
+        "vx": 0,
+        "vy": 0,
+        "onGround": true,
+        "state": "idle"
+      },
+      "cameraWorldY": 855.3630172092351
+    },
+    "after": {
+      "route": "D04",
+      "x": 1130.16,
+      "y": -520.6,
+      "player": {
+        "x": 1130.16,
+        "y": -568.6,
+        "vx": 0,
+        "vy": 0,
+        "onGround": true,
+        "state": "idle"
+      },
+      "cameraWorldY": 855.3630172092351
+    },
+    "file": "E:\\oyunlar\\TrustMeBro-wt\\video-bulgu\\03-test\\manager-preview\\video-bulgu\\d04-asili-000236-yanyana.png"
   },
   {
     "name": "d05-asili",
@@ -240,34 +274,34 @@
   {
     "name": "d11-asili",
     "route": "D11",
-    "supportId": "d11-v-28",
+    "x": 1120,
     "before": {
       "route": "D11",
-      "x": 6795.12,
-      "y": -68.25,
+      "x": 1120,
+      "y": -907.25,
       "player": {
-        "x": 6795.12,
-        "y": -116.25,
+        "x": 1120,
+        "y": -955.25,
         "vx": 0,
         "vy": 0,
         "onGround": true,
         "state": "idle"
       },
-      "cameraWorldY": 403.06357095616085
+      "cameraWorldY": 1242.0493579376605
     },
     "after": {
       "route": "D11",
-      "x": 6795.12,
-      "y": -68.25,
+      "x": 1120,
+      "y": -907.25,
       "player": {
-        "x": 6795.12,
-        "y": -116.25,
+        "x": 1120,
+        "y": -955.25,
         "vx": 0,
         "vy": 0,
         "onGround": true,
         "state": "idle"
       },
-      "cameraWorldY": 403.06357095616085
+      "cameraWorldY": 1242.0493579376605
     },
     "file": "E:\\oyunlar\\TrustMeBro-wt\\video-bulgu\\03-test\\manager-preview\\video-bulgu\\d11-asili-yanyana.png"
   }

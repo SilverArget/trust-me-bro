@@ -6,7 +6,7 @@ const path = require('path');
 // KABUL TARIFI: 60 Hz gercek zamanli gercek girdi. normal A.x1-[25,2], dive merkez +-15,
 // tutunma B.x0-[58,2], vault x-[55,18], slide gap [2,36]. O-4 esikleri 0.8 s ve 1.0 s,
 // M-1 viewportlari 390x844 / 844x390; esikler ilk kosumdan once sabittir.
-const root = path.join(__dirname, '..');
+const root = process.env.TMB_APP_ROOT ? path.resolve(process.env.TMB_APP_ROOT) : path.join(__dirname, '..');
 const dataRoots = {D01:'E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/dock-d01d02',D02:'E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/dock-d01d02',D03:'E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/dock-d03d04',D04:'E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/dock-d03d04',D05:'E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/dock-d05d06',D06:'E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/dock-d05d06',F01:'E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/frozen-f01f02',F02:'E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/frozen-f01f02',F03:'E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/frozen-f03f04',F04:'E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/frozen-f03f04',M01:'E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/magma-m01m02',M02:'E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/magma-m01m02',M03:'E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/magma-m03m04',M04:'E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/magma-m03m04',A01:'E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/aftermath-a01a02',A02:'E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/aftermath-a01a02'};
 for(let n=7;n<=18;n++)dataRoots[`D${String(n).padStart(2,'0')}`]=path.join(__dirname,'dock18-generated');
 for(const id of ['F01','F02','F03','F04'])if(fs.existsSync(path.join(__dirname,'frozen-hard-generated',`transitions-${id}.json`)))dataRoots[id]=path.join(__dirname,'frozen-hard-generated');
@@ -101,6 +101,7 @@ async function drive(page, id, {touch=false, stopAfter, omitDives=[]} = {}) {
   const fired = new Set(), pending = new Map(), lastPress = new Map(), trace = [], tr = transitions[id], started = Date.now();
   const chiefSamples = [], movementSamples = [];
   const d05d06 = ['D05','D06','F01','F02','F03','F04','M01','M02','M03','M04','A01','A02'].includes(id)||/^D(0[7-9]|1\d)$/.test(id);
+  const targetCaptures = new Set();
   let diveSeen = false, catchSeen = false, deaths = 0, retries = 0, end, stuckSince = null, c07Y = null, previousSample = null, lastGroundAt = -Infinity, chainClimbSeconds = 0, chiefMinGap = Infinity, chiefCatches = 0, manualInputs = 0;
   while (Date.now() - started < 115000) {
     const s = await page.evaluate(() => __TMB_A12__.getState());
@@ -113,13 +114,42 @@ async function drive(page, id, {touch=false, stopAfter, omitDives=[]} = {}) {
     const p = s.player, right = p.x + s.hitbox.w, center = p.x + s.hitbox.w / 2;
     const centerY = p.y + s.hitbox.h / 2;
     if (process.env.TMB_MEASURE_HARD_TRACE && (!movementSamples.length || s.gameClock-movementSamples.at(-1).t >= 1/60-.003)) {
-      movementSamples.push({t:+s.gameClock.toFixed(4),x:+p.x.toFixed(3),y:+p.y.toFixed(3),w:s.hitbox.w,h:s.hitbox.h,state:s.parkour.state,onGround:p.onGround,vx:+p.vx.toFixed(3),vy:+p.vy.toFixed(3)});
+      const camX = await page.evaluate(() => window.__tmb?.cam ?? null);
+      movementSamples.push({t:+s.gameClock.toFixed(4),x:+p.x.toFixed(3),y:+p.y.toFixed(3),cam:Number.isFinite(camX)?+camX.toFixed(3):null,screenX:Number.isFinite(camX)?+(p.x-camX).toFixed(3):null,w:s.hitbox.w,h:s.hitbox.h,state:s.parkour.state,onGround:p.onGround,vx:+p.vx.toFixed(3),vy:+p.vy.toFixed(3)});
+    }
+    if (process.env.TMB_SNAPBACK_DIR && process.env.TMB_TARGET_CAPTURE_XS) {
+      const targets = process.env.TMB_TARGET_CAPTURE_XS.split(',').map(Number).filter(Number.isFinite);
+      for (const tx of targets) {
+        if (targetCaptures.has(tx)) continue;
+        if (Math.abs(p.x - tx) > 18) continue;
+        targetCaptures.add(tx);
+        const dir = process.env.TMB_SNAPBACK_DIR;
+        fs.mkdirSync(dir, { recursive: true });
+        const camX = await page.evaluate(() => window.__tmb?.cam ?? null);
+        const rowsPath = path.join(dir, `${id}-target-frames.json`);
+        const rows = fs.existsSync(rowsPath) ? JSON.parse(fs.readFileSync(rowsPath, 'utf8')) : [];
+        const row = { targetX: tx, t:+s.gameClock.toFixed(4), x:+p.x.toFixed(3), y:+p.y.toFixed(3), cam:Number.isFinite(camX)?+camX.toFixed(3):null, screenX:Number.isFinite(camX)?+(p.x-camX).toFixed(3):null, state:s.parkour.state };
+        rows.push(row);
+        fs.writeFileSync(rowsPath, JSON.stringify(rows, null, 2) + '\n');
+        await page.screenshot({ path: path.join(dir, `${id}-target-${String(tx).replace(/\D/g, '')}.png`) });
+      }
     }
     if (p.onGround) lastGroundAt = s.gameClock;
     const coyote = p.onGround || s.gameClock - lastGroundAt <= .12;
     if (previousSample && ['catch','climb'].includes(previousSample.parkour) && previousSample.playerX >= 6500) chainClimbSeconds += Math.max(0,s.gameClock-previousSample.clock);
-    const checkpointReset = previousSample
-      && previousSample.playerX - p.x > 150
+    const rawSnapback = previousSample && previousSample.playerX - p.x > 150;
+    if (rawSnapback && process.env.TMB_SNAPBACK_DIR) {
+      const dir = process.env.TMB_SNAPBACK_DIR;
+      fs.mkdirSync(dir, { recursive: true });
+      const camX = await page.evaluate(() => window.__tmb?.cam ?? null);
+      const rowsPath = path.join(dir, `${id}-snapbacks.json`);
+      const rows = fs.existsSync(rowsPath) ? JSON.parse(fs.readFileSync(rowsPath, 'utf8')) : [];
+      const row = { index: rows.length + 1, t:+s.gameClock.toFixed(4), prevX:+previousSample.playerX.toFixed(3), x:+p.x.toFixed(3), dx:+(p.x-previousSample.playerX).toFixed(3), cam:Number.isFinite(camX)?+camX.toFixed(3):null, screenX:Number.isFinite(camX)?+(p.x-camX).toFixed(3):null, state:s.parkour.state };
+      rows.push(row);
+      fs.writeFileSync(rowsPath, JSON.stringify(rows, null, 2) + '\n');
+      await page.screenshot({ path: path.join(dir, `${id}-snapback-${String(row.index).padStart(2, '0')}.png`) });
+    }
+    const checkpointReset = rawSnapback
       && (s.route.checkpoints || []).some(cp => p.x >= cp - 12 && p.x <= cp + 120 && previousSample.playerX > cp + 150);
     if (checkpointReset) {
       retries++;
