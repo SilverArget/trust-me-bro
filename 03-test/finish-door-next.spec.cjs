@@ -83,6 +83,25 @@ async function step(page, seconds) {
   await page.evaluate(n => { for (let i = 0; i < n; i++) __tmbCampaignStep(1 / 60); __tmbCampaignDraw(); }, n);
 }
 
+async function shotDoorSequence(page, routeId, prefix) {
+  await placeNearFinish(page, routeId, -150);
+  await step(page, .85);
+  await page.screenshot({ path: path.join(previewDir, `${prefix}-kapi-acik.png`) });
+  if (prefix === "desktop") await page.screenshot({ path: path.join(previewDir, "kapi-acik.png") });
+
+  await placeNearFinish(page, routeId, 2);
+  await step(page, .22);
+  await page.screenshot({ path: path.join(previewDir, `${prefix}-kapi-giris.png`) });
+
+  await step(page, .34);
+  const closed = await page.evaluate(() => __TMB_A12__.getState());
+  expect(closed.finishGate.phase).toBe("closed");
+  expect(closed.result).toBeNull();
+  expect(closed.finishAdvance).toBeNull();
+  await page.screenshot({ path: path.join(previewDir, `${prefix}-kapi-kapandi.png`) });
+  if (prefix === "desktop") await page.screenshot({ path: path.join(previewDir, "kapi-kapandi.png") });
+}
+
 async function nextHit(page) {
   return page.evaluate(() => {
     const button = document.querySelector('#a12Actions [data-act="next"]');
@@ -91,30 +110,39 @@ async function nextHit(page) {
   });
 }
 
-test("finish door closes before result on Dock and Frozen routes", async ({ page }) => {
+test("finish door closes, shows transition banner, then auto-starts next route", async ({ page }) => {
   await page.setViewportSize({ width: 1600, height: 720 });
   await boot(page, "D01");
-  await placeNearFinish(page, "D01", -40);
-  await step(page, .45);
-  await page.screenshot({ path: path.join(previewDir, "kapi-acik.png") });
-  await placeNearFinish(page, "D01", 2);
-  await step(page, .2);
+  await shotDoorSequence(page, "D01", "desktop");
+  await step(page, .35);
   let s = await page.evaluate(() => __TMB_A12__.getState());
-  expect(s.finishGate.phase).toBe("closing");
-  expect(s.result).toBeNull();
-  await step(page, .42);
-  s = await page.evaluate(() => __TMB_A12__.getState());
-  expect(s.finishGate.phase).toBe("closed");
   expect(s.result).not.toBeNull();
-  await page.screenshot({ path: path.join(previewDir, "kapi-kapandi.png") });
+  expect(s.finishAdvance).toMatchObject({ routeId: "D01", nextId: "D02" });
+  expect(await page.locator('#a12Actions [data-act="next"]').isVisible()).toBeFalsy();
+  await page.screenshot({ path: path.join(previewDir, "desktop-tamamlandi-banner.png") });
+  await expect.poll(() => page.evaluate(() => __TMB_A12__.getState().route.id), { timeout: 2500 }).toBe("D02");
 
-  await page.evaluate(() => __TMB_A12__.renderWorldOnRoute("frozen", "F01"));
-  await placeNearFinish(page, "F01", 2);
-  await step(page, .62);
+  await placeNearFinish(page, "D02", 2);
+  await step(page, .9);
   s = await page.evaluate(() => __TMB_A12__.getState());
-  expect(s.route.id).toBe("F01");
-  expect(s.finishGate.phase).toBe("closed");
-  expect(s.result).not.toBeNull();
+  expect(s.finishAdvance).toMatchObject({ routeId: "D02", nextId: "D03" });
+  await expect.poll(() => page.evaluate(() => __TMB_A12__.getState().route.id), { timeout: 3500 }).toBe("D03");
+  expect(await page.evaluate(() => window.__finishDoorNextAds.length)).toBe(1);
+
+  await page.evaluate(() => __TMB_A12__.renderWorldOnRoute("magma", "M01"));
+  await placeNearFinish(page, "M01", -150);
+  await step(page, .85);
+  await page.screenshot({ path: path.join(previewDir, "magma-kapi-acik.png") });
+  s = await page.evaluate(() => __TMB_A12__.getState());
+  expect(s.route.id).toBe("M01");
+});
+
+test("finish door preview frames are clear on iPhone landscape", async ({ browser }) => {
+  const context = await browser.newContext({ ...devices["iPhone 14 landscape"] });
+  const page = await context.newPage();
+  await boot(page, "D01");
+  await shotDoorSequence(page, "D01", "iphone-landscape");
+  await context.close();
 });
 
 test("NEXT works by click, touch, and fast double tap without skipping", async ({ browser }) => {

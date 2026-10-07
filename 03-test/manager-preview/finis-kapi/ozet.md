@@ -1,34 +1,36 @@
-## Kapi + SONRAKI ozeti
+## Kapi + SONRAKI kabul ozeti
 
 - Branch/worktree: `kapi-sonraki-1007` / `E:/oyunlar/TrustMeBro-wt/kapi-sonraki`
 - Base: `a2e3e66` (`origin/master`, live)
-- Commit: `194725d`
+- Onceki commit: `4b7511a`
+- Yeni commit: bu dosyanin icindeki commit (`git log -1 --oneline`)
 
-## SONRAKI root cause
+## Akis fix
 
-- `73fc5c0`'in asil rota sirasi duzeltmesi live `a2e3e66` icinde var: `startNextRoute()` kilitli/uygunsuz rotayi yutmadan siradaki acik rotayi seciyor.
-- Kalan problem hizli cift tik/dokunmada async `NEXT` handlerinin iki kez calisabilmesiydi. Interstitial gereken durumda ilk handler reklam promise'ini beklerken ikinci handler hemen rota baslatabiliyor, ilk handler reklam donusunde tekrar `startNextRoute()` cagirabiliyordu. Sonuc: tek kullanici niyeti bazen rota atlama / "calismadi" hissi.
-- Fix: `nextRouteInFlight` guard eklendi. `SONRAKI` bir kez basildiginda interstitial + route start bitene kadar ikinci click/touch yok sayiliyor.
+- Kapi kapaninca artik result/grid ekrani acilmiyor; run yine ayni `bankRun()` ile yildiz, wallet, best, progress ve pending-run temizligini kaydediyor.
+- Kapanis tamamlaninca result UI gizli kalirken `D01 TAMAMLANDI · +35` biciminde kisa banner gorunuyor.
+- Banner sonrasi mevcut interstitial kurali aynen calisiyor; reklam gerekiyorsa bu transition icinde gosteriliyor, sonra siradaki rota basliyor.
+- Son rota icin next rota yoksa eski final/result davranisi korunuyor.
+- `SONRAKI` butonu kaldigi ekranlarda ayni; onceki `nextRouteInFlight` double tap/click guard korunuyor.
 
-## Kapi fix
+## Erisim kontrolu
 
-- Ortak kampanya finish render'i yesil `FINISH` levhasi yerine depo/konteyner cikis kapisi ciziyor: metal frame, shutter, EXIT isigi.
-- Finish akisi `route.finishX` uzerinden korunuyor; geometri, chief/Hermes/coin verisi degismedi.
-- Oyuncu finish'e girdiginde `finishGate.phase = closing`; inputlar temizleniyor, oyuncu kapinin icine cekiliyor, shutter ~0.52 sn kapaninca sonuc ekrani aciliyor.
-
-## Testler
-
-- `node --check js/a12-campaign.js`
-- `NODE_PATH=C:/Users/Arget/AppData/Roaming/npm/node_modules npx.cmd playwright test 03-test/finish-door-next.spec.cjs --reporter=line` -> 2 passed
-- `NODE_PATH=C:/Users/Arget/AppData/Roaming/npm/node_modules npx.cmd playwright test 03-test/next-button-touch.spec.cjs --reporter=line` -> 2 passed
-- `NODE_PATH=C:/Users/Arget/AppData/Roaming/npm/node_modules npx.cmd playwright test 03-test/chief-runner.spec.cjs --reporter=line` -> 23 passed
-- `NODE_PATH=C:/Users/Arget/AppData/Roaming/npm/node_modules npx.cmd playwright test 03-test/hermes-tum-oyun.spec.cjs 03-test/dokunmatik-input.spec.cjs --reporter=line` -> 2 passed
-- `node 03-test/d09-logic-audit.cjs` -> 22/22 routes issues=0
+- Result grid / `YENIDEN DENE` / `MAGAZA` tamamen silinmedi; final rota result davranisinda ve debug/manual finish akista duruyor.
+- Magaza ayrica karakter secim ekranindaki `SHOP/MAGAZA` girisinden ulasilabilir.
 
 ## Preview dosyalari
 
-- `once.png`
-- `kapi-acik.png`
-- `kapi-kapandi.png`
-- `sonraki-click-once.png`
-- `sonraki-click-after.png`
+- Desktop: `desktop-kapi-acik.png`, `desktop-kapi-giris.png`, `desktop-kapi-kapandi.png`, `desktop-tamamlandi-banner.png`
+- iPhone landscape: `iphone-landscape-kapi-acik.png`, `iphone-landscape-kapi-giris.png`, `iphone-landscape-kapi-kapandi.png`
+- Magma ornegi: `magma-kapi-acik.png`
+- Eski ad uyumlulugu: `kapi-acik.png`, `kapi-kapandi.png`
+- NEXT: `sonraki-click-once.png`, `sonraki-click-after.png`
+
+## Testler
+
+- `NODE_PATH=C:/Users/Arget/AppData/Roaming/npm/node_modules npx.cmd playwright test 03-test/finish-door-next.spec.cjs --workers=1` -> 3 passed
+- `NODE_PATH=C:/Users/Arget/AppData/Roaming/npm/node_modules npx.cmd playwright test 03-test/next-button-touch.spec.cjs --workers=1` -> 2 passed
+- `NODE_PATH=C:/Users/Arget/AppData/Roaming/npm/node_modules npx.cmd playwright test 03-test/chief-runner.spec.cjs --workers=1` -> 23 passed
+- `NODE_PATH=C:/Users/Arget/AppData/Roaming/npm/node_modules npx.cmd playwright test 03-test/hermes-tum-oyun.spec.cjs --workers=1` -> 1 passed
+- `NODE_PATH=C:/Users/Arget/AppData/Roaming/npm/node_modules npx.cmd playwright test 03-test/dokunmatik-input.spec.cjs --workers=1` -> 1 passed
+- `node 03-test/d09-logic-audit.cjs` -> 22/22 routes issues=0

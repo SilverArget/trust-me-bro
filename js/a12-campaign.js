@@ -1460,11 +1460,12 @@ applyD09LogicRulesToRoutes();
     previewStartedAt = 0,
     purchaseBusy = false,
     nextRouteInFlight = false,
+    finishAdvance = null,
     sceneCache = new Map(),
     staggerT = 0,
     invulnerableT = 0,
     respawnT = 0,
-    finishGate = { phase: "open", t: 0, closeS: .52, playerAlpha: 1 },
+    finishGate = { phase: "open", t: 0, closeS: .52, holdS: .28, playerAlpha: 1 },
     frontFlip = { active: false, angle: 0 },
     barrels = [],
     workerClock = 0,
@@ -1680,6 +1681,12 @@ applyD09LogicRulesToRoutes();
     if (worldId==="frozen") return ["F01","F02","F03","F04"];
     return WORLD_REGISTRY.dock31.routes;
   }
+  function nextRouteAfterCurrent() {
+    const order=routeOrderForWorld(),i=order.indexOf(routeId);
+    if(i<0||i>=order.length-1)return null;
+    const id=order[i+1];
+    return ROUTES[id]&&routeUnlocked(id)?id:null;
+  }
   function startNextRoute() {
     const order=routeOrderForWorld(),start=Math.max(0,order.indexOf(routeId)),candidates=[];
     for(let i=1;i<=order.length;i++)candidates.push(order[(start+i)%order.length]);
@@ -1707,7 +1714,8 @@ applyD09LogicRulesToRoutes();
     route = ROUTES[routeId];
     run = newEconomy ? freshRun(routeId) : restoreRun(routeId);
     result = null;
-    finishGate = { phase: "open", t: 0, closeS: .52, playerAlpha: 1 };
+    finishAdvance = null;
+    finishGate = { phase: "open", t: 0, closeS: .52, holdS: .28, playerAlpha: 1 };
     syncActionVisibility();
     shopOpen = false;
     barrels = [];
@@ -2418,7 +2426,7 @@ applyD09LogicRulesToRoutes();
     finishGate.phase = "closing";
     finishGate.t = 0;
     finishGate.playerAlpha = 1;
-    player.x = route.finishX;
+    player.x = route.finishX - 28;
     player.vx = 0;
     player.vy = 0;
     player.onGround = true;
@@ -2434,16 +2442,18 @@ applyD09LogicRulesToRoutes();
     emitGame("finish_gate_enter", { routeId, x: route.finishX });
   }
   function updateFinishGate(dt) {
-    finishGate.t = Math.min(finishGate.closeS, finishGate.t + dt);
+    const holdS = finishGate.holdS ?? .28;
+    finishGate.t = Math.min(finishGate.closeS + holdS, finishGate.t + dt);
     const k = finishGate.t / finishGate.closeS;
     const feet = routeGroundYAt(route.finishX);
-    player.x += (route.finishX + 35 - player.x) * Math.min(1, dt * 8);
+    player.x += (route.finishX - 28 - player.x) * Math.min(1, dt * 8);
     player.y += (feet - player.h - player.y) * Math.min(1, dt * 10);
     player.vx = 0;
     player.vy = 0;
     player.onGround = true;
     finishGate.playerAlpha = Math.max(0, 1 - Math.max(0, (k - .2) / .55));
-    if (finishGate.t >= finishGate.closeS) finishGateEntry();
+    if (finishGate.t >= finishGate.closeS) finishGate.phase = "closed";
+    if (finishGate.t >= finishGate.closeS + holdS) finishGateEntry();
   }
   function finishGateEntry() {
     if (result) return;
@@ -2454,6 +2464,21 @@ applyD09LogicRulesToRoutes();
     engine.setWon(true);
     emitGame("run_complete", { routeId, elapsed_s: result.elapsed });
     emitGame("finish_gate_closed", { routeId, x: route.finishX });
+    beginFinishAdvance();
+  }
+  function beginFinishAdvance() {
+    const nextId=nextRouteAfterCurrent();
+    if(!nextId)return;
+    const token=uid("finish-advance");
+    finishAdvance={active:true,token,routeId,amount:result.amount,nextId};
+    document.body.dataset.campaignPhase="transition";
+    syncActionVisibility();
+    setTimeout(async()=>{
+      if(!finishAdvance||finishAdvance.token!==token||routeId!==finishAdvance.routeId)return;
+      await requestRouteInterstitial();
+      if(!finishAdvance||finishAdvance.token!==token||routeId!==finishAdvance.routeId)return;
+      startRoute(nextId,true,nextId==="D06");
+    },1250);
   }
   function rr(x, y, w, h, r = 6) {
     ctx.beginPath();
@@ -2631,7 +2656,8 @@ applyD09LogicRulesToRoutes();
       ctx.font = "900 24px system-ui";
       ctx.fillText(t("checkpoint"), W / 2, H / 2);
     }
-    if (result) drawResult();
+    if (finishAdvance) drawFinishAdvanceBanner();
+    else if (result) drawResult();
   }
   function t(k) {
     return (I18N[profile.settings.language] || I18N.en)[k] || I18N.en[k] || k;
@@ -2641,7 +2667,7 @@ applyD09LogicRulesToRoutes();
   function syncActionVisibility() {
     const a = document.getElementById("a12Actions");
     if (!a) return;
-    const show = !!result && !shopOpen;
+    const show = !!result && !finishAdvance && !shopOpen;
     a.hidden = !show;
     a.setAttribute("aria-hidden", String(!show));
     syncRewardedButton();
@@ -2738,6 +2764,17 @@ applyD09LogicRulesToRoutes();
     ctx.font="800 13px system-ui";
     ctx.fillText(`${t("clean")} ${gs.clean?.earned?"✓":"○"} · ${t("mastery")} ${gs.mastery?.earned?"✓":"○"} · ${t("style")} ${gs.style?.earned?"✓":"○"}`,W/2,H/2+34);
     ctx.textAlign = "left";
+  }
+  function drawFinishAdvanceBanner() {
+    if(!finishAdvance||!result)return;
+    ctx.save();
+    ctx.fillStyle="#06111be8";
+    rr(W/2-178,H*.16,356,52,10);
+    ctx.fillStyle="#7cecc0";
+    ctx.textAlign="center";
+    ctx.font="950 19px system-ui";
+    ctx.fillText(`${finishAdvance.routeId} ${t("complete")} · +${finishAdvance.amount}`,W/2,H*.16+32);
+    ctx.restore();
   }
   function installUI() {
     const style = document.createElement("style");
@@ -3169,6 +3206,7 @@ applyD09LogicRulesToRoutes();
       worker: { disabled:workerDisabled, clock:workerClock },
       checkpointX: run?.checkpointX,
       result: result ? clone(result) : null,
+      finishAdvance: finishAdvance ? { ...finishAdvance } : null,
       finishGate: { ...finishGate },
       engine: {
         singleLoop: !document.getElementById("a12Canvas"),
@@ -3674,7 +3712,15 @@ applyD09LogicRulesToRoutes();
     c.fillText(`${t("run")} ◉ ${run?.runCoins || 0}/40`, 29, 57);
     c.fillStyle = "#7cecc0";
     c.fillText(`${t("wallet")} ◉ ${profile.walletBalance}`, 180, 57);
-    if (result) {
+    if (finishAdvance&&result) {
+      c.fillStyle = "#06111be8";
+      c.fillRect(w/2-178, h*.16, 356, 52);
+      c.fillStyle = "#7cecc0";
+      c.textAlign = "center";
+      c.font = "950 19px system-ui";
+      c.fillText(`${finishAdvance.routeId} ${t("complete")} · +${finishAdvance.amount}`, w / 2, h*.16+32);
+      c.textAlign = "left";
+    } else if (result) {
       c.fillStyle = "#06111be8";
       c.fillRect(0, 0, w, h);
       c.fillStyle = "#7cecc0";
