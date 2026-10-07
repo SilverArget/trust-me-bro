@@ -48,6 +48,7 @@ async function runStairs(page, { jumps = false, screenshotName = null } = {}) {
   await page.keyboard.down('ArrowRight');
   let lastJumpAt = 0;
   const started = Date.now();
+  let captured = false;
   while (Date.now() - started < 6000) {
     const s = await page.evaluate(() => {
       __tmbCampaignStep(1 / 60);
@@ -68,6 +69,11 @@ async function runStairs(page, { jumps = false, screenshotName = null } = {}) {
       });
       return q;
     });
+    if (screenshotName && !captured && s.player.x >= 5770 && s.player.x <= 5900) {
+      captured = true;
+      await page.evaluate(() => __tmbCampaignDraw());
+      await page.screenshot({ path: path.join(outDir, screenshotName) });
+    }
     if (s.player.x >= 6300 || s.dead || s.deaths) break;
     if (jumps && s.player.onGround && s.player.x >= 5560 && s.player.x <= 6230 && Date.now() - lastJumpAt > 360) {
       lastJumpAt = Date.now();
@@ -77,7 +83,7 @@ async function runStairs(page, { jumps = false, screenshotName = null } = {}) {
     }
   }
   await page.keyboard.up('ArrowRight');
-  if (screenshotName) {
+  if (screenshotName && !captured) {
     await page.evaluate(() => __tmbCampaignDraw());
     await page.screenshot({ path: path.join(outDir, screenshotName) });
   }
@@ -123,7 +129,9 @@ test('D04 long staircase is passable with right held and ordinary jumps', async 
 test('D04 long staircase right-only probe records no reset or chief catch', async ({ page }) => {
   test.setTimeout(20000);
   await bootD04(page);
-  const r = await runStairs(page, { jumps: false, screenshotName: 'once.png' });
+  await runStairs(page, { jumps: true, screenshotName: 'once.png' });
+  await bootD04(page);
+  const r = await runStairs(page, { jumps: false });
   console.log(`D04-STAIR-PROBE ${JSON.stringify({ end: r.end, maxBack: r.maxBack, minVx: r.minVx, stuckFrames: r.stuckFrames, firstBack: r.firstBack, firstStuck: r.firstStuck })}`);
   expect(r.end.deaths).toBe(0);
   expect(r.end.chiefCaught).toBeFalsy();
