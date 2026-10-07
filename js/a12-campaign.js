@@ -2490,8 +2490,39 @@ applyD09LogicRulesToRoutes();
     const closeK = tGate.phase === "closed" ? 1 : tGate.phase === "closing" ? Math.min(1, tGate.t / tGate.closeS) : 0;
     const left = x - 74, top = y - 142, w = 112, h = 142;
     c.save();
-    c.fillStyle = "#0a1116";
+    if (opts.shutterOnly) {
+      drawFinishDoorShutter(c, left, top, w, h, closeK);
+      c.restore();
+      return;
+    }
+    const interior = c.createLinearGradient(left + 11, top + 25, left + w - 11, y);
+    interior.addColorStop(0, closeK >= 1 ? "#101820" : "#fff3bb");
+    interior.addColorStop(.42, closeK >= 1 ? "#18252d" : "#ffd16d");
+    interior.addColorStop(1, closeK >= 1 ? "#05090d" : "#1d2a2f");
+    c.fillStyle = interior;
     c.fillRect(left + 11, top + 25, w - 22, h - 25);
+    if (closeK < .98) {
+      const glow = c.createRadialGradient(left + 56, top + 48, 8, left + 56, top + 62, 70);
+      glow.addColorStop(0, "rgba(255,247,198,.92)");
+      glow.addColorStop(.55, "rgba(255,195,89,.34)");
+      glow.addColorStop(1, "rgba(255,195,89,0)");
+      c.fillStyle = glow;
+      c.fillRect(left + 11, top + 25, w - 22, h - 25);
+      c.fillStyle = "rgba(255,222,132,.56)";
+      c.beginPath();
+      c.moveTo(left + 45, y - 15);
+      c.lineTo(left + 72, y - 15);
+      c.lineTo(left + 103, y - 2);
+      c.lineTo(left + 12, y - 2);
+      c.closePath();
+      c.fill();
+      c.strokeStyle = "rgba(255,255,221,.75)";
+      c.lineWidth = 2;
+      c.beginPath();
+      c.moveTo(left + 52, y - 58);
+      c.lineTo(left + 22, y - 5);
+      c.stroke();
+    }
     const frame = c.createLinearGradient(left, top, left + w, top);
     frame.addColorStop(0, "#61707a");
     frame.addColorStop(.5, "#b0bbc0");
@@ -2502,34 +2533,66 @@ applyD09LogicRulesToRoutes();
     c.fillRect(left, top, w, 18);
     c.fillStyle = "#17232a";
     c.fillRect(left + 13, top + 18, w - 26, 10);
-    const shutterH = (h - 31) * closeK;
-    if (shutterH > 0) {
-      const sy = top + 28;
-      const g = c.createLinearGradient(left + 15, sy, left + w - 15, sy);
-      g.addColorStop(0, "#465760");
-      g.addColorStop(.45, "#87949a");
-      g.addColorStop(1, "#34434b");
-      c.fillStyle = g;
-      c.fillRect(left + 15, sy, w - 30, shutterH);
-      c.strokeStyle = "#b7c2c7";
-      c.lineWidth = 1.5;
-      for (let yy = sy + 10; yy < sy + shutterH; yy += 13) {
-        c.beginPath();
-        c.moveTo(left + 17, yy);
-        c.lineTo(left + w - 17, yy);
-        c.stroke();
-      }
-    }
+    drawFinishDoorShutter(c, left, top, w, h, closeK);
     c.fillStyle = "#244a35";
     c.fillRect(left + 34, top - 19, 44, 15);
-    c.fillStyle = closeK >= 1 ? "#ff6b62" : "#80ffc0";
-    c.font = "900 10px system-ui";
+    c.fillStyle = closeK >= 1 ? "#ff5148" : "#80ffc0";
+    c.font = closeK >= 1 ? "900 8px system-ui" : "900 10px system-ui";
     c.textAlign = "center";
-    c.fillText("EXIT", left + 56, top - 8);
+    c.fillText(closeK >= 1 ? "KAPANDI" : "EXIT", left + 56, top - 8);
     c.textAlign = "left";
     c.fillStyle = "#111820";
     c.fillRect(left - 7, y - 8, w + 14, 8);
     c.restore();
+  }
+  function drawFinishDoorShutter(c, left, top, w, h, closeK) {
+    const shutterH = (h - 31) * closeK;
+    if (shutterH <= 0) return;
+    const sy = top + 28;
+    const panelW = w - 30;
+    const g = c.createLinearGradient(left + 15, sy, left + w - 15, sy);
+    g.addColorStop(0, "#6f7d84");
+    g.addColorStop(.18, "#d5dde1");
+    g.addColorStop(.48, "#9facb3");
+    g.addColorStop(.72, "#eef3f4");
+    g.addColorStop(1, "#56646c");
+    c.fillStyle = g;
+    c.fillRect(left + 15, sy, panelW, shutterH);
+    c.strokeStyle = "rgba(39,52,60,.8)";
+    c.lineWidth = 1.4;
+    for (let yy = sy + 8; yy < sy + shutterH; yy += 10) {
+      c.beginPath();
+      c.moveTo(left + 17, yy);
+      c.lineTo(left + w - 17, yy);
+      c.stroke();
+      c.strokeStyle = "rgba(255,255,255,.45)";
+      c.beginPath();
+      c.moveTo(left + 17, yy + 2);
+      c.lineTo(left + w - 17, yy + 2);
+      c.stroke();
+      c.strokeStyle = "rgba(39,52,60,.8)";
+    }
+    const bottomY = sy + shutterH - 9;
+    if (shutterH >= 12) {
+      c.fillStyle = "#f5c542";
+      c.fillRect(left + 15, bottomY, panelW, 9);
+      c.save();
+      c.beginPath();
+      c.rect(left + 15, bottomY, panelW, 9);
+      c.clip();
+      c.strokeStyle = "#1a1f22";
+      c.lineWidth = 5;
+      for (let sx = left - 4; sx < left + w; sx += 16) {
+        c.beginPath();
+        c.moveTo(sx, bottomY + 11);
+        c.lineTo(sx + 18, bottomY - 2);
+        c.stroke();
+      }
+      c.restore();
+    }
+    c.strokeStyle = "#24323a";
+    c.lineWidth = 2;
+    c.strokeRect(left + 15, sy, panelW, shutterH);
   }
   function drawCampaign() {
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
@@ -2646,6 +2709,7 @@ applyD09LogicRulesToRoutes();
         profile.equippedOutfitByRunner[profile.runnerId],
         frontFlip.active ? frontFlip.angle : 0,
       );ctx.restore();}
+    drawFinishDoor(ctx, route.finishX, finishY, { shutterOnly: true });
     ctx.restore();
     drawHud();
     if (respawnT > 0) {
@@ -3585,7 +3649,7 @@ applyD09LogicRulesToRoutes();
       c.restore();
     }
     const finishY=routeGroundYAt(route.finishX);
-      drawFinishDoor(c, route.finishX, finishY, { gate: { phase: "open", t: 0, closeS: .52 } });
+      drawFinishDoor(c, route.finishX, finishY);
   }
   // A5b decorative layer: no RNG, collisions, profile or simulation writes.
   function presentationNpcs() {

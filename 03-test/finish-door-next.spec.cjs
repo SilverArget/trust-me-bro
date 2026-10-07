@@ -102,6 +102,35 @@ async function shotDoorSequence(page, routeId, prefix) {
   if (prefix === "desktop") await page.screenshot({ path: path.join(previewDir, "kapi-kapandi.png") });
 }
 
+async function writeOpenClosedComparison(page) {
+  const openPath = path.join(previewDir, "desktop-kapi-acik.png");
+  const closedPath = path.join(previewDir, "desktop-kapi-kapandi.png");
+  const open = fs.readFileSync(openPath).toString("base64");
+  const closed = fs.readFileSync(closedPath).toString("base64");
+  const p = await page.context().newPage();
+  await p.setViewportSize({ width: 1600, height: 760 });
+  await p.setContent(`<!doctype html>
+    <style>
+      body{margin:0;background:#101820;font-family:system-ui;color:#fff}
+      .wrap{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:12px}
+      figure{margin:0;position:relative;background:#000}
+      img{display:block;width:100%;height:auto}
+      figcaption{position:absolute;left:16px;top:14px;padding:7px 11px;border-radius:6px;background:rgba(0,0,0,.72);font:900 18px system-ui}
+    </style>
+    <div class="wrap">
+      <figure><img src="data:image/png;base64,${open}"><figcaption>ACIK</figcaption></figure>
+      <figure><img src="data:image/png;base64,${closed}"><figcaption>KAPALI</figcaption></figure>
+    </div>`);
+  await p.screenshot({ path: path.join(previewDir, "kapi-acik-kapali-yanyana.png"), fullPage: true });
+  await p.close();
+}
+
+async function expectDoorStatesVisuallyDifferent() {
+  const open = fs.statSync(path.join(previewDir, "desktop-kapi-acik.png")).size;
+  const closed = fs.statSync(path.join(previewDir, "desktop-kapi-kapandi.png")).size;
+  expect(Math.abs(open - closed)).toBeGreaterThan(1200);
+}
+
 async function nextHit(page) {
   return page.evaluate(() => {
     const button = document.querySelector('#a12Actions [data-act="next"]');
@@ -114,6 +143,8 @@ test("finish door closes, shows transition banner, then auto-starts next route",
   await page.setViewportSize({ width: 1600, height: 720 });
   await boot(page, "D01");
   await shotDoorSequence(page, "D01", "desktop");
+  await writeOpenClosedComparison(page);
+  await expectDoorStatesVisuallyDifferent();
   await step(page, .35);
   let s = await page.evaluate(() => __TMB_A12__.getState());
   expect(s.result).not.toBeNull();

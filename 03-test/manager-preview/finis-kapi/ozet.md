@@ -3,7 +3,15 @@
 - Branch/worktree: `kapi-sonraki-1007` / `E:/oyunlar/TrustMeBro-wt/kapi-sonraki`
 - Base: `a2e3e66` (`origin/master`, live)
 - Onceki commit: `4b7511a`
+- Akis commit: `75359d5`
 - Yeni commit: bu dosyanin icindeki commit (`git log -1 --oneline`)
+
+## Gorsel kabul fix
+
+- Akis degismedi; sadece finish kapisi cizimi guncellendi.
+- Acik kapi artik sicak sari/beyaz ic mekan isigi ve zeminde isik izi gosteriyor.
+- Giris karesinde celik gri roll-up shutter yukaridan asagi kayiyor; yatay slat cizgileri ve alt kenarda sari-siyah ikaz seridi var.
+- Kapali kapi artik acik halinden net farkli: shutter kapinin tamamini kapatiyor ve ust lamba kirmizi `KAPANDI` durumuna geciyor.
 
 ## Akis fix
 
@@ -24,6 +32,7 @@
 - iPhone landscape: `iphone-landscape-kapi-acik.png`, `iphone-landscape-kapi-giris.png`, `iphone-landscape-kapi-kapandi.png`
 - Magma ornegi: `magma-kapi-acik.png`
 - Eski ad uyumlulugu: `kapi-acik.png`, `kapi-kapandi.png`
+- Karsilastirma: `kapi-acik-kapali-yanyana.png`
 - NEXT: `sonraki-click-once.png`, `sonraki-click-after.png`
 
 ## Testler
