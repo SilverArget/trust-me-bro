@@ -1005,6 +1005,8 @@ if(D09_OPENING_FIX){
   if(D09_OPENING_POST)D09_OPENING_POST.w=132.96;
   const D09_G2_BLOCK=D09_OPENING_FIX.groundSegments.find(s=>s.id==="d09-ir-40");
   if(D09_G2_BLOCK)D09_G2_BLOCK.w=320;
+  const D09_SARKAN_STEP=D09_OPENING_FIX.groundSegments.find(s=>s.id==="d09-ir-23");
+  if(D09_SARKAN_STEP)D09_SARKAN_STEP.h=303.675;
   if(!D09_OPENING_FIX.catchableSurfaces.some(s=>(typeof s==="string"?s:s.id)==="d09-ir-23"))D09_OPENING_FIX.catchableSurfaces.push({id:"d09-ir-23"});
   const D09_SARKAN_SLIDES=[
     ["d09-ir-slide-01",3820,277.375],

@@ -71,6 +71,8 @@ function applyRuntimeRouteFixes(routes) {
   if (openingPost) openingPost.w = 132.96;
   const g2Block = d09.groundSegments?.find(s => s.id === "d09-ir-40");
   if (g2Block) g2Block.w = 320;
+  const sarkanStep = d09.groundSegments?.find(s => s.id === "d09-ir-23");
+  if (sarkanStep) sarkanStep.h = 303.675;
   if (!d09.catchableSurfaces?.some(s => (typeof s === "string" ? s : s.id) === "d09-ir-23")) d09.catchableSurfaces.push({ id: "d09-ir-23" });
   const sarkanSlides = [
     ["d09-ir-slide-01", 3820, 277.375],
@@ -105,6 +107,14 @@ function isSupported(surface, solids) {
   if ((surface.y + surface.h) >= GROUND - 1) return true;
   const below = solids.filter(s => s.id !== surface.id && s.y >= surface.y + surface.h - 1 && overlaps(surface.x, surface.x + surface.w, s.x, s.x + s.w, 4));
   return below.some(s => isSupported(s, solids));
+}
+
+function touchesSupportBelow(surface, solids) {
+  const bottom = surface.y + surface.h;
+  if (bottom >= GROUND - 1) return true;
+  return solids.some(s => s.id !== surface.id &&
+    Math.abs(s.y - bottom) <= 1.5 &&
+    overlaps(surface.x, surface.x + surface.w, s.x, s.x + s.w, 4));
 }
 
 function actionWindows(route) {
@@ -172,6 +182,15 @@ function auditRoute(id, route) {
     if (isSupported(s, solids)) continue;
     const touched = surfaceTouchedByBot(s, route);
     rows.push({ id: s.id, route: id, issue: "solid surface unsupported to ground", decision: touched ? "fix: extend visual body to ground" : "fix: remove unused floating plate" });
+  }
+
+  if (id === "D09") {
+    const catchableIds = new Set((route.catchableSurfaces || []).map(c => typeof c === "string" ? c : c.id));
+    for (const s of solids.filter(s => !s.parkour && catchableIds.has(s.id) && !(route.visualSupports || []).some(v => v.id === s.id && v.type === "stack-to-ground"))) {
+      if (!touchesSupportBelow(s, solids)) {
+        rows.push({ id: s.id, route: id, issue: "D09 catchable solid has vertical air gap", decision: "fix: extend to real support or remove" });
+      }
+    }
   }
 
   for (const g of narrowGaps(solids.filter(s => !s.parkour))) {

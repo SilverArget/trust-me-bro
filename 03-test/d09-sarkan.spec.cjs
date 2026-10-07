@@ -46,21 +46,21 @@ async function tapSlide(page) {
   await page.keyboard.up('ArrowUp');
 }
 
-async function placeAtProblem(page) {
-  await page.evaluate(() => {
+async function placeAt(page, x) {
+  await page.evaluate((targetX) => {
     const r = __TMB_A12__.routeDefinition('D09');
-    const x = 2940;
+    const x = targetX;
     const grounds = r.groundSegments.filter(s => s.kind === 'ground' && x >= s.x && x <= s.x + s.w);
     const y = Math.min(...grounds.map(s => s.y)) - 48;
     __TMB_A12__.placePlayer(x, y);
     __TMB_A12__.disableChief();
     for (let i = 0; i < 45; i++) __tmbCampaignStep(1 / 60);
-  });
+  }, x);
 }
 
-async function capturePoint(page, viewport, fileName) {
+async function capturePoint(page, viewport, fileName, x = 3450) {
   await boot(page, viewport);
-  await placeAtProblem(page);
+  await placeAt(page, x);
   await page.screenshot({ path: path.join(outDir, fileName) });
 }
 
@@ -104,6 +104,27 @@ test('D09 hanging slide geometry is on flat ground, not the step transition', as
       expect(row.support.overlap).toBeGreaterThanOrEqual(row.bar.x1 - row.bar.x0 - 1);
     }
     for (const row of report.transitionOverlap) expect(row.overlap).toBe(0);
+  }
+});
+
+test('D09 catchable step is a grounded column, not a floating block', async ({ page }) => {
+  await boot(page, { width: 844, height: 390 });
+  const report = await page.evaluate(() => {
+    const r = __TMB_A12__.routeDefinition('D09');
+    const step = r.groundSegments.find(s => s.id === 'd09-ir-23');
+    const solids = r.groundSegments.filter(s => s.kind === 'ground');
+    const bottom = step.y + step.h;
+    const touches = solids
+      .filter(s => s.id !== step.id)
+      .filter(s => Math.abs(s.y - bottom) <= 1.5)
+      .filter(s => step.x + step.w > s.x + 4 && step.x < s.x + s.w - 4)
+      .map(s => s.id);
+    return { step, bottom, touches, reachesGround: bottom >= 455 - 1 };
+  });
+  console.log(`D09-SARKAN-STEP ${phase} ${JSON.stringify(report)}`);
+  if (!baseline) {
+    expect(report.reachesGround || report.touches.length > 0).toBe(true);
+    expect(report.step.h).toBeGreaterThan(250);
   }
 });
 
@@ -174,4 +195,5 @@ test('D09 player clears the hanging slides with normal right plus slide input', 
 test('D09 manager screenshots for hanging slide point', async ({ page }) => {
   await capturePoint(page, { width: 390, height: 844 }, `${phase}.png`);
   if (!baseline) await capturePoint(page, { width: 844, height: 390 }, 'sonra-yatay.png');
+  if (!baseline) await capturePoint(page, { width: 844, height: 390 }, 'sonra-sarkan-yeni-yer.png', 3950);
 });
