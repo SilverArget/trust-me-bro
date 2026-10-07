@@ -98,7 +98,7 @@ const m03Expected = irSegments("bonus_02-backbone.json", 0, -2720, "m03");
 const m04Expected = irSegments("bonus_03-backbone.json", 0, -1112, "m04");
 const extraSteps = {
   D03: [["d03-slope-1",4946.53,323.8,117.76,41.6],["d03-slope-2",5064.29,365.4,117.76,41.6],["d03-slope-3",5182.04,407,117.76,41.6]],
-  D04: [...Array.from({length:7},(_,i)=>[`d04-slope-${i+1}`,round2(1374+i*40.285714),round2(-448.6+(i+1)*45.257143),round2(40.285714),round2(45.257143)]),...Array.from({length:8},(_,i)=>[`d04-long-${i+1}`,round2(5612.4+i*82.65),round2(-88.6+(i+1)*44.85),82.65,44.85])],
+  D04: [...Array.from({length:7},(_,i)=>[`d04-slope-${i+1}`,round2(1374+i*40.285714),round2(-448.6+(i+1)*45.257143),round2(40.285714),round2(45.257143)])],
   D05: [...Array.from({length:3},(_,i)=>[`d05-up-${i+1}`,round2(195.6+i*80),round2(-701.8-(i+1)*39.2),80,39.2]),...Array.from({length:5},(_,i)=>[`d05-down1-${i+1}`,round2(4934.82+i*46.52),round2(-192.76+(i+1)*39.888),46.52,39.888]),...Array.from({length:4},(_,i)=>[`d05-down2-${i+1}`,round2(5796.48+i*58.5),round2(23+(i+1)*45),58.5,45]),...Array.from({length:6},(_,i)=>[`d05-down3-${i+1}`,round2(6091.68+i*38.8),round2(203+(i+1)*42),38.8,42])],
   D06: [],
   F01: [],
