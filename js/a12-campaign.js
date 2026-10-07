@@ -1459,10 +1459,12 @@ applyD09LogicRulesToRoutes();
     previewMotion = "idle",
     previewStartedAt = 0,
     purchaseBusy = false,
+    nextRouteInFlight = false,
     sceneCache = new Map(),
     staggerT = 0,
     invulnerableT = 0,
     respawnT = 0,
+    finishGate = { phase: "open", t: 0, closeS: .52, playerAlpha: 1 },
     frontFlip = { active: false, angle: 0 },
     barrels = [],
     workerClock = 0,
@@ -1705,6 +1707,7 @@ applyD09LogicRulesToRoutes();
     route = ROUTES[routeId];
     run = newEconomy ? freshRun(routeId) : restoreRun(routeId);
     result = null;
+    finishGate = { phase: "open", t: 0, closeS: .52, playerAlpha: 1 };
     syncActionVisibility();
     shopOpen = false;
     barrels = [];
@@ -2041,6 +2044,7 @@ applyD09LogicRulesToRoutes();
   function beforePhysicsIntegrated(dt) {
     if (!campaign || shopOpen || result) return;
     gameClock += dt;
+    if (finishGate.phase !== "open") return;
     if(edgeClimb){engine.parkour.state="normal";engine.parkour.timer=0}
     tryHermesLaunch();
     tryScriptedMove();
@@ -2078,6 +2082,10 @@ applyD09LogicRulesToRoutes();
   }
   function updateIntegrated(dt, state, input={}) {
     if (!campaign || shopOpen || result) return;
+    if (finishGate.phase !== "open") {
+      updateFinishGate(dt);
+      return;
+    }
     edgeCatchCooldown=Math.max(0,edgeCatchCooldown-dt);
     if(route.movementProfile==="vector-v1"&&input.bufferedJump&&!vectorJumpPending&&!wallJumpRun){
       const center=player.x+player.w/2,diveZone=(route.diveZones||[]).find(z=>center>=z.x1&&center<=z.x2);
@@ -2403,19 +2411,100 @@ applyD09LogicRulesToRoutes();
       ? player.y > deepestGroundYAt(player.x+player.w/2) + 120
       : player.y > Math.max(H + 120,routeGroundYAt(player.x+player.w/2)+120);
     if(fallingOut&&!jumpRun?.hermes)retry(false);
-    if (player.x >= route.finishX) {
-      player.x = route.finishX;
-      player.vx = 0;
-      result = bankRun();
-      sfx("finish");
-      engine.setWon(true);
-      emitGame("run_complete", { routeId, elapsed_s: result.elapsed });
-    }
+    if (player.x >= route.finishX) startFinishGateEntry();
+  }
+  function startFinishGateEntry() {
+    if (finishGate.phase !== "open") return;
+    finishGate.phase = "closing";
+    finishGate.t = 0;
+    finishGate.playerAlpha = 1;
+    player.x = route.finishX;
+    player.vx = 0;
+    player.vy = 0;
+    player.onGround = true;
+    engine.parkour.state = "normal";
+    engine.parkour.timer = 0;
+    diveRun = null;
+    jumpRun = null;
+    wallJumpRun = null;
+    edgeClimb = null;
+    keys.left = keys.right = keys.jump = false;
+    joystick.axis = 0;
+    sfx("door");
+    emitGame("finish_gate_enter", { routeId, x: route.finishX });
+  }
+  function updateFinishGate(dt) {
+    finishGate.t = Math.min(finishGate.closeS, finishGate.t + dt);
+    const k = finishGate.t / finishGate.closeS;
+    const feet = routeGroundYAt(route.finishX);
+    player.x += (route.finishX + 35 - player.x) * Math.min(1, dt * 8);
+    player.y += (feet - player.h - player.y) * Math.min(1, dt * 10);
+    player.vx = 0;
+    player.vy = 0;
+    player.onGround = true;
+    finishGate.playerAlpha = Math.max(0, 1 - Math.max(0, (k - .2) / .55));
+    if (finishGate.t >= finishGate.closeS) finishGateEntry();
+  }
+  function finishGateEntry() {
+    if (result) return;
+    finishGate.phase = "closed";
+    finishGate.playerAlpha = 0;
+    result = bankRun();
+    sfx("finish");
+    engine.setWon(true);
+    emitGame("run_complete", { routeId, elapsed_s: result.elapsed });
+    emitGame("finish_gate_closed", { routeId, x: route.finishX });
   }
   function rr(x, y, w, h, r = 6) {
     ctx.beginPath();
     ctx.roundRect(x, y, w, h, r);
     ctx.fill();
+  }
+  function drawFinishDoor(c, x, y, opts = {}) {
+    const tGate = opts.gate || finishGate;
+    const closeK = tGate.phase === "closed" ? 1 : tGate.phase === "closing" ? Math.min(1, tGate.t / tGate.closeS) : 0;
+    const left = x - 74, top = y - 142, w = 112, h = 142;
+    c.save();
+    c.fillStyle = "#0a1116";
+    c.fillRect(left + 11, top + 25, w - 22, h - 25);
+    const frame = c.createLinearGradient(left, top, left + w, top);
+    frame.addColorStop(0, "#61707a");
+    frame.addColorStop(.5, "#b0bbc0");
+    frame.addColorStop(1, "#3f4b53");
+    c.fillStyle = frame;
+    c.fillRect(left, top + 14, 13, h - 14);
+    c.fillRect(left + w - 13, top + 14, 13, h - 14);
+    c.fillRect(left, top, w, 18);
+    c.fillStyle = "#17232a";
+    c.fillRect(left + 13, top + 18, w - 26, 10);
+    const shutterH = (h - 31) * closeK;
+    if (shutterH > 0) {
+      const sy = top + 28;
+      const g = c.createLinearGradient(left + 15, sy, left + w - 15, sy);
+      g.addColorStop(0, "#465760");
+      g.addColorStop(.45, "#87949a");
+      g.addColorStop(1, "#34434b");
+      c.fillStyle = g;
+      c.fillRect(left + 15, sy, w - 30, shutterH);
+      c.strokeStyle = "#b7c2c7";
+      c.lineWidth = 1.5;
+      for (let yy = sy + 10; yy < sy + shutterH; yy += 13) {
+        c.beginPath();
+        c.moveTo(left + 17, yy);
+        c.lineTo(left + w - 17, yy);
+        c.stroke();
+      }
+    }
+    c.fillStyle = "#244a35";
+    c.fillRect(left + 34, top - 19, 44, 15);
+    c.fillStyle = closeK >= 1 ? "#ff6b62" : "#80ffc0";
+    c.font = "900 10px system-ui";
+    c.textAlign = "center";
+    c.fillText("EXIT", left + 56, top - 8);
+    c.textAlign = "left";
+    c.fillStyle = "#111820";
+    c.fillRect(left - 7, y - 8, w + 14, 8);
+    c.restore();
   }
   function drawCampaign() {
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
@@ -2522,22 +2611,16 @@ applyD09LogicRulesToRoutes();
       ctx.fill();
     }
     const finishY=routeGroundYAt(route.finishX);
-    ctx.fillStyle = "#19242b";
-    ctx.fillRect(route.finishX, finishY - 120, 16, 120);
-    ctx.fillStyle = "#79f0bc";
-    ctx.fillRect(route.finishX + 16, finishY - 118, 88, 48);
-    ctx.fillStyle = "#10252b";
-    ctx.font = "900 15px system-ui";
-    ctx.fillText(t("finish"), route.finishX + 28, finishY - 88);
+    drawFinishDoor(ctx, route.finishX, finishY);
     if (run)
-      drawRunner(
+      {ctx.save();ctx.globalAlpha*=finishGate.playerAlpha;drawRunner(
         player.x + player.w / 2,
         player.y + player.h,
         1,
         profile.runnerId,
         profile.equippedOutfitByRunner[profile.runnerId],
         frontFlip.active ? frontFlip.angle : 0,
-      );
+      );ctx.restore();}
     ctx.restore();
     drawHud();
     if (respawnT > 0) {
@@ -2677,7 +2760,12 @@ applyD09LogicRulesToRoutes();
       const a = e.target.dataset.act;
       if (!a) return;
       if (a === "rewarded") { void claimRewardedResult(); return; }
-      if (a === "next") { await requestRouteInterstitial();startNextRoute(); }
+      if (a === "next") {
+        if (nextRouteInFlight) return;
+        nextRouteInFlight = true;
+        try { await requestRouteInterstitial();startNextRoute(); }
+        finally { nextRouteInFlight = false; }
+      }
       if (a === "retry") startRoute(routeId, true, routeId === "D06");
       if (a === "shop") openShop();
     });
@@ -2896,7 +2984,7 @@ applyD09LogicRulesToRoutes();
     for(const d of containerDoors){aftermathSurface(c,d.x,d.currentY,d.w,d.h);c.strokeStyle='#d5c8a0';c.lineWidth=6;c.beginPath();c.moveTo(d.x-8,d.currentY+d.h);c.lineTo(d.x-3,d.currentY-12);c.lineTo(d.x+d.w+9,d.currentY-5);c.stroke();c.fillStyle=d.state==='OPEN'?'#63f2a5':d.state==='PREPARING'?'#ffd34d':'#ff5b55';c.beginPath();c.arc(d.x+d.w/2,d.currentY-26,9,0,7);c.fill();}
     for(const b of barrels){c.fillStyle='#343c32';c.strokeStyle='#c6bd94';c.lineWidth=3;c.beginPath();c.moveTo(b.x+5,b.y);c.lineTo(b.x+27,b.y+4);c.lineTo(b.x+24,b.y+27);c.lineTo(b.x,b.y+22);c.closePath();c.fill();c.stroke();c.beginPath();c.moveTo(b.x+3,b.y+9);c.lineTo(b.x+23,b.y+17);c.stroke();}
     if(campaignChief?.active)aftermathRescuer(c,campaignChief.x+14,campaignChief.y+48,true);
-    c.strokeStyle='#c1c9ad';c.lineWidth=8;c.strokeRect(route.finishX,GROUND-126,112,126);c.fillStyle='#44be82';c.fillRect(route.finishX+8,GROUND-120,96,35);c.fillStyle='#102a20';c.font='bold 14px system-ui';c.fillText(t('finish'),route.finishX+17,GROUND-97);
+    drawFinishDoor(c, route.finishX, routeGroundYAt(route.finishX));
     aftermathLights(c,time,light,gain);
     for(const coin of route.coins)if(!run?.collectedCoinIds.includes(coin.id))drawCoin(c,coin);
   }
@@ -3081,6 +3169,7 @@ applyD09LogicRulesToRoutes();
       worker: { disabled:workerDisabled, clock:workerClock },
       checkpointX: run?.checkpointX,
       result: result ? clone(result) : null,
+      finishGate: { ...finishGate },
       engine: {
         singleLoop: !document.getElementById("a12Canvas"),
         renderFrameCount,
@@ -3458,14 +3547,7 @@ applyD09LogicRulesToRoutes();
       c.restore();
     }
     const finishY=routeGroundYAt(route.finishX);
-    c.fillStyle = "#19242b";
-    c.fillRect(route.finishX, finishY - 120, 16, 120);
-    c.fillStyle = magma?"#bec6cc":"#79f0bc";
-    c.fillRect(route.finishX + 16, finishY - 118, 88, 48);
-    if(magma){c.fillStyle="#68717b";c.fillRect(route.finishX+99,finishY-120,10,120);c.strokeStyle="#eff1eb";c.lineWidth=3;c.strokeRect(route.finishX+20,finishY-113,76,38);}
-    c.fillStyle = "#10252b";
-    c.font = "900 15px system-ui";
-    c.fillText(t("finish"), route.finishX + 28, finishY - 88);
+      drawFinishDoor(c, route.finishX, finishY, { gate: { phase: "open", t: 0, closeS: .52 } });
   }
   // A5b decorative layer: no RNG, collisions, profile or simulation writes.
   function presentationNpcs() {
@@ -3573,7 +3655,10 @@ applyD09LogicRulesToRoutes();
     if(debugHidePlayer)return;
     const runner=profile.runnerId||"male",outfit=profile.equippedOutfitByRunner[runner]||"default";
     const poseState=diveRun?{...state,state:"dive",timer:Math.max(0,diveRun.duration-diveRun.elapsed),duration:diveRun.duration}:wallJumpRun?{...state,state:"wallRun",timer:Math.max(0,wallJumpRun.duration-wallJumpRun.elapsed),duration:wallJumpRun.duration}:state;
+    c.save();
+    c.globalAlpha *= finishGate.playerAlpha;
     drawRunnerAtlas(c,runner,outfit,runnerAtlasPose(poseState),player.x+player.w/2,player.y+player.h,player.facing);
+    c.restore();
   }
   function drawRunnerLayerIntegrated(c) { ctx=c; }
   function drawOverlayIntegrated(c, w, h) {
