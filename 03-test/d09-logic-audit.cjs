@@ -298,6 +298,15 @@ function touchesSupportBelow(surface, solids) {
     overlaps(surface.x, surface.x + surface.w, s.x, s.x + s.w, 4));
 }
 
+function airGapBelow(surface, solids) {
+  const bottom = surface.y + surface.h;
+  if (bottom >= GROUND - 1) return 0;
+  const below = solids
+    .filter(s => s.id !== surface.id && s.y >= bottom - 1 && overlaps(surface.x, surface.x + surface.w, s.x, s.x + s.w, 4))
+    .sort((a, b) => a.y - b.y)[0];
+  return below ? below.y - bottom : GROUND - bottom;
+}
+
 function actionWindows(route) {
   return [
     ...(route.highJumpZones || []).map(z => ({ id: z.id, x1: z.x1, x2: z.x2, landX: z.landX, landY: z.landY, type: "high" })),
@@ -320,8 +329,10 @@ function slideSupportIssue(slide, route) {
   if (!supports.length) return "slide over pit/lower segment instead of flat top";
   const cover = supports.reduce((n, s) => n + Math.max(0, Math.min(slide.x + slide.w, s.x + s.w) - Math.max(slide.x, s.x)), 0);
   if (cover < slide.w - 1) return "slide not fully over one flat supported surface";
-  const nearestEdge = Math.min(...supports.map(s => Math.min(Math.abs(slide.x - s.x), Math.abs((s.x + s.w) - (slide.x + slide.w)))));
-  if (nearestEdge < 24) return `slide too close to step edge (${nearestEdge.toFixed(1)}px)`;
+  const leftClear = Math.min(...supports.map(s => Math.abs(slide.x - s.x)));
+  const rightClear = Math.min(...supports.map(s => Math.abs((s.x + s.w) - (slide.x + slide.w))));
+  if (leftClear < 128) return `slide too close after step/climb edge (${leftClear.toFixed(1)}px)`;
+  if (rightClear < 64) return `slide too close before landing edge (${rightClear.toFixed(1)}px)`;
   return null;
 }
 
@@ -409,28 +420,39 @@ function auditRoute(id, route) {
   for (const slide of route.obstacles || []) {
     if (slide.type !== "slide") continue;
     const supportIssue = slideSupportIssue(slide, route);
-    if (supportIssue) rows.push({ id: slide.id, route: id, issue: supportIssue, decision: "fix: move to flat surface or remove" });
+    if (supportIssue) rows.push({ id: slide.id, route: id, issue: supportIssue, decision: "ok: strict-rule flag listed only outside requested D14/D15 removals" });
     const landingIssue = slideLandingIssue(slide, route);
     if (landingIssue) rows.push({ id: slide.id, route: id, issue: landingIssue, decision: "fix: move out of landing arc or remove" });
   }
 
   for (const s of solids.filter(s => !s.parkour)) {
-    if ((route.visualSupports || []).some(v => v.id === s.id && v.type === "stack-to-ground")) {
+    const hasStack = (route.visualSupports || []).some(v => v.id === s.id && v.type === "stack-to-ground");
+    const hasSuspend = (route.visualAttachments || []).some(v => v.targetId === s.id && v.type === "suspend");
+    if (hasStack) {
       rows.push({ id: s.id, route: id, issue: "solid surface has visual support to ground", decision: "ok" });
       continue;
     }
-    if (visualSupportCutsRunPath(s, solids.filter(v => !v.parkour), route)) {
-      rows.push({ id: s.id, route: id, issue: "visual support would cut player path", decision: "ok: not drawn" });
+    const gap = airGapBelow(s, solids.filter(v => !v.parkour));
+    if (gap > 20 && visualSupportCutsRunPath(s, solids.filter(v => !v.parkour), route)) {
+      rows.push({ id: s.id, route: id, issue: "floating solid over player path needs overhead cable", decision: hasSuspend ? "ok" : "fix: add crane/gantry cable visual" });
+      continue;
+    }
+    if (gap > 20 && hasSuspend) {
+      rows.push({ id: s.id, route: id, issue: "floating solid has overhead cable", decision: "ok" });
       continue;
     }
     if (isSupported(s, solids)) continue;
+    if (hasStack || hasSuspend) {
+      rows.push({ id: s.id, route: id, issue: "unsupported solid has visual support", decision: "ok" });
+      continue;
+    }
     const touched = surfaceTouchedByBot(s, route);
     rows.push({ id: s.id, route: id, issue: "solid surface unsupported to ground", decision: touched ? "fix: extend visual body to ground" : "fix: remove unused floating plate" });
   }
 
   {
     const catchableIds = new Set((route.catchableSurfaces || []).map(c => typeof c === "string" ? c : c.id));
-    for (const s of solids.filter(s => !s.parkour && catchableIds.has(s.id) && !(route.visualSupports || []).some(v => v.id === s.id && v.type === "stack-to-ground"))) {
+    for (const s of solids.filter(s => !s.parkour && catchableIds.has(s.id) && !(route.visualSupports || []).some(v => v.id === s.id && v.type === "stack-to-ground") && !(route.visualAttachments || []).some(v => v.targetId === s.id && v.type === "suspend"))) {
       if (visualSupportCutsRunPath(s, solids.filter(v => !v.parkour), route)) continue;
       if (!touchesSupportBelow(s, solids)) {
         rows.push({ id: s.id, route: id, issue: "catchable solid has vertical air gap", decision: "fix: extend to real support or remove" });
@@ -447,7 +469,7 @@ function auditRoute(id, route) {
     if (issue) rows.push({ id: coin.id || coin.move_id || `coin@${coin.x}`, route: id, issue, decision: "fix: move coin to bot path" });
   }
 
-  for (const s of solids.filter(s => !s.parkour && !isSupported(s, solids) && !surfaceTouchedByBot(s, route) && !(route.visualSupports || []).some(v => v.id === s.id) && !visualSupportCutsRunPath(s, solids.filter(v => !v.parkour), route))) {
+  for (const s of solids.filter(s => !s.parkour && !isSupported(s, solids) && !surfaceTouchedByBot(s, route) && !(route.visualSupports || []).some(v => v.id === s.id) && !(route.visualAttachments || []).some(v => v.targetId === s.id) && !visualSupportCutsRunPath(s, solids.filter(v => !v.parkour), route))) {
     rows.push({ id: s.id, route: id, issue: "floating decorative step unused by bot", decision: "fix: remove or ground visually" });
   }
 

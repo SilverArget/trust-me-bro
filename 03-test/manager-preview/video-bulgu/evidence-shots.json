@@ -138,68 +138,68 @@
   {
     "name": "d04-asili-000005",
     "route": "D04",
-    "supportId": "d04-v-03",
+    "supportId": "d04-v-14",
     "before": {
       "route": "D04",
-      "x": 535.2,
-      "y": -448.6,
+      "x": 3850.68,
+      "y": -297.4,
       "player": {
-        "x": 535.2,
-        "y": -496.6,
+        "x": 3850.68,
+        "y": -345.4,
         "vx": 0,
         "vy": 0,
         "onGround": true,
         "state": "idle"
       },
-      "cameraWorldY": 783.4000000000001
+      "cameraWorldY": 632.2508880266057
     },
     "after": {
       "route": "D04",
-      "x": 535.2,
-      "y": -448.6,
+      "x": 3850.68,
+      "y": -297.4,
       "player": {
-        "x": 535.2,
-        "y": -496.6,
+        "x": 3850.68,
+        "y": -345.4,
         "vx": 0,
         "vy": 0,
         "onGround": true,
         "state": "idle"
       },
-      "cameraWorldY": 783.4000000000001
+      "cameraWorldY": 632.2508880266057
     },
     "file": "E:\\oyunlar\\TrustMeBro-wt\\video-bulgu\\03-test\\manager-preview\\video-bulgu\\d04-asili-000005-yanyana.png"
   },
   {
     "name": "d04-asili-000236",
     "route": "D04",
-    "supportId": "d04-v-06",
+    "supportId": "d04-v-14",
     "before": {
       "route": "D04",
-      "x": 1130.16,
-      "y": -520.6,
+      "x": 3850.68,
+      "y": -297.4,
       "player": {
-        "x": 1130.16,
-        "y": -568.6,
+        "x": 3850.68,
+        "y": -345.4,
         "vx": 0,
         "vy": 0,
         "onGround": true,
         "state": "idle"
       },
-      "cameraWorldY": 855.3630172092351
+      "cameraWorldY": 632.2508880266057
     },
     "after": {
       "route": "D04",
-      "x": 1130.16,
-      "y": -520.6,
+      "x": 3850.68,
+      "y": -297.4,
       "player": {
-        "x": 1130.16,
-        "y": -568.6,
+        "x": 3850.68,
+        "y": -345.4,
         "vx": 0,
         "vy": 0,
         "onGround": true,
         "state": "idle"
       },
-      "cameraWorldY": 855.3630172092351
+      "cameraWorldY": 632.2508880266057
     },
     "file": "E:\\oyunlar\\TrustMeBro-wt\\video-bulgu\\03-test\\manager-preview\\video-bulgu\\d04-asili-000236-yanyana.png"
   },
@@ -274,34 +274,34 @@
   {
     "name": "d11-asili",
     "route": "D11",
-    "x": 1120,
+    "supportId": "d11-v-24",
     "before": {
       "route": "D11",
-      "x": 1120,
-      "y": -907.25,
+      "x": 4863.599999999999,
+      "y": -919.25,
       "player": {
-        "x": 1120,
-        "y": -955.25,
+        "x": 4863.599999999999,
+        "y": -967.25,
         "vx": 0,
         "vy": 0,
         "onGround": true,
         "state": "idle"
       },
-      "cameraWorldY": 1242.0493579376605
+      "cameraWorldY": 1254.0431941391996
     },
     "after": {
       "route": "D11",
-      "x": 1120,
-      "y": -907.25,
+      "x": 4863.599999999999,
+      "y": -919.25,
       "player": {
-        "x": 1120,
-        "y": -955.25,
+        "x": 4863.599999999999,
+        "y": -967.25,
         "vx": 0,
         "vy": 0,
         "onGround": true,
         "state": "idle"
       },
-      "cameraWorldY": 1242.0493579376605
+      "cameraWorldY": 1254.0431941391996
     },
     "file": "E:\\oyunlar\\TrustMeBro-wt\\video-bulgu\\03-test\\manager-preview\\video-bulgu\\d11-asili-yanyana.png"
   }

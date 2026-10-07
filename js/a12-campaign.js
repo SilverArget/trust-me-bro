@@ -1143,11 +1143,8 @@ function applyD09LogicRulesToRoutes(){
   };
   if(ROUTES.D09)moveSlide(ROUTES.D09,"d09-ir-slide-04",4156,277.375);
   if(ROUTES.D18)removeSlides(ROUTES.D18,["d18-p1-a01-slide-02","d18-p1-a01-slide-04"]);
-  if(ROUTES.D14){
-    moveSlide(ROUTES.D14,"d14-slide-01",1050,231.375);
-    removeSlides(ROUTES.D14,["d14-slide-02"]);
-  }
-  if(ROUTES.D15)moveSlide(ROUTES.D15,"d15-slide-02",1280,289.375);
+  if(ROUTES.D14)removeSlides(ROUTES.D14,["d14-slide-01","d14-slide-02"]);
+  if(ROUTES.D15)removeSlides(ROUTES.D15,["d15-slide-02"]);
   for(const id of routeIds){
     const r=ROUTES[id];
     const slideStats=relocateSlidesOffTransitions(r);
@@ -1173,6 +1170,12 @@ function applyD09LogicRulesToRoutes(){
     const solids=surfaces(r).filter(s=>s.kind==="ground"||s.kind==="platform"||s.kind==="movingPlatform");
     const catchableIds=new Set((r.catchableSurfaces||[]).map(c=>typeof c==="string"?c:c.id));
     const touchesBelow=(s)=>s.y+s.h>=GROUND-1||solids.some(v=>v.id!==s.id&&Math.abs(v.y-(s.y+s.h))<=1.5&&overlaps(s.x,s.x+s.w,v.x,v.x+v.w,4));
+    const airGapBelow=(s)=>{
+      const bottom=s.y+s.h;
+      if(bottom>=GROUND-1)return 0;
+      const below=solids.filter(v=>v.id!==s.id&&v.y>=bottom-1&&overlaps(s.x,s.x+s.w,v.x,v.x+v.w,4)).sort((a,b)=>a.y-b.y)[0];
+      return below?below.y-bottom:GROUND-bottom;
+    };
     const bodyCutsRunPath=(s)=>{
       const top=s.y+s.h;
       if(top>=GROUND-1)return false;
@@ -1180,14 +1183,28 @@ function applyD09LogicRulesToRoutes(){
     };
     let skipped=0;
     for(const s of solids){
-      if(!(!isSupported(s,solids)||(catchableIds.has(s.id)&&!touchesBelow(s))))continue;
+      const gap=airGapBelow(s);
+      if(!(!isSupported(s,solids)||(catchableIds.has(s.id)&&!touchesBelow(s))||gap>20))continue;
       if(r.visualSupports.some(v=>v.id===s.id&&v.type==="stack-to-ground"))continue;
-      if(bodyCutsRunPath(s)){skipped++;continue}
+      if(r.visualAttachments.some(v=>v.targetId===s.id&&v.type==="suspend"))continue;
+      if(bodyCutsRunPath(s)){
+        if(!r.visualAttachments.some(v=>v.targetId===s.id&&v.type==="suspend"))r.visualAttachments.push({targetId:s.id,type:"suspend"});
+        skipped++;
+        continue
+      }
       r.visualSupports.push({id:s.id,type:"stack-to-ground"});
     }
     r.logicRuleStats.visualSupportSkipped=skipped;
   }
-  if(ROUTES.D04&&!ROUTES.D04.visualSupports.some(v=>v.id==="d04-v-06"&&v.type==="stack-to-ground"))ROUTES.D04.visualSupports.push({id:"d04-v-06",type:"stack-to-ground"});
+  for(const [rid,ids] of Object.entries({
+    D09:["d09-ir-08","d09-ir-46"],
+    D04:["d04-v-14","d04-v-24","d04-v-27"],
+    D11:["d11-v-24","d11-v-22","d11-v-17","d11-deadend-i11-step-2","d11-deadend-i11-step-3"],
+  })){
+    const r=ROUTES[rid];if(!r)continue;
+    r.visualAttachments=r.visualAttachments||[];
+    for(const id of ids)if(!r.visualAttachments.some(v=>v.targetId===id&&v.type==="suspend"))r.visualAttachments.push({targetId:id,type:"suspend"});
+  }
 }
 applyD09LogicRulesToRoutes();
   const JUMP_HINT_ZONE_IDS=Object.freeze({
@@ -3520,6 +3537,23 @@ applyD09LogicRulesToRoutes();
         c.fillStyle=frozen?"#1f5269cc":magma?"#25252acc":"#243b46";c.fillRect(g.x,g.y,g.w,bodyH);
         c.fillStyle=frozen?"#82c7d8":magma?"#4a4644":"#314f5d";for(let yy=g.y+14;yy<GROUND-12;yy+=42)c.fillRect(g.x+4,yy,Math.max(0,g.w-8),4);
         c.strokeStyle=frozen?"#8edbea":magma?"#b49e72":"#f1be31";c.lineWidth=3;c.strokeRect(g.x+2,g.y+2,Math.max(0,g.w-4),Math.max(0,bodyH-4));
+      }
+    }
+    if(route.visualAttachments?.length){
+      const suspendedGround=new Set(route.visualAttachments.filter(v=>v.type==="suspend").map(v=>v.targetId));
+      for(const g of groundSurfaces.filter(v=>suspendedGround.has(v.id))){
+        const m=c.getTransform(),topWorld=(m.d?(-28-m.f)/m.d:g.y-260);
+        const cx=g.x+g.w/2,beamY=Math.min(g.y-42,topWorld),hookY=g.y+8;
+        c.save();
+        c.strokeStyle=frozen?"#203944":magma?"#28282d":"#1b2a33";c.lineWidth=8;c.beginPath();c.moveTo(cx-Math.max(32,g.w*.45),beamY);c.lineTo(cx+Math.max(32,g.w*.45),beamY);c.stroke();
+        c.strokeStyle=frozen?"#356577":magma?"#4a4644":"#253a45";c.lineWidth=5;c.beginPath();c.moveTo(cx-Math.max(26,g.w*.35),beamY+7);c.lineTo(cx+Math.max(26,g.w*.35),beamY+7);c.stroke();
+        c.strokeStyle=frozen?"#203944":magma?"#28282d":"#1b2a33";c.lineWidth=4;c.beginPath();
+        c.moveTo(g.x+Math.max(8,g.w*.2),beamY+2);c.lineTo(g.x+Math.max(8,g.w*.2),hookY);
+        c.moveTo(g.x+Math.min(g.w-8,g.w*.8),beamY+2);c.lineTo(g.x+Math.min(g.w-8,g.w*.8),hookY);
+        c.stroke();
+        c.fillStyle=frozen?"#1f5269":magma?"#3a3838":"#203846";c.fillRect(cx-Math.max(32,g.w*.45),beamY-10,Math.max(64,g.w*.9),10);
+        c.fillStyle=frozen?"#ffd27a":magma?"#c6cbd0":"#f0c544";c.fillRect(cx-Math.max(26,g.w*.35),beamY-15,Math.max(52,g.w*.7),5);
+        c.restore();
       }
     }
     for(const g of groundSurfaces){

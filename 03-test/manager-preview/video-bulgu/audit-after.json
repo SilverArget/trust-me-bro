@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-07T19:32:10.660Z",
+  "generatedAt": "2026-10-07T20:59:00.264Z",
   "summary": {
     "D01": {
       "issues": 0,
@@ -44,7 +44,7 @@
         "slideRemoved": 0,
         "slideBlocked": 0,
         "physicalGapClosed": 1,
-        "visualSupportSkipped": 5
+        "visualSupportSkipped": 6
       },
       "details": {
         "slideMoved": [],
@@ -78,7 +78,7 @@
         "slideRemoved": 0,
         "slideBlocked": 0,
         "physicalGapClosed": 0,
-        "visualSupportSkipped": 8
+        "visualSupportSkipped": 9
       },
       "details": {
         "slideMoved": [],
@@ -95,7 +95,7 @@
         "slideRemoved": 0,
         "slideBlocked": 0,
         "physicalGapClosed": 0,
-        "visualSupportSkipped": 4
+        "visualSupportSkipped": 7
       },
       "details": {
         "slideMoved": [],
@@ -112,7 +112,7 @@
         "slideRemoved": 1,
         "slideBlocked": 0,
         "physicalGapClosed": 0,
-        "visualSupportSkipped": 1
+        "visualSupportSkipped": 2
       },
       "details": {
         "slideMoved": [],
@@ -332,7 +332,7 @@
         "slideRemoved": 1,
         "slideBlocked": 0,
         "physicalGapClosed": 0,
-        "visualSupportSkipped": 1
+        "visualSupportSkipped": 2
       },
       "details": {
         "slideMoved": [],
@@ -429,26 +429,26 @@
       {
         "id": "d01-v-04",
         "route": "D01",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "unsupported solid has visual support",
+        "decision": "ok"
       },
       {
         "id": "d01-v-05",
         "route": "D01",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "unsupported solid has visual support",
+        "decision": "ok"
       },
       {
         "id": "d01-v-06",
         "route": "D01",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "unsupported solid has visual support",
+        "decision": "ok"
       },
       {
         "id": "d01-v-07",
         "route": "D01",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "unsupported solid has visual support",
+        "decision": "ok"
       },
       {
         "id": "d01-v-08",
@@ -459,14 +459,14 @@
       {
         "id": "d01-v-09",
         "route": "D01",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "unsupported solid has visual support",
+        "decision": "ok"
       },
       {
         "id": "d01-v-10",
         "route": "D01",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "unsupported solid has visual support",
+        "decision": "ok"
       },
       {
         "id": "d01-v-11",
@@ -477,8 +477,8 @@
       {
         "id": "d01-v-14",
         "route": "D01",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "unsupported solid has visual support",
+        "decision": "ok"
       },
       {
         "id": "d01-v-15",
@@ -489,26 +489,26 @@
       {
         "id": "d01-v-16",
         "route": "D01",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "unsupported solid has visual support",
+        "decision": "ok"
       },
       {
         "id": "d01-v-17",
         "route": "D01",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "unsupported solid has visual support",
+        "decision": "ok"
       },
       {
         "id": "d01-v-19",
         "route": "D01",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "unsupported solid has visual support",
+        "decision": "ok"
       },
       {
         "id": "d01-v-20",
         "route": "D01",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "unsupported solid has visual support",
+        "decision": "ok"
       },
       {
         "id": "d01-v-21",
@@ -519,8 +519,8 @@
       {
         "id": "d01-v-22",
         "route": "D01",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "unsupported solid has visual support",
+        "decision": "ok"
       },
       {
         "id": "d01-v-23",
@@ -531,8 +531,14 @@
       {
         "id": "d01-v-24",
         "route": "D01",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "unsupported solid has visual support",
+        "decision": "ok"
+      },
+      {
+        "id": "d01-v-28",
+        "route": "D01",
+        "issue": "solid surface has visual support to ground",
+        "decision": "ok"
       },
       {
         "id": "D01-chief-ladder",
@@ -557,8 +563,8 @@
       {
         "id": "d02-v-03",
         "route": "D02",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "unsupported solid has visual support",
+        "decision": "ok"
       },
       {
         "id": "d02-v-04",
@@ -567,19 +573,13 @@
         "decision": "ok"
       },
       {
-        "id": "d02-v-08",
-        "route": "D02",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
-      },
-      {
-        "id": "d02-v-09",
-        "route": "D02",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
-      },
-      {
         "id": "d02-v-10",
+        "route": "D02",
+        "issue": "solid surface has visual support to ground",
+        "decision": "ok"
+      },
+      {
+        "id": "d02-v-15",
         "route": "D02",
         "issue": "solid surface has visual support to ground",
         "decision": "ok"
@@ -599,38 +599,38 @@
       {
         "id": "d02-roof1-1",
         "route": "D02",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "unsupported solid has visual support",
+        "decision": "ok"
       },
       {
         "id": "d02-roof1-2",
         "route": "D02",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "unsupported solid has visual support",
+        "decision": "ok"
       },
       {
         "id": "d02-roof1-3",
         "route": "D02",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "unsupported solid has visual support",
+        "decision": "ok"
       },
       {
         "id": "d02-roof2-1",
         "route": "D02",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "unsupported solid has visual support",
+        "decision": "ok"
       },
       {
         "id": "d02-roof2-2",
         "route": "D02",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "unsupported solid has visual support",
+        "decision": "ok"
       },
       {
         "id": "d02-roof2-3",
         "route": "D02",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "unsupported solid has visual support",
+        "decision": "ok"
       },
       {
         "id": "d02-slope-1",
@@ -677,6 +677,12 @@
         "decision": "ok"
       },
       {
+        "id": "d03-slide-01",
+        "route": "D03",
+        "issue": "slide too close after step/climb edge (121.2px)",
+        "decision": "ok: strict-rule flag listed only outside requested D14/D15 removals"
+      },
+      {
         "id": "d03-v-01",
         "route": "D03",
         "issue": "solid surface has visual support to ground",
@@ -685,20 +691,20 @@
       {
         "id": "d03-v-02",
         "route": "D03",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "unsupported solid has visual support",
+        "decision": "ok"
       },
       {
         "id": "d03-v-03",
         "route": "D03",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "unsupported solid has visual support",
+        "decision": "ok"
       },
       {
         "id": "d03-v-04",
         "route": "D03",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "unsupported solid has visual support",
+        "decision": "ok"
       },
       {
         "id": "d03-v-05",
@@ -709,14 +715,14 @@
       {
         "id": "d03-v-06",
         "route": "D03",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "unsupported solid has visual support",
+        "decision": "ok"
       },
       {
         "id": "d03-v-07",
         "route": "D03",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "unsupported solid has visual support",
+        "decision": "ok"
       },
       {
         "id": "d03-v-09",
@@ -725,82 +731,28 @@
         "decision": "ok"
       },
       {
-        "id": "d03-v-11",
-        "route": "D03",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
-      },
-      {
         "id": "d03-v-13",
         "route": "D03",
         "issue": "solid surface has visual support to ground",
         "decision": "ok"
       },
       {
-        "id": "d03-v-16",
+        "id": "d03-v-23",
         "route": "D03",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
-      },
-      {
-        "id": "d03-v-18",
-        "route": "D03",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
-      },
-      {
-        "id": "d03-v-20",
-        "route": "D03",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
-      },
-      {
-        "id": "d03-v-21",
-        "route": "D03",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
-      },
-      {
-        "id": "d03-v-27",
-        "route": "D03",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
-      },
-      {
-        "id": "d03-v-28",
-        "route": "D03",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "solid surface has visual support to ground",
+        "decision": "ok"
       },
       {
         "id": "d03-v-32",
         "route": "D03",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "floating solid over player path needs overhead cable",
+        "decision": "ok"
       },
       {
-        "id": "d03-u-5",
+        "id": "d03-u-3",
         "route": "D03",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
-      },
-      {
-        "id": "d03-u-6",
-        "route": "D03",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
-      },
-      {
-        "id": "d03-u-7",
-        "route": "D03",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
-      },
-      {
-        "id": "d03-slope-1",
-        "route": "D03",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "solid surface has visual support to ground",
+        "decision": "ok"
       },
       {
         "id": "d03-slope-3",
@@ -849,7 +801,7 @@
       {
         "id": "d04-v-06",
         "route": "D04",
-        "issue": "solid surface has visual support to ground",
+        "issue": "unsupported solid has visual support",
         "decision": "ok"
       },
       {
@@ -861,14 +813,14 @@
       {
         "id": "d04-v-08",
         "route": "D04",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "unsupported solid has visual support",
+        "decision": "ok"
       },
       {
         "id": "d04-v-09",
         "route": "D04",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "unsupported solid has visual support",
+        "decision": "ok"
       },
       {
         "id": "d04-v-10",
@@ -885,14 +837,14 @@
       {
         "id": "d04-v-14",
         "route": "D04",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "floating solid over player path needs overhead cable",
+        "decision": "ok"
       },
       {
         "id": "d04-v-15",
         "route": "D04",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "unsupported solid has visual support",
+        "decision": "ok"
       },
       {
         "id": "d04-v-16",
@@ -903,20 +855,20 @@
       {
         "id": "d04-v-17",
         "route": "D04",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "unsupported solid has visual support",
+        "decision": "ok"
       },
       {
         "id": "d04-v-18",
         "route": "D04",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "unsupported solid has visual support",
+        "decision": "ok"
       },
       {
         "id": "d04-v-19",
         "route": "D04",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "unsupported solid has visual support",
+        "decision": "ok"
       },
       {
         "id": "d04-v-20",
@@ -937,10 +889,22 @@
         "decision": "ok"
       },
       {
+        "id": "d04-v-24",
+        "route": "D04",
+        "issue": "solid surface has visual support to ground",
+        "decision": "ok"
+      },
+      {
+        "id": "d04-v-27",
+        "route": "D04",
+        "issue": "solid surface has visual support to ground",
+        "decision": "ok"
+      },
+      {
         "id": "d04-u-1",
         "route": "D04",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "unsupported solid has visual support",
+        "decision": "ok"
       },
       {
         "id": "d04-u-2",
@@ -1061,20 +1025,20 @@
       {
         "id": "d05-v-02",
         "route": "D05",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "unsupported solid has visual support",
+        "decision": "ok"
       },
       {
         "id": "d05-v-03",
         "route": "D05",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "unsupported solid has visual support",
+        "decision": "ok"
       },
       {
         "id": "d05-v-04",
         "route": "D05",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "unsupported solid has visual support",
+        "decision": "ok"
       },
       {
         "id": "d05-v-05",
@@ -1103,8 +1067,8 @@
       {
         "id": "d05-v-09",
         "route": "D05",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "unsupported solid has visual support",
+        "decision": "ok"
       },
       {
         "id": "d05-v-10",
@@ -1143,22 +1107,10 @@
         "decision": "ok"
       },
       {
-        "id": "d05-v-21",
-        "route": "D05",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
-      },
-      {
-        "id": "d05-v-22",
-        "route": "D05",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
-      },
-      {
         "id": "d05-v-24",
         "route": "D05",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "floating solid over player path needs overhead cable",
+        "decision": "ok"
       },
       {
         "id": "d05-u-1",
@@ -1169,20 +1121,20 @@
       {
         "id": "d05-up-1",
         "route": "D05",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "unsupported solid has visual support",
+        "decision": "ok"
       },
       {
         "id": "d05-up-2",
         "route": "D05",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "unsupported solid has visual support",
+        "decision": "ok"
       },
       {
         "id": "d05-up-3",
         "route": "D05",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "unsupported solid has visual support",
+        "decision": "ok"
       },
       {
         "id": "d05-down1-1",
@@ -1205,8 +1157,8 @@
       {
         "id": "d05-down1-4",
         "route": "D05",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "unsupported solid has visual support",
+        "decision": "ok"
       },
       {
         "id": "d05-down1-5",
@@ -1255,14 +1207,14 @@
       {
         "id": "d06-v-02",
         "route": "D06",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "unsupported solid has visual support",
+        "decision": "ok"
       },
       {
         "id": "d06-v-03",
         "route": "D06",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "unsupported solid has visual support",
+        "decision": "ok"
       },
       {
         "id": "d06-v-04",
@@ -1277,40 +1229,22 @@
         "decision": "ok"
       },
       {
-        "id": "d06-v-08",
-        "route": "D06",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
-      },
-      {
         "id": "d06-v-09",
         "route": "D06",
         "issue": "solid surface has visual support to ground",
         "decision": "ok"
       },
       {
-        "id": "d06-pit1-step-1",
-        "route": "D06",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
-      },
-      {
-        "id": "d06-pit1-step-2",
-        "route": "D06",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
-      },
-      {
         "id": "d06-pit2-step-1",
         "route": "D06",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "unsupported solid has visual support",
+        "decision": "ok"
       },
       {
         "id": "d06-pit2-step-2",
         "route": "D06",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "unsupported solid has visual support",
+        "decision": "ok"
       },
       {
         "id": "d06-v-10",
@@ -1325,34 +1259,16 @@
         "decision": "ok"
       },
       {
-        "id": "d06-v-14",
-        "route": "D06",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
-      },
-      {
-        "id": "d06-v-16",
-        "route": "D06",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
-      },
-      {
         "id": "d06-v-17",
         "route": "D06",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
-      },
-      {
-        "id": "d06-v-18",
-        "route": "D06",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "floating solid over player path needs overhead cable",
+        "decision": "ok"
       },
       {
         "id": "d06-v-26",
         "route": "D06",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "floating solid over player path needs overhead cable",
+        "decision": "ok"
       },
       {
         "id": "d06-u-1",
@@ -1361,16 +1277,10 @@
         "decision": "ok"
       },
       {
-        "id": "d06-u-3",
-        "route": "D06",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
-      },
-      {
         "id": "d06-u-4",
         "route": "D06",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "floating solid over player path needs overhead cable",
+        "decision": "ok"
       },
       {
         "id": "D06-chief-ladder",
@@ -1393,6 +1303,12 @@
         "decision": "ok"
       },
       {
+        "id": "d07-slide-02",
+        "route": "D07",
+        "issue": "slide too close after step/climb edge (74.6px)",
+        "decision": "ok: strict-rule flag listed only outside requested D14/D15 removals"
+      },
+      {
         "id": "d07-v-01",
         "route": "D07",
         "issue": "solid surface has visual support to ground",
@@ -1401,8 +1317,8 @@
       {
         "id": "d07-v-02",
         "route": "D07",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "unsupported solid has visual support",
+        "decision": "ok"
       },
       {
         "id": "d07-v-03",
@@ -1417,34 +1333,16 @@
         "decision": "ok"
       },
       {
-        "id": "d07-v-08",
-        "route": "D07",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
-      },
-      {
         "id": "d07-v-12",
         "route": "D07",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "floating solid over player path needs overhead cable",
+        "decision": "ok"
       },
       {
-        "id": "d07-v-13",
+        "id": "d07-v-24",
         "route": "D07",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
-      },
-      {
-        "id": "d07-v-18",
-        "route": "D07",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
-      },
-      {
-        "id": "d07-v-22",
-        "route": "D07",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "solid surface has visual support to ground",
+        "decision": "ok"
       },
       {
         "id": "D07-chief-ladder",
@@ -1469,14 +1367,14 @@
       {
         "id": "d08-v-02",
         "route": "D08",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "unsupported solid has visual support",
+        "decision": "ok"
       },
       {
         "id": "d08-v-03",
         "route": "D08",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "unsupported solid has visual support",
+        "decision": "ok"
       },
       {
         "id": "d08-v-04",
@@ -1487,26 +1385,26 @@
       {
         "id": "d08-v-05",
         "route": "D08",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "unsupported solid has visual support",
+        "decision": "ok"
       },
       {
         "id": "d08-v-06",
         "route": "D08",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "unsupported solid has visual support",
+        "decision": "ok"
       },
       {
         "id": "d08-v-07",
         "route": "D08",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "unsupported solid has visual support",
+        "decision": "ok"
       },
       {
         "id": "d08-v-08",
         "route": "D08",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "unsupported solid has visual support",
+        "decision": "ok"
       },
       {
         "id": "d08-v-09",
@@ -1517,14 +1415,14 @@
       {
         "id": "d08-v-10",
         "route": "D08",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "unsupported solid has visual support",
+        "decision": "ok"
       },
       {
         "id": "d08-v-11",
         "route": "D08",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "unsupported solid has visual support",
+        "decision": "ok"
       },
       {
         "id": "d08-v-12",
@@ -1535,32 +1433,32 @@
       {
         "id": "d08-v-13",
         "route": "D08",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "unsupported solid has visual support",
+        "decision": "ok"
       },
       {
         "id": "d08-v-14",
         "route": "D08",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "unsupported solid has visual support",
+        "decision": "ok"
       },
       {
         "id": "d08-v-15",
         "route": "D08",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "unsupported solid has visual support",
+        "decision": "ok"
       },
       {
         "id": "d08-v-16",
         "route": "D08",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "unsupported solid has visual support",
+        "decision": "ok"
       },
       {
         "id": "d08-v-17",
         "route": "D08",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "unsupported solid has visual support",
+        "decision": "ok"
       },
       {
         "id": "d08-v-18",
@@ -1583,8 +1481,8 @@
       {
         "id": "d08-v-23",
         "route": "D08",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "unsupported solid has visual support",
+        "decision": "ok"
       },
       {
         "id": "d08-v-24",
@@ -1613,8 +1511,8 @@
       {
         "id": "d08-v-29",
         "route": "D08",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "unsupported solid has visual support",
+        "decision": "ok"
       },
       {
         "id": "d08-u-1",
@@ -1635,13 +1533,13 @@
         "decision": "ok"
       },
       {
-        "id": "d08-v-37",
+        "id": "d08-v-39",
         "route": "D08",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "solid surface has visual support to ground",
+        "decision": "ok"
       },
       {
-        "id": "d08-v-39",
+        "id": "d08-v-41",
         "route": "D08",
         "issue": "solid surface has visual support to ground",
         "decision": "ok"
@@ -1655,8 +1553,8 @@
       {
         "id": "d08-slope-2",
         "route": "D08",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "unsupported solid has visual support",
+        "decision": "ok"
       },
       {
         "id": "d08-slope-3",
@@ -1667,8 +1565,8 @@
       {
         "id": "d08-slope-4",
         "route": "D08",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "unsupported solid has visual support",
+        "decision": "ok"
       },
       {
         "id": "d08-slope-5",
@@ -1709,6 +1607,18 @@
         "decision": "ok"
       },
       {
+        "id": "d09-ir-slide-01",
+        "route": "D09",
+        "issue": "slide too close after step/climb edge (44.6px)",
+        "decision": "ok: strict-rule flag listed only outside requested D14/D15 removals"
+      },
+      {
+        "id": "d09-ir-slide-04",
+        "route": "D09",
+        "issue": "slide too close before landing edge (51.4px)",
+        "decision": "ok: strict-rule flag listed only outside requested D14/D15 removals"
+      },
+      {
         "id": "d09-ir-01",
         "route": "D09",
         "issue": "solid surface has visual support to ground",
@@ -1735,38 +1645,8 @@
       {
         "id": "d09-ir-08",
         "route": "D09",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
-      },
-      {
-        "id": "d09-ir-11",
-        "route": "D09",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
-      },
-      {
-        "id": "d09-ir-14",
-        "route": "D09",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
-      },
-      {
-        "id": "d09-ir-15",
-        "route": "D09",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
-      },
-      {
-        "id": "d09-ir-17",
-        "route": "D09",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
-      },
-      {
-        "id": "d09-ir-20",
-        "route": "D09",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "floating solid over player path needs overhead cable",
+        "decision": "ok"
       },
       {
         "id": "d09-ir-25",
@@ -1779,12 +1659,6 @@
         "route": "D09",
         "issue": "solid surface has visual support to ground",
         "decision": "ok"
-      },
-      {
-        "id": "d09-ir-29",
-        "route": "D09",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
       },
       {
         "id": "d09-ir-30",
@@ -1805,34 +1679,16 @@
         "decision": "ok"
       },
       {
-        "id": "d09-ir-33",
-        "route": "D09",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
-      },
-      {
         "id": "d09-ir-37",
         "route": "D09",
         "issue": "solid surface has visual support to ground",
         "decision": "ok"
       },
       {
-        "id": "d09-ir-38",
-        "route": "D09",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
-      },
-      {
-        "id": "d09-ir-44",
-        "route": "D09",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
-      },
-      {
         "id": "d09-ir-46",
         "route": "D09",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "floating solid over player path needs overhead cable",
+        "decision": "ok"
       },
       {
         "id": "D09-chief-ladder",
@@ -1851,8 +1707,8 @@
       {
         "id": "d10-v-02",
         "route": "D10",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "unsupported solid has visual support",
+        "decision": "ok"
       },
       {
         "id": "d10-v-04",
@@ -1869,38 +1725,38 @@
       {
         "id": "d10-v-06",
         "route": "D10",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "unsupported solid has visual support",
+        "decision": "ok"
       },
       {
         "id": "d10-v-07",
         "route": "D10",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "unsupported solid has visual support",
+        "decision": "ok"
       },
       {
         "id": "d10-v-08",
         "route": "D10",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "unsupported solid has visual support",
+        "decision": "ok"
       },
       {
         "id": "d10-v-09",
         "route": "D10",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "unsupported solid has visual support",
+        "decision": "ok"
       },
       {
         "id": "d10-v-10",
         "route": "D10",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "unsupported solid has visual support",
+        "decision": "ok"
       },
       {
         "id": "d10-v-11",
         "route": "D10",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "unsupported solid has visual support",
+        "decision": "ok"
       },
       {
         "id": "d10-v-12",
@@ -1911,8 +1767,8 @@
       {
         "id": "d10-v-13",
         "route": "D10",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "unsupported solid has visual support",
+        "decision": "ok"
       },
       {
         "id": "d10-v-14",
@@ -1923,32 +1779,32 @@
       {
         "id": "d10-v-15",
         "route": "D10",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "unsupported solid has visual support",
+        "decision": "ok"
       },
       {
         "id": "d10-v-16",
         "route": "D10",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "unsupported solid has visual support",
+        "decision": "ok"
       },
       {
         "id": "d10-v-17",
         "route": "D10",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "unsupported solid has visual support",
+        "decision": "ok"
       },
       {
         "id": "d10-v-18",
         "route": "D10",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "unsupported solid has visual support",
+        "decision": "ok"
       },
       {
         "id": "d10-v-19",
         "route": "D10",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "unsupported solid has visual support",
+        "decision": "ok"
       },
       {
         "id": "d10-v-20",
@@ -1965,8 +1821,8 @@
       {
         "id": "d10-v-22",
         "route": "D10",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "unsupported solid has visual support",
+        "decision": "ok"
       },
       {
         "id": "d10-v-23",
@@ -1977,38 +1833,20 @@
       {
         "id": "d10-v-25",
         "route": "D10",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "unsupported solid has visual support",
+        "decision": "ok"
       },
       {
         "id": "d10-v-27",
         "route": "D10",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "unsupported solid has visual support",
+        "decision": "ok"
       },
       {
         "id": "d10-v-28",
         "route": "D10",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
-      },
-      {
-        "id": "d10-v-30",
-        "route": "D10",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
-      },
-      {
-        "id": "d10-v-32",
-        "route": "D10",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
-      },
-      {
-        "id": "d10-v-33",
-        "route": "D10",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "unsupported solid has visual support",
+        "decision": "ok"
       },
       {
         "id": "D10-chief-ladder",
@@ -2033,8 +1871,8 @@
       {
         "id": "d11-v-03",
         "route": "D11",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "unsupported solid has visual support",
+        "decision": "ok"
       },
       {
         "id": "d11-v-06",
@@ -2045,20 +1883,20 @@
       {
         "id": "d11-v-09",
         "route": "D11",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "unsupported solid has visual support",
+        "decision": "ok"
       },
       {
         "id": "d11-v-10",
         "route": "D11",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "unsupported solid has visual support",
+        "decision": "ok"
       },
       {
         "id": "d11-v-11",
         "route": "D11",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "unsupported solid has visual support",
+        "decision": "ok"
       },
       {
         "id": "d11-v-13",
@@ -2075,8 +1913,8 @@
       {
         "id": "d11-v-17",
         "route": "D11",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "floating solid over player path needs overhead cable",
+        "decision": "ok"
       },
       {
         "id": "d11-v-18",
@@ -2093,26 +1931,26 @@
       {
         "id": "d11-v-20",
         "route": "D11",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "unsupported solid has visual support",
+        "decision": "ok"
       },
       {
         "id": "d11-v-21",
         "route": "D11",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "unsupported solid has visual support",
+        "decision": "ok"
       },
       {
         "id": "d11-v-22",
         "route": "D11",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "floating solid over player path needs overhead cable",
+        "decision": "ok"
       },
       {
         "id": "d11-v-24",
         "route": "D11",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "floating solid over player path needs overhead cable",
+        "decision": "ok"
       },
       {
         "id": "d11-v-25",
@@ -2135,8 +1973,8 @@
       {
         "id": "d11-v-30",
         "route": "D11",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "unsupported solid has visual support",
+        "decision": "ok"
       },
       {
         "id": "d11-tunnel-floor",
@@ -2159,8 +1997,8 @@
       {
         "id": "d11-slope2-1",
         "route": "D11",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "unsupported solid has visual support",
+        "decision": "ok"
       },
       {
         "id": "d11-slope2-2",
@@ -2171,20 +2009,20 @@
       {
         "id": "d11-deadend-i11-step-1",
         "route": "D11",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "unsupported solid has visual support",
+        "decision": "ok"
       },
       {
         "id": "d11-deadend-i11-step-2",
         "route": "D11",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "unsupported solid has visual support",
+        "decision": "ok"
       },
       {
         "id": "d11-deadend-i11-step-3",
         "route": "D11",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "unsupported solid has visual support",
+        "decision": "ok"
       },
       {
         "id": "D11-chief-ladder",
@@ -2203,14 +2041,14 @@
       {
         "id": "d12-v-03",
         "route": "D12",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "unsupported solid has visual support",
+        "decision": "ok"
       },
       {
         "id": "d12-v-04",
         "route": "D12",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "unsupported solid has visual support",
+        "decision": "ok"
       },
       {
         "id": "d12-v-05",
@@ -2221,20 +2059,20 @@
       {
         "id": "d12-v-06",
         "route": "D12",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "unsupported solid has visual support",
+        "decision": "ok"
       },
       {
         "id": "d12-v-07",
         "route": "D12",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "unsupported solid has visual support",
+        "decision": "ok"
       },
       {
         "id": "d12-v-08",
         "route": "D12",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "unsupported solid has visual support",
+        "decision": "ok"
       },
       {
         "id": "d12-v-10",
@@ -2245,14 +2083,14 @@
       {
         "id": "d12-v-12",
         "route": "D12",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "unsupported solid has visual support",
+        "decision": "ok"
       },
       {
         "id": "d12-v-13",
         "route": "D12",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "unsupported solid has visual support",
+        "decision": "ok"
       },
       {
         "id": "d12-v-14",
@@ -2269,32 +2107,14 @@
       {
         "id": "d12-v-17",
         "route": "D12",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "unsupported solid has visual support",
+        "decision": "ok"
       },
       {
         "id": "d12-v-18",
         "route": "D12",
         "issue": "solid surface has visual support to ground",
         "decision": "ok"
-      },
-      {
-        "id": "d12-v-24",
-        "route": "D12",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
-      },
-      {
-        "id": "d12-v-25",
-        "route": "D12",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
-      },
-      {
-        "id": "d12-v-29",
-        "route": "D12",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
       },
       {
         "id": "d12-slope-1",
@@ -2383,18 +2203,6 @@
         "decision": "ok"
       },
       {
-        "id": "d13-v-14",
-        "route": "D13",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
-      },
-      {
-        "id": "d13-v-16",
-        "route": "D13",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
-      },
-      {
         "id": "d13-v-19",
         "route": "D13",
         "issue": "solid surface has visual support to ground",
@@ -2409,26 +2217,26 @@
       {
         "id": "d13-v-21",
         "route": "D13",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "unsupported solid has visual support",
+        "decision": "ok"
       },
       {
         "id": "d13-v-22",
         "route": "D13",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "unsupported solid has visual support",
+        "decision": "ok"
       },
       {
         "id": "d13-v-23",
         "route": "D13",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "unsupported solid has visual support",
+        "decision": "ok"
       },
       {
         "id": "d13-v-24",
         "route": "D13",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "unsupported solid has visual support",
+        "decision": "ok"
       },
       {
         "id": "d13-v-25",
@@ -2451,8 +2259,8 @@
       {
         "id": "d13-slope1-2",
         "route": "D13",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "unsupported solid has visual support",
+        "decision": "ok"
       },
       {
         "id": "d13-slope1-3",
@@ -2499,12 +2307,6 @@
     ],
     "D14": [
       {
-        "id": "d14-slide-01",
-        "route": "D14",
-        "issue": "slide obstacle has overhead attachment",
-        "decision": "ok"
-      },
-      {
         "id": "d14-slide-03",
         "route": "D14",
         "issue": "slide obstacle has overhead attachment",
@@ -2515,12 +2317,6 @@
         "route": "D14",
         "issue": "solid surface has visual support to ground",
         "decision": "ok"
-      },
-      {
-        "id": "d14-v-03",
-        "route": "D14",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
       },
       {
         "id": "d14-v-05",
@@ -2579,8 +2375,8 @@
       {
         "id": "d14-v-24",
         "route": "D14",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "unsupported solid has visual support",
+        "decision": "ok"
       },
       {
         "id": "d14-v-25",
@@ -2591,14 +2387,8 @@
       {
         "id": "d14-v-26",
         "route": "D14",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
-      },
-      {
-        "id": "d14-slope1-2",
-        "route": "D14",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "unsupported solid has visual support",
+        "decision": "ok"
       },
       {
         "id": "d14-slope2-1",
@@ -2633,7 +2423,7 @@
     ],
     "D15": [
       {
-        "id": "d15-slide-02",
+        "id": "d15-slide-04",
         "route": "D15",
         "issue": "slide obstacle has overhead attachment",
         "decision": "ok"
@@ -2641,38 +2431,14 @@
       {
         "id": "d15-slide-04",
         "route": "D15",
-        "issue": "slide obstacle has overhead attachment",
-        "decision": "ok"
+        "issue": "slide too close after step/climb edge (117.6px)",
+        "decision": "ok: strict-rule flag listed only outside requested D14/D15 removals"
       },
       {
         "id": "d15-v-06",
         "route": "D15",
         "issue": "solid surface has visual support to ground",
         "decision": "ok"
-      },
-      {
-        "id": "d15-v-13",
-        "route": "D15",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
-      },
-      {
-        "id": "d15-v-17",
-        "route": "D15",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
-      },
-      {
-        "id": "d15-v-18",
-        "route": "D15",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
-      },
-      {
-        "id": "d15-v-19",
-        "route": "D15",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
       },
       {
         "id": "d15-v-24",
@@ -2685,18 +2451,6 @@
         "route": "D15",
         "issue": "solid surface has visual support to ground",
         "decision": "ok"
-      },
-      {
-        "id": "d15-v-29",
-        "route": "D15",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
-      },
-      {
-        "id": "d15-v-35",
-        "route": "D15",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
       },
       {
         "id": "D15-chief-ladder",
@@ -2733,8 +2487,8 @@
       {
         "id": "d16-v-06",
         "route": "D16",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "unsupported solid has visual support",
+        "decision": "ok"
       },
       {
         "id": "d16-v-07",
@@ -2745,26 +2499,26 @@
       {
         "id": "d16-v-08",
         "route": "D16",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "unsupported solid has visual support",
+        "decision": "ok"
       },
       {
         "id": "d16-v-09",
         "route": "D16",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "unsupported solid has visual support",
+        "decision": "ok"
       },
       {
         "id": "d16-v-10",
         "route": "D16",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "unsupported solid has visual support",
+        "decision": "ok"
       },
       {
         "id": "d16-v-12",
         "route": "D16",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "unsupported solid has visual support",
+        "decision": "ok"
       },
       {
         "id": "d16-v-13",
@@ -2793,8 +2547,8 @@
       {
         "id": "d16-v-17",
         "route": "D16",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "unsupported solid has visual support",
+        "decision": "ok"
       },
       {
         "id": "d16-v-20",
@@ -2817,20 +2571,20 @@
       {
         "id": "d16-s-wall-1",
         "route": "D16",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "unsupported solid has visual support",
+        "decision": "ok"
       },
       {
         "id": "d16-s-wall-2",
         "route": "D16",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "unsupported solid has visual support",
+        "decision": "ok"
       },
       {
         "id": "d16-s-wall-3",
         "route": "D16",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "unsupported solid has visual support",
+        "decision": "ok"
       },
       {
         "id": "D16-chief-ladder",
@@ -2855,14 +2609,14 @@
       {
         "id": "d17-p1-f04-v-22",
         "route": "D17",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "unsupported solid has visual support",
+        "decision": "ok"
       },
       {
         "id": "d17-p1-f04-v-19",
         "route": "D17",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "unsupported solid has visual support",
+        "decision": "ok"
       },
       {
         "id": "d17-p1-f04-v-14",
@@ -2879,32 +2633,32 @@
       {
         "id": "d17-p1-f04-v-18",
         "route": "D17",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "unsupported solid has visual support",
+        "decision": "ok"
       },
       {
         "id": "d17-p1-f04-v-17",
         "route": "D17",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "unsupported solid has visual support",
+        "decision": "ok"
       },
       {
         "id": "d17-p1-f04-v-16",
         "route": "D17",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "unsupported solid has visual support",
+        "decision": "ok"
       },
       {
         "id": "d17-p1-f04-v-15",
         "route": "D17",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "unsupported solid has visual support",
+        "decision": "ok"
       },
       {
         "id": "d17-p1-f04-v-13",
         "route": "D17",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "unsupported solid has visual support",
+        "decision": "ok"
       },
       {
         "id": "d17-p1-f04-v-12",
@@ -2921,38 +2675,38 @@
       {
         "id": "d17-p1-f04-v-11",
         "route": "D17",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "unsupported solid has visual support",
+        "decision": "ok"
       },
       {
         "id": "d17-p1-f04-v-10",
         "route": "D17",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "unsupported solid has visual support",
+        "decision": "ok"
       },
       {
         "id": "d17-p1-f04-v-09",
         "route": "D17",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "unsupported solid has visual support",
+        "decision": "ok"
       },
       {
         "id": "d17-p1-f04-v-08",
         "route": "D17",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "unsupported solid has visual support",
+        "decision": "ok"
       },
       {
         "id": "d17-p1-f04-v-07",
         "route": "D17",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "unsupported solid has visual support",
+        "decision": "ok"
       },
       {
         "id": "d17-p1-f04-v-06",
         "route": "D17",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "unsupported solid has visual support",
+        "decision": "ok"
       },
       {
         "id": "d17-p1-f04-v-04",
@@ -2969,8 +2723,8 @@
       {
         "id": "d17-p1-f04-v-02",
         "route": "D17",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "unsupported solid has visual support",
+        "decision": "ok"
       },
       {
         "id": "d17-p2-m03-v-19",
@@ -2987,26 +2741,26 @@
       {
         "id": "d17-p2-m03-v-21",
         "route": "D17",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "unsupported solid has visual support",
+        "decision": "ok"
       },
       {
         "id": "d17-p2-m03-v-22",
         "route": "D17",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "unsupported solid has visual support",
+        "decision": "ok"
       },
       {
         "id": "d17-p2-m03-v-23",
         "route": "D17",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "unsupported solid has visual support",
+        "decision": "ok"
       },
       {
         "id": "d17-p2-m03-v-24",
         "route": "D17",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "unsupported solid has visual support",
+        "decision": "ok"
       },
       {
         "id": "d17-p2-m03-v-25",
@@ -3029,30 +2783,6 @@
     ],
     "D18": [
       {
-        "id": "d18-p1-a01-v-19",
-        "route": "D18",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
-      },
-      {
-        "id": "d18-p1-a01-v-18",
-        "route": "D18",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
-      },
-      {
-        "id": "d18-p1-a01-v-17",
-        "route": "D18",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
-      },
-      {
-        "id": "d18-p1-a01-v-13",
-        "route": "D18",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
-      },
-      {
         "id": "d18-p1-a01-v-06",
         "route": "D18",
         "issue": "solid surface has visual support to ground",
@@ -3073,8 +2803,8 @@
       {
         "id": "d18-p2-f03-v-28",
         "route": "D18",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "floating solid over player path needs overhead cable",
+        "decision": "ok"
       },
       {
         "id": "d18-p2-f03-v-31",
@@ -3085,8 +2815,8 @@
       {
         "id": "d18-p2-f03-v-32",
         "route": "D18",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "unsupported solid has visual support",
+        "decision": "ok"
       },
       {
         "id": "d18-p2-f03-down-1",
@@ -3115,8 +2845,8 @@
       {
         "id": "d18-p2-f03-down-5",
         "route": "D18",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "unsupported solid has visual support",
+        "decision": "ok"
       },
       {
         "id": "d18-p2-f03-v-33",
@@ -3133,8 +2863,8 @@
       {
         "id": "d18-p2-f03-v-36",
         "route": "D18",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "unsupported solid has visual support",
+        "decision": "ok"
       },
       {
         "id": "d18-p2-f03-v-37",
@@ -3175,22 +2905,10 @@
         "decision": "ok"
       },
       {
-        "id": "f01-p1-d07-v-13",
-        "route": "F01",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
-      },
-      {
         "id": "f01-p1-d07-v-12",
         "route": "F01",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
-      },
-      {
-        "id": "f01-p1-d07-v-08",
-        "route": "F01",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "floating solid over player path needs overhead cable",
+        "decision": "ok"
       },
       {
         "id": "f01-p1-d07-v-04",
@@ -3213,32 +2931,8 @@
       {
         "id": "f01-p1-d07-v-02",
         "route": "F01",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
-      },
-      {
-        "id": "f01-p2-d13-v-21",
-        "route": "F01",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
-      },
-      {
-        "id": "f01-p2-d13-v-22",
-        "route": "F01",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
-      },
-      {
-        "id": "f01-p2-d13-v-23",
-        "route": "F01",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
-      },
-      {
-        "id": "f01-p2-d13-v-24",
-        "route": "F01",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "unsupported solid has visual support",
+        "decision": "ok"
       },
       {
         "id": "F01-chief-ladder",
@@ -3275,14 +2969,14 @@
       {
         "id": "f02-p1-d08-v-02",
         "route": "F02",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "unsupported solid has visual support",
+        "decision": "ok"
       },
       {
         "id": "f02-p1-d08-v-03",
         "route": "F02",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "unsupported solid has visual support",
+        "decision": "ok"
       },
       {
         "id": "f02-p1-d08-v-04",
@@ -3293,26 +2987,26 @@
       {
         "id": "f02-p1-d08-v-05",
         "route": "F02",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "unsupported solid has visual support",
+        "decision": "ok"
       },
       {
         "id": "f02-p1-d08-v-06",
         "route": "F02",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "unsupported solid has visual support",
+        "decision": "ok"
       },
       {
         "id": "f02-p1-d08-v-07",
         "route": "F02",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "unsupported solid has visual support",
+        "decision": "ok"
       },
       {
         "id": "f02-p1-d08-v-08",
         "route": "F02",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "unsupported solid has visual support",
+        "decision": "ok"
       },
       {
         "id": "f02-p1-d08-v-09",
@@ -3323,50 +3017,50 @@
       {
         "id": "f02-p1-d08-v-10",
         "route": "F02",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "unsupported solid has visual support",
+        "decision": "ok"
       },
       {
         "id": "f02-p1-d08-v-11",
         "route": "F02",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "unsupported solid has visual support",
+        "decision": "ok"
       },
       {
         "id": "f02-p1-d08-v-12",
         "route": "F02",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "unsupported solid has visual support",
+        "decision": "ok"
       },
       {
         "id": "f02-p1-d08-v-13",
         "route": "F02",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "unsupported solid has visual support",
+        "decision": "ok"
       },
       {
         "id": "f02-p1-d08-v-14",
         "route": "F02",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "unsupported solid has visual support",
+        "decision": "ok"
       },
       {
         "id": "f02-p1-d08-v-15",
         "route": "F02",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "unsupported solid has visual support",
+        "decision": "ok"
       },
       {
         "id": "f02-p1-d08-v-16",
         "route": "F02",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "unsupported solid has visual support",
+        "decision": "ok"
       },
       {
         "id": "f02-p1-d08-v-17",
         "route": "F02",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "unsupported solid has visual support",
+        "decision": "ok"
       },
       {
         "id": "f02-p1-d08-v-18",
@@ -3389,8 +3083,8 @@
       {
         "id": "f02-p1-d08-v-23",
         "route": "F02",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "unsupported solid has visual support",
+        "decision": "ok"
       },
       {
         "id": "f02-p1-d08-v-24",
@@ -3431,8 +3125,8 @@
       {
         "id": "f02-p2-d14-v-24",
         "route": "F02",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "unsupported solid has visual support",
+        "decision": "ok"
       },
       {
         "id": "f02-p2-d14-v-25",
@@ -3443,20 +3137,14 @@
       {
         "id": "f02-p2-d14-v-26",
         "route": "F02",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "unsupported solid has visual support",
+        "decision": "ok"
       },
       {
         "id": "f02-p2-d14-v-28",
         "route": "F02",
         "issue": "solid surface has visual support to ground",
         "decision": "ok"
-      },
-      {
-        "id": "f02-p2-d14-v-31",
-        "route": "F02",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
       },
       {
         "id": "f02-p2-d14-slope2-1",
@@ -3509,100 +3197,16 @@
         "decision": "ok"
       },
       {
-        "id": "f03-p1-d09-v-03",
+        "id": "f03-p1-d09-v-02",
         "route": "F03",
         "issue": "solid surface has visual support to ground",
         "decision": "ok"
       },
       {
-        "id": "f03-p2-d10-v-02",
+        "id": "f03-p1-d09-v-03",
         "route": "F03",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
-      },
-      {
-        "id": "f03-p2-d10-v-06",
-        "route": "F03",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
-      },
-      {
-        "id": "f03-p2-d10-v-07",
-        "route": "F03",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
-      },
-      {
-        "id": "f03-p2-d10-v-08",
-        "route": "F03",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
-      },
-      {
-        "id": "f03-p2-d10-v-09",
-        "route": "F03",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
-      },
-      {
-        "id": "f03-p2-d10-v-10",
-        "route": "F03",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
-      },
-      {
-        "id": "f03-p2-d10-v-11",
-        "route": "F03",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
-      },
-      {
-        "id": "f03-p2-d10-v-13",
-        "route": "F03",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
-      },
-      {
-        "id": "f03-p2-d10-v-18",
-        "route": "F03",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
-      },
-      {
-        "id": "f03-p2-d10-v-20",
-        "route": "F03",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
-      },
-      {
-        "id": "f03-p3-d12-v-04",
-        "route": "F03",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
-      },
-      {
-        "id": "f03-p3-d12-v-06",
-        "route": "F03",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
-      },
-      {
-        "id": "f03-p3-d12-v-07",
-        "route": "F03",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
-      },
-      {
-        "id": "f03-p3-d12-v-08",
-        "route": "F03",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
-      },
-      {
-        "id": "f03-p3-d12-v-12",
-        "route": "F03",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "solid surface has visual support to ground",
+        "decision": "ok"
       },
       {
         "id": "f03-p3-d12-slope-2",
@@ -3649,6 +3253,12 @@
         "decision": "ok"
       },
       {
+        "id": "f04-p2-d03-slide-01",
+        "route": "F04",
+        "issue": "slide too close after step/climb edge (121.2px)",
+        "decision": "ok: strict-rule flag listed only outside requested D14/D15 removals"
+      },
+      {
         "id": "f04-p1-d02-v-01",
         "route": "F04",
         "issue": "solid surface has visual support to ground",
@@ -3673,18 +3283,6 @@
         "decision": "ok"
       },
       {
-        "id": "f04-p1-d02-v-08",
-        "route": "F04",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
-      },
-      {
-        "id": "f04-p1-d02-v-09",
-        "route": "F04",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
-      },
-      {
         "id": "f04-p1-d02-u-1",
         "route": "F04",
         "issue": "solid surface has visual support to ground",
@@ -3693,38 +3291,38 @@
       {
         "id": "f04-p1-d02-roof1-1",
         "route": "F04",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "unsupported solid has visual support",
+        "decision": "ok"
       },
       {
         "id": "f04-p1-d02-roof1-2",
         "route": "F04",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "unsupported solid has visual support",
+        "decision": "ok"
       },
       {
         "id": "f04-p1-d02-roof1-3",
         "route": "F04",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "unsupported solid has visual support",
+        "decision": "ok"
       },
       {
         "id": "f04-p1-d02-roof2-1",
         "route": "F04",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "unsupported solid has visual support",
+        "decision": "ok"
       },
       {
         "id": "f04-p1-d02-roof2-2",
         "route": "F04",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "unsupported solid has visual support",
+        "decision": "ok"
       },
       {
         "id": "f04-p1-d02-roof2-3",
         "route": "F04",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "unsupported solid has visual support",
+        "decision": "ok"
       },
       {
         "id": "f04-p1-d02-slope-1",
@@ -3757,22 +3355,16 @@
         "decision": "ok"
       },
       {
-        "id": "f04-p2-d03-v-02",
-        "route": "F04",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
-      },
-      {
         "id": "f04-p2-d03-v-03",
         "route": "F04",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "unsupported solid has visual support",
+        "decision": "ok"
       },
       {
         "id": "f04-p2-d03-v-04",
         "route": "F04",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "unsupported solid has visual support",
+        "decision": "ok"
       },
       {
         "id": "f04-p2-d03-v-05",
@@ -3783,14 +3375,14 @@
       {
         "id": "f04-p2-d03-v-06",
         "route": "F04",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "unsupported solid has visual support",
+        "decision": "ok"
       },
       {
         "id": "f04-p2-d03-v-07",
         "route": "F04",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "unsupported solid has visual support",
+        "decision": "ok"
       },
       {
         "id": "f04-p2-d03-v-09",
@@ -3799,10 +3391,10 @@
         "decision": "ok"
       },
       {
-        "id": "f04-p2-d03-v-11",
+        "id": "f04-p2-d03-u-3",
         "route": "F04",
-        "issue": "visual support would cut player path",
-        "decision": "ok: not drawn"
+        "issue": "solid surface has visual support to ground",
+        "decision": "ok"
       },
       {
         "id": "f04-p3-d01-v-01",
