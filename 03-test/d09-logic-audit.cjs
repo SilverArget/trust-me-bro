@@ -5,7 +5,7 @@ const fs = require("fs");
 const path = require("path");
 const vm = require("vm");
 
-const root = path.join(__dirname, "..");
+const root = process.env.TMB_ROOT || path.join(__dirname, "..");
 const sourcePath = path.join(root, "js", "a12-campaign.js");
 const GROUND = 455;
 const PLAYER_W = 32;
