@@ -5,8 +5,8 @@ const vm = require('vm');
 
 const root = path.join(__dirname, '..');
 const ids = process.argv.slice(2);
-if (!ids.length || ids.some(id => !/^(?:D(?:0[1-9]|1[0-8])|F0[1-6])$/.test(id))) {
-  throw new Error('usage: node 03-test/record-chief-paths.cjs <D01...D18|F01...F06>');
+if (!ids.length || ids.some(id => !/^(?:D(?:0[1-9]|1[0-8])|[FMA]0[1-6])$/.test(id))) {
+  throw new Error('usage: node 03-test/record-chief-paths.cjs <D01...D18|F01...F06|M01...M06|A01...A06>');
 }
 const nodePath = process.env.NODE_PATH || 'C:/Users/Arget/AppData/Roaming/npm/node_modules';
 const pattern = `O-1 B-5 (?:${ids.join('|')}) ideal keyboard route`;
