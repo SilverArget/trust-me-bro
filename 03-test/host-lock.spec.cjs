@@ -61,3 +61,14 @@ test("unlisted copied host is always blocked", async ({ page }) => {
   await page.goto("http://copy.example/index.html#debug", { waitUntil: "commit" }).catch(() => {});
   await expect(page.getByText(blockText)).toBeVisible({ timeout: 10000 });
 });
+
+test("browser translation is disabled without changing language menu options", async ({ page }) => {
+  await installRoutes(page);
+  await page.goto("http://localhost/index.html#debug");
+  await expect(page.locator("#characterCard")).toBeVisible({ timeout: 10000 });
+  await expect(page.locator("html")).toHaveAttribute("translate", "no");
+  await expect(page.locator("html")).toHaveClass(/notranslate/);
+  await expect(page.locator('meta[name="google"]')).toHaveAttribute("content", "notranslate");
+  await expect(page.locator("#a12Language option")).toHaveText(["EN", "TR", "RU"]);
+  await expect.poll(() => page.locator("#a12Language option").evaluateAll(list => list.map(option => option.value))).toEqual(["en", "tr", "ru"]);
+});
