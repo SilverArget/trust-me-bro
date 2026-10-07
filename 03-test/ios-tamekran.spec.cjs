@@ -55,7 +55,7 @@ async function installVirtualHostRoutes(page) {
       const target = url.searchParams.get('target');
       return route.fulfill({
         contentType: 'text/html',
-        body: `<!doctype html><html><body style="margin:0"><iframe id="gameFrame" src="${target}" style="width:100vw;height:100vh;border:0"></iframe></body></html>`
+        body: `<!doctype html><html><head><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"></head><body style="margin:0"><iframe id="gameFrame" src="${target}" style="width:100vw;height:100vh;border:0"></iframe></body></html>`
       });
     }
     const rel = decodeURIComponent(url.pathname).replace(/^\/+/, '') || 'index.html';
@@ -84,6 +84,68 @@ async function setTr(page) {
   await page.waitForFunction(() => document.querySelector('#fullscreenBtn')?.title === 'Tam ekran');
 }
 
+async function frameTouchState(frame) {
+  return await frame.evaluate(() => {
+    const rect = selector => {
+      const r = document.querySelector(selector)?.getBoundingClientRect();
+      return r ? { x: r.x, y: r.y, width: r.width, height: r.height, top: r.top, left: r.left, right: r.right, bottom: r.bottom } : null;
+    };
+    const style = selector => {
+      const el = document.querySelector(selector);
+      return el ? getComputedStyle(el).display : null;
+    };
+    const player = window.__TMB_A12__?.getState?.().player || window.__GAME_DEBUG__?.getState?.().player || window.__tmb?.player;
+    return {
+      hasPointerEvent: !!window.PointerEvent,
+      coarse: !!(window.matchMedia && matchMedia('(pointer:coarse)').matches),
+      fine: !!(window.matchMedia && matchMedia('(pointer:fine)').matches),
+      hover: !!(window.matchMedia && matchMedia('(hover:hover)').matches),
+      maxTouchPoints: navigator.maxTouchPoints,
+      inner: { width: innerWidth, height: innerHeight },
+      joystickDisplay: style('#joystick'),
+      jumpDisplay: style('#jumpWrap'),
+      hintDisplay: style('#hint'),
+      joystick: rect('#joystick'),
+      jump: rect('#jumpWrap button'),
+      player: player ? { x: player.x, vx: player.vx, y: player.y, vy: player.vy } : null,
+      axis: window.__tmb?.joystick?.axis || 0,
+    };
+  });
+}
+
+async function frameTouchPointer(frame, type, x, y, id = 71) {
+  await frame.evaluate(({ type, x, y, id }) => {
+    const store = window.__platformTouchTargets || (window.__platformTouchTargets = {});
+    const target = type === 'pointerdown'
+      ? (document.elementFromPoint(x, y) || document.body)
+      : (store[id] || document.elementFromPoint(x, y) || document.body);
+    if (type === 'pointerdown') store[id] = target;
+    target.dispatchEvent(new PointerEvent(type, {
+      bubbles: true,
+      cancelable: true,
+      composed: true,
+      pointerId: id,
+      pointerType: 'touch',
+      isPrimary: true,
+      clientX: x,
+      clientY: y,
+      button: type === 'pointerdown' ? 0 : -1,
+      buttons: type === 'pointerup' || type === 'pointercancel' ? 0 : 1,
+    }));
+    if (type === 'pointerup' || type === 'pointercancel') delete store[id];
+  }, { type, x, y, id });
+}
+
+function platformGameFrame(page) {
+  return page.frames().find(frame => {
+    try {
+      return new URL(frame.url()).hostname === 'app-1001.games.s3.yandex.net';
+    } catch (_) {
+      return false;
+    }
+  });
+}
+
 test.describe('iOS fullscreen help button', () => {
   test('WebKit iPhone API yokken dugme ve TR kart; kart pause/resume yapar', async ({ browserName, browser }) => {
     test.skip(browserName !== 'webkit', 'WebKit iPhone fallback');
@@ -96,6 +158,7 @@ test.describe('iOS fullscreen help button', () => {
 
     await expect(page.locator('#fullscreenBtn.show')).toBeVisible();
     await page.screenshot({ path: path.join(outDir, 'iphone-dugme.png'), fullPage: true });
+    await page.screenshot({ path: path.join(outDir, 'kendi-site-iphone.png'), fullPage: true });
 
     await page.locator('#fullscreenBtn').tap();
     await expect(page.locator('#iosFullscreenHelp.show')).toBeVisible();
@@ -167,10 +230,36 @@ test.describe('iOS fullscreen help button', () => {
     await expect(gameFrame.locator('#fullscreenBtn.show')).toHaveCount(0);
     await expect(gameFrame.locator('#iosFullscreenHelp.show')).toHaveCount(0);
     await gameFrame.locator('.characterChoice:visible').first().tap();
-    await expect.poll(() => page.frame({ url: /app-1001\.games\.s3\.yandex\.net/ }).evaluate(() => window.__requestFullscreenCalls)).toBe(0);
+    const frame = platformGameFrame(page);
+    await expect.poll(() => frame.evaluate(() => window.__requestFullscreenCalls)).toBe(0);
     await expect(gameFrame.locator('#missionBrief.show')).toHaveCount(0, { timeout: 3000 });
+    await expect.poll(() => frame.evaluate(() => !!(window.__tmb && window.__GAME_DEBUG__)), { timeout: 10000 }).toBe(true);
+    await frame.evaluate(() => window.__GAME_DEBUG__.reset());
+    await page.waitForTimeout(650);
+    const beforeTouch = await frameTouchState(frame);
+    expect(beforeTouch.coarse, JSON.stringify(beforeTouch)).toBe(true);
+    expect(beforeTouch.fine, JSON.stringify(beforeTouch)).toBe(false);
+    expect(beforeTouch.hover, JSON.stringify(beforeTouch)).toBe(false);
+    expect(beforeTouch.joystickDisplay, JSON.stringify(beforeTouch)).not.toBe('none');
+    expect(beforeTouch.jumpDisplay, JSON.stringify(beforeTouch)).not.toBe('none');
+    expect(beforeTouch.hintDisplay, JSON.stringify(beforeTouch)).toBe('none');
+    await page.screenshot({ path: path.join(outDir, 'platform-iframe-iphone.png'), fullPage: true });
+    const start = {
+      x: beforeTouch.joystick.x + beforeTouch.joystick.width / 2,
+      y: beforeTouch.joystick.y + beforeTouch.joystick.height / 2,
+    };
+    await frameTouchPointer(frame, 'pointerdown', start.x, start.y);
+    await frameTouchPointer(frame, 'pointermove', start.x + 52, start.y);
+    for (let i = 0; i < 24; i++) {
+      await page.waitForTimeout(16);
+    }
+    const afterDrag = await frameTouchState(frame);
+    await frameTouchPointer(frame, 'pointerup', start.x + 52, start.y);
+    expect(afterDrag.axis, JSON.stringify({ beforeTouch, afterDrag })).toBeGreaterThan(0.25);
+    expect(afterDrag.player.x, JSON.stringify({ beforeTouch, afterDrag })).toBeGreaterThan(beforeTouch.player.x + 2);
+    expect(afterDrag.player.vx, JSON.stringify({ beforeTouch, afterDrag })).toBeGreaterThan(20);
     await gameFrame.locator('#game').tap({ position: { x: 120, y: 120 }, force: true });
-    await expect.poll(() => page.frame({ url: /app-1001\.games\.s3\.yandex\.net/ }).evaluate(() => window.__requestFullscreenCalls)).toBe(0);
+    await expect.poll(() => frame.evaluate(() => window.__requestFullscreenCalls)).toBe(0);
     await context.close();
   });
 });
