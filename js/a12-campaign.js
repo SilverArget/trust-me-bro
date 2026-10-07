@@ -1020,6 +1020,83 @@ if(D09_OPENING_FIX){
     if(scripted){scripted.x=x;scripted.x1=x-60;scripted.x2=x-16}
   }
 }
+function applyD09LogicRulesToRoutes(){
+  const routeIds=Object.keys(ROUTES).filter(id=>/^(?:D(?:0[1-9]|1[0-8])|F0[1-4])$/.test(id)&&id!=="D09").sort();
+  const overlaps=(a0,a1,b0,b1,pad=0)=>a0<b1+pad&&a1>b0-pad;
+  const surfaces=(r)=>{
+    const out=r.groundSegments?r.groundSegments.map(s=>({...s})):[{id:`${r.routeId||"route"}-ground`,x:0,y:GROUND,w:r.length,h:100,kind:"ground"}];
+    for(const o of r.obstacles||[]){
+      const baseY=o.baseY??GROUND;
+      if(o.type==="vault")out.push({id:o.id,x:o.x,y:baseY-o.h,w:o.w,h:o.h,parkour:"vault"});
+      if(o.type==="slide")out.push({id:o.id,x:o.x,y:baseY-o.h-32,w:o.w,h:o.h,parkour:"slide"});
+      if(o.type==="platform")out.push({id:o.id,x:o.x,y:o.y,w:o.w,h:o.h,kind:"platform"});
+      if(o.type==="overpass")out.push({id:o.id,x:o.x,y:o.y,w:o.w,h:o.h,kind:"movingPlatform"});
+    }
+    return out;
+  };
+  const isSupported=(s,solids)=>{
+    if(s.y+s.h>=GROUND-1)return true;
+    return solids.some(v=>v.id!==s.id&&v.y>=s.y+s.h-1&&overlaps(s.x,s.x+s.w,v.x,v.x+v.w,4)&&isSupported(v,solids));
+  };
+  const actionWindows=(r)=>[...(r.highJumpZones||[]).map(z=>({x1:z.x1,x2:z.x2,landX:z.landX})),...(r.diveZones||[]).map(z=>({x1:z.x1,x2:z.x2,landX:z.landX})),...(r.scriptedMoveZones||[]).map(z=>({x1:z.x1,x2:z.x2,landX:z.endX}))].filter(z=>Number.isFinite(z.x1)&&Number.isFinite(z.x2));
+  const surfaceTouched=(s,r)=>{
+    const zones=actionWindows(r);
+    if(zones.some(z=>overlaps(s.x,s.x+s.w,z.x1-80,z.x2+120)))return true;
+    if(zones.some(z=>Number.isFinite(z.landX)&&z.landX>=s.x-16&&z.landX<=s.x+s.w+16))return true;
+    if((r.catchableSurfaces||[]).some(c=>(typeof c==="string"?c:c.id)===s.id))return true;
+    if((r.coins||[]).some(c=>c.x>=s.x-4&&c.x<=s.x+s.w+4&&c.y<=s.y+8))return true;
+    return s.w>=160&&s.x<(r.finishX??r.length);
+  };
+  const narrowGaps=(solids)=>{
+    const gaps=[],byX=[...solids].sort((a,b)=>a.x-b.x||a.y-b.y),seen=new Set();
+    for(const left of byX)for(const right of byX){
+      if(right===left||Math.abs(right.y-left.y)>12)continue;
+      const gap=right.x-(left.x+left.w);
+      if(gap<=.5||gap>=40)continue;
+      const key=`${left.id}/${right.id}`;
+      if(!seen.has(key)){seen.add(key);gaps.push({left,right,gap})}
+    }
+    return gaps;
+  };
+  const coinIssue=(coin,r,solids)=>{
+    if(solids.some(s=>coin.x>=s.x&&coin.x<=s.x+s.w&&coin.y>=s.y&&coin.y<=s.y+s.h))return true;
+    if(narrowGaps(solids).some(g=>coin.x>g.left.x+g.left.w&&coin.x<g.right.x))return true;
+    return false;
+  };
+  const coinPathFixes={
+    D03:{"D03-c04":[4138.22,291.03],"D03-c08":[2506.16,78.73]},
+    F03:{"F03-c06":[441.62,83.47],"F03-c07":[1492.53,216.83],"F03-c08":[2679.66,287.95],"F03-c10":[6385.24,165.69]},
+    F04:{"F04-c07":[2272.69,314.36],"F04-c08":[7118.66,456.2],"F04-c12":[660.22,-369.92]},
+  };
+  for(const id of routeIds){
+    const r=ROUTES[id];
+    r.visualAttachments=r.visualAttachments||[];
+    for(const o of r.obstacles||[])if(o.type==="slide"&&!r.visualAttachments.some(a=>a.targetId===o.id&&a.type==="suspend"))r.visualAttachments.push({targetId:o.id,type:"suspend"});
+    r.visualGapFills=r.visualGapFills||[];
+    for(const gap of narrowGaps(surfaces(r).filter(s=>s.kind==="ground"||s.kind==="platform"||s.kind==="movingPlatform"))){
+      if(!r.visualGapFills.some(v=>v.leftId===gap.left.id&&v.rightId===gap.right.id))r.visualGapFills.push({leftId:gap.left.id,rightId:gap.right.id,x:Number((gap.left.x+gap.left.w).toFixed(3)),y:gap.left.y,w:Number(gap.gap.toFixed(3)),h:Math.max(gap.left.h,gap.right.h)});
+    }
+    const coinFix=coinPathFixes[id];
+    if(coinFix&&r.coins)for(const c of r.coins){const xy=coinFix[c.id];if(xy){c.x=xy[0];c.y=xy[1]}}
+    for(let i=0;i<24&&r.coins?.length;i++){
+      const solids=surfaces(r).filter(s=>s.kind==="ground"||s.kind==="platform"||s.kind==="movingPlatform"||s.parkour);
+      const coin=r.coins.find(c=>coinIssue(c,r,solids));if(!coin)break;
+      const targets=solids.filter(s=>!s.parkour&&s.w>=72&&surfaceTouched(s,r)).sort((a,b)=>Math.abs((a.x+a.w/2)-coin.x)-Math.abs((b.x+b.w/2)-coin.x));
+      const original={x:coin.x,y:coin.y};let placed=false;
+      for(const t of targets){
+        coin.x=Number(Math.min(Math.max(original.x,t.x+24),t.x+t.w-24).toFixed(2));coin.y=Number((t.y-36).toFixed(2));
+        if(!coinIssue(coin,r,solids)){placed=true;break}
+      }
+      if(!placed){coin.x=original.x;coin.y=original.y;break}
+    }
+    r.visualSupports=r.visualSupports||[];
+    const solids=surfaces(r).filter(s=>s.kind==="ground"||s.kind==="platform"||s.kind==="movingPlatform");
+    const catchableIds=new Set((r.catchableSurfaces||[]).map(c=>typeof c==="string"?c:c.id));
+    const touchesBelow=(s)=>s.y+s.h>=GROUND-1||solids.some(v=>v.id!==s.id&&Math.abs(v.y-(s.y+s.h))<=1.5&&overlaps(s.x,s.x+s.w,v.x,v.x+v.w,4));
+    for(const s of solids)if((!isSupported(s,solids)||(catchableIds.has(s.id)&&!touchesBelow(s)))&&!r.visualSupports.some(v=>v.id===s.id&&v.type==="stack-to-ground"))r.visualSupports.push({id:s.id,type:"stack-to-ground"});
+  }
+}
+applyD09LogicRulesToRoutes();
   const JUMP_HINT_ZONE_IDS=Object.freeze({
     D01:["d01-dz-01","d01-dz-02"],
     D02:["d02-dz-01"],
@@ -3151,15 +3228,21 @@ if(D09_OPENING_FIX){
     }
     const surfaces=routeSurfaces(route);
     const groundSurfaces=surfaces.filter(v=>v.kind==="ground"&&(!bounds||visibleX(bounds,v.x,v.w,80)));
-    if(!frozen&&!magma&&route.visualSupports?.length){
+    if(route.visualSupports?.length){
       const supported=new Set(route.visualSupports.filter(v=>v.type==="stack-to-ground").map(v=>v.id));
       for(const g of groundSurfaces.filter(v=>supported.has(v.id))){
         const bodyH=Math.max(0,GROUND-g.y);
         if(bodyH<=g.h+2)continue;
-        c.fillStyle="#243b46";c.fillRect(g.x,g.y,g.w,bodyH);
-        c.fillStyle="#314f5d";for(let yy=g.y+14;yy<GROUND-12;yy+=42)c.fillRect(g.x+4,yy,Math.max(0,g.w-8),4);
-        c.strokeStyle="#f1be31";c.lineWidth=3;c.strokeRect(g.x+2,g.y+2,Math.max(0,g.w-4),Math.max(0,bodyH-4));
+        c.fillStyle=frozen?"#1f5269cc":magma?"#25252acc":"#243b46";c.fillRect(g.x,g.y,g.w,bodyH);
+        c.fillStyle=frozen?"#82c7d8":magma?"#4a4644":"#314f5d";for(let yy=g.y+14;yy<GROUND-12;yy+=42)c.fillRect(g.x+4,yy,Math.max(0,g.w-8),4);
+        c.strokeStyle=frozen?"#8edbea":magma?"#b49e72":"#f1be31";c.lineWidth=3;c.strokeRect(g.x+2,g.y+2,Math.max(0,g.w-4),Math.max(0,bodyH-4));
       }
+    }
+    for(const g of route.visualGapFills||[]){
+      if(bounds&&!visibleX(bounds,g.x,g.w,80))continue;
+      if(frozen) frozenSurface(c,g.x,g.y,g.w,g.h,"ground");
+      else if(magma) magmaSurface(c,g.x,g.y,g.w,g.h,"ground");
+      else engine.drawMetal(g.x,g.y,g.w,g.h);
     }
     for(const g of groundSurfaces){
       if(frozen) drawClippedSurface(c,bounds,()=>frozenSurface(c,g.x,g.y,g.w,g.h,"ground"),g.x,g.y,g.w,g.h,44);
@@ -3188,16 +3271,16 @@ if(D09_OPENING_FIX){
         c.beginPath(); c.moveTo(s.x + 5, s.y + 9); c.lineTo(s.x + s.w - 5, s.y + s.h - 5); c.stroke();
       }
       if (s.parkour === "slide") {
-        const suspended=!frozen&&!magma&&route.visualAttachments?.some(a=>a.targetId===s.id&&a.type==="suspend");
+        const suspended=route.visualAttachments?.some(a=>a.targetId===s.id&&a.type==="suspend");
         if(suspended){
           const m=c.getTransform(),topWorld=(m.d?(-28-m.f)/m.d:s.y-260);
           const cx=s.x+s.w/2,beamY=topWorld,hookY=s.y+7;
           c.save();
-          c.strokeStyle="#1b2a33";c.lineWidth=8;c.beginPath();c.moveTo(cx-56,beamY);c.lineTo(cx+56,beamY);c.stroke();
-          c.strokeStyle="#253a45";c.lineWidth=5;c.beginPath();c.moveTo(cx-46,beamY+7);c.lineTo(cx+46,beamY+7);c.stroke();
-          c.strokeStyle="#1b2a33";c.lineWidth=4;c.beginPath();c.moveTo(s.x+s.w*.25,beamY+2);c.lineTo(s.x+s.w*.25,hookY);c.moveTo(s.x+s.w*.75,beamY+2);c.lineTo(s.x+s.w*.75,hookY);c.stroke();
-          c.fillStyle="#203846";c.fillRect(cx-53,beamY-10,106,10);
-          c.fillStyle="#f0c544";c.fillRect(cx-46,beamY-15,92,5);
+          c.strokeStyle=frozen?"#203944":magma?"#28282d":"#1b2a33";c.lineWidth=8;c.beginPath();c.moveTo(cx-56,beamY);c.lineTo(cx+56,beamY);c.stroke();
+          c.strokeStyle=frozen?"#356577":magma?"#4a4644":"#253a45";c.lineWidth=5;c.beginPath();c.moveTo(cx-46,beamY+7);c.lineTo(cx+46,beamY+7);c.stroke();
+          c.strokeStyle=frozen?"#203944":magma?"#28282d":"#1b2a33";c.lineWidth=4;c.beginPath();c.moveTo(s.x+s.w*.25,beamY+2);c.lineTo(s.x+s.w*.25,hookY);c.moveTo(s.x+s.w*.75,beamY+2);c.lineTo(s.x+s.w*.75,hookY);c.stroke();
+          c.fillStyle=frozen?"#1f5269":magma?"#3a3838":"#203846";c.fillRect(cx-53,beamY-10,106,10);
+          c.fillStyle=frozen?"#ffd27a":magma?"#c6cbd0":"#f0c544";c.fillRect(cx-46,beamY-15,92,5);
           c.restore();
         }
         c.fillStyle = frozen?"#bdeff7":magma?"#b9b9b4":"#f2c230"; c.fillRect(s.x - 16, s.y + s.h - 7, s.w + 32, 7);

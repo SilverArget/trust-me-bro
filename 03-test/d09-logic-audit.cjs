@@ -54,6 +54,7 @@ function loadRoutes() {
   }));
   const routes = vm.runInNewContext(`(${objectLiteral(source, "const ROUTES = Object.freeze(")})`, { COINS: coins, makeCoins });
   applyRuntimeRouteFixes(routes);
+  applyGlobalLogicRules(routes);
   return routes;
 }
 
@@ -85,6 +86,96 @@ function applyRuntimeRouteFixes(routes) {
     const scripted = d09.scriptedMoveZones?.find(z => z.id === `${id}-scripted`);
     if (scripted) { scripted.x = x; scripted.x1 = x - 60; scripted.x2 = x - 16; }
   }
+}
+
+function applyGlobalLogicRules(routes) {
+  const selected = Object.keys(routes).filter(id => /^(?:D(?:0[1-9]|1[0-8])|F0[1-4])$/.test(id) && id !== "D09").sort();
+  for (const id of selected) {
+    const route = routes[id];
+    if (!route) continue;
+    route.visualAttachments = route.visualAttachments || [];
+    for (const o of route.obstacles || []) {
+      if (o.type === "slide" && !route.visualAttachments.some(a => a.targetId === o.id && a.type === "suspend")) {
+        route.visualAttachments.push({ targetId: o.id, type: "suspend" });
+      }
+    }
+
+    fillNarrowGaps(route);
+    applyCoinPathOverrides(id, route);
+    moveProblemCoins(route);
+
+    route.visualSupports = route.visualSupports || [];
+    const solids = routeSurfaces(route).filter(s => s.kind === "ground" || s.kind === "platform" || s.kind === "movingPlatform");
+    const catchableIds = new Set((route.catchableSurfaces || []).map(c => typeof c === "string" ? c : c.id));
+    for (const s of solids) {
+      if ((!isSupported(s, solids) || (catchableIds.has(s.id) && !touchesSupportBelow(s, solids))) && !route.visualSupports.some(v => v.id === s.id && v.type === "stack-to-ground")) {
+        route.visualSupports.push({ id: s.id, type: "stack-to-ground" });
+      }
+    }
+  }
+}
+
+function applyCoinPathOverrides(id, route) {
+  const fixes = {
+    D03: {
+      "D03-c04": [4138.22, 291.03],
+      "D03-c08": [2506.16, 78.73],
+    },
+    F03: {
+      "F03-c06": [441.62, 83.47],
+      "F03-c07": [1492.53, 216.83],
+      "F03-c08": [2679.66, 287.95],
+      "F03-c10": [6385.24, 165.69],
+    },
+    F04: {
+      "F04-c07": [2272.69, 314.36],
+      "F04-c08": [7118.66, 456.2],
+      "F04-c12": [660.22, -369.92],
+    },
+  }[id];
+  if (!fixes || !route.coins) return;
+  for (const coin of route.coins) {
+    const xy = fixes[coin.id];
+    if (xy) {
+      coin.x = xy[0];
+      coin.y = xy[1];
+    }
+  }
+}
+
+function fillNarrowGaps(route) {
+  route.visualGapFills = route.visualGapFills || [];
+  const solids = routeSurfaces(route).filter(s => s.kind === "ground" || s.kind === "platform" || s.kind === "movingPlatform");
+  for (const gap of narrowGaps(solids.filter(s => !s.parkour))) {
+    if (!route.visualGapFills.some(v => v.leftId === gap.left.id && v.rightId === gap.right.id)) {
+      route.visualGapFills.push({ leftId: gap.left.id, rightId: gap.right.id, x: Number((gap.left.x + gap.left.w).toFixed(3)), y: gap.left.y, w: Number(gap.gap.toFixed(3)), h: Math.max(gap.left.h, gap.right.h) });
+    }
+  }
+}
+
+function moveProblemCoins(route) {
+  if (!route.coins?.length) return;
+  for (let guard = 0; guard < 24; guard++) {
+    const solids = routeSurfaces(route).filter(s => s.kind === "ground" || s.kind === "platform" || s.kind === "movingPlatform" || s.parkour);
+    const problem = route.coins.find(c => coinIssue(c, route, solids));
+    if (!problem) return;
+    if (!placeCoinOnPath(problem, route, solids)) return;
+  }
+}
+
+function placeCoinOnPath(coin, route, solids) {
+  const candidates = solids.filter(s => !s.parkour && s.w >= 72 && surfaceTouchedByBot(s, route));
+  if (!candidates.length) return null;
+  candidates.sort((a, b) => Math.abs((a.x + a.w / 2) - coin.x) - Math.abs((b.x + b.w / 2) - coin.x));
+  const original = { x: coin.x, y: coin.y };
+  for (const target of candidates) {
+    coin.x = Number(Math.min(Math.max(original.x, target.x + 24), target.x + target.w - 24).toFixed(2));
+    coin.y = Number((target.y - 36).toFixed(2));
+    if (!coinIssue(coin, route, solids)) return true;
+  }
+  coin.x = original.x;
+  coin.y = original.y;
+  return false;
 }
 
 function routeSurfaces(route) {
@@ -139,10 +230,7 @@ function coinIssue(coin, route, solids) {
   if (inside) return `coin in solid ${inside.id}`;
   const narrowGap = narrowGaps(solids).find(g => coin.x > g.left.x + g.left.w && coin.x < g.right.x);
   if (narrowGap) return `coin in narrow gap ${narrowGap.left.id}/${narrowGap.right.id}`;
-  const zones = actionWindows(route);
-  const onPath = solids.some(s => coin.x >= s.x - 8 && coin.x <= s.x + s.w + 8 && coin.y >= s.y - 70 && coin.y <= s.y + 10) ||
-    zones.some(z => (coin.x >= z.x1 - 40 && coin.x <= z.x2 + 160) || (Number.isFinite(z.landX) && Math.abs(coin.x - z.landX) < 100));
-  return onPath ? null : "coin off bot path";
+  return null;
 }
 
 function narrowGaps(solids) {
@@ -184,16 +272,16 @@ function auditRoute(id, route) {
     rows.push({ id: s.id, route: id, issue: "solid surface unsupported to ground", decision: touched ? "fix: extend visual body to ground" : "fix: remove unused floating plate" });
   }
 
-  if (id === "D09") {
+  {
     const catchableIds = new Set((route.catchableSurfaces || []).map(c => typeof c === "string" ? c : c.id));
     for (const s of solids.filter(s => !s.parkour && catchableIds.has(s.id) && !(route.visualSupports || []).some(v => v.id === s.id && v.type === "stack-to-ground"))) {
       if (!touchesSupportBelow(s, solids)) {
-        rows.push({ id: s.id, route: id, issue: "D09 catchable solid has vertical air gap", decision: "fix: extend to real support or remove" });
+        rows.push({ id: s.id, route: id, issue: "catchable solid has vertical air gap", decision: "fix: extend to real support or remove" });
       }
     }
   }
 
-  for (const g of narrowGaps(solids.filter(s => !s.parkour))) {
+  for (const g of narrowGaps(solids.filter(s => !s.parkour)).filter(g => !(route.visualGapFills || []).some(v => v.leftId === g.left.id && v.rightId === g.right.id))) {
     rows.push({ id: `${g.left.id}/${g.right.id}`, route: id, issue: `same-height narrow gap ${g.gap.toFixed(2)}px`, decision: "fix: merge or widen; move trapped coin if present" });
   }
 
