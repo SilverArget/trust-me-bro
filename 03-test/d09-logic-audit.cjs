@@ -9,6 +9,7 @@ const root = process.env.TMB_ROOT || path.join(__dirname, "..");
 const sourcePath = path.join(root, "js", "a12-campaign.js");
 const GROUND = 455;
 const PLAYER_W = 32;
+const PLAYER_H = 48;
 const MIN_MEANINGFUL_GAP = PLAYER_W + 8;
 
 function balancedEnd(text, openAt) {
@@ -45,6 +46,14 @@ function objectLiteral(source, marker) {
   return source.slice(open, close + 1);
 }
 
+function functionLiteral(source, marker) {
+  const at = source.indexOf(marker);
+  if (at < 0) throw new Error(`missing ${marker}`);
+  const open = source.indexOf("{", at);
+  const close = balancedEnd(source, open);
+  return source.slice(at, close + 1);
+}
+
 function loadRoutes() {
   const source = fs.readFileSync(sourcePath, "utf8");
   const coins = vm.runInNewContext(`(${objectLiteral(source, "const COINS = Object.freeze(")})`);
@@ -53,51 +62,16 @@ function loadRoutes() {
     id: c.id || `${id}-c${String((c.n ?? i) + 1).padStart(2, "0")}`,
   }));
   const routes = vm.runInNewContext(`(${objectLiteral(source, "const ROUTES = Object.freeze(")})`, { COINS: coins, makeCoins });
-  markRawAuditFindings(routes);
-  applyGlobalLogicRules(routes);
+  applyProductRuntimeRules(source, routes);
   return routes;
 }
 
-function markRawAuditFindings(routes) {
-  for (const route of Object.values(routes)) route.__auditFlags = [];
-  const d09 = routes.D09;
-  if (d09) {
-    const sarkanStep = d09.groundSegments?.find(s => s.id === "d09-ir-23");
-    const badSlides = (d09.obstacles || []).filter(o =>
-      o.type === "slide" &&
-      o.x >= 3200 && o.x <= 3340 &&
-      (o.baseY ?? GROUND) > 330 &&
-      (!sarkanStep || sarkanStep.h < 200)
-    );
-    for (const o of badSlides) {
-      d09.__auditFlags.push({
-        id: o.id,
-        issue: "D09 slide hangs over narrow pit/step transition",
-        decision: "fix: move to flat supported surface or remove",
-      });
-    }
-  }
-  const requiredSupports = {
-    D03: ["d03-v-13"],
-    D04: ["d04-v-02", "d04-v-03", "d04-v-05"],
-    D05: ["d05-v-08"],
-    D08: ["d08-v-31"],
-    D11: ["d11-v-28"],
-  };
-  for (const [id, supportIds] of Object.entries(requiredSupports)) {
-    const route = routes[id];
-    if (!route) continue;
-    const supported = new Set((route.visualSupports || []).filter(v => v.type === "stack-to-ground").map(v => v.id));
-    for (const supportId of supportIds) {
-      if (!supported.has(supportId)) {
-        route.__auditFlags.push({
-          id: supportId,
-          issue: "video evidence target is visually unsupported",
-          decision: "fix: add visible support to ground or remove",
-        });
-      }
-    }
-  }
+function applyProductRuntimeRules(source, routes) {
+  const fn = functionLiteral(source, "function applyD09LogicRulesToRoutes()");
+  vm.runInNewContext(
+    `const GROUND = ${GROUND}; const ROUTES = routes; ${fn}; applyD09LogicRulesToRoutes();`,
+    { routes }
+  );
 }
 
 function applyRuntimeRouteFixes(routes) {
@@ -332,6 +306,56 @@ function actionWindows(route) {
   ].filter(z => Number.isFinite(z.x1) && Number.isFinite(z.x2));
 }
 
+function supportUnderSlide(slide, route) {
+  const baseY = slide.baseY ?? GROUND;
+  const span = [slide.x, slide.x + slide.w];
+  return (route.groundSegments || []).filter(s =>
+    Math.abs(s.y - baseY) <= 1.5 &&
+    overlaps(span[0], span[1], s.x, s.x + s.w, 0)
+  );
+}
+
+function slideSupportIssue(slide, route) {
+  const supports = supportUnderSlide(slide, route);
+  if (!supports.length) return "slide over pit/lower segment instead of flat top";
+  const cover = supports.reduce((n, s) => n + Math.max(0, Math.min(slide.x + slide.w, s.x + s.w) - Math.max(slide.x, s.x)), 0);
+  if (cover < slide.w - 1) return "slide not fully over one flat supported surface";
+  const nearestEdge = Math.min(...supports.map(s => Math.min(Math.abs(slide.x - s.x), Math.abs((s.x + s.w) - (slide.x + slide.w)))));
+  if (nearestEdge < 24) return `slide too close to step edge (${nearestEdge.toFixed(1)}px)`;
+  return null;
+}
+
+function jumpLandingBands(route) {
+  if (route.routeId !== "D18") return [];
+  const solids = (route.groundSegments || [])
+    .filter(s => s.kind === "ground" || s.kind === "platform" || s.kind === "movingPlatform")
+    .sort((a, b) => a.x - b.x || a.y - b.y);
+  const bands = [];
+  for (const left of solids) for (const right of solids) {
+    if (right.x <= left.x + left.w) continue;
+    const gap = right.x - (left.x + left.w);
+    if (gap < 24 || gap > 180) continue;
+    if (right.y > left.y + 96) continue;
+    bands.push({ id: `${left.id}->${right.id}`, x0: right.x, x1: right.x + 244 });
+  }
+  return bands;
+}
+
+function vaultLandingBands(route) {
+  return (route.obstacles || [])
+    .filter(o => o.type === "vault")
+    .map(o => ({ id: o.id, x0: o.x + o.w, x1: o.x + o.w + 160 }));
+}
+
+function slideLandingIssue(slide, route) {
+  const bar = slideBar(slide);
+  const jump = jumpLandingBands(route).find(b => overlaps(bar.x0, bar.x1, b.x0, b.x1, 0));
+  if (jump) return `slide inside jump landing arc ${jump.id}`;
+  const vault = vaultLandingBands(route).find(b => overlaps(bar.x0, bar.x1, b.x0, b.x1, 0));
+  if (vault) return `slide inside vault landing arc ${vault.id}`;
+  return null;
+}
+
 function surfaceTouchedByBot(surface, route) {
   const zones = actionWindows(route);
   if (zones.some(z => overlaps(surface.x, surface.x + surface.w, z.x1 - 80, z.x2 + 120))) return true;
@@ -380,6 +404,14 @@ function auditRoute(id, route) {
   for (const s of surfaces.filter(s => s.parkour === "slide")) {
     const hasAttachment = !!s.suspended || !!(route.visualAttachments || []).some(a => a.targetId === s.id && a.type === "suspend");
     rows.push({ id: s.id, route: id, issue: "slide obstacle has overhead attachment", decision: hasAttachment ? "ok" : "fix: add crane/gantry cable visual" });
+  }
+
+  for (const slide of route.obstacles || []) {
+    if (slide.type !== "slide") continue;
+    const supportIssue = slideSupportIssue(slide, route);
+    if (supportIssue) rows.push({ id: slide.id, route: id, issue: supportIssue, decision: "fix: move to flat surface or remove" });
+    const landingIssue = slideLandingIssue(slide, route);
+    if (landingIssue) rows.push({ id: slide.id, route: id, issue: landingIssue, decision: "fix: move out of landing arc or remove" });
   }
 
   for (const s of solids.filter(s => !s.parkour)) {

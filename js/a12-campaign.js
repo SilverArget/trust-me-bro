@@ -1129,6 +1129,20 @@ function applyD09LogicRulesToRoutes(){
     F03:{"F03-c06":[441.62,83.47],"F03-c07":[1492.53,216.83],"F03-c08":[2679.66,287.95],"F03-c10":[6385.24,165.69]},
     F04:{"F04-c07":[2272.69,314.36],"F04-c08":[7118.66,456.2],"F04-c12":[660.22,-369.92]},
   };
+  const moveSlide=(r,id,x,baseY)=>{
+    const o=(r.obstacles||[]).find(v=>v.id===id);
+    if(o){o.x=x;o.baseY=baseY}
+    const z=(r.scriptedMoveZones||[]).find(v=>v.obstacleId===id||v.id===`${id}-scripted`);
+    if(z){z.x=x;z.x1=x-60;z.x2=x-16}
+  };
+  const removeSlides=(r,ids)=>{
+    const blocked=new Set(ids);
+    r.obstacles=(r.obstacles||[]).filter(o=>!(o.type==="slide"&&blocked.has(o.id)));
+    r.scriptedMoveZones=(r.scriptedMoveZones||[]).filter(z=>!blocked.has(z.obstacleId)&&!blocked.has(String(z.id||"").replace(/-scripted$/,"")));
+    r.visualAttachments=(r.visualAttachments||[]).filter(a=>!blocked.has(a.targetId));
+  };
+  if(ROUTES.D09)moveSlide(ROUTES.D09,"d09-ir-slide-04",4156,277.375);
+  if(ROUTES.D18)removeSlides(ROUTES.D18,["d18-p1-a01-slide-02","d18-p1-a01-slide-04"]);
   for(const id of routeIds){
     const r=ROUTES[id];
     const slideStats=relocateSlidesOffTransitions(r);
