@@ -11,6 +11,9 @@ const dataRoots = {D01:'E:/oyunlar/TrustMeBro/01-tasarim/vector-parkur/dock-d01d
 for(let n=7;n<=18;n++)dataRoots[`D${String(n).padStart(2,'0')}`]=path.join(__dirname,'dock18-generated');
 for(const id of ['F01','F02','F03','F04'])if(fs.existsSync(path.join(__dirname,'frozen-hard-generated',`transitions-${id}.json`)))dataRoots[id]=path.join(__dirname,'frozen-hard-generated');
 const transitions = Object.fromEntries(Object.keys(dataRoots).map(id => [id, JSON.parse(fs.readFileSync(`${dataRoots[id]}/transitions-${id}.json`, 'utf8'))]));
+const allRouteIds = ['D01','D02','D03','D04','D05','D06','D07','D08','D09','D10','D11','D12','D13','D14','D15','D16','D17','D18','F01','F02','F03','F04','M01','M02','M03','M04','A01','A02'];
+const routeIds = process.env.TMB_ROUTE_IDS ? process.env.TMB_ROUTE_IDS.split(',').map(s => s.trim()).filter(Boolean) : allRouteIds;
+const driveFrameMs = process.env.TMB_RAF_HZ ? 1000 / 60 : 16;
 let server, base;
 
 test.beforeAll(async () => {
@@ -29,6 +32,31 @@ test.afterAll(async () => new Promise(resolve => server.close(resolve)));
 
 async function boot(page, id, viewport = {width:1280,height:720}) {
   await page.setViewportSize(viewport);
+  if (process.env.TMB_RAF_HZ) {
+    await page.addInitScript(({ hz, fastMode }) => {
+      const frameMs = 1000 / Number(hz);
+      if (!Number.isFinite(frameMs) || frameMs <= 0) return;
+      let now = 0, nextId = 1;
+      const timers = new Map();
+      Object.defineProperty(performance, 'now', {value: () => now});
+      Date.now = () => Math.floor(now);
+      window.requestAnimationFrame = callback => {
+        const id = nextId++;
+        const timer = setTimeout(() => {
+          timers.delete(id);
+          now += frameMs;
+          callback(now);
+        }, fastMode ? 0 : frameMs);
+        timers.set(id, timer);
+        return id;
+      };
+      window.cancelAnimationFrame = id => {
+        const timer = timers.get(id);
+        if (timer) clearTimeout(timer);
+        timers.delete(id);
+      };
+    }, { hz: Number(process.env.TMB_RAF_HZ), fastMode: !!process.env.TMB_RAF_FAST });
+  }
   await page.goto(base + '#debug');
   await page.waitForFunction(() => window.__TMB_A12__);
   await page.locator('.characterChoice:visible').first().click();
@@ -237,15 +265,24 @@ async function drive(page, id, {touch=false, stopAfter, omitDives=[]} = {}) {
         throw new Error(`${id} stuck without target at x=${p.x.toFixed(2)}\n${trace.slice(-15).join('\n')}`);
       }
     } else stuckSince = null;
-    await page.waitForTimeout(16);
+    if (process.env.TMB_RAF_HZ) await page.waitForFunction(t => __TMB_A12__.getState().gameClock >= t + 1 / 60 - .002, s.gameClock);
+    else await page.waitForTimeout(Number.isFinite(driveFrameMs) && driveFrameMs > 0 ? driveFrameMs : 16);
   }
   await page.keyboard.up('ArrowRight');
   if (process.env.TMB_MEASURE_HARD_TRACE) fs.writeFileSync(path.join(__dirname,`frozen-hard-generated`,`${id}-60hz-trace.json`),JSON.stringify(movementSamples,null,2)+'\n');
   return {end, deaths, retries, elapsed:(Date.now()-started)/1000, diveSeen, catchSeen, trace, c07Y, chiefSamples, chiefMinGap, chiefCatches, manualInputs};
 }
 
-for (const id of ['D01','D02','D03','D04','D05','D06','D07','D08','D09','D10','D11','D12','D13','D14','D15','D16','D17','D18','F01','F02','F03','F04','M01','M02','M03','M04','A01','A02']) test(`O-1 B-5 ${id} ideal keyboard route`, async ({page}) => {
-  test.setTimeout(120000); await boot(page,id); const r=await drive(page,id);
+for (const id of routeIds) test(`O-1 B-5 ${id} ideal keyboard route`, async ({page}) => {
+  test.setTimeout(120000); await boot(page,id);
+  if (process.env.TMB_INPUT_TRACE) await page.evaluate(() => { window.__tmbInputTrace = []; });
+  const r=await drive(page,id);
+  if (process.env.TMB_INPUT_TRACE) {
+    const trace = await page.evaluate(() => window.__tmbInputTrace || []);
+    const target = process.env.TMB_INPUT_TRACE.replace(/\.json$/i, `-${id}.json`);
+    fs.mkdirSync(path.dirname(target), { recursive: true });
+    fs.writeFileSync(target, JSON.stringify({ route:id, trace }, null, 2) + '\n');
+  }
   const collected=r.end.economy.collectedCoinIds.length, expected=r.end.route.coins.length;
   const coinBaseline=process.env.TMB_MEASURE_HARD_TRACE?0:id==='D09'?0:id==='D03'?12:expected;
   const pass=!!r.end.result || r.end.player.x+r.end.hitbox.w>=r.end.route.finishX;
