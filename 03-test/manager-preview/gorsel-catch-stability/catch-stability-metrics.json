@@ -24,27 +24,27 @@
   ],
   "slowCatch": {
     "caught": true,
-    "sampleCount": 122,
+    "sampleCount": 152,
     "firstCatch": {
-      "t": 7.74970000000004,
+      "t": 9.583000000000007,
       "x": 3919,
       "result": false,
       "deaths": 1,
       "chief": {
-        "x": 2790.89,
-        "chiefT": 11.332,
+        "x": 3919,
+        "chiefT": 11.349176319999989,
         "playerT": 13.832,
         "catches": 1
       }
     },
     "end": {
-      "t": 7.74970000000004,
+      "t": 9.583000000000007,
       "x": 3919,
       "result": false,
       "deaths": 1,
       "chief": {
-        "x": 2790.89,
-        "chiefT": 11.332,
+        "x": 3919,
+        "chiefT": 11.349176319999989,
         "playerT": 13.832,
         "catches": 1
       }

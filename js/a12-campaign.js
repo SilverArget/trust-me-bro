@@ -985,7 +985,7 @@ applyD09LogicRulesToRoutes();
     if(c.matchMode==="x"){best=start;bestD=Infinity;for(let i=start;i<=end;i++){const d=Math.abs(a[i][1]-player.x);if(d<bestD){bestD=d;best=i}}}
     c.playerIndex=Math.max(start,best);c.playerT=Math.max(c.playerT,a[c.playerIndex][0]);
   }
-  const CHIEF_ENTRY_X=-64,CHIEF_LADDER_FRACTION=.15,CHIEF_LADDER_HEIGHT=132,CHIEF_LADDER_CLIMB_T=.85,CHIEF_FAST_SCALE=40/30,CHIEF_CLOSE_GAP_PX=160,CHIEF_EASE_GAP_PX=180;
+  const CHIEF_ENTRY_X=-64,CHIEF_LADDER_FRACTION=.15,CHIEF_LADDER_HEIGHT=132,CHIEF_LADDER_CLIMB_T=.85,CHIEF_FAST_SCALE=40/30,CHIEF_CLOSE_GAP_PX=160,CHIEF_EASE_GAP_PX=180,CHIEF_STOP_CLOSE_PX=520;
   function chiefDelayFor(path,id){
     if(!path)return undefined;
     const d=path.delay||0;
@@ -999,8 +999,14 @@ applyD09LogicRulesToRoutes();
     const behind=gap>40;
     const offscreen=behind&&(c.x+c.w<camX+12||c.x>camX+viewW-12);
     const far=Math.max(0,Math.min(1,(gap-CHIEF_CLOSE_GAP_PX)/CHIEF_EASE_GAP_PX));
-    const target=gap>CHIEF_CLOSE_GAP_PX?1+(CHIEF_FAST_SCALE-1)*(offscreen?1:far):1;
-    c.chaseScale+=(target-(c.chaseScale||1))*Math.min(1,dt*(target<c.chaseScale?14:4));
+    let target=gap>CHIEF_CLOSE_GAP_PX?1+(CHIEF_FAST_SCALE-1)*(offscreen?1:far):1;
+    const playerSlow=Math.abs(player.vx)<70;
+    if(playerSlow&&behind&&gap<CHIEF_STOP_CLOSE_PX){
+      const stopFar=Math.max(0,Math.min(1,(gap-CHIEF_CLOSE_GAP_PX)/(CHIEF_STOP_CLOSE_PX-CHIEF_CLOSE_GAP_PX)));
+      const stopTarget=.25+Math.sqrt(stopFar)*.55;
+      target=Math.min(target,stopTarget);
+    }
+    c.chaseScale+=(target-(c.chaseScale||1))*Math.min(1,dt*(target<c.chaseScale?30:4));
     return c.chaseScale;
   }
   function chiefLadderEntry(){
