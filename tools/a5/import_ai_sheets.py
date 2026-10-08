@@ -21,15 +21,19 @@ from PIL import Image, ImageDraw
 ROOT = Path(__file__).resolve().parents[2]
 RAW = ROOT / "sprites" / "raw" / "a5-ai"
 OUT = ROOT / "sprites" / "a5"
-EVIDENCE = ROOT / "03-test" / "a5e-evidence"
-RUNNERS = ("male", "female")
-OUTFITS = ("default", "dockCrew", "nightShift", "hazardRunner")
-EXPECTED = {
-    "male-default": "5855e15f", "male-dockCrew": "6c0759a0",
-    "male-nightShift": "7b1a85c9", "male-hazardRunner": "204a0910",
-    "female-default": "5a9cc190", "female-dockCrew": "a611545b",
-    "female-nightShift": "aeab88d6", "female-hazardRunner": "02939de5",
+CHIEF_OUT = ROOT / "sprites" / "chiefs"
+EVIDENCE = ROOT / "03-test" / "manager-preview" / "gorsel"
+RUNNER_OUTFITS = {
+    "male": ("ronin", "shadowNinja", "orbitAstronaut", "northRaider", "mechaPilot"),
+    "female": ("ronin", "shadowNinja", "orbitAstronaut", "northRaider", "mechaPilot"),
+    "tall": ("default",),
+    "compact": ("default",),
+    "bruiser": ("default",),
+    "athlete": ("default",),
 }
+RUNNER_TARGET_HEIGHT = {"male": 48, "female": 48, "tall": 54, "compact": 42, "bruiser": 50, "athlete": 47}
+CHIEFS = ("securityTall", "classicChief", "robotGuard", "bouncer")
+CHIEF_TARGET_HEIGHT = {"securityTall": 64, "classicChief": 52, "robotGuard": 62, "bouncer": 60}
 RESAMPLE = Image.Resampling.LANCZOS
 
 
@@ -144,64 +148,80 @@ def median(values: list[float]) -> float:
     return (a[n // 2] if n & 1 else (a[n // 2 - 1] + a[n // 2]) / 2)
 
 
-def load_pages() -> dict[str, dict]:
+def load_pages(keys: list[str]) -> dict[str, dict]:
     pages = {}
-    for runner in RUNNERS:
-        for outfit in OUTFITS:
-            key = f"{runner}-{outfit}"
-            path = RAW / f"{key}.png"
-            if not path.is_file():
-                raise SystemExit(f"STOP: missing source {path}")
-            digest = sha256(path)
-            if digest[:8] != EXPECTED[key]:
-                raise SystemExit(f"STOP: source SHA mismatch {key}: {digest[:8]} != {EXPECTED[key]}")
-            src = Image.open(path).convert("RGBA")
-            xb, yb = bounds(src.width), bounds(src.height)
-            cells, boxes, page_cleanup = [], [], []
-            for row in range(8):
-                for col in range(8):
-                    im = segment(src.crop((xb[col], yb[row], xb[col + 1], yb[row + 1])))
-                    im, removed_components, removed_area = clean_edge_fragments(im)
-                    box = alpha_bbox(im)
-                    cells.append(im)
-                    boxes.append(box)
-                    page_cleanup.append({"removed_components": removed_components, "removed_alpha_pixels": removed_area})
-            pages[key] = {"path": path, "source_sha256": digest, "size": src.size,
-                          "cells": cells, "boxes": boxes, "cleanup": page_cleanup}
+    for key in keys:
+        path = RAW / f"{key}.png"
+        if not path.is_file():
+            raise SystemExit(f"STOP: missing source {path}")
+        digest = sha256(path)
+        src = Image.open(path).convert("RGBA")
+        xb, yb = bounds(src.width), bounds(src.height)
+        cells, boxes, page_cleanup = [], [], []
+        for row in range(8):
+            for col in range(8):
+                im = segment(src.crop((xb[col], yb[row], xb[col + 1], yb[row + 1])))
+                im, removed_components, removed_area = clean_edge_fragments(im)
+                box = alpha_bbox(im)
+                cells.append(im)
+                boxes.append(box)
+                page_cleanup.append({"removed_components": removed_components, "removed_alpha_pixels": removed_area})
+        pages[key] = {"path": path, "source_sha256": digest, "size": src.size,
+                      "cells": cells, "boxes": boxes, "cleanup": page_cleanup}
     return pages
 
 
-def calibrate(pages: dict[str, dict]) -> dict[str, float]:
+def calibrate(pages: dict[str, dict], targets: dict[str, int]) -> dict[str, float]:
     scales = {}
-    for runner in RUNNERS:
+    for runner, target in targets.items():
         heights = []
-        for outfit in OUTFITS:
-            page = pages[f"{runner}-{outfit}"]
+        for key, page in pages.items():
+            if key != runner and not key.startswith(f"{runner}-"):
+                continue
             for i in range(8):
                 box = page["boxes"][i]
                 if box:
                     heights.append((box[3] - box[1]) * 64.0 / page["cells"][i].height)
-        if len(heights) != 32:
+        if not heights:
             raise SystemExit(f"STOP: empty idle calibration frame for {runner}")
-        scales[runner] = 48.0 / median(heights)
+        scales[runner] = target / median(heights)
         if scales[runner] < 0.70:
             raise SystemExit(f"STOP: runner-global scale below 0.70 for {runner}: {scales[runner]:.6f}")
     return scales
 
 
-def page_translation(page: dict, scale: float) -> tuple[float, float]:
+def page_translation(page: dict, scale: float, cell_size: int, anchor: tuple[int, int]) -> tuple[float, float]:
     idle_centres, contacts = [], []
     for i in range(8):
         box = page["boxes"][i]
         if box:
-            idle_centres.append(((box[0] + box[2]) / 2) * 64.0 / page["cells"][i].width)
+            idle_centres.append(((box[0] + box[2]) / 2) * cell_size / page["cells"][i].width)
     for i in range(16):  # idle + run are the only grounded calibration rows
         box = page["boxes"][i]
         if box:
-            contacts.append(box[3] * 64.0 / page["cells"][i].height)
+            contacts.append(box[3] * cell_size / page["cells"][i].height)
     if len(idle_centres) != 8 or len(contacts) != 16:
         raise SystemExit("STOP: missing idle/run calibration frame")
-    return 32.0 - scale * median(idle_centres), 56.0 - scale * median(contacts)
+    return anchor[0] - scale * median(idle_centres), anchor[1] - scale * median(contacts)
+
+
+def page_fits(page: dict, scale: float, cell_size: int, anchor: tuple[int, int]) -> bool:
+    tx, ty = page_translation(page, scale, cell_size, anchor)
+    for box, cell in zip(page["boxes"], page["cells"]):
+        if not box:
+            return False
+        sx, sy = cell_size / cell.width, cell_size / cell.height
+        x0, y0, x1, y1 = [box[0] * sx * scale + tx, box[1] * sy * scale + ty,
+                          box[2] * sx * scale + tx, box[3] * sy * scale + ty]
+        if x0 < 0 or y0 < 0 or x1 > cell_size or y1 > cell_size:
+            return False
+    return True
+
+
+def fit_scale(page: dict, scale: float, cell_size: int, anchor: tuple[int, int]) -> float:
+    while scale > 0.5 and not page_fits(page, scale, cell_size, anchor):
+        scale *= 0.985
+    return scale
 
 
 def boundary_halo_count(im: Image.Image) -> int:
@@ -217,8 +237,8 @@ def boundary_halo_count(im: Image.Image) -> int:
                                   (p[..., 1] - np.maximum(p[..., 0], p[..., 2]) > 24)))
 
 
-def render_cell(cell: Image.Image, scale: float, tx: float, ty: float) -> tuple[Image.Image, bool]:
-    sx, sy = 64.0 / cell.width, 64.0 / cell.height
+def render_cell(cell: Image.Image, scale: float, tx: float, ty: float, cell_size: int) -> tuple[Image.Image, bool]:
+    sx, sy = cell_size / cell.width, cell_size / cell.height
     nw = max(1, round(cell.width * sx * scale))
     nh = max(1, round(cell.height * sy * scale))
     resized = cell.resize((nw, nh), RESAMPLE)
@@ -239,8 +259,8 @@ def render_cell(cell: Image.Image, scale: float, tx: float, ty: float) -> tuple[
     resized = Image.fromarray(arr, "RGBA")
     x, y = round(tx), round(ty)
     box = resized.getchannel("A").getbbox()
-    overflow = bool(box and (x + box[0] < 0 or y + box[1] < 0 or x + box[2] > 64 or y + box[3] > 64))
-    out = Image.new("RGBA", (64, 64))
+    overflow = bool(box and (x + box[0] < 0 or y + box[1] < 0 or x + box[2] > cell_size or y + box[3] > cell_size))
+    out = Image.new("RGBA", (cell_size, cell_size))
     out.alpha_composite(resized, (x, y))
     arr = np.asarray(out).copy()
     opaque = arr[..., 3] > 0
@@ -264,36 +284,43 @@ def save_png(im: Image.Image, path: Path) -> None:
 
 def main() -> None:
     OUT.mkdir(parents=True, exist_ok=True)
+    CHIEF_OUT.mkdir(parents=True, exist_ok=True)
     EVIDENCE.mkdir(parents=True, exist_ok=True)
-    pages = load_pages()
-    scales = calibrate(pages)
-    report = {"schema": 1, "calibration": {"idle_height_px": 48, "contact_y": 56,
-              "idle_center_x": 32}, "runner_scales": scales, "pages": {}}
+    runner_keys = [f"{runner}-{outfit}" for runner, outfits in RUNNER_OUTFITS.items() for outfit in outfits]
+    pages = load_pages(runner_keys + list(CHIEFS))
+    runner_scales = calibrate({k: pages[k] for k in runner_keys}, RUNNER_TARGET_HEIGHT)
+    chief_scales = calibrate({k: pages[k] for k in CHIEFS}, CHIEF_TARGET_HEIGHT)
+    report = {"schema": 2, "runner_calibration": {"anchor": [32, 56], "cell": [64, 64]},
+              "chief_calibration": {"anchor": [40, 74], "cell": [80, 80]},
+              "runner_scales": runner_scales, "chief_scales": chief_scales, "pages": {}}
     failures = []
-    for runner in RUNNERS:
-        for outfit in OUTFITS:
-            key = f"{runner}-{outfit}"
+    for kind, keys, out_dir, cell_size, atlas_size, anchor, scales in [
+        ("runner", runner_keys, OUT, 64, 512, (32, 56), runner_scales),
+        ("chief", list(CHIEFS), CHIEF_OUT, 80, 640, (40, 74), chief_scales),
+    ]:
+        for key in keys:
+            runner = key.split("-", 1)[0] if kind == "runner" else key
             page, scale = pages[key], scales[runner]
-            tx, ty = page_translation(page, scale)
-            atlas = Image.new("RGBA", (512, 512))
+            scale = fit_scale(page, scale, cell_size, anchor)
+            tx, ty = page_translation(page, scale, cell_size, anchor)
+            atlas = Image.new("RGBA", (atlas_size, atlas_size))
             frames, rendered = [], []
             for i, cell in enumerate(page["cells"]):
-                out, overflow = render_cell(cell, scale, tx, ty)
-                atlas.alpha_composite(out, ((i % 8) * 64, (i // 8) * 64))
+                out, overflow = render_cell(cell, scale, tx, ty, cell_size)
+                atlas.alpha_composite(out, ((i % 8) * cell_size, (i // 8) * cell_size))
                 rendered.append(out)
                 alpha_pixels = int(np.count_nonzero(np.asarray(out.getchannel("A"))))
                 halo = boundary_halo_count(out)
                 box = alpha_bbox(out)
                 item = {"index": i, "row": i // 8, "column": i % 8,
-                        "alpha_pixels": alpha_pixels,
-                        "alpha_ratio": round(alpha_pixels / 4096.0, 8),
+                        "alpha_pixels": alpha_pixels, "alpha_ratio": round(alpha_pixels / float(cell_size * cell_size), 8),
                         "bbox": list(box) if box else None, "overflow": overflow,
                         "boundary_green_halo_pixels": halo, "empty": box is None}
                 item.update(page["cleanup"][i])
                 frames.append(item)
                 if item["empty"] or overflow or halo:
                     failures.append(f"{key} frame {i}: empty={item['empty']} overflow={overflow} halo={halo}")
-            atlas_path = OUT / f"{key}-full.png"
+            atlas_path = out_dir / f"{key}-full.png"
             save_png(atlas, atlas_path)
             contact = Image.new("RGBA", (1024, 1024), (20, 24, 31, 255))
             draw = ImageDraw.Draw(contact)

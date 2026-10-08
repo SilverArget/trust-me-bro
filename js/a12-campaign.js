@@ -54,14 +54,29 @@
     delete document.body.dataset.routeId;
   }
   const RUNNERS = Object.freeze({
-    male: { id: "male", legacy: 0, label: "MALE RUNNER" },
-    female: { id: "female", legacy: 2, label: "FEMALE RUNNER" },
+    male: { id: "male", legacy: 0, price: 0, outfitLocked: false, labelKey: "male" },
+    female: { id: "female", legacy: 2, price: 0, outfitLocked: false, labelKey: "female" },
+    tall: { id: "tall", legacy: 0, price: 300, outfitLocked: true, labelKey: "tall" },
+    compact: { id: "compact", legacy: 2, price: 300, outfitLocked: true, labelKey: "compact" },
+    bruiser: { id: "bruiser", legacy: 0, price: 500, outfitLocked: true, labelKey: "bruiser" },
+    athlete: { id: "athlete", legacy: 2, price: 500, outfitLocked: true, labelKey: "athlete" },
   });
   const OUTFITS = Object.freeze({
     default: { id: "default", price: 0 },
     dockCrew: { id: "dockCrew", price: 40 },
     nightShift: { id: "nightShift", price: 240 },
     hazardRunner: { id: "hazardRunner", price: 360 },
+    ronin: { id: "ronin", price: 500 },
+    shadowNinja: { id: "shadowNinja", price: 650 },
+    orbitAstronaut: { id: "orbitAstronaut", price: 800 },
+    northRaider: { id: "northRaider", price: 1000 },
+    mechaPilot: { id: "mechaPilot", price: 1500 },
+  });
+  const CHIEFS = Object.freeze({
+    securityTall: { id: "securityTall", price: 0, labelKey: "securityTall" },
+    classicChief: { id: "classicChief", price: 200, labelKey: "classicChief" },
+    robotGuard: { id: "robotGuard", price: 400, labelKey: "robotGuard" },
+    bouncer: { id: "bouncer", price: 600, labelKey: "bouncer" },
   });
   const WORLD_REGISTRY = Object.freeze({
     dock31: { id: "dock31", themeId: "dock", price: 0, enabled: true, routes: ["D01", "D02", "D03", "D04", "D05", "D06", "D07", "D08", "D09", "D10", "D11", "D12", "D13", "D14", "D15", "D16", "D17", "D18"] },
@@ -81,6 +96,16 @@
       choose: "CHOOSE YOUR RUNNER",
       male: "MALE RUNNER",
       female: "FEMALE RUNNER",
+      tall: "BEANPOLE",
+      compact: "POCKET",
+      bruiser: "BRUISER",
+      athlete: "ATHLETE",
+      characters: "CHARACTERS",
+      chiefs: "CHIEFS",
+      securityTall: "SECURITY",
+      classicChief: "OLD CHIEF",
+      robotGuard: "ROBO GUARD",
+      bouncer: "BOUNCER",
       route: "ROUTE",
       run: "RUN",
       wallet: "WALLET",
@@ -106,6 +131,11 @@
       dockCrew: "DOCK CREW · HELMET + VEST",
       nightShift: "Night Shift",
       hazardRunner: "Hazard Runner",
+      ronin: "Ronin",
+      shadowNinja: "Shadow Ninja",
+      orbitAstronaut: "Astronaut",
+      northRaider: "North Raider",
+      mechaPilot: "Mecha Pilot",
       saveFailed: "SAVE FAILED — RETRY",
       noCharge: "LIVE PREVIEW · NO CHARGE",
       worlds: "WORLDS", buyWorld: "BUY — {price}", select: "SELECT", selected: "SELECTED", planned: "PLANNED", insufficient: "INSUFFICIENT COINS",
@@ -588,8 +618,10 @@ applyD09LogicRulesToRoutes();
       walletBalance: 0,
       runnerId: null,
       ownedRunnerIds: ["male", "female"],
-      equippedOutfitByRunner: { male: "default", female: "default" },
+      equippedOutfitByRunner: { male: "default", female: "default", tall: "default", compact: "default", bruiser: "default", athlete: "default" },
       ownedOutfitSetIds: ["default"],
+      ownedChiefIds: ["securityTall"],
+      equippedChief: "securityTall",
       ownedWorldIds: ["dock31"],
       selectedWorldId: "dock31",
       progressByRoute: {},
@@ -616,7 +648,13 @@ applyD09LogicRulesToRoutes();
     if (!raw || typeof raw !== "object") return p;
     const n = { ...p, ...raw };
     n.schemaVersion = SCHEMA;
-    n.ownedRunnerIds = ["male", "female"];
+    n.ownedRunnerIds = [
+      ...new Set([
+        "male",
+        "female",
+        ...(Array.isArray(raw.ownedRunnerIds) ? raw.ownedRunnerIds.filter((x) => RUNNERS[x]) : []),
+      ]),
+    ];
     n.profileRevision = Math.max(0, Number(raw.profileRevision) || 0);
     n.walletBalance = Math.max(0, Math.floor(Number(raw.walletBalance) || 0));
     n.runnerId = RUNNERS[raw.runnerId] ? raw.runnerId : null;
@@ -632,8 +670,15 @@ applyD09LogicRulesToRoutes();
           : []),
       ]),
     ];
+    n.ownedChiefIds = [
+      ...new Set([
+        "securityTall",
+        ...(Array.isArray(raw.ownedChiefIds) ? raw.ownedChiefIds.filter((x) => CHIEFS[x]) : []),
+      ]),
+    ];
+    n.equippedChief = CHIEFS[raw.equippedChief] && n.ownedChiefIds.includes(raw.equippedChief) ? raw.equippedChief : "securityTall";
     for (const id of Object.keys(RUNNERS)) {
-      if (!n.ownedOutfitSetIds.includes(n.equippedOutfitByRunner[id])) n.equippedOutfitByRunner[id] = "default";
+      if (RUNNERS[id].outfitLocked || !n.ownedOutfitSetIds.includes(n.equippedOutfitByRunner[id])) n.equippedOutfitByRunner[id] = "default";
     }
     n.ownedWorldIds = [
       ...new Set([
@@ -778,6 +823,7 @@ applyD09LogicRulesToRoutes();
     shopOpen = false,
     shopTab = "outfits",
     previewOutfitId = "default",
+    previewChiefId = "securityTall",
     previewWorldId = "dock31",
     previewRunnerId = "male",
     previewMotion = "idle",
@@ -2200,13 +2246,15 @@ applyD09LogicRulesToRoutes();
     const shop = document.createElement("section");
     shop.id = "a12Shop";
     shop.setAttribute("aria-hidden", "true");
-    shop.innerHTML = `<div id="a12Preview"><canvas width="480" height="320" aria-label="Runner preview"></canvas><p id="a12WorldWarning" data-world-insufficient hidden></p><div class="previewControls"><button data-preview-runner="male"></button><button data-preview-runner="female"></button></div><div class="previewControls"><button data-preview-motion="idle"></button><button data-preview-motion="run"></button><button data-preview-motion="frontFlip"></button></div></div><div id="a12Products"><div id="a12ShopTop"><h2></h2><button data-close>×</button></div><div class="a12Tabs"><button data-tab="outfits"></button><button data-tab="worlds"></button></div><div data-list="outfits"><article data-item="default"><h3></h3><button data-action></button></article><article data-item="dockCrew"><h3></h3><button data-action></button></article></div><div data-list="worlds"></div><div id="a12ShopBottom"><button data-shop-back></button><button data-shop-buy></button></div><p data-save></p></div>`;
+    shop.innerHTML = `<div id="a12Preview"><canvas width="480" height="320" aria-label="Runner preview"></canvas><p id="a12WorldWarning" data-world-insufficient hidden></p><div class="previewControls"><button data-preview-runner="male"></button><button data-preview-runner="female"></button></div><div class="previewControls"><button data-preview-motion="idle"></button><button data-preview-motion="run"></button><button data-preview-motion="frontFlip"></button></div></div><div id="a12Products"><div id="a12ShopTop"><h2></h2><button data-close>x</button></div><div class="a12Tabs"><button data-tab="outfits"></button><button data-tab="characters"></button><button data-tab="chiefs"></button><button data-tab="worlds"></button></div><div data-list="outfits"></div><div data-list="characters"></div><div data-list="chiefs"></div><div data-list="worlds"></div><div id="a12ShopBottom"><button data-shop-back></button><button data-shop-buy></button></div><p data-save></p></div>`;
     shop.querySelector('[data-list="outfits"]').innerHTML = Object.keys(OUTFITS).map(id=>`<article data-item="${id}"><h3></h3><button data-action></button></article>`).join("");
+    shop.querySelector('[data-list="characters"]').innerHTML = Object.keys(RUNNERS).map(id=>`<article data-item="${id}"><h3></h3><button data-action></button></article>`).join("");
+    shop.querySelector('[data-list="chiefs"]').innerHTML = Object.keys(CHIEFS).map(id=>`<article data-item="${id}"><h3></h3><button data-action></button></article>`).join("");
     document.body.appendChild(shop);
     shop.addEventListener("click", async (e) => {
       if (e.target.closest("[data-close]")) return closeShop();
       if (e.target.closest("[data-shop-back]")) return closeShop();
-      if (e.target.closest("[data-shop-buy]")) return shopTab==="worlds"?purchaseOrSelectWorld(previewWorldId):purchaseOrWear(previewOutfitId,previewRunnerId);
+      if (e.target.closest("[data-shop-buy]")) return shopTab==="worlds"?purchaseOrSelectWorld(previewWorldId):shopTab==="characters"?purchaseOrSelectRunner(previewRunnerId):shopTab==="chiefs"?purchaseOrSelectChief(previewChiefId):purchaseOrWear(previewOutfitId,previewRunnerId);
       const runnerButton=e.target.closest("[data-preview-runner]");
       if(runnerButton){previewRunnerId=runnerButton.dataset.previewRunner;return renderShop();}
       const motionButton=e.target.closest("[data-preview-motion]");
@@ -2221,6 +2269,18 @@ applyD09LogicRulesToRoutes();
         if (e.target.matches("[data-action]")) await purchaseOrSelectWorld(previewWorldId);
         return;
       }
+      if (shopTab === "characters") {
+        previewRunnerId = article.dataset.item;
+        renderShop();
+        if (e.target.matches("[data-action]")) await purchaseOrSelectRunner(previewRunnerId);
+        return;
+      }
+      if (shopTab === "chiefs") {
+        previewChiefId = article.dataset.item;
+        renderShop();
+        if (e.target.matches("[data-action]")) await purchaseOrSelectChief(previewChiefId);
+        return;
+      }
       previewOutfitId = article.dataset.item;
       renderShop();
       if (e.target.matches("[data-action]"))
@@ -2233,22 +2293,19 @@ applyD09LogicRulesToRoutes();
     card.querySelector(".eyebrow").textContent = "TRUST ME BRO · DOCK 31";
     card.querySelector("h2").textContent = t("choose");
     card.querySelector("p").textContent = t("samePhysics");
+    const choiceWrap = document.getElementById("characterChoices");
+    for (const id of Object.keys(RUNNERS).slice(2)) choiceWrap?.insertAdjacentHTML("beforeend", `<button class="characterChoice" data-character="${id}" aria-pressed="false"><canvas class="portrait" width="106" height="192" aria-hidden="true"></canvas>${t(id)}</button>`);
     const choices = [...document.querySelectorAll(".characterChoice")];
     choices.forEach((el, i) => {
-      if (i > 1) {
-        el.hidden = true;
-        return;
-      }
-      el.querySelector(":scope > canvas")?.insertAdjacentHTML(
-        "beforebegin",
-        `<span class="runnerSymbol">${i ? "♀" : "♂"}</span>`,
-      );
-      el.lastChild.textContent = i ? t("female") : t("male");
-      el.addEventListener("click", () => selectRunner(i ? "female" : "male"));
+      const id = Object.keys(RUNNERS)[i] || "male";
+      el.dataset.character = id;
+      el.querySelector(":scope > canvas")?.insertAdjacentHTML("beforebegin", `<span class="runnerSymbol">${i < 2 ? (i ? "F" : "M") : String(i + 1)}</span>`);
+      el.lastChild.textContent = t(id);
+      el.addEventListener("click", () => selectRunner(id));
     });
     drawCharacterChoicePortraits();
     runnerAtlasReady.then(drawCharacterChoicePortraits);
-    const syncRunnerChoice=()=>choices.forEach((el,i)=>el.setAttribute("aria-pressed",String((i?"female":"male")===profile.runnerId)));
+    const syncRunnerChoice=()=>choices.forEach(el=>el.setAttribute("aria-pressed",String(el.dataset.character===profile.runnerId)));
     syncRunnerChoice();
     document.getElementById("characterShop")?.addEventListener("click",()=>{shopReturnToCharacter=true;openShop();});
     const change = document.getElementById("characterChange");
@@ -2267,8 +2324,15 @@ applyD09LogicRulesToRoutes();
     });
   }
   function selectRunner(id) {
+    if (!profile.ownedRunnerIds.includes(id)) {
+      openShop();
+      shopTab = "characters";
+      previewRunnerId = id;
+      renderShop();
+      return;
+    }
     profile.runnerId = id;
-    document.querySelectorAll(".characterChoice").forEach((el,i)=>el.setAttribute("aria-pressed",String((i?"female":"male")===id)));
+    document.querySelectorAll(".characterChoice").forEach(el=>el.setAttribute("aria-pressed",String(el.dataset.character===id)));
     engine.setCharacter(RUNNERS[id].legacy);
     void persist();
     startRoute(firstRouteForWorld(), true);
@@ -2277,7 +2341,8 @@ applyD09LogicRulesToRoutes();
     shopOpen = true;
     previewRunnerId=profile.runnerId||"male";previewMotion="idle";previewStartedAt=performance.now();
     previewOutfitId =
-      profile.equippedOutfitByRunner[profile.runnerId] || "default";
+      RUNNERS[previewRunnerId]?.outfitLocked ? "default" : profile.equippedOutfitByRunner[profile.runnerId] || "default";
+    previewChiefId = profile.equippedChief || "securityTall";
     previewWorldId = profile.selectedWorldId;
     document.getElementById("a12Shop").classList.add("show");
     document.getElementById("a12Shop").setAttribute("aria-hidden", "false");
@@ -2299,8 +2364,12 @@ applyD09LogicRulesToRoutes();
     s.querySelectorAll('[data-preview-motion]').forEach((b,i)=>{b.textContent=motionLabels[i];b.setAttribute('aria-pressed',String(b.dataset.previewMotion===previewMotion));});
     s.querySelector("h2").textContent = `${t("shop")} · ${t(shopTab)} · ${t("wallet")} ${profile.walletBalance}`;
     s.querySelector('[data-tab="outfits"]').textContent=t("outfits");
+    s.querySelector('[data-tab="characters"]').textContent=t("characters");
+    s.querySelector('[data-tab="chiefs"]').textContent=t("chiefs");
     s.querySelector('[data-tab="worlds"]').textContent=t("worlds");
     s.querySelector('[data-list="outfits"]').hidden=shopTab!=="outfits";
+    s.querySelector('[data-list="characters"]').hidden=shopTab!=="characters";
+    s.querySelector('[data-list="chiefs"]').hidden=shopTab!=="chiefs";
     s.querySelector('[data-list="worlds"]').hidden=shopTab!=="worlds";
     s.querySelector('[data-item="default"] h3').textContent = t("defaultOutfit");
     s.querySelector('[data-item="dockCrew"] h3').textContent = t("dockCrew");
@@ -2320,10 +2389,22 @@ applyD09LogicRulesToRoutes();
       a.querySelector("button").disabled = worn || purchaseBusy || short;
       a.querySelector('.priceBadge')?.remove();
     }
+    for (const a of s.querySelectorAll('[data-list="characters"] article')) {
+      const id=a.dataset.item,item=RUNNERS[id],owned=profile.ownedRunnerIds.includes(id),selected=profile.runnerId===id,short=!owned&&profile.walletBalance<item.price,b=a.querySelector("button");
+      a.querySelector("h3").textContent=t(id);a.style.outline=previewRunnerId===id?"2px solid #79e9ba":"none";
+      b.textContent=selected?t("selected"):owned?t("select"):`${short?"LOCK ":""}${item.price}`;
+      b.disabled=selected||purchaseBusy||short;
+    }
+    for (const a of s.querySelectorAll('[data-list="chiefs"] article')) {
+      const id=a.dataset.item,item=CHIEFS[id],owned=profile.ownedChiefIds.includes(id),selected=profile.equippedChief===id,short=!owned&&profile.walletBalance<item.price,b=a.querySelector("button");
+      a.querySelector("h3").textContent=t(id);a.style.outline=previewChiefId===id?"2px solid #79e9ba":"none";
+      b.textContent=selected?t("selected"):owned?t("select"):`${short?"LOCK ":""}${item.price}`;
+      b.disabled=selected||purchaseBusy||short;
+    }
     const worlds=s.querySelector('[data-list="worlds"]');
     worlds.innerHTML=Object.values(WORLD_REGISTRY).map(w=>`<article data-item="${w.id}"><h3>${w.id.toUpperCase()}</h3><button data-action></button></article>`).join("");
     for(const a of worlds.querySelectorAll("article")){const w=WORLD_REGISTRY[a.dataset.item],owned=profile.ownedWorldIds.includes(w.id),selected=profile.selectedWorldId===w.id,b=a.querySelector("button"),short=!owned&&profile.walletBalance<w.price;a.dataset.owned=String(owned);a.dataset.price=String(w.price);a.style.outline=previewWorldId===w.id?"2px solid #79e9ba":"none";b.textContent=!w.enabled?t("planned"):selected?t("selected"):owned?t("select"):`${short?"🔒 ":""}◉ ${w.price}`;b.disabled=!w.enabled||selected||purchaseBusy||short;}
-    const back=s.querySelector('[data-shop-back]'),buy=s.querySelector('[data-shop-buy]'),selected=s.querySelector(`${shopTab==="worlds"?'[data-list="worlds"]':'[data-list="outfits"]'} [data-item="${shopTab==="worlds"?previewWorldId:previewOutfitId}"] [data-action]`),previewWorld=WORLD_REGISTRY[previewWorldId],worldOwned=!!previewWorld&&profile.ownedWorldIds.includes(previewWorldId),worldSelected=profile.selectedWorldId===previewWorldId,worldShort=!!previewWorld&&!worldOwned&&profile.walletBalance<previewWorld.price,warning=s.querySelector('[data-world-insufficient]');back.textContent=profile.settings.language==='tr'?'GERİ':profile.settings.language==='ru'?'НАЗАД':'BACK';if(shopTab==="worlds"&&previewWorld){buy.textContent=!previewWorld.enabled?t("planned"):worldSelected?t("selected"):worldOwned?t("select"):t("buyWorld").replace("{price}",previewWorld.price);buy.disabled=!previewWorld.enabled||worldSelected||purchaseBusy||worldShort}else{buy.textContent=selected?.textContent||t('selected');buy.disabled=!!selected?.disabled}warning.hidden=!(shopTab==="worlds"&&previewWorld?.enabled&&worldShort);warning.textContent=warning.hidden?"":t("insufficient");
+    const activeList=shopTab==="worlds"?"worlds":shopTab==="characters"?"characters":shopTab==="chiefs"?"chiefs":"outfits",activeId=shopTab==="worlds"?previewWorldId:shopTab==="characters"?previewRunnerId:shopTab==="chiefs"?previewChiefId:previewOutfitId,back=s.querySelector('[data-shop-back]'),buy=s.querySelector('[data-shop-buy]'),selected=s.querySelector(`[data-list="${activeList}"] [data-item="${activeId}"] [data-action]`),previewWorld=WORLD_REGISTRY[previewWorldId],worldOwned=!!previewWorld&&profile.ownedWorldIds.includes(previewWorldId),worldSelected=profile.selectedWorldId===previewWorldId,worldShort=!!previewWorld&&!worldOwned&&profile.walletBalance<previewWorld.price,warning=s.querySelector('[data-world-insufficient]');back.textContent=profile.settings.language==='tr'?'GERI':profile.settings.language==='ru'?'BACK':'BACK';if(shopTab==="worlds"&&previewWorld){buy.textContent=!previewWorld.enabled?t("planned"):worldSelected?t("selected"):worldOwned?t("select"):t("buyWorld").replace("{price}",previewWorld.price);buy.disabled=!previewWorld.enabled||worldSelected||purchaseBusy||worldShort}else{buy.textContent=selected?.textContent||t('selected');buy.disabled=!!selected?.disabled}warning.hidden=!(shopTab==="worlds"&&previewWorld?.enabled&&worldShort);warning.textContent=warning.hidden?"":t("insufficient");
     s.querySelector("[data-save]").textContent = saveFailure ? t("saveFailed") : t("noCharge");
     drawShopPreview();
   }
@@ -2333,7 +2414,8 @@ applyD09LogicRulesToRoutes();
     x.clearRect(0, 0, q.width, q.height);
     drawThemeScene(x,q.width,q.height,shopTab==="worlds"?previewWorldId:profile.selectedWorldId,true);
     x.save();x.translate(q.width/2,240);x.scale(3,3);
-    drawRunnerAtlas(x,previewRunnerId,previewOutfitId,{motion:previewMotion,frame:Math.floor(Math.max(0,now-previewStartedAt)/1000*(previewMotion==="run"?16:8))%8},0,0);
+    if(shopTab==="chiefs") drawChiefAtlas(x,previewChiefId,{motion:"run",frame:Math.floor(Math.max(0,now-previewStartedAt)/1000*16)%8},0,0,1);
+    else drawRunnerAtlas(x,previewRunnerId,RUNNERS[previewRunnerId]?.outfitLocked?"default":previewOutfitId,{motion:previewMotion,frame:Math.floor(Math.max(0,now-previewStartedAt)/1000*(previewMotion==="run"?16:8))%8},0,0);
     x.restore();
   }
   async function purchaseOrSelectWorld(id) {
@@ -2507,7 +2589,7 @@ applyD09LogicRulesToRoutes();
     const s=surface.getContext("2d");magmaSurfaceDirect(s,2,2,w,h,kind);worldSurfaceCache.set(key,surface);c.drawImage(surface,x-2,y-2);
   }
   async function purchaseOrWear(id, runnerId=profile.runnerId) {
-    if (purchaseBusy || !RUNNERS[runnerId] || !Object.hasOwn(OUTFITS, id)) return false;
+    if (purchaseBusy || !RUNNERS[runnerId] || RUNNERS[runnerId].outfitLocked || !Object.hasOwn(OUTFITS, id)) return false;
     if (profile.ownedOutfitSetIds.includes(id)) {
       purchaseBusy = true;
       const before = clone(profile);
@@ -2538,6 +2620,44 @@ applyD09LogicRulesToRoutes();
     if(ok){sfx("equip");emitGame("outfit_worn",{itemId:id,runnerId});}
     renderShop();
     drawCharacterChoicePortraits();
+    return ok;
+  }
+  async function purchaseOrSelectRunner(id) {
+    if (purchaseBusy || !RUNNERS[id]) return false;
+    if (profile.ownedRunnerIds.includes(id)) { selectRunner(id); renderShop(); return true; }
+    const item=RUNNERS[id];
+    if (profile.walletBalance < item.price) return false;
+    purchaseBusy = true;
+    const before = clone(profile);
+    profile.walletBalance -= item.price;
+    profile.ownedRunnerIds.push(id);
+    profile.runnerId = id;
+    profile.equippedOutfitByRunner[id] = "default";
+    const ok = await persist();
+    if (!ok) profile = before; else { engine.setCharacter(RUNNERS[id].legacy); sfx("purchase"); }
+    purchaseBusy = false;
+    renderShop(); drawCharacterChoicePortraits();
+    return ok;
+  }
+  async function purchaseOrSelectChief(id) {
+    if (purchaseBusy || !CHIEFS[id]) return false;
+    if (profile.ownedChiefIds.includes(id)) {
+      profile.equippedChief = id;
+      const ok = await persist();
+      renderShop();
+      return ok;
+    }
+    const item=CHIEFS[id];
+    if (profile.walletBalance < item.price) return false;
+    purchaseBusy = true;
+    const before = clone(profile);
+    profile.walletBalance -= item.price;
+    profile.ownedChiefIds.push(id);
+    profile.equippedChief = id;
+    const ok = await persist();
+    if (!ok) profile = before; else sfx("purchase");
+    purchaseBusy = false;
+    renderShop();
     return ok;
   }
   function debugState() {
@@ -2990,9 +3110,9 @@ applyD09LogicRulesToRoutes();
     if (campaignChief?.active) {
       c.save();
       c.fillStyle="#fff2a51c";c.beginPath();c.moveTo(campaignChief.x+22,campaignChief.y+18);c.lineTo(campaignChief.x+175,campaignChief.y-28);c.lineTo(campaignChief.x+175,campaignChief.y+65);c.closePath();c.fill();
-      if(magma){c.fillStyle="#8e969f";c.fillRect(campaignChief.x-4,campaignChief.y-5,34,48);c.fillStyle="#d6dadd";c.fillRect(campaignChief.x-6,campaignChief.y-14,38,22);c.fillStyle="#202a36";c.fillRect(campaignChief.x,campaignChief.y-10,26,12);c.fillStyle="#404954";c.fillRect(campaignChief.x-2,campaignChief.y+35,12,18);c.fillRect(campaignChief.x+17,campaignChief.y+35,12,18);} else if (route.worldId==="dock31"&&runnerAtlasContract) {
-        const state=campaignChief.pose||"run",motion=state==="catch"||state==="climb"?"wallRun":["vault","slide","wallRun","roll"].includes(state)?state:state==="dive"?"vault":state==="normal"?"run":"jump";
-        drawRunnerAtlas(c,"male","hazardRunner",{motion,frame:Math.floor(gameClock*(motion==="run"?16:8))%8},campaignChief.x+16,campaignChief.y+48,campaignChief.facing||1);
+      if(magma){c.fillStyle="#8e969f";c.fillRect(campaignChief.x-4,campaignChief.y-5,34,48);c.fillStyle="#d6dadd";c.fillRect(campaignChief.x-6,campaignChief.y-14,38,22);c.fillStyle="#202a36";c.fillRect(campaignChief.x,campaignChief.y-10,26,12);c.fillStyle="#404954";c.fillRect(campaignChief.x-2,campaignChief.y+35,12,18);c.fillRect(campaignChief.x+17,campaignChief.y+35,12,18);} else if (chiefAtlasContract) {
+        const state=campaignChief.pose||"run";
+        drawChiefAtlas(c,profile.equippedChief||"securityTall",chiefPoseFromState(state),campaignChief.x+16,campaignChief.y+48,campaignChief.facing||1);
       } else if (CHIEF_SPRITE.complete && CHIEF_SPRITE.naturalWidth) {
         const fw=CHIEF_SPRITE.naturalWidth/4,fh=CHIEF_SPRITE.naturalHeight,frame=campaignChief.path&&campaignChief.pose!=="run"?0:Math.floor(gameClock*8)%4;
         c.imageSmoothingEnabled=false;c.drawImage(CHIEF_SPRITE,frame*fw,0,fw,fh,campaignChief.x-8,campaignChief.y-16,48,64);
@@ -3054,6 +3174,8 @@ applyD09LogicRulesToRoutes();
   // A5 presentation only: atlas selection never writes player/parkour state.
   let runnerAtlasContract = null;
   const runnerAtlasImages = new Map();
+  let chiefAtlasContract = null;
+  const chiefAtlasImages = new Map();
   const runnerAtlasReady = fetch("sprites/a5/atlas-contract.json", {cache:"no-cache"})
     .then(r=>{if(!r.ok)throw new Error("atlas contract");return r.json();})
     .then(async contract=>{
@@ -3064,6 +3186,17 @@ applyD09LogicRulesToRoutes();
         image.src=asset.path+"?v="+asset.cacheVersion;
       })));
       runnerAtlasContract=contract;return true;
+    }).catch(()=>false);
+  const chiefAtlasReady = fetch("sprites/chiefs/chief-contract.json", {cache:"no-cache"})
+    .then(r=>{if(!r.ok)throw new Error("chief contract");return r.json();})
+    .then(async contract=>{
+      await Promise.all(contract.assets.map(asset=>new Promise((resolve,reject)=>{
+        const image=new Image();
+        image.onload=()=>{if(image.naturalWidth!==640||image.naturalHeight!==640)return reject(new Error("chief dimensions"));chiefAtlasImages.set(asset.id,image);resolve();};
+        image.onerror=()=>reject(new Error("chief unavailable"));
+        image.src=asset.path+"?v="+asset.cacheVersion;
+      })));
+      chiefAtlasContract=contract;return true;
     }).catch(()=>false);
   function runnerAtlasPose(state) {
     const pk=state.state;
@@ -3077,10 +3210,10 @@ applyD09LogicRulesToRoutes();
   }
   function drawCharacterChoicePortraits(now=performance.now()) {
     document.querySelectorAll(".characterChoice").forEach((el, i) => {
-      if (i > 1 || el.hidden) return;
+      if (el.hidden) return;
       const q = el.querySelector("canvas.portrait"), c = q?.getContext("2d");
       if (!c) return;
-      const runner = i ? "female" : "male";
+      const runner = el.dataset.character || (i ? "female" : "male");
       const outfit = profile.equippedOutfitByRunner[runner] || "default";
       const frame = Math.floor(now / 160) % 8;
       c.clearRect(0, 0, q.width, q.height);
@@ -3098,15 +3231,27 @@ applyD09LogicRulesToRoutes();
     const fullPath=`sprites/a5/${runner}-${outfit}-full.png`;
     const full=runnerAtlasImages.get(fullPath);
     if(full){c.drawImage(full,pose.frame*64,row*64,64,64,-32,-56,64,64);c.restore();return;}
+    if(!runnerAtlasContract.layerOrder?.every(layer=>runnerAtlasImages.get(`sprites/a5/${runner}-${layer==="body"?"base":outfit}-${layer}.png`))){c.fillStyle=runner==="female"?"#d5e3de":"#c1d2df";c.fillRect(-12,-44,24,44);c.restore();return;}
     for(const layer of runnerAtlasContract.layerOrder){if(layer===omit)continue;
       const path=`sprites/a5/${runner}-${layer==="body"?"base":outfit}-${layer}.png`;
       c.drawImage(runnerAtlasImages.get(path),pose.frame*64,row*64,64,64,-32,-56,64,64);
     }
     c.restore();
   }
+  function chiefPoseFromState(state) {
+    const motion=state==="catch"||state==="climb"?"wallRun":state==="roll"?"roll":state==="jump"||state==="dive"?"jump":state==="normal"||state==="run"?"run":"idle";
+    return {motion,frame:Math.floor(gameClock*((motion==="run")?16:8))%8};
+  }
+  function drawChiefAtlas(c, id, pose, x, feet, facing=1) {
+    c.save();c.translate(x,feet);c.scale(facing,1);c.imageSmoothingEnabled=false;
+    const image=chiefAtlasImages.get(id||"securityTall");
+    if(chiefAtlasContract&&image){const row=chiefAtlasContract.motions[pose.motion]?.row??0;c.drawImage(image,pose.frame*80,row*80,80,80,-40,-74,80,80);}
+    else {c.fillStyle="#101820";c.fillRect(-15,-58,30,58);c.fillStyle="#e5d79e";c.fillRect(10,-43,8,5);}
+    c.restore();
+  }
   function drawRunnerIntegrated(c,state) {
     if(debugHidePlayer)return;
-    const runner=profile.runnerId||"male",outfit=profile.equippedOutfitByRunner[runner]||"default";
+    const runner=profile.runnerId||"male",outfit=RUNNERS[runner]?.outfitLocked?"default":profile.equippedOutfitByRunner[runner]||"default";
     const poseState=diveRun?{...state,state:"dive",timer:Math.max(0,diveRun.duration-diveRun.elapsed),duration:diveRun.duration}:wallJumpRun?{...state,state:"wallRun",timer:Math.max(0,wallJumpRun.duration-wallJumpRun.elapsed),duration:wallJumpRun.duration}:state;
     c.save();
     c.globalAlpha *= finishGate.playerAlpha;
@@ -3187,6 +3332,7 @@ applyD09LogicRulesToRoutes();
         disableChief: ()=>{campaignChief=null},
         placePlayerAtChiefTime: (t,dy=0)=>{if(!campaignChief?.path)return false;const entry=primeChiefLadder(campaignChief),q=chiefSample(campaignChief.path,t);engine.reset(q.x,q.y+dy);if(t<entry.readyTime){parkChiefAtLadder(campaignChief);setChiefPlayerTime(campaignChief,t);return true}campaignChief.active=true;campaignChief.entryPhase="running";campaignChief.climbElapsed=entry?.duration||0;campaignChief.playerT=t;campaignChief.playerIndex=Math.max(0,campaignChief.path.samples.findIndex(v=>v[0]>=t));campaignChief.chiefT=Math.max(entry?.time??0,t-campaignChief.delay);return true},
         placePlayerAtChiefLadderStart: (dy=0)=>{if(!campaignChief?.path)return false;const entry=primeChiefLadder(campaignChief),t=entry.climbStartTime+.02,x=entry.x+8;player.x=x;player.y=routeGroundYAt(x)-player.h+dy;player.vx=player.vy=0;player.onGround=true;campaignChief.active=false;campaignChief.entryPhase="waiting";campaignChief.climbElapsed=0;campaignChief.playerT=t;campaignChief.playerIndex=Math.max(0,campaignChief.path.samples.findIndex(v=>v[0]>=t));campaignChief.chiefT=entry.time-campaignChief.delay;return debugState()},
+        forceChiefNear: ()=>{if(!campaignChief)return false;campaignChief.active=true;campaignChief.entryPhase="running";campaignChief.x=player.x-96;campaignChief.y=routeGroundYAt(player.x)-48;campaignChief.pose="run";campaignChief.facing=1;return debugState()},
         routeDefinition: (id)=>clone(ROUTES[id]),
         chiefRouteHash: (id)=>chiefRouteHash(ROUTES[id]),
         chiefPathStatus: (id, deltaX=0)=>{const r=clone(ROUTES[id]);if(deltaX&&r.groundSegments?.length)r.groundSegments[0].x+=deltaX;return {stored:window.TMB_CHIEF_PATHS?.[id]?.routeHash||null,current:chiefRouteHash(r),valid:window.TMB_CHIEF_PATHS?.[id]?.routeHash===chiefRouteHash(r)}},
@@ -3211,9 +3357,11 @@ applyD09LogicRulesToRoutes();
         closeShop,
         purchase: purchaseOrWear,
         purchaseWorld: purchaseOrSelectWorld,
+        purchaseRunner: purchaseOrSelectRunner,
+        purchaseChief: purchaseOrSelectChief,
         renderThemeFixture: (worldId,id="D01") => { if(!WORLD_REGISTRY[worldId]||!ROUTES[id])return false;profile.selectedWorldId=/^A0/.test(id)?"aftermath":"dock31";pendingWorldId=null;const started=startRoute(id);profile.selectedWorldId=worldId;return started; },
         renderWorldOnRoute: (worldId,id="D01") => { if(!WORLD_REGISTRY[worldId])return false; profile.selectedWorldId=worldId;pendingWorldId=null;return startRoute(id); },
-        setShopTab: (v)=>{shopTab=v==="worlds"?"worlds":"outfits";renderShop();},
+        setShopTab: (v)=>{shopTab=["worlds","characters","chiefs","outfits"].includes(v)?v:"outfits";renderShop();},
         previewWorld: (id)=>{if(WORLD_REGISTRY[id])previewWorldId=id;renderShop();return debugState();},
         setWallet: (n) => {
           profile.walletBalance = Math.max(0, n | 0);
