@@ -2376,7 +2376,7 @@ applyD09LogicRulesToRoutes();
     const syncRunnerChoice=()=>syncRunnerChoiceCards();
     syncRunnerChoice();
     const change = document.getElementById("characterChange");
-    change.textContent = "\u2194";
+    change.textContent = "ID";
     change.title = t("choose");
     applyLanguage();
     addEventListener("keydown", (e) => {
@@ -2399,11 +2399,20 @@ applyD09LogicRulesToRoutes();
       renderShop();
       return;
     }
+    const firstSelection = !profile.runnerId || !run;
     profile.runnerId = id;
     syncRunnerChoiceCards();
     engine.setCharacter(RUNNERS[id].legacy);
     void persist();
-    startRoute(firstRouteForWorld(), true);
+    if (firstSelection) startRoute(firstRouteForWorld(), true);
+    else {
+      closeCharacterSelect();
+      if (!shopOpen && !result) {
+        document.body.dataset.campaignPhase = "running";
+        document.body.dataset.routeId = routeId;
+      }
+      syncActionVisibility();
+    }
   }
   function syncRunnerChoiceCards() {
     document.querySelectorAll(".characterChoice").forEach(el=>{
@@ -3326,7 +3335,6 @@ applyD09LogicRulesToRoutes();
     }
     if (campaignChief?.active) {
       c.save();
-      c.fillStyle="#fff2a51c";c.beginPath();c.moveTo(campaignChief.x+22,campaignChief.y+18);c.lineTo(campaignChief.x+175,campaignChief.y-28);c.lineTo(campaignChief.x+175,campaignChief.y+65);c.closePath();c.fill();
       if(magma){c.fillStyle="#8e969f";c.fillRect(campaignChief.x-4,campaignChief.y-5,34,48);c.fillStyle="#d6dadd";c.fillRect(campaignChief.x-6,campaignChief.y-14,38,22);c.fillStyle="#202a36";c.fillRect(campaignChief.x,campaignChief.y-10,26,12);c.fillStyle="#404954";c.fillRect(campaignChief.x-2,campaignChief.y+35,12,18);c.fillRect(campaignChief.x+17,campaignChief.y+35,12,18);} else if (chiefAtlasContract) {
         const state=campaignChief.pose||"run";
         drawChiefAtlas(c,profile.equippedChief||"securityTall",chiefPoseFromState(state),campaignChief.x+16,campaignChief.y+48,campaignChief.facing||1);

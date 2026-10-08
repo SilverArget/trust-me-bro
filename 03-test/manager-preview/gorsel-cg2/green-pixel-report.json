@@ -1,0 +1,26 @@
+{
+  "rows": [
+    {
+      "file": "sprites/chiefs/bouncer-full.png",
+      "exact00ff00": 0,
+      "greenKeyCandidate": 0
+    },
+    {
+      "file": "sprites/chiefs/classicChief-full.png",
+      "exact00ff00": 0,
+      "greenKeyCandidate": 0
+    },
+    {
+      "file": "sprites/chiefs/robotGuard-full.png",
+      "exact00ff00": 0,
+      "greenKeyCandidate": 0
+    },
+    {
+      "file": "sprites/chiefs/securityTall-full.png",
+      "exact00ff00": 0,
+      "greenKeyCandidate": 0
+    }
+  ],
+  "totalExact00ff00": 0,
+  "totalGreenKeyCandidate": 0
+}

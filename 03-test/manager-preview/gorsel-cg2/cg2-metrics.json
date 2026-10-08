@@ -1,0 +1,140 @@
+{
+  "mojibake": {
+    "pattern": "/Ã|â€|Å¸|ÄŸ/g",
+    "matches": {
+      "index.html": 0,
+      "js/a12-campaign.js": 0,
+      "js/a5-audio.js": 0,
+      "js/ads-config.js": 0,
+      "js/chief-paths.js": 0
+    },
+    "totalMatches": 0,
+    "indexNonAsciiCount": 150,
+    "base3152a03NonAsciiCount": 150,
+    "indexNonAsciiSet": "«·»çöüşДНПавгдежзийклмнопрстуыьэя—•™←↑→⏸▲♥⛶✓👁💀🔇🔊",
+    "base3152a03NonAsciiSet": "«·»çöüşДНПавгдежзийклмнопрстуыьэя—•™←↑→⏸▲♥⛶✓👁💀🔇🔊",
+    "indexNonAsciiSameAs3152a03": true
+  },
+  "topButtons": [
+    {
+      "name": "1280x720",
+      "file": "top-buttons-1280x720.png",
+      "metrics": {
+        "pause": {
+          "text": "⏸",
+          "x": 1170,
+          "y": 32,
+          "w": 45,
+          "h": 45,
+          "right": 1215,
+          "bottom": 77
+        },
+        "mute": {
+          "text": "🔊",
+          "x": 1223,
+          "y": 32,
+          "w": 45,
+          "h": 45,
+          "right": 1268,
+          "bottom": 77
+        },
+        "change": {
+          "text": "ID",
+          "x": 1223,
+          "y": 84,
+          "w": 45,
+          "h": 45,
+          "right": 1268,
+          "bottom": 129
+        },
+        "fullscreen": {
+          "text": "⛶",
+          "x": 618,
+          "y": 14,
+          "w": 44,
+          "h": 44,
+          "right": 662,
+          "bottom": 58
+        }
+      },
+      "consoleErrors": 0
+    },
+    {
+      "name": "390x844",
+      "file": "top-buttons-390x844.png",
+      "metrics": {
+        "pause": {
+          "text": "⏸",
+          "x": 280,
+          "y": 32,
+          "w": 45,
+          "h": 45,
+          "right": 325,
+          "bottom": 77
+        },
+        "mute": {
+          "text": "🔊",
+          "x": 333,
+          "y": 32,
+          "w": 45,
+          "h": 45,
+          "right": 378,
+          "bottom": 77
+        },
+        "change": {
+          "text": "ID",
+          "x": 333,
+          "y": 84,
+          "w": 45,
+          "h": 45,
+          "right": 378,
+          "bottom": 129
+        },
+        "fullscreen": {
+          "text": "⛶",
+          "x": 173,
+          "y": 14,
+          "w": 44,
+          "h": 44,
+          "right": 217,
+          "bottom": 58
+        }
+      },
+      "consoleErrors": 0
+    }
+  ],
+  "chiefAndShop": {
+    "consoleErrors": 0
+  },
+  "characterChange": {
+    "before": {
+      "routeId": "D04",
+      "x": 3000,
+      "y": -251.8,
+      "runnerId": "male",
+      "chiefT": -1.55
+    },
+    "after": {
+      "routeId": "D04",
+      "x": 3000,
+      "y": -251.8,
+      "runnerId": "female",
+      "chiefT": -1.55
+    },
+    "sameRoute": true,
+    "deltaX": 0,
+    "deltaY": 0,
+    "consoleErrors": 0
+  },
+  "d18Door": {
+    "metrics": {
+      "doorX1": 8906,
+      "doorX2": 9018,
+      "groundX2": 9022,
+      "margin": 4,
+      "groundId": "d18-p2-f03-v-39"
+    },
+    "consoleErrors": 0
+  },
+  "consoleErrors": 0
+}
