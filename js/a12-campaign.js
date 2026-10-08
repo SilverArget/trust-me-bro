@@ -963,6 +963,18 @@ applyD09LogicRulesToRoutes();
     const q=a[lo],n=a[hi],u=(t-q.t)/Math.max(.001,n.t-q.t);
     return {t,x:q.x+(n.x-q.x)*u,y:q.y+(n.y-q.y)*u,feet:q.feet+(n.feet-q.feet)*u,pose:u<.5?q.pose:n.pose,facing:u<.5?q.facing:n.facing,checkpointX:n.checkpointX};
   }
+  function chiefTraceSampleAtX(x){
+    const a=chiefPlayerTrace;if(!a.length)return null;
+    if(x<=a[0].x)return a[0];
+    for(let i=1;i<a.length;i++){
+      const q=a[i-1],n=a[i];
+      if(n.x>=x){
+        const u=(x-q.x)/Math.max(.001,n.x-q.x);
+        return {t:q.t+(n.t-q.t)*u,x:q.x+(n.x-q.x)*u,y:q.y+(n.y-q.y)*u,feet:q.feet+(n.feet-q.feet)*u,pose:u<.5?q.pose:n.pose,facing:u<.5?q.facing:n.facing,checkpointX:n.checkpointX};
+      }
+    }
+    return a[a.length-1];
+  }
   function matchPlayerToChiefPath(c){
     const a=c.path.samples,start=c.playerIndex??0,limitT=c.playerT+1;let end=start;
     while(end+1<a.length&&a[end+1][0]<=limitT)end++;
@@ -1720,15 +1732,15 @@ applyD09LogicRulesToRoutes();
       }
       if (campaignChief.active) {
         if(campaignChief.path&&campaignChief.entryPhase==="climbing"){campaignChief.climbElapsed=Math.min(campaignChief.entry.duration,campaignChief.climbElapsed+dt);const u=campaignChief.climbElapsed/campaignChief.entry.duration;campaignChief.x=campaignChief.entry.x-campaignChief.w*.5;campaignChief.y=campaignChief.entry.bottomY-campaignChief.h-(campaignChief.entry.height-campaignChief.h*.2)*u;campaignChief.pose="climb";if(u>=1)finishChiefLadder(campaignChief)}
-        else if(campaignChief.path){const entry=primeChiefLadder(campaignChief);campaignChief.chiefT=Math.max(entry.time,campaignChief.chiefT+dt*(campaignChief.timeScale||1));matchPlayerToChiefPath(campaignChief);const live=chiefTraceSample(Math.max(0,gameClock-campaignChief.delay));if(live){campaignChief.x=live.x;campaignChief.y=live.feet-campaignChief.h;campaignChief.pose=live.pose;campaignChief.facing=live.facing||1}else{const q=chiefSample(campaignChief.path,campaignChief.chiefT);campaignChief.x=q.x;campaignChief.y=q.y;campaignChief.pose=q.pose;campaignChief.facing=q.facing}}else campaignChief.x+=campaignChief.speed*dt;
-        const liveChiefOverlap=campaignChief.path&&campaignChief.entryPhase==="running"&&campaignChief.regrabT<=0&&campaignChief.chiefT>=0&&campaignChief.x+campaignChief.w>=player.x+4&&campaignChief.x<=player.x+player.w-4&&Math.abs(campaignChief.y-player.y)<64;
-        if (campaignChief.caughtT<=0 && (!campaignChief.path ? campaignChief.x+campaignChief.w>=player.x+4 && campaignChief.x<=player.x+player.w-4 : liveChiefOverlap)) {
+        else if(campaignChief.path){const entry=primeChiefLadder(campaignChief);campaignChief.chiefT=Math.max(entry.time,campaignChief.chiefT+dt*(campaignChief.timeScale||1));matchPlayerToChiefPath(campaignChief);const ideal=chiefSample(campaignChief.path,campaignChief.chiefT),live=chiefTraceSampleAtX(ideal.x);if(live){campaignChief.x=live.x;campaignChief.y=live.feet-campaignChief.h;campaignChief.pose=live.pose;campaignChief.facing=live.facing||1}else{campaignChief.x=ideal.x;campaignChief.y=ideal.y;campaignChief.pose=ideal.pose;campaignChief.facing=ideal.facing}}else campaignChief.x+=campaignChief.speed*dt;
+        const liveChiefCatch=campaignChief.path&&campaignChief.entryPhase==="running"&&campaignChief.regrabT<=0&&campaignChief.chiefT>=0&&campaignChief.chiefT>=campaignChief.playerT-.05;
+        if (campaignChief.caughtT<=0 && (!campaignChief.path ? campaignChief.x+campaignChief.w>=player.x+4 && campaignChief.x<=player.x+player.w-4 : liveChiefCatch)) {
           campaignChief.catches++;
           campaignDeaths++;
           campaignChief.caughtT=.35;if(campaignChief.path)campaignChief.regrabT=campaignChief.delay;
           campaignChief.lastReturnX=run.checkpointX;
           engine.reset(run.checkpointX,routeGroundYAt(run.checkpointX)-player.h);
-          if(campaignChief.path)resetRecordedChief(run.checkpointX);else{campaignChief.x=run.checkpointX-380;campaignChief.y=routeGroundYAt(run.checkpointX)-campaignChief.h}
+          if(campaignChief.path){resetRecordedChief(run.checkpointX);resetChiefTrace();}else{campaignChief.x=run.checkpointX-380;campaignChief.y=routeGroundYAt(run.checkpointX)-campaignChief.h}
           emitGame("chief_catch",{routeId,checkpointX:run.checkpointX});
         }
       }
