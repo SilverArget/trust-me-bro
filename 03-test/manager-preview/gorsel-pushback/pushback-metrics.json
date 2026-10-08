@@ -1,0 +1,375 @@
+{
+  "mojibake": {
+    "totalMatches": 0,
+    "matches": {
+      "index.html": 0,
+      "js/a12-campaign.js": 0,
+      "js/a5-audio.js": 0,
+      "js/ads-config.js": 0,
+      "js/chief-paths.js": 0
+    },
+    "indexNonAsciiCount": 150,
+    "base37f63ddNonAsciiCount": 150,
+    "indexNonAsciiSameAs37f63dd": true
+  },
+  "copiedVideoFrames": [
+    "video-repro-before-pushback.png",
+    "video-repro-after-pushback.png"
+  ],
+  "pushback": {
+    "routeId": "D04",
+    "zoneId": "d04-dz-03",
+    "triggerX": 7092.4,
+    "oldStartX": 6884.4,
+    "landX": 7634.8,
+    "playerW": 32,
+    "beforeDx": -164.87,
+    "afterDx": 0,
+    "shift": 164.87,
+    "consoleErrors": 0,
+    "errors": []
+  },
+  "routeTable": {
+    "rows": [
+      {
+        "routeId": "D01",
+        "zones": 2,
+        "probes": 4,
+        "backEvents": 0,
+        "landingDeaths": 0,
+        "minDx": 0
+      },
+      {
+        "routeId": "D02",
+        "zones": 1,
+        "probes": 2,
+        "backEvents": 0,
+        "landingDeaths": 0,
+        "minDx": 0
+      },
+      {
+        "routeId": "D03",
+        "zones": 3,
+        "probes": 6,
+        "backEvents": 0,
+        "landingDeaths": 0,
+        "minDx": 0
+      },
+      {
+        "routeId": "D04",
+        "zones": 3,
+        "probes": 6,
+        "backEvents": 0,
+        "landingDeaths": 0,
+        "minDx": 0
+      },
+      {
+        "routeId": "D05",
+        "zones": 3,
+        "probes": 6,
+        "backEvents": 0,
+        "landingDeaths": 0,
+        "minDx": 0
+      },
+      {
+        "routeId": "D06",
+        "zones": 4,
+        "probes": 8,
+        "backEvents": 0,
+        "landingDeaths": 0,
+        "minDx": 0
+      },
+      {
+        "routeId": "D07",
+        "zones": 6,
+        "probes": 12,
+        "backEvents": 0,
+        "landingDeaths": 0,
+        "minDx": 0
+      },
+      {
+        "routeId": "D08",
+        "zones": 11,
+        "probes": 22,
+        "backEvents": 0,
+        "landingDeaths": 0,
+        "minDx": 0
+      },
+      {
+        "routeId": "D09",
+        "zones": 5,
+        "probes": 10,
+        "backEvents": 0,
+        "landingDeaths": 0,
+        "minDx": 0
+      },
+      {
+        "routeId": "D10",
+        "zones": 13,
+        "probes": 26,
+        "backEvents": 0,
+        "landingDeaths": 0,
+        "minDx": 0
+      },
+      {
+        "routeId": "D11",
+        "zones": 10,
+        "probes": 20,
+        "backEvents": 0,
+        "landingDeaths": 0,
+        "minDx": 0
+      },
+      {
+        "routeId": "D12",
+        "zones": 9,
+        "probes": 18,
+        "backEvents": 0,
+        "landingDeaths": 0,
+        "minDx": 0
+      },
+      {
+        "routeId": "D13",
+        "zones": 10,
+        "probes": 20,
+        "backEvents": 0,
+        "landingDeaths": 0,
+        "minDx": 0
+      },
+      {
+        "routeId": "D14",
+        "zones": 7,
+        "probes": 14,
+        "backEvents": 0,
+        "landingDeaths": 0,
+        "minDx": 0
+      },
+      {
+        "routeId": "D15",
+        "zones": 8,
+        "probes": 16,
+        "backEvents": 0,
+        "landingDeaths": 0,
+        "minDx": 0
+      },
+      {
+        "routeId": "D16",
+        "zones": 8,
+        "probes": 16,
+        "backEvents": 0,
+        "landingDeaths": 0,
+        "minDx": 0
+      },
+      {
+        "routeId": "D17",
+        "zones": 7,
+        "probes": 14,
+        "backEvents": 0,
+        "landingDeaths": 0,
+        "minDx": 0
+      },
+      {
+        "routeId": "D18",
+        "zones": 10,
+        "probes": 20,
+        "backEvents": 0,
+        "landingDeaths": 0,
+        "minDx": 0
+      },
+      {
+        "routeId": "F01",
+        "zones": 6,
+        "probes": 12,
+        "backEvents": 0,
+        "landingDeaths": 0,
+        "minDx": 0
+      },
+      {
+        "routeId": "F02",
+        "zones": 10,
+        "probes": 20,
+        "backEvents": 0,
+        "landingDeaths": 0,
+        "minDx": 0
+      },
+      {
+        "routeId": "F03",
+        "zones": 9,
+        "probes": 18,
+        "backEvents": 0,
+        "landingDeaths": 0,
+        "minDx": 0
+      },
+      {
+        "routeId": "F04",
+        "zones": 2,
+        "probes": 4,
+        "backEvents": 0,
+        "landingDeaths": 0,
+        "minDx": 0
+      },
+      {
+        "routeId": "F05",
+        "zones": 2,
+        "probes": 4,
+        "backEvents": 0,
+        "landingDeaths": 0,
+        "minDx": 0
+      },
+      {
+        "routeId": "F06",
+        "zones": 8,
+        "probes": 16,
+        "backEvents": 0,
+        "landingDeaths": 0,
+        "minDx": 0
+      },
+      {
+        "routeId": "M01",
+        "zones": 10,
+        "probes": 20,
+        "backEvents": 0,
+        "landingDeaths": 0,
+        "minDx": 0
+      },
+      {
+        "routeId": "M02",
+        "zones": 9,
+        "probes": 18,
+        "backEvents": 0,
+        "landingDeaths": 0,
+        "minDx": 0
+      },
+      {
+        "routeId": "M03",
+        "zones": 10,
+        "probes": 20,
+        "backEvents": 0,
+        "landingDeaths": 0,
+        "minDx": 0
+      },
+      {
+        "routeId": "M04",
+        "zones": 7,
+        "probes": 14,
+        "backEvents": 0,
+        "landingDeaths": 0,
+        "minDx": 0
+      },
+      {
+        "routeId": "M05",
+        "zones": 8,
+        "probes": 16,
+        "backEvents": 0,
+        "landingDeaths": 0,
+        "minDx": 0
+      },
+      {
+        "routeId": "M06",
+        "zones": 10,
+        "probes": 20,
+        "backEvents": 0,
+        "landingDeaths": 0,
+        "minDx": 0
+      },
+      {
+        "routeId": "A01",
+        "zones": 8,
+        "probes": 16,
+        "backEvents": 0,
+        "landingDeaths": 0,
+        "minDx": 0
+      },
+      {
+        "routeId": "A02",
+        "zones": 9,
+        "probes": 18,
+        "backEvents": 0,
+        "landingDeaths": 0,
+        "minDx": 0
+      },
+      {
+        "routeId": "A03",
+        "zones": 10,
+        "probes": 20,
+        "backEvents": 0,
+        "landingDeaths": 0,
+        "minDx": 0
+      },
+      {
+        "routeId": "A04",
+        "zones": 8,
+        "probes": 16,
+        "backEvents": 0,
+        "landingDeaths": 0,
+        "minDx": 0
+      },
+      {
+        "routeId": "A05",
+        "zones": 8,
+        "probes": 16,
+        "backEvents": 0,
+        "landingDeaths": 0,
+        "minDx": 0
+      },
+      {
+        "routeId": "A06",
+        "zones": 10,
+        "probes": 20,
+        "backEvents": 0,
+        "landingDeaths": 0,
+        "minDx": 0
+      }
+    ],
+    "totalBackEvents": 0,
+    "totalLandingDeaths": 0,
+    "consoleErrors": 0,
+    "errors": []
+  },
+  "finishChief": [
+    {
+      "routeId": "D01",
+      "viewport": {},
+      "chiefX": 7947,
+      "feetY": 455,
+      "groundY": 455,
+      "delta": 0,
+      "result": true,
+      "consoleErrors": 0,
+      "errors": []
+    },
+    {
+      "routeId": "D04",
+      "viewport": {},
+      "chiefX": 7741,
+      "feetY": 455,
+      "groundY": 455,
+      "delta": 0,
+      "result": true,
+      "consoleErrors": 0,
+      "errors": []
+    },
+    {
+      "routeId": "D01",
+      "viewport": {},
+      "chiefX": 7947,
+      "feetY": 455,
+      "groundY": 455,
+      "delta": 0,
+      "result": true,
+      "consoleErrors": 0,
+      "errors": []
+    },
+    {
+      "routeId": "D04",
+      "viewport": {},
+      "chiefX": 7741,
+      "feetY": 455,
+      "groundY": 455,
+      "delta": 0,
+      "result": true,
+      "consoleErrors": 0,
+      "errors": []
+    }
+  ],
+  "consoleErrors": 0
+}

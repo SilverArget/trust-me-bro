@@ -1546,11 +1546,20 @@ applyD09LogicRulesToRoutes();
         vectorAir=null;
       }
     }else vectorAir=null;
+    function clampArcRunForward(d, arcX){
+      if(!d||!Number.isFinite(arcX)||!Number.isFinite(player.x))return arcX;
+      const backwards=(d.dir>=0&&arcX<player.x)||(d.dir<0&&arcX>player.x);
+      if(!backwards)return arcX;
+      const shift=player.x-arcX;
+      d.startX+=shift;
+      d.endX+=shift;
+      return player.x;
+    }
     if(diveRun&&validArcRun(diveRun)){
       const d=diveRun,tau=Math.min(d.elapsed+=dt,d.duration),t=tau/d.duration;
       engine.parkour.state="normal";engine.parkour.timer=0;engine.parkour.dir=d.dir;
       let arcX=d.startX+(d.endX-d.startX)*tau/d.duration;
-      if(route.routeId==="D18"&&((d.dir>=0&&arcX<player.x)||(d.dir<0&&arcX>player.x))){const shift=player.x-arcX;d.startX+=shift;d.endX+=shift;arcX=player.x}
+      arcX=clampArcRunForward(d,arcX);
       player.x=arcX;player.y=d.startY+d.vy0*tau+725*tau*tau;
       player.vx=(d.endX-d.startX)/d.duration;player.vy=d.vy0+1450*tau;player.onGround=false;
       if(tau===d.duration){
@@ -1563,7 +1572,7 @@ applyD09LogicRulesToRoutes();
       const d=jumpRun,tau=Math.min(d.elapsed+=dt,d.duration);
       engine.parkour.state="normal";engine.parkour.timer=0;engine.parkour.dir=d.dir;
       let arcX=d.startX+(d.endX-d.startX)*tau/d.duration;
-      if(route.routeId==="D18"&&((d.dir>=0&&arcX<player.x)||(d.dir<0&&arcX>player.x))){const shift=player.x-arcX;d.startX+=shift;d.endX+=shift;arcX=player.x}
+      arcX=clampArcRunForward(d,arcX);
       player.x=arcX;player.y=d.startY+d.vy0*tau+725*tau*tau;
       player.vx=(d.endX-d.startX)/d.duration;player.vy=d.vy0+1450*tau;player.onGround=false;
       if(tau===d.duration){
@@ -3495,8 +3504,8 @@ applyD09LogicRulesToRoutes();
   function drawRunnerLayerIntegrated(c) { ctx=c; }
   function drawResultChiefOverlay(c){
     if(!result||!campaignChief?.resultAngry)return;
-    const screenX=campaignChief.x-(window.__tmb?.cam||0)+16,rawFeet=campaignChief.y+48+cameraWorldY,feet=Math.min(rawFeet,H*.57);
-    if(screenX<-60||screenX>W+60||rawFeet<-20||rawFeet>H+110)return;
+    const screenX=campaignChief.x-(window.__tmb?.cam||0)+16,feet=campaignChief.y+48+cameraWorldY;
+    if(screenX<-60||screenX>W+60||feet<-20||feet>H+110)return;
     drawChiefAtlas(c,profile.equippedChief||"securityTall",{motion:"idle",frame:0},screenX,feet,campaignChief.facing||1);
     drawChiefAngerIcon(c,screenX,feet-66);
   }
