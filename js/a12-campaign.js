@@ -147,6 +147,16 @@
       choose: "KOŞUCUNU SEÇ",
       male: "ERKEK KOŞUCU",
       female: "KADIN KOŞUCU",
+      tall: "UZUN",
+      compact: "KISA",
+      bruiser: "IRI",
+      athlete: "ATLET",
+      characters: "KARAKTERLER",
+      chiefs: "SEFLER",
+      securityTall: "GUVENLIK",
+      classicChief: "ESKI SEF",
+      robotGuard: "ROBOT GUVENLIK",
+      bouncer: "FEDAI",
       route: "ROTA",
       run: "KOŞU",
       wallet: "CÜZDAN",
@@ -172,6 +182,11 @@
       dockCrew: "LİMAN EKİBİ · BARET + YELEK",
       nightShift: "GECE VARDİYASI",
       hazardRunner: "TEHLİKE KOŞUCUSU",
+      ronin: "RONIN",
+      shadowNinja: "GOLGE NINJA",
+      orbitAstronaut: "ASTRONOT",
+      northRaider: "KUZEY AKINCISI",
+      mechaPilot: "MECHA PILOT",
       saveFailed: "KAYIT BAŞARISIZ — YENİDEN DENE",
       noCharge: "CANLI ÖNİZLEME · ÜCRETSİZ",
       worlds: "DÜNYALAR", buyWorld: "SATIN AL — {price}", select: "SEÇ", selected: "SEÇİLİ", planned: "PLANLANDI", insufficient: "Yetersiz jeton",
@@ -214,6 +229,19 @@
       idle: "ОЖИДАНИЕ", motionRun: "БЕГ", flip: "САЛЬТО", language: "ЯЗЫК", samePhysics: "Та же физика. Общий кошелёк. Твой бегун.", ghostOn: "ПРИЗРАК ВКЛ", ghostOff: "ПРИЗРАК ВЫКЛ", effectsFull: "ЭФФЕКТЫ ПОЛНЫЕ", effectsReduced: "ЭФФЕКТЫ СНИЖЕНЫ", flow: "ПОТОК", localBest: "ЛУЧШИЙ РЕЗУЛЬТАТ", newRecord: "НОВЫЙ", clean: "ЧИСТО", mastery: "МАСТЕРСТВО", style: "СТИЛЬ",
     },
   });
+  Object.assign(I18N.tr, {
+    tall: "UZUN", compact: "KISA", bruiser: "IRI", athlete: "ATLET",
+    characters: "KARAKTERLER", chiefs: "SEFLER",
+    securityTall: "GUVENLIK", classicChief: "ESKI SEF", robotGuard: "ROBOT GUVENLIK", bouncer: "FEDAI",
+    ronin: "RONIN", shadowNinja: "GOLGE NINJA", orbitAstronaut: "ASTRONOT", northRaider: "KUZEY AKINCISI", mechaPilot: "MECHA PILOT",
+  });
+  Object.assign(I18N.ru, {
+    tall: "DLINNYY", compact: "MALYSH", bruiser: "GROMILA", athlete: "ATLET",
+    characters: "PERSONAZHI", chiefs: "NACHALNIKI",
+    securityTall: "OKHRANNIK", classicChief: "STARYY SHEF", robotGuard: "ROBOT-OKHRANNIK", bouncer: "VYSHIBALA",
+    ronin: "RONIN", shadowNinja: "TENEVOY NINDZYA", orbitAstronaut: "ASTRONAVT", northRaider: "SEVERNYY NALETCHIK", mechaPilot: "PILOT MEKHA",
+  });
+  for (const lang of ["tr", "ru"]) for (const key of Object.keys(I18N.en)) if (!Object.hasOwn(I18N[lang], key)) I18N[lang][key] = I18N.en[key];
   const COINS = Object.freeze({    "A03": [{"n":0,"move_id":"a03-p1-d10-dz-01","kind":"CJ","x":353,"y":-247,"skill":false,"id":"A03-c01"},{"n":1,"move_id":"a03-p1-d10-dz-01","kind":"CS","x":353,"y":-247,"skill":true,"id":"A03-c02"},{"n":2,"move_id":"a03-p1-d10-dz-02","kind":"CJ","x":877,"y":-221,"skill":false,"id":"A03-c03"},{"n":3,"move_id":"a03-p1-d10-dz-02","kind":"CS","x":877,"y":-221,"skill":true,"id":"A03-c04"},{"n":4,"move_id":"a03-p1-d10-v-07","kind":"CC","x":1332.64,"y":-115,"skill":true,"id":"A03-c05"},{"n":5,"move_id":"a03-p1-d10-dz-03","kind":"CJ","x":2042,"y":-148,"skill":false,"id":"A03-c06"},{"n":6,"move_id":"a03-p1-d10-tr-15","kind":"CJ","x":2358,"y":-64.62,"skill":false,"id":"A03-c07"},{"n":7,"move_id":"a03-p3-d13-dz-01","kind":"CJ","x":7402.68,"y":-146.62,"skill":false,"id":"A03-c08"},{"n":8,"move_id":"a03-p3-d13-slope1-2","kind":"CC","x":7583.68,"y":-113.62,"skill":true,"id":"A03-c09"},{"n":9,"move_id":"a03-p3-d13-slope1-3","kind":"CC","x":7646.28,"y":-114.24,"skill":true,"id":"A03-c10"},{"n":10,"move_id":"a03-p3-d13-slope1-3","kind":"CC","x":7646.28,"y":-114.24,"skill":true,"id":"A03-c11"},{"n":11,"move_id":"a03-p3-d13-dz-02","kind":"CJ","x":7855.68,"y":-218.62,"skill":false,"id":"A03-c12"},{"n":12,"move_id":"a03-p3-d13-dz-02","kind":"CJ","x":7855.68,"y":-218.62,"skill":false,"id":"A03-c13"},{"n":13,"move_id":"a03-p3-d13-dz-02","kind":"CJ","x":7855.68,"y":-218.62,"skill":false,"id":"A03-c14"}],
     "A04": [{"n":0,"move_id":"a04-p1-d10-dz-01","kind":"CJ","x":353,"y":-247,"skill":false,"id":"A04-c01"},{"n":1,"move_id":"a04-p1-d10-dz-01","kind":"CS","x":353,"y":-247,"skill":true,"id":"A04-c02"},{"n":2,"move_id":"a04-p1-d10-dz-02","kind":"CJ","x":877,"y":-221,"skill":false,"id":"A04-c03"},{"n":3,"move_id":"a04-p1-d10-dz-02","kind":"CS","x":877,"y":-221,"skill":true,"id":"A04-c04"},{"n":4,"move_id":"a04-p1-d10-v-07","kind":"CC","x":1332.64,"y":-115,"skill":true,"id":"A04-c05"},{"n":5,"move_id":"a04-p1-d10-dz-03","kind":"CJ","x":2042,"y":-148,"skill":false,"id":"A04-c06"},{"n":6,"move_id":"a04-p1-d10-tr-15","kind":"CJ","x":2358,"y":-64.62,"skill":false,"id":"A04-c07"},{"n":7,"move_id":"a04-p2-d17-mix-01","kind":"CJ","x":4801.48,"y":-62.62,"skill":false,"id":"A04-c08"},{"n":8,"move_id":"a04-p2-d17-mix-02","kind":"CJ","x":5325.48,"y":-36.62,"skill":false,"id":"A04-c09"},{"n":9,"move_id":"a04-p2-d17-mix-03","kind":"CC","x":5781.12,"y":69.38,"skill":true,"id":"A04-c10"},{"n":10,"move_id":"a04-p2-d17-mix-04","kind":"CC","x":5781.12,"y":69.38,"skill":true,"id":"A04-c11"},{"n":11,"move_id":"a04-p2-d17-mix-05","kind":"CC","x":5781.12,"y":69.38,"skill":true,"id":"A04-c12"},{"n":12,"move_id":"a04-p2-d17-mix-07","kind":"CJ","x":6490.48,"y":36.38,"skill":false,"id":"A04-c13"},{"n":13,"move_id":"a04-p2-d17-mix-08","kind":"CJ","x":6806.48,"y":119.76,"skill":false,"id":"A04-c14"}],
     "A01": [{"n":0,"move_id":"a01-dz-01","kind":"CJ","x":527,"y":207,"skill":false},{"n":1,"move_id":"a01-dz-02","kind":"CJ","x":1038,"y":88,"skill":false},{"n":2,"move_id":"a01-dz-03","kind":"CJ","x":2244,"y":256,"skill":false},{"n":3,"move_id":"a01-dz-04","kind":"CJ","x":2722,"y":113,"skill":false},{"n":4,"move_id":"a01-dz-05","kind":"CJ","x":4643,"y":38,"skill":false},{"n":5,"move_id":"a01-dz-06","kind":"CJ","x":6049,"y":152,"skill":false},{"n":6,"move_id":"a01-dz-07","kind":"CJ","x":7835,"y":219,"skill":false},{"n":7,"move_id":"a01-slide-01","kind":"CS","x":680,"y":310,"skill":true},{"n":8,"move_id":"a01-slide-02","kind":"CS","x":1620,"y":290,"skill":true},{"n":9,"move_id":"a01-slide-04","kind":"CS","x":3480,"y":170,"skill":true},{"n":10,"move_id":"a01-v-02","kind":"CC","x":250,"y":312.25,"skill":true},{"n":11,"move_id":"a01-v-14","kind":"CC","x":2506,"y":294.25,"skill":true},{"n":12,"move_id":"a01-v-16","kind":"CC","x":2822.8,"y":219.75,"skill":true},{"n":13,"move_id":"a01-v-17","kind":"CC","x":2938.7999999999997,"y":198.25,"skill":true}],
@@ -565,6 +593,8 @@ applyD09LogicRulesToRoutes();
   for(const [id,r] of Object.entries(ROUTES))r.hermesLaunchZones=buildHermesLaunchZones(id,r);
   const CHIEF_SPRITE = new Image();
   CHIEF_SPRITE.src = "sprites/chief.png";
+  const BRAND_WOLF_A12 = new Image();
+  BRAND_WOLF_A12.src = "sprites/brand/borugaming-wolf.png";
   function range(start, count, x, step) {
     return Array.from({ length: count }, (_, i) => ({
       n: start + i,
@@ -2218,7 +2248,7 @@ applyD09LogicRulesToRoutes();
     style.textContent = `#a12Actions{position:fixed;z-index:31;left:50%;bottom:max(86px,calc(env(safe-area-inset-bottom) + 82px));transform:translateX(-50%);display:flex;gap:9px}#a12Actions[hidden]{display:none!important}#a12Actions button,#a12Shop button,#a12Language{border:1px solid #ffffff44;border-radius:12px;background:#153246;color:#fff;padding:11px 16px;font:900 13px system-ui}#a12LanguageWrap{display:flex;align-items:center;justify-content:center;gap:10px;min-height:44px;margin:8px auto 0;color:#fff;font:800 13px system-ui}#a12Language{min-height:44px;margin:0;padding:8px 14px}#a12Shop{position:fixed;inset:0;z-index:45;display:none;background:#06121bf2;color:#fff;padding:clamp(15px,4vw,38px)}#a12Shop.show{display:grid;grid-template-columns:minmax(230px,42%) 1fr;gap:25px}#a12Preview{display:grid;place-items:center;background:#102635;border-radius:18px;min-height:280px}#a12Preview canvas{width:180px;height:240px}#a12Products{overflow:auto;padding-bottom:48px}#a12Products article{padding:17px;margin:12px 0;background:#132b39;border:1px solid #ffffff30;border-radius:14px}.runnerSymbol{font-size:15px;line-height:1;display:block;margin-bottom:2px;color:#dcecf5}.characterChoice[data-character="0"]{box-shadow:inset 0 0 0 2px #3aa2ff}.characterChoice[data-character="1"]{box-shadow:inset 0 0 0 2px #ff6aac}@media(max-width:540px) and (orientation:portrait){#a12Shop.show{grid-template-columns:1fr;grid-template-rows:35vh 1fr}#a12Preview{min-height:0}#a12Preview canvas{width:120px;height:160px}}`;
     style.textContent += `#a12Shop{box-sizing:border-box}#a12Shop.show{grid-template-columns:minmax(230px,40%) minmax(0,1fr);grid-template-rows:minmax(0,1fr);gap:18px}#a12Preview{display:flex;flex-direction:column;justify-content:center;gap:12px;min-width:0;min-height:0;overflow:hidden}#a12Preview canvas{width:min(100%,480px);height:auto;max-height:65%;aspect-ratio:3/2;object-fit:contain;image-rendering:pixelated}#a12WorldWarning{margin:0;padding:7px 10px;border:1px solid #ffcf5c88;border-radius:10px;background:#442b12;color:#ffe29a;text-align:center;font:900 12px/1.2 system-ui}#a12WorldWarning[hidden]{display:none}#a12Preview .previewControls{display:flex;flex-wrap:wrap;justify-content:center;gap:6px}#a12Preview button{padding:8px 10px}#a12Preview button[aria-pressed="true"]{background:#286650;border-color:#8ff1c8}#a12Products{min-height:0;min-width:0;overscroll-behavior:contain}@media(max-width:540px) and (orientation:portrait){#a12Shop.show{grid-template-columns:minmax(0,1fr);grid-template-rows:minmax(230px,40%) minmax(0,1fr);gap:12px}#a12Preview{gap:5px}#a12Preview canvas{max-height:62%;width:auto;max-width:100%}}`;
     style.textContent += `@media(orientation:landscape){#a12Shop{padding:max(12px,var(--safe-top)) max(14px,var(--safe-right)) max(12px,var(--safe-bottom)) max(14px,var(--safe-left))}#a12Shop.show{grid-template-columns:minmax(230px,38%) minmax(0,1fr);gap:14px}#a12Preview{min-height:35vh}#a12Preview canvas{max-height:72%}#a12Products{display:grid;grid-template-rows:auto auto minmax(0,1fr) auto;overflow:hidden;padding:0}#a12ShopTop{display:flex;align-items:center;justify-content:space-between;gap:8px}#a12ShopTop h2{font:900 clamp(15px,2.4vw,22px)/1 system-ui;margin:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}#a12ShopTop [data-close]{min-width:44px;min-height:44px;padding:0}#a12Products .a12Tabs{display:flex;gap:7px;margin:5px 0}#a12Products [data-list]{display:grid;grid-template-columns:repeat(4,minmax(96px,1fr));gap:8px;overflow-y:auto;min-height:0;align-content:start}#a12Products article{position:relative;min-width:96px;min-height:102px;margin:0;padding:10px 8px 54px;box-sizing:border-box}#a12Products article h3{margin:0;font:850 12px/1.15 system-ui}#a12Products article [data-action]{position:absolute;left:8px;right:8px;bottom:6px;min-width:0;width:calc(100% - 16px);height:44px;padding:4px 6px;border-radius:999px;background:#07131d;color:#ffd45c;border:1px solid #ffd45c88;font:900 11px/1.05 system-ui;box-shadow:0 2px 0 #0008;text-shadow:none}#a12Products article [data-action]:not(:disabled):active{transform:translateY(1px);box-shadow:0 1px 0 #0008}#a12Products article [data-action]:disabled{opacity:.55;color:#d9e2e8;border-color:#ffffff35;box-shadow:none}#a12ShopBottom{display:flex;gap:8px;padding-top:7px}#a12ShopBottom button{min-height:44px;flex:1}#a12Products [data-save]{display:none}}`;
-    style.textContent += `@media(orientation:landscape){#a12Products [data-list][hidden]{display:none!important}#a12Products article [data-action]:disabled{opacity:1;color:#82919a;background:#0b171e;border-color:#52616a;box-shadow:none}}`;
+    style.textContent += `#a12Products article canvas.shopThumb{display:block;width:84px;height:84px;margin:4px auto 8px;image-rendering:pixelated;pointer-events:none}#a12Products article h3{text-align:center}#a12Preview .previewControls[hidden]{display:none!important}@media(orientation:landscape){#a12Products article canvas.shopThumb{width:60px;height:60px;margin:2px auto 5px}#a12Products [data-list][hidden]{display:none!important}#a12Products article [data-action]:disabled{opacity:1;color:#82919a;background:#0b171e;border-color:#52616a;box-shadow:none}}`;
     style.textContent += `#a12DockRoutes{position:fixed;z-index:30;left:50%;bottom:var(--dock-actions-clearance,148px);transform:translateX(-50%);width:min(94vw,760px);display:grid;grid-template-columns:repeat(6,1fr);gap:5px;padding:8px;box-sizing:border-box;background:#06121be8;border:1px solid #ffffff33;border-radius:6px}#a12DockRoutes[hidden]{display:none!important}#a12DockRoutes button{min-width:0;padding:6px 2px;border:1px solid #ffffff33;border-radius:4px;background:#153246;color:#fff;font:800 10px/1.05 system-ui}#a12DockRoutes small{display:block;color:#ffd45c;font-size:9px}@media(max-width:540px) and (orientation:portrait){#a12DockRoutes{grid-template-columns:repeat(6,1fr);gap:3px;padding:5px}#a12DockRoutes button{padding:5px 1px;font-size:9px}}`;
     style.textContent += `body[data-campaign-phase="result"] #joystick,body[data-campaign-phase="result"] #jumpWrap,body[data-campaign-phase="result"] #controlHint{display:none!important}`;
     document.head.appendChild(style);
@@ -2246,10 +2276,11 @@ applyD09LogicRulesToRoutes();
     const shop = document.createElement("section");
     shop.id = "a12Shop";
     shop.setAttribute("aria-hidden", "true");
-    shop.innerHTML = `<div id="a12Preview"><canvas width="480" height="320" aria-label="Runner preview"></canvas><p id="a12WorldWarning" data-world-insufficient hidden></p><div class="previewControls"><button data-preview-runner="male"></button><button data-preview-runner="female"></button></div><div class="previewControls"><button data-preview-motion="idle"></button><button data-preview-motion="run"></button><button data-preview-motion="frontFlip"></button></div></div><div id="a12Products"><div id="a12ShopTop"><h2></h2><button data-close>x</button></div><div class="a12Tabs"><button data-tab="outfits"></button><button data-tab="characters"></button><button data-tab="chiefs"></button><button data-tab="worlds"></button></div><div data-list="outfits"></div><div data-list="characters"></div><div data-list="chiefs"></div><div data-list="worlds"></div><div id="a12ShopBottom"><button data-shop-back></button><button data-shop-buy></button></div><p data-save></p></div>`;
-    shop.querySelector('[data-list="outfits"]').innerHTML = Object.keys(OUTFITS).map(id=>`<article data-item="${id}"><h3></h3><button data-action></button></article>`).join("");
-    shop.querySelector('[data-list="characters"]').innerHTML = Object.keys(RUNNERS).map(id=>`<article data-item="${id}"><h3></h3><button data-action></button></article>`).join("");
-    shop.querySelector('[data-list="chiefs"]').innerHTML = Object.keys(CHIEFS).map(id=>`<article data-item="${id}"><h3></h3><button data-action></button></article>`).join("");
+    shop.innerHTML = `<div id="a12Preview"><canvas width="480" height="320" aria-label="Runner preview"></canvas><p id="a12WorldWarning" data-world-insufficient hidden></p><div class="previewControls" data-runner-controls></div><div class="previewControls" data-motion-controls><button data-preview-motion="idle"></button><button data-preview-motion="run"></button><button data-preview-motion="frontFlip"></button></div></div><div id="a12Products"><div id="a12ShopTop"><h2></h2><button data-close>x</button></div><div class="a12Tabs"><button data-tab="outfits"></button><button data-tab="characters"></button><button data-tab="chiefs"></button><button data-tab="worlds"></button></div><div data-list="outfits"></div><div data-list="characters"></div><div data-list="chiefs"></div><div data-list="worlds"></div><div id="a12ShopBottom"><button data-shop-back></button><button data-shop-buy></button></div><p data-save></p></div>`;
+    shop.querySelector('[data-runner-controls]').innerHTML = Object.keys(RUNNERS).map(id=>`<button data-preview-runner="${id}"></button>`).join("");
+    shop.querySelector('[data-list="outfits"]').innerHTML = Object.keys(OUTFITS).map(id=>`<article data-item="${id}"><canvas class="shopThumb" width="96" height="96" aria-hidden="true"></canvas><h3></h3><button data-action></button></article>`).join("");
+    shop.querySelector('[data-list="characters"]').innerHTML = Object.keys(RUNNERS).map(id=>`<article data-item="${id}"><canvas class="shopThumb" width="96" height="96" aria-hidden="true"></canvas><h3></h3><button data-action></button></article>`).join("");
+    shop.querySelector('[data-list="chiefs"]').innerHTML = Object.keys(CHIEFS).map(id=>`<article data-item="${id}"><canvas class="shopThumb" width="96" height="96" aria-hidden="true"></canvas><h3></h3><button data-action></button></article>`).join("");
     document.body.appendChild(shop);
     shop.addEventListener("click", async (e) => {
       if (e.target.closest("[data-close]")) return closeShop();
@@ -2285,6 +2316,15 @@ applyD09LogicRulesToRoutes();
       renderShop();
       if (e.target.matches("[data-action]"))
         await purchaseOrWear(previewOutfitId, previewRunnerId);
+    });
+    shop.addEventListener("pointerover", (e) => {
+      const article = e.target.closest("[data-item]");
+      if (!article || !shop.contains(article)) return;
+      if (shopTab === "characters") previewRunnerId = article.dataset.item;
+      else if (shopTab === "chiefs") previewChiefId = article.dataset.item;
+      else if (shopTab === "outfits") previewOutfitId = article.dataset.item;
+      else if (shopTab === "worlds") previewWorldId = article.dataset.item;
+      renderShop();
     });
     window.setInterval(() => {
       if (shopOpen) drawShopPreview();
@@ -2362,6 +2402,8 @@ applyD09LogicRulesToRoutes();
     const motionLabels=[t("idle"),t("motionRun"),t("flip")];
     s.querySelectorAll('[data-preview-runner]').forEach(b=>{b.textContent=t(b.dataset.previewRunner);b.setAttribute('aria-pressed',String(b.dataset.previewRunner===previewRunnerId));});
     s.querySelectorAll('[data-preview-motion]').forEach((b,i)=>{b.textContent=motionLabels[i];b.setAttribute('aria-pressed',String(b.dataset.previewMotion===previewMotion));});
+    s.querySelector('[data-runner-controls]').hidden = shopTab === "characters" || shopTab === "chiefs";
+    s.querySelector('[data-motion-controls]').hidden = shopTab === "chiefs" || shopTab === "worlds";
     s.querySelector("h2").textContent = `${t("shop")} · ${t(shopTab)} · ${t("wallet")} ${profile.walletBalance}`;
     s.querySelector('[data-tab="outfits"]').textContent=t("outfits");
     s.querySelector('[data-tab="characters"]').textContent=t("characters");
@@ -2406,7 +2448,30 @@ applyD09LogicRulesToRoutes();
     for(const a of worlds.querySelectorAll("article")){const w=WORLD_REGISTRY[a.dataset.item],owned=profile.ownedWorldIds.includes(w.id),selected=profile.selectedWorldId===w.id,b=a.querySelector("button"),short=!owned&&profile.walletBalance<w.price;a.dataset.owned=String(owned);a.dataset.price=String(w.price);a.style.outline=previewWorldId===w.id?"2px solid #79e9ba":"none";b.textContent=!w.enabled?t("planned"):selected?t("selected"):owned?t("select"):`${short?"🔒 ":""}◉ ${w.price}`;b.disabled=!w.enabled||selected||purchaseBusy||short;}
     const activeList=shopTab==="worlds"?"worlds":shopTab==="characters"?"characters":shopTab==="chiefs"?"chiefs":"outfits",activeId=shopTab==="worlds"?previewWorldId:shopTab==="characters"?previewRunnerId:shopTab==="chiefs"?previewChiefId:previewOutfitId,back=s.querySelector('[data-shop-back]'),buy=s.querySelector('[data-shop-buy]'),selected=s.querySelector(`[data-list="${activeList}"] [data-item="${activeId}"] [data-action]`),previewWorld=WORLD_REGISTRY[previewWorldId],worldOwned=!!previewWorld&&profile.ownedWorldIds.includes(previewWorldId),worldSelected=profile.selectedWorldId===previewWorldId,worldShort=!!previewWorld&&!worldOwned&&profile.walletBalance<previewWorld.price,warning=s.querySelector('[data-world-insufficient]');back.textContent=profile.settings.language==='tr'?'GERI':profile.settings.language==='ru'?'BACK':'BACK';if(shopTab==="worlds"&&previewWorld){buy.textContent=!previewWorld.enabled?t("planned"):worldSelected?t("selected"):worldOwned?t("select"):t("buyWorld").replace("{price}",previewWorld.price);buy.disabled=!previewWorld.enabled||worldSelected||purchaseBusy||worldShort}else{buy.textContent=selected?.textContent||t('selected');buy.disabled=!!selected?.disabled}warning.hidden=!(shopTab==="worlds"&&previewWorld?.enabled&&worldShort);warning.textContent=warning.hidden?"":t("insufficient");
     s.querySelector("[data-save]").textContent = saveFailure ? t("saveFailed") : t("noCharge");
+    drawShopCardThumbs();
     drawShopPreview();
+  }
+  function drawShopCardThumbs() {
+    const root = document.getElementById("a12Shop");
+    if (!root) return;
+    for (const a of root.querySelectorAll('[data-list="outfits"] article')) {
+      const q=a.querySelector("canvas.shopThumb"),c=q?.getContext("2d");
+      if(!c)continue;
+      c.clearRect(0,0,q.width,q.height);c.save();c.translate(q.width/2,q.height-10);c.scale(1.85,1.85);
+      drawRunnerAtlas(c,previewRunnerId,RUNNERS[previewRunnerId]?.outfitLocked?"default":a.dataset.item,{motion:"idle",frame:0},0,0,1);c.restore();
+    }
+    for (const a of root.querySelectorAll('[data-list="characters"] article')) {
+      const id=a.dataset.item,q=a.querySelector("canvas.shopThumb"),c=q?.getContext("2d");
+      if(!c)continue;
+      c.clearRect(0,0,q.width,q.height);c.save();c.translate(q.width/2,q.height-10);c.scale(1.85,1.85);
+      drawRunnerAtlas(c,id,RUNNERS[id]?.outfitLocked?"default":profile.equippedOutfitByRunner[id]||"default",{motion:"idle",frame:0},0,0,1);c.restore();
+    }
+    for (const a of root.querySelectorAll('[data-list="chiefs"] article')) {
+      const q=a.querySelector("canvas.shopThumb"),c=q?.getContext("2d");
+      if(!c)continue;
+      c.clearRect(0,0,q.width,q.height);c.save();c.translate(q.width/2,q.height-8);c.scale(1.6,1.6);
+      drawChiefAtlas(c,a.dataset.item,{motion:"idle",frame:0},0,0,1);c.restore();
+    }
   }
   function drawShopPreview(now=performance.now()) {
     const q = document.querySelector("#a12Preview canvas"),
@@ -2415,6 +2480,7 @@ applyD09LogicRulesToRoutes();
     drawThemeScene(x,q.width,q.height,shopTab==="worlds"?previewWorldId:profile.selectedWorldId,true);
     x.save();x.translate(q.width/2,240);x.scale(3,3);
     if(shopTab==="chiefs") drawChiefAtlas(x,previewChiefId,{motion:"run",frame:Math.floor(Math.max(0,now-previewStartedAt)/1000*16)%8},0,0,1);
+    else if(shopTab==="characters") drawRunnerAtlas(x,previewRunnerId,RUNNERS[previewRunnerId]?.outfitLocked?"default":profile.equippedOutfitByRunner[previewRunnerId]||"default",{motion:"idle",frame:0},0,0);
     else drawRunnerAtlas(x,previewRunnerId,RUNNERS[previewRunnerId]?.outfitLocked?"default":previewOutfitId,{motion:previewMotion,frame:Math.floor(Math.max(0,now-previewStartedAt)/1000*(previewMotion==="run"?16:8))%8},0,0);
     x.restore();
   }
@@ -2772,6 +2838,17 @@ applyD09LogicRulesToRoutes();
     c.save();
     c.translate(0,verticalParallax);
     if(frozen||magma||profile.selectedWorldId==="aftermath") drawThemeScene(c,w,h,profile.selectedWorldId); else engine.drawDockBackdrop(activeWorldCacheKey);
+    if(!frozen&&!magma&&profile.selectedWorldId==="dock31"&&player&&player.x>850&&player.x<2100&&BRAND_WOLF_A12.complete&&BRAND_WOLF_A12.naturalWidth){
+      c.save();
+      c.globalAlpha=.9;
+      c.fillStyle="#10202acc";
+      c.fillRect(w*.36-10,h*.48-8,112,68);
+      c.strokeStyle="#d8edf566";
+      c.lineWidth=2;
+      c.strokeRect(w*.36-10,h*.48-8,112,68);
+      c.drawImage(BRAND_WOLF_A12,w*.36,h*.48,92,52);
+      c.restore();
+    }
     backdropCalls++;
     c.restore();
     let edges=drawBackgroundIntegrated.edgeColors.get(backgroundKey);
@@ -2804,6 +2881,21 @@ applyD09LogicRulesToRoutes();
   }
   function visibleX(bounds,x,w,pad=0) {
     return x+w>=bounds.minX-pad&&x<=bounds.maxX+pad;
+  }
+  function drawDockWolfMarks(c) {
+    if (!BRAND_WOLF_A12.complete || !BRAND_WOLF_A12.naturalWidth || profile.selectedWorldId !== "dock31") return;
+    for (let x = 980; x < route.length; x += 1900) {
+      const y = 292, w = 92, h = 52;
+      c.save();
+      c.globalAlpha = .9;
+      c.fillStyle = "#10202acc";
+      c.fillRect(x - 10, y - 8, w + 20, h + 16);
+      c.strokeStyle = "#d8edf566";
+      c.lineWidth = 2;
+      c.strokeRect(x - 10, y - 8, w + 20, h + 16);
+      c.drawImage(BRAND_WOLF_A12, x, y, w, h);
+      c.restore();
+    }
   }
   function drawClippedSurface(c,bounds,draw,x,y,w,h,pad=36) {
     const x0=Math.max(x,bounds.minX-pad),x1=Math.min(x+w,bounds.maxX+pad);
@@ -2966,6 +3058,7 @@ applyD09LogicRulesToRoutes();
       else if(magma) drawClippedSurface(c,bounds,()=>magmaSurface(c,g.x,g.y,g.w,g.h,"ground"),g.x,g.y,g.w,g.h,24);
       else engine.drawMetal(g.x,g.y,g.w,g.h)
     }
+    if(!frozen&&!magma) drawDockWolfMarks(c);
     for(const z of route.wallJumpZones||[]){
       const x=z.x1,w=z.x2-z.x1,y0=z.yTop,y1=z.yBottom;if(bounds&&!visibleX(bounds,x,w,120))continue;
       c.save();c.strokeStyle="#ffd34dcc";c.lineWidth=4;c.setLineDash([10,8]);
@@ -3332,7 +3425,7 @@ applyD09LogicRulesToRoutes();
         disableChief: ()=>{campaignChief=null},
         placePlayerAtChiefTime: (t,dy=0)=>{if(!campaignChief?.path)return false;const entry=primeChiefLadder(campaignChief),q=chiefSample(campaignChief.path,t);engine.reset(q.x,q.y+dy);if(t<entry.readyTime){parkChiefAtLadder(campaignChief);setChiefPlayerTime(campaignChief,t);return true}campaignChief.active=true;campaignChief.entryPhase="running";campaignChief.climbElapsed=entry?.duration||0;campaignChief.playerT=t;campaignChief.playerIndex=Math.max(0,campaignChief.path.samples.findIndex(v=>v[0]>=t));campaignChief.chiefT=Math.max(entry?.time??0,t-campaignChief.delay);return true},
         placePlayerAtChiefLadderStart: (dy=0)=>{if(!campaignChief?.path)return false;const entry=primeChiefLadder(campaignChief),t=entry.climbStartTime+.02,x=entry.x+8;player.x=x;player.y=routeGroundYAt(x)-player.h+dy;player.vx=player.vy=0;player.onGround=true;campaignChief.active=false;campaignChief.entryPhase="waiting";campaignChief.climbElapsed=0;campaignChief.playerT=t;campaignChief.playerIndex=Math.max(0,campaignChief.path.samples.findIndex(v=>v[0]>=t));campaignChief.chiefT=entry.time-campaignChief.delay;return debugState()},
-        forceChiefNear: ()=>{if(!campaignChief)return false;campaignChief.active=true;campaignChief.entryPhase="running";campaignChief.x=player.x-96;campaignChief.y=routeGroundYAt(player.x)-48;campaignChief.pose="run";campaignChief.facing=1;return debugState()},
+        forceChiefNear: ()=>{if(!campaignChief)return false;campaignChief.active=true;campaignChief.entryPhase="running";campaignChief.x=player.x-168;campaignChief.y=routeGroundYAt(player.x)-48;campaignChief.pose="run";campaignChief.facing=1;return debugState()},
         routeDefinition: (id)=>clone(ROUTES[id]),
         chiefRouteHash: (id)=>chiefRouteHash(ROUTES[id]),
         chiefPathStatus: (id, deltaX=0)=>{const r=clone(ROUTES[id]);if(deltaX&&r.groundSegments?.length)r.groundSegments[0].x+=deltaX;return {stored:window.TMB_CHIEF_PATHS?.[id]?.routeHash||null,current:chiefRouteHash(r),valid:window.TMB_CHIEF_PATHS?.[id]?.routeHash===chiefRouteHash(r)}},
