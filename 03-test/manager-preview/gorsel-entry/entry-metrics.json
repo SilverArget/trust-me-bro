@@ -1,0 +1,84 @@
+{
+  "entry": {
+    "desktop": {
+      "buttons": [
+        {
+          "text": "♂",
+          "dataCharacter": "0",
+          "label": "MALE RUNNER",
+          "w": 180,
+          "h": 180
+        },
+        {
+          "text": "♀",
+          "dataCharacter": "1",
+          "label": "FEMALE RUNNER",
+          "w": 180,
+          "h": 180
+        }
+      ],
+      "visibleExtra": 0
+    },
+    "femaleStart": {
+      "characterId": 2,
+      "runnerId": "female",
+      "routeId": "D01"
+    },
+    "idReopen": "♂♀",
+    "desktopConsoleErrors": 0,
+    "mobile": [
+      {
+        "text": "♂",
+        "w": 146,
+        "h": 146,
+        "x": 30,
+        "y": 349
+      },
+      {
+        "text": "♀",
+        "w": 146,
+        "h": 146,
+        "x": 204,
+        "y": 349
+      }
+    ],
+    "mobileConsoleErrors": 0
+  },
+  "d04": {
+    "fromId": "d04-v-23",
+    "toId": "d04-v-24",
+    "gapPx": 499.2,
+    "startX": 7344,
+    "edgeX": 7094.4,
+    "deckY": 270.2,
+    "startCameraWorldY": 783.4,
+    "samples": [
+      {
+        "playerY": 376.15,
+        "cameraWorldY": 783.4,
+        "cameraGroundFootY": -448.6,
+        "deaths": 0,
+        "routeId": "D04"
+      },
+      {
+        "playerY": -83.8,
+        "cameraWorldY": 481.9,
+        "cameraGroundFootY": -83.8,
+        "deaths": 1,
+        "routeId": "D04"
+      },
+      {
+        "playerY": -83.8,
+        "cameraWorldY": 418.92,
+        "cameraGroundFootY": -83.8,
+        "deaths": 1,
+        "routeId": "D04"
+      }
+    ],
+    "deaths": 1,
+    "routeId": "D04",
+    "maxCameraWorldY": 783.4,
+    "consoleErrors": 0
+  },
+  "consoleErrors": 0
+}

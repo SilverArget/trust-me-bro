@@ -1831,7 +1831,7 @@ applyD09LogicRulesToRoutes();
     const fallingOut=route.movementProfile==="vector-v1"
       ? player.y > deepestGroundYAt(player.x+player.w/2) + 120
       : player.y > Math.max(H + 120,routeGroundYAt(player.x+player.w/2)+120);
-    if(fallingOut&&!jumpRun?.hermes)retry(false);
+    if(fallingOut&&!jumpRun?.hermes){campaignDeaths++;emitGame("player_fall",{routeId});retry(false);}
     if (player.x >= route.finishX) startFinishGateEntry();
   }
   function startFinishGateEntry() {
@@ -2182,7 +2182,11 @@ applyD09LogicRulesToRoutes();
     document.dispatchEvent(new CustomEvent("tmb:audio-language",{detail:profile.settings.language}));
     document.getElementById("hint").textContent = t("help");
     const card = document.getElementById("characterCard");
-    if (card) { card.querySelector("h2").textContent = t("choose"); card.querySelector("p").textContent=t("samePhysics"); }
+    if (card) {
+      const title = card.querySelector("h2"), copy = card.querySelector("p");
+      if (title) title.textContent = t("choose");
+      if (copy) copy.textContent = t("samePhysics");
+    }
     syncRunnerChoiceCards();
     const actions = document.getElementById("a12Actions");
     if (actions) for (const b of actions.querySelectorAll("button")) b.textContent = t(b.dataset.act);
@@ -2257,7 +2261,7 @@ applyD09LogicRulesToRoutes();
     style.textContent += `#a12Shop{box-sizing:border-box}#a12Shop.show{grid-template-columns:minmax(230px,40%) minmax(0,1fr);grid-template-rows:minmax(0,1fr);gap:18px}#a12Preview{display:flex;flex-direction:column;justify-content:center;gap:12px;min-width:0;min-height:0;overflow:hidden}#a12Preview canvas{width:min(100%,480px);height:auto;max-height:65%;aspect-ratio:3/2;object-fit:contain;image-rendering:pixelated}#a12WorldWarning{margin:0;padding:7px 10px;border:1px solid #ffcf5c88;border-radius:10px;background:#442b12;color:#ffe29a;text-align:center;font:900 12px/1.2 system-ui}#a12WorldWarning[hidden]{display:none}#a12Preview .previewControls{display:flex;flex-wrap:wrap;justify-content:center;gap:6px}#a12Preview button{padding:8px 10px}#a12Preview button[aria-pressed="true"]{background:#286650;border-color:#8ff1c8}#a12Products{min-height:0;min-width:0;overscroll-behavior:contain}@media(max-width:540px) and (orientation:portrait){#a12Shop.show{grid-template-columns:minmax(0,1fr);grid-template-rows:minmax(230px,40%) minmax(0,1fr);gap:12px}#a12Preview{gap:5px}#a12Preview canvas{max-height:62%;width:auto;max-width:100%}}`;
     style.textContent += `@media(orientation:landscape){#a12Shop{padding:max(12px,var(--safe-top)) max(14px,var(--safe-right)) max(12px,var(--safe-bottom)) max(14px,var(--safe-left))}#a12Shop.show{grid-template-columns:minmax(230px,38%) minmax(0,1fr);gap:14px}#a12Preview{min-height:35vh}#a12Preview canvas{max-height:72%}#a12Products{display:grid;grid-template-rows:auto auto minmax(0,1fr) auto;overflow:hidden;padding:0}#a12ShopTop{display:flex;align-items:center;justify-content:space-between;gap:8px}#a12ShopTop h2{font:900 clamp(15px,2.4vw,22px)/1 system-ui;margin:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}#a12ShopTop [data-close]{min-width:44px;min-height:44px;padding:0}#a12Products .a12Tabs{display:flex;gap:7px;margin:5px 0}#a12Products [data-list]{display:grid;grid-template-columns:repeat(4,minmax(96px,1fr));gap:8px;overflow-y:auto;min-height:0;align-content:start}#a12Products article{position:relative;min-width:96px;min-height:102px;margin:0;padding:10px 8px 54px;box-sizing:border-box}#a12Products article h3{margin:0;font:850 12px/1.15 system-ui}#a12Products article [data-action]{position:absolute;left:8px;right:8px;bottom:6px;min-width:0;width:calc(100% - 16px);height:44px;padding:4px 6px;border-radius:999px;background:#07131d;color:#ffd45c;border:1px solid #ffd45c88;font:900 11px/1.05 system-ui;box-shadow:0 2px 0 #0008;text-shadow:none}#a12Products article [data-action]:not(:disabled):active{transform:translateY(1px);box-shadow:0 1px 0 #0008}#a12Products article [data-action]:disabled{opacity:.55;color:#d9e2e8;border-color:#ffffff35;box-shadow:none}#a12ShopBottom{display:flex;gap:8px;padding-top:7px}#a12ShopBottom button{min-height:44px;flex:1}#a12Products [data-save]{display:none}}`;
     style.textContent += `#a12Products article canvas.shopThumb{display:block;width:84px;height:84px;margin:4px auto 8px;image-rendering:pixelated;pointer-events:none}#a12Products article h3{text-align:center}#a12Preview .previewControls[hidden]{display:none!important}@media(orientation:landscape){#a12Products article canvas.shopThumb{width:60px;height:60px;margin:2px auto 5px}#a12Products [data-list][hidden]{display:none!important}#a12Products article [data-action]:disabled{opacity:1;color:#82919a;background:#0b171e;border-color:#52616a;box-shadow:none}}`;
-    style.textContent += `#characterChoices{grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}.characterChoice{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;min-width:0}.characterChoice .portrait{width:min(106px,22vw);max-height:138px}.characterChoice .lockBadge{position:absolute;right:8px;top:8px;border-radius:999px;background:#07131de6;border:1px solid #ffd45c88;color:#ffd45c;padding:4px 7px;font:900 11px/1 system-ui}.characterChoice.locked{filter:saturate(.72);opacity:.78}.characterChoice.locked .portrait{opacity:.58}@media(max-width:620px){#characterSelect{overflow:auto;align-items:flex-start}#characterCard{width:min(420px,96vw)}#characterChoices{grid-template-columns:repeat(2,minmax(0,1fr))}.characterChoice .portrait{width:min(112px,34vw);max-height:142px}}`;
+    style.textContent += `#characterSelect #characterCard>img,#characterSelect #characterCard>.eyebrow,#characterSelect #characterCard>h2,#characterSelect #characterCard>p,#characterSelect #characterShop,#characterSelect #a12LanguageWrap,#characterSelect .portrait,#characterSelect .choiceName,#characterSelect .lockBadge{display:none!important}#characterSelect #characterChoices{grid-template-columns:repeat(2,minmax(120px,1fr))}#characterSelect .characterChoice{position:relative;display:grid;place-items:center;justify-content:center;align-items:center;min-width:120px}`;
     style.textContent += `#a12DockRoutes{position:fixed;z-index:30;left:50%;bottom:var(--dock-actions-clearance,148px);transform:translateX(-50%);width:min(94vw,760px);display:grid;grid-template-columns:repeat(6,1fr);gap:5px;padding:8px;box-sizing:border-box;background:#06121be8;border:1px solid #ffffff33;border-radius:6px}#a12DockRoutes[hidden]{display:none!important}#a12DockRoutes button{min-width:0;padding:6px 2px;border:1px solid #ffffff33;border-radius:4px;background:#153246;color:#fff;font:800 10px/1.05 system-ui}#a12DockRoutes small{display:block;color:#ffd45c;font-size:9px}@media(max-width:540px) and (orientation:portrait){#a12DockRoutes{grid-template-columns:repeat(6,1fr);gap:3px;padding:5px}#a12DockRoutes button{padding:5px 1px;font-size:9px}}`;
     style.textContent += `body[data-campaign-phase="result"] #joystick,body[data-campaign-phase="result"] #jumpWrap,body[data-campaign-phase="result"] #controlHint{display:none!important}`;
     document.head.appendChild(style);
@@ -2267,7 +2271,7 @@ applyD09LogicRulesToRoutes();
     actions.innerHTML = `<button data-act="next">${t("next")}</button><button data-act="shop">${t("shop")}</button><button data-act="rewarded" hidden></button><button data-act="retry">${t("retry")}</button>`;
     document.body.appendChild(actions);
     const dockRoutes=document.createElement("nav");dockRoutes.id="a12DockRoutes";dockRoutes.hidden=true;document.body.appendChild(dockRoutes);const placeDockRoutes=()=>{if(dockRoutes.hidden||actions.hidden)return;const top=actions.getBoundingClientRect().top;dockRoutes.style.setProperty("--dock-actions-clearance",`${Math.max(8,innerHeight-top+8)}px`)};const renderDockRoutes=()=>{const show=document.body.dataset.campaignPhase==="result"&&profile.selectedWorldId==="dock31";dockRoutes.hidden=!show;if(!show)return;dockRoutes.innerHTML=WORLD_REGISTRY.dock31.routes.map(id=>`<button data-route="${id}">${id}<small>${"★".repeat(profile.progressByRoute[id]?.stars||0)}${"☆".repeat(3-(profile.progressByRoute[id]?.stars||0))}</small></button>`).join("");requestAnimationFrame(placeDockRoutes)};new MutationObserver(renderDockRoutes).observe(document.body,{attributes:true,attributeFilter:["data-campaign-phase"]});addEventListener("resize",placeDockRoutes);dockRoutes.addEventListener("click",e=>{const id=e.target.closest("[data-route]")?.dataset.route;if(id)startRoute(id)});
-    const languageSelect=document.getElementById("a12Language");languageSelect.value=profile.settings.language;languageSelect.addEventListener("change",async()=>{const previous=profile.settings.language;profile.settings.language=languageFrom(languageSelect.value);applyLanguage();emitGame("language_change",{from:previous,to:profile.settings.language});await persist();});
+    const languageSelect=document.getElementById("a12Language");if(languageSelect){languageSelect.value=profile.settings.language;languageSelect.addEventListener("change",async()=>{const previous=profile.settings.language;profile.settings.language=languageFrom(languageSelect.value);applyLanguage();emitGame("language_change",{from:previous,to:profile.settings.language});await persist();});}
     actions.hidden = true;
     actions.addEventListener("click", async (e) => {
       const a = e.target.dataset.act;
@@ -2335,29 +2339,24 @@ applyD09LogicRulesToRoutes();
       else if (shopTab === "worlds") previewWorldId = article.dataset.item;
       renderShop();
     });
-    const card = document.getElementById("characterCard");
-    card.querySelector(".eyebrow").textContent = "TRUST ME BRO · DOCK 31";
-    card.querySelector("h2").textContent = t("choose");
-    card.querySelector("p").textContent = t("samePhysics");
     const choiceWrap = document.getElementById("characterChoices");
-    for (const id of Object.keys(RUNNERS).slice(2)) choiceWrap?.insertAdjacentHTML("beforeend", `<button class="characterChoice" data-character="${id}" aria-pressed="false"><canvas class="portrait" width="106" height="192" aria-hidden="true"></canvas>${t(id)}</button>`);
+    if (choiceWrap) {
+      choiceWrap.innerHTML = `<button class="characterChoice" data-character="0" data-runner-id="male" aria-pressed="false"></button><button class="characterChoice" data-character="1" data-runner-id="female" aria-pressed="false"></button>`;
+    }
     const choices = [...document.querySelectorAll(".characterChoice")];
     choices.forEach((el, i) => {
       const id = Object.keys(RUNNERS)[i] || "male";
-      el.dataset.character = id;
-      [...el.querySelectorAll(".runnerSymbol")].forEach(v=>v.remove());
-      [...el.childNodes].filter(n=>n.nodeType===Node.TEXT_NODE).forEach(n=>n.remove());
-      if(!el.querySelector(".choiceName")) el.insertAdjacentHTML("beforeend", `<span class="choiceName"></span>`);
+      el.dataset.character = String(i);
+      el.dataset.runnerId = id;
+      el.textContent = id === "female" ? "\u2640" : "\u2642";
+      el.setAttribute("aria-label", t(id));
       el.addEventListener("click", () => selectRunner(id));
     });
     syncRunnerChoiceCards();
-    drawCharacterChoicePortraits();
-    runnerAtlasReady.then(drawCharacterChoicePortraits);
     const syncRunnerChoice=()=>syncRunnerChoiceCards();
     syncRunnerChoice();
-    document.getElementById("characterShop")?.addEventListener("click",()=>{shopReturnToCharacter=true;openShop();});
     const change = document.getElementById("characterChange");
-    change.textContent = "↔";
+    change.textContent = "ID";
     change.title = t("choose");
     applyLanguage();
     addEventListener("keydown", (e) => {
@@ -2388,15 +2387,12 @@ applyD09LogicRulesToRoutes();
   }
   function syncRunnerChoiceCards() {
     document.querySelectorAll(".characterChoice").forEach(el=>{
-      const id=el.dataset.character||"male",owned=profile.ownedRunnerIds.includes(id),selected=id===profile.runnerId;
+      const id=el.dataset.runnerId||(["male","female"][Number(el.dataset.character)||0])||"male",selected=id===profile.runnerId;
+      el.dataset.character = id === "female" ? "1" : "0";
+      el.dataset.runnerId = id;
+      el.textContent = id === "female" ? "\u2640" : "\u2642";
+      el.setAttribute("aria-label", t(id));
       el.setAttribute("aria-pressed",String(selected));
-      el.dataset.locked=String(!owned);
-      el.classList.toggle("locked",!owned);
-      const label=el.querySelector(".choiceName")||el.appendChild(Object.assign(document.createElement("span"),{className:"choiceName"}));
-      label.textContent=t(id);
-      let badge=el.querySelector(".lockBadge");
-      if(!owned){if(!badge){badge=document.createElement("span");badge.className="lockBadge";el.appendChild(badge);}badge.textContent=`LOCK ${RUNNERS[id].price}`;}
-      else badge?.remove();
     });
   }
   function openShop() {
