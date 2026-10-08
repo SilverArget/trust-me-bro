@@ -2450,7 +2450,7 @@ applyD09LogicRulesToRoutes();
     const worlds=s.querySelector('[data-list="worlds"]');
     worlds.innerHTML=Object.values(WORLD_REGISTRY).map(w=>`<article data-item="${w.id}"><h3>${w.id.toUpperCase()}</h3><button data-action></button></article>`).join("");
     for(const a of worlds.querySelectorAll("article")){const w=WORLD_REGISTRY[a.dataset.item],owned=profile.ownedWorldIds.includes(w.id),selected=profile.selectedWorldId===w.id,b=a.querySelector("button"),short=!owned&&profile.walletBalance<w.price;a.dataset.owned=String(owned);a.dataset.price=String(w.price);a.style.outline=previewWorldId===w.id?"2px solid #79e9ba":"none";b.textContent=!w.enabled?t("planned"):selected?t("selected"):owned?t("select"):`${short?"🔒 ":""}◉ ${w.price}`;b.disabled=!w.enabled||selected||purchaseBusy||short;}
-    const activeList=shopTab==="worlds"?"worlds":shopTab==="characters"?"characters":shopTab==="chiefs"?"chiefs":"outfits",activeId=shopTab==="worlds"?previewWorldId:shopTab==="characters"?previewRunnerId:shopTab==="chiefs"?previewChiefId:previewOutfitId,back=s.querySelector('[data-shop-back]'),buy=s.querySelector('[data-shop-buy]'),selected=s.querySelector(`[data-list="${activeList}"] [data-item="${activeId}"] [data-action]`),previewWorld=WORLD_REGISTRY[previewWorldId],worldOwned=!!previewWorld&&profile.ownedWorldIds.includes(previewWorldId),worldSelected=profile.selectedWorldId===previewWorldId,worldShort=!!previewWorld&&!worldOwned&&profile.walletBalance<previewWorld.price,warning=s.querySelector('[data-world-insufficient]');back.textContent=profile.settings.language==='tr'?'GERI':profile.settings.language==='ru'?'BACK':'BACK';if(shopTab==="worlds"&&previewWorld){buy.textContent=!previewWorld.enabled?t("planned"):worldSelected?t("selected"):worldOwned?t("select"):t("buyWorld").replace("{price}",previewWorld.price);buy.disabled=!previewWorld.enabled||worldSelected||purchaseBusy||worldShort}else{buy.textContent=selected?.textContent||t('selected');buy.disabled=!!selected?.disabled}warning.hidden=!(shopTab==="worlds"&&previewWorld?.enabled&&worldShort);warning.textContent=warning.hidden?"":t("insufficient");
+    const activeList=shopTab==="worlds"?"worlds":shopTab==="characters"?"characters":shopTab==="chiefs"?"chiefs":"outfits",activeId=shopTab==="worlds"?previewWorldId:shopTab==="characters"?previewRunnerId:shopTab==="chiefs"?previewChiefId:previewOutfitId,back=s.querySelector('[data-shop-back]'),buy=s.querySelector('[data-shop-buy]'),selected=s.querySelector(`[data-list="${activeList}"] [data-item="${activeId}"] [data-action]`),previewWorld=WORLD_REGISTRY[previewWorldId],worldOwned=!!previewWorld&&profile.ownedWorldIds.includes(previewWorldId),worldSelected=profile.selectedWorldId===previewWorldId,worldShort=!!previewWorld&&!worldOwned&&profile.walletBalance<previewWorld.price,warning=s.querySelector('[data-world-insufficient]');back.textContent=profile.settings.language==='tr'?'GERI':profile.settings.language==='ru'?'\u041d\u0410\u0417\u0410\u0414':'BACK';if(shopTab==="worlds"&&previewWorld){buy.textContent=!previewWorld.enabled?t("planned"):worldSelected?t("selected"):worldOwned?t("select"):t("buyWorld").replace("{price}",previewWorld.price);buy.disabled=!previewWorld.enabled||worldSelected||purchaseBusy||worldShort}else{buy.textContent=selected?.textContent||t('selected');buy.disabled=!!selected?.disabled}warning.hidden=!(shopTab==="worlds"&&previewWorld?.enabled&&worldShort);warning.textContent=warning.hidden?"":t("insufficient");
     s.querySelector("[data-save]").textContent = saveFailure ? t("saveFailed") : t("noCharge");
     drawShopCardThumbs();
     drawShopPreview();
@@ -2842,15 +2842,6 @@ applyD09LogicRulesToRoutes();
     c.save();
     c.translate(0,verticalParallax);
     if(frozen||magma||profile.selectedWorldId==="aftermath") drawThemeScene(c,w,h,profile.selectedWorldId); else engine.drawDockBackdrop(activeWorldCacheKey);
-    if (BRAND_WOLF_A12.complete && BRAND_WOLF_A12.naturalWidth) {
-      if (!frozen && !magma && profile.selectedWorldId === "dock31" && player && player.x > 850 && player.x < 2500) {
-        drawTintedWolfDecal(c, w * .35, h * .47, Math.min(128, h * .18), Math.min(128, h * .18));
-      } else if (magma) {
-        drawTintedWolfDecal(c, w * .58, h * .42, Math.min(132, h * .18), Math.min(132, h * .18));
-      } else if (frozen) {
-        drawTintedWolfDecal(c, w * .58, h * .44, Math.min(124, h * .17), Math.min(124, h * .17));
-      }
-    }
     backdropCalls++;
     c.restore();
     let edges=drawBackgroundIntegrated.edgeColors.get(backgroundKey);
@@ -2894,39 +2885,51 @@ applyD09LogicRulesToRoutes();
       const img = wc.getImageData(0, 0, wolfDecalCanvas.width, wolfDecalCanvas.height);
       for (let i = 0; i < img.data.length; i += 4) {
         const luma = img.data[i] * .2126 + img.data[i + 1] * .7152 + img.data[i + 2] * .0722;
-        const alpha = Math.max(0, Math.min(210, (luma - 38) * 3.3));
-        img.data[i] = 217;
-        img.data[i + 1] = 222;
-        img.data[i + 2] = 230;
+        const alpha = Math.max(0, Math.min(235, (luma - 30) * 3.8));
+        img.data[i] = 238;
+        img.data[i + 1] = 242;
+        img.data[i + 2] = 247;
         img.data[i + 3] = alpha;
       }
       wc.putImageData(img, 0, 0);
     }
     c.save();
-    c.globalAlpha = .55;
+    c.globalAlpha = .70;
     c.drawImage(wolfDecalCanvas, x, y, w, h);
     c.restore();
   }
   function drawDockWolfMarks(c, groundSurfaces, bounds) {
+    window.__tmbWolfDecals = [];
     if (!BRAND_WOLF_A12.complete || !BRAND_WOLF_A12.naturalWidth) return;
     let nextMarkX = 980;
     for (const g of groundSurfaces.filter(v => v.kind === "ground").sort((a, b) => a.x - b.x)) {
       const visibleLeft = Math.max(g.x, bounds?.minX ?? -Infinity);
       const visibleRight = Math.min(g.x + g.w, bounds?.maxX ?? Infinity);
       const visibleW = visibleRight - visibleLeft;
-      const faceH = Math.max(0, g.h);
+      const faceH = Math.max(0, g.decalFaceH || g.h);
+      const faceY = Number.isFinite(g.decalFaceY) ? g.decalFaceY : g.y;
       if (visibleW < 200 || faceH < 120 || g.x + g.w * .5 < nextMarkX) continue;
-      const h = Math.max(52, Math.min(faceH * .55, 128));
+      const h = Math.max(52, Math.min(faceH * .48, 130));
       const w = h * (BRAND_WOLF_A12.naturalWidth / BRAND_WOLF_A12.naturalHeight);
       if (w > Math.min(g.w * .72, visibleW * .72)) continue;
       const x = Math.max(g.x + 18, Math.min(g.x + g.w - w - 18, g.x + (g.w - w) * .5));
-      const y = g.y + Math.max(12, (faceH - h) * .52);
+      const y = faceY + 24;
       c.save();
       c.beginPath();
-      c.rect(g.x, g.y, g.w, faceH);
+      c.rect(g.x, faceY, g.w, faceH);
       c.clip();
       drawTintedWolfDecal(c, x, y, w, h);
       c.restore();
+      try {
+        const m = c.getTransform();
+        const p0 = new DOMPoint(x, y).matrixTransform(m);
+        const p1 = new DOMPoint(x + w, y + h).matrixTransform(m);
+        const f0 = new DOMPoint(g.x, faceY).matrixTransform(m);
+        window.__tmbWolfDecals.push({
+          world: { x, y, w, h, faceX: g.x, faceY, faceW: g.w, faceH },
+          screen: { x: Math.min(p0.x, p1.x), y: Math.min(p0.y, p1.y), w: Math.abs(p1.x - p0.x), h: Math.abs(p1.y - p0.y), faceTop: f0.y },
+        });
+      } catch (_) {}
       nextMarkX = g.x + 1900;
     }
   }
@@ -3091,7 +3094,11 @@ applyD09LogicRulesToRoutes();
       else if(magma) drawClippedSurface(c,bounds,()=>magmaSurface(c,g.x,g.y,g.w,g.h,"ground"),g.x,g.y,g.w,g.h,24);
       else engine.drawMetal(g.x,g.y,g.w,g.h)
     }
-    if(!frozen&&!magma) drawDockWolfMarks(c, groundSurfaces, bounds);
+    const decalSurfaces = groundSurfaces.map((g) => {
+      const supported = route.visualSupports?.some(v => v.type === "stack-to-ground" && v.id === g.id);
+      return supported ? { ...g, decalFaceY: g.y, decalFaceH: Math.max(g.h, GROUND - g.y) } : g;
+    });
+    drawDockWolfMarks(c, decalSurfaces, bounds);
     for(const z of route.wallJumpZones||[]){
       const x=z.x1,w=z.x2-z.x1,y0=z.yTop,y1=z.yBottom;if(bounds&&!visibleX(bounds,x,w,120))continue;
       c.save();c.strokeStyle="#ffd34dcc";c.lineWidth=4;c.setLineDash([10,8]);

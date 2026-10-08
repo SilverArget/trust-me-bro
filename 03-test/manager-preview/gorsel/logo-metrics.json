@@ -1,0 +1,38 @@
+[
+  {
+    "routeId": "D01",
+    "worldId": "dock31",
+    "ok": true,
+    "bbox": {
+      "x": 551,
+      "y": 491,
+      "w": 173,
+      "h": 173,
+      "faceTop": 459
+    },
+    "inside": true,
+    "wolfLuma": 173.6,
+    "surroundLuma": 89.3,
+    "lumaDiff": 84.2,
+    "backgroundWolfPixels": 0,
+    "wolfPixels": 1840
+  },
+  {
+    "routeId": "M01",
+    "worldId": "magma",
+    "ok": true,
+    "bbox": {
+      "x": 416,
+      "y": 290,
+      "w": 173,
+      "h": 173,
+      "faceTop": 258
+    },
+    "inside": true,
+    "wolfLuma": 171.6,
+    "surroundLuma": 51.9,
+    "lumaDiff": 119.7,
+    "backgroundWolfPixels": 0,
+    "wolfPixels": 71
+  }
+]

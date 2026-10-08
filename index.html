@@ -891,7 +891,6 @@ const SPRITES={
   jump:[".....kkkkkk.....","....kuuuuuk.....","...kuUUUUUUk....","..kkkkkkkkkkkk..","....kSSSSSSk....","...kSksSSksSk...","...kSssssssSk...","....ksskkssk....","...kkkuuuukkk...","ksk.UUuuUUu..kgk","ksk.kuutuuuk.kgk",".k..kutuuuuk.ksk","....kutuuuk.kskg","....kuuuuuuk..kk","....kkuuuukk....",".....kppppk.....","...kkppkkppkk...","..kppk....kppk..",".kbbk......kbbk.","..kk........kk..","................","................","................","................"]}
 };
 const SPRITE_NAMES=['courier','forklift','picker','guard'],SPRITE_CACHE=new Map(),SPRITE_HALO='#fff1d6';
-const BRAND_WOLF=new Image();BRAND_WOLF.src='sprites/brand/borugaming-wolf.png';const BRAND_TMB=new Image();BRAND_TMB.src='sprites/brand/trust-me-bro-logo.png';
 const PNG_SPRITE_CELL_W=106,PNG_SPRITE_CELL_H=192,PNG_SPRITE_IDLE_H=[177,159,181,177],PNG_SPRITE_SCALE=PNG_SPRITE_IDLE_H.map(h=>56/h);
 const PNG_SPRITES=SPRITE_NAMES.map(name=>{const state={image:new Image(),loaded:false,failed:false};state.image.onload=()=>{state.loaded=true;drawCharacterPortraits()};state.image.onerror=()=>{state.failed=true};state.image.src=`sprites/${name}.png`;return state});
 // Optional sheets are lazy and independent; missing art preserves the v62 transforms.
@@ -977,8 +976,6 @@ function drawSceneIdentity(){const sc=scene(),st=sc.start,X=x=>st+x,th=theme(),L
  const crate=(x,y,w=40,h=40,c='#b87b45')=>{const g=ctx.createLinearGradient(st+x,y,st+x+w,y+h);g.addColorStop(0,'#e2a567');g.addColorStop(.42,c);g.addColorStop(1,'#61381f');ctx.fillStyle=g;ctx.fillRect(st+x,y,w,h);ctx.fillStyle='#ffd39a55';ctx.fillRect(st+x+3,y+3,w-6,3);ctx.strokeStyle='#4d2b19';ctx.lineWidth=2;ctx.strokeRect(st+x+1,y+1,w-2,h-2);ctx.beginPath();ctx.moveTo(st+x+6,y+6);ctx.lineTo(st+x+w-6,y+h-6);ctx.moveTo(st+x+w-6,y+6);ctx.lineTo(st+x+6,y+h-6);ctx.stroke()};
  const lamp=(x,y,c='#ffe56a')=>{ctx.strokeStyle='#5c6870';ctx.lineWidth=3;ctx.beginPath();ctx.moveTo(st+x,80);ctx.lineTo(st+x,y);ctx.stroke();ctx.save();ctx.shadowColor=c;ctx.shadowBlur=14;const g=ctx.createRadialGradient(st+x-2,y-2,1,st+x,y,9);g.addColorStop(0,'#fff');g.addColorStop(.35,c);g.addColorStop(1,'#9b6c20');ctx.fillStyle=g;ctx.beginPath();ctx.arc(st+x,y,8,0,Math.PI*2);ctx.fill();ctx.restore()};
  const stripe=(x,y,w,c=th.accent)=>{ctx.fillStyle=c;ctx.fillRect(st+x,y,w,5);ctx.fillStyle='#16191d';for(let i=0;i<w;i+=24)ctx.fillRect(st+x+i,y,12,5)};
- const wolfMark=(x,y,w=74,h=42)=>{if(!BRAND_WOLF.complete||!BRAND_WOLF.naturalWidth)return;ctx.save();ctx.globalAlpha=.82;ctx.fillStyle='#10202a';ctx.fillRect(st+x-8,y-6,w+16,h+12);ctx.drawImage(BRAND_WOLF,st+x,y,w,h);ctx.restore()};
- if(L%4===1)wolfMark(1440,238);else if(L%5===2)wolfMark(760,250,58,34);
  switch(L){
   case 1: sign(55,350,185,28,'RECEIVING / DOCK 31 →','#7b2634','#fff');beam(30,190,200,12);crate(250,GROUND-42);sign(700,260,190,30,'OBEY THE SIGNS','#1f8f55','#fff');break;
   case 2: sign(55,350,175,26,"SORTING / DON'T JUMP",'#7b2634','#fff');ctx.strokeStyle='#d2654a';ctx.lineWidth=3;for(let x=300;x<575;x+=35){ctx.beginPath();ctx.moveTo(st+x,GROUND-12);ctx.lineTo(st+x+20,GROUND-2);ctx.stroke()}beam(285,300,300,8);break;
