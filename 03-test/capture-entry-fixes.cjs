@@ -52,6 +52,21 @@ async function newPage(browser, viewport) {
   return { page, errors };
 }
 
+async function noJsEntryShot(browser) {
+  const context = await browser.newContext({ viewport: { width: 1280, height: 720 }, javaScriptEnabled: false });
+  const page = await context.newPage();
+  await page.goto(`http://127.0.0.1:${server.address().port}/index.html`, { waitUntil: "domcontentloaded" });
+  await page.evaluate(() => {
+    document.getElementById("introOverlay")?.remove();
+    document.getElementById("bootOverlay")?.remove();
+    document.getElementById("characterSelect")?.classList.add("show");
+  });
+  await page.screenshot({ path: path.join(out, "entry-no-js-1280x720.png") });
+  const metrics = await page.evaluate(() => [...document.querySelectorAll(".characterChoice")].map((e) => e.textContent.trim()).join(""));
+  await context.close();
+  return metrics;
+}
+
 async function entryShots(browser) {
   const metrics = {};
   {
@@ -71,6 +86,8 @@ async function entryShots(browser) {
     await page.waitForFunction(() => !document.getElementById("characterSelect")?.classList.contains("show"));
     await page.screenshot({ path: path.join(out, "female-started-1280x720.png") });
     metrics.femaleStart = await page.evaluate(() => ({ characterId: __tmb.characterId, runnerId: __TMB_A12__.getState().profile.runnerId, routeId: __TMB_A12__.getState().routeId }));
+    await page.screenshot({ path: path.join(out, "ingame-character-change-button-1280x720.png") });
+    metrics.changeButtonText = await page.locator("#characterChange").textContent();
     await page.locator("#characterChange").click();
     await page.waitForSelector("#characterSelect.show");
     await page.screenshot({ path: path.join(out, "id-reopen-1280x720.png") });
@@ -141,14 +158,16 @@ async function d04Fall(browser) {
   await new Promise((resolve) => server.listen(0, "127.0.0.1", resolve));
   const browser = await chromium.launch({ headless: true });
   try {
-    const metrics = { entry: await entryShots(browser), d04: await d04Fall(browser) };
+    const metrics = { entry: await entryShots(browser), noJsEntry: await noJsEntryShot(browser), d04: await d04Fall(browser) };
     metrics.consoleErrors = metrics.entry.desktopConsoleErrors + metrics.entry.mobileConsoleErrors + metrics.d04.consoleErrors;
     fs.writeFileSync(path.join(out, "entry-metrics.json"), JSON.stringify(metrics, null, 2));
     if (metrics.entry.desktop.visibleExtra !== 0) throw new Error("entry extras visible");
     if (metrics.entry.desktop.buttons.map((b) => b.text).join("") !== "♂♀") throw new Error("entry symbols missing");
     if (metrics.entry.desktop.buttons.some((b) => b.w < 120 || b.h < 120)) throw new Error("entry buttons too small");
     if (metrics.entry.femaleStart.runnerId !== "female") throw new Error("female start failed");
+    if (metrics.entry.changeButtonText !== "\u2194") throw new Error("change button is not arrow");
     if (metrics.entry.idReopen !== "♂♀") throw new Error("ID reopen did not show symbols");
+    if (metrics.noJsEntry !== "\u2642\u2640") throw new Error("no-JS entry symbols missing");
     if (metrics.d04.deaths < 1) throw new Error("D04 fall did not die");
     if (metrics.d04.maxCameraWorldY > metrics.d04.startCameraWorldY + 4) throw new Error("camera followed fall into pit");
     if (metrics.consoleErrors !== 0) throw new Error(`console errors ${metrics.consoleErrors}`);

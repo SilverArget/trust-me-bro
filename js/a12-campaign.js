@@ -2356,7 +2356,7 @@ applyD09LogicRulesToRoutes();
     const syncRunnerChoice=()=>syncRunnerChoiceCards();
     syncRunnerChoice();
     const change = document.getElementById("characterChange");
-    change.textContent = "ID";
+    change.textContent = "\u2194";
     change.title = t("choose");
     applyLanguage();
     addEventListener("keydown", (e) => {

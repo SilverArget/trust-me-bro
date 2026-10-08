@@ -24,6 +24,7 @@
       "runnerId": "female",
       "routeId": "D01"
     },
+    "changeButtonText": "↔",
     "idReopen": "♂♀",
     "desktopConsoleErrors": 0,
     "mobile": [
@@ -44,6 +45,7 @@
     ],
     "mobileConsoleErrors": 0
   },
+  "noJsEntry": "♂♀",
   "d04": {
     "fromId": "d04-v-23",
     "toId": "d04-v-24",
