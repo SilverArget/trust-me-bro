@@ -1,0 +1,226 @@
+{
+  "preview": [
+    {
+      "tab": "outfits",
+      "idle": {
+        "first": "f9797934f5ac5cf9",
+        "second": "b67762aabd64ae00",
+        "frameChanged": true
+      },
+      "run": {
+        "first": "d23e88addb7d4728",
+        "second": "f44e874a7b5b5da2",
+        "frameChanged": true
+      },
+      "flip": {
+        "first": "2e3cf16b66b006a3",
+        "second": "0a93e2c7667a2fbc",
+        "frameChanged": true
+      },
+      "idleVsRun": true,
+      "runVsFlip": true,
+      "ok": true
+    },
+    {
+      "tab": "characters",
+      "idle": {
+        "first": "f9797934f5ac5cf9",
+        "second": "b67762aabd64ae00",
+        "frameChanged": true
+      },
+      "run": {
+        "first": "d23e88addb7d4728",
+        "second": "f44e874a7b5b5da2",
+        "frameChanged": true
+      },
+      "flip": {
+        "first": "2e3cf16b66b006a3",
+        "second": "115a2e22195bb63c",
+        "frameChanged": true
+      },
+      "idleVsRun": true,
+      "runVsFlip": true,
+      "ok": true
+    },
+    {
+      "tab": "chiefs",
+      "idle": {
+        "first": "d3744d8b3dc39032",
+        "second": "f26ef7fc299ff72a",
+        "frameChanged": true
+      },
+      "run": {
+        "first": "6668e5d15f6ae355",
+        "second": "5885d0ecdf3a7fd0",
+        "frameChanged": true
+      },
+      "flip": {
+        "first": "36ea02c729de0fb5",
+        "second": "bde8ea22494c674f",
+        "frameChanged": true
+      },
+      "idleVsRun": true,
+      "runVsFlip": true,
+      "ok": true
+    }
+  ],
+  "suspendCounts": {
+    "A01": {
+      "before": 2,
+      "after": 2
+    },
+    "A02": {
+      "before": 9,
+      "after": 0
+    },
+    "A03": {
+      "before": 22,
+      "after": 3
+    },
+    "A04": {
+      "before": 24,
+      "after": 2
+    },
+    "A05": {
+      "before": 28,
+      "after": 4
+    },
+    "A06": {
+      "before": 23,
+      "after": 3
+    },
+    "D01": {
+      "before": 15,
+      "after": 2
+    },
+    "D02": {
+      "before": 6,
+      "after": 0
+    },
+    "D03": {
+      "before": 8,
+      "after": 2
+    },
+    "D04": {
+      "before": 12,
+      "after": 4
+    },
+    "D05": {
+      "before": 9,
+      "after": 4
+    },
+    "D06": {
+      "before": 7,
+      "after": 3
+    },
+    "D07": {
+      "before": 4,
+      "after": 3
+    },
+    "D08": {
+      "before": 18,
+      "after": 4
+    },
+    "D09": {
+      "before": 6,
+      "after": 6
+    },
+    "D10": {
+      "before": 17,
+      "after": 0
+    },
+    "D11": {
+      "before": 14,
+      "after": 5
+    },
+    "D12": {
+      "before": 8,
+      "after": 0
+    },
+    "D13": {
+      "before": 6,
+      "after": 2
+    },
+    "D14": {
+      "before": 3,
+      "after": 1
+    },
+    "D15": {
+      "before": 1,
+      "after": 1
+    },
+    "D16": {
+      "before": 9,
+      "after": 0
+    },
+    "D17": {
+      "before": 19,
+      "after": 1
+    },
+    "D18": {
+      "before": 4,
+      "after": 1
+    },
+    "F01": {
+      "before": 6,
+      "after": 4
+    },
+    "F02": {
+      "before": 20,
+      "after": 4
+    },
+    "F03": {
+      "before": 2,
+      "after": 2
+    },
+    "F04": {
+      "before": 12,
+      "after": 2
+    },
+    "F05": {
+      "before": 11,
+      "after": 2
+    },
+    "F06": {
+      "before": 26,
+      "after": 1
+    },
+    "M01": {
+      "before": 15,
+      "after": 6
+    },
+    "M02": {
+      "before": 9,
+      "after": 1
+    },
+    "M03": {
+      "before": 7,
+      "after": 3
+    },
+    "M04": {
+      "before": 3,
+      "after": 1
+    },
+    "M05": {
+      "before": 27,
+      "after": 4
+    },
+    "M06": {
+      "before": 22,
+      "after": 3
+    }
+  },
+  "lockedClick": {
+    "selectOpen": true,
+    "shopOpen": true,
+    "runnerId": "male",
+    "shop": {
+      "open": true,
+      "tab": "characters",
+      "previewOutfitId": "default",
+      "previewWorldId": "dock31",
+      "purchaseBusy": false,
+      "saveStatus": "saved"
+    }
+  }
+}
