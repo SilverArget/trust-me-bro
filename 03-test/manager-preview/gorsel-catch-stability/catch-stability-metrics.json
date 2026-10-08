@@ -1,0 +1,113 @@
+{
+  "ahead": [
+    {
+      "routeId": "D01",
+      "aheadFrames": 0,
+      "maxAhead": null,
+      "runningFrames": 0,
+      "examples": []
+    },
+    {
+      "routeId": "D04",
+      "aheadFrames": 0,
+      "maxAhead": null,
+      "runningFrames": 0,
+      "examples": []
+    },
+    {
+      "routeId": "D18",
+      "aheadFrames": 0,
+      "maxAhead": null,
+      "runningFrames": 0,
+      "examples": []
+    }
+  ],
+  "slowCatch": {
+    "caught": true,
+    "sampleCount": 150,
+    "firstCatch": {
+      "t": 9.56580000000001,
+      "x": 3919,
+      "result": false,
+      "deaths": 1,
+      "chief": {
+        "x": 3919,
+        "chiefT": 11.184000000000003,
+        "playerT": 13.832,
+        "catches": 1
+      }
+    },
+    "end": {
+      "t": 9.56580000000001,
+      "x": 3919,
+      "result": false,
+      "deaths": 1,
+      "chief": {
+        "x": 3919,
+        "chiefT": 11.184000000000003,
+        "playerT": 13.832,
+        "catches": 1
+      }
+    }
+  },
+  "finish": [
+    {
+      "routeId": "D04",
+      "w": 1280,
+      "h": 720,
+      "result": true,
+      "titleY": 62,
+      "iconY": 268.80000000000007,
+      "screenX": 886,
+      "screenFeet": 334.80000000000007,
+      "resultAngry": true,
+      "shot": "finish-D04-1280x720.png",
+      "noTitleOverlap": true
+    },
+    {
+      "routeId": "D04",
+      "w": 390,
+      "h": 844,
+      "result": true,
+      "titleY": 62,
+      "iconY": 247.19999999999993,
+      "screenX": 196,
+      "screenFeet": 313.19999999999993,
+      "resultAngry": true,
+      "shot": "finish-D04-390x844.png",
+      "noTitleOverlap": true
+    },
+    {
+      "routeId": "D18",
+      "w": 1280,
+      "h": 720,
+      "result": true,
+      "titleY": 62,
+      "iconY": 198.43,
+      "screenX": 886,
+      "screenFeet": 264.43,
+      "resultAngry": true,
+      "shot": "finish-D18-1280x720.png",
+      "noTitleOverlap": true
+    },
+    {
+      "routeId": "D18",
+      "w": 390,
+      "h": 844,
+      "result": true,
+      "titleY": 62,
+      "iconY": 247.2,
+      "screenX": 196,
+      "screenFeet": 313.2,
+      "resultAngry": true,
+      "shot": "finish-D18-390x844.png",
+      "noTitleOverlap": true
+    }
+  ],
+  "consoleErrors": [],
+  "mojibake": {
+    "index": 0,
+    "a12": 0
+  },
+  "nonAsciiIndex": 150
+}
