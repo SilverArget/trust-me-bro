@@ -1,0 +1,79 @@
+{
+  "desktop": {
+    "before": {
+      "routeId": "D01",
+      "result": true,
+      "phase": "result",
+      "actions": [
+        "NEXT LEVEL",
+        "SHOP",
+        "WATCH AD ×2",
+        "RETRY"
+      ]
+    },
+    "afterWait": {
+      "routeId": "D01",
+      "result": true,
+      "phase": "result"
+    },
+    "afterShopClose": {
+      "routeId": "D01",
+      "result": true,
+      "actionsVisible": true
+    },
+    "afterNext": {
+      "routeId": "D02",
+      "result": false
+    }
+  },
+  "mobile": {
+    "before": {
+      "routeId": "D01",
+      "result": true,
+      "phase": "result",
+      "actions": [
+        "NEXT LEVEL",
+        "SHOP",
+        "WATCH AD ×2",
+        "RETRY"
+      ]
+    },
+    "afterWait": {
+      "routeId": "D01",
+      "result": true,
+      "phase": "result"
+    },
+    "afterShopClose": {
+      "routeId": "D01",
+      "result": true,
+      "actionsVisible": true
+    },
+    "afterNext": {
+      "routeId": "D02",
+      "result": false
+    }
+  },
+  "d04": {
+    "found": {
+      "id": "d04-v-21 -> d04-v-22",
+      "x": 5300.4,
+      "gapPx": 72,
+      "dropPx": 67.2,
+      "v22Catchable": true
+    },
+    "human": {
+      "landedOrCaught": true,
+      "endX": 5448.3,
+      "state": "normal",
+      "deaths": 0,
+      "maxCameraSpread": 101.43
+    },
+    "fallCamera": {
+      "samples": 240,
+      "deaths": 0,
+      "cameraWorldYStart": 423.4000154736037,
+      "cameraWorldYEnd": 418.6,
+      "maxCameraWorldY": 423.4
+    }
+  }
+}
