@@ -912,6 +912,7 @@ applyD09LogicRulesToRoutes();
     campaignAdPaused = false,
     routesSinceInterstitial = 0;
   document.addEventListener("tmb:campaign-ad-pause",e=>{campaignAdPaused=e.detail===true;});
+  function campaignFrozen(){return campaignAdPaused || document.body.dataset.systemPaused === "true" || document.getElementById("pauseOverlay")?.classList.contains("show");}
   function canonical(value) {
     if (Array.isArray(value)) return `[${value.map(canonical).join(",")}]`;
     if (value && typeof value === "object") return `{${Object.keys(value).sort().map(k=>`${JSON.stringify(k)}:${canonical(value[k])}`).join(",")}}`;
@@ -1460,7 +1461,7 @@ applyD09LogicRulesToRoutes();
     return true;
   }
   function beforePhysicsIntegrated(dt) {
-    if (!campaign || shopOpen || result) return;
+    if (!campaign || shopOpen || result || campaignFrozen()) return;
     gameClock += dt;
     if (finishGate.phase !== "open") return;
     if(edgeClimb){engine.parkour.state="normal";engine.parkour.timer=0}
@@ -1499,7 +1500,7 @@ applyD09LogicRulesToRoutes();
     engine.setDynamicSurfaces([...movingPlatforms.map(p => ({ x:p.x, y:p.y, w:p.w, h:p.h, kind:"movingPlatform", id:p.id })),...doorRects]);
   }
   function updateIntegrated(dt, state, input={}) {
-    if (!campaign || shopOpen || result) return;
+    if (!campaign || shopOpen || result || campaignFrozen()) return;
     if (finishGate.phase !== "open") {
       updateFinishGate(dt);
       return;
@@ -1876,6 +1877,7 @@ applyD09LogicRulesToRoutes();
     finishGate.phase = "closed";
     finishGate.playerAlpha = 0;
     result = bankRun();
+    if (campaignChief) { campaignChief.resultAngry = true; campaignChief.pose = "idle"; campaignChief.caughtT = 0; campaignChief.regrabT = 0; }
     sfx("finish");
     engine.setWon(true);
     emitGame("run_complete", { routeId, elapsed_s: result.elapsed });
@@ -2231,7 +2233,7 @@ applyD09LogicRulesToRoutes();
     if(flowFlash>0){ctx.fillStyle=`rgba(255,222,80,${Math.min(1,flowFlash*2)})`;ctx.font="950 18px system-ui";ctx.fillText(`+ ${t("flow")}`,390,42)}
   }
   function drawResult() {
-    ctx.fillStyle = "#06111be8";
+    ctx.fillStyle = "#06111bb8";
     ctx.fillRect(0, 0, W, H);
     ctx.fillStyle = "#142b39";
     rr(W / 2 - 230, H / 2 - 160, 460, 320, 22);
@@ -2261,7 +2263,7 @@ applyD09LogicRulesToRoutes();
   function drawFinishAdvanceBanner() {
     if(!finishAdvance||!result)return;
     ctx.save();
-    ctx.fillStyle="#06111be8";
+    ctx.fillStyle="#06111bb8";
     rr(W/2-178,H*.16,356,52,10);
     ctx.fillStyle="#7cecc0";
     ctx.textAlign="center";
@@ -3333,15 +3335,16 @@ applyD09LogicRulesToRoutes();
       c.lineWidth=4;c.strokeStyle=frozen?"#d7f6ff":"#c0915b";for(let y=top+18;y<bottom-6;y+=22){c.beginPath();c.moveTo(x-22,y);c.lineTo(x+22,y);c.stroke()}
       c.fillStyle=frozen?"#6faaba":"#5c3b24";c.fillRect(x-32,top-7,64,9);c.fillStyle=frozen?"#bcefff":"#a06c3c";c.fillRect(x-26,top-11,52,5);c.restore();
     }
-    if (campaignChief?.active) {
+    if (campaignChief?.active && !campaignChief.resultAngry) {
       c.save();
       if(magma){c.fillStyle="#8e969f";c.fillRect(campaignChief.x-4,campaignChief.y-5,34,48);c.fillStyle="#d6dadd";c.fillRect(campaignChief.x-6,campaignChief.y-14,38,22);c.fillStyle="#202a36";c.fillRect(campaignChief.x,campaignChief.y-10,26,12);c.fillStyle="#404954";c.fillRect(campaignChief.x-2,campaignChief.y+35,12,18);c.fillRect(campaignChief.x+17,campaignChief.y+35,12,18);} else if (chiefAtlasContract) {
-        const state=campaignChief.pose||"run";
+        const state=campaignChief.resultAngry?"idle":campaignChief.pose||"run";
         drawChiefAtlas(c,profile.equippedChief||"securityTall",chiefPoseFromState(state),campaignChief.x+16,campaignChief.y+48,campaignChief.facing||1);
       } else if (CHIEF_SPRITE.complete && CHIEF_SPRITE.naturalWidth) {
         const fw=CHIEF_SPRITE.naturalWidth/4,fh=CHIEF_SPRITE.naturalHeight,frame=campaignChief.path&&campaignChief.pose!=="run"?0:Math.floor(gameClock*8)%4;
         c.imageSmoothingEnabled=false;c.drawImage(CHIEF_SPRITE,frame*fw,0,fw,fh,campaignChief.x-8,campaignChief.y-16,48,64);
       } else { c.fillStyle="#111820";c.fillRect(campaignChief.x,campaignChief.y,campaignChief.w,campaignChief.h); }
+      if(campaignChief.resultAngry)drawChiefAngerIcon(c,campaignChief.x+16,campaignChief.y-18);
       c.restore();
     }
     const finishDoor=finishDoorPlacement();
@@ -3463,6 +3466,12 @@ applyD09LogicRulesToRoutes();
     }
     c.restore();
   }
+  function drawChiefAngerIcon(c,x,y){
+    c.save();c.translate(x,y);c.lineCap="square";c.lineJoin="miter";c.strokeStyle="#ff3348";c.fillStyle="#ff3348";c.lineWidth=4;
+    c.beginPath();c.moveTo(-11,-4);c.lineTo(-3,-13);c.lineTo(-5,-3);c.lineTo(4,-10);c.stroke();
+    c.beginPath();c.moveTo(8,-12);c.lineTo(14,-20);c.lineTo(13,-9);c.lineTo(21,-15);c.stroke();
+    c.fillRect(-18,-13,5,5);c.fillRect(15,0,5,5);c.strokeStyle="#7a0712";c.lineWidth=2;c.strokeRect(-18,-13,5,5);c.strokeRect(15,0,5,5);c.restore();
+  }
   function chiefPoseFromState(state) {
     const motion=state==="catch"||state==="climb"?"wallRun":state==="roll"?"roll":state==="jump"||state==="dive"?"jump":state==="normal"||state==="run"?"run":"idle";
     return {motion,frame:Math.floor(gameClock*((motion==="run")?16:8))%8};
@@ -3484,6 +3493,13 @@ applyD09LogicRulesToRoutes();
     c.restore();
   }
   function drawRunnerLayerIntegrated(c) { ctx=c; }
+  function drawResultChiefOverlay(c){
+    if(!result||!campaignChief?.resultAngry)return;
+    const screenX=campaignChief.x-(window.__tmb?.cam||0)+16,rawFeet=campaignChief.y+48+cameraWorldY,feet=Math.min(rawFeet,H*.57);
+    if(screenX<-60||screenX>W+60||rawFeet<-20||rawFeet>H+110)return;
+    drawChiefAtlas(c,profile.equippedChief||"securityTall",{motion:"idle",frame:0},screenX,feet,campaignChief.facing||1);
+    drawChiefAngerIcon(c,screenX,feet-66);
+  }
   function drawOverlayIntegrated(c, w, h) {
     ctx = c;
     renderFrameCount++;
@@ -3496,7 +3512,7 @@ applyD09LogicRulesToRoutes();
     c.fillStyle = "#7cecc0";
     c.fillText(`${t("wallet")} ◉ ${profile.walletBalance}`, 180, 57);
     if (finishAdvance&&result) {
-      c.fillStyle = "#06111be8";
+      c.fillStyle = "#06111bb8";
       c.fillRect(w/2-178, h*.16, 356, 52);
       c.fillStyle = "#7cecc0";
       c.textAlign = "center";
@@ -3504,8 +3520,9 @@ applyD09LogicRulesToRoutes();
       c.fillText(`${finishAdvance.routeId} ${t("complete")} · +${finishAdvance.amount}`, w / 2, h*.16+32);
       c.textAlign = "left";
     } else if (result) {
-      c.fillStyle = "#06111be8";
+      c.fillStyle = "#06111bb8";
       c.fillRect(0, 0, w, h);
+      drawResultChiefOverlay(c);
       c.fillStyle = "#7cecc0";
       c.textAlign = "center";
       c.font = "950 30px system-ui";
@@ -3528,7 +3545,7 @@ applyD09LogicRulesToRoutes();
       },
       blocked: () =>
         shopOpen ||
-        campaignAdPaused ||
+        campaignFrozen() ||
         !!result ||
         document.getElementById("characterSelect")?.classList.contains("show"),
       length: () => route.length,
@@ -3557,7 +3574,7 @@ applyD09LogicRulesToRoutes();
         disableChief: ()=>{campaignChief=null},
         placePlayerAtChiefTime: (t,dy=0)=>{if(!campaignChief?.path)return false;const entry=primeChiefLadder(campaignChief),q=chiefSample(campaignChief.path,t);engine.reset(q.x,q.y+dy);if(t<entry.readyTime){parkChiefAtLadder(campaignChief);setChiefPlayerTime(campaignChief,t);return true}campaignChief.active=true;campaignChief.entryPhase="running";campaignChief.climbElapsed=entry?.duration||0;campaignChief.playerT=t;campaignChief.playerIndex=Math.max(0,campaignChief.path.samples.findIndex(v=>v[0]>=t));campaignChief.chiefT=Math.max(entry?.time??0,t-campaignChief.delay);return true},
         placePlayerAtChiefLadderStart: (dy=0)=>{if(!campaignChief?.path)return false;const entry=primeChiefLadder(campaignChief),t=entry.climbStartTime+.02,x=entry.x+8;player.x=x;player.y=routeGroundYAt(x)-player.h+dy;player.vx=player.vy=0;player.onGround=true;campaignChief.active=false;campaignChief.entryPhase="waiting";campaignChief.climbElapsed=0;campaignChief.playerT=t;campaignChief.playerIndex=Math.max(0,campaignChief.path.samples.findIndex(v=>v[0]>=t));campaignChief.chiefT=entry.time-campaignChief.delay;return debugState()},
-        forceChiefNear: ()=>{if(!campaignChief)return false;campaignChief.active=true;campaignChief.entryPhase="running";campaignChief.x=player.x-168;campaignChief.y=routeGroundYAt(player.x)-48;campaignChief.pose="run";campaignChief.facing=1;return debugState()},
+        forceChiefNear: (dx=-168)=>{if(!campaignChief)return false;campaignChief.active=true;campaignChief.entryPhase="running";campaignChief.x=player.x+dx;campaignChief.y=routeGroundYAt(campaignChief.x+16)-48;campaignChief.pose=result?"idle":"run";campaignChief.resultAngry=!!result||!!campaignChief.resultAngry;campaignChief.facing=1;return debugState()},
         routeDefinition: (id)=>clone(ROUTES[id]),
         finishDoorPlacement: (id)=>{const old=route;if(id&&ROUTES[id])route=ROUTES[id];const p=finishDoorPlacement(route);route=old;return p;},
         auditSuspendCounts,
@@ -3578,6 +3595,7 @@ applyD09LogicRulesToRoutes();
           return debugState();
         },
         finish: () => bankRun(),
+        finishResult: () => { startFinishGateEntry(); finishGate.t = finishGate.closeS + finishGate.holdS; finishGateEntry(); return debugState(); },
         claimRewardedResult,
         syncRewardedButton,
         retry,

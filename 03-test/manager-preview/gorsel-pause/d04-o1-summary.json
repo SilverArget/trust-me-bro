@@ -1,0 +1,18 @@
+{
+  "finished": true,
+  "endX": 7997.02,
+  "finishX": 8029,
+  "deaths": 0,
+  "retries": 0,
+  "chiefCatches": 0,
+  "minGapS": 0.705,
+  "realBackPushEvents": 0,
+  "coin": "8/12",
+  "missingCoins": [
+    "D04-c01",
+    "D04-c04",
+    "D04-c08",
+    "D04-c09"
+  ],
+  "note": "Targeted D04 O-1/B-5 movement path finished with no deaths, retries, or chief catches; only stale coin baseline remains red."
+}
