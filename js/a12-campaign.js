@@ -1371,7 +1371,6 @@ applyD09LogicRulesToRoutes();
     if(!wall)return false;
     const gap=dir>0?wall.x-(player.x+player.w):player.x-(wall.x+wall.w),startX=player.x,startY=player.y;
     const catchX=dir>0?wall.x-player.w:wall.x+wall.w,H=Math.max(0,feet-wall.y);
-    if((dir>0&&catchX<startX)||(dir<0&&catchX>startX))return false;
     edgeClimb={wall,dir,elapsed:0,duration:.2+.6*Math.max(0,Math.min(1,(H-60)/36)),startX:catchX,startY,endX:dir>0?wall.x+4:wall.x+wall.w-player.w-4,endY:wall.y-player.h,approach:{elapsed:0,duration:Math.max(.08,gap/Math.max(255,Math.abs(player.vx))),startX,startY,endX:catchX}};
     vectorJumpPending=null;
     keys.jump=false;
@@ -1390,7 +1389,6 @@ applyD09LogicRulesToRoutes();
     const wall=accepted&&candidates.find(s=>s.id===accepted.id);
     if(!wall)return;
     const dir=input,startX=dir>0?wall.x-player.w:wall.x+wall.w;
-    if((dir>0&&startX<player.x)||(dir<0&&startX>player.x))return;
     edgeClimb={wall,dir,elapsed:0,duration:.2+.6*Math.max(0,Math.min(1,((player.y+player.h)-wall.y-60)/36)),startX,startY:player.y,endX:dir>0?wall.x+4:wall.x+wall.w-player.w-4,endY:wall.y-player.h};
     frontFlip.active=false;
     engine.setGeometry(routeSurfaces(route).filter(s=>!(s.catchable&&s.id===wall.id)));
@@ -1588,18 +1586,17 @@ applyD09LogicRulesToRoutes();
         engine.setGeometry(routeSurfaces(route));
         engine.parkour.state="normal";engine.parkour.timer=0;edgeClimb=null;edgeCatchCooldown=.12;
       }else if(c.approach){
-        const a=c.approach,t=Math.min(1,(a.elapsed+=dt)/a.duration),arc=4*t*(1-t),nextX=a.startX+(a.endX-a.startX)*t;engine.parkour.state="normal";engine.parkour.timer=0;engine.parkour.dir=c.dir;player.x=(c.dir>=0?Math.max(player.x,nextX):Math.min(player.x,nextX));player.y=a.startY-12*arc;player.vx=(a.endX-a.startX)/a.duration;player.vy=0;player.onGround=false;if(t===1){player.x=(c.dir>=0?Math.max(player.x,a.endX):Math.min(player.x,a.endX));player.y=a.startY;player.vx=player.vy=0;delete c.approach}
+        const a=c.approach,t=Math.min(1,(a.elapsed+=dt)/a.duration),arc=4*t*(1-t);engine.parkour.state="normal";engine.parkour.timer=0;engine.parkour.dir=c.dir;player.x=a.startX+(a.endX-a.startX)*t;player.y=a.startY-12*arc;player.vx=(a.endX-a.startX)/a.duration;player.vy=0;player.onGround=false;if(t===1){player.x=a.endX;player.y=a.startY;player.vx=player.vy=0;delete c.approach}
       }else{
         c.elapsed=Math.min(c.duration,c.elapsed+dt);
         const t=c.elapsed/c.duration,hold=.12/c.duration,move=Math.max(0,(t-hold)/(1-hold)),rise=Math.min(1,move/.85),pull=Math.max(0,(move-.85)/.15);
         engine.parkour.state=move>0?"climb":"catch";engine.parkour.timer=c.duration-c.elapsed;engine.parkour.dir=c.dir;
-        const nextClimbX=c.startX+(c.endX-c.startX)*pull;
-        player.x=c.dir>=0?Math.max(player.x,nextClimbX):Math.min(player.x,nextClimbX);
+        player.x=c.startX+(c.endX-c.startX)*pull;
         player.y=c.startY+(c.endY-c.startY)*rise;
         player.vx=player.vy=0;player.onGround=false;
         if(t===1){
           engine.setGeometry(routeSurfaces(route));
-          player.x=c.dir>=0?Math.max(player.x,c.endX):Math.min(player.x,c.endX);player.y=c.endY;player.vx=c.dir*255;player.vy=0;player.onGround=true;
+          player.x=c.endX;player.y=c.endY;player.vx=c.dir*255;player.vy=0;player.onGround=true;
           edgeClimb=null;edgeCatchCooldown=.25;
         }
       }
@@ -1889,7 +1886,7 @@ applyD09LogicRulesToRoutes();
     finishGate.phase = "closed";
     finishGate.playerAlpha = 0;
     result = bankRun();
-    if (campaignChief) { const grounds=route.groundSegments||[],cam=window.__tmb?.cam||0,viewL=cam+80,viewR=cam+W-80; let finishSurface=grounds.filter(g=>route.finishX>=g.x-4&&route.finishX<=g.x+g.w+120).sort((a,b)=>b.x-a.x)[0]; let angryX=finishSurface?Math.max(finishSurface.x+60,Math.min(finishSurface.x+finishSurface.w-80,route.finishX-260)):Math.max(70, route.finishX - 260); if(!finishSurface||angryX<viewL||angryX>viewR){const visible=grounds.filter(g=>g.w>=120&&g.x+g.w>=viewL&&g.x<=viewR).sort((a,b)=>Math.abs((b.x+b.w)-route.finishX)-Math.abs((a.x+a.w)-route.finishX))[0]; if(visible){finishSurface=visible; angryX=Math.max(visible.x+60,Math.min(visible.x+visible.w-80,cam+W*.68));}} const angryGround=finishSurface?finishSurface.y:routeGroundYAt(angryX); campaignChief.resultAngry = true; campaignChief.active = true; campaignChief.entryPhase = "running"; campaignChief.pose = "idle"; campaignChief.x = angryX - campaignChief.w * .5; campaignChief.y = angryGround - campaignChief.h; campaignChief.facing = 1; campaignChief.caughtT = 0; campaignChief.regrabT = 0; }
+    if (campaignChief) { campaignChief.resultAngry = true; campaignChief.pose = "idle"; campaignChief.caughtT = 0; campaignChief.regrabT = 0; }
     sfx("finish");
     engine.setWon(true);
     emitGame("run_complete", { routeId, elapsed_s: result.elapsed });
