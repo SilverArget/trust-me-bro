@@ -110,6 +110,7 @@
       run: "RUN",
       wallet: "WALLET",
       shop: "SHOP",
+      locked: "LOCK",
       outfits: "OUTFITS",
       buy: "BUY & WEAR — {price}",
       wear: "WEAR",
@@ -161,6 +162,7 @@
       run: "KOŞU",
       wallet: "CÜZDAN",
       shop: "MAĞAZA",
+      locked: "KİLİT",
       outfits: "KIYAFETLER",
       buy: "SATIN AL VE GİY — {price}",
       wear: "GİY",
@@ -212,6 +214,7 @@
       run: "ЗАБЕГ",
       wallet: "КОШЕЛЁК",
       shop: "МАГАЗИН",
+      locked: "ЗАКРЫТО",
       outfits: "КОСТЮМЫ",
       buy: "КУПИТЬ И НАДЕТЬ — {price}",
       wear: "НАДЕТЬ",
@@ -949,7 +952,7 @@ applyD09LogicRulesToRoutes();
     if(c.matchMode==="x"){best=start;bestD=Infinity;for(let i=start;i<=end;i++){const d=Math.abs(a[i][1]-player.x);if(d<bestD){bestD=d;best=i}}}
     c.playerIndex=Math.max(start,best);c.playerT=Math.max(c.playerT,a[c.playerIndex][0]);
   }
-  const CHIEF_ENTRY_X=-64,CHIEF_LADDER_FRACTION=.15,CHIEF_LADDER_HEIGHT=132,CHIEF_LADDER_CLIMB_T=.85;
+  const CHIEF_ENTRY_X=-64,CHIEF_LADDER_FRACTION=.15,CHIEF_LADDER_HEIGHT=132,CHIEF_LADDER_CLIMB_T=.85,CHIEF_TIME_SCALE=1.04;
   function chiefLadderEntry(){
     const x=Math.max(70,Math.min(route.finishX??route.length,(route.length||route.finishX||0)*CHIEF_LADDER_FRACTION));
     const topY=routeGroundYAt(x);
@@ -1165,7 +1168,7 @@ applyD09LogicRulesToRoutes();
     document.dispatchEvent(new CustomEvent("tmb:campaign-audio", { detail: { worldId: route.worldId, routeId } }));
     for (const p of movingPlatforms) sfx(p.type === "crane" ? "crane" : "pallet");
     const recordedChiefPath=chiefPathFor(route);
-    const chiefDelay=recordedChiefPath&&/^D(?:0[1-9]|1[0-8])$/.test(routeId)?Math.max(recordedChiefPath.delay||0,2.5):recordedChiefPath?.delay;
+    const chiefDelay=recordedChiefPath&&/^D(?:0[1-9]|1[0-8])$/.test(routeId)?Math.max((recordedChiefPath.delay||0)*.84,1.55):(recordedChiefPath?Math.max((recordedChiefPath.delay||0)*.84,.9):undefined);
     campaignChief = recordedChiefPath ? {active:false,x:CHIEF_ENTRY_X,y:recordedChiefPath.samples[0][2],w:32,h:48,catches:0,caughtT:0,regrabT:0,lastReturnX:null,path:recordedChiefPath,delay:chiefDelay,chiefT:-chiefDelay,playerT:chiefTimeAtX(recordedChiefPath,70),playerIndex:0,matchMode:"xy",pose:"climb",facing:1,entry:chiefLadderEntry(),entryPhase:"waiting",climbElapsed:0}
       : (routeId === "D06" || route.chief) ? {active:false,x:-400,y:routeGroundYAt(route.chief?.startX ?? 70)-48,w:32,h:48,speed:205,catches:0,caughtT:0,lastReturnX:null} : null;
     if(recordedChiefPath)parkChiefAtLadder(campaignChief);
@@ -1681,7 +1684,7 @@ applyD09LogicRulesToRoutes();
       }
       if (campaignChief.active) {
         if(campaignChief.path&&campaignChief.entryPhase==="climbing"){campaignChief.climbElapsed=Math.min(campaignChief.entry.duration,campaignChief.climbElapsed+dt);const u=campaignChief.climbElapsed/campaignChief.entry.duration;campaignChief.x=campaignChief.entry.x-campaignChief.w*.5;campaignChief.y=campaignChief.entry.bottomY-campaignChief.h-(campaignChief.entry.height-campaignChief.h*.2)*u;campaignChief.pose="climb";if(u>=1)finishChiefLadder(campaignChief)}
-        else if(campaignChief.path){const entry=primeChiefLadder(campaignChief);campaignChief.chiefT=Math.max(entry.time,campaignChief.chiefT+dt);matchPlayerToChiefPath(campaignChief);const q=chiefSample(campaignChief.path,campaignChief.chiefT);campaignChief.x=q.x;campaignChief.y=q.y;campaignChief.pose=q.pose;campaignChief.facing=q.facing}else campaignChief.x+=campaignChief.speed*dt;
+        else if(campaignChief.path){const entry=primeChiefLadder(campaignChief);campaignChief.chiefT=Math.max(entry.time,campaignChief.chiefT+dt*CHIEF_TIME_SCALE);matchPlayerToChiefPath(campaignChief);const q=chiefSample(campaignChief.path,campaignChief.chiefT);campaignChief.x=q.x;campaignChief.y=q.y;campaignChief.pose=q.pose;campaignChief.facing=q.facing}else campaignChief.x+=campaignChief.speed*dt;
         if (campaignChief.caughtT<=0 && (!campaignChief.path ? campaignChief.x+campaignChief.w>=player.x+4 && campaignChief.x<=player.x+player.w-4 : campaignChief.entryPhase==="running"&&campaignChief.regrabT<=0 && campaignChief.chiefT>=0 && campaignChief.chiefT>=campaignChief.playerT-.05)) {
           campaignChief.catches++;
           campaignDeaths++;
@@ -1897,6 +1900,17 @@ applyD09LogicRulesToRoutes();
     ctx.roundRect(x, y, w, h, r);
     ctx.fill();
   }
+  function finishDoorPlacement(r=route) {
+    const doorLeftOffset = 74, doorRightOffset = 38, pad = 4;
+    const x = r.finishX;
+    const surfaces = (r.groundSegments || []).filter(s => s.solid !== false && x >= s.x - 4 && x <= s.x + s.w + 4).sort((a,b)=>b.x+b.w-a.x-a.w);
+    const s = surfaces[0] || (r.groundSegments || []).filter(v => v.solid !== false).sort((a,b)=>b.x+b.w-a.x-a.w)[0];
+    if (!s) return { x, y: routeGroundYAt(x), groundRight: x, groundId: null };
+    const minX = s.x + doorLeftOffset + pad;
+    const maxX = s.x + s.w - doorRightOffset - pad;
+    const drawX = maxX >= minX ? Math.max(minX, Math.min(x, maxX)) : s.x + s.w - doorRightOffset - pad;
+    return { x: drawX, y: routeGroundYAt(drawX), groundRight: s.x + s.w, groundId: s.id };
+  }
   function drawFinishDoor(c, x, y, opts = {}) {
     const tGate = opts.gate || finishGate;
     const closeK = tGate.phase === "closed" ? 1 : tGate.phase === "closing" ? Math.min(1, tGate.t / tGate.closeS) : 0;
@@ -2110,8 +2124,8 @@ applyD09LogicRulesToRoutes();
       ctx.lineTo(cp + 6, baseY - 30);
       ctx.fill();
     }
-    const finishY=routeGroundYAt(route.finishX);
-    drawFinishDoor(ctx, route.finishX, finishY);
+    const finishDoor=finishDoorPlacement();
+    drawFinishDoor(ctx, finishDoor.x, finishDoor.y);
     if (run)
       {ctx.save();ctx.globalAlpha*=finishGate.playerAlpha;drawRunner(
         player.x + player.w / 2,
@@ -2121,7 +2135,7 @@ applyD09LogicRulesToRoutes();
         profile.equippedOutfitByRunner[profile.runnerId],
         frontFlip.active ? frontFlip.angle : 0,
       );ctx.restore();}
-    drawFinishDoor(ctx, route.finishX, finishY, { shutterOnly: true });
+    drawFinishDoor(ctx, finishDoor.x, finishDoor.y, { shutterOnly: true });
     ctx.restore();
     drawHud();
     if (respawnT > 0) {
@@ -2259,8 +2273,8 @@ applyD09LogicRulesToRoutes();
     const style = document.createElement("style");
     style.textContent = `#a12Actions{position:fixed;z-index:31;left:50%;bottom:max(86px,calc(env(safe-area-inset-bottom) + 82px));transform:translateX(-50%);display:flex;gap:9px}#a12Actions[hidden]{display:none!important}#a12Actions button,#a12Shop button,#a12Language{border:1px solid #ffffff44;border-radius:12px;background:#153246;color:#fff;padding:11px 16px;font:900 13px system-ui}#a12LanguageWrap{display:flex;align-items:center;justify-content:center;gap:10px;min-height:44px;margin:8px auto 0;color:#fff;font:800 13px system-ui}#a12Language{min-height:44px;margin:0;padding:8px 14px}#a12Shop{position:fixed;inset:0;z-index:45;display:none;background:#06121bf2;color:#fff;padding:clamp(15px,4vw,38px)}#a12Shop.show{display:grid;grid-template-columns:minmax(230px,42%) 1fr;gap:25px}#a12Preview{display:grid;place-items:center;background:#102635;border-radius:18px;min-height:280px}#a12Preview canvas{width:180px;height:240px}#a12Products{overflow:auto;padding-bottom:48px}#a12Products article{padding:17px;margin:12px 0;background:#132b39;border:1px solid #ffffff30;border-radius:14px}.characterChoice[data-character="male"]{box-shadow:inset 0 0 0 2px #3aa2ff}.characterChoice[data-character="female"]{box-shadow:inset 0 0 0 2px #ff6aac}@media(max-width:540px) and (orientation:portrait){#a12Shop.show{grid-template-columns:1fr;grid-template-rows:35vh 1fr}#a12Preview{min-height:0}#a12Preview canvas{width:120px;height:160px}}`;
     style.textContent += `#a12Shop{box-sizing:border-box}#a12Shop.show{grid-template-columns:minmax(230px,40%) minmax(0,1fr);grid-template-rows:minmax(0,1fr);gap:18px}#a12Preview{display:flex;flex-direction:column;justify-content:center;gap:12px;min-width:0;min-height:0;overflow:hidden}#a12Preview canvas{width:min(100%,480px);height:auto;max-height:65%;aspect-ratio:3/2;object-fit:contain;image-rendering:pixelated}#a12WorldWarning{margin:0;padding:7px 10px;border:1px solid #ffcf5c88;border-radius:10px;background:#442b12;color:#ffe29a;text-align:center;font:900 12px/1.2 system-ui}#a12WorldWarning[hidden]{display:none}#a12Preview .previewControls{display:flex;flex-wrap:wrap;justify-content:center;gap:6px}#a12Preview button{padding:8px 10px}#a12Preview button[aria-pressed="true"]{background:#286650;border-color:#8ff1c8}#a12Products{min-height:0;min-width:0;overscroll-behavior:contain}@media(max-width:540px) and (orientation:portrait){#a12Shop.show{grid-template-columns:minmax(0,1fr);grid-template-rows:minmax(230px,40%) minmax(0,1fr);gap:12px}#a12Preview{gap:5px}#a12Preview canvas{max-height:62%;width:auto;max-width:100%}}`;
-    style.textContent += `@media(orientation:landscape){#a12Shop{padding:max(12px,var(--safe-top)) max(14px,var(--safe-right)) max(12px,var(--safe-bottom)) max(14px,var(--safe-left))}#a12Shop.show{grid-template-columns:minmax(230px,38%) minmax(0,1fr);gap:14px}#a12Preview{min-height:35vh}#a12Preview canvas{max-height:72%}#a12Products{display:grid;grid-template-rows:auto auto minmax(0,1fr) auto;overflow:hidden;padding:0}#a12ShopTop{display:flex;align-items:center;justify-content:space-between;gap:8px}#a12ShopTop h2{font:900 clamp(15px,2.4vw,22px)/1 system-ui;margin:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}#a12ShopTop [data-close]{min-width:44px;min-height:44px;padding:0}#a12Products .a12Tabs{display:flex;gap:7px;margin:5px 0}#a12Products [data-list]{display:grid;grid-template-columns:repeat(4,minmax(96px,1fr));gap:8px;overflow-y:auto;min-height:0;align-content:start}#a12Products article{position:relative;min-width:96px;min-height:102px;margin:0;padding:10px 8px 54px;box-sizing:border-box}#a12Products article h3{margin:0;font:850 12px/1.15 system-ui}#a12Products article [data-action]{position:absolute;left:8px;right:8px;bottom:6px;min-width:0;width:calc(100% - 16px);height:44px;padding:4px 6px;border-radius:999px;background:#07131d;color:#ffd45c;border:1px solid #ffd45c88;font:900 11px/1.05 system-ui;box-shadow:0 2px 0 #0008;text-shadow:none}#a12Products article [data-action]:not(:disabled):active{transform:translateY(1px);box-shadow:0 1px 0 #0008}#a12Products article [data-action]:disabled{opacity:.55;color:#d9e2e8;border-color:#ffffff35;box-shadow:none}#a12ShopBottom{display:flex;gap:8px;padding-top:7px}#a12ShopBottom button{min-height:44px;flex:1}#a12Products [data-save]{display:none}}`;
-    style.textContent += `#a12Products article canvas.shopThumb{display:block;width:84px;height:84px;margin:4px auto 8px;image-rendering:pixelated;pointer-events:none}#a12Products article h3{text-align:center}#a12Preview .previewControls[hidden]{display:none!important}@media(orientation:landscape){#a12Products article canvas.shopThumb{width:60px;height:60px;margin:2px auto 5px}#a12Products [data-list][hidden]{display:none!important}#a12Products article [data-action]:disabled{opacity:1;color:#82919a;background:#0b171e;border-color:#52616a;box-shadow:none}}`;
+    style.textContent += `@media(orientation:landscape){#a12Shop{padding:max(10px,var(--safe-top)) max(12px,var(--safe-right)) max(10px,var(--safe-bottom)) max(12px,var(--safe-left))}#a12Shop.show{grid-template-columns:minmax(190px,34%) minmax(0,1fr);gap:12px}#a12Preview{min-height:35vh}#a12Preview canvas{max-height:72%}#a12Products{display:grid;grid-template-rows:auto auto minmax(0,1fr) auto;overflow:hidden;padding:0}#a12ShopTop{display:flex;align-items:center;justify-content:space-between;gap:8px}#a12ShopTop h2{font:900 clamp(14px,2.2vw,22px)/1 system-ui;margin:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}#a12ShopTop [data-close]{min-width:40px;min-height:40px;padding:0}#a12Products .a12Tabs{display:flex;gap:6px;margin:4px 0}#a12Products .a12Tabs button{min-height:36px;padding:6px 9px;font-size:11px}#a12Products [data-list]{display:grid;grid-template-columns:repeat(4,minmax(104px,1fr));gap:7px;overflow-y:auto;min-height:0;align-content:start}#a12Products article{position:relative;min-width:104px;min-height:128px;margin:0;padding:7px 6px 48px;box-sizing:border-box}#a12Products article h3{margin:0;min-height:28px;font:850 11px/1.14 system-ui;text-wrap:balance;overflow-wrap:anywhere}#a12Products article [data-action]{position:absolute;left:6px;right:6px;bottom:5px;min-width:0;width:calc(100% - 12px);height:40px;padding:3px 5px;border-radius:999px;background:#07131d;color:#ffd45c;border:1px solid #ffd45c88;font:900 10px/1.04 system-ui;box-shadow:0 2px 0 #0008;text-shadow:none;white-space:normal;overflow-wrap:anywhere}#a12Products article [data-action]:not(:disabled):active{transform:translateY(1px);box-shadow:0 1px 0 #0008}#a12Products article [data-action]:disabled{opacity:.55;color:#d9e2e8;border-color:#ffffff35;box-shadow:none}#a12ShopBottom{display:flex;gap:8px;padding-top:7px}#a12ShopBottom button{min-height:42px;flex:1}#a12Products [data-save]{display:none}}`;
+    style.textContent += `#a12Products article canvas.shopThumb{display:block;width:84px;height:84px;margin:4px auto 8px;image-rendering:pixelated;pointer-events:none}#a12Products article h3{text-align:center}#a12Preview .previewControls[hidden]{display:none!important}@media(orientation:landscape){#a12Products article canvas.shopThumb{width:52px;height:52px;margin:1px auto 4px}#a12Products [data-list][hidden]{display:none!important}#a12Products article [data-action]:disabled{opacity:1;color:#82919a;background:#0b171e;border-color:#52616a;box-shadow:none}}`;
     style.textContent += `#characterSelect #characterCard>img,#characterSelect #characterCard>.eyebrow,#characterSelect #characterCard>h2,#characterSelect #characterCard>p,#characterSelect #characterShop,#characterSelect #a12LanguageWrap,#characterSelect .portrait,#characterSelect .choiceName,#characterSelect .lockBadge{display:none!important}#characterSelect #characterChoices{grid-template-columns:repeat(2,minmax(120px,1fr))}#characterSelect .characterChoice{position:relative;display:grid;place-items:center;justify-content:center;align-items:center;min-width:120px}`;
     style.textContent += `#a12DockRoutes{position:fixed;z-index:30;left:50%;bottom:var(--dock-actions-clearance,148px);transform:translateX(-50%);width:min(94vw,760px);display:grid;grid-template-columns:repeat(6,1fr);gap:5px;padding:8px;box-sizing:border-box;background:#06121be8;border:1px solid #ffffff33;border-radius:6px}#a12DockRoutes[hidden]{display:none!important}#a12DockRoutes button{min-width:0;padding:6px 2px;border:1px solid #ffffff33;border-radius:4px;background:#153246;color:#fff;font:800 10px/1.05 system-ui}#a12DockRoutes small{display:block;color:#ffd45c;font-size:9px}@media(max-width:540px) and (orientation:portrait){#a12DockRoutes{grid-template-columns:repeat(6,1fr);gap:3px;padding:5px}#a12DockRoutes button{padding:5px 1px;font-size:9px}}`;
     style.textContent += `body[data-campaign-phase="result"] #joystick,body[data-campaign-phase="result"] #jumpWrap,body[data-campaign-phase="result"] #controlHint{display:none!important}`;
@@ -2339,6 +2353,12 @@ applyD09LogicRulesToRoutes();
       else if (shopTab === "worlds") previewWorldId = article.dataset.item;
       renderShop();
     });
+    addEventListener("keydown", (e) => {
+      if (e.key !== "Escape") return;
+      e.preventDefault();
+      e.stopImmediatePropagation();
+      if (shopOpen) closeShop();
+    }, { capture: true });
     const choiceWrap = document.getElementById("characterChoices");
     if (choiceWrap) {
       choiceWrap.innerHTML = `<button class="characterChoice" data-character="0" data-runner-id="male" aria-pressed="false"></button><button class="characterChoice" data-character="1" data-runner-id="female" aria-pressed="false"></button>`;
@@ -2467,13 +2487,13 @@ applyD09LogicRulesToRoutes();
     for (const a of s.querySelectorAll('[data-list="characters"] article')) {
       const id=a.dataset.item,item=RUNNERS[id],owned=profile.ownedRunnerIds.includes(id),selected=profile.runnerId===id,short=!owned&&profile.walletBalance<item.price,b=a.querySelector("button");
       a.querySelector("h3").textContent=t(id);a.style.outline=previewRunnerId===id?"2px solid #79e9ba":"none";
-      b.textContent=selected?t("selected"):owned?t("select"):`${short?"LOCK ":""}${item.price}`;
+      b.textContent=selected?t("selected"):owned?t("select"):`${short?t("locked")+" ":""}${item.price}`;
       b.disabled=selected||purchaseBusy||short;
     }
     for (const a of s.querySelectorAll('[data-list="chiefs"] article')) {
       const id=a.dataset.item,item=CHIEFS[id],owned=profile.ownedChiefIds.includes(id),selected=profile.equippedChief===id,short=!owned&&profile.walletBalance<item.price,b=a.querySelector("button");
       a.querySelector("h3").textContent=t(id);a.style.outline=previewChiefId===id?"2px solid #79e9ba":"none";
-      b.textContent=selected?t("selected"):owned?t("select"):`${short?"LOCK ":""}${item.price}`;
+      b.textContent=selected?t("selected"):owned?t("select"):`${short?t("locked")+" ":""}${item.price}`;
       b.disabled=selected||purchaseBusy||short;
     }
     const worlds=s.querySelector('[data-list="worlds"]');
@@ -2596,7 +2616,7 @@ applyD09LogicRulesToRoutes();
     for(const d of containerDoors){aftermathSurface(c,d.x,d.currentY,d.w,d.h);c.strokeStyle='#d5c8a0';c.lineWidth=6;c.beginPath();c.moveTo(d.x-8,d.currentY+d.h);c.lineTo(d.x-3,d.currentY-12);c.lineTo(d.x+d.w+9,d.currentY-5);c.stroke();c.fillStyle=d.state==='OPEN'?'#63f2a5':d.state==='PREPARING'?'#ffd34d':'#ff5b55';c.beginPath();c.arc(d.x+d.w/2,d.currentY-26,9,0,7);c.fill();}
     for(const b of barrels){c.fillStyle='#343c32';c.strokeStyle='#c6bd94';c.lineWidth=3;c.beginPath();c.moveTo(b.x+5,b.y);c.lineTo(b.x+27,b.y+4);c.lineTo(b.x+24,b.y+27);c.lineTo(b.x,b.y+22);c.closePath();c.fill();c.stroke();c.beginPath();c.moveTo(b.x+3,b.y+9);c.lineTo(b.x+23,b.y+17);c.stroke();}
     if(campaignChief?.active)aftermathRescuer(c,campaignChief.x+14,campaignChief.y+48,true);
-    drawFinishDoor(c, route.finishX, routeGroundYAt(route.finishX));
+    { const finishDoor=finishDoorPlacement(); drawFinishDoor(c, finishDoor.x, finishDoor.y); }
     aftermathLights(c,time,light,gain);
     for(const coin of route.coins)if(!run?.collectedCoinIds.includes(coin.id))drawCoin(c,coin);
   }
@@ -3316,8 +3336,8 @@ applyD09LogicRulesToRoutes();
       } else { c.fillStyle="#111820";c.fillRect(campaignChief.x,campaignChief.y,campaignChief.w,campaignChief.h); }
       c.restore();
     }
-    const finishY=routeGroundYAt(route.finishX);
-      drawFinishDoor(c, route.finishX, finishY);
+    const finishDoor=finishDoorPlacement();
+      drawFinishDoor(c, finishDoor.x, finishDoor.y);
   }
   // A5b decorative layer: no RNG, collisions, profile or simulation writes.
   function presentationNpcs() {
@@ -3531,6 +3551,7 @@ applyD09LogicRulesToRoutes();
         placePlayerAtChiefLadderStart: (dy=0)=>{if(!campaignChief?.path)return false;const entry=primeChiefLadder(campaignChief),t=entry.climbStartTime+.02,x=entry.x+8;player.x=x;player.y=routeGroundYAt(x)-player.h+dy;player.vx=player.vy=0;player.onGround=true;campaignChief.active=false;campaignChief.entryPhase="waiting";campaignChief.climbElapsed=0;campaignChief.playerT=t;campaignChief.playerIndex=Math.max(0,campaignChief.path.samples.findIndex(v=>v[0]>=t));campaignChief.chiefT=entry.time-campaignChief.delay;return debugState()},
         forceChiefNear: ()=>{if(!campaignChief)return false;campaignChief.active=true;campaignChief.entryPhase="running";campaignChief.x=player.x-168;campaignChief.y=routeGroundYAt(player.x)-48;campaignChief.pose="run";campaignChief.facing=1;return debugState()},
         routeDefinition: (id)=>clone(ROUTES[id]),
+        finishDoorPlacement: (id)=>{const old=route;if(id&&ROUTES[id])route=ROUTES[id];const p=finishDoorPlacement(route);route=old;return p;},
         auditSuspendCounts,
         chiefRouteHash: (id)=>chiefRouteHash(ROUTES[id]),
         chiefPathStatus: (id, deltaX=0)=>{const r=clone(ROUTES[id]);if(deltaX&&r.groundSegments?.length)r.groundSegments[0].x+=deltaX;return {stored:window.TMB_CHIEF_PATHS?.[id]?.routeHash||null,current:chiefRouteHash(r),valid:window.TMB_CHIEF_PATHS?.[id]?.routeHash===chiefRouteHash(r)}},

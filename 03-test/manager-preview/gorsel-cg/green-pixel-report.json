@@ -1,0 +1,77 @@
+{
+  "totalRemainingKeyGreenPixels": 0,
+  "files": [
+    {
+      "file": "sprites/a5/male-ronin-full.png",
+      "remainingKeyGreenPixels": 0
+    },
+    {
+      "file": "sprites/a5/male-shadowNinja-full.png",
+      "remainingKeyGreenPixels": 0
+    },
+    {
+      "file": "sprites/a5/male-orbitAstronaut-full.png",
+      "remainingKeyGreenPixels": 0
+    },
+    {
+      "file": "sprites/a5/male-northRaider-full.png",
+      "remainingKeyGreenPixels": 0
+    },
+    {
+      "file": "sprites/a5/male-mechaPilot-full.png",
+      "remainingKeyGreenPixels": 0
+    },
+    {
+      "file": "sprites/a5/female-ronin-full.png",
+      "remainingKeyGreenPixels": 0
+    },
+    {
+      "file": "sprites/a5/female-shadowNinja-full.png",
+      "remainingKeyGreenPixels": 0
+    },
+    {
+      "file": "sprites/a5/female-orbitAstronaut-full.png",
+      "remainingKeyGreenPixels": 0
+    },
+    {
+      "file": "sprites/a5/female-northRaider-full.png",
+      "remainingKeyGreenPixels": 0
+    },
+    {
+      "file": "sprites/a5/female-mechaPilot-full.png",
+      "remainingKeyGreenPixels": 0
+    },
+    {
+      "file": "sprites/a5/tall-default-full.png",
+      "remainingKeyGreenPixels": 0
+    },
+    {
+      "file": "sprites/a5/compact-default-full.png",
+      "remainingKeyGreenPixels": 0
+    },
+    {
+      "file": "sprites/a5/bruiser-default-full.png",
+      "remainingKeyGreenPixels": 0
+    },
+    {
+      "file": "sprites/a5/athlete-default-full.png",
+      "remainingKeyGreenPixels": 0
+    },
+    {
+      "file": "sprites/chiefs/bouncer-full.png",
+      "remainingKeyGreenPixels": 0
+    },
+    {
+      "file": "sprites/chiefs/classicChief-full.png",
+      "remainingKeyGreenPixels": 0
+    },
+    {
+      "file": "sprites/chiefs/robotGuard-full.png",
+      "remainingKeyGreenPixels": 0
+    },
+    {
+      "file": "sprites/chiefs/securityTall-full.png",
+      "remainingKeyGreenPixels": 0
+    }
+  ]
+}

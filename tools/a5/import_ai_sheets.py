@@ -77,10 +77,11 @@ def border_connected(mask: np.ndarray) -> np.ndarray:
 
 def segment(cell: Image.Image) -> Image.Image:
     arr = np.asarray(cell.convert("RGBA")).copy()
-    connected = border_connected(green_candidate(arr[..., :3]))
-    arr[connected, 3] = 0
-    # Decontaminate only the one-pixel alpha boundary. Interior costume greens
-    # are intentionally untouched.
+    # The approved sheets use flat #00FF00 as a key color. Treat every keyed
+    # island as transparent, including closed holes inside limbs/clothes.
+    keyed = green_candidate(arr[..., :3])
+    arr[keyed, 3] = 0
+    # Decontaminate only the one-pixel alpha boundary after keying.
     opaque = arr[..., 3] > 0
     adjacent_clear = np.zeros_like(opaque)
     adjacent_clear[1:] |= ~opaque[:-1]
@@ -245,6 +246,7 @@ def render_cell(cell: Image.Image, scale: float, tx: float, ty: float, cell_size
     # Resampling can recreate a thin green-biased fringe; clean only pixels
     # directly bordering transparency, never interior costume pixels.
     arr = np.asarray(resized).copy()
+    arr[green_candidate(arr[..., :3]), 3] = 0
     opaque = arr[..., 3] > 0
     adjacent_clear = np.zeros_like(opaque)
     adjacent_clear[1:] |= ~opaque[:-1]
@@ -262,6 +264,9 @@ def render_cell(cell: Image.Image, scale: float, tx: float, ty: float, cell_size
     overflow = bool(box and (x + box[0] < 0 or y + box[1] < 0 or x + box[2] > cell_size or y + box[3] > cell_size))
     out = Image.new("RGBA", (cell_size, cell_size))
     out.alpha_composite(resized, (x, y))
+    arr = np.asarray(out).copy()
+    arr[green_candidate(arr[..., :3]), 3] = 0
+    out = Image.fromarray(arr, "RGBA")
     arr = np.asarray(out).copy()
     opaque = arr[..., 3] > 0
     adjacent_clear = np.zeros_like(opaque)
