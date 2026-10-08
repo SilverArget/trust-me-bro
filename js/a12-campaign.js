@@ -149,14 +149,14 @@
       female: "KADIN KOŞUCU",
       tall: "UZUN",
       compact: "KISA",
-      bruiser: "IRI",
+      bruiser: "İRİ",
       athlete: "ATLET",
       characters: "KARAKTERLER",
-      chiefs: "SEFLER",
-      securityTall: "GUVENLIK",
-      classicChief: "ESKI SEF",
-      robotGuard: "ROBOT GUVENLIK",
-      bouncer: "FEDAI",
+      chiefs: "ŞEFLER",
+      securityTall: "GÜVENLİK",
+      classicChief: "ESKİ ŞEF",
+      robotGuard: "ROBOT GÜVENLİK",
+      bouncer: "FEDAİ",
       route: "ROTA",
       run: "KOŞU",
       wallet: "CÜZDAN",
@@ -182,11 +182,11 @@
       dockCrew: "LİMAN EKİBİ · BARET + YELEK",
       nightShift: "GECE VARDİYASI",
       hazardRunner: "TEHLİKE KOŞUCUSU",
-      ronin: "RONIN",
-      shadowNinja: "GOLGE NINJA",
+      ronin: "RONİN",
+      shadowNinja: "GÖLGE NİNJA",
       orbitAstronaut: "ASTRONOT",
       northRaider: "KUZEY AKINCISI",
-      mechaPilot: "MECHA PILOT",
+      mechaPilot: "MECHA PİLOT",
       saveFailed: "KAYIT BAŞARISIZ — YENİDEN DENE",
       noCharge: "CANLI ÖNİZLEME · ÜCRETSİZ",
       worlds: "DÜNYALAR", buyWorld: "SATIN AL — {price}", select: "SEÇ", selected: "SEÇİLİ", planned: "PLANLANDI", insufficient: "Yetersiz jeton",
@@ -198,6 +198,16 @@
       choose: "ВЫБЕРИ БЕГУНА",
       male: "МУЖСКОЙ БЕГУН",
       female: "ЖЕНСКИЙ БЕГУН",
+      tall: "ДЛИННЫЙ",
+      compact: "МАЛЫШ",
+      bruiser: "ГРОМИЛА",
+      athlete: "АТЛЕТ",
+      characters: "ПЕРСОНАЖИ",
+      chiefs: "ШЕФЫ",
+      securityTall: "ОХРАННИК",
+      classicChief: "СТАРЫЙ ШЕФ",
+      robotGuard: "РОБОТ-ОХРАННИК",
+      bouncer: "ВЫШИБАЛА",
       route: "МАРШРУТ",
       run: "ЗАБЕГ",
       wallet: "КОШЕЛЁК",
@@ -223,23 +233,16 @@
       dockCrew: "ПОРТОВАЯ БРИГАДА · КАСКА + ЖИЛЕТ",
       nightShift: "НОЧНАЯ СМЕНА",
       hazardRunner: "ОПАСНЫЙ БЕГУН",
+      ronin: "РОНИН",
+      shadowNinja: "ТЕНЕВОЙ НИНДЗЯ",
+      orbitAstronaut: "АСТРОНАВТ",
+      northRaider: "СЕВЕРНЫЙ НАЛЁТЧИК",
+      mechaPilot: "ПИЛОТ МЕХА",
       saveFailed: "ОШИБКА СОХРАНЕНИЯ — ПОВТОРИТЬ",
       noCharge: "ЖИВОЙ ПРОСМОТР · БЕСПЛАТНО",
       worlds: "МИРЫ", buyWorld: "КУПИТЬ — {price}", select: "ВЫБРАТЬ", selected: "ВЫБРАНО", planned: "ЗАПЛАНИРОВАНО", insufficient: "НЕДОСТАТОЧНО МОНЕТ",
       idle: "ОЖИДАНИЕ", motionRun: "БЕГ", flip: "САЛЬТО", language: "ЯЗЫК", samePhysics: "Та же физика. Общий кошелёк. Твой бегун.", ghostOn: "ПРИЗРАК ВКЛ", ghostOff: "ПРИЗРАК ВЫКЛ", effectsFull: "ЭФФЕКТЫ ПОЛНЫЕ", effectsReduced: "ЭФФЕКТЫ СНИЖЕНЫ", flow: "ПОТОК", localBest: "ЛУЧШИЙ РЕЗУЛЬТАТ", newRecord: "НОВЫЙ", clean: "ЧИСТО", mastery: "МАСТЕРСТВО", style: "СТИЛЬ",
     },
-  });
-  Object.assign(I18N.tr, {
-    tall: "UZUN", compact: "KISA", bruiser: "IRI", athlete: "ATLET",
-    characters: "KARAKTERLER", chiefs: "SEFLER",
-    securityTall: "GUVENLIK", classicChief: "ESKI SEF", robotGuard: "ROBOT GUVENLIK", bouncer: "FEDAI",
-    ronin: "RONIN", shadowNinja: "GOLGE NINJA", orbitAstronaut: "ASTRONOT", northRaider: "KUZEY AKINCISI", mechaPilot: "MECHA PILOT",
-  });
-  Object.assign(I18N.ru, {
-    tall: "DLINNYY", compact: "MALYSH", bruiser: "GROMILA", athlete: "ATLET",
-    characters: "PERSONAZHI", chiefs: "NACHALNIKI",
-    securityTall: "OKHRANNIK", classicChief: "STARYY SHEF", robotGuard: "ROBOT-OKHRANNIK", bouncer: "VYSHIBALA",
-    ronin: "RONIN", shadowNinja: "TENEVOY NINDZYA", orbitAstronaut: "ASTRONAVT", northRaider: "SEVERNYY NALETCHIK", mechaPilot: "PILOT MEKHA",
   });
   for (const lang of ["tr", "ru"]) for (const key of Object.keys(I18N.en)) if (!Object.hasOwn(I18N[lang], key)) I18N[lang][key] = I18N.en[key];
   const COINS = Object.freeze({    "A03": [{"n":0,"move_id":"a03-p1-d10-dz-01","kind":"CJ","x":353,"y":-247,"skill":false,"id":"A03-c01"},{"n":1,"move_id":"a03-p1-d10-dz-01","kind":"CS","x":353,"y":-247,"skill":true,"id":"A03-c02"},{"n":2,"move_id":"a03-p1-d10-dz-02","kind":"CJ","x":877,"y":-221,"skill":false,"id":"A03-c03"},{"n":3,"move_id":"a03-p1-d10-dz-02","kind":"CS","x":877,"y":-221,"skill":true,"id":"A03-c04"},{"n":4,"move_id":"a03-p1-d10-v-07","kind":"CC","x":1332.64,"y":-115,"skill":true,"id":"A03-c05"},{"n":5,"move_id":"a03-p1-d10-dz-03","kind":"CJ","x":2042,"y":-148,"skill":false,"id":"A03-c06"},{"n":6,"move_id":"a03-p1-d10-tr-15","kind":"CJ","x":2358,"y":-64.62,"skill":false,"id":"A03-c07"},{"n":7,"move_id":"a03-p3-d13-dz-01","kind":"CJ","x":7402.68,"y":-146.62,"skill":false,"id":"A03-c08"},{"n":8,"move_id":"a03-p3-d13-slope1-2","kind":"CC","x":7583.68,"y":-113.62,"skill":true,"id":"A03-c09"},{"n":9,"move_id":"a03-p3-d13-slope1-3","kind":"CC","x":7646.28,"y":-114.24,"skill":true,"id":"A03-c10"},{"n":10,"move_id":"a03-p3-d13-slope1-3","kind":"CC","x":7646.28,"y":-114.24,"skill":true,"id":"A03-c11"},{"n":11,"move_id":"a03-p3-d13-dz-02","kind":"CJ","x":7855.68,"y":-218.62,"skill":false,"id":"A03-c12"},{"n":12,"move_id":"a03-p3-d13-dz-02","kind":"CJ","x":7855.68,"y":-218.62,"skill":false,"id":"A03-c13"},{"n":13,"move_id":"a03-p3-d13-dz-02","kind":"CJ","x":7855.68,"y":-218.62,"skill":false,"id":"A03-c14"}],
@@ -595,6 +598,7 @@ applyD09LogicRulesToRoutes();
   CHIEF_SPRITE.src = "sprites/chief.png";
   const BRAND_WOLF_A12 = new Image();
   BRAND_WOLF_A12.src = "sprites/brand/borugaming-wolf.png";
+  let wolfDecalCanvas = null;
   function range(start, count, x, step) {
     return Array.from({ length: count }, (_, i) => ({
       n: start + i,
@@ -2838,16 +2842,14 @@ applyD09LogicRulesToRoutes();
     c.save();
     c.translate(0,verticalParallax);
     if(frozen||magma||profile.selectedWorldId==="aftermath") drawThemeScene(c,w,h,profile.selectedWorldId); else engine.drawDockBackdrop(activeWorldCacheKey);
-    if(!frozen&&!magma&&profile.selectedWorldId==="dock31"&&player&&player.x>850&&player.x<2100&&BRAND_WOLF_A12.complete&&BRAND_WOLF_A12.naturalWidth){
-      c.save();
-      c.globalAlpha=.9;
-      c.fillStyle="#10202acc";
-      c.fillRect(w*.36-10,h*.48-8,112,68);
-      c.strokeStyle="#d8edf566";
-      c.lineWidth=2;
-      c.strokeRect(w*.36-10,h*.48-8,112,68);
-      c.drawImage(BRAND_WOLF_A12,w*.36,h*.48,92,52);
-      c.restore();
+    if (BRAND_WOLF_A12.complete && BRAND_WOLF_A12.naturalWidth) {
+      if (!frozen && !magma && profile.selectedWorldId === "dock31" && player && player.x > 850 && player.x < 2500) {
+        drawTintedWolfDecal(c, w * .35, h * .47, Math.min(128, h * .18), Math.min(128, h * .18));
+      } else if (magma) {
+        drawTintedWolfDecal(c, w * .58, h * .42, Math.min(132, h * .18), Math.min(132, h * .18));
+      } else if (frozen) {
+        drawTintedWolfDecal(c, w * .58, h * .44, Math.min(124, h * .17), Math.min(124, h * .17));
+      }
     }
     backdropCalls++;
     c.restore();
@@ -2882,19 +2884,50 @@ applyD09LogicRulesToRoutes();
   function visibleX(bounds,x,w,pad=0) {
     return x+w>=bounds.minX-pad&&x<=bounds.maxX+pad;
   }
-  function drawDockWolfMarks(c) {
-    if (!BRAND_WOLF_A12.complete || !BRAND_WOLF_A12.naturalWidth || profile.selectedWorldId !== "dock31") return;
-    for (let x = 980; x < route.length; x += 1900) {
-      const y = 292, w = 92, h = 52;
+  function drawTintedWolfDecal(c, x, y, w, h) {
+    if (!wolfDecalCanvas || wolfDecalCanvas.width !== BRAND_WOLF_A12.naturalWidth || wolfDecalCanvas.height !== BRAND_WOLF_A12.naturalHeight) {
+      wolfDecalCanvas = document.createElement("canvas");
+      wolfDecalCanvas.width = BRAND_WOLF_A12.naturalWidth;
+      wolfDecalCanvas.height = BRAND_WOLF_A12.naturalHeight;
+      const wc = wolfDecalCanvas.getContext("2d");
+      wc.drawImage(BRAND_WOLF_A12, 0, 0);
+      const img = wc.getImageData(0, 0, wolfDecalCanvas.width, wolfDecalCanvas.height);
+      for (let i = 0; i < img.data.length; i += 4) {
+        const luma = img.data[i] * .2126 + img.data[i + 1] * .7152 + img.data[i + 2] * .0722;
+        const alpha = Math.max(0, Math.min(210, (luma - 38) * 3.3));
+        img.data[i] = 217;
+        img.data[i + 1] = 222;
+        img.data[i + 2] = 230;
+        img.data[i + 3] = alpha;
+      }
+      wc.putImageData(img, 0, 0);
+    }
+    c.save();
+    c.globalAlpha = .55;
+    c.drawImage(wolfDecalCanvas, x, y, w, h);
+    c.restore();
+  }
+  function drawDockWolfMarks(c, groundSurfaces, bounds) {
+    if (!BRAND_WOLF_A12.complete || !BRAND_WOLF_A12.naturalWidth) return;
+    let nextMarkX = 980;
+    for (const g of groundSurfaces.filter(v => v.kind === "ground").sort((a, b) => a.x - b.x)) {
+      const visibleLeft = Math.max(g.x, bounds?.minX ?? -Infinity);
+      const visibleRight = Math.min(g.x + g.w, bounds?.maxX ?? Infinity);
+      const visibleW = visibleRight - visibleLeft;
+      const faceH = Math.max(0, g.h);
+      if (visibleW < 200 || faceH < 120 || g.x + g.w * .5 < nextMarkX) continue;
+      const h = Math.max(52, Math.min(faceH * .55, 128));
+      const w = h * (BRAND_WOLF_A12.naturalWidth / BRAND_WOLF_A12.naturalHeight);
+      if (w > Math.min(g.w * .72, visibleW * .72)) continue;
+      const x = Math.max(g.x + 18, Math.min(g.x + g.w - w - 18, g.x + (g.w - w) * .5));
+      const y = g.y + Math.max(12, (faceH - h) * .52);
       c.save();
-      c.globalAlpha = .9;
-      c.fillStyle = "#10202acc";
-      c.fillRect(x - 10, y - 8, w + 20, h + 16);
-      c.strokeStyle = "#d8edf566";
-      c.lineWidth = 2;
-      c.strokeRect(x - 10, y - 8, w + 20, h + 16);
-      c.drawImage(BRAND_WOLF_A12, x, y, w, h);
+      c.beginPath();
+      c.rect(g.x, g.y, g.w, faceH);
+      c.clip();
+      drawTintedWolfDecal(c, x, y, w, h);
       c.restore();
+      nextMarkX = g.x + 1900;
     }
   }
   function drawClippedSurface(c,bounds,draw,x,y,w,h,pad=36) {
@@ -3058,7 +3091,7 @@ applyD09LogicRulesToRoutes();
       else if(magma) drawClippedSurface(c,bounds,()=>magmaSurface(c,g.x,g.y,g.w,g.h,"ground"),g.x,g.y,g.w,g.h,24);
       else engine.drawMetal(g.x,g.y,g.w,g.h)
     }
-    if(!frozen&&!magma) drawDockWolfMarks(c);
+    if(!frozen&&!magma) drawDockWolfMarks(c, groundSurfaces, bounds);
     for(const z of route.wallJumpZones||[]){
       const x=z.x1,w=z.x2-z.x1,y0=z.yTop,y1=z.yBottom;if(bounds&&!visibleX(bounds,x,w,120))continue;
       c.save();c.strokeStyle="#ffd34dcc";c.lineWidth=4;c.setLineDash([10,8]);

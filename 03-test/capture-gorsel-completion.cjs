@@ -36,7 +36,7 @@ const server = http.createServer((req, res) => {
   });
 });
 
-const profileFor = (chief = "securityTall") => ({
+const profileFor = (chief = "securityTall", language = "en") => ({
   schema: 1,
   runnerId: "male",
   walletBalance: 5000,
@@ -47,14 +47,14 @@ const profileFor = (chief = "securityTall") => ({
   equippedChief: chief,
   ownedWorldIds: ["dock31", "frozen", "magma", "aftermath"],
   selectedWorldId: "dock31",
-  settings: { language: "en" },
+  settings: { language },
 });
 
-async function newPage(browser, chief = "securityTall") {
+async function newPage(browser, chief = "securityTall", language = "en") {
   const page = await browser.newPage({ viewport: { width: 1280, height: 720 } });
   await page.addInitScript((profile) => {
     localStorage.setItem("trust_me_bro_campaign_profile_v1", JSON.stringify(profile));
-  }, profileFor(chief));
+  }, profileFor(chief, language));
   await page.goto(`http://127.0.0.1:${server.address().port}/index.html#debug`, { waitUntil: "domcontentloaded" });
   await page.waitForFunction(() => window.__TMB_A12__);
   await page.evaluate(() => document.getElementById("introOverlay")?.remove());
@@ -73,11 +73,22 @@ async function newPage(browser, chief = "securityTall") {
       await page.locator(".characterChoice:visible").first().click();
       await page.evaluate(() => {
         __TMB_A12__.startRoute("D01", true);
-        __TMB_A12__.placePlayerAtChiefTime(3);
+        const r = __TMB_A12__.routeDefinition("D01");
+        const g = r.groundSegments.find((v) => v.w >= 200 && v.h >= 120 && v.x >= 900);
+        __TMB_A12__.placePlayer(g.x + g.w * 0.5, g.y - 72);
         __tmbCampaignDraw();
       });
       await page.waitForTimeout(50);
       await page.screenshot({ path: path.join(out, "logo-container-1280x720.png") });
+      await page.evaluate(() => {
+        __TMB_A12__.renderWorldOnRoute("magma", "M01");
+        const r = __TMB_A12__.routeDefinition("M01");
+        const g = r.groundSegments.find((v) => v.w >= 200 && v.h >= 120 && v.x >= 900);
+        __TMB_A12__.placePlayer(g.x + g.w * 0.5, g.y - 72);
+        __tmbCampaignDraw();
+      });
+      await page.waitForTimeout(50);
+      await page.screenshot({ path: path.join(out, "m01-logo-block-1280x720.png") });
       await page.evaluate(() => {
         __TMB_A12__.finish();
         __TMB_A12__.openShop();
@@ -88,6 +99,21 @@ async function newPage(browser, chief = "securityTall") {
       await page.evaluate(() => __TMB_A12__.setShopTab("chiefs"));
       await page.waitForTimeout(250);
       await page.screenshot({ path: path.join(out, "shop-chiefs-thumbs-1280x720.png") });
+      await page.close();
+    }
+    for (const language of ["tr", "ru"]) {
+      const page = await newPage(browser, "securityTall", language);
+      await page.locator(".characterChoice:visible").first().click();
+      await page.evaluate(() => {
+        __TMB_A12__.finish();
+        __TMB_A12__.openShop();
+        __TMB_A12__.setShopTab("characters");
+      });
+      await page.waitForTimeout(250);
+      await page.screenshot({ path: path.join(out, `shop-${language}-characters-1280x720.png`) });
+      await page.evaluate(() => __TMB_A12__.setShopTab("chiefs"));
+      await page.waitForTimeout(250);
+      await page.screenshot({ path: path.join(out, `shop-${language}-chiefs-1280x720.png`) });
       await page.close();
     }
     for (const chief of ["securityTall", "classicChief", "robotGuard", "bouncer"]) {
