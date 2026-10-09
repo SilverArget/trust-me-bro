@@ -2508,7 +2508,7 @@ applyD09LogicRulesToRoutes();
     style.textContent += `@media(orientation:landscape){#a12DockRoutes{left:auto;right:max(12px,var(--safe-right));transform:none;width:min(calc(100vw - 440px),760px)}}`;
     style.textContent += `body[data-campaign-phase="result"] #joystick,body[data-campaign-phase="result"] #jumpWrap,body[data-campaign-phase="result"] #controlHint{display:none!important}`;
     document.head.appendChild(style);
-    style.textContent += `#a12Actions{flex-wrap:wrap;justify-content:center;max-width:min(96vw,720px)}#a12Actions [data-act="rewarded"]{background:#286650;border-color:#8ff1c8}`;
+    style.textContent += `#a12Actions{flex-wrap:wrap;justify-content:center;max-width:min(96vw,720px)}body[data-campaign-phase="result"] #a12Actions{bottom:max(12px,var(--safe-bottom))}#a12Actions [data-act="rewarded"]{background:#286650;border-color:#8ff1c8}`;
     const actions = document.createElement("div");
     actions.id = "a12Actions";
     actions.innerHTML = `<button data-act="next">${t("next")}</button><button data-act="shop">${t("shop")}</button><button data-act="rewarded" hidden></button><button data-act="retry">${t("retry")}</button>`;
@@ -3604,7 +3604,7 @@ applyD09LogicRulesToRoutes();
         const fw=CHIEF_SPRITE.naturalWidth/4,fh=CHIEF_SPRITE.naturalHeight,frame=campaignChief.path&&campaignChief.pose!=="run"?0:Math.floor(gameClock*8)%4;
         c.imageSmoothingEnabled=false;c.drawImage(CHIEF_SPRITE,frame*fw,0,fw,fh,campaignChief.x-8,campaignChief.y-16,48,64);
       } else { c.fillStyle="#111820";c.fillRect(campaignChief.x,campaignChief.y,campaignChief.w,campaignChief.h); }
-      if(campaignChief.resultAngry)drawChiefAngerIcon(c,campaignChief.x+16,campaignChief.y-18);
+      if(campaignChief.resultAngry)drawChiefAngerIcon(c,campaignChief.x+16,campaignChief.y-46);
       c.restore();
     }
     const finishDoor=finishDoorPlacement();
@@ -3790,7 +3790,7 @@ applyD09LogicRulesToRoutes();
     const camX=typeof engine?.cameraX==="function"?engine.cameraX():0;
     c.save();c.translate(-camX,cameraWorldY);
     drawChiefAtlas(c,profile.equippedChief||"securityTall",{motion:"idle",frame:0},campaignChief.x+16,campaignChief.y+48,campaignChief.facing||1);
-    drawChiefAngerIcon(c,campaignChief.x+16,campaignChief.y-18);c.restore();
+    drawChiefAngerIcon(c,campaignChief.x+16,campaignChief.y-46);c.restore();
   }
   function cameraTargetIntegrated(info={}) {
     const fallback=Number.isFinite(info.fallback)?info.fallback:Math.max(0,Math.min(route.length-W,player.x-W*.3));
