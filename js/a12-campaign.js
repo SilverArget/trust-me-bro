@@ -1882,6 +1882,7 @@ applyD09LogicRulesToRoutes();
         campaignChief.stunCatchGrace=engine.parkour.state==="stun"?1.05:Math.max(0,(campaignChief.stunCatchGrace||0)-dt);
         if(campaignChief.path&&campaignChief.entryPhase==="climbing"){campaignChief.climbElapsed=Math.min(campaignChief.entry.duration,campaignChief.climbElapsed+dt);const u=campaignChief.climbElapsed/campaignChief.entry.duration;campaignChief.x=campaignChief.entry.x-campaignChief.w*.5;campaignChief.y=campaignChief.entry.bottomY-campaignChief.h-(campaignChief.entry.height-campaignChief.h*.2)*u;campaignChief.pose="climb";if(u>=1)finishChiefLadder(campaignChief)}
         else if(campaignChief.path){const entry=primeChiefLadder(campaignChief),scale=chiefChaseScale(campaignChief,dt);campaignChief.chiefT=Math.max(entry.time,campaignChief.chiefT+dt*scale);if((player.vx>180||campaignChief.stunCatchGrace>0)&&campaignChief.playerT>0)campaignChief.chiefT=Math.min(campaignChief.chiefT,campaignChief.playerT-.22);matchPlayerToChiefPath(campaignChief);const ideal=chiefSample(campaignChief.path,campaignChief.chiefT),live=chiefTraceSampleAtX(ideal.x);if(live){campaignChief.x=live.x;campaignChief.y=live.feet-campaignChief.h;campaignChief.pose=live.pose;campaignChief.facing=live.facing||1}else{campaignChief.x=ideal.x;campaignChief.y=ideal.y;campaignChief.pose=ideal.pose;campaignChief.facing=ideal.facing}}else campaignChief.x+=campaignChief.speed*dt;
+        if(innerHeight>=innerWidth&&campaignChief.path&&campaignChief.x<player.x-(engine.W||W)*.18){const portraitLive=chiefTraceSampleAtX(player.x-(engine.W||W)*.18);if(portraitLive){campaignChief.x=portraitLive.x;campaignChief.y=portraitLive.feet-campaignChief.h;campaignChief.pose=portraitLive.pose;campaignChief.facing=portraitLive.facing||1}}
         const playerCatchable=player.onGround&&engine.parkour.state==="normal"&&!diveRun&&!wallJumpRun&&Math.abs(player.vx)<70;
         campaignChief.catchExposureT=playerCatchable?(campaignChief.catchExposureT||0)+dt:0;
         const liveChiefCatch=campaignChief.path&&campaignChief.entryPhase==="running"&&campaignChief.regrabT<=0&&campaignChief.stunCatchGrace<=0&&campaignChief.catchExposureT>=2.15&&playerCatchable&&campaignChief.chiefT>=0&&campaignChief.chiefT>=campaignChief.playerT-.05&&campaignChief.x+campaignChief.w>=player.x-80;
@@ -3764,6 +3765,7 @@ applyD09LogicRulesToRoutes();
   function cameraTargetIntegrated(info={}) {
     const fallback=Number.isFinite(info.fallback)?info.fallback:Math.max(0,Math.min(route.length-W,player.x-W*.3));
     if(result)return fallback;
+    if(innerHeight>=innerWidth)return Math.max(0,Math.min(route.length-(info.W||W),player.x-(info.W||W)*.25+Math.max(0,player.vx)/6.5));
     return Math.max(0,Math.min(route.length-W,player.x-W*.3));
   }
   function drawOverlayIntegrated(c, w, h) {
