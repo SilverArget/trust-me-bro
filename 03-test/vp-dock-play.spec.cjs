@@ -32,6 +32,7 @@ test.afterAll(async () => new Promise(resolve => server.close(resolve)));
 
 async function boot(page, id, viewport = {width:1280,height:720}) {
   await page.setViewportSize(viewport);
+  const pageScale=Number(process.env.TMB_PAGE_SCALE);
   if (process.env.TMB_RAF_HZ) {
     await page.addInitScript(({ hz, fastMode }) => {
       const frameMs = 1000 / Number(hz);
@@ -58,6 +59,10 @@ async function boot(page, id, viewport = {width:1280,height:720}) {
     }, { hz: Number(process.env.TMB_RAF_HZ), fastMode: !!process.env.TMB_RAF_FAST });
   }
   await page.goto(base + '#debug');
+  if(Number.isFinite(pageScale)&&pageScale>0){
+    const cdp=await page.context().newCDPSession(page);
+    await cdp.send('Emulation.setPageScaleFactor',{pageScaleFactor:pageScale});
+  }
   await page.waitForFunction(() => window.__TMB_A12__);
   await page.locator('.characterChoice:visible').first().click();
   await page.evaluate(async id => {

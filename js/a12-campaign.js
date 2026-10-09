@@ -2507,14 +2507,12 @@ applyD09LogicRulesToRoutes();
     style.textContent += `#a12DockRoutes{position:fixed;z-index:30;left:50%;bottom:var(--dock-actions-clearance,148px);transform:translateX(-50%);width:min(94vw,760px);display:grid;grid-template-columns:repeat(6,1fr);gap:5px;padding:8px;box-sizing:border-box;background:#06121be8;border:1px solid #ffffff33;border-radius:6px}#a12DockRoutes[hidden]{display:none!important}#a12DockRoutes button{min-width:0;padding:6px 2px;border:1px solid #ffffff33;border-radius:4px;background:#153246;color:#fff;font:800 10px/1.05 system-ui}#a12DockRoutes small{display:block;color:#ffd45c;font-size:9px}@media(max-width:540px) and (orientation:portrait){#a12DockRoutes{grid-template-columns:repeat(6,1fr);gap:3px;padding:5px}#a12DockRoutes button{padding:5px 1px;font-size:9px}}`;
     style.textContent += `@media(orientation:landscape){#a12DockRoutes{left:auto;right:max(12px,var(--safe-right));transform:none;width:min(calc(100vw - 440px),760px)}}`;
     style.textContent += `body[data-campaign-phase="result"] #joystick,body[data-campaign-phase="result"] #jumpWrap,body[data-campaign-phase="result"] #controlHint{display:none!important}`;
-    style.textContent += `#a12WorldChiefOverlay{position:fixed;z-index:32;pointer-events:none;image-rendering:pixelated}#a12WorldChiefOverlay[hidden]{display:none!important}`;
     document.head.appendChild(style);
     style.textContent += `#a12Actions{flex-wrap:wrap;justify-content:center;max-width:min(96vw,720px)}#a12Actions [data-act="rewarded"]{background:#286650;border-color:#8ff1c8}`;
     const actions = document.createElement("div");
     actions.id = "a12Actions";
     actions.innerHTML = `<button data-act="next">${t("next")}</button><button data-act="shop">${t("shop")}</button><button data-act="rewarded" hidden></button><button data-act="retry">${t("retry")}</button>`;
     document.body.appendChild(actions);
-    const resultChiefOverlay=document.createElement("canvas");resultChiefOverlay.id="a12WorldChiefOverlay";resultChiefOverlay.width=120;resultChiefOverlay.height=130;resultChiefOverlay.hidden=true;resultChiefOverlay.setAttribute("aria-label","Angry chief");document.body.appendChild(resultChiefOverlay);
     const dockRoutes=document.createElement("nav");dockRoutes.id="a12DockRoutes";dockRoutes.hidden=true;document.body.appendChild(dockRoutes);const placeDockRoutes=()=>{if(dockRoutes.hidden||actions.hidden)return;const top=actions.getBoundingClientRect().top;dockRoutes.style.setProperty("--dock-actions-clearance",`${Math.max(8,innerHeight-top+8)}px`)};const renderDockRoutes=()=>{const show=document.body.dataset.campaignPhase==="result"&&profile.selectedWorldId==="dock31";dockRoutes.hidden=!show;if(!show)return;dockRoutes.innerHTML=WORLD_REGISTRY.dock31.routes.map(id=>`<button data-route="${id}">${id}<small>${"★".repeat(profile.progressByRoute[id]?.stars||0)}${"☆".repeat(3-(profile.progressByRoute[id]?.stars||0))}</small></button>`).join("");requestAnimationFrame(placeDockRoutes)};new MutationObserver(renderDockRoutes).observe(document.body,{attributes:true,attributeFilter:["data-campaign-phase"]});addEventListener("resize",placeDockRoutes);dockRoutes.addEventListener("click",e=>{const id=e.target.closest("[data-route]")?.dataset.route;if(id)startRoute(id)});
     if(!document.getElementById("a12Language")){const card=document.getElementById("characterCard");if(card){const wrap=document.createElement("label");wrap.id="a12LanguageWrap";wrap.innerHTML=`<span></span><select id="a12Language" aria-label="Language"><option value="en">EN</option><option value="tr">TR</option><option value="ru">RU</option></select>`;card.appendChild(wrap);}}
     const languageSelect=document.getElementById("a12Language");if(languageSelect){languageSelect.value=profile.settings.language;languageSelect.addEventListener("change",async()=>{const previous=profile.settings.language;profile.settings.language=languageFrom(languageSelect.value);applyLanguage();emitGame("language_change",{from:previous,to:profile.settings.language});await persist();});}
@@ -3615,8 +3613,8 @@ applyD09LogicRulesToRoutes();
   // A5b decorative layer: no RNG, collisions, profile or simulation writes.
   function presentationNpcs() {
     const carrierSurface=(targetX=520)=>{
-      const s=presentationSurface(targetX,96),x=patrolXOnSurface(s,.35,42);
-      return s&&Number.isFinite(x)?{role:"carrier",x,y:s.y-6,added:false,grounded:true,surfaceId:s.id}:null;
+      const s=presentationSurface(targetX,96),patrol=patrolMotionOnSurface(s,.35,42);
+      return s&&patrol?{role:"carrier",x:patrol.x,y:s.y-6,direction:patrol.direction,added:false,grounded:true,surfaceId:s.id}:null;
     };
     const roles=[carrierSurface()].filter(Boolean);
     for(const o of route.obstacles){
@@ -3673,6 +3671,7 @@ applyD09LogicRulesToRoutes();
         }
       } else if(n.grounded&&n.role==="carrier"){
         const npcImage=npcAtlasImages.get("decor"),frame=(Math.floor(gameClock*8)%2)+(surprised?1:0);
+        c.scale(n.direction>0?-1:1,1);
         if(npcAtlasContract&&npcImage)c.drawImage(npcImage,frame*64,0,64,64,-32,-56,64,64);
         else{
           c.fillStyle=suit;c.fillRect(-9,-32,18,24);c.fillRect(-9,-9,6,9);c.fillRect(3,-9,6,9);
@@ -3786,15 +3785,12 @@ applyD09LogicRulesToRoutes();
     c.restore();
   }
   function drawRunnerLayerIntegrated(c) { ctx=c; }
-  function syncResultChiefOverlay(){
-    const layer=document.getElementById("a12WorldChiefOverlay"),show=campaignChief?.active&&campaignChief.entryPhase==="result"&&!shopOpen;
-    if(!layer)return;
-    layer.hidden=!show;
-    if(!show)return;
-    const worldW=engine.W||W,worldH=engine.H||H,scale=Math.min(innerWidth/worldW,innerHeight/worldH),offsetX=(innerWidth-worldW*scale)/2,offsetY=(innerHeight-worldH*scale)/2,camX=typeof engine?.cameraX==="function"?engine.cameraX():0;
-    const screenX=campaignChief.x+campaignChief.w/2-camX,feet=campaignChief.y+campaignChief.h+cameraWorldY;
-    layer.style.left=`${offsetX+(screenX-60)*scale}px`;layer.style.top=`${offsetY+(feet-110)*scale}px`;layer.style.width=`${120*scale}px`;layer.style.height=`${130*scale}px`;
-    const q=layer.getContext("2d");q.clearRect(0,0,layer.width,layer.height);drawChiefAtlas(q,profile.equippedChief||"securityTall",{motion:"idle",frame:0},60,110,campaignChief.facing||1);drawChiefAngerIcon(q,60,28);
+  function drawResultChief(c){
+    if(!campaignChief?.active||campaignChief.entryPhase!=="result"||shopOpen)return;
+    const camX=typeof engine?.cameraX==="function"?engine.cameraX():0;
+    c.save();c.translate(-camX,cameraWorldY);
+    drawChiefAtlas(c,profile.equippedChief||"securityTall",{motion:"idle",frame:0},campaignChief.x+16,campaignChief.y+48,campaignChief.facing||1);
+    drawChiefAngerIcon(c,campaignChief.x+16,campaignChief.y-18);c.restore();
   }
   function cameraTargetIntegrated(info={}) {
     const fallback=Number.isFinite(info.fallback)?info.fallback:Math.max(0,Math.min(route.length-W,player.x-W*.3));
@@ -3831,8 +3827,8 @@ applyD09LogicRulesToRoutes();
       c.fillText(`${routeId} ${t("complete")} +${result.amount}`, w / 2, innerHeight>=innerWidth?164:62);
       c.textAlign = "left";
     }
+    drawResultChief(c);
     syncActionVisibility();
-    syncResultChiefOverlay();
   }
   async function init() {
     if (document.body.dataset.gameMode === "campaign") return;
