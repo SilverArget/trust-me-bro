@@ -11,16 +11,13 @@ const copyNames = [
   "js",
   "sprites",
   ".nojekyll",
-  "cover-art.png",
   "game-icon.png",
-  "intro.mp4",
   "manifest.webmanifest",
   "playgama-bridge-config.json",
   "playgama-bridge.js",
   "privacy.html",
   "README-PLAY.txt",
   "soundtrack.mp3",
-  "trust-me-bro-logo.png",
 ];
 
 function rm(target) {
@@ -111,6 +108,8 @@ for (const name of copyNames) {
   const src = path.join(root, name);
   if (fs.existsSync(src)) copy(src, path.join(dist, name));
 }
+// AI source renders are production inputs, not runtime assets referenced by the game.
+rm(path.join(dist, "sprites", "raw"));
 copy(path.join(root, "index.html"), path.join(dist, "index.html"));
 walk(path.join(dist, "js"), file => {
   if (file.endsWith(".js")) minifyJsFile(file);

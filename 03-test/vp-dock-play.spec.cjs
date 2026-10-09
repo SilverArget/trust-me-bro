@@ -99,11 +99,26 @@ async function drive(page, id, {touch=false, stopAfter, omitDives=[]} = {}) {
   const fired = new Set(), pending = new Map(), lastPress = new Map(), trace = [], tr = transitions[id], started = Date.now();
   const chiefSamples = [], movementSamples = [];
   const visibility = {started:false,samples:[]}, routeTrace=[];
+  const finishEvidenceDir=process.env.TMB_FINISH_EVIDENCE_DIR||null,midrunEvidenceDir=process.env.TMB_MIDRUN_EVIDENCE_DIR||null,midrunCaptureT=Number(process.env.TMB_MIDRUN_CAPTURE_T);
+  let finishCaptureStarted=false,finishCaptureAt=0,finishCaptureCount=0,resultWallAt=null,midrunCaptured=false;
   const d05d06 = /^(?:[FMA]0[1-6])$/.test(id)||/^D(0[5-9]|1\d)$/.test(id);
   const targetCaptures = new Set();
   let diveSeen = false, catchSeen = false, deaths = 0, retries = 0, end, stuckSince = null, c07Y = null, previousSample = null, lastGroundAt = -Infinity, chainClimbSeconds = 0, chiefMinGap = Infinity, chiefCatches = 0, manualInputs = 0, evidenceCaptured = false;
   while (Date.now() - started < 115000) {
     const {s,layout} = await page.evaluate(() => ({s:__TMB_A12__.getState(),layout:window.__tmb?.layout||null}));
+    const wallNow=Date.now();
+    if(finishEvidenceDir&&!finishCaptureStarted&&s.route.finishX-s.player.x<=560){finishCaptureStarted=true;finishCaptureAt=wallNow}
+    if(finishEvidenceDir&&finishCaptureStarted&&wallNow>=finishCaptureAt){
+      fs.mkdirSync(finishEvidenceDir,{recursive:true});
+      const size=process.env.TMB_EVIDENCE_VIEWPORT||`${s.viewport.w}x${s.viewport.h}`;
+      await page.screenshot({path:path.join(finishEvidenceDir,`finish-${size}-${String(finishCaptureCount++).padStart(2,'0')}.png`)});
+      finishCaptureAt=wallNow+250;
+    }
+    if(s.result&&resultWallAt===null)resultWallAt=wallNow;
+    if(midrunEvidenceDir&&!midrunCaptured&&process.env.TMB_MIDRUN_ROUTE===id&&Number.isFinite(midrunCaptureT)&&s.gameClock>=midrunCaptureT){
+      midrunCaptured=true;fs.mkdirSync(midrunEvidenceDir,{recursive:true});
+      await page.screenshot({path:path.join(midrunEvidenceDir,`${id}-midrun-${process.env.TMB_EVIDENCE_VIEWPORT||`${s.viewport.w}x${s.viewport.h}`}.png`)});
+    }
     if (!evidenceCaptured && id === 'D01' && process.env.TMB_D01_EVIDENCE_DIR && s.economy.collectedCoinIds.length) {
       evidenceCaptured = true; fs.mkdirSync(process.env.TMB_D01_EVIDENCE_DIR,{recursive:true});
       const size=process.env.TMB_EVIDENCE_VIEWPORT||`${s.viewport.w}x${s.viewport.h}`;
@@ -207,6 +222,10 @@ async function drive(page, id, {touch=false, stopAfter, omitDives=[]} = {}) {
     diveSeen ||= !!s.diveRun || s.parkour.state === 'dive';
     catchSeen ||= s.parkour.state === 'catch' || s.parkour.state === 'climb';
     if (stopAfter && stopAfter({s, diveSeen, catchSeen})) break;
+    if(finishEvidenceDir&&(s.result||right>=s.route.finishX)){
+      if(resultWallAt!==null&&wallNow-resultWallAt>=3000)break;
+      await page.waitForTimeout(16);continue;
+    }
     if (s.result || right >= s.route.finishX) break;
     if (deaths) {
       trace.push(`[DBG-B2] ${s.gameClock.toFixed(2)} ${p.x.toFixed(2)} ${s.parkour.state} fail death chiefCatches=${s.chief?.catches||0} caughtT=${s.chief?.caughtT||0}`);
@@ -321,7 +340,7 @@ async function drive(page, id, {touch=false, stopAfter, omitDives=[]} = {}) {
   }
   await page.keyboard.up('ArrowRight');
   if (process.env.TMB_MEASURE_HARD_TRACE) fs.writeFileSync(path.join(__dirname,`frozen-hard-generated`,`${id}-60hz-trace.json`),JSON.stringify(movementSamples,null,2)+'\n');
-  return {end, deaths, retries, elapsed:(Date.now()-started)/1000, diveSeen, catchSeen, trace, c07Y, chiefSamples, chiefMinGap, chiefCatches, manualInputs, visibility, routeTrace};
+  return {end, deaths, retries, elapsed:(Date.now()-started)/1000, diveSeen, catchSeen, trace, c07Y, chiefSamples, chiefMinGap, chiefCatches, manualInputs, visibility, routeTrace, finishCaptureCount};
 }
 
 for (const id of routeIds) test(`O-1 B-5 ${id} ideal keyboard route`, async ({page}) => {
@@ -350,14 +369,15 @@ for (const id of routeIds) test(`O-1 B-5 ${id} ideal keyboard route`, async ({pa
   if (/^(?:D(?:0[1-9]|1[0-8])|[FMA]0[1-6])$/.test(id)&&r.end.chief) console.log(`CHIEF-${id} | minGap=${r.chiefMinGap.toFixed(3)}s, catches=${r.chiefCatches} | catches=0 | ${r.chiefCatches===0?'PASS':'FAIL'}`);
   let visMetrics=null;
   if (r.visibility.samples.length) {
-    const v=r.visibility.samples,gaps=v.map(q=>q.gap).sort((a,b)=>a-b),playerPct=100*v.filter(q=>q.playerIn).length/v.length,chiefPct=100*v.filter(q=>q.chiefIn).length/v.length,median=gaps[gaps.length>>1];
+    const v=r.visibility.samples,gaps=v.map(q=>q.gap).sort((a,b)=>a-b),playerXs=v.map(q=>q.px).sort((a,b)=>a-b),playerPct=100*v.filter(q=>q.playerIn).length/v.length,chiefPct=100*v.filter(q=>q.chiefIn).length/v.length,playerForwardPct=100*v.filter(q=>q.px<=q.viewportW*.45).length/v.length,median=gaps[gaps.length>>1],gapP90=gaps[Math.min(gaps.length-1,Math.floor(gaps.length*.9))],playerXp99=playerXs[Math.min(playerXs.length-1,Math.floor(playerXs.length*.99))],maxGapSample=v.reduce((best,q)=>q.gap>best.gap?q:best,v[0]),visibleSamples=v.filter(q=>q.playerIn&&q.chiefIn),maxVisibleGapSample=visibleSamples.reduce((best,q)=>q.gap>best.gap?q:best,visibleSamples[0]||v[0]);
     const chiefX=100*v.filter(q=>q.cx>=0&&q.cx<=q.viewportW).length/v.length,chiefY=100*v.filter(q=>q.cy>=0&&q.cy<=q.viewportH).length/v.length,firstOut=v.find(q=>!q.chiefIn),firstPlayerOut=v.find(q=>!q.playerIn);
-    console.log(`VIS-${id} | samples=${v.length} playerInFrame=${playerPct.toFixed(1)}% chiefInFrame=${chiefPct.toFixed(1)}% chiefX=${chiefX.toFixed(1)}% chiefY=${chiefY.toFixed(1)}% gapPx med=${median.toFixed(1)} firstOut=${firstOut?JSON.stringify({t:+firstOut.t.toFixed(2),cx:Math.round(firstOut.cx),cy:Math.round(firstOut.cy)}):'null'} firstPlayerOut=${firstPlayerOut?JSON.stringify({t:+firstPlayerOut.t.toFixed(2),px:Math.round(firstPlayerOut.px),py:Math.round(firstPlayerOut.py),result:firstPlayerOut.result}):'null'}`);
-    visMetrics={samples:v.length,playerPct,chiefPct,median};
+    console.log(`VIS-${id} | samples=${v.length} playerInFrame=${playerPct.toFixed(1)}% playerForward=${playerForwardPct.toFixed(1)}% playerXp99=${playerXp99.toFixed(1)} chiefInFrame=${chiefPct.toFixed(1)}% chiefX=${chiefX.toFixed(1)}% chiefY=${chiefY.toFixed(1)}% gapPx med=${median.toFixed(1)} p90=${gapP90.toFixed(1)} firstOut=${firstOut?JSON.stringify({t:+firstOut.t.toFixed(2),cx:Math.round(firstOut.cx),cy:Math.round(firstOut.cy)}):'null'} firstPlayerOut=${firstPlayerOut?JSON.stringify({t:+firstPlayerOut.t.toFixed(2),px:Math.round(firstPlayerOut.px),py:Math.round(firstPlayerOut.py),result:firstPlayerOut.result}):'null'}`);
+    visMetrics={samples:v.length,playerPct,playerForwardPct,playerXp99,chiefPct,median,gapP90,maxGap:maxGapSample.gap,maxGapT:maxGapSample.t,maxVisibleGap:maxVisibleGapSample.gap,maxVisibleGapT:maxVisibleGapSample.t};
   }
-  if(process.env.TMB_ACCEPTANCE_JSONL){fs.mkdirSync(path.dirname(process.env.TMB_ACCEPTANCE_JSONL),{recursive:true});fs.appendFileSync(process.env.TMB_ACCEPTANCE_JSONL,JSON.stringify({route:id,viewport:process.env.TMB_EVIDENCE_VIEWPORT||'1280x720',finish:pass,deaths:r.deaths,catches:r.chiefCatches,collected,total:expected,playerInFramePct:visMetrics?.playerPct??null,chiefInFramePct:visMetrics?.chiefPct??null,chiefDistanceMedian:visMetrics?.median??null})+'\n')}
+  if(process.env.TMB_ACCEPTANCE_JSONL){fs.mkdirSync(path.dirname(process.env.TMB_ACCEPTANCE_JSONL),{recursive:true});fs.appendFileSync(process.env.TMB_ACCEPTANCE_JSONL,JSON.stringify({route:id,viewport:process.env.TMB_EVIDENCE_VIEWPORT||'1280x720',finish:pass,deaths:r.deaths,catches:r.chiefCatches,collected,total:expected,playerInFramePct:visMetrics?.playerPct??null,playerForwardPct:visMetrics?.playerForwardPct??null,playerScreenXp99:visMetrics?.playerXp99??null,chiefInFramePct:visMetrics?.chiefPct??null,chiefDistanceMedian:visMetrics?.median??null,chiefDistanceP90:visMetrics?.gapP90??null,chiefDistanceMax:visMetrics?.maxGap??null,chiefDistanceMaxT:visMetrics?.maxGapT??null,chiefDistanceMaxVisible:visMetrics?.maxVisibleGap??null,chiefDistanceMaxVisibleT:visMetrics?.maxVisibleGapT??null})+'\n')}
+  if(process.env.TMB_FINISH_EVIDENCE_DIR){const size=process.env.TMB_EVIDENCE_VIEWPORT||'1280x720';fs.writeFileSync(path.join(process.env.TMB_FINISH_EVIDENCE_DIR,`finish-${size}.json`),JSON.stringify({route:id,fromRouteStart:true,finish:pass,deaths:r.deaths,catches:r.chiefCatches,collected,total:expected,frames:r.finishCaptureCount,state:r.end},null,2)+'\n')}
   if(visMetrics){
-    expect(visMetrics.playerPct).toBe(100); expect(visMetrics.chiefPct).toBeGreaterThanOrEqual(90); expect(visMetrics.median).toBeLessThanOrEqual(300);
+    expect(visMetrics.playerPct).toBe(100); expect(visMetrics.playerForwardPct).toBeGreaterThanOrEqual(99); expect(visMetrics.chiefPct).toBeGreaterThanOrEqual(90); expect(visMetrics.gapP90).toBeLessThanOrEqual(400);
   }
   if (process.env.TMB_RECORD_CHIEF) fs.writeFileSync(path.join(__dirname,`.chief-record-${id}.json`),JSON.stringify({delay:id[0]==='F'?1.2:id[0]==='M'?1.0:id[0]==='A'?0.8:['D01','D02'].includes(id)?2.5:1.5,routeHash:r.end.chiefRouteHash,samples:r.chiefSamples}));
   if (id === 'D01') console.log(`D01-c07-y | measured=${r.c07Y?.toFixed(2)} | coin center y | ${r.c07Y!==null?'PASS':'FAIL'}`);
@@ -370,6 +390,14 @@ for (const i of [14,17]) test(`F01 i${i} missed-dive fallback catch`, async ({pa
   const crossed=r.end.player.x+r.end.hitbox.w>=t.B.x0+24&&r.end.player.y+r.end.hitbox.h<=t.B.y+4;
   console.log(`F01-i${i}-fallback | x=${r.end.player.x.toFixed(2)}, feet=${(r.end.player.y+r.end.hitbox.h).toFixed(2)} | no dive, keyboard catch onto ${t.B.id} | ${crossed?'PASS':'FAIL'}`);
   expect(crossed).toBeTruthy(); expect(r.deaths).toBe(0);
+});
+test('chief stop contract: one second safe, sustained stop catches', async ({page}) => {
+  test.setTimeout(30000);await boot(page,'D07',{width:915,height:412});
+  await drive(page,'D07',{stopAfter:({s})=>s.chief?.entryPhase==='running'&&s.player.onGround&&s.parkour.state==='normal'&&s.player.vx>180});
+  await page.waitForTimeout(1000);const oneSecond=await page.evaluate(()=>__TMB_A12__.getState().chief.catches);
+  await page.waitForTimeout(1800);const sustained=await page.evaluate(()=>__TMB_A12__.getState().chief.catches);
+  console.log(`CHIEF-STOP-CONTRACT | at1s=${oneSecond}, sustained=${sustained} | 1s=0, sustained>=1 | ${oneSecond===0&&sustained>=1?'PASS':'FAIL'}`);
+  expect(oneSecond).toBe(0);expect(sustained).toBeGreaterThanOrEqual(1);
 });
 test('F01 fatal void causes death, retry, and no route lock', async ({page}) => {
   test.setTimeout(15000); await boot(page,'F01'); await page.keyboard.up('ArrowRight');

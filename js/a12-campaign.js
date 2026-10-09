@@ -1093,20 +1093,17 @@ applyD09LogicRulesToRoutes();
   }
   function chiefChaseScale(c,dt){
     if(!c?.path||c.entryPhase!=="running")return 1;
-    const camX=typeof engine?.cameraX==="function"?engine.cameraX():Math.max(0,player.x-W*.35);
-    const viewW=Math.max(320,Math.min(W,innerWidth||W));
     const gap=player.x-c.x;
     const behind=gap>40;
-    const offscreen=behind&&(c.x+c.w<camX+12||c.x>camX+viewW-12);
     const far=Math.max(0,Math.min(1,(gap-CHIEF_CLOSE_GAP_PX)/CHIEF_EASE_GAP_PX));
-    let target=gap>CHIEF_CLOSE_GAP_PX?1+(CHIEF_FAST_SCALE-1)*(offscreen?1:far):1;
-    const playerSlow=player.onGround&&engine.parkour.state==="normal"&&!diveRun&&!wallJumpRun&&Math.abs(player.vx)<70;
+    let target=gap>CHIEF_CLOSE_GAP_PX?1+(CHIEF_FAST_SCALE-1)*far:1;
+    const playerSlow=engine.parkour.state==="stun"||(player.onGround&&engine.parkour.state==="normal"&&!diveRun&&!wallJumpRun&&Math.abs(player.vx)<70);
     if(playerSlow&&behind&&gap<CHIEF_STOP_CLOSE_PX){
       const stopFar=Math.max(0,Math.min(1,(gap-CHIEF_CLOSE_GAP_PX)/(CHIEF_STOP_CLOSE_PX-CHIEF_CLOSE_GAP_PX)));
       const stopTarget=.25+Math.sqrt(stopFar)*.55;
       target=Math.min(target,stopTarget);
     }
-    c.chaseScale+=(target-(c.chaseScale||1))*Math.min(1,dt*(target<c.chaseScale?30:4));
+    c.chaseScale+=(target-(c.chaseScale||1))*Math.min(1,dt*30);
     return c.chaseScale;
   }
   function chiefLadderEntry(){
@@ -1130,8 +1127,9 @@ applyD09LogicRulesToRoutes();
     if(!c?.path)return null;
     c.entry=c.entry||chiefLadderEntry();
     if(!Number.isFinite(c.entry.time))c.entry.time=chiefTimeAtX(c.path,c.entry.x);
-    c.entry.climbStartTime=Math.max(c.entry.time,c.entry.time+c.delay-c.entry.duration);
-    c.entry.readyTime=c.entry.time+c.delay;
+    const chaseEntryTime=chiefTimeAtX(c.path,c.entry.x+CHIEF_CLOSE_GAP_PX);
+    c.entry.readyTime=Math.max(c.delay+c.entry.duration,chaseEntryTime);
+    c.entry.climbStartTime=c.entry.readyTime-c.entry.duration;
     return c.entry;
   }
   function setChiefPlayerTime(c,t){
@@ -1149,7 +1147,7 @@ applyD09LogicRulesToRoutes();
     c.x=entry.x-c.w*.5;c.y=entry.bottomY-c.h;c.pose="climb";c.facing=1;
   }
   function finishChiefLadder(c){
-    const entry=primeChiefLadder(c);c.entryPhase="running";c.climbElapsed=entry.duration;matchPlayerToChiefPath(c);c.playerT=Math.max(c.playerT,entry.readyTime);c.chaseScale=CHIEF_FAST_SCALE;c.chiefT=Math.max(entry.time,c.playerT-c.delay);
+    const entry=primeChiefLadder(c);c.entryPhase="running";c.climbElapsed=entry.duration;matchPlayerToChiefPath(c);c.playerT=Math.max(c.playerT,entry.readyTime);c.chaseScale=CHIEF_FAST_SCALE;c.chiefT=Math.max(entry.time,Math.min(c.playerT-.22,chiefTimeAtX(c.path,player.x)));
     const q=chiefSample(c.path,c.chiefT);c.x=q.x;c.y=q.y;c.pose=q.pose;c.facing=q.facing;
     emitGame("chief_chase_started",{routeId,entry:"ladder"});
   }
@@ -1881,10 +1879,12 @@ applyD09LogicRulesToRoutes();
         }
       }
       if (campaignChief.active) {
+        campaignChief.stunCatchGrace=engine.parkour.state==="stun"?1.05:Math.max(0,(campaignChief.stunCatchGrace||0)-dt);
         if(campaignChief.path&&campaignChief.entryPhase==="climbing"){campaignChief.climbElapsed=Math.min(campaignChief.entry.duration,campaignChief.climbElapsed+dt);const u=campaignChief.climbElapsed/campaignChief.entry.duration;campaignChief.x=campaignChief.entry.x-campaignChief.w*.5;campaignChief.y=campaignChief.entry.bottomY-campaignChief.h-(campaignChief.entry.height-campaignChief.h*.2)*u;campaignChief.pose="climb";if(u>=1)finishChiefLadder(campaignChief)}
-        else if(campaignChief.path){const entry=primeChiefLadder(campaignChief),scale=chiefChaseScale(campaignChief,dt);campaignChief.chiefT=Math.max(entry.time,campaignChief.chiefT+dt*scale);if(player.vx>180&&campaignChief.playerT>0)campaignChief.chiefT=Math.min(campaignChief.chiefT,campaignChief.playerT-.22);matchPlayerToChiefPath(campaignChief);const ideal=chiefSample(campaignChief.path,campaignChief.chiefT),live=chiefTraceSampleAtX(ideal.x);if(live){campaignChief.x=live.x;campaignChief.y=live.feet-campaignChief.h;campaignChief.pose=live.pose;campaignChief.facing=live.facing||1}else{campaignChief.x=ideal.x;campaignChief.y=ideal.y;campaignChief.pose=ideal.pose;campaignChief.facing=ideal.facing}}else campaignChief.x+=campaignChief.speed*dt;
+        else if(campaignChief.path){const entry=primeChiefLadder(campaignChief),scale=chiefChaseScale(campaignChief,dt);campaignChief.chiefT=Math.max(entry.time,campaignChief.chiefT+dt*scale);if((player.vx>180||campaignChief.stunCatchGrace>0)&&campaignChief.playerT>0)campaignChief.chiefT=Math.min(campaignChief.chiefT,campaignChief.playerT-.22);matchPlayerToChiefPath(campaignChief);const ideal=chiefSample(campaignChief.path,campaignChief.chiefT),live=chiefTraceSampleAtX(ideal.x);if(live){campaignChief.x=live.x;campaignChief.y=live.feet-campaignChief.h;campaignChief.pose=live.pose;campaignChief.facing=live.facing||1}else{campaignChief.x=ideal.x;campaignChief.y=ideal.y;campaignChief.pose=ideal.pose;campaignChief.facing=ideal.facing}}else campaignChief.x+=campaignChief.speed*dt;
         const playerCatchable=player.onGround&&engine.parkour.state==="normal"&&!diveRun&&!wallJumpRun&&Math.abs(player.vx)<70;
-        const liveChiefCatch=campaignChief.path&&campaignChief.entryPhase==="running"&&campaignChief.regrabT<=0&&playerCatchable&&campaignChief.chiefT>=0&&campaignChief.chiefT>=campaignChief.playerT-.05&&campaignChief.x+campaignChief.w>=player.x-80;
+        campaignChief.catchExposureT=playerCatchable?(campaignChief.catchExposureT||0)+dt:0;
+        const liveChiefCatch=campaignChief.path&&campaignChief.entryPhase==="running"&&campaignChief.regrabT<=0&&campaignChief.stunCatchGrace<=0&&campaignChief.catchExposureT>=2.15&&playerCatchable&&campaignChief.chiefT>=0&&campaignChief.chiefT>=campaignChief.playerT-.05&&campaignChief.x+campaignChief.w>=player.x-80;
         if (campaignChief.caughtT<=0 && (!campaignChief.path ? campaignChief.x+campaignChief.w>=player.x+4 && campaignChief.x<=player.x+player.w-4 : liveChiefCatch)) {
           campaignChief.catches++;
           campaignDeaths++;
@@ -2375,8 +2375,6 @@ applyD09LogicRulesToRoutes();
     const show = !!result && !shopOpen;
     a.hidden = !show;
     a.setAttribute("aria-hidden", String(!show));
-    const resultChief=document.getElementById("a12ResultChief");
-    if(resultChief){resultChief.hidden=!show;resultChief.style.setProperty("--chief-image",`url("sprites/chiefs/${profile.equippedChief||"securityTall"}-full.png")`)}
     syncRewardedButton();
   }
   let rewardedInFlight = null;
@@ -2503,16 +2501,16 @@ applyD09LogicRulesToRoutes();
     style.textContent += `#a12Products article canvas.shopThumb{display:block;width:84px;height:84px;margin:4px auto 8px;image-rendering:pixelated;pointer-events:none}#a12Products article h3{text-align:center}#a12Preview .previewControls[hidden]{display:none!important}@media(orientation:landscape){#a12Products article canvas.shopThumb{width:52px;height:52px;margin:1px auto 4px}#a12Products [data-list][hidden]{display:none!important}#a12Products article [data-action]:disabled{opacity:1;color:#82919a;background:#0b171e;border-color:#52616a;box-shadow:none}}`;
     style.textContent += `#characterSelect #characterCard>img,#characterSelect #characterCard>.eyebrow,#characterSelect #characterCard>h2,#characterSelect #characterCard>p,#characterSelect #characterShop,#characterSelect .portrait,#characterSelect .choiceName,#characterSelect .lockBadge{display:none!important}#characterSelect #characterCard{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px}#characterSelect #characterChoices{grid-template-columns:repeat(2,minmax(120px,1fr))}#characterSelect .characterChoice{position:relative;display:grid;place-items:center;justify-content:center;align-items:center;min-width:120px}#characterSelect #a12LanguageWrap{display:flex!important;margin:0 auto;min-height:44px;max-width:min(100%,320px);flex-wrap:wrap}#characterSelect #a12Language{min-width:92px;min-height:44px}`;
     style.textContent += `#a12DockRoutes{position:fixed;z-index:30;left:50%;bottom:var(--dock-actions-clearance,148px);transform:translateX(-50%);width:min(94vw,760px);display:grid;grid-template-columns:repeat(6,1fr);gap:5px;padding:8px;box-sizing:border-box;background:#06121be8;border:1px solid #ffffff33;border-radius:6px}#a12DockRoutes[hidden]{display:none!important}#a12DockRoutes button{min-width:0;padding:6px 2px;border:1px solid #ffffff33;border-radius:4px;background:#153246;color:#fff;font:800 10px/1.05 system-ui}#a12DockRoutes small{display:block;color:#ffd45c;font-size:9px}@media(max-width:540px) and (orientation:portrait){#a12DockRoutes{grid-template-columns:repeat(6,1fr);gap:3px;padding:5px}#a12DockRoutes button{padding:5px 1px;font-size:9px}}`;
-    style.textContent += `@media(orientation:landscape){#a12DockRoutes{width:min(calc(100vw - 190px),760px)}}`;
+    style.textContent += `@media(orientation:landscape){#a12DockRoutes{left:auto;right:max(12px,var(--safe-right));transform:none;width:min(calc(100vw - 440px),760px)}}`;
     style.textContent += `body[data-campaign-phase="result"] #joystick,body[data-campaign-phase="result"] #jumpWrap,body[data-campaign-phase="result"] #controlHint{display:none!important}`;
-    style.textContent += `#a12ResultChief{position:fixed;z-index:32;right:max(16px,var(--safe-right));bottom:max(104px,calc(var(--safe-bottom) + 94px));width:80px;height:80px;pointer-events:none;background:var(--chief-image) 0 0/640px 640px no-repeat;image-rendering:pixelated;filter:drop-shadow(0 4px 3px #0008)}#a12ResultChief[hidden]{display:none!important}#a12ResultChief::after{content:"😠";position:absolute;left:23px;top:-30px;font:32px/1 "Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",system-ui;filter:drop-shadow(0 2px 2px #000)}@media(orientation:portrait){#a12ResultChief{right:max(20px,var(--safe-right));top:max(170px,calc(var(--safe-top) + 140px));bottom:auto}}`;
+    style.textContent += `#a12WorldChiefOverlay{position:fixed;z-index:32;pointer-events:none;image-rendering:pixelated}#a12WorldChiefOverlay[hidden]{display:none!important}`;
     document.head.appendChild(style);
     style.textContent += `#a12Actions{flex-wrap:wrap;justify-content:center;max-width:min(96vw,720px)}#a12Actions [data-act="rewarded"]{background:#286650;border-color:#8ff1c8}`;
     const actions = document.createElement("div");
     actions.id = "a12Actions";
     actions.innerHTML = `<button data-act="next">${t("next")}</button><button data-act="shop">${t("shop")}</button><button data-act="rewarded" hidden></button><button data-act="retry">${t("retry")}</button>`;
     document.body.appendChild(actions);
-    const resultChief=document.createElement("div");resultChief.id="a12ResultChief";resultChief.hidden=true;resultChief.setAttribute("aria-label","Angry chief");document.body.appendChild(resultChief);
+    const resultChiefOverlay=document.createElement("canvas");resultChiefOverlay.id="a12WorldChiefOverlay";resultChiefOverlay.width=120;resultChiefOverlay.height=130;resultChiefOverlay.hidden=true;resultChiefOverlay.setAttribute("aria-label","Angry chief");document.body.appendChild(resultChiefOverlay);
     const dockRoutes=document.createElement("nav");dockRoutes.id="a12DockRoutes";dockRoutes.hidden=true;document.body.appendChild(dockRoutes);const placeDockRoutes=()=>{if(dockRoutes.hidden||actions.hidden)return;const top=actions.getBoundingClientRect().top;dockRoutes.style.setProperty("--dock-actions-clearance",`${Math.max(8,innerHeight-top+8)}px`)};const renderDockRoutes=()=>{const show=document.body.dataset.campaignPhase==="result"&&profile.selectedWorldId==="dock31";dockRoutes.hidden=!show;if(!show)return;dockRoutes.innerHTML=WORLD_REGISTRY.dock31.routes.map(id=>`<button data-route="${id}">${id}<small>${"★".repeat(profile.progressByRoute[id]?.stars||0)}${"☆".repeat(3-(profile.progressByRoute[id]?.stars||0))}</small></button>`).join("");requestAnimationFrame(placeDockRoutes)};new MutationObserver(renderDockRoutes).observe(document.body,{attributes:true,attributeFilter:["data-campaign-phase"]});addEventListener("resize",placeDockRoutes);dockRoutes.addEventListener("click",e=>{const id=e.target.closest("[data-route]")?.dataset.route;if(id)startRoute(id)});
     if(!document.getElementById("a12Language")){const card=document.getElementById("characterCard");if(card){const wrap=document.createElement("label");wrap.id="a12LanguageWrap";wrap.innerHTML=`<span></span><select id="a12Language" aria-label="Language"><option value="en">EN</option><option value="tr">TR</option><option value="ru">RU</option></select>`;card.appendChild(wrap);}}
     const languageSelect=document.getElementById("a12Language");if(languageSelect){languageSelect.value=profile.settings.language;languageSelect.addEventListener("change",async()=>{const previous=profile.settings.language;profile.settings.language=languageFrom(languageSelect.value);applyLanguage();emitGame("language_change",{from:previous,to:profile.settings.language});await persist();});}
@@ -3567,7 +3565,7 @@ applyD09LogicRulesToRoutes();
       c.lineWidth=4;c.strokeStyle=frozen?"#d7f6ff":"#c0915b";for(let y=top+18;y<bottom-6;y+=22){c.beginPath();c.moveTo(x-22,y);c.lineTo(x+22,y);c.stroke()}
       c.fillStyle=frozen?"#6faaba":"#5c3b24";c.fillRect(x-32,top-7,64,9);c.fillStyle=frozen?"#bcefff":"#a06c3c";c.fillRect(x-26,top-11,52,5);c.restore();
     }
-    if (!result && campaignChief?.active) {
+    if (campaignChief?.active) {
       c.save();
       if(magma){c.fillStyle="#8e969f";c.fillRect(campaignChief.x-4,campaignChief.y-5,34,48);c.fillStyle="#d6dadd";c.fillRect(campaignChief.x-6,campaignChief.y-14,38,22);c.fillStyle="#202a36";c.fillRect(campaignChief.x,campaignChief.y-10,26,12);c.fillStyle="#404954";c.fillRect(campaignChief.x-2,campaignChief.y+35,12,18);c.fillRect(campaignChief.x+17,campaignChief.y+35,12,18);} else if (chiefAtlasContract) {
         const state=campaignChief.resultAngry?"idle":campaignChief.pose||"run";
@@ -3753,23 +3751,20 @@ applyD09LogicRulesToRoutes();
     c.restore();
   }
   function drawRunnerLayerIntegrated(c) { ctx=c; }
-  function drawResultChiefOverlay(c){
-    if(!result||!campaignChief?.resultAngry)return;
-    const portrait=innerHeight>=innerWidth,screenX=portrait?W*.78:W-64,feet=portrait?H*.35:H*.67;
-    drawChiefAtlas(c,profile.equippedChief||"securityTall",{motion:"idle",frame:0},screenX,feet,campaignChief.facing||1);
-    drawChiefAngerIcon(c,screenX,feet-78);
+  function syncResultChiefOverlay(){
+    const layer=document.getElementById("a12WorldChiefOverlay"),show=campaignChief?.active&&campaignChief.entryPhase==="result"&&!shopOpen;
+    if(!layer)return;
+    layer.hidden=!show;
+    if(!show)return;
+    const worldW=engine.W||W,worldH=engine.H||H,scale=Math.min(innerWidth/worldW,innerHeight/worldH),offsetX=(innerWidth-worldW*scale)/2,offsetY=(innerHeight-worldH*scale)/2,camX=typeof engine?.cameraX==="function"?engine.cameraX():0;
+    const screenX=campaignChief.x+campaignChief.w/2-camX,feet=campaignChief.y+campaignChief.h+cameraWorldY;
+    layer.style.left=`${offsetX+(screenX-60)*scale}px`;layer.style.top=`${offsetY+(feet-110)*scale}px`;layer.style.width=`${120*scale}px`;layer.style.height=`${130*scale}px`;
+    const q=layer.getContext("2d");q.clearRect(0,0,layer.width,layer.height);drawChiefAtlas(q,profile.equippedChief||"securityTall",{motion:"idle",frame:0},60,110,campaignChief.facing||1);drawChiefAngerIcon(q,60,28);
   }
   function cameraTargetIntegrated(info={}) {
     const fallback=Number.isFinite(info.fallback)?info.fallback:Math.max(0,Math.min(route.length-W,player.x-W*.3));
     if(result)return fallback;
-    const pad=Math.max(0,info.cameraPadLeft||0),scale=Math.max(.01,info.viewScale||1),visibleW=Math.max(320,Math.min(W,(info.viewportW||W)/scale)),playerTarget=player.x-W*.3-pad;
-    let target=playerTarget;
-    if(campaignChief?.active&&campaignChief.entryPhase==="running"){
-      const chiefVisibleCam=campaignChief.x+campaignChief.w/2-(72+pad);
-      const playerVisibleCam=player.x+player.w/2-(visibleW-48);
-      target=Math.max(playerVisibleCam,Math.min(target,chiefVisibleCam));
-    }
-    return Math.max(0,Math.min(route.length-W,target));
+    return Math.max(0,Math.min(route.length-W,player.x-W*.3));
   }
   function drawOverlayIntegrated(c, w, h) {
     ctx = c;
@@ -3801,6 +3796,7 @@ applyD09LogicRulesToRoutes();
       c.textAlign = "left";
     }
     syncActionVisibility();
+    syncResultChiefOverlay();
   }
   async function init() {
     if (document.body.dataset.gameMode === "campaign") return;
@@ -3828,6 +3824,7 @@ applyD09LogicRulesToRoutes();
       drawRunnerLayer: drawRunnerLayerIntegrated,
       drawOverlay: drawOverlayIntegrated,
       cameraTarget: cameraTargetIntegrated,
+      cameraMax: () => Math.max(0,route.finishX-W*.3),
       runnerPose: () => frontFlip,
     });
     installUI();

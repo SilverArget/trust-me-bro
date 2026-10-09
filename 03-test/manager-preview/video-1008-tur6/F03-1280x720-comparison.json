@@ -1,0 +1,25 @@
+{
+  "route": "F03",
+  "viewport": "1280x720",
+  "baseline": {
+    "commit": "bbed9ce",
+    "mainSessionObservation": "2/4 runs caught after stun in under 1 second",
+    "localReplay": {
+      "runs": 5,
+      "finishes": 5,
+      "deaths": 0,
+      "catches": 0,
+      "note": "The intermittent catch did not reproduce locally; all five old-build failures were only the new camera acceptance assertions."
+    }
+  },
+  "tur6": {
+    "runs": 5,
+    "finishes": 5,
+    "deaths": 0,
+    "catches": 0,
+    "coins": "14/14 in all runs",
+    "playerForwardPct": 100,
+    "chiefInFramePct": 100,
+    "chiefDistanceP90RangePx": [150.7, 159.2]
+  }
+}

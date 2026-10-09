@@ -1,0 +1,678 @@
+{
+  "route": "D04",
+  "fromRouteStart": true,
+  "finish": true,
+  "deaths": 0,
+  "catches": 0,
+  "collected": 12,
+  "total": 12,
+  "frames": 21,
+  "state": {
+    "schemaVersion": 1,
+    "profile": {
+      "schemaVersion": 1,
+      "profileRevision": 18,
+      "walletBalance": 53,
+      "runnerId": "male",
+      "ownedRunnerIds": [
+        "male",
+        "female"
+      ],
+      "equippedOutfitByRunner": {
+        "male": "default",
+        "female": "default",
+        "tall": "default",
+        "compact": "default",
+        "bruiser": "default",
+        "athlete": "default"
+      },
+      "ownedOutfitSetIds": [
+        "default"
+      ],
+      "ownedChiefIds": [
+        "securityTall"
+      ],
+      "equippedChief": "securityTall",
+      "ownedWorldIds": [
+        "dock31"
+      ],
+      "selectedWorldId": "dock31",
+      "progressByRoute": {
+        "D04": {
+          "completed": true,
+          "completions": 1,
+          "stars": 3
+        }
+      },
+      "pendingRunsByRoute": {
+        "D01": {
+          "economyRunId": "run-mv0txm2w-aei7j0",
+          "attemptId": "try-mv0txm2w-ikpsu0",
+          "routeId": "D01",
+          "runCoins": 0,
+          "collectedCoinIds": [],
+          "banked": false,
+          "checkpointX": 70,
+          "startedAt": 1791542139656,
+          "flowScore": 0,
+          "usedSkill": false
+        }
+      },
+      "bestRunsByRouteVersion": {
+        "D04@1": 28.248199999999606
+      },
+      "settings": {
+        "language": "en",
+        "reducedEffects": false
+      },
+      "migrationFlags": {},
+      "legacyProgress": null,
+      "bankedRunIds": [
+        "run-mv0txm69-8np4z4"
+      ],
+      "rewardedRunIds": []
+    },
+    "routeId": "D04",
+    "routeVersion": 1,
+    "cameraWorldY": -112.37037617351217,
+    "cameraX": 7599.808900000001,
+    "cameraGroundFootY": 455,
+    "pose": {
+      "motion": "idle",
+      "frame": 1,
+      "angle": 0
+    },
+    "movementProfile": "5a28f5d80f9d3dbd66d81dc70f7511564694931b9fe32568d150c230cb392b2f",
+    "vectorJumpPending": null,
+    "wallJumpRun": null,
+    "vectorAir": null,
+    "vectorRollStarts": 2,
+    "diveRun": null,
+    "parkour": {
+      "state": "normal",
+      "timer": 0,
+      "dir": 1
+    },
+    "obstacleSeed": "8dcb17a53fa0e4857a6319d5d0826169e66cb8cdefc7d84dbfd5ee2dab9b32b8",
+    "chiefRouteHash": "c3631fa534e488522e9105e0c51500d6ac172a9e89935e46245ee317a68e472f",
+    "runnerId": "male",
+    "hitbox": {
+      "w": 32,
+      "h": 48
+    },
+    "viewport": {
+      "w": 960,
+      "h": 540
+    },
+    "economy": {
+      "economyRunId": "run-mv0txm69-8np4z4",
+      "attemptId": "try-mv0txm69-wufohr",
+      "runCoins": 12,
+      "collectedCoinIds": [
+        "D04-c05",
+        "D04-c12",
+        "D04-c03",
+        "D04-c01",
+        "D04-c09",
+        "D04-c02",
+        "D04-c06",
+        "D04-c10",
+        "D04-c11",
+        "D04-c07",
+        "D04-c04",
+        "D04-c08"
+      ],
+      "walletBalance": 53,
+      "banked": true
+    },
+    "player": {
+      "x": 8001,
+      "y": 407,
+      "vx": 0,
+      "vy": 0,
+      "onGround": true,
+      "state": "idle"
+    },
+    "input": {
+      "left": false,
+      "right": false,
+      "jump": false,
+      "joystick": 0
+    },
+    "frontFlip": {
+      "active": false,
+      "phase": "idle",
+      "tuckFrame": 0,
+      "hitboxBefore": null,
+      "renderMode": "tuck-atlas-layer"
+    },
+    "flow": 54,
+    "barrels": [],
+    "worker": {
+      "disabled": false,
+      "clock": 0
+    },
+    "checkpointX": 3919,
+    "result": {
+      "stars": 3,
+      "amount": 53,
+      "first": true,
+      "style": 6,
+      "elapsed": 28.248199999999606,
+      "economyRunId": "run-mv0txm69-8np4z4",
+      "bestDiff": null,
+      "goals": {
+        "clean": {
+          "earned": true,
+          "reason": "clean"
+        },
+        "mastery": {
+          "earned": true,
+          "reason": "skill-route"
+        },
+        "style": {
+          "earned": true,
+          "reason": "flow"
+        }
+      }
+    },
+    "finishAdvance": null,
+    "finishGate": {
+      "phase": "closed",
+      "t": 0.8,
+      "closeS": 0.52,
+      "holdS": 0.28,
+      "playerAlpha": 0
+    },
+    "engine": {
+      "singleLoop": true,
+      "renderFrameCount": 1886,
+      "wallHeight": 130,
+      "wallRise": 42,
+      "observedStates": [
+        "slide",
+        "hermesLaunch",
+        "hermesLaunch",
+        "hermesLaunch"
+      ]
+    },
+    "movingPlatforms": [],
+    "platformOrder": {
+      "colliderFrame": 0,
+      "landingFrame": 0,
+      "carryFrame": 0
+    },
+    "gameClock": 28.248199999999606,
+    "wallMantle": null,
+    "lastWallMantle": null,
+    "edgeClimb": null,
+    "edgeCatchProbe": {
+      "input": 1,
+      "probes": [
+        {
+          "id": "d04-v-03",
+          "gap": -7654.099999999973,
+          "feetDelta": 900.1250144999999,
+          "vy": 217.5,
+          "front": false,
+          "toward": false,
+          "vertical": false,
+          "apex": false
+        },
+        {
+          "id": "d04-v-05",
+          "gap": -7202.899999999973,
+          "feetDelta": 900.1250144999999,
+          "vy": 217.5,
+          "front": false,
+          "toward": false,
+          "vertical": false,
+          "apex": false
+        },
+        {
+          "id": "d04-v-06",
+          "gap": -6975.139999999973,
+          "feetDelta": 972.1250144999999,
+          "vy": 217.5,
+          "front": false,
+          "toward": false,
+          "vertical": false,
+          "apex": false
+        },
+        {
+          "id": "d04-v-08",
+          "gap": -6377.299999999973,
+          "feetDelta": 655.3250145,
+          "vy": 217.5,
+          "front": false,
+          "toward": false,
+          "vertical": false,
+          "apex": false
+        },
+        {
+          "id": "d04-v-09",
+          "gap": -6160.099999999973,
+          "feetDelta": 655.3250145,
+          "vy": 217.5,
+          "front": false,
+          "toward": false,
+          "vertical": false,
+          "apex": false
+        },
+        {
+          "id": "d04-v-10",
+          "gap": -6017.299999999973,
+          "feetDelta": 655.3250145,
+          "vy": 217.5,
+          "front": false,
+          "toward": false,
+          "vertical": false,
+          "apex": false
+        },
+        {
+          "id": "d04-v-15",
+          "gap": -3947.299999999973,
+          "feetDelta": 556.9250145,
+          "vy": 217.5,
+          "front": false,
+          "toward": false,
+          "vertical": false,
+          "apex": false
+        },
+        {
+          "id": "d04-v-17",
+          "gap": -3674.8999999999733,
+          "feetDelta": 535.3250145,
+          "vy": 217.5,
+          "front": false,
+          "toward": false,
+          "vertical": false,
+          "apex": false
+        },
+        {
+          "id": "d04-v-18",
+          "gap": -3415.6999999999725,
+          "feetDelta": 535.3250145,
+          "vy": 217.5,
+          "front": false,
+          "toward": false,
+          "vertical": false,
+          "apex": false
+        },
+        {
+          "id": "d04-v-21",
+          "gap": -2972.8999999999733,
+          "feetDelta": 607.3250145,
+          "vy": 217.5,
+          "front": false,
+          "toward": false,
+          "vertical": false,
+          "apex": false
+        },
+        {
+          "id": "d04-v-22",
+          "gap": -2660.8999999999733,
+          "feetDelta": 540.1250144999999,
+          "vy": 217.5,
+          "front": false,
+          "toward": false,
+          "vertical": false,
+          "apex": false
+        },
+        {
+          "id": "d04-v-26",
+          "gap": -154.09999999997308,
+          "feetDelta": 18.125014499999963,
+          "vy": 217.5,
+          "front": false,
+          "toward": false,
+          "vertical": true,
+          "apex": false
+        }
+      ]
+    },
+    "campaignDeaths": 0,
+    "collapsing": [],
+    "containerDoors": [],
+    "chief": {
+      "active": true,
+      "x": 7925,
+      "y": 385.4,
+      "w": 32,
+      "h": 48,
+      "catches": 0,
+      "caughtT": 0,
+      "regrabT": 0,
+      "lastReturnX": null,
+      "delay": 2.5,
+      "timeScale": 1,
+      "chaseScale": 1,
+      "chiefT": 27.076,
+      "playerT": 27.296,
+      "playerIndex": 379,
+      "matchMode": "xy",
+      "pose": "idle",
+      "facing": 1,
+      "entry": {
+        "x": 1184.16,
+        "topY": -520.6,
+        "bottomY": -448.6,
+        "height": 72,
+        "duration": 0.7,
+        "offscreen": false,
+        "time": 4.849,
+        "readyTime": 5.466,
+        "climbStartTime": 4.766
+      },
+      "entryPhase": "result",
+      "climbElapsed": 0.7,
+      "stunCatchGrace": 0,
+      "catchExposureT": 0,
+      "resultAngry": true,
+      "resultSnapshot": {
+        "x": 7925,
+        "y": 385.4,
+        "feet": 433.4,
+        "doorX": 8029
+      },
+      "distance": 76
+    },
+    "deaths": 0,
+    "dead": false,
+    "shop": {
+      "open": false,
+      "tab": "outfits",
+      "previewOutfitId": "default",
+      "previewWorldId": "dock31",
+      "purchaseBusy": false,
+      "saveStatus": "saved"
+    },
+    "world": {
+      "registry": {
+        "dock31": {
+          "id": "dock31",
+          "themeId": "dock",
+          "price": 0,
+          "enabled": true,
+          "routes": [
+            "D01",
+            "D02",
+            "D03",
+            "D04",
+            "D05",
+            "D06",
+            "D07",
+            "D08",
+            "D09",
+            "D10",
+            "D11",
+            "D12",
+            "D13",
+            "D14",
+            "D15",
+            "D16",
+            "D17",
+            "D18"
+          ]
+        },
+        "frozen": {
+          "id": "frozen",
+          "themeId": "frozen",
+          "price": 160,
+          "enabled": true,
+          "routes": [
+            "F01",
+            "F02",
+            "F03",
+            "F04",
+            "F05",
+            "F06"
+          ]
+        },
+        "magma": {
+          "id": "magma",
+          "themeId": "magma",
+          "price": 200,
+          "enabled": true,
+          "routes": [
+            "M01",
+            "M02",
+            "M03",
+            "M04",
+            "M05",
+            "M06"
+          ]
+        },
+        "aftermath": {
+          "id": "aftermath",
+          "themeId": "aftermath",
+          "price": 500,
+          "enabled": true,
+          "routes": [
+            "A01",
+            "A02",
+            "A03",
+            "A04",
+            "A05",
+            "A06"
+          ]
+        }
+      },
+      "selectedWorldId": "dock31",
+      "pendingWorldId": null,
+      "activeCacheKey": "dock31|D04|1|1",
+      "cacheKeys": [],
+      "renderSignatures": {
+        "deckStripe": 1,
+        "dock31Text": 1,
+        "containerBlock": 1,
+        "dockCrane": 1,
+        "loadingCorridor": 1,
+        "foregroundLampGroundGap": 0,
+        "snowCap": 0,
+        "icicles": 0,
+        "iceRatio": 0
+      }
+    },
+    "wallJumpZones": [],
+    "route": {
+      "id": "D04",
+      "name": "ROOFTOP SHORTCUT",
+      "worldId": "dock31",
+      "length": 8169,
+      "finishX": 8029,
+      "checkpoints": [
+        70,
+        3919
+      ],
+      "obstacles": [
+        {
+          "id": "d04-slide-01",
+          "type": "slide",
+          "x": 552.72,
+          "w": 48,
+          "h": 86.4,
+          "baseY": -448.6
+        },
+        {
+          "id": "d04-vault-01",
+          "type": "vault",
+          "x": 877.2,
+          "w": 24,
+          "h": 48,
+          "baseY": -448.6
+        },
+        {
+          "id": "d04-vault-02",
+          "type": "vault",
+          "x": 2397.6,
+          "w": 28.8,
+          "h": 21.6,
+          "baseY": -203.8
+        },
+        {
+          "id": "d04-vault-03",
+          "type": "vault",
+          "x": 2600.4,
+          "w": 72,
+          "h": 48,
+          "baseY": -203.8
+        }
+      ],
+      "coins": [
+        {
+          "id": "D04-c01",
+          "n": 0,
+          "move_id": "d04-dz-01",
+          "kind": "CJ",
+          "x": 3999.87,
+          "y": -131.8,
+          "skill": false,
+          "pathLocked": true
+        },
+        {
+          "id": "D04-c02",
+          "n": 1,
+          "move_id": "d04-dz-02",
+          "kind": "CJ",
+          "x": 4907.18,
+          "y": -173.66,
+          "skill": false
+        },
+        {
+          "id": "D04-c03",
+          "n": 2,
+          "move_id": "d04-v-06",
+          "kind": "CC",
+          "x": 1082.42,
+          "y": -544.6,
+          "skill": true
+        },
+        {
+          "id": "D04-c04",
+          "n": 3,
+          "move_id": "d04-dz-03",
+          "kind": "CJ",
+          "x": 7009.66,
+          "y": 231.71,
+          "skill": false,
+          "pathLocked": true
+        },
+        {
+          "id": "D04-c05",
+          "n": 4,
+          "move_id": "d04-slide-01",
+          "kind": "CS",
+          "x": 513.21,
+          "y": -464.6,
+          "skill": true
+        },
+        {
+          "id": "D04-c06",
+          "n": 5,
+          "move_id": "d04-dz-02",
+          "kind": "CJ",
+          "x": 4907.18,
+          "y": -173.66,
+          "skill": false
+        },
+        {
+          "id": "D04-c07",
+          "n": 6,
+          "move_id": "d04-tr-32",
+          "kind": "CJ",
+          "x": 5348.15,
+          "y": -237.57,
+          "skill": false
+        },
+        {
+          "id": "D04-c08",
+          "n": 7,
+          "move_id": "d04-dz-03",
+          "kind": "CJ",
+          "x": 7009.66,
+          "y": 231.71,
+          "skill": false,
+          "pathLocked": true
+        },
+        {
+          "id": "D04-c09",
+          "n": 8,
+          "move_id": "d04-v-17",
+          "kind": "CC",
+          "x": 4275.07,
+          "y": -131.8,
+          "skill": true,
+          "pathLocked": true
+        },
+        {
+          "id": "D04-c10",
+          "n": 9,
+          "move_id": "d04-dz-02",
+          "kind": "CJ",
+          "x": 4907.18,
+          "y": -173.66,
+          "skill": false
+        },
+        {
+          "id": "D04-c11",
+          "n": 10,
+          "move_id": "d04-v-21",
+          "kind": "CC",
+          "x": 5084.68,
+          "y": -179.8,
+          "skill": true
+        },
+        {
+          "id": "D04-c12",
+          "n": 11,
+          "move_id": "d04-slide-01",
+          "kind": "CS",
+          "x": 569.21,
+          "y": -464.6,
+          "skill": true
+        }
+      ],
+      "hermesLaunchZones": [
+        {
+          "id": "hermes-d04-dz-01",
+          "sourceId": "d04-dz-01",
+          "kind": "dive",
+          "x1": 3276,
+          "x2": 3396,
+          "landX": 3846.4,
+          "landY": -83.8,
+          "peakY": -176.8
+        },
+        {
+          "id": "hermes-d04-dz-02",
+          "sourceId": "d04-dz-02",
+          "kind": "dive",
+          "x1": 4809.6,
+          "x2": 4882.8,
+          "landX": 4922.8,
+          "landY": -155.8,
+          "peakY": -248.8
+        },
+        {
+          "id": "hermes-d04-dz-03",
+          "sourceId": "d04-dz-03",
+          "kind": "dive",
+          "x1": 6974.4,
+          "x2": 7094.4,
+          "landX": 7634.8,
+          "landY": 455,
+          "peakY": 362
+        }
+      ],
+      "unlocked": {
+        "F01": true,
+        "F02": false,
+        "F03": false,
+        "F04": false,
+        "F05": false,
+        "F06": false
+      }
+    }
+  }
+}
