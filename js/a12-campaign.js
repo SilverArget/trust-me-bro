@@ -1596,7 +1596,10 @@ applyD09LogicRulesToRoutes();
   }
   function tryScriptedMove(force=false){
     if((!force&&!keys.jump)||engine.parkour.state!=="normal"||edgeClimb)return false;
-    const center=player.x+player.w/2,z=(route.scriptedMoveZones||[]).find(v=>(v.kind==="vault"||v.kind==="slide")&&center>=v.x1&&center<=v.x2);
+    const center=player.x+player.w/2,zones=(route.scriptedMoveZones||[]).filter(v=>v.kind==="vault"||v.kind==="slide");
+    let z=zones.find(v=>center>=v.x1&&center<=v.x2);
+    // A01 recovery: a missed slide window must not become a dead pocket at the block face.
+    if(!z&&routeId==="A01"&&player.onGround)z=zones.find(v=>{if(v.kind!=="slide")return false;const o=route.obstacles.find(q=>q.id===v.obstacleId&&q.type==="slide"),right=player.x+player.w;return o&&right>=o.x-4&&right<=o.x+4});
     if(!z)return false;
     const o=route.obstacles.find(v=>v.id===z.obstacleId&&v.type===z.kind);
     if(!o)return false;
@@ -2812,10 +2815,12 @@ applyD09LogicRulesToRoutes();
     const sky=c.createLinearGradient(0,0,w,h);sky.addColorStop(0,'#9b9c91');sky.addColorStop(.53,'#626960');sky.addColorStop(1,'#232f30');c.fillStyle=sky;c.fillRect(0,0,w,h);
     // Thin smoke stays in the distant sky, above the gameplay band.
     for(let i=0;i<4;i++){c.strokeStyle='#353f4055';c.lineWidth=9+i*2;c.beginPath();c.moveTo(w*(.16+i*.24),h*.28);c.bezierCurveTo(w*(.08+i*.24),h*.2,w*(.22+i*.24),h*.12,w*(.13+i*.24),-10);c.stroke();}
-    for(let i=0;i<8;i++){const x=i*w/7;c.fillStyle=i%2?'#3a4947':'#50564a';c.beginPath();c.moveTo(x,h*.61);c.lineTo(x+15,h*.32);c.lineTo(x+65,h*.38);c.lineTo(x+90,h*.6);c.fill();c.fillStyle='#bbc3a3';c.fillRect(x+27,h*.4,18,7);}
-    c.fillStyle='#303a35';c.fillRect(0,h*.64,w,h*.36);
-    // Diagonal toppled freight silhouettes, not the regular dock corridor.
-    for(let x=-45;x<w;x+=227){c.save();c.translate(x,h*.59);c.rotate(-.28);c.fillStyle='#59645a';c.fillRect(0,-55,160,65);c.strokeStyle='#8d9380';c.lineWidth=3;c.strokeRect(0,-55,160,65);for(let q=12;q<150;q+=23){c.beginPath();c.moveTo(q,-51);c.lineTo(q,6);c.stroke();}c.restore();}
+    for(let i=0;i<8;i++){const x=i*w/7;c.fillStyle=i%2?'#3a4947':'#50564a';c.beginPath();c.moveTo(x,h*.58);c.lineTo(x+15,h*.32);c.lineTo(x+65,h*.38);c.lineTo(x+90,h*.58);c.fill();c.fillStyle='#bbc3a355';c.fillRect(x+27,h*.4,18,7);}
+    // A soft fog bank has no horizontal edge that can be mistaken for solid ground.
+    const fog=c.createLinearGradient(0,h*.5,0,h);fog.addColorStop(0,'#303a3500');fog.addColorStop(.55,'#303a3544');fog.addColorStop(1,'#17232388');c.fillStyle=fog;c.fillRect(0,h*.5,w,h*.5);
+    // Wreckage remains distant, low contrast and entirely above the play band.
+    c.fillStyle='#39464055';
+    for(let x=-30;x<w;x+=235){c.beginPath();c.moveTo(x,h*.55);c.lineTo(x+24,h*.43);c.lineTo(x+61,h*.48);c.lineTo(x+103,h*.39);c.lineTo(x+148,h*.55);c.closePath();c.fill();}
     const tile=document.createElement('canvas');tile.width=w;tile.height=h;tile.getContext('2d').drawImage(c.canvas,0,0);aftermathBackdropCache.set(key,tile);
   }
   function aftermathSurface(c,x,y,w,h,kind='platform') {
@@ -2834,26 +2839,46 @@ applyD09LogicRulesToRoutes();
   }
   function aftermathLights(c,time,enabled=true,gain=1) {
     if(!enabled)return;
-    const pulse=.5+.5*Math.sin(time*Math.PI); // 2 second period; surface overlay <= 4% alpha.
+    const pulse=.5+.5*Math.sin(time*Math.PI),grounds=routeSurfaces(route).filter(s=>s.kind==='ground');
     for(const d of aftermathDecor()){
-      c.fillStyle=`rgba(255,94,38,${.58+.32*pulse*gain})`;c.fillRect(d.x+64,GROUND-116,16,9);
-      c.fillStyle=`rgba(255,171,85,${.04*pulse*gain})`;c.fillRect(d.x,GROUND-3,150,28);
+      const g=grounds.find(s=>d.x+75>=s.x&&d.x+75<=s.x+s.w);if(!g)continue;
+      const x=Math.max(d.x,g.x),w=Math.max(0,Math.min(d.x+150,g.x+g.w)-x);if(!w)continue;
+      c.fillStyle=`rgba(255,94,38,${.58+.32*pulse*gain})`;c.fillRect(Math.min(x+w-16,d.x+64),g.y-116,16,9);
+      c.fillStyle=`rgba(255,171,85,${.04*pulse*gain})`;c.fillRect(x,g.y-3,w,Math.min(28,g.h+3));
     }
   }
+  function drawAftermathSupport(c,s,suspendIds) {
+    if(route.visualSupports?.some(v=>v.type==='stack-to-ground'&&v.id===s.id)){
+      const bodyH=Math.max(s.h,GROUND-s.y);c.fillStyle='#354039';c.fillRect(s.x,s.y,s.w,bodyH);
+      c.fillStyle='#59645a';for(let y=s.y+20;y<s.y+bodyH-8;y+=34)c.fillRect(s.x+5,y,Math.max(0,s.w-10),3);
+    }
+    if(!s.id||!suspendIds.has(s.id))return;
+    const m=c.getTransform(),topWorld=m.d?(-28-m.f)/m.d:s.y-260,cx=s.x+s.w/2,beamY=Math.min(s.y-42,topWorld),hookY=s.y-2;
+    c.save();c.strokeStyle='#202b27';c.lineWidth=8;c.beginPath();c.moveTo(cx-Math.max(32,s.w*.45),beamY);c.lineTo(cx+Math.max(32,s.w*.45),beamY);c.stroke();
+    c.strokeStyle='#657067';c.lineWidth=4;c.beginPath();c.moveTo(s.x+s.w*.22,beamY+2);c.lineTo(s.x+s.w*.22,hookY);c.moveTo(s.x+s.w*.78,beamY+2);c.lineTo(s.x+s.w*.78,hookY);c.stroke();
+    c.fillStyle='#d4b554';c.fillRect(cx-Math.max(27,s.w*.35),beamY-8,Math.max(54,s.w*.7),5);c.restore();
+  }
   function drawAftermathWorld(c,light=true,time=gameClock,gain=1) {
-    for(const d of aftermathDecor()){c.save();c.translate(d.x,d.y-12);c.rotate(-.19);c.fillStyle='#384941';c.fillRect(0,-84,146,77);c.strokeStyle='#86917b';c.lineWidth=3;c.strokeRect(0,-84,146,77);for(let q=16;q<138;q+=27){c.beginPath();c.moveTo(q,-80);c.lineTo(q,-13);c.stroke();}c.restore();}
-    aftermathSurface(c,0,GROUND,route.length,100,'ground');
-    for(const s of routeSurfaces(route).filter(v=>v.kind!=='ground')){
-      aftermathSurface(c,s.x,s.y,s.w,s.h);
+    const surfaces=routeSurfaces(route),staticSurfaces=surfaces.filter(s=>s.kind!=='collapse');
+    const supportSolids=surfaces.filter(s=>s.kind==='ground'||s.kind==='platform'||s.kind==='movingPlatform'||s.kind==='collapse'||s.parkour);
+    const suspendIds=drawableSuspendIds(route,supportSolids);
+    // Decorative wrecks sit behind and below collision tops; they never form a readable ledge.
+    for(const d of aftermathDecor()){c.fillStyle='#26332f66';c.beginPath();c.moveTo(d.x,GROUND+46);c.lineTo(d.x+38,GROUND+17);c.lineTo(d.x+83,GROUND+39);c.lineTo(d.x+146,GROUND+10);c.lineTo(d.x+146,GROUND+82);c.lineTo(d.x,GROUND+82);c.closePath();c.fill();}
+    for(const s of staticSurfaces)drawAftermathSupport(c,s,suspendIds);
+    for(const s of staticSurfaces){
+      aftermathSurface(c,s.x,s.y,s.w,s.h,s.kind==='ground'?'ground':'platform');
       if(s.parkour==='vault'){c.strokeStyle='#c6c9af';c.lineWidth=3;c.beginPath();c.moveTo(s.x+4,s.y+8);c.lineTo(s.x+s.w*.6,s.y+s.h*.6);c.lineTo(s.x+s.w-4,s.y+11);c.stroke();c.fillStyle='#262c29';c.fillRect(s.x+s.w*.2,s.y+s.h*.6,s.w*.6,8);}
       if(s.parkour==='slide'){c.fillStyle='#eff0cc';c.fillRect(s.x-5,s.y+s.h-6,s.w+10,6);c.fillStyle='#e9c04b';c.font='bold 17px system-ui';c.fillText('↓',s.x+s.w/2-7,s.y+s.h+17);}
     }
-    for(const o of route.obstacles){if(o.type==='ramp'){c.fillStyle='#73796b';c.beginPath();c.moveTo(o.x,GROUND);c.lineTo(o.x+o.w,GROUND-o.h);c.lineTo(o.x+o.w,GROUND);c.closePath();c.fill();c.strokeStyle='#edf1cd';c.lineWidth=6;c.stroke();c.strokeStyle='#333d35';c.lineWidth=3;c.beginPath();c.moveTo(o.x+o.w*.5,GROUND-o.h*.5+7);c.lineTo(o.x+o.w*.6,GROUND-10);c.stroke();}else if(o.type==='worker'){aftermathRescuer(c,o.x,GROUND);if(!workerDisabled&&workerClock>1.65){c.fillStyle='#ff6551';c.font='bold 22px system-ui';c.fillText('!',o.x-3,GROUND-97);}}}
+    drawDockWolfMarks(c,staticSurfaces.filter(s=>s.kind==='ground'));
+    for(const s of route.slopes||[]){if(s.visible===false)continue;c.fillStyle='#535f55';c.beginPath();c.moveTo(s.x1,s.y1);c.lineTo(s.x2,s.y2);c.lineTo(s.x2,s.y2+100);c.lineTo(s.x1,s.y1+100);c.closePath();c.fill();c.strokeStyle='#e1e7c9';c.lineWidth=5;c.beginPath();c.moveTo(s.x1,s.y1);c.lineTo(s.x2,s.y2);c.stroke();}
+    for(const o of route.obstacles){if(o.type==='ramp'){const baseY=o.baseY??GROUND;c.fillStyle='#73796b';c.beginPath();c.moveTo(o.x,baseY);c.lineTo(o.x+o.w,baseY-o.h);c.lineTo(o.x+o.w,baseY);c.closePath();c.fill();c.strokeStyle='#edf1cd';c.lineWidth=6;c.stroke();c.strokeStyle='#333d35';c.lineWidth=3;c.beginPath();c.moveTo(o.x+o.w*.5,baseY-o.h*.5+7);c.lineTo(o.x+o.w*.6,baseY-10);c.stroke();}else if(o.type==='worker'&&!o.offscreenWait){const s=presentationSurface(o.x,96),patrol=patrolMotionOnSurface(s,.8,36);if(patrol){aftermathRescuer(c,patrol.x,s.y);if(!workerDisabled&&workerClock>1.65){c.fillStyle='#ff6551';c.font='bold 22px system-ui';c.fillText('!',patrol.x-3,s.y-97);}}}}
     if(!debugHideMovingPlatforms)for(const p of movingPlatforms){if(p.type==='crane'){c.strokeStyle='#d5d7b9';c.lineWidth=4;c.beginPath();c.moveTo(p.x+p.w*.3-35,115);c.quadraticCurveTo(p.x+p.w*.3+20,190,p.x+p.w*.3,p.y);c.moveTo(p.x+p.w*.75+22,115);c.lineTo(p.x+p.w*.75,p.y);c.stroke();}aftermathSurface(c,p.x,p.y,p.w,p.h);c.fillStyle='#ecbd55';c.fillRect(p.x+7,p.y+7,Math.max(4,p.w*.24),6);c.fillStyle='#eff2d5';c.font='bold 18px system-ui';c.fillText(p.type==='pallet'?'↔':'!',p.x+p.w/2-7,p.y-9);}
     for(const p of collapsing){if(p.state==='ABSENT')continue;c.save();if(p.state==='CONTACT_WARNING')c.translate(Math.sin(p.timer*55)*3,0);const y=p.y+p.fallY;aftermathSurface(c,p.x,y,p.w,p.h);c.strokeStyle='#17251d';c.lineWidth=4;c.beginPath();c.moveTo(p.x+10,y+5);c.lineTo(p.x+p.w*.4,y+19);c.lineTo(p.x+p.w*.7,y+5);c.lineTo(p.x+p.w-10,y+20);c.stroke();c.fillStyle='#f3c54b';c.fillRect(p.x,y,p.w,4);c.restore();}
     for(const d of containerDoors){aftermathSurface(c,d.x,d.currentY,d.w,d.h);c.strokeStyle='#d5c8a0';c.lineWidth=6;c.beginPath();c.moveTo(d.x-8,d.currentY+d.h);c.lineTo(d.x-3,d.currentY-12);c.lineTo(d.x+d.w+9,d.currentY-5);c.stroke();c.fillStyle=d.state==='OPEN'?'#63f2a5':d.state==='PREPARING'?'#ffd34d':'#ff5b55';c.beginPath();c.arc(d.x+d.w/2,d.currentY-26,9,0,7);c.fill();}
+    drawHermesShoes(c);
     for(const b of barrels){c.fillStyle='#343c32';c.strokeStyle='#c6bd94';c.lineWidth=3;c.beginPath();c.moveTo(b.x+5,b.y);c.lineTo(b.x+27,b.y+4);c.lineTo(b.x+24,b.y+27);c.lineTo(b.x,b.y+22);c.closePath();c.fill();c.stroke();c.beginPath();c.moveTo(b.x+3,b.y+9);c.lineTo(b.x+23,b.y+17);c.stroke();}
-    if(campaignChief?.active)aftermathRescuer(c,campaignChief.x+14,campaignChief.y+48,true);
+    if(campaignChief?.active&&campaignChief.entryPhase!=='result')aftermathRescuer(c,campaignChief.x+14,campaignChief.y+48,true);
     { const finishDoor=finishDoorPlacement(); drawFinishDoor(c, finishDoor.x, finishDoor.y); }
     aftermathLights(c,time,light,gain);
     for(const coin of route.coins)if(!run?.collectedCoinIds.includes(coin.id))drawCoin(c,coin);
