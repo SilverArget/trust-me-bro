@@ -95,7 +95,7 @@ async function jump(page, touch) {
   }
 }
 
-async function drive(page, id, {touch=false, stopAfter, omitDives=[]} = {}) {
+async function drive(page, id, {touch=false, stopAfter, omitDives=[], omitTransitions=[]} = {}) {
   const fired = new Set(), pending = new Map(), lastPress = new Map(), trace = [], tr = transitions[id], started = Date.now();
   const chiefSamples = [], movementSamples = [];
   const visibility = {started:false,samples:[]}, routeTrace=[];
@@ -104,6 +104,7 @@ async function drive(page, id, {touch=false, stopAfter, omitDives=[]} = {}) {
   const d05d06 = /^(?:[FMA]0[1-6])$/.test(id)||/^D(0[5-9]|1\d)$/.test(id);
   const targetCaptures = new Set();
   let diveSeen = false, catchSeen = false, deaths = 0, retries = 0, end, stuckSince = null, c07Y = null, previousSample = null, lastGroundAt = -Infinity, chainClimbSeconds = 0, chiefMinGap = Infinity, chiefCatches = 0, manualInputs = 0, evidenceCaptured = false;
+  let d11CaptureAt = -Infinity, d11Recovery = null;
   while (Date.now() - started < 115000) {
     const {s,layout} = await page.evaluate(() => ({s:__TMB_A12__.getState(),layout:window.__tmb?.layout||null}));
     const wallNow=Date.now();
@@ -139,6 +140,16 @@ async function drive(page, id, {touch=false, stopAfter, omitDives=[]} = {}) {
     }
     const p = s.player, right = p.x + s.hitbox.w, center = p.x + s.hitbox.w / 2;
     const centerY = p.y + s.hitbox.h / 2;
+    if (d11Recovery && !d11Recovery.escaped && p.x > d11Recovery.x + 20) {
+      Object.assign(d11Recovery, {escaped:true,escapeSeconds:+(s.gameClock-d11Recovery.pressedAt).toFixed(3),afterX:+p.x.toFixed(2),afterY:+p.y.toFixed(2),afterState:s.parkour.state});
+    }
+    if (id === 'D11' && process.env.TMB_D11_EVIDENCE_DIR && p.x >= 2200 && p.x <= 2750 && s.gameClock - d11CaptureAt >= .25) {
+      const dir = process.env.TMB_D11_EVIDENCE_DIR, prefix = process.env.TMB_D11_EVIDENCE_PREFIX || 'd11-stairs-915x412';
+      fs.mkdirSync(dir, {recursive:true});
+      const existing = fs.readdirSync(dir).filter(name => name.startsWith(prefix + '-') && name.endsWith('.png')).length;
+      await page.screenshot({path:path.join(dir, `${prefix}-${String(existing + 1).padStart(2,'0')}.png`)});
+      d11CaptureAt = s.gameClock;
+    }
     routeTrace.push({x:center,y:centerY,onGround:p.onGround,state:s.parkour.state});
     if (process.env.TMB_MEASURE_HARD_TRACE && (!movementSamples.length || s.gameClock-movementSamples.at(-1).t >= 1/60-.003)) {
       const camX = await page.evaluate(() => window.__tmb?.cam ?? null);
@@ -236,14 +247,14 @@ async function drive(page, id, {touch=false, stopAfter, omitDives=[]} = {}) {
       const fallbackCatch = (/^[FMA]0[1-6]$/.test(id) && -t.D > 52 && t.gap <= 96)
         || (/^M0[12]$/.test(id) && -t.D > 0 && -t.D <= 100 && t.gap <= 96)
         || (/^M0[34]$/.test(id) && -t.D > 52 && t.gap <= 96);
-      if (t.mech !== 'tutunma' && !fallbackCatch) continue;
+      if ((t.mech !== 'tutunma' && !fallbackCatch) || omitTransitions.includes(t.i)) continue;
       const key = `${t.mech}-${t.i}`;
       const braced = p.onGround && !s.edgeClimb && s.parkour.state !== 'climb' && right >= t.B.x0 - 8 && right <= t.B.x0;
       if (braced && !pending.has(key) && (!lastPress.has(key) || s.gameClock-lastPress.get(key)>=.1)) { target=[key,{...t,mech:'tutunma'}]; break; }
     }
     if (!target) for (const t of tr) {
       const key = `${t.mech}-${t.i}`;
-      if (fired.has(key)) continue;
+      if (fired.has(key) || omitTransitions.includes(t.i)) continue;
       const normalLead = /^[FMA]0[1-6]$/.test(id) ? 12 : 25;
       if (t.mech === 'normal' && !pending.has(key) && coyote && right >= t.A.x1 - normalLead && right <= t.A.x1 - 2) target = [key, t];
       if (t.mech === 'high' && !pending.has(key) && coyote && center >= t.x1 && center <= t.x2 && (!lastPress.has(key) || s.gameClock-lastPress.get(key)>=.1)) target = [key, t];
@@ -330,7 +341,16 @@ async function drive(page, id, {touch=false, stopAfter, omitDives=[]} = {}) {
     }
     if (!target && p.onGround && p.vx <= 1) {
       stuckSince ??= s.gameClock;
-      if (s.gameClock - stuckSince >= 1.5) {
+      if (id === 'D11' && process.env.TMB_D11_RECOVER_STUCK && !d11Recovery && p.x >= 2390 && p.x <= 2440 && s.gameClock - stuckSince >= .15) {
+        d11Recovery = {pressedAt:+s.gameClock.toFixed(3),x:+p.x.toFixed(2),y:+p.y.toFixed(2),state:s.parkour.state,synthetic:false};
+        trace.push(`[DBG-B2] ${s.gameClock.toFixed(2)} ${p.x.toFixed(2)},${p.y.toFixed(2)} ${s.parkour.state} real-key recovery ArrowUp`);
+        await jump(page, false);
+        stuckSince = null;
+      }
+      if (d11Recovery && s.gameClock - d11Recovery.pressedAt >= 1) {
+        Object.assign(d11Recovery, {escaped:p.x > d11Recovery.x + 20,afterX:+p.x.toFixed(2),afterY:+p.y.toFixed(2),afterState:s.parkour.state,observedSeconds:+(s.gameClock-d11Recovery.pressedAt).toFixed(3)});
+        break;
+      } else if (stuckSince !== null && s.gameClock - stuckSince >= 1.5) {
         trace.push(`[DBG-B2] ${s.gameClock.toFixed(2)} ${p.x.toFixed(2)} ${s.parkour.state} fail stuck-no-target`);
         throw new Error(`${id} stuck without target at x=${p.x.toFixed(2)}\n${trace.slice(-15).join('\n')}`);
       }
@@ -340,13 +360,15 @@ async function drive(page, id, {touch=false, stopAfter, omitDives=[]} = {}) {
   }
   await page.keyboard.up('ArrowRight');
   if (process.env.TMB_MEASURE_HARD_TRACE) fs.writeFileSync(path.join(__dirname,`frozen-hard-generated`,`${id}-60hz-trace.json`),JSON.stringify(movementSamples,null,2)+'\n');
-  return {end, deaths, retries, elapsed:(Date.now()-started)/1000, diveSeen, catchSeen, trace, c07Y, chiefSamples, chiefMinGap, chiefCatches, manualInputs, visibility, routeTrace, finishCaptureCount};
+  if (d11Recovery) Object.assign(d11Recovery, {finished:!!end.result || end.player.x + end.hitbox.w >= end.route.finishX, finishX:+end.player.x.toFixed(2), deaths, catches:chiefCatches});
+  return {end, deaths, retries, elapsed:(Date.now()-started)/1000, diveSeen, catchSeen, trace, c07Y, chiefSamples, chiefMinGap, chiefCatches, manualInputs, visibility, routeTrace, finishCaptureCount, d11Recovery};
 }
 
 for (const id of routeIds) test(`O-1 B-5 ${id} ideal keyboard route`, async ({page}) => {
   test.setTimeout(120000); const evidenceViewport=process.env.TMB_EVIDENCE_VIEWPORT?.split('x').map(Number); await boot(page,id,evidenceViewport?.length===2&&evidenceViewport.every(Number.isFinite)?{width:evidenceViewport[0],height:evidenceViewport[1]}:undefined);
   if (process.env.TMB_INPUT_TRACE) await page.evaluate(() => { window.__tmbInputTrace = []; });
-  const r=await drive(page,id);
+  const omitTransitions=(process.env.TMB_D11_OMIT_TRANSITIONS||'').split(',').filter(value=>value.trim()).map(Number).filter(Number.isFinite);
+  const r=await drive(page,id,{omitTransitions});
   if (process.env.TMB_INPUT_TRACE) {
     const trace = await page.evaluate(() => window.__tmbInputTrace || []);
     const target = process.env.TMB_INPUT_TRACE.replace(/\.json$/i, `-${id}.json`);
@@ -374,7 +396,7 @@ for (const id of routeIds) test(`O-1 B-5 ${id} ideal keyboard route`, async ({pa
     console.log(`VIS-${id} | samples=${v.length} playerInFrame=${playerPct.toFixed(1)}% playerForward=${playerForwardPct.toFixed(1)}% playerXp99=${playerXp99.toFixed(1)} chiefInFrame=${chiefPct.toFixed(1)}% chiefX=${chiefX.toFixed(1)}% chiefY=${chiefY.toFixed(1)}% gapPx med=${median.toFixed(1)} p90=${gapP90.toFixed(1)} firstOut=${firstOut?JSON.stringify({t:+firstOut.t.toFixed(2),cx:Math.round(firstOut.cx),cy:Math.round(firstOut.cy)}):'null'} firstPlayerOut=${firstPlayerOut?JSON.stringify({t:+firstPlayerOut.t.toFixed(2),px:Math.round(firstPlayerOut.px),py:Math.round(firstPlayerOut.py),result:firstPlayerOut.result}):'null'}`);
     visMetrics={samples:v.length,playerPct,playerForwardPct,playerXp99,chiefPct,median,gapP90,maxGap:maxGapSample.gap,maxGapT:maxGapSample.t,maxVisibleGap:maxVisibleGapSample.gap,maxVisibleGapT:maxVisibleGapSample.t};
   }
-  if(process.env.TMB_ACCEPTANCE_JSONL){fs.mkdirSync(path.dirname(process.env.TMB_ACCEPTANCE_JSONL),{recursive:true});fs.appendFileSync(process.env.TMB_ACCEPTANCE_JSONL,JSON.stringify({route:id,viewport:process.env.TMB_EVIDENCE_VIEWPORT||'1280x720',finish:pass,deaths:r.deaths,catches:r.chiefCatches,collected,total:expected,playerInFramePct:visMetrics?.playerPct??null,playerForwardPct:visMetrics?.playerForwardPct??null,playerScreenXp99:visMetrics?.playerXp99??null,chiefInFramePct:visMetrics?.chiefPct??null,chiefDistanceMedian:visMetrics?.median??null,chiefDistanceP90:visMetrics?.gapP90??null,chiefDistanceMax:visMetrics?.maxGap??null,chiefDistanceMaxT:visMetrics?.maxGapT??null,chiefDistanceMaxVisible:visMetrics?.maxVisibleGap??null,chiefDistanceMaxVisibleT:visMetrics?.maxVisibleGapT??null})+'\n')}
+  if(process.env.TMB_ACCEPTANCE_JSONL){fs.mkdirSync(path.dirname(process.env.TMB_ACCEPTANCE_JSONL),{recursive:true});fs.appendFileSync(process.env.TMB_ACCEPTANCE_JSONL,JSON.stringify({route:id,viewport:process.env.TMB_EVIDENCE_VIEWPORT||'1280x720',finish:pass,deaths:r.deaths,catches:r.chiefCatches,collected,total:expected,input:'real keyboard',omitTransitions,recovery:r.d11Recovery,playerInFramePct:visMetrics?.playerPct??null,playerForwardPct:visMetrics?.playerForwardPct??null,playerScreenXp99:visMetrics?.playerXp99??null,chiefInFramePct:visMetrics?.chiefPct??null,chiefDistanceMedian:visMetrics?.median??null,chiefDistanceP90:visMetrics?.gapP90??null,chiefDistanceMax:visMetrics?.maxGap??null,chiefDistanceMaxT:visMetrics?.maxGapT??null,chiefDistanceMaxVisible:visMetrics?.maxVisibleGap??null,chiefDistanceMaxVisibleT:visMetrics?.maxVisibleGapT??null})+'\n')}
   if(process.env.TMB_FINISH_EVIDENCE_DIR){const size=process.env.TMB_EVIDENCE_VIEWPORT||'1280x720';fs.writeFileSync(path.join(process.env.TMB_FINISH_EVIDENCE_DIR,`finish-${size}.json`),JSON.stringify({route:id,fromRouteStart:true,finish:pass,deaths:r.deaths,catches:r.chiefCatches,collected,total:expected,frames:r.finishCaptureCount,state:r.end},null,2)+'\n')}
   if(visMetrics){
     expect(visMetrics.playerPct).toBe(100); expect(visMetrics.playerForwardPct).toBeGreaterThanOrEqual(99); expect(visMetrics.chiefPct).toBeGreaterThanOrEqual(90); expect(visMetrics.gapP90).toBeLessThanOrEqual(400);
