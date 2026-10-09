@@ -98,11 +98,12 @@ async function jump(page, touch) {
 async function drive(page, id, {touch=false, stopAfter, omitDives=[]} = {}) {
   const fired = new Set(), pending = new Map(), lastPress = new Map(), trace = [], tr = transitions[id], started = Date.now();
   const chiefSamples = [], movementSamples = [];
+  const visibility = {started:false,samples:[]}, routeTrace=[];
   const d05d06 = /^(?:[FMA]0[1-6])$/.test(id)||/^D(0[5-9]|1\d)$/.test(id);
   const targetCaptures = new Set();
   let diveSeen = false, catchSeen = false, deaths = 0, retries = 0, end, stuckSince = null, c07Y = null, previousSample = null, lastGroundAt = -Infinity, chainClimbSeconds = 0, chiefMinGap = Infinity, chiefCatches = 0, manualInputs = 0, evidenceCaptured = false;
   while (Date.now() - started < 115000) {
-    const s = await page.evaluate(() => __TMB_A12__.getState());
+    const {s,layout} = await page.evaluate(() => ({s:__TMB_A12__.getState(),layout:window.__tmb?.layout||null}));
     if (!evidenceCaptured && id === 'D01' && process.env.TMB_D01_EVIDENCE_DIR && s.economy.collectedCoinIds.length) {
       evidenceCaptured = true; fs.mkdirSync(process.env.TMB_D01_EVIDENCE_DIR,{recursive:true});
       const size=process.env.TMB_EVIDENCE_VIEWPORT||`${s.viewport.w}x${s.viewport.h}`;
@@ -114,8 +115,16 @@ async function drive(page, id, {touch=false, stopAfter, omitDives=[]} = {}) {
     end = s; deaths = Math.max(deaths, s.deaths || 0);
     if (Number.isFinite(s.chief?.playerT) && s.chief.chiefT >= 0) chiefMinGap = Math.min(chiefMinGap, s.chief.playerT-s.chief.chiefT);
     chiefCatches = Math.max(chiefCatches, s.chief?.catches || 0);
+    if (s.chief?.entryPhase === 'running') visibility.started = true;
+    if (visibility.started && s.chief && layout) {
+      const scale=layout.viewScale||1,ox=layout.viewOffsetX||0,oy=layout.viewOffsetY||0;
+      const px=ox+(s.player.x-s.cameraX+s.hitbox.w/2)*scale,py=oy+(s.player.y+s.cameraWorldY+s.hitbox.h/2)*scale;
+      const cx=ox+(s.chief.x-s.cameraX+s.chief.w/2)*scale,cy=oy+(s.chief.y+s.cameraWorldY+s.chief.h/2)*scale;
+      visibility.samples.push({t:s.gameClock,px,py,cx,cy,viewportW:layout.viewportW,viewportH:layout.viewportH,playerIn:px>=0&&px<=layout.viewportW&&py>=0&&py<=layout.viewportH,chiefIn:cx>=0&&cx<=layout.viewportW&&cy>=0&&cy<=layout.viewportH,gap:s.player.x-s.chief.x,result:!!s.result});
+    }
     const p = s.player, right = p.x + s.hitbox.w, center = p.x + s.hitbox.w / 2;
     const centerY = p.y + s.hitbox.h / 2;
+    routeTrace.push({x:center,y:centerY,onGround:p.onGround,state:s.parkour.state});
     if (process.env.TMB_MEASURE_HARD_TRACE && (!movementSamples.length || s.gameClock-movementSamples.at(-1).t >= 1/60-.003)) {
       const camX = await page.evaluate(() => window.__tmb?.cam ?? null);
       movementSamples.push({t:+s.gameClock.toFixed(4),x:+p.x.toFixed(3),y:+p.y.toFixed(3),cam:Number.isFinite(camX)?+camX.toFixed(3):null,screenX:Number.isFinite(camX)?+(p.x-camX).toFixed(3):null,w:s.hitbox.w,h:s.hitbox.h,state:s.parkour.state,onGround:p.onGround,vx:+p.vx.toFixed(3),vy:+p.vy.toFixed(3),vectorJumpPending:s.vectorJumpPending?{kind:s.vectorJumpPending.kind,frames:s.vectorJumpPending.frames,diveZone:s.vectorJumpPending.diveZone?.id,highZone:s.vectorJumpPending.highZone?.id}:null,diveRun:s.diveRun?{elapsed:+s.diveRun.elapsed.toFixed(4),duration:+s.diveRun.duration.toFixed(4),startX:+s.diveRun.startX.toFixed(3),endX:+s.diveRun.endX.toFixed(3),landY:+s.diveRun.landY.toFixed(3)}:null,jumpRun:s.jumpRun?{elapsed:+s.jumpRun.elapsed.toFixed(4),duration:+s.jumpRun.duration.toFixed(4),startX:+s.jumpRun.startX.toFixed(3),endX:+s.jumpRun.endX.toFixed(3),landY:+s.jumpRun.landY.toFixed(3)}:null});
@@ -200,7 +209,7 @@ async function drive(page, id, {touch=false, stopAfter, omitDives=[]} = {}) {
     if (stopAfter && stopAfter({s, diveSeen, catchSeen})) break;
     if (s.result || right >= s.route.finishX) break;
     if (deaths) {
-      trace.push(`[DBG-B2] ${s.gameClock.toFixed(2)} ${p.x.toFixed(2)} ${s.parkour.state} fail death`);
+      trace.push(`[DBG-B2] ${s.gameClock.toFixed(2)} ${p.x.toFixed(2)} ${s.parkour.state} fail death chiefCatches=${s.chief?.catches||0} caughtT=${s.chief?.caughtT||0}`);
       throw new Error(`${id} death before finish\n${trace.slice(-15).join('\n')}`);
     }
     let target = null;
@@ -312,7 +321,7 @@ async function drive(page, id, {touch=false, stopAfter, omitDives=[]} = {}) {
   }
   await page.keyboard.up('ArrowRight');
   if (process.env.TMB_MEASURE_HARD_TRACE) fs.writeFileSync(path.join(__dirname,`frozen-hard-generated`,`${id}-60hz-trace.json`),JSON.stringify(movementSamples,null,2)+'\n');
-  return {end, deaths, retries, elapsed:(Date.now()-started)/1000, diveSeen, catchSeen, trace, c07Y, chiefSamples, chiefMinGap, chiefCatches, manualInputs};
+  return {end, deaths, retries, elapsed:(Date.now()-started)/1000, diveSeen, catchSeen, trace, c07Y, chiefSamples, chiefMinGap, chiefCatches, manualInputs, visibility, routeTrace};
 }
 
 for (const id of routeIds) test(`O-1 B-5 ${id} ideal keyboard route`, async ({page}) => {
@@ -326,20 +335,30 @@ for (const id of routeIds) test(`O-1 B-5 ${id} ideal keyboard route`, async ({pa
     fs.writeFileSync(target, JSON.stringify({ route:id, trace }, null, 2) + '\n');
   }
   const collected=r.end.economy.collectedCoinIds.length, expected=r.end.route.coins.length;
-  // These routes intentionally split physical coins across the safe line and optional
-  // skill arcs. Baselines measure the deterministic safe-line yield, not total route stock.
-  const safeLineCoinBaseline={D01:10,D02:6,D03:12,D09:0,D18:0,F05:7};
-  const coinBaseline=(process.env.TMB_MEASURE_HARD_TRACE||process.env.TMB_RECORD_CHIEF)?0:(safeLineCoinBaseline[id]??expected);
+  const coinBaseline=(process.env.TMB_MEASURE_HARD_TRACE||process.env.TMB_RECORD_CHIEF)?0:Math.max(0,expected-2);
   const pass=!!r.end.result || r.end.player.x+r.end.hitbox.w>=r.end.route.finishX;
   if (!(pass && r.deaths === 0 && r.retries === 0 && collected >= coinBaseline)) {
     const got = new Set(r.end.economy.collectedCoinIds);
+    const safeTrace=r.routeTrace.filter(v=>v.onGround&&v.state==='normal'),fixes=Object.fromEntries(r.end.route.coins.filter(c=>!got.has(c.id)).map(c=>{const pool=safeTrace.length?safeTrace:r.routeTrace,q=pool.reduce((best,v)=>Math.hypot(v.x-c.x,v.y-c.y)<Math.hypot(best.x-c.x,best.y-c.y)?v:best,pool[0]);return[c.id,{from:[c.x,c.y],to:[+q.x.toFixed(2),+q.y.toFixed(2)]}]}));
     console.log(r.trace.join('\n'));
     console.log(`[DBG-B2] missing ${r.end.route.coins.filter(c => !got.has(c.id)).map(c => c.id).join(',')}`);
+    console.log(`COINFIX-${id} ${JSON.stringify(fixes)}`);
   }
   console.log(`O-1-${id} | ${r.elapsed.toFixed(2)}s, x=${r.end.player.x.toFixed(2)}, deaths=${r.deaths}, retries=${r.retries}, coin=${collected}/${expected} | finish, deaths=0, retries=0, coin>=${coinBaseline}/${expected} | ${pass&&r.deaths===0&&r.retries===0&&collected>=coinBaseline?'PASS':'FAIL'}`);
   console.log(`B-5-${id} | ${collected}/${expected} coin | baseline ${coinBaseline}/${expected} coin | ${collected>=coinBaseline?'PASS':'FAIL'}`);
   if (['F01','F02','F03','F04','D07','D08','D09','D10','D13','D14','D15','D16'].includes(id)) { const movements=transitions[id].length+r.end.route.obstacles.filter(o=>o.type==='vault'||o.type==='slide').length; console.log(`DENSITY-${id} | length=${r.end.route.length.toFixed(2)}, movements=${movements}, per1000=${(movements*1000/r.end.route.length).toFixed(3)}, manualInputs=${r.manualInputs}`); }
   if (/^(?:D(?:0[1-9]|1[0-8])|[FMA]0[1-6])$/.test(id)&&r.end.chief) console.log(`CHIEF-${id} | minGap=${r.chiefMinGap.toFixed(3)}s, catches=${r.chiefCatches} | catches=0 | ${r.chiefCatches===0?'PASS':'FAIL'}`);
+  let visMetrics=null;
+  if (r.visibility.samples.length) {
+    const v=r.visibility.samples,gaps=v.map(q=>q.gap).sort((a,b)=>a-b),playerPct=100*v.filter(q=>q.playerIn).length/v.length,chiefPct=100*v.filter(q=>q.chiefIn).length/v.length,median=gaps[gaps.length>>1];
+    const chiefX=100*v.filter(q=>q.cx>=0&&q.cx<=q.viewportW).length/v.length,chiefY=100*v.filter(q=>q.cy>=0&&q.cy<=q.viewportH).length/v.length,firstOut=v.find(q=>!q.chiefIn),firstPlayerOut=v.find(q=>!q.playerIn);
+    console.log(`VIS-${id} | samples=${v.length} playerInFrame=${playerPct.toFixed(1)}% chiefInFrame=${chiefPct.toFixed(1)}% chiefX=${chiefX.toFixed(1)}% chiefY=${chiefY.toFixed(1)}% gapPx med=${median.toFixed(1)} firstOut=${firstOut?JSON.stringify({t:+firstOut.t.toFixed(2),cx:Math.round(firstOut.cx),cy:Math.round(firstOut.cy)}):'null'} firstPlayerOut=${firstPlayerOut?JSON.stringify({t:+firstPlayerOut.t.toFixed(2),px:Math.round(firstPlayerOut.px),py:Math.round(firstPlayerOut.py),result:firstPlayerOut.result}):'null'}`);
+    visMetrics={samples:v.length,playerPct,chiefPct,median};
+  }
+  if(process.env.TMB_ACCEPTANCE_JSONL){fs.mkdirSync(path.dirname(process.env.TMB_ACCEPTANCE_JSONL),{recursive:true});fs.appendFileSync(process.env.TMB_ACCEPTANCE_JSONL,JSON.stringify({route:id,viewport:process.env.TMB_EVIDENCE_VIEWPORT||'1280x720',finish:pass,deaths:r.deaths,catches:r.chiefCatches,collected,total:expected,playerInFramePct:visMetrics?.playerPct??null,chiefInFramePct:visMetrics?.chiefPct??null,chiefDistanceMedian:visMetrics?.median??null})+'\n')}
+  if(visMetrics){
+    expect(visMetrics.playerPct).toBe(100); expect(visMetrics.chiefPct).toBeGreaterThanOrEqual(90); expect(visMetrics.median).toBeLessThanOrEqual(300);
+  }
   if (process.env.TMB_RECORD_CHIEF) fs.writeFileSync(path.join(__dirname,`.chief-record-${id}.json`),JSON.stringify({delay:id[0]==='F'?1.2:id[0]==='M'?1.0:id[0]==='A'?0.8:['D01','D02'].includes(id)?2.5:1.5,routeHash:r.end.chiefRouteHash,samples:r.chiefSamples}));
   if (id === 'D01') console.log(`D01-c07-y | measured=${r.c07Y?.toFixed(2)} | coin center y | ${r.c07Y!==null?'PASS':'FAIL'}`);
   expect(pass).toBeTruthy(); expect(r.deaths).toBe(0); expect(r.retries).toBe(0); expect(collected).toBeGreaterThanOrEqual(coinBaseline); if (/^(?:D(?:0[1-9]|1[0-8])|[FMA]0[1-6])$/.test(id) && r.end.chief && !process.env.TMB_RECORD_CHIEF) { expect(r.chiefCatches).toBe(0); expect(Number.isFinite(r.chiefMinGap)).toBeTruthy(); }

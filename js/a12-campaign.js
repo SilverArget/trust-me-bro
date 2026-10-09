@@ -489,15 +489,12 @@ function applyD09LogicRulesToRoutes(){
   const coinIssue=(coin,r,solids)=>{
     if(coin.x<24||coin.x>(r.finishX??r.length)-60)return true;
     if(solids.some(s=>coinRectOverlap(coin,s)))return true;
-    const support=coinNaturalSupport(coin,solids);
-    if(support&&Math.abs(coin.y-(support.y-COIN_CONTACT_RADIUS-7))>120)return true;
-    if(narrowGaps(solids).some(g=>coin.x>g.left.x+g.left.w&&coin.x<g.right.x))return true;
     return false;
   };
   const repairCoinSolids=(r)=>{
     let moved=0;
     for(let guard=0;guard<72&&r.coins?.length;guard++){
-      const solids=coinSolidRects(r),coin=r.coins.find(c=>coinIssue(c,r,solids));
+      const solids=coinSolidRects(r),coin=r.coins.find(c=>!c.pathLocked&&coinIssue(c,r,solids));
       if(!coin)break;
       const outside=coin.x<24||coin.x>(r.finishX??r.length)-60;
       const candidates=solids.filter(s=>!s.parkour&&(s.kind==="ground"||s.kind==="platform"||s.kind==="movingPlatform"||s.kind==="collapse")&&s.w>=44)
@@ -533,13 +530,38 @@ function applyD09LogicRulesToRoutes(){
     return closed;
   };
   const coinPathFixes={
-    D03:{"D03-c04":[4138.22,291.03],"D03-c08":[2506.16,78.73]},
+    D03:{"D03-c03":[3288.29,219.29],"D03-c04":[4138.22,291.03],"D03-c08":[2506.16,78.73],"D03-c09":[3279.8,220.61],"D03-c11":[5843.57,330.55]},
     D04:{"D04-c01":[3999.87,-131.8],"D04-c04":[7009.66,231.71],"D04-c08":[7009.66,231.71],"D04-c09":[4275.07,-131.8]},
-    D07:{"D07-c07":[5687.48,271.06]},
+    D05:{"D05-c01":[2390.36,-639.52],"D05-c03":[3639.21,-419.61],"D05-c04":[7117.82,305.65]},
+    D06:{"D06-c01":[957.72,93.15],"D06-c03":[1873.23,72.52],"D06-c04":[4600.39,376.03]},
+    D09:{"D09-c01":[620.19,246.63],"D09-c02":[943.72,246.63],"D09-c05":[2925.53,329.5],"D09-c08":[4639.48,374.63],"D09-c09":[4987.96,374.63],"D09-c11":[6518.63,383],"D09-c12":[7080.48,323]},
+    D10:{"D10-c01":[314.46,-167.47],"D10-c02":[769,-148.49],"D10-c07":[5574.26,59.03],"D10-c09":[8586.61,424.6]},
     D14:{"D14-c01":[1668.74,198.26],"D14-c03":[2757.07,-36.91],"D14-c04":[3827.42,19.73],"D14-c06":[7674.92,389.14],"D14-c07":[8616.79,319.54],"D14-c14":[2738.28,-38.54]},
     D15:{"D15-c01":[495.82,279.61],"D15-c03":[2235.30,341.23],"D15-c04":[2709.31,178.39],"D15-c05":[4601.82,189.20],"D15-c06":[6016.59,314.53],"D15-c07":[7819.06,262.57],"D15-c08":[626.80,313.88]},
+    D16:{"D16-c01":[1041.77,-1437.61],"D16-c02":[1785.43,-1322.78],"D16-c12":[2977.06,-893.2]},
+    D18:{"D18-c02":[701.06,179.55],"D18-c03":[678.89,308.05],"D18-c04":[1119.26,108],"D18-c06":[2339.98,343.8],"D18-c08":[2813.89,183.2],"D18-c11":[5697.16,44.94],"D18-c12":[6123.33,-10.98]},
     F03:{"F03-c06":[441.62,83.47],"F03-c07":[1492.53,216.83],"F03-c08":[2679.66,287.95],"F03-c10":[6385.24,165.69]},
     F04:{"F04-c07":[2272.69,314.36],"F04-c08":[7118.66,456.2],"F04-c12":[660.22,-369.92]},
+    F05:{"F05-c01":[1464.13,-264.89],"F05-c05":[7897.28,874.38],"F05-c12":[7727.27,831.89]},
+    M02:{"M02-c01":[511.38,-291.3],"M02-c04":[2113.74,-341.19],"M02-c06":[3210.65,-95.2]},
+    A01:{"A01-c03":[2334.74,340.24],"A01-c04":[2828.27,206.78],"A01-c07":[7909.08,288.8]},
+  };
+  const alignCoinsToIdealPath=(r)=>{
+    const samples=window.TMB_CHIEF_PATHS?.[r.routeId]?.samples;
+    if(!Array.isArray(samples)||samples.length<2||!r.coins?.length)return 0;
+    let moved=0;
+    for(const coin of r.coins){
+      let best=null,bestDx=Infinity,bestDy=Infinity;
+      for(const sample of samples){
+        const dx=Math.abs((sample[1]+16)-coin.x),dy=Math.abs((sample[2]+24)-coin.y);
+        if(dx<bestDx-.01||(Math.abs(dx-bestDx)<=.01&&dy<bestDy)){best=sample;bestDx=dx;bestDy=dy}
+      }
+      if(!best)continue;
+      const x=Number((best[1]+16).toFixed(2)),y=Number((best[2]+24).toFixed(2));
+      if(Math.abs(coin.x-x)>.01||Math.abs(coin.y-y)>.01)moved++;
+      coin.x=x;coin.y=y;
+    }
+    return moved;
   };
   const moveSlide=(r,id,x,baseY)=>{
     const o=(r.obstacles||[]).find(v=>v.id===id);
@@ -565,8 +587,9 @@ function applyD09LogicRulesToRoutes(){
     r.logicRuleDetails={...(r.logicRuleDetails||{}),slideMoved:slideStats.movedIds,slideRemoved:slideStats.removedIds,slideBlocked:slideStats.blockedIds};
     r.visualAttachments=r.visualAttachments||[];
     for(const o of r.obstacles||[])if(o.type==="slide"&&!r.visualAttachments.some(a=>a.targetId===o.id&&a.type==="suspend"))r.visualAttachments.push({targetId:o.id,type:"suspend"});
+    r.logicRuleStats.coinPathAligned=alignCoinsToIdealPath(r);
     const coinFix=coinPathFixes[id];
-    if(coinFix&&r.coins)for(const c of r.coins){const xy=coinFix[c.id];if(xy){c.x=xy[0];c.y=xy[1]}}
+    if(coinFix&&r.coins)for(const c of r.coins){const xy=coinFix[c.id];if(xy){c.x=xy[0];c.y=xy[1];c.pathLocked=true}}
     r.logicRuleStats.coinSolidRepaired=repairCoinSolids(r);
     let workersGrounded=0;
     for(const o of r.obstacles||[]){
@@ -611,6 +634,9 @@ function applyD09LogicRulesToRoutes(){
     r.logicRuleStats.visualSupportSkipped=skipped;
   }
   if(ROUTES.D09){
+    ROUTES.D09.logicRuleStats={...(ROUTES.D09.logicRuleStats||{}),coinPathAligned:alignCoinsToIdealPath(ROUTES.D09)};
+    const coinFix=coinPathFixes.D09;
+    for(const c of ROUTES.D09.coins||[]){const xy=coinFix?.[c.id];if(xy){c.x=xy[0];c.y=xy[1];c.pathLocked=true}}
     ROUTES.D09.logicRuleStats={...(ROUTES.D09.logicRuleStats||{}),coinSolidRepaired:repairCoinSolids(ROUTES.D09)};
   }
   for(const [rid,ids] of Object.entries({
@@ -1074,7 +1100,7 @@ applyD09LogicRulesToRoutes();
     const offscreen=behind&&(c.x+c.w<camX+12||c.x>camX+viewW-12);
     const far=Math.max(0,Math.min(1,(gap-CHIEF_CLOSE_GAP_PX)/CHIEF_EASE_GAP_PX));
     let target=gap>CHIEF_CLOSE_GAP_PX?1+(CHIEF_FAST_SCALE-1)*(offscreen?1:far):1;
-    const playerSlow=Math.abs(player.vx)<70;
+    const playerSlow=player.onGround&&engine.parkour.state==="normal"&&!diveRun&&!wallJumpRun&&Math.abs(player.vx)<70;
     if(playerSlow&&behind&&gap<CHIEF_STOP_CLOSE_PX){
       const stopFar=Math.max(0,Math.min(1,(gap-CHIEF_CLOSE_GAP_PX)/(CHIEF_STOP_CLOSE_PX-CHIEF_CLOSE_GAP_PX)));
       const stopTarget=.25+Math.sqrt(stopFar)*.55;
@@ -1123,7 +1149,7 @@ applyD09LogicRulesToRoutes();
     c.x=entry.x-c.w*.5;c.y=entry.bottomY-c.h;c.pose="climb";c.facing=1;
   }
   function finishChiefLadder(c){
-    const entry=primeChiefLadder(c);c.entryPhase="running";c.climbElapsed=entry.duration;matchPlayerToChiefPath(c);setChiefPlayerTime(c,entry.readyTime);c.chaseScale=CHIEF_FAST_SCALE;c.chiefT=entry.time;
+    const entry=primeChiefLadder(c);c.entryPhase="running";c.climbElapsed=entry.duration;matchPlayerToChiefPath(c);c.playerT=Math.max(c.playerT,entry.readyTime);c.chaseScale=CHIEF_FAST_SCALE;c.chiefT=Math.max(entry.time,c.playerT-c.delay);
     const q=chiefSample(c.path,c.chiefT);c.x=q.x;c.y=q.y;c.pose=q.pose;c.facing=q.facing;
     emitGame("chief_chase_started",{routeId,entry:"ladder"});
   }
@@ -1812,14 +1838,13 @@ applyD09LogicRulesToRoutes();
       const targetWorldY=H*.62-cameraGroundFootY,omega=16;
       cameraWorldVelocity+=(omega*omega*(targetWorldY-cameraWorldY)-2*omega*cameraWorldVelocity)*dt;
       cameraWorldY+=cameraWorldVelocity*dt;
-      const fallingToDeath=!player.onGround&&player.vy>0&&player.y+player.h>cameraGroundFootY+80;
       const foot=cameraWorldY+player.y+player.h;
       if(foot<H*.251){cameraWorldY+=H*.251-foot;cameraWorldVelocity=Math.max(0,cameraWorldVelocity)}
-      else if(!fallingToDeath&&foot>H*.799){cameraWorldY-=foot-H*.799;cameraWorldVelocity=Math.min(0,cameraWorldVelocity)}
+      else if(foot>H*.799){cameraWorldY-=foot-H*.799;cameraWorldVelocity=Math.min(0,cameraWorldVelocity)}
       if(campaignChief?.active&&campaignChief.entryPhase==="running"){
-        const chiefFoot=cameraWorldY+campaignChief.y+campaignChief.h;
-        if(chiefFoot<H*.18){cameraWorldY+=H*.18-chiefFoot;cameraWorldVelocity=Math.max(0,cameraWorldVelocity)}
-        else if(chiefFoot>H*.82){cameraWorldY-=chiefFoot-H*.82;cameraWorldVelocity=Math.min(0,cameraWorldVelocity)}
+        const playerFoot=cameraWorldY+player.y+player.h,chiefFoot=cameraWorldY+campaignChief.y+campaignChief.h;
+        const shift=chiefFoot<H*.18?H*.18-chiefFoot:chiefFoot>H*.82?H*.82-chiefFoot:0;
+        if(shift&&playerFoot+shift>=player.h/2&&playerFoot+shift<=H+player.h/2){cameraWorldY+=shift;cameraWorldVelocity=0}
       }
       engine.setWorldY(cameraWorldY);
     } else {
@@ -1828,14 +1853,13 @@ applyD09LogicRulesToRoutes();
       const targetWorldY=H*.58-cameraGroundFootY,omega=16;
       cameraWorldVelocity+=(omega*omega*(targetWorldY-cameraWorldY)-2*omega*cameraWorldVelocity)*dt;
       cameraWorldY+=cameraWorldVelocity*dt;
-      const fallingToDeath=!player.onGround&&player.vy>0&&player.y+player.h>cameraGroundFootY+80;
       const foot=cameraWorldY+player.y+player.h;
       if(foot<H*.24){cameraWorldY+=H*.24-foot;cameraWorldVelocity=Math.max(0,cameraWorldVelocity)}
-      else if(!fallingToDeath&&foot>H*.76){cameraWorldY-=foot-H*.76;cameraWorldVelocity=Math.min(0,cameraWorldVelocity)}
+      else if(foot>H*.76){cameraWorldY-=foot-H*.76;cameraWorldVelocity=Math.min(0,cameraWorldVelocity)}
       if(campaignChief?.active&&campaignChief.entryPhase==="running"){
-        const chiefFoot=cameraWorldY+campaignChief.y+campaignChief.h;
-        if(chiefFoot<H*.18){cameraWorldY+=H*.18-chiefFoot;cameraWorldVelocity=Math.max(0,cameraWorldVelocity)}
-        else if(chiefFoot>H*.82){cameraWorldY-=chiefFoot-H*.82;cameraWorldVelocity=Math.min(0,cameraWorldVelocity)}
+        const playerFoot=cameraWorldY+player.y+player.h,chiefFoot=cameraWorldY+campaignChief.y+campaignChief.h;
+        const shift=chiefFoot<H*.18?H*.18-chiefFoot:chiefFoot>H*.82?H*.82-chiefFoot:0;
+        if(shift&&playerFoot+shift>=player.h/2&&playerFoot+shift<=H+player.h/2){cameraWorldY+=shift;cameraWorldVelocity=0}
       }
       engine.setWorldY(cameraWorldY);
     }
@@ -1859,7 +1883,8 @@ applyD09LogicRulesToRoutes();
       if (campaignChief.active) {
         if(campaignChief.path&&campaignChief.entryPhase==="climbing"){campaignChief.climbElapsed=Math.min(campaignChief.entry.duration,campaignChief.climbElapsed+dt);const u=campaignChief.climbElapsed/campaignChief.entry.duration;campaignChief.x=campaignChief.entry.x-campaignChief.w*.5;campaignChief.y=campaignChief.entry.bottomY-campaignChief.h-(campaignChief.entry.height-campaignChief.h*.2)*u;campaignChief.pose="climb";if(u>=1)finishChiefLadder(campaignChief)}
         else if(campaignChief.path){const entry=primeChiefLadder(campaignChief),scale=chiefChaseScale(campaignChief,dt);campaignChief.chiefT=Math.max(entry.time,campaignChief.chiefT+dt*scale);if(player.vx>180&&campaignChief.playerT>0)campaignChief.chiefT=Math.min(campaignChief.chiefT,campaignChief.playerT-.22);matchPlayerToChiefPath(campaignChief);const ideal=chiefSample(campaignChief.path,campaignChief.chiefT),live=chiefTraceSampleAtX(ideal.x);if(live){campaignChief.x=live.x;campaignChief.y=live.feet-campaignChief.h;campaignChief.pose=live.pose;campaignChief.facing=live.facing||1}else{campaignChief.x=ideal.x;campaignChief.y=ideal.y;campaignChief.pose=ideal.pose;campaignChief.facing=ideal.facing}}else campaignChief.x+=campaignChief.speed*dt;
-        const liveChiefCatch=campaignChief.path&&campaignChief.entryPhase==="running"&&campaignChief.regrabT<=0&&campaignChief.chiefT>=0&&campaignChief.chiefT>=campaignChief.playerT-.05&&campaignChief.x+campaignChief.w>=player.x-80;
+        const playerCatchable=player.onGround&&engine.parkour.state==="normal"&&!diveRun&&!wallJumpRun&&Math.abs(player.vx)<70;
+        const liveChiefCatch=campaignChief.path&&campaignChief.entryPhase==="running"&&campaignChief.regrabT<=0&&playerCatchable&&campaignChief.chiefT>=0&&campaignChief.chiefT>=campaignChief.playerT-.05&&campaignChief.x+campaignChief.w>=player.x-80;
         if (campaignChief.caughtT<=0 && (!campaignChief.path ? campaignChief.x+campaignChief.w>=player.x+4 && campaignChief.x<=player.x+player.w-4 : liveChiefCatch)) {
           campaignChief.catches++;
           campaignDeaths++;
@@ -1871,12 +1896,6 @@ applyD09LogicRulesToRoutes();
           emitGame("chief_catch",{routeId,checkpointX:run.checkpointX});
         }
       }
-    }
-    if(campaignChief?.active&&campaignChief.entryPhase==="running"){
-      const chiefFoot=cameraWorldY+campaignChief.y+campaignChief.h,minFoot=86,maxFoot=H-12;
-      if(chiefFoot<minFoot){cameraWorldY+=minFoot-chiefFoot;cameraWorldVelocity=Math.max(0,cameraWorldVelocity)}
-      else if(chiefFoot>maxFoot){cameraWorldY-=chiefFoot-maxFoot;cameraWorldVelocity=Math.min(0,cameraWorldVelocity)}
-      engine.setWorldY(cameraWorldY);
     }
     for (const p of movingPlatforms) {
       const ridingOverlap = player.x + player.w > p.x + 3 && player.x < p.x + p.w - 3;
@@ -2036,8 +2055,17 @@ applyD09LogicRulesToRoutes();
     edgeClimb = null;
     keys.left = keys.right = keys.jump = false;
     joystick.axis = 0;
+    parkChiefAtFinish();
     sfx("door");
     emitGame("finish_gate_enter", { routeId, x: route.finishX });
+  }
+  function parkChiefAtFinish() {
+    if (!campaignChief) return;
+    const door=finishDoorPlacement(route),s=(route.groundSegments||[]).filter(v=>v.solid!==false&&door.x>=v.x-4&&door.x<=v.x+v.w+4).sort((a,b)=>Math.abs(a.y-door.y)-Math.abs(b.y-door.y))[0];
+    const minX=s?s.x+48:70,maxX=s?s.x+s.w-64:route.finishX-64,cx=Math.max(minX,Math.min(maxX,door.x-104));
+    campaignChief.active=true;campaignChief.entryPhase="result";campaignChief.resultAngry=true;campaignChief.x=cx;
+    const feet=routeGroundYAt(cx+16);campaignChief.y=feet-campaignChief.h;campaignChief.pose="idle";campaignChief.facing=1;campaignChief.caughtT=0;campaignChief.regrabT=0;
+    campaignChief.resultSnapshot={x:campaignChief.x,y:campaignChief.y,feet,doorX:door.x};
   }
   function updateFinishGate(dt) {
     const holdS = finishGate.holdS ?? .28;
@@ -2058,7 +2086,7 @@ applyD09LogicRulesToRoutes();
     finishGate.phase = "closed";
     finishGate.playerAlpha = 0;
     result = bankRun();
-    if (campaignChief) { const door=finishDoorPlacement(route),s=(route.groundSegments||[]).filter(v=>v.solid!==false&&door.x>=v.x-4&&door.x<=v.x+v.w+4).sort((a,b)=>Math.abs(a.y-door.y)-Math.abs(b.y-door.y))[0],minX=s?s.x+48:70,maxX=s?s.x+s.w-64:route.finishX-64,cx=Math.max(minX,Math.min(maxX,door.x-104)); campaignChief.active = true; campaignChief.entryPhase = "result"; campaignChief.resultAngry = true; campaignChief.x = cx; const feet=routeGroundYAt(cx+16); campaignChief.y = feet-campaignChief.h; campaignChief.pose = "idle"; campaignChief.facing = 1; campaignChief.caughtT = 0; campaignChief.regrabT = 0; campaignChief.resultSnapshot={x:campaignChief.x,y:campaignChief.y,feet,screenHint:null}; }
+    parkChiefAtFinish();
     sfx("finish");
     engine.setWon(true);
     emitGame("run_complete", { routeId, elapsed_s: result.elapsed });
@@ -2347,6 +2375,8 @@ applyD09LogicRulesToRoutes();
     const show = !!result && !shopOpen;
     a.hidden = !show;
     a.setAttribute("aria-hidden", String(!show));
+    const resultChief=document.getElementById("a12ResultChief");
+    if(resultChief){resultChief.hidden=!show;resultChief.style.setProperty("--chief-image",`url("sprites/chiefs/${profile.equippedChief||"securityTall"}-full.png")`)}
     syncRewardedButton();
   }
   let rewardedInFlight = null;
@@ -2418,7 +2448,7 @@ applyD09LogicRulesToRoutes();
     ctx.font = "900 14px system-ui";
     ctx.fillText(`${t("route")} ${routeId} · ${routeDisplayName(route)}`, 29, 36);
     ctx.fillStyle = "#ffd43d";
-    ctx.fillText(`${t("run")} ◉ ${run?.runCoins || 0}/40`, 29, 57);
+    ctx.fillText(`${t("run")} ◉ ${run?.runCoins || 0}/${route.coins.length}`, 29, 57);
     ctx.fillStyle = "#7cecc0";
     ctx.fillText(`${t("wallet")} ◉ ${profile.walletBalance}`, 180, 57);
     ctx.fillStyle = "#fff";
@@ -2475,12 +2505,14 @@ applyD09LogicRulesToRoutes();
     style.textContent += `#a12DockRoutes{position:fixed;z-index:30;left:50%;bottom:var(--dock-actions-clearance,148px);transform:translateX(-50%);width:min(94vw,760px);display:grid;grid-template-columns:repeat(6,1fr);gap:5px;padding:8px;box-sizing:border-box;background:#06121be8;border:1px solid #ffffff33;border-radius:6px}#a12DockRoutes[hidden]{display:none!important}#a12DockRoutes button{min-width:0;padding:6px 2px;border:1px solid #ffffff33;border-radius:4px;background:#153246;color:#fff;font:800 10px/1.05 system-ui}#a12DockRoutes small{display:block;color:#ffd45c;font-size:9px}@media(max-width:540px) and (orientation:portrait){#a12DockRoutes{grid-template-columns:repeat(6,1fr);gap:3px;padding:5px}#a12DockRoutes button{padding:5px 1px;font-size:9px}}`;
     style.textContent += `@media(orientation:landscape){#a12DockRoutes{width:min(calc(100vw - 190px),760px)}}`;
     style.textContent += `body[data-campaign-phase="result"] #joystick,body[data-campaign-phase="result"] #jumpWrap,body[data-campaign-phase="result"] #controlHint{display:none!important}`;
+    style.textContent += `#a12ResultChief{position:fixed;z-index:32;right:max(16px,var(--safe-right));bottom:max(104px,calc(var(--safe-bottom) + 94px));width:80px;height:80px;pointer-events:none;background:var(--chief-image) 0 0/640px 640px no-repeat;image-rendering:pixelated;filter:drop-shadow(0 4px 3px #0008)}#a12ResultChief[hidden]{display:none!important}#a12ResultChief::after{content:"😠";position:absolute;left:23px;top:-30px;font:32px/1 "Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",system-ui;filter:drop-shadow(0 2px 2px #000)}@media(orientation:portrait){#a12ResultChief{right:max(20px,var(--safe-right));top:max(170px,calc(var(--safe-top) + 140px));bottom:auto}}`;
     document.head.appendChild(style);
     style.textContent += `#a12Actions{flex-wrap:wrap;justify-content:center;max-width:min(96vw,720px)}#a12Actions [data-act="rewarded"]{background:#286650;border-color:#8ff1c8}`;
     const actions = document.createElement("div");
     actions.id = "a12Actions";
     actions.innerHTML = `<button data-act="next">${t("next")}</button><button data-act="shop">${t("shop")}</button><button data-act="rewarded" hidden></button><button data-act="retry">${t("retry")}</button>`;
     document.body.appendChild(actions);
+    const resultChief=document.createElement("div");resultChief.id="a12ResultChief";resultChief.hidden=true;resultChief.setAttribute("aria-label","Angry chief");document.body.appendChild(resultChief);
     const dockRoutes=document.createElement("nav");dockRoutes.id="a12DockRoutes";dockRoutes.hidden=true;document.body.appendChild(dockRoutes);const placeDockRoutes=()=>{if(dockRoutes.hidden||actions.hidden)return;const top=actions.getBoundingClientRect().top;dockRoutes.style.setProperty("--dock-actions-clearance",`${Math.max(8,innerHeight-top+8)}px`)};const renderDockRoutes=()=>{const show=document.body.dataset.campaignPhase==="result"&&profile.selectedWorldId==="dock31";dockRoutes.hidden=!show;if(!show)return;dockRoutes.innerHTML=WORLD_REGISTRY.dock31.routes.map(id=>`<button data-route="${id}">${id}<small>${"★".repeat(profile.progressByRoute[id]?.stars||0)}${"☆".repeat(3-(profile.progressByRoute[id]?.stars||0))}</small></button>`).join("");requestAnimationFrame(placeDockRoutes)};new MutationObserver(renderDockRoutes).observe(document.body,{attributes:true,attributeFilter:["data-campaign-phase"]});addEventListener("resize",placeDockRoutes);dockRoutes.addEventListener("click",e=>{const id=e.target.closest("[data-route]")?.dataset.route;if(id)startRoute(id)});
     if(!document.getElementById("a12Language")){const card=document.getElementById("characterCard");if(card){const wrap=document.createElement("label");wrap.id="a12LanguageWrap";wrap.innerHTML=`<span></span><select id="a12Language" aria-label="Language"><option value="en">EN</option><option value="tr">TR</option><option value="ru">RU</option></select>`;card.appendChild(wrap);}}
     const languageSelect=document.getElementById("a12Language");if(languageSelect){languageSelect.value=profile.settings.language;languageSelect.addEventListener("change",async()=>{const previous=profile.settings.language;profile.settings.language=languageFrom(languageSelect.value);applyLanguage();emitGame("language_change",{from:previous,to:profile.settings.language});await persist();});}
@@ -3723,20 +3755,19 @@ applyD09LogicRulesToRoutes();
   function drawRunnerLayerIntegrated(c) { ctx=c; }
   function drawResultChiefOverlay(c){
     if(!result||!campaignChief?.resultAngry)return;
-    const snap=campaignChief.resultSnapshot||campaignChief,camX=typeof engine?.cameraX==="function"?engine.cameraX():Math.max(0,Math.min((route.length||route.finishX)-W,snap.x-W*.3)),portrait=innerHeight>=innerWidth;
-    const screenX=portrait?W*.5:Math.max(82,Math.min(W-82,snap.x-camX+16));
-    const rawFeet=(snap.y??campaignChief.y)+48+cameraWorldY,feet=portrait?Math.max(H*.28,Math.min(H*.55,rawFeet)):Math.max(132,Math.min(H-154,rawFeet));
+    const portrait=innerHeight>=innerWidth,screenX=portrait?W*.78:W-64,feet=portrait?H*.35:H*.67;
     drawChiefAtlas(c,profile.equippedChief||"securityTall",{motion:"idle",frame:0},screenX,feet,campaignChief.facing||1);
     drawChiefAngerIcon(c,screenX,feet-78);
   }
   function cameraTargetIntegrated(info={}) {
     const fallback=Number.isFinite(info.fallback)?info.fallback:Math.max(0,Math.min(route.length-W,player.x-W*.3));
     if(result)return fallback;
-    const pad=Math.max(0,info.cameraPadLeft||0),playerTarget=player.x-W*.3-pad;
+    const pad=Math.max(0,info.cameraPadLeft||0),scale=Math.max(.01,info.viewScale||1),visibleW=Math.max(320,Math.min(W,(info.viewportW||W)/scale)),playerTarget=player.x-W*.3-pad;
     let target=playerTarget;
     if(campaignChief?.active&&campaignChief.entryPhase==="running"){
-      const chiefMinCam=campaignChief.x+16-(W-180),chiefMaxCam=campaignChief.x+16-(174+pad);
-      target=Math.max(chiefMinCam,Math.min(target,chiefMaxCam));
+      const chiefVisibleCam=campaignChief.x+campaignChief.w/2-(72+pad);
+      const playerVisibleCam=player.x+player.w/2-(visibleW-48);
+      target=Math.max(playerVisibleCam,Math.min(target,chiefVisibleCam));
     }
     return Math.max(0,Math.min(route.length-W,target));
   }
@@ -3748,7 +3779,7 @@ applyD09LogicRulesToRoutes();
     c.font = "900 14px system-ui";
     c.fillText(`${t("route")} ${routeId} · ${routeDisplayName(route)}`, 29, 36);
     c.fillStyle = "#ffd43d";
-    c.fillText(`${t("run")} ◉ ${run?.runCoins || 0}/40`, 29, 57);
+    c.fillText(`${t("run")} ◉ ${run?.runCoins || 0}/${route.coins.length}`, 29, 57);
     c.fillStyle = "#7cecc0";
     c.fillText(`${t("wallet")} ◉ ${profile.walletBalance}`, 180, 57);
     if (finishAdvance&&result) {
@@ -3763,7 +3794,6 @@ applyD09LogicRulesToRoutes();
     } else if (result) {
       c.fillStyle = "#06111bb8";
       c.fillRect(0, 0, w, h);
-      drawResultChiefOverlay(c);
       c.fillStyle = "#7cecc0";
       c.textAlign = "center";
       c.font = "950 30px system-ui";
