@@ -2876,7 +2876,10 @@ applyD09LogicRulesToRoutes();
     for(const d of containerDoors){aftermathSurface(c,d.x,d.currentY,d.w,d.h);c.strokeStyle='#d5c8a0';c.lineWidth=6;c.beginPath();c.moveTo(d.x-8,d.currentY+d.h);c.lineTo(d.x-3,d.currentY-12);c.lineTo(d.x+d.w+9,d.currentY-5);c.stroke();c.fillStyle=d.state==='OPEN'?'#63f2a5':d.state==='PREPARING'?'#ffd34d':'#ff5b55';c.beginPath();c.arc(d.x+d.w/2,d.currentY-26,9,0,7);c.fill();}
     drawHermesShoes(c);
     for(const b of barrels){c.fillStyle='#343c32';c.strokeStyle='#c6bd94';c.lineWidth=3;c.beginPath();c.moveTo(b.x+5,b.y);c.lineTo(b.x+27,b.y+4);c.lineTo(b.x+24,b.y+27);c.lineTo(b.x,b.y+22);c.closePath();c.fill();c.stroke();c.beginPath();c.moveTo(b.x+3,b.y+9);c.lineTo(b.x+23,b.y+17);c.stroke();}
-    if(campaignChief?.active&&campaignChief.entryPhase!=='result')aftermathRescuer(c,campaignChief.x+14,campaignChief.y+48,true);
+    if(campaignChief?.active&&campaignChief.entryPhase!=='result'){
+      const state=campaignChief.resultAngry?"idle":campaignChief.pose||"run";
+      drawChiefAtlas(c,profile.equippedChief||"securityTall",chiefPoseFromState(state),campaignChief.x+16,campaignChief.y+48,campaignChief.facing||1);
+    }
     { const finishDoor=finishDoorPlacement(); drawFinishDoor(c, finishDoor.x, finishDoor.y); }
     aftermathLights(c,time,light,gain);
     for(const coin of route.coins)if(!run?.collectedCoinIds.includes(coin.id))drawCoin(c,coin);
@@ -3597,7 +3600,7 @@ applyD09LogicRulesToRoutes();
     }
     if (campaignChief?.active && campaignChief.entryPhase!=="result") {
       c.save();
-      if(magma){c.fillStyle="#8e969f";c.fillRect(campaignChief.x-4,campaignChief.y-5,34,48);c.fillStyle="#d6dadd";c.fillRect(campaignChief.x-6,campaignChief.y-14,38,22);c.fillStyle="#202a36";c.fillRect(campaignChief.x,campaignChief.y-10,26,12);c.fillStyle="#404954";c.fillRect(campaignChief.x-2,campaignChief.y+35,12,18);c.fillRect(campaignChief.x+17,campaignChief.y+35,12,18);} else if (chiefAtlasContract) {
+      if (chiefAtlasContract) {
         const state=campaignChief.resultAngry?"idle":campaignChief.pose||"run";
         drawChiefAtlas(c,profile.equippedChief||"securityTall",chiefPoseFromState(state),campaignChief.x+16,campaignChief.y+48,campaignChief.facing||1);
       } else if (CHIEF_SPRITE.complete && CHIEF_SPRITE.naturalWidth) {
