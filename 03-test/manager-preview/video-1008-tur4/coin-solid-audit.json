@@ -1,0 +1,3880 @@
+{
+  "radius": 9,
+  "chiefPaths": [
+    {
+      "id": "D01",
+      "stored": "b5042d812754789b314f870999cd306f914ba22bea67f52dbc762b288ea371f3",
+      "current": "b5042d812754789b314f870999cd306f914ba22bea67f52dbc762b288ea371f3",
+      "valid": true
+    },
+    {
+      "id": "D02",
+      "stored": "7cfa1beabca7071a55b094b277d27f06f8a579bfd63f08d88d4158cc97a57fa9",
+      "current": "7cfa1beabca7071a55b094b277d27f06f8a579bfd63f08d88d4158cc97a57fa9",
+      "valid": true
+    },
+    {
+      "id": "D03",
+      "stored": "687c8752848d8c40feb76b8db20c60ac4537fa9c8fae4c389b03aa3dbd621239",
+      "current": "687c8752848d8c40feb76b8db20c60ac4537fa9c8fae4c389b03aa3dbd621239",
+      "valid": true
+    },
+    {
+      "id": "D04",
+      "stored": "c3631fa534e488522e9105e0c51500d6ac172a9e89935e46245ee317a68e472f",
+      "current": "c3631fa534e488522e9105e0c51500d6ac172a9e89935e46245ee317a68e472f",
+      "valid": true
+    },
+    {
+      "id": "D05",
+      "stored": "d17e04d601aae3bc3bd520a75a66f87053dd2cbea3f11bd4cb5d5c202e506674",
+      "current": "d17e04d601aae3bc3bd520a75a66f87053dd2cbea3f11bd4cb5d5c202e506674",
+      "valid": true
+    },
+    {
+      "id": "D06",
+      "stored": "c81f979eae54b3c73206b1a71c9ca66fd7e3b76e979a447e0b87128f6ea83747",
+      "current": "c81f979eae54b3c73206b1a71c9ca66fd7e3b76e979a447e0b87128f6ea83747",
+      "valid": true
+    },
+    {
+      "id": "D07",
+      "stored": "1864388fa6142361717229eba4e3798e1753f96e68fd924d56e3ca0fe76d3f7b",
+      "current": "1864388fa6142361717229eba4e3798e1753f96e68fd924d56e3ca0fe76d3f7b",
+      "valid": true
+    },
+    {
+      "id": "D08",
+      "stored": "66d0a2c121425d000e6842855357aee9b41a5bdcd7ecfa80a32b6c45d83779bb",
+      "current": "66d0a2c121425d000e6842855357aee9b41a5bdcd7ecfa80a32b6c45d83779bb",
+      "valid": true
+    },
+    {
+      "id": "D09",
+      "stored": "6514cb0f6686ea5b0cbb49c6d13f81395f4445c71ea8e6d7da5b4f81dcf0cf2b",
+      "current": "6514cb0f6686ea5b0cbb49c6d13f81395f4445c71ea8e6d7da5b4f81dcf0cf2b",
+      "valid": true
+    },
+    {
+      "id": "D10",
+      "stored": "6532bb63a239caa88b8ae73186f87d19c3f1a00729b88638da8148fdefde26d4",
+      "current": "6532bb63a239caa88b8ae73186f87d19c3f1a00729b88638da8148fdefde26d4",
+      "valid": true
+    },
+    {
+      "id": "D11",
+      "stored": "542476c36bf5cdbc1e9fba52e00dded4f456aa39454b28c181e033564f97aed4",
+      "current": "542476c36bf5cdbc1e9fba52e00dded4f456aa39454b28c181e033564f97aed4",
+      "valid": true
+    },
+    {
+      "id": "D12",
+      "stored": "de3ada4d3826d5032400c610e117e35cfe38cb6dde9a5fa4d68ce79da790795a",
+      "current": "de3ada4d3826d5032400c610e117e35cfe38cb6dde9a5fa4d68ce79da790795a",
+      "valid": true
+    },
+    {
+      "id": "D13",
+      "stored": "bc66081459119bc6d9b5791d6732200fe5ea6ad5cb7a02b2749b2d0a7e8a15db",
+      "current": "bc66081459119bc6d9b5791d6732200fe5ea6ad5cb7a02b2749b2d0a7e8a15db",
+      "valid": true
+    },
+    {
+      "id": "D14",
+      "stored": "b44396a0db9331bfaba2093dc219a6bf75994681dad70f61a97be924e47f50a4",
+      "current": "b44396a0db9331bfaba2093dc219a6bf75994681dad70f61a97be924e47f50a4",
+      "valid": true
+    },
+    {
+      "id": "D15",
+      "stored": "b4776506fab73d882917be60c4c929cb48d7b1863b7d74a7ec25aff6a44b3703",
+      "current": "b4776506fab73d882917be60c4c929cb48d7b1863b7d74a7ec25aff6a44b3703",
+      "valid": true
+    },
+    {
+      "id": "D16",
+      "stored": "07b339d9cd62096c2bc6d17b4c82249c3dfd371b1985b9c9ab0861b97dbf867c",
+      "current": "07b339d9cd62096c2bc6d17b4c82249c3dfd371b1985b9c9ab0861b97dbf867c",
+      "valid": true
+    },
+    {
+      "id": "D17",
+      "stored": "00c4e26ab981c54f5089b5afa66255461c8689fc7d0b2d8cba7310379723ed93",
+      "current": "00c4e26ab981c54f5089b5afa66255461c8689fc7d0b2d8cba7310379723ed93",
+      "valid": true
+    },
+    {
+      "id": "D18",
+      "stored": "ae7870cea44cf35ae8f411a0d6ca674f843efd77ce7646bcf6f67b5be157e416",
+      "current": "ae7870cea44cf35ae8f411a0d6ca674f843efd77ce7646bcf6f67b5be157e416",
+      "valid": true
+    },
+    {
+      "id": "F01",
+      "stored": "53544d26c537ddd7b13d61a659934553ee1dd488fc894dd00b42f43e4f68075b",
+      "current": "53544d26c537ddd7b13d61a659934553ee1dd488fc894dd00b42f43e4f68075b",
+      "valid": true
+    },
+    {
+      "id": "F02",
+      "stored": "3e633f8ef9ecfb1c361c1d5e6374dd4b1db00c9fe6aaee2b0de2b4dd56486d2d",
+      "current": "3e633f8ef9ecfb1c361c1d5e6374dd4b1db00c9fe6aaee2b0de2b4dd56486d2d",
+      "valid": true
+    },
+    {
+      "id": "F03",
+      "stored": "9d3c9808e49a8b4c0cbe922d66d21380e4b8ec32714005b37e10cf9fa2314482",
+      "current": "9d3c9808e49a8b4c0cbe922d66d21380e4b8ec32714005b37e10cf9fa2314482",
+      "valid": true
+    },
+    {
+      "id": "F04",
+      "stored": "9b3085e54a7dbfa2e4ce957840150b43328a1d67182b041ecaf28c47b877fe49",
+      "current": "9b3085e54a7dbfa2e4ce957840150b43328a1d67182b041ecaf28c47b877fe49",
+      "valid": true
+    },
+    {
+      "id": "F05",
+      "stored": "ccbf50256e2b73b6e01e93b6e48a2f4f65863035eb835499515c9a358f46bcd0",
+      "current": "ccbf50256e2b73b6e01e93b6e48a2f4f65863035eb835499515c9a358f46bcd0",
+      "valid": true
+    },
+    {
+      "id": "F06",
+      "stored": "cf7f576dae2cc4ca04b275d7a24b453cb96206efcf45315d94b37b804e7538ca",
+      "current": "cf7f576dae2cc4ca04b275d7a24b453cb96206efcf45315d94b37b804e7538ca",
+      "valid": true
+    },
+    {
+      "id": "M01",
+      "stored": "d9ef3543532d0f06bfd79740a1cb61e5191099613015ebc17093c6a3203e0508",
+      "current": "d9ef3543532d0f06bfd79740a1cb61e5191099613015ebc17093c6a3203e0508",
+      "valid": true
+    },
+    {
+      "id": "M02",
+      "stored": "57750e07b404752bfe2f830d87f7b2860bece23bd67053c80d7d34c7dbaf9eb7",
+      "current": "57750e07b404752bfe2f830d87f7b2860bece23bd67053c80d7d34c7dbaf9eb7",
+      "valid": true
+    },
+    {
+      "id": "M03",
+      "stored": "15471d650b65a749331babd0a93235b3bd8670aefb6dfab3ddcdf2bfef9bb42e",
+      "current": "15471d650b65a749331babd0a93235b3bd8670aefb6dfab3ddcdf2bfef9bb42e",
+      "valid": true
+    },
+    {
+      "id": "M04",
+      "stored": "b7f5e95c02487f202347e0deb4800cd600e32fbebf29f6c82f8f008bcd63d856",
+      "current": "b7f5e95c02487f202347e0deb4800cd600e32fbebf29f6c82f8f008bcd63d856",
+      "valid": true
+    },
+    {
+      "id": "M05",
+      "stored": "dded0653d02b3895d39ff04c777e9706eac9284c110e851a00a9b8f317d9d904",
+      "current": "dded0653d02b3895d39ff04c777e9706eac9284c110e851a00a9b8f317d9d904",
+      "valid": true
+    },
+    {
+      "id": "M06",
+      "stored": "c998aba4958ed3e0960e698802dceda3ec89144e5b8d631b1d15523eb39db434",
+      "current": "c998aba4958ed3e0960e698802dceda3ec89144e5b8d631b1d15523eb39db434",
+      "valid": true
+    },
+    {
+      "id": "A01",
+      "stored": "9652c1c2af93efa816421ec3f5e12c0376d618a3a57c9499c764a3be9e548392",
+      "current": "9652c1c2af93efa816421ec3f5e12c0376d618a3a57c9499c764a3be9e548392",
+      "valid": true
+    },
+    {
+      "id": "A02",
+      "stored": "8b7872b26317fb36eee89647e36270af234983bcd7c0890a93aee46c8b87f71b",
+      "current": "8b7872b26317fb36eee89647e36270af234983bcd7c0890a93aee46c8b87f71b",
+      "valid": true
+    },
+    {
+      "id": "A03",
+      "stored": "81a5be06e5755b5ad11e09df55d0ecdaee18cf173c97d813f09864c7c63b8530",
+      "current": "81a5be06e5755b5ad11e09df55d0ecdaee18cf173c97d813f09864c7c63b8530",
+      "valid": true
+    },
+    {
+      "id": "A04",
+      "stored": "db20c767a693bd80124c79f6cebdfa9496bae0e2568352fe1c55ba4fff87c1de",
+      "current": "db20c767a693bd80124c79f6cebdfa9496bae0e2568352fe1c55ba4fff87c1de",
+      "valid": true
+    },
+    {
+      "id": "A05",
+      "stored": "a80835b622b092cceb742d0d0e162386fdd3a343aa6bb5c76eb4193118b5d611",
+      "current": "a80835b622b092cceb742d0d0e162386fdd3a343aa6bb5c76eb4193118b5d611",
+      "valid": true
+    },
+    {
+      "id": "A06",
+      "stored": "af94973066e1ad7fdedeadaa48edf6332a7c590526595090af55c15d6609748e",
+      "current": "af94973066e1ad7fdedeadaa48edf6332a7c590526595090af55c15d6609748e",
+      "valid": true
+    }
+  ],
+  "routes": [
+    {
+      "id": "D01",
+      "count": 12,
+      "repairCount": 10,
+      "coins": [
+        {
+          "id": "D01-c01",
+          "x": 1200,
+          "y": -272.45,
+          "kind": "CC",
+          "skill": true
+        },
+        {
+          "id": "D01-c02",
+          "x": 1488,
+          "y": -200.45,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "D01-c03",
+          "x": 2118,
+          "y": -176.45,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "D01-c04",
+          "x": 3534,
+          "y": -219.65,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "D01-c05",
+          "x": 4082,
+          "y": -219.65,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "D01-c06",
+          "x": 5450,
+          "y": -171.65,
+          "kind": "CC",
+          "skill": true
+        },
+        {
+          "id": "D01-c07",
+          "x": 6588,
+          "y": 129.43,
+          "kind": "CC",
+          "skill": true
+        },
+        {
+          "id": "D01-c08",
+          "x": 7128,
+          "y": 355,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "D01-c09",
+          "x": 7859,
+          "y": 355,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "D01-c10",
+          "x": 7754.19,
+          "y": 366.04,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "D01-c11",
+          "x": 7698.19,
+          "y": 366.04,
+          "kind": "CC",
+          "skill": true
+        },
+        {
+          "id": "D01-c12",
+          "x": 8175,
+          "y": 439,
+          "kind": "CS",
+          "skill": true
+        }
+      ],
+      "issues": []
+    },
+    {
+      "id": "D02",
+      "count": 10,
+      "repairCount": 8,
+      "coins": [
+        {
+          "id": "D02-c01",
+          "x": 1386,
+          "y": -125,
+          "kind": "CS",
+          "skill": true
+        },
+        {
+          "id": "D02-c02",
+          "x": 3720,
+          "y": 254.2,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "D02-c03",
+          "x": 4960,
+          "y": 350,
+          "kind": "CC",
+          "skill": true
+        },
+        {
+          "id": "D02-c04",
+          "x": 5890,
+          "y": 350,
+          "kind": "CC",
+          "skill": true
+        },
+        {
+          "id": "D02-c05",
+          "x": 2267.3,
+          "y": 346.36,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "D02-c06",
+          "x": 2211.3,
+          "y": 346.36,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "D02-c07",
+          "x": 2168.7,
+          "y": 346.36,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "D02-c08",
+          "x": 5826.04,
+          "y": 374.2,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "D02-c09",
+          "x": 5770.04,
+          "y": 374.2,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "D02-c10",
+          "x": 5714.04,
+          "y": 374.2,
+          "kind": "CJ",
+          "skill": false
+        }
+      ],
+      "issues": []
+    },
+    {
+      "id": "D03",
+      "count": 13,
+      "repairCount": 1,
+      "coins": [
+        {
+          "id": "D03-c01",
+          "x": 241.6,
+          "y": 94.6,
+          "kind": "CC",
+          "skill": true
+        },
+        {
+          "id": "D03-c02",
+          "x": 479.68,
+          "y": 137.8,
+          "kind": "CC",
+          "skill": true
+        },
+        {
+          "id": "D03-c03",
+          "x": 3260.42,
+          "y": 225.4,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "D03-c04",
+          "x": 4138.22,
+          "y": 291.03,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "D03-c05",
+          "x": 1318,
+          "y": 65.8,
+          "kind": "CC",
+          "skill": true
+        },
+        {
+          "id": "D03-c06",
+          "x": 1903.48,
+          "y": 44.2,
+          "kind": "CC",
+          "skill": true
+        },
+        {
+          "id": "D03-c07",
+          "x": 3889.24,
+          "y": 304.6,
+          "kind": "CC",
+          "skill": true
+        },
+        {
+          "id": "D03-c08",
+          "x": 2506.16,
+          "y": 78.73,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "D03-c09",
+          "x": 3260.42,
+          "y": 225.4,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "D03-c10",
+          "x": 3629.24,
+          "y": 350.2,
+          "kind": "CS",
+          "skill": true
+        },
+        {
+          "id": "D03-c11",
+          "x": 5788.6,
+          "y": 345.4,
+          "kind": "CC",
+          "skill": true
+        },
+        {
+          "id": "D03-c12",
+          "x": 6699.64,
+          "y": 331,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "D03-c13",
+          "x": 1171,
+          "y": 101.8,
+          "kind": "CJ",
+          "skill": false
+        }
+      ],
+      "issues": []
+    },
+    {
+      "id": "D04",
+      "count": 12,
+      "repairCount": 2,
+      "coins": [
+        {
+          "id": "D04-c01",
+          "x": 3999.87,
+          "y": -131.8,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "D04-c02",
+          "x": 4898.8,
+          "y": -179.8,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "D04-c03",
+          "x": 1074.16,
+          "y": -560.6,
+          "kind": "CC",
+          "skill": true
+        },
+        {
+          "id": "D04-c04",
+          "x": 7009.66,
+          "y": 231.71,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "D04-c05",
+          "x": 520.72,
+          "y": -464.6,
+          "kind": "CS",
+          "skill": true
+        },
+        {
+          "id": "D04-c06",
+          "x": 4898.8,
+          "y": -179.8,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "D04-c07",
+          "x": 5352.4,
+          "y": -231.8,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "D04-c08",
+          "x": 7009.66,
+          "y": 231.71,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "D04-c09",
+          "x": 4275.07,
+          "y": -131.8,
+          "kind": "CC",
+          "skill": true
+        },
+        {
+          "id": "D04-c10",
+          "x": 4898.8,
+          "y": -179.8,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "D04-c11",
+          "x": 5076.4,
+          "y": -195.8,
+          "kind": "CC",
+          "skill": true
+        },
+        {
+          "id": "D04-c12",
+          "x": 576.72,
+          "y": -464.6,
+          "kind": "CS",
+          "skill": true
+        }
+      ],
+      "issues": []
+    },
+    {
+      "id": "D05",
+      "count": 13,
+      "repairCount": 0,
+      "coins": [
+        {
+          "id": "D05-c01",
+          "x": 2461.4,
+          "y": -798.375,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "D05-c02",
+          "x": 4868.85,
+          "y": -245.25,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "D05-c03",
+          "x": 3717.32,
+          "y": -582.625,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "D05-c04",
+          "x": 7169.39,
+          "y": 272,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "D05-c05",
+          "x": 6698.75,
+          "y": 335,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "D05-c06",
+          "x": 2026.32,
+          "y": -866.75,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "D05-c07",
+          "x": 5167.43,
+          "y": -86.75,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "D05-c08",
+          "x": 6760,
+          "y": 313.375,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "D05-c09",
+          "x": 5654.16,
+          "y": -158.375,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "D05-c10",
+          "x": 6843.25,
+          "y": 337,
+          "kind": "CS",
+          "skill": true
+        },
+        {
+          "id": "D05-c11",
+          "x": 211.6,
+          "y": -781,
+          "kind": "CC",
+          "skill": true
+        },
+        {
+          "id": "D05-c12",
+          "x": 1134,
+          "y": -797.75,
+          "kind": "CC",
+          "skill": true
+        },
+        {
+          "id": "D05-c13",
+          "x": 5315.44,
+          "y": -105.375,
+          "kind": "CC",
+          "skill": true
+        }
+      ],
+      "issues": []
+    },
+    {
+      "id": "D06",
+      "count": 13,
+      "repairCount": 1,
+      "coins": [
+        {
+          "id": "D06-c01",
+          "x": 1081.2,
+          "y": 334.63,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "D06-c02",
+          "x": 1400,
+          "y": 0,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "D06-c03",
+          "x": 1918.1,
+          "y": -96.375,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "D06-c04",
+          "x": 4647.2,
+          "y": 291.25,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "D06-c05",
+          "x": 879,
+          "y": 54.75,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "D06-c06",
+          "x": 2422.2,
+          "y": 155.625,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "D06-c07",
+          "x": 2930.4,
+          "y": 198.75,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "D06-c08",
+          "x": 3439.8,
+          "y": 132.75,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "D06-c09",
+          "x": 3663,
+          "y": 361,
+          "kind": "CS",
+          "skill": true
+        },
+        {
+          "id": "D06-c10",
+          "x": 274,
+          "y": 129.375,
+          "kind": "CC",
+          "skill": true
+        },
+        {
+          "id": "D06-c11",
+          "x": 740.8,
+          "y": 107.75,
+          "kind": "CC",
+          "skill": true
+        },
+        {
+          "id": "D06-c12",
+          "x": 2539,
+          "y": 230.25,
+          "kind": "CC",
+          "skill": true
+        },
+        {
+          "id": "D06-c13",
+          "x": 3898.6,
+          "y": 327.375,
+          "kind": "CC",
+          "skill": true
+        }
+      ],
+      "issues": []
+    },
+    {
+      "id": "D07",
+      "count": 14,
+      "repairCount": 2,
+      "coins": [
+        {
+          "id": "D07-c01",
+          "x": 632,
+          "y": -31,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "D07-c02",
+          "x": 1784,
+          "y": 127.375,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "D07-c03",
+          "x": 2912,
+          "y": 207.75,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "D07-c04",
+          "x": 4599.2,
+          "y": 294.25,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "D07-c05",
+          "x": 5097.2,
+          "y": 183.75,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "D07-c06",
+          "x": 5582.72,
+          "y": 224.625,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "D07-c07",
+          "x": 5497.2,
+          "y": 295,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "D07-c08",
+          "x": 789.6,
+          "y": -67,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "D07-c09",
+          "x": 333.6,
+          "y": -52.625,
+          "kind": "CC",
+          "skill": true
+        },
+        {
+          "id": "D07-c10",
+          "x": 2186.4,
+          "y": 170.625,
+          "kind": "CC",
+          "skill": true
+        },
+        {
+          "id": "D07-c11",
+          "x": 3154.8,
+          "y": 186.25,
+          "kind": "CC",
+          "skill": true
+        },
+        {
+          "id": "D07-c12",
+          "x": 4795.6,
+          "y": 246.25,
+          "kind": "CC",
+          "skill": true
+        },
+        {
+          "id": "D07-c13",
+          "x": 5097.2,
+          "y": 183.75,
+          "kind": "CC",
+          "skill": true
+        },
+        {
+          "id": "D07-c14",
+          "x": 5262.24,
+          "y": 295,
+          "kind": "CS",
+          "skill": true
+        }
+      ],
+      "issues": []
+    },
+    {
+      "id": "D08",
+      "count": 13,
+      "repairCount": 1,
+      "coins": [
+        {
+          "id": "D08-c01",
+          "x": 539.6,
+          "y": -445,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "D08-c02",
+          "x": 794,
+          "y": -493,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "D08-c03",
+          "x": 1292,
+          "y": -471.375,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "D08-c04",
+          "x": 2667.2,
+          "y": -351.375,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "D08-c05",
+          "x": 3075.2,
+          "y": -411.375,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "D08-c06",
+          "x": 3435.2,
+          "y": -339.375,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "D08-c07",
+          "x": 4023.2,
+          "y": -255.375,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "D08-c08",
+          "x": 4347.2,
+          "y": -229,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "D08-c09",
+          "x": 5800,
+          "y": -184.375,
+          "kind": "CC",
+          "skill": true
+        },
+        {
+          "id": "D08-c10",
+          "x": 1074.4,
+          "y": -383.75,
+          "kind": "CC",
+          "skill": true
+        },
+        {
+          "id": "D08-c11",
+          "x": 1591.6,
+          "y": -373,
+          "kind": "CC",
+          "skill": true
+        },
+        {
+          "id": "D08-c12",
+          "x": 6900,
+          "y": 16.63,
+          "kind": "CC",
+          "skill": true
+        },
+        {
+          "id": "D08-c13",
+          "x": 2822.61,
+          "y": -351.375,
+          "kind": "CS",
+          "skill": true
+        }
+      ],
+      "issues": []
+    },
+    {
+      "id": "D09",
+      "count": 13,
+      "repairCount": 2,
+      "coins": [
+        {
+          "id": "D09-c01",
+          "x": 543.6,
+          "y": 242.63,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "D09-c02",
+          "x": 1073.76,
+          "y": 323.13,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "D09-c03",
+          "x": 1652.97,
+          "y": 205.5,
+          "kind": "CS",
+          "skill": false
+        },
+        {
+          "id": "D09-c04",
+          "x": 2249.46,
+          "y": 252.25,
+          "kind": "CC",
+          "skill": true
+        },
+        {
+          "id": "D09-c05",
+          "x": 2845.95,
+          "y": 325.5,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "D09-c06",
+          "x": 3485.04,
+          "y": 259,
+          "kind": "CS",
+          "skill": false
+        },
+        {
+          "id": "D09-c07",
+          "x": 4038.92,
+          "y": 261.38,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "D09-c08",
+          "x": 4635.41,
+          "y": 264.75,
+          "kind": "CC",
+          "skill": true
+        },
+        {
+          "id": "D09-c09",
+          "x": 5175.89,
+          "y": 331,
+          "kind": "CS",
+          "skill": false
+        },
+        {
+          "id": "D09-c10",
+          "x": 5805.84,
+          "y": 158.25,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "D09-c11",
+          "x": 6460,
+          "y": 379,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "D09-c12",
+          "x": 7021.35,
+          "y": 319,
+          "kind": "CC",
+          "skill": true
+        },
+        {
+          "id": "D09-c13",
+          "x": 7617.84,
+          "y": 319,
+          "kind": "CJ",
+          "skill": false
+        }
+      ],
+      "issues": []
+    },
+    {
+      "id": "D10",
+      "count": 12,
+      "repairCount": 3,
+      "coins": [
+        {
+          "id": "D10-c01",
+          "x": 283,
+          "y": -107,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "D10-c02",
+          "x": 807,
+          "y": -221,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "D10-c03",
+          "x": 1972,
+          "y": -148,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "D10-c04",
+          "x": 2288,
+          "y": -64.625,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "D10-c05",
+          "x": 4846,
+          "y": 157,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "D10-c06",
+          "x": 5143,
+          "y": 197.5,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "D10-c07",
+          "x": 5508,
+          "y": 197.5,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "D10-c08",
+          "x": 6026,
+          "y": 92,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "D10-c09",
+          "x": 8600,
+          "y": 401,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "D10-c10",
+          "x": 8048,
+          "y": 379,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "D10-c11",
+          "x": 1262.64,
+          "y": -115,
+          "kind": "CC",
+          "skill": true
+        },
+        {
+          "id": "D10-c12",
+          "x": 8606.56,
+          "y": 430.25,
+          "kind": "CC",
+          "skill": true
+        }
+      ],
+      "issues": []
+    },
+    {
+      "id": "D11",
+      "count": 14,
+      "repairCount": 2,
+      "coins": [
+        {
+          "id": "D11-c01",
+          "x": 488,
+          "y": -963,
+          "skill": false
+        },
+        {
+          "id": "D11-c02",
+          "x": 1456,
+          "y": -1140,
+          "skill": false
+        },
+        {
+          "id": "D11-c03",
+          "x": 1999,
+          "y": -1122,
+          "skill": false
+        },
+        {
+          "id": "D11-c04",
+          "x": 2442,
+          "y": -1091.25,
+          "skill": false
+        },
+        {
+          "id": "D11-c05",
+          "x": 2861,
+          "y": -659.25,
+          "skill": false
+        },
+        {
+          "id": "D11-c06",
+          "x": 3842,
+          "y": -852,
+          "skill": false
+        },
+        {
+          "id": "D11-c07",
+          "x": 4821.2,
+          "y": -943.25,
+          "skill": false
+        },
+        {
+          "id": "D11-c08",
+          "x": 6085,
+          "y": -486,
+          "skill": false
+        },
+        {
+          "id": "D11-c09",
+          "x": 715.6,
+          "y": -1015.25,
+          "skill": false
+        },
+        {
+          "id": "D11-c10",
+          "x": 1544.8,
+          "y": -1028.5,
+          "skill": false
+        },
+        {
+          "id": "D11-c11",
+          "x": 2374.8,
+          "y": -1169.625,
+          "skill": false
+        },
+        {
+          "id": "D11-c12",
+          "x": 2410.8,
+          "y": -1240.125,
+          "skill": false
+        },
+        {
+          "id": "D11-c13",
+          "x": 1136.4,
+          "y": -979.25,
+          "skill": false
+        },
+        {
+          "id": "D11-c14",
+          "x": 5266.8,
+          "y": -445,
+          "skill": false
+        }
+      ],
+      "issues": []
+    },
+    {
+      "id": "D12",
+      "count": 14,
+      "repairCount": 5,
+      "coins": [
+        {
+          "id": "D12-c01",
+          "x": 408,
+          "y": -212.63,
+          "skill": false
+        },
+        {
+          "id": "D12-c02",
+          "x": 870,
+          "y": -380,
+          "skill": false
+        },
+        {
+          "id": "D12-c03",
+          "x": 979,
+          "y": -341,
+          "skill": false
+        },
+        {
+          "id": "D12-c04",
+          "x": 2028,
+          "y": -277.38,
+          "skill": false
+        },
+        {
+          "id": "D12-c05",
+          "x": 4498,
+          "y": -22,
+          "skill": false
+        },
+        {
+          "id": "D12-c06",
+          "x": 3328,
+          "y": -29,
+          "skill": false
+        },
+        {
+          "id": "D12-c07",
+          "x": 496,
+          "y": -290.25,
+          "skill": false
+        },
+        {
+          "id": "D12-c08",
+          "x": 620.8,
+          "y": -347.75,
+          "skill": false
+        },
+        {
+          "id": "D12-c09",
+          "x": 1050.4,
+          "y": -370.625,
+          "skill": false
+        },
+        {
+          "id": "D12-c10",
+          "x": 3418.24,
+          "y": -99.375,
+          "skill": false
+        },
+        {
+          "id": "D12-c11",
+          "x": 1303.6,
+          "y": -464.25,
+          "skill": false
+        },
+        {
+          "id": "D12-c12",
+          "x": 2258.8,
+          "y": -381.375,
+          "skill": false
+        },
+        {
+          "id": "D12-c13",
+          "x": 3113.89,
+          "y": -29,
+          "skill": false
+        },
+        {
+          "id": "D12-c14",
+          "x": 114,
+          "y": -268.625,
+          "skill": false
+        }
+      ],
+      "issues": []
+    },
+    {
+      "id": "D13",
+      "count": 14,
+      "repairCount": 3,
+      "coins": [
+        {
+          "id": "D13-c01",
+          "x": 319,
+          "y": -213.75,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "D13-c02",
+          "x": 772,
+          "y": -445,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "D13-c03",
+          "x": 1246,
+          "y": -407,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "D13-c04",
+          "x": 1536,
+          "y": -528,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "D13-c05",
+          "x": 2778,
+          "y": -155,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "D13-c06",
+          "x": 3904.4,
+          "y": 99.75,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "D13-c07",
+          "x": 4501,
+          "y": 14,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "D13-c08",
+          "x": 500,
+          "y": -340,
+          "kind": "CC",
+          "skill": true
+        },
+        {
+          "id": "D13-c09",
+          "x": 562.6,
+          "y": -340.625,
+          "kind": "CC",
+          "skill": true
+        },
+        {
+          "id": "D13-c10",
+          "x": 1198,
+          "y": -415,
+          "kind": "CC",
+          "skill": true
+        },
+        {
+          "id": "D13-c11",
+          "x": 3596.8,
+          "y": 78.25,
+          "kind": "CC",
+          "skill": true
+        },
+        {
+          "id": "D13-c12",
+          "x": 1400,
+          "y": -415,
+          "kind": "CS",
+          "skill": true
+        },
+        {
+          "id": "D13-c13",
+          "x": 4392,
+          "y": 158.25,
+          "kind": "CS",
+          "skill": true
+        },
+        {
+          "id": "D13-c14",
+          "x": 5580,
+          "y": 114,
+          "kind": "CS",
+          "skill": true
+        }
+      ],
+      "issues": []
+    },
+    {
+      "id": "D14",
+      "count": 14,
+      "repairCount": 2,
+      "coins": [
+        {
+          "id": "D14-c01",
+          "x": 1668.74,
+          "y": 198.26,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "D14-c02",
+          "x": 2336,
+          "y": 48,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "D14-c03",
+          "x": 2752.8,
+          "y": 202.63,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "D14-c04",
+          "x": 3827.42,
+          "y": 19.73,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "D14-c05",
+          "x": 4765,
+          "y": 62,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "D14-c06",
+          "x": 7674.92,
+          "y": 389.14,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "D14-c07",
+          "x": 8616.79,
+          "y": 319.54,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "D14-c08",
+          "x": 1009.6,
+          "y": 207.375,
+          "kind": "CC",
+          "skill": true
+        },
+        {
+          "id": "D14-c09",
+          "x": 1840,
+          "y": 160,
+          "kind": "CC",
+          "skill": true
+        },
+        {
+          "id": "D14-c10",
+          "x": 1904.3999999999999,
+          "y": 160.75,
+          "kind": "CC",
+          "skill": true
+        },
+        {
+          "id": "D14-c11",
+          "x": 2095.6,
+          "y": 85.375,
+          "kind": "CC",
+          "skill": true
+        },
+        {
+          "id": "D14-c12",
+          "x": 2867.2,
+          "y": 6.25,
+          "kind": "CC",
+          "skill": true
+        },
+        {
+          "id": "D14-c13",
+          "x": 1168.56,
+          "y": 195.375,
+          "kind": "CS",
+          "skill": true
+        },
+        {
+          "id": "D14-c14",
+          "x": 2682.28,
+          "y": 202.63,
+          "kind": "CS",
+          "skill": true
+        }
+      ],
+      "issues": []
+    },
+    {
+      "id": "D15",
+      "count": 14,
+      "repairCount": 3,
+      "coins": [
+        {
+          "id": "D15-c01",
+          "x": 495.82,
+          "y": 279.61,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "D15-c02",
+          "x": 1038,
+          "y": 88,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "D15-c03",
+          "x": 2235.3,
+          "y": 341.23,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "D15-c04",
+          "x": 2709.31,
+          "y": 302.25,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "D15-c05",
+          "x": 4601.82,
+          "y": 189.2,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "D15-c06",
+          "x": 6016.59,
+          "y": 314.53,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "D15-c07",
+          "x": 7819.06,
+          "y": 262.57,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "D15-c08",
+          "x": 626.8,
+          "y": 313.88,
+          "kind": "CS",
+          "skill": true
+        },
+        {
+          "id": "D15-c09",
+          "x": 1620,
+          "y": 273.38,
+          "kind": "CS",
+          "skill": true
+        },
+        {
+          "id": "D15-c10",
+          "x": 3480,
+          "y": 161.75,
+          "kind": "CS",
+          "skill": true
+        },
+        {
+          "id": "D15-c11",
+          "x": 250,
+          "y": 312.25,
+          "kind": "CC",
+          "skill": true
+        },
+        {
+          "id": "D15-c12",
+          "x": 2506,
+          "y": 294.25,
+          "kind": "CC",
+          "skill": true
+        },
+        {
+          "id": "D15-c13",
+          "x": 2822.8,
+          "y": 219.75,
+          "kind": "CC",
+          "skill": true
+        },
+        {
+          "id": "D15-c14",
+          "x": 2938.7999999999997,
+          "y": 198.25,
+          "kind": "CC",
+          "skill": true
+        }
+      ],
+      "issues": []
+    },
+    {
+      "id": "D16",
+      "count": 14,
+      "repairCount": 4,
+      "coins": [
+        {
+          "id": "D16-c01",
+          "x": 1037,
+          "y": -1502,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "D16-c02",
+          "x": 1838,
+          "y": -1494,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "D16-c03",
+          "x": 2908,
+          "y": -757.38,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "D16-c04",
+          "x": 3473,
+          "y": -905,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "D16-c05",
+          "x": 3775,
+          "y": -926.63,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "D16-c06",
+          "x": 4196,
+          "y": -1106.25,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "D16-c07",
+          "x": 5085.84,
+          "y": -806.25,
+          "kind": "CS",
+          "skill": true
+        },
+        {
+          "id": "D16-c08",
+          "x": 4926,
+          "y": -806.25,
+          "kind": "CS",
+          "skill": true
+        },
+        {
+          "id": "D16-c09",
+          "x": 4916.4,
+          "y": -806.25,
+          "kind": "CS",
+          "skill": true
+        },
+        {
+          "id": "D16-c10",
+          "x": 2650,
+          "y": -945,
+          "kind": "CC",
+          "skill": true
+        },
+        {
+          "id": "D16-c11",
+          "x": 2956.8,
+          "y": -884.25,
+          "kind": "CC",
+          "skill": true
+        },
+        {
+          "id": "D16-c12",
+          "x": 3050,
+          "y": -757.38,
+          "kind": "CC",
+          "skill": true
+        },
+        {
+          "id": "D16-c13",
+          "x": 3424,
+          "y": -913,
+          "kind": "CC",
+          "skill": true
+        },
+        {
+          "id": "D16-c14",
+          "x": 3727.6,
+          "y": -934.625,
+          "kind": "CC",
+          "skill": true
+        }
+      ],
+      "issues": []
+    },
+    {
+      "id": "D17",
+      "count": 14,
+      "repairCount": 1,
+      "coins": [
+        {
+          "id": "D17-c01",
+          "x": 353,
+          "y": -107,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "D17-c02",
+          "x": 877,
+          "y": -221,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "D17-c03",
+          "x": 1332.64,
+          "y": -115,
+          "kind": "CC",
+          "skill": true
+        },
+        {
+          "id": "D17-c04",
+          "x": 1332.64,
+          "y": -115,
+          "kind": "CC",
+          "skill": true
+        },
+        {
+          "id": "D17-c05",
+          "x": 1332.64,
+          "y": -115,
+          "kind": "CC",
+          "skill": true
+        },
+        {
+          "id": "D17-c06",
+          "x": 1332.64,
+          "y": -115,
+          "kind": "CC",
+          "skill": true
+        },
+        {
+          "id": "D17-c07",
+          "x": 2042,
+          "y": -148,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "D17-c08",
+          "x": 2358,
+          "y": -64.62,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "D17-c09",
+          "x": 4542.68,
+          "y": 41.13,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "D17-c10",
+          "x": 4542.68,
+          "y": 41.13,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "D17-c11",
+          "x": 4542.68,
+          "y": 41.13,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "D17-c12",
+          "x": 4542.68,
+          "y": 41.13,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "D17-c13",
+          "x": 5621.68,
+          "y": 141.13,
+          "kind": "CS",
+          "skill": true
+        },
+        {
+          "id": "D17-c14",
+          "x": 5621.68,
+          "y": 141.13,
+          "kind": "CS",
+          "skill": true
+        }
+      ],
+      "issues": []
+    },
+    {
+      "id": "D18",
+      "count": 14,
+      "repairCount": 4,
+      "coins": [
+        {
+          "id": "D18-c01",
+          "x": 320,
+          "y": 312.25,
+          "kind": "CC",
+          "skill": true
+        },
+        {
+          "id": "D18-c02",
+          "x": 597,
+          "y": 207,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "D18-c03",
+          "x": 750,
+          "y": 310,
+          "kind": "CS",
+          "skill": true
+        },
+        {
+          "id": "D18-c04",
+          "x": 1108,
+          "y": 88,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "D18-c05",
+          "x": 1690,
+          "y": 273.38,
+          "kind": "CS",
+          "skill": true
+        },
+        {
+          "id": "D18-c06",
+          "x": 2314,
+          "y": 397,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "D18-c07",
+          "x": 2576,
+          "y": 294.25,
+          "kind": "CC",
+          "skill": true
+        },
+        {
+          "id": "D18-c08",
+          "x": 2792,
+          "y": 302.25,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "D18-c09",
+          "x": 2892.8,
+          "y": 219.75,
+          "kind": "CC",
+          "skill": true
+        },
+        {
+          "id": "D18-c10",
+          "x": 3008.8,
+          "y": 198.25,
+          "kind": "CC",
+          "skill": true
+        },
+        {
+          "id": "D18-c11",
+          "x": 5664.16,
+          "y": 230.13,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "D18-c12",
+          "x": 6034.53,
+          "y": 81.5,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "D18-c13",
+          "x": 6666,
+          "y": -18.25,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "D18-c14",
+          "x": 7614.16,
+          "y": 167.5,
+          "kind": "CJ",
+          "skill": false
+        }
+      ],
+      "issues": []
+    },
+    {
+      "id": "F01",
+      "count": 14,
+      "repairCount": 0,
+      "coins": [
+        {
+          "id": "F01-c01",
+          "x": 797.49,
+          "y": -74.11,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "F01-c02",
+          "x": 2608.21,
+          "y": 126.26,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "F01-c03",
+          "x": 2497.72,
+          "y": 170.63,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "F01-c04",
+          "x": 7917.56,
+          "y": 451.89,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "F01-c05",
+          "x": 6648.76,
+          "y": 417.72,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "F01-c06",
+          "x": 3259.8,
+          "y": 143.07,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "F01-c07",
+          "x": 3850.51,
+          "y": 168.28,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "F01-c08",
+          "x": 6648.76,
+          "y": 417.72,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "F01-c09",
+          "x": 343.2,
+          "y": -31,
+          "kind": "CC",
+          "skill": true
+        },
+        {
+          "id": "F01-c10",
+          "x": 3172.8,
+          "y": 207.75,
+          "kind": "CC",
+          "skill": true
+        },
+        {
+          "id": "F01-c11",
+          "x": 4594.8,
+          "y": 256.88,
+          "kind": "CC",
+          "skill": true
+        },
+        {
+          "id": "F01-c12",
+          "x": 4594.8,
+          "y": 256.88,
+          "kind": "CC",
+          "skill": true
+        },
+        {
+          "id": "F01-c13",
+          "x": 5243.97,
+          "y": 291.75,
+          "kind": "CS",
+          "skill": true
+        },
+        {
+          "id": "F01-c14",
+          "x": 8151.3,
+          "y": 503.38,
+          "kind": "CS",
+          "skill": true
+        }
+      ],
+      "issues": []
+    },
+    {
+      "id": "F02",
+      "count": 14,
+      "repairCount": 2,
+      "coins": [
+        {
+          "id": "F02-c01",
+          "x": 4827.63,
+          "y": -186.86,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "F02-c02",
+          "x": 6231.54,
+          "y": 48.27,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "F02-c03",
+          "x": 3300.97,
+          "y": -247.37,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "F02-c04",
+          "x": 8816.4,
+          "y": 73.56,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "F02-c05",
+          "x": 6524.79,
+          "y": 44.64,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "F02-c06",
+          "x": 1292,
+          "y": -583,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "F02-c07",
+          "x": 2652,
+          "y": -465,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "F02-c08",
+          "x": 3076,
+          "y": -343.37,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "F02-c09",
+          "x": 1605.6,
+          "y": -303.37,
+          "kind": "CC",
+          "skill": true
+        },
+        {
+          "id": "F02-c10",
+          "x": 2133.6,
+          "y": -255.37,
+          "kind": "CC",
+          "skill": true
+        },
+        {
+          "id": "F02-c11",
+          "x": 2497.2,
+          "y": -272.98,
+          "kind": "CC",
+          "skill": true
+        },
+        {
+          "id": "F02-c12",
+          "x": 5425.2,
+          "y": -121.6,
+          "kind": "CC",
+          "skill": true
+        },
+        {
+          "id": "F02-c13",
+          "x": 6703.27,
+          "y": 151.38,
+          "kind": "CS",
+          "skill": true
+        },
+        {
+          "id": "F02-c14",
+          "x": 6971.02,
+          "y": 151.38,
+          "kind": "CS",
+          "skill": true
+        }
+      ],
+      "issues": []
+    },
+    {
+      "id": "F03",
+      "count": 14,
+      "repairCount": 1,
+      "coins": [
+        {
+          "id": "F03-c01",
+          "x": 1039.62,
+          "y": 207.19,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "F03-c02",
+          "x": 5631.14,
+          "y": 372.95,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "F03-c03",
+          "x": 4675.07,
+          "y": 415.41,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "F03-c04",
+          "x": 7297.72,
+          "y": 296.43,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "F03-c05",
+          "x": 3239.91,
+          "y": 241.47,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "F03-c06",
+          "x": 441.62,
+          "y": 83.47,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "F03-c07",
+          "x": 1492.53,
+          "y": 216.83,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "F03-c08",
+          "x": 2679.66,
+          "y": 287.95,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "F03-c09",
+          "x": 5839,
+          "y": 361,
+          "kind": "CC",
+          "skill": true
+        },
+        {
+          "id": "F03-c10",
+          "x": 6385.24,
+          "y": 289,
+          "kind": "CC",
+          "skill": true
+        },
+        {
+          "id": "F03-c11",
+          "x": 1212.8,
+          "y": 230.05,
+          "kind": "CC",
+          "skill": true
+        },
+        {
+          "id": "F03-c12",
+          "x": 2115.44,
+          "y": 250.66,
+          "kind": "CC",
+          "skill": true
+        },
+        {
+          "id": "F03-c13",
+          "x": 5023.42,
+          "y": 443.01,
+          "kind": "CS",
+          "skill": true
+        },
+        {
+          "id": "F03-c14",
+          "x": 7607.83,
+          "y": 378.26,
+          "kind": "CS",
+          "skill": true
+        }
+      ],
+      "issues": []
+    },
+    {
+      "id": "F04",
+      "count": 14,
+      "repairCount": 1,
+      "coins": [
+        {
+          "id": "F04-c01",
+          "x": 2532.84,
+          "y": 206.76,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "F04-c02",
+          "x": 3183.12,
+          "y": 185.14,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "F04-c03",
+          "x": 5326.34,
+          "y": 91.53,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "F04-c04",
+          "x": 7753.12,
+          "y": 490.02,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "F04-c05",
+          "x": 1205.53,
+          "y": -265.59,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "F04-c06",
+          "x": 4515.68,
+          "y": 206.79,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "F04-c07",
+          "x": 2272.69,
+          "y": 314.36,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "F04-c08",
+          "x": 7118.66,
+          "y": 456.2,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "F04-c09",
+          "x": 114,
+          "y": -248.2,
+          "kind": "CC",
+          "skill": true
+        },
+        {
+          "id": "F04-c10",
+          "x": 114,
+          "y": -248.2,
+          "kind": "CC",
+          "skill": true
+        },
+        {
+          "id": "F04-c11",
+          "x": 274,
+          "y": -345.81,
+          "kind": "CC",
+          "skill": true
+        },
+        {
+          "id": "F04-c12",
+          "x": 692.56,
+          "y": -279.75,
+          "kind": "CC",
+          "skill": true
+        },
+        {
+          "id": "F04-c13",
+          "x": 4787.6,
+          "y": 164.63,
+          "kind": "CS",
+          "skill": true
+        },
+        {
+          "id": "F04-c14",
+          "x": 5636.6,
+          "y": 164.63,
+          "kind": "CS",
+          "skill": true
+        }
+      ],
+      "issues": []
+    },
+    {
+      "id": "F05",
+      "count": 14,
+      "repairCount": 6,
+      "coins": [
+        {
+          "id": "F05-c01",
+          "x": 1456,
+          "y": -125,
+          "kind": "CS",
+          "skill": true
+        },
+        {
+          "id": "F05-c02",
+          "x": 5421.26,
+          "y": 302.2,
+          "kind": "CC",
+          "skill": true
+        },
+        {
+          "id": "F05-c03",
+          "x": 6559.26,
+          "y": 603.28,
+          "kind": "CC",
+          "skill": true
+        },
+        {
+          "id": "F05-c04",
+          "x": 7099.26,
+          "y": 828.85,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "F05-c05",
+          "x": 7830.26,
+          "y": 828.85,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "F05-c06",
+          "x": 8512.26,
+          "y": 828.85,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "F05-c07",
+          "x": 8512.26,
+          "y": 828.85,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "F05-c08",
+          "x": 8512.26,
+          "y": 828.85,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "F05-c09",
+          "x": 8512.26,
+          "y": 828.85,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "F05-c10",
+          "x": 8512.26,
+          "y": 828.85,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "F05-c11",
+          "x": 8512.26,
+          "y": 828.85,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "F05-c12",
+          "x": 7725.45,
+          "y": 839.89,
+          "kind": "CC",
+          "skill": true
+        },
+        {
+          "id": "F05-c13",
+          "x": 7669.45,
+          "y": 839.89,
+          "kind": "CC",
+          "skill": true
+        },
+        {
+          "id": "F05-c14",
+          "x": 8887.47,
+          "y": 912.85,
+          "kind": "CS",
+          "skill": true
+        }
+      ],
+      "issues": []
+    },
+    {
+      "id": "F06",
+      "count": 14,
+      "repairCount": 3,
+      "coins": [
+        {
+          "id": "F06-c01",
+          "x": 1816.6,
+          "y": -341,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "F06-c02",
+          "x": 2340.6,
+          "y": -455,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "F06-c03",
+          "x": 2796.24,
+          "y": -349,
+          "kind": "CC",
+          "skill": true
+        },
+        {
+          "id": "F06-c04",
+          "x": 2796.24,
+          "y": -349,
+          "kind": "CC",
+          "skill": true
+        },
+        {
+          "id": "F06-c05",
+          "x": 2796.24,
+          "y": -349,
+          "kind": "CC",
+          "skill": true
+        },
+        {
+          "id": "F06-c06",
+          "x": 2796.24,
+          "y": -349,
+          "kind": "CC",
+          "skill": true
+        },
+        {
+          "id": "F06-c07",
+          "x": 3505.6,
+          "y": -382,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "F06-c08",
+          "x": 3821.6,
+          "y": -298.62,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "F06-c09",
+          "x": 3821.6,
+          "y": -298.62,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "F06-c10",
+          "x": 3821.6,
+          "y": -298.62,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "F06-c11",
+          "x": 3821.6,
+          "y": -298.62,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "F06-c12",
+          "x": 3821.6,
+          "y": -298.62,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "F06-c13",
+          "x": 7368.08,
+          "y": -41.42,
+          "kind": "CS",
+          "skill": true
+        },
+        {
+          "id": "F06-c14",
+          "x": 7312.08,
+          "y": -84.62,
+          "kind": "CS",
+          "skill": true
+        }
+      ],
+      "issues": []
+    },
+    {
+      "id": "M01",
+      "count": 14,
+      "repairCount": 2,
+      "coins": [
+        {
+          "id": "M01-c01",
+          "x": 488,
+          "y": -963,
+          "skill": false
+        },
+        {
+          "id": "M01-c02",
+          "x": 1456,
+          "y": -1140,
+          "skill": false
+        },
+        {
+          "id": "M01-c03",
+          "x": 1999,
+          "y": -1122,
+          "skill": false
+        },
+        {
+          "id": "M01-c04",
+          "x": 2442,
+          "y": -1091.25,
+          "skill": false
+        },
+        {
+          "id": "M01-c05",
+          "x": 2861,
+          "y": -659.25,
+          "skill": false
+        },
+        {
+          "id": "M01-c06",
+          "x": 3842,
+          "y": -852,
+          "skill": false
+        },
+        {
+          "id": "M01-c07",
+          "x": 4821.2,
+          "y": -943.25,
+          "skill": false
+        },
+        {
+          "id": "M01-c08",
+          "x": 6085,
+          "y": -486,
+          "skill": false
+        },
+        {
+          "id": "M01-c09",
+          "x": 715.6,
+          "y": -1015.25,
+          "skill": false
+        },
+        {
+          "id": "M01-c10",
+          "x": 1544.8,
+          "y": -1028.5,
+          "skill": false
+        },
+        {
+          "id": "M01-c11",
+          "x": 2374.8,
+          "y": -1169.625,
+          "skill": false
+        },
+        {
+          "id": "M01-c12",
+          "x": 2410.8,
+          "y": -1240.125,
+          "skill": false
+        },
+        {
+          "id": "M01-c13",
+          "x": 1136.4,
+          "y": -979.25,
+          "skill": false
+        },
+        {
+          "id": "M01-c14",
+          "x": 5266.8,
+          "y": -445,
+          "skill": false
+        }
+      ],
+      "issues": []
+    },
+    {
+      "id": "M02",
+      "count": 14,
+      "repairCount": 5,
+      "coins": [
+        {
+          "id": "M02-c01",
+          "x": 408,
+          "y": -212.63,
+          "skill": false
+        },
+        {
+          "id": "M02-c02",
+          "x": 870,
+          "y": -380,
+          "skill": false
+        },
+        {
+          "id": "M02-c03",
+          "x": 979,
+          "y": -341,
+          "skill": false
+        },
+        {
+          "id": "M02-c04",
+          "x": 2028,
+          "y": -277.38,
+          "skill": false
+        },
+        {
+          "id": "M02-c05",
+          "x": 4498,
+          "y": -22,
+          "skill": false
+        },
+        {
+          "id": "M02-c06",
+          "x": 3328,
+          "y": -29,
+          "skill": false
+        },
+        {
+          "id": "M02-c07",
+          "x": 496,
+          "y": -290.25,
+          "skill": false
+        },
+        {
+          "id": "M02-c08",
+          "x": 620.8,
+          "y": -347.75,
+          "skill": false
+        },
+        {
+          "id": "M02-c09",
+          "x": 1050.4,
+          "y": -370.625,
+          "skill": false
+        },
+        {
+          "id": "M02-c10",
+          "x": 3418.24,
+          "y": -99.375,
+          "skill": false
+        },
+        {
+          "id": "M02-c11",
+          "x": 1303.6,
+          "y": -464.25,
+          "skill": false
+        },
+        {
+          "id": "M02-c12",
+          "x": 2258.8,
+          "y": -381.375,
+          "skill": false
+        },
+        {
+          "id": "M02-c13",
+          "x": 3113.89,
+          "y": -29,
+          "skill": false
+        },
+        {
+          "id": "M02-c14",
+          "x": 114,
+          "y": -268.625,
+          "skill": false
+        }
+      ],
+      "issues": []
+    },
+    {
+      "id": "M03",
+      "count": 14,
+      "repairCount": 3,
+      "coins": [
+        {
+          "id": "M03-c01",
+          "x": 319,
+          "y": -213.75,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "M03-c02",
+          "x": 772,
+          "y": -445,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "M03-c03",
+          "x": 1246,
+          "y": -407,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "M03-c04",
+          "x": 1536,
+          "y": -528,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "M03-c05",
+          "x": 2778,
+          "y": -155,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "M03-c06",
+          "x": 3904.4,
+          "y": 99.75,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "M03-c07",
+          "x": 4501,
+          "y": 14,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "M03-c08",
+          "x": 500,
+          "y": -340,
+          "kind": "CC",
+          "skill": true
+        },
+        {
+          "id": "M03-c09",
+          "x": 562.6,
+          "y": -340.625,
+          "kind": "CC",
+          "skill": true
+        },
+        {
+          "id": "M03-c10",
+          "x": 1198,
+          "y": -415,
+          "kind": "CC",
+          "skill": true
+        },
+        {
+          "id": "M03-c11",
+          "x": 3596.8,
+          "y": 78.25,
+          "kind": "CC",
+          "skill": true
+        },
+        {
+          "id": "M03-c12",
+          "x": 1400,
+          "y": -415,
+          "kind": "CS",
+          "skill": true
+        },
+        {
+          "id": "M03-c13",
+          "x": 4392,
+          "y": 158.25,
+          "kind": "CS",
+          "skill": true
+        },
+        {
+          "id": "M03-c14",
+          "x": 5580,
+          "y": 114,
+          "kind": "CS",
+          "skill": true
+        }
+      ],
+      "issues": []
+    },
+    {
+      "id": "M04",
+      "count": 14,
+      "repairCount": 2,
+      "coins": [
+        {
+          "id": "M04-c01",
+          "x": 1686,
+          "y": 287.38,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "M04-c02",
+          "x": 2336,
+          "y": 48,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "M04-c03",
+          "x": 2782,
+          "y": -104,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "M04-c04",
+          "x": 3870,
+          "y": -105,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "M04-c05",
+          "x": 4765,
+          "y": 62,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "M04-c06",
+          "x": 7690,
+          "y": 260,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "M04-c07",
+          "x": 8626,
+          "y": 235,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "M04-c08",
+          "x": 1009.6,
+          "y": 207.375,
+          "kind": "CC",
+          "skill": true
+        },
+        {
+          "id": "M04-c09",
+          "x": 1840,
+          "y": 160,
+          "kind": "CC",
+          "skill": true
+        },
+        {
+          "id": "M04-c10",
+          "x": 1904.3999999999999,
+          "y": 160.75,
+          "kind": "CC",
+          "skill": true
+        },
+        {
+          "id": "M04-c11",
+          "x": 2095.6,
+          "y": 85.375,
+          "kind": "CC",
+          "skill": true
+        },
+        {
+          "id": "M04-c12",
+          "x": 2867.2,
+          "y": 6.25,
+          "kind": "CC",
+          "skill": true
+        },
+        {
+          "id": "M04-c13",
+          "x": 1168.56,
+          "y": 195.375,
+          "kind": "CS",
+          "skill": true
+        },
+        {
+          "id": "M04-c14",
+          "x": 2750,
+          "y": 202.63,
+          "kind": "CS",
+          "skill": true
+        }
+      ],
+      "issues": []
+    },
+    {
+      "id": "M05",
+      "count": 14,
+      "repairCount": 2,
+      "coins": [
+        {
+          "id": "M05-c01",
+          "x": 353,
+          "y": -107,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "M05-c02",
+          "x": 297,
+          "y": -107,
+          "kind": "CS",
+          "skill": true
+        },
+        {
+          "id": "M05-c03",
+          "x": 877,
+          "y": -221,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "M05-c04",
+          "x": 877,
+          "y": -221,
+          "kind": "CS",
+          "skill": true
+        },
+        {
+          "id": "M05-c05",
+          "x": 1332.64,
+          "y": -115,
+          "kind": "CC",
+          "skill": true
+        },
+        {
+          "id": "M05-c06",
+          "x": 2042,
+          "y": -148,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "M05-c07",
+          "x": 2358,
+          "y": -64.62,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "M05-c08",
+          "x": 2358,
+          "y": -64.62,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "M05-c09",
+          "x": 2358,
+          "y": -64.62,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "M05-c10",
+          "x": 2358,
+          "y": -64.62,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "M05-c11",
+          "x": 2358,
+          "y": -64.62,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "M05-c12",
+          "x": 4730.08,
+          "y": 14.13,
+          "kind": "CC",
+          "skill": true
+        },
+        {
+          "id": "M05-c13",
+          "x": 4730.08,
+          "y": 14.13,
+          "kind": "CC",
+          "skill": true
+        },
+        {
+          "id": "M05-c14",
+          "x": 4730.08,
+          "y": 14.13,
+          "kind": "CC",
+          "skill": true
+        }
+      ],
+      "issues": []
+    },
+    {
+      "id": "M06",
+      "count": 14,
+      "repairCount": 3,
+      "coins": [
+        {
+          "id": "M06-c01",
+          "x": 353,
+          "y": -107,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "M06-c02",
+          "x": 297,
+          "y": -107,
+          "kind": "CS",
+          "skill": true
+        },
+        {
+          "id": "M06-c03",
+          "x": 877,
+          "y": -221,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "M06-c04",
+          "x": 877,
+          "y": -221,
+          "kind": "CS",
+          "skill": true
+        },
+        {
+          "id": "M06-c05",
+          "x": 1332.64,
+          "y": -115,
+          "kind": "CC",
+          "skill": true
+        },
+        {
+          "id": "M06-c06",
+          "x": 1332.64,
+          "y": -115,
+          "kind": "CC",
+          "skill": true
+        },
+        {
+          "id": "M06-c07",
+          "x": 1332.64,
+          "y": -115,
+          "kind": "CC",
+          "skill": true
+        },
+        {
+          "id": "M06-c08",
+          "x": 1332.64,
+          "y": -115,
+          "kind": "CC",
+          "skill": true
+        },
+        {
+          "id": "M06-c09",
+          "x": 2042,
+          "y": -148,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "M06-c10",
+          "x": 2358,
+          "y": -64.62,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "M06-c11",
+          "x": 4837.48,
+          "y": 77.38,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "M06-c12",
+          "x": 5290.48,
+          "y": -153.87,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "M06-c13",
+          "x": 5290.48,
+          "y": -153.87,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "M06-c14",
+          "x": 5290.48,
+          "y": -153.87,
+          "kind": "CJ",
+          "skill": false
+        }
+      ],
+      "issues": []
+    },
+    {
+      "id": "A01",
+      "count": 14,
+      "repairCount": 5,
+      "coins": [
+        {
+          "id": "A01-c01",
+          "x": 527,
+          "y": 207,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "A01-c02",
+          "x": 1038,
+          "y": 88,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "A01-c03",
+          "x": 2244,
+          "y": 397,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "A01-c04",
+          "x": 2722,
+          "y": 302.25,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "A01-c05",
+          "x": 4643,
+          "y": 38,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "A01-c06",
+          "x": 6049,
+          "y": 152,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "A01-c07",
+          "x": 7835,
+          "y": 353.5,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "A01-c08",
+          "x": 680,
+          "y": 310,
+          "kind": "CS",
+          "skill": true
+        },
+        {
+          "id": "A01-c09",
+          "x": 1620,
+          "y": 273.38,
+          "kind": "CS",
+          "skill": true
+        },
+        {
+          "id": "A01-c10",
+          "x": 3480,
+          "y": 161.75,
+          "kind": "CS",
+          "skill": true
+        },
+        {
+          "id": "A01-c11",
+          "x": 250,
+          "y": 312.25,
+          "kind": "CC",
+          "skill": true
+        },
+        {
+          "id": "A01-c12",
+          "x": 2506,
+          "y": 294.25,
+          "kind": "CC",
+          "skill": true
+        },
+        {
+          "id": "A01-c13",
+          "x": 2822.8,
+          "y": 219.75,
+          "kind": "CC",
+          "skill": true
+        },
+        {
+          "id": "A01-c14",
+          "x": 2938.7999999999997,
+          "y": 198.25,
+          "kind": "CC",
+          "skill": true
+        }
+      ],
+      "issues": []
+    },
+    {
+      "id": "A02",
+      "count": 14,
+      "repairCount": 4,
+      "coins": [
+        {
+          "id": "A02-c01",
+          "x": 1037,
+          "y": -1502,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "A02-c02",
+          "x": 1838,
+          "y": -1494,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "A02-c03",
+          "x": 2908,
+          "y": -757.38,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "A02-c04",
+          "x": 3473,
+          "y": -905,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "A02-c05",
+          "x": 3775,
+          "y": -926.63,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "A02-c06",
+          "x": 4196,
+          "y": -1106.25,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "A02-c07",
+          "x": 5085.84,
+          "y": -806.25,
+          "kind": "CS",
+          "skill": true
+        },
+        {
+          "id": "A02-c08",
+          "x": 4926,
+          "y": -806.25,
+          "kind": "CS",
+          "skill": true
+        },
+        {
+          "id": "A02-c09",
+          "x": 4916.4,
+          "y": -806.25,
+          "kind": "CS",
+          "skill": true
+        },
+        {
+          "id": "A02-c10",
+          "x": 2650,
+          "y": -945,
+          "kind": "CC",
+          "skill": true
+        },
+        {
+          "id": "A02-c11",
+          "x": 2956.8,
+          "y": -884.25,
+          "kind": "CC",
+          "skill": true
+        },
+        {
+          "id": "A02-c12",
+          "x": 3050,
+          "y": -757.38,
+          "kind": "CC",
+          "skill": true
+        },
+        {
+          "id": "A02-c13",
+          "x": 3424,
+          "y": -913,
+          "kind": "CC",
+          "skill": true
+        },
+        {
+          "id": "A02-c14",
+          "x": 3727.6,
+          "y": -934.625,
+          "kind": "CC",
+          "skill": true
+        }
+      ],
+      "issues": []
+    },
+    {
+      "id": "A03",
+      "count": 14,
+      "repairCount": 3,
+      "coins": [
+        {
+          "id": "A03-c01",
+          "x": 353,
+          "y": -107,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "A03-c02",
+          "x": 297,
+          "y": -107,
+          "kind": "CS",
+          "skill": true
+        },
+        {
+          "id": "A03-c03",
+          "x": 877,
+          "y": -221,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "A03-c04",
+          "x": 877,
+          "y": -221,
+          "kind": "CS",
+          "skill": true
+        },
+        {
+          "id": "A03-c05",
+          "x": 1332.64,
+          "y": -115,
+          "kind": "CC",
+          "skill": true
+        },
+        {
+          "id": "A03-c06",
+          "x": 2042,
+          "y": -148,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "A03-c07",
+          "x": 2358,
+          "y": -64.62,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "A03-c08",
+          "x": 7402.68,
+          "y": 12.63,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "A03-c09",
+          "x": 7583.68,
+          "y": -113.62,
+          "kind": "CC",
+          "skill": true
+        },
+        {
+          "id": "A03-c10",
+          "x": 7646.28,
+          "y": -114.24,
+          "kind": "CC",
+          "skill": true
+        },
+        {
+          "id": "A03-c11",
+          "x": 7646.28,
+          "y": -114.24,
+          "kind": "CC",
+          "skill": true
+        },
+        {
+          "id": "A03-c12",
+          "x": 7855.68,
+          "y": -218.62,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "A03-c13",
+          "x": 7855.68,
+          "y": -218.62,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "A03-c14",
+          "x": 7855.68,
+          "y": -218.62,
+          "kind": "CJ",
+          "skill": false
+        }
+      ],
+      "issues": []
+    },
+    {
+      "id": "A04",
+      "count": 14,
+      "repairCount": 3,
+      "coins": [
+        {
+          "id": "A04-c01",
+          "x": 353,
+          "y": -107,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "A04-c02",
+          "x": 297,
+          "y": -107,
+          "kind": "CS",
+          "skill": true
+        },
+        {
+          "id": "A04-c03",
+          "x": 877,
+          "y": -221,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "A04-c04",
+          "x": 877,
+          "y": -221,
+          "kind": "CS",
+          "skill": true
+        },
+        {
+          "id": "A04-c05",
+          "x": 1332.64,
+          "y": -115,
+          "kind": "CC",
+          "skill": true
+        },
+        {
+          "id": "A04-c06",
+          "x": 2042,
+          "y": -148,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "A04-c07",
+          "x": 2358,
+          "y": -64.62,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "A04-c08",
+          "x": 4801.48,
+          "y": 77.38,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "A04-c09",
+          "x": 5325.48,
+          "y": -36.62,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "A04-c10",
+          "x": 5781.12,
+          "y": 69.38,
+          "kind": "CC",
+          "skill": true
+        },
+        {
+          "id": "A04-c11",
+          "x": 5781.12,
+          "y": 69.38,
+          "kind": "CC",
+          "skill": true
+        },
+        {
+          "id": "A04-c12",
+          "x": 5781.12,
+          "y": 69.38,
+          "kind": "CC",
+          "skill": true
+        },
+        {
+          "id": "A04-c13",
+          "x": 6490.48,
+          "y": 36.38,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "A04-c14",
+          "x": 6806.48,
+          "y": 119.76,
+          "kind": "CJ",
+          "skill": false
+        }
+      ],
+      "issues": []
+    },
+    {
+      "id": "A05",
+      "count": 14,
+      "repairCount": 2,
+      "coins": [
+        {
+          "id": "A05-c01",
+          "x": 353,
+          "y": -107,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "A05-c02",
+          "x": 297,
+          "y": -107,
+          "kind": "CS",
+          "skill": true
+        },
+        {
+          "id": "A05-c03",
+          "x": 877,
+          "y": -221,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "A05-c04",
+          "x": 877,
+          "y": -221,
+          "kind": "CS",
+          "skill": true
+        },
+        {
+          "id": "A05-c05",
+          "x": 1332.64,
+          "y": -115,
+          "kind": "CC",
+          "skill": true
+        },
+        {
+          "id": "A05-c06",
+          "x": 2042,
+          "y": -148,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "A05-c07",
+          "x": 2358,
+          "y": -64.62,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "A05-c08",
+          "x": 2358,
+          "y": -64.62,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "A05-c09",
+          "x": 2358,
+          "y": -64.62,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "A05-c10",
+          "x": 2358,
+          "y": -64.62,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "A05-c11",
+          "x": 2358,
+          "y": -64.62,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "A05-c12",
+          "x": 4730.08,
+          "y": 14.13,
+          "kind": "CC",
+          "skill": true
+        },
+        {
+          "id": "A05-c13",
+          "x": 5652.48,
+          "y": -2.62,
+          "kind": "CC",
+          "skill": true
+        },
+        {
+          "id": "A05-c14",
+          "x": 5652.48,
+          "y": -2.62,
+          "kind": "CC",
+          "skill": true
+        }
+      ],
+      "issues": []
+    },
+    {
+      "id": "A06",
+      "count": 14,
+      "repairCount": 3,
+      "coins": [
+        {
+          "id": "A06-c01",
+          "x": 353,
+          "y": -107,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "A06-c02",
+          "x": 297,
+          "y": -107,
+          "kind": "CS",
+          "skill": true
+        },
+        {
+          "id": "A06-c03",
+          "x": 877,
+          "y": -221,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "A06-c04",
+          "x": 877,
+          "y": -221,
+          "kind": "CS",
+          "skill": true
+        },
+        {
+          "id": "A06-c05",
+          "x": 1332.64,
+          "y": -115,
+          "kind": "CC",
+          "skill": true
+        },
+        {
+          "id": "A06-c06",
+          "x": 2042,
+          "y": -148,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "A06-c07",
+          "x": 2358,
+          "y": -64.62,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "A06-c08",
+          "x": 7402.68,
+          "y": 12.63,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "A06-c09",
+          "x": 7583.68,
+          "y": -113.62,
+          "kind": "CC",
+          "skill": true
+        },
+        {
+          "id": "A06-c10",
+          "x": 7646.28,
+          "y": -114.24,
+          "kind": "CC",
+          "skill": true
+        },
+        {
+          "id": "A06-c11",
+          "x": 7646.28,
+          "y": -114.24,
+          "kind": "CC",
+          "skill": true
+        },
+        {
+          "id": "A06-c12",
+          "x": 7855.68,
+          "y": -218.62,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "A06-c13",
+          "x": 7855.68,
+          "y": -218.62,
+          "kind": "CJ",
+          "skill": false
+        },
+        {
+          "id": "A06-c14",
+          "x": 7855.68,
+          "y": -218.62,
+          "kind": "CJ",
+          "skill": false
+        }
+      ],
+      "issues": []
+    }
+  ],
+  "totalCoins": 489,
+  "totalIssues": 0
+}

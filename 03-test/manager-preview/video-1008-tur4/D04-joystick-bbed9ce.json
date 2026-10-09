@@ -1,0 +1,1432 @@
+{
+  "label": "bbed9ce",
+  "root": "C:\\Users\\Arget\\AppData\\Local\\Temp/tmb-tur4/bbed9ce",
+  "input": {
+    "viewport": "915x412",
+    "joystickAxis": "right + 0.10 radius down",
+    "jumpHoldMs": 42,
+    "jumpCadenceMs": 280,
+    "startX": 3919,
+    "chief": true
+  },
+  "maxSingleFrameBack": -47.613990886363354,
+  "backFrames": [
+    {
+      "t": 1.883,
+      "x": 4278.79,
+      "y": -131.8,
+      "dx": -47.61,
+      "state": "normal",
+      "checkpoint": 3919,
+      "chiefX": 1577.91,
+      "catches": 0
+    }
+  ],
+  "frames": [
+    {
+      "t": 0.083,
+      "x": 3919,
+      "y": -131.8,
+      "dx": 0,
+      "state": "normal",
+      "checkpoint": 3919,
+      "chiefX": 1209.35,
+      "catches": 0
+    },
+    {
+      "t": 0.15,
+      "x": 3922.85,
+      "y": -131.8,
+      "dx": 3.85,
+      "state": "normal",
+      "checkpoint": 3919,
+      "chiefX": 1209.35,
+      "catches": 0
+    },
+    {
+      "t": 0.233,
+      "x": 3936.3,
+      "y": -131.8,
+      "dx": 13.45,
+      "state": "normal",
+      "checkpoint": 3919,
+      "chiefX": 1209.35,
+      "catches": 0
+    },
+    {
+      "t": 0.3,
+      "x": 3952.5,
+      "y": -131.8,
+      "dx": 16.2,
+      "state": "normal",
+      "checkpoint": 3919,
+      "chiefX": 1209.35,
+      "catches": 0
+    },
+    {
+      "t": 0.35,
+      "x": 3964.86,
+      "y": -131.8,
+      "dx": 12.37,
+      "state": "normal",
+      "checkpoint": 3919,
+      "chiefX": 1209.35,
+      "catches": 0
+    },
+    {
+      "t": 0.417,
+      "x": 3981.39,
+      "y": -131.8,
+      "dx": 16.52,
+      "state": "normal",
+      "checkpoint": 3919,
+      "chiefX": 1209.35,
+      "catches": 0
+    },
+    {
+      "t": 0.55,
+      "x": 4014.33,
+      "y": -171.27,
+      "dx": 32.95,
+      "state": "normal",
+      "checkpoint": 3919,
+      "chiefX": 1209.35,
+      "catches": 0
+    },
+    {
+      "t": 0.617,
+      "x": 4030.83,
+      "y": -183.59,
+      "dx": 16.5,
+      "state": "normal",
+      "checkpoint": 3919,
+      "chiefX": 1209.35,
+      "catches": 0
+    },
+    {
+      "t": 0.683,
+      "x": 4047.33,
+      "y": -189.46,
+      "dx": 16.5,
+      "state": "normal",
+      "checkpoint": 3919,
+      "chiefX": 1209.35,
+      "catches": 0
+    },
+    {
+      "t": 0.75,
+      "x": 4063.83,
+      "y": -188.87,
+      "dx": 16.5,
+      "state": "normal",
+      "checkpoint": 3919,
+      "chiefX": 1209.35,
+      "catches": 0
+    },
+    {
+      "t": 0.8,
+      "x": 4076.2,
+      "y": -184.21,
+      "dx": 12.37,
+      "state": "normal",
+      "checkpoint": 3919,
+      "chiefX": 1209.35,
+      "catches": 0
+    },
+    {
+      "t": 0.917,
+      "x": 4105.04,
+      "y": -159.24,
+      "dx": 28.84,
+      "state": "normal",
+      "checkpoint": 3919,
+      "chiefX": 1249.32,
+      "catches": 0
+    },
+    {
+      "t": 0.983,
+      "x": 4121.54,
+      "y": -170.84,
+      "dx": 16.5,
+      "state": "normal",
+      "checkpoint": 3919,
+      "chiefX": 1271.87,
+      "catches": 0
+    },
+    {
+      "t": 1.033,
+      "x": 4133.9,
+      "y": -194.01,
+      "dx": 12.37,
+      "state": "normal",
+      "checkpoint": 3919,
+      "chiefX": 1288.87,
+      "catches": 0
+    },
+    {
+      "t": 1.1,
+      "x": 4150.4,
+      "y": -219.27,
+      "dx": 16.5,
+      "state": "normal",
+      "checkpoint": 3919,
+      "chiefX": 1311.57,
+      "catches": 0
+    },
+    {
+      "t": 1.167,
+      "x": 4166.88,
+      "y": -238.07,
+      "dx": 16.47,
+      "state": "normal",
+      "checkpoint": 3919,
+      "chiefX": 1334.26,
+      "catches": 0
+    },
+    {
+      "t": 1.3,
+      "x": 4199.85,
+      "y": -256.36,
+      "dx": 32.97,
+      "state": "normal",
+      "checkpoint": 3919,
+      "chiefX": 1379.49,
+      "catches": 0
+    },
+    {
+      "t": 1.367,
+      "x": 4216.35,
+      "y": -255.84,
+      "dx": 16.5,
+      "state": "normal",
+      "checkpoint": 3919,
+      "chiefX": 1402.3,
+      "catches": 0
+    },
+    {
+      "t": 1.433,
+      "x": 4232.82,
+      "y": -248.88,
+      "dx": 16.47,
+      "state": "normal",
+      "checkpoint": 3919,
+      "chiefX": 1424.9,
+      "catches": 0
+    },
+    {
+      "t": 1.5,
+      "x": 4249.34,
+      "y": -235.44,
+      "dx": 16.52,
+      "state": "normal",
+      "checkpoint": 3919,
+      "chiefX": 1447.72,
+      "catches": 0
+    },
+    {
+      "t": 1.567,
+      "x": 4265.82,
+      "y": -215.6,
+      "dx": 16.47,
+      "state": "normal",
+      "checkpoint": 3919,
+      "chiefX": 1470.28,
+      "catches": 0
+    },
+    {
+      "t": 1.7,
+      "x": 4298.81,
+      "y": -156.52,
+      "dx": 33,
+      "state": "normal",
+      "checkpoint": 3919,
+      "chiefX": 1515.66,
+      "catches": 0
+    },
+    {
+      "t": 1.75,
+      "x": 4311.15,
+      "y": -127.8,
+      "dx": 12.34,
+      "state": "normal",
+      "checkpoint": 3919,
+      "chiefX": 1532.61,
+      "catches": 0
+    },
+    {
+      "t": 1.817,
+      "x": 4326.4,
+      "y": -83.75,
+      "dx": 15.25,
+      "state": "normal",
+      "checkpoint": 3919,
+      "chiefX": 1555.18,
+      "catches": 0
+    },
+    {
+      "t": 1.883,
+      "x": 4278.79,
+      "y": -131.8,
+      "dx": -47.61,
+      "state": "normal",
+      "checkpoint": 3919,
+      "chiefX": 1577.91,
+      "catches": 0
+    },
+    {
+      "t": 1.95,
+      "x": 4284.16,
+      "y": -131.8,
+      "dx": 5.38,
+      "state": "normal",
+      "checkpoint": 3919,
+      "chiefX": 1600.69,
+      "catches": 0
+    },
+    {
+      "t": 2.05,
+      "x": 4303.66,
+      "y": -167.2,
+      "dx": 19.5,
+      "state": "normal",
+      "checkpoint": 3919,
+      "chiefX": 1634.65,
+      "catches": 0
+    },
+    {
+      "t": 2.117,
+      "x": 4320.13,
+      "y": -181.11,
+      "dx": 16.47,
+      "state": "normal",
+      "checkpoint": 3919,
+      "chiefX": 1657.27,
+      "catches": 0
+    },
+    {
+      "t": 2.183,
+      "x": 4336.66,
+      "y": -188.6,
+      "dx": 16.52,
+      "state": "normal",
+      "checkpoint": 3919,
+      "chiefX": 1679.95,
+      "catches": 0
+    },
+    {
+      "t": 2.233,
+      "x": 4349.02,
+      "y": -189.97,
+      "dx": 12.37,
+      "state": "normal",
+      "checkpoint": 3919,
+      "chiefX": 1697.02,
+      "catches": 0
+    },
+    {
+      "t": 2.3,
+      "x": 4365.5,
+      "y": -186.17,
+      "dx": 16.47,
+      "state": "normal",
+      "checkpoint": 3919,
+      "chiefX": 1719.56,
+      "catches": 0
+    },
+    {
+      "t": 2.433,
+      "x": 4398.47,
+      "y": -159.24,
+      "dx": 32.97,
+      "state": "normal",
+      "checkpoint": 3919,
+      "chiefX": 1764.89,
+      "catches": 0
+    },
+    {
+      "t": 2.5,
+      "x": 4414.97,
+      "y": -136.09,
+      "dx": 16.5,
+      "state": "normal",
+      "checkpoint": 3919,
+      "chiefX": 1787.52,
+      "catches": 0
+    },
+    {
+      "t": 2.567,
+      "x": 4431.47,
+      "y": -131.8,
+      "dx": 16.5,
+      "state": "normal",
+      "checkpoint": 3919,
+      "chiefX": 1810.21,
+      "catches": 0
+    },
+    {
+      "t": 2.617,
+      "x": 4443.83,
+      "y": -131.8,
+      "dx": 12.37,
+      "state": "normal",
+      "checkpoint": 3919,
+      "chiefX": 1827.34,
+      "catches": 0
+    },
+    {
+      "t": 2.683,
+      "x": 4460.31,
+      "y": -131.8,
+      "dx": 16.47,
+      "state": "normal",
+      "checkpoint": 3919,
+      "chiefX": 1839.93,
+      "catches": 0
+    },
+    {
+      "t": 2.816,
+      "x": 4493.28,
+      "y": -171.24,
+      "dx": 32.97,
+      "state": "normal",
+      "checkpoint": 3919,
+      "chiefX": 1853.66,
+      "catches": 0
+    },
+    {
+      "t": 2.866,
+      "x": 4505.65,
+      "y": -181.07,
+      "dx": 12.37,
+      "state": "normal",
+      "checkpoint": 3919,
+      "chiefX": 1894.4,
+      "catches": 0
+    },
+    {
+      "t": 2.933,
+      "x": 4522.14,
+      "y": -188.55,
+      "dx": 16.5,
+      "state": "normal",
+      "checkpoint": 3919,
+      "chiefX": 1916.96,
+      "catches": 0
+    },
+    {
+      "t": 3,
+      "x": 4538.64,
+      "y": -189.57,
+      "dx": 16.5,
+      "state": "normal",
+      "checkpoint": 3919,
+      "chiefX": 1939.6,
+      "catches": 0
+    },
+    {
+      "t": 3.05,
+      "x": 4551.01,
+      "y": -186.11,
+      "dx": 12.37,
+      "state": "normal",
+      "checkpoint": 3919,
+      "chiefX": 1956.6,
+      "catches": 0
+    },
+    {
+      "t": 3.166,
+      "x": 4579.85,
+      "y": -163.95,
+      "dx": 28.84,
+      "state": "normal",
+      "checkpoint": 3919,
+      "chiefX": 1996.32,
+      "catches": 0
+    },
+    {
+      "t": 3.233,
+      "x": 4596.35,
+      "y": -142.41,
+      "dx": 16.5,
+      "state": "normal",
+      "checkpoint": 3919,
+      "chiefX": 2018.94,
+      "catches": 0
+    },
+    {
+      "t": 3.283,
+      "x": 4608.72,
+      "y": -131.8,
+      "dx": 12.37,
+      "state": "normal",
+      "checkpoint": 3919,
+      "chiefX": 2035.99,
+      "catches": 0
+    },
+    {
+      "t": 3.35,
+      "x": 4625.19,
+      "y": -131.8,
+      "dx": 16.47,
+      "state": "normal",
+      "checkpoint": 3919,
+      "chiefX": 2058.59,
+      "catches": 0
+    },
+    {
+      "t": 3.416,
+      "x": 4641.69,
+      "y": -131.8,
+      "dx": 16.5,
+      "state": "normal",
+      "checkpoint": 3919,
+      "chiefX": 2081.39,
+      "catches": 0
+    },
+    {
+      "t": 3.55,
+      "x": 4674.69,
+      "y": -171.26,
+      "dx": 33,
+      "state": "normal",
+      "checkpoint": 3919,
+      "chiefX": 2126.7,
+      "catches": 0
+    },
+    {
+      "t": 3.616,
+      "x": 4691.16,
+      "y": -183.55,
+      "dx": 16.47,
+      "state": "normal",
+      "checkpoint": 3919,
+      "chiefX": 2149.32,
+      "catches": 0
+    },
+    {
+      "t": 3.683,
+      "x": 4707.66,
+      "y": -189.41,
+      "dx": 16.5,
+      "state": "normal",
+      "checkpoint": 3919,
+      "chiefX": 2171.97,
+      "catches": 0
+    },
+    {
+      "t": 3.75,
+      "x": 4724.13,
+      "y": -188.82,
+      "dx": 16.47,
+      "state": "normal",
+      "checkpoint": 3919,
+      "chiefX": 2194.62,
+      "catches": 0
+    },
+    {
+      "t": 3.8,
+      "x": 4736.52,
+      "y": -184.14,
+      "dx": 12.39,
+      "state": "normal",
+      "checkpoint": 3919,
+      "chiefX": 2211.61,
+      "catches": 0
+    },
+    {
+      "t": 3.933,
+      "x": 4769.49,
+      "y": -153.97,
+      "dx": 32.97,
+      "state": "normal",
+      "checkpoint": 3919,
+      "chiefX": 2257.04,
+      "catches": 0
+    },
+    {
+      "t": 3.983,
+      "x": 4781.86,
+      "y": -136,
+      "dx": 12.37,
+      "state": "normal",
+      "checkpoint": 3919,
+      "chiefX": 2274.01,
+      "catches": 0
+    },
+    {
+      "t": 4.05,
+      "x": 4802.86,
+      "y": -139.73,
+      "dx": 21,
+      "state": "normal",
+      "checkpoint": 3919,
+      "chiefX": 2296.57,
+      "catches": 0
+    },
+    {
+      "t": 4.116,
+      "x": 4837.55,
+      "y": -167.55,
+      "dx": 34.68,
+      "state": "normal",
+      "checkpoint": 3919,
+      "chiefX": 2319.28,
+      "catches": 0
+    },
+    {
+      "t": 4.183,
+      "x": 4872.23,
+      "y": -188.92,
+      "dx": 34.68,
+      "state": "normal",
+      "checkpoint": 3919,
+      "chiefX": 2341.91,
+      "catches": 0
+    },
+    {
+      "t": 4.283,
+      "x": 4915.04,
+      "y": -221.24,
+      "dx": 42.81,
+      "state": "normal",
+      "checkpoint": 3919,
+      "chiefX": 2376.03,
+      "catches": 0
+    },
+    {
+      "t": 4.35,
+      "x": 4931.54,
+      "y": -251.34,
+      "dx": 16.5,
+      "state": "normal",
+      "checkpoint": 3919,
+      "chiefX": 2398.64,
+      "catches": 0
+    },
+    {
+      "t": 4.417,
+      "x": 4948.03,
+      "y": -274.99,
+      "dx": 16.5,
+      "state": "normal",
+      "checkpoint": 3919,
+      "chiefX": 2421.22,
+      "catches": 0
+    },
+    {
+      "t": 4.467,
+      "x": 4960.4,
+      "y": -288.49,
+      "dx": 12.37,
+      "state": "normal",
+      "checkpoint": 3919,
+      "chiefX": 2438.37,
+      "catches": 0
+    },
+    {
+      "t": 4.533,
+      "x": 4976.9,
+      "y": -300.85,
+      "dx": 16.5,
+      "state": "normal",
+      "checkpoint": 3919,
+      "chiefX": 2460.95,
+      "catches": 0
+    },
+    {
+      "t": 4.65,
+      "x": 5005.74,
+      "y": -306.97,
+      "dx": 28.84,
+      "state": "normal",
+      "checkpoint": 3919,
+      "chiefX": 2500.62,
+      "catches": 0
+    },
+    {
+      "t": 4.716,
+      "x": 5022.21,
+      "y": -301.61,
+      "dx": 16.47,
+      "state": "normal",
+      "checkpoint": 3919,
+      "chiefX": 2523.22,
+      "catches": 0
+    },
+    {
+      "t": 4.767,
+      "x": 5034.61,
+      "y": -293.35,
+      "dx": 12.39,
+      "state": "normal",
+      "checkpoint": 3919,
+      "chiefX": 2540.29,
+      "catches": 0
+    },
+    {
+      "t": 4.833,
+      "x": 5051.1,
+      "y": -276.7,
+      "dx": 16.5,
+      "state": "normal",
+      "checkpoint": 3919,
+      "chiefX": 2562.9,
+      "catches": 0
+    },
+    {
+      "t": 4.9,
+      "x": 5067.58,
+      "y": -253.63,
+      "dx": 16.47,
+      "state": "normal",
+      "checkpoint": 3919,
+      "chiefX": 2585.54,
+      "catches": 0
+    },
+    {
+      "t": 5.016,
+      "x": 5096.42,
+      "y": -203.8,
+      "dx": 28.84,
+      "state": "normal",
+      "checkpoint": 3919,
+      "chiefX": 2625.24,
+      "catches": 0
+    },
+    {
+      "t": 5.083,
+      "x": 5112.94,
+      "y": -237.16,
+      "dx": 16.52,
+      "state": "normal",
+      "checkpoint": 3919,
+      "chiefX": 2647.94,
+      "catches": 0
+    },
+    {
+      "t": 5.15,
+      "x": 5129.42,
+      "y": -263.99,
+      "dx": 16.47,
+      "state": "normal",
+      "checkpoint": 3919,
+      "chiefX": 2670.57,
+      "catches": 0
+    },
+    {
+      "t": 5.217,
+      "x": 5145.91,
+      "y": -284.41,
+      "dx": 16.5,
+      "state": "normal",
+      "checkpoint": 3919,
+      "chiefX": 2693.28,
+      "catches": 0
+    },
+    {
+      "t": 5.267,
+      "x": 5158.28,
+      "y": -295.48,
+      "dx": 12.37,
+      "state": "normal",
+      "checkpoint": 3919,
+      "chiefX": 2710.24,
+      "catches": 0
+    },
+    {
+      "t": 5.383,
+      "x": 5187.12,
+      "y": -307.23,
+      "dx": 28.84,
+      "state": "normal",
+      "checkpoint": 3919,
+      "chiefX": 2749.99,
+      "catches": 0
+    },
+    {
+      "t": 5.45,
+      "x": 5203.6,
+      "y": -305.09,
+      "dx": 16.47,
+      "state": "normal",
+      "checkpoint": 3919,
+      "chiefX": 2772.59,
+      "catches": 0
+    },
+    {
+      "t": 5.5,
+      "x": 5215.96,
+      "y": -299.26,
+      "dx": 12.37,
+      "state": "normal",
+      "checkpoint": 3919,
+      "chiefX": 2789.72,
+      "catches": 0
+    },
+    {
+      "t": 5.567,
+      "x": 5232.49,
+      "y": -285.82,
+      "dx": 16.52,
+      "state": "normal",
+      "checkpoint": 3919,
+      "chiefX": 2812.38,
+      "catches": 0
+    },
+    {
+      "t": 5.633,
+      "x": 5248.96,
+      "y": -265.97,
+      "dx": 16.47,
+      "state": "normal",
+      "checkpoint": 3919,
+      "chiefX": 2834.92,
+      "catches": 0
+    },
+    {
+      "t": 5.75,
+      "x": 5277.83,
+      "y": -215.68,
+      "dx": 28.87,
+      "state": "normal",
+      "checkpoint": 3919,
+      "chiefX": 2874.63,
+      "catches": 0
+    },
+    {
+      "t": 5.816,
+      "x": 5294.3,
+      "y": -221.24,
+      "dx": 16.47,
+      "state": "normal",
+      "checkpoint": 3919,
+      "chiefX": 2897.23,
+      "catches": 0
+    },
+    {
+      "t": 5.883,
+      "x": 5310.8,
+      "y": -251.34,
+      "dx": 16.5,
+      "state": "normal",
+      "checkpoint": 3919,
+      "chiefX": 2919.97,
+      "catches": 0
+    },
+    {
+      "t": 5.95,
+      "x": 5327.27,
+      "y": -274.96,
+      "dx": 16.47,
+      "state": "normal",
+      "checkpoint": 3919,
+      "chiefX": 2942.65,
+      "catches": 0
+    },
+    {
+      "t": 6,
+      "x": 5339.64,
+      "y": -288.47,
+      "dx": 12.37,
+      "state": "normal",
+      "checkpoint": 3919,
+      "chiefX": 2959.62,
+      "catches": 0
+    },
+    {
+      "t": 6.117,
+      "x": 5368.53,
+      "y": -305.89,
+      "dx": 28.89,
+      "state": "normal",
+      "checkpoint": 3919,
+      "chiefX": 2999.29,
+      "catches": 0
+    },
+    {
+      "t": 6.183,
+      "x": 5385,
+      "y": -306.97,
+      "dx": 16.47,
+      "state": "normal",
+      "checkpoint": 3919,
+      "chiefX": 3022,
+      "catches": 0
+    },
+    {
+      "t": 6.233,
+      "x": 5397.37,
+      "y": -303.55,
+      "dx": 12.37,
+      "state": "normal",
+      "checkpoint": 3919,
+      "chiefX": 3039.02,
+      "catches": 0
+    },
+    {
+      "t": 6.3,
+      "x": 5413.87,
+      "y": -293.35,
+      "dx": 16.5,
+      "state": "normal",
+      "checkpoint": 3919,
+      "chiefX": 3061.62,
+      "catches": 0
+    },
+    {
+      "t": 6.366,
+      "x": 5430.34,
+      "y": -276.73,
+      "dx": 16.47,
+      "state": "normal",
+      "checkpoint": 3919,
+      "chiefX": 3084.41,
+      "catches": 0
+    },
+    {
+      "t": 6.483,
+      "x": 5459.18,
+      "y": -232.14,
+      "dx": 28.84,
+      "state": "normal",
+      "checkpoint": 3919,
+      "chiefX": 3124.05,
+      "catches": 0
+    },
+    {
+      "t": 6.55,
+      "x": 5475.71,
+      "y": -197.71,
+      "dx": 16.52,
+      "state": "normal",
+      "checkpoint": 3919,
+      "chiefX": 3146.65,
+      "catches": 0
+    },
+    {
+      "t": 6.616,
+      "x": 5492.18,
+      "y": -156.95,
+      "dx": 16.47,
+      "state": "normal",
+      "checkpoint": 3919,
+      "chiefX": 3169.37,
+      "catches": 0
+    },
+    {
+      "t": 6.683,
+      "x": 5508.68,
+      "y": -136.6,
+      "dx": 16.5,
+      "state": "normal",
+      "checkpoint": 3919,
+      "chiefX": 3192.01,
+      "catches": 0
+    },
+    {
+      "t": 6.75,
+      "x": 5525.15,
+      "y": -136.6,
+      "dx": 16.47,
+      "state": "normal",
+      "checkpoint": 3919,
+      "chiefX": 3214.65,
+      "catches": 0
+    },
+    {
+      "t": 6.866,
+      "x": 5554.02,
+      "y": -172,
+      "dx": 28.87,
+      "state": "normal",
+      "checkpoint": 3919,
+      "chiefX": 3268.01,
+      "catches": 0
+    },
+    {
+      "t": 6.933,
+      "x": 5570.51,
+      "y": -185.92,
+      "dx": 16.5,
+      "state": "normal",
+      "checkpoint": 3919,
+      "chiefX": 3390.87,
+      "catches": 0
+    },
+    {
+      "t": 7,
+      "x": 5586.99,
+      "y": -193.39,
+      "dx": 16.47,
+      "state": "normal",
+      "checkpoint": 3919,
+      "chiefX": 3592.84,
+      "catches": 0
+    },
+    {
+      "t": 7.066,
+      "x": 5603.49,
+      "y": -194.42,
+      "dx": 16.5,
+      "state": "normal",
+      "checkpoint": 3919,
+      "chiefX": 3777.71,
+      "catches": 0
+    },
+    {
+      "t": 7.116,
+      "x": 5615.85,
+      "y": -190.97,
+      "dx": 12.37,
+      "state": "normal",
+      "checkpoint": 3919,
+      "chiefX": 3843.29,
+      "catches": 0
+    },
+    {
+      "t": 7.25,
+      "x": 5648.83,
+      "y": -164.04,
+      "dx": 32.97,
+      "state": "normal",
+      "checkpoint": 3919,
+      "chiefX": 3888.69,
+      "catches": 0
+    },
+    {
+      "t": 7.3,
+      "x": 5661.22,
+      "y": -147.26,
+      "dx": 12.39,
+      "state": "normal",
+      "checkpoint": 3919,
+      "chiefX": 3905.71,
+      "catches": 0
+    },
+    {
+      "t": 7.366,
+      "x": 5677.69,
+      "y": -119.31,
+      "dx": 16.47,
+      "state": "normal",
+      "checkpoint": 3919,
+      "chiefX": 3928.38,
+      "catches": 0
+    },
+    {
+      "t": 7.433,
+      "x": 5694.16,
+      "y": -83.55,
+      "dx": 16.47,
+      "state": "slide",
+      "checkpoint": 3919,
+      "chiefX": 3951.03,
+      "catches": 0
+    },
+    {
+      "t": 7.5,
+      "x": 5710.66,
+      "y": -74.6,
+      "dx": 16.5,
+      "state": "slide",
+      "checkpoint": 3919,
+      "chiefX": 3973.7,
+      "catches": 0
+    },
+    {
+      "t": 7.6,
+      "x": 5735.4,
+      "y": -61.17,
+      "dx": 24.74,
+      "state": "slide",
+      "checkpoint": 3919,
+      "chiefX": 4007.71,
+      "catches": 0
+    },
+    {
+      "t": 7.666,
+      "x": 5751.9,
+      "y": -52.22,
+      "dx": 16.5,
+      "state": "slide",
+      "checkpoint": 3919,
+      "chiefX": 4030.35,
+      "catches": 0
+    },
+    {
+      "t": 7.733,
+      "x": 5768.39,
+      "y": -43.27,
+      "dx": 16.5,
+      "state": "slide",
+      "checkpoint": 3919,
+      "chiefX": 4052.92,
+      "catches": 0
+    },
+    {
+      "t": 7.783,
+      "x": 5780.74,
+      "y": -36.57,
+      "dx": 12.34,
+      "state": "slide",
+      "checkpoint": 3919,
+      "chiefX": 4070.01,
+      "catches": 0
+    },
+    {
+      "t": 7.85,
+      "x": 5797.24,
+      "y": -27.62,
+      "dx": 16.5,
+      "state": "slide",
+      "checkpoint": 3919,
+      "chiefX": 4092.65,
+      "catches": 0
+    },
+    {
+      "t": 7.966,
+      "x": 5826.1,
+      "y": -11.95,
+      "dx": 28.87,
+      "state": "slide",
+      "checkpoint": 3919,
+      "chiefX": 4132.32,
+      "catches": 0
+    },
+    {
+      "t": 8.033,
+      "x": 5842.57,
+      "y": -3.01,
+      "dx": 16.47,
+      "state": "slide",
+      "checkpoint": 3919,
+      "chiefX": 4154.96,
+      "catches": 0
+    },
+    {
+      "t": 8.083,
+      "x": 5854.94,
+      "y": 3.7,
+      "dx": 12.37,
+      "state": "slide",
+      "checkpoint": 3919,
+      "chiefX": 4171.96,
+      "catches": 0
+    },
+    {
+      "t": 8.15,
+      "x": 5871.44,
+      "y": 12.65,
+      "dx": 16.5,
+      "state": "slide",
+      "checkpoint": 3919,
+      "chiefX": 4194.63,
+      "catches": 0
+    },
+    {
+      "t": 8.216,
+      "x": 5887.94,
+      "y": 21.6,
+      "dx": 16.5,
+      "state": "slide",
+      "checkpoint": 3919,
+      "chiefX": 4217.32,
+      "catches": 0
+    },
+    {
+      "t": 8.316,
+      "x": 5912.67,
+      "y": 35.03,
+      "dx": 24.74,
+      "state": "slide",
+      "checkpoint": 3919,
+      "chiefX": 4251.39,
+      "catches": 0
+    },
+    {
+      "t": 8.383,
+      "x": 5929.15,
+      "y": 43.97,
+      "dx": 16.47,
+      "state": "slide",
+      "checkpoint": 3919,
+      "chiefX": 4273.96,
+      "catches": 0
+    },
+    {
+      "t": 8.433,
+      "x": 5941.51,
+      "y": 50.68,
+      "dx": 12.37,
+      "state": "slide",
+      "checkpoint": 3919,
+      "chiefX": 4290.95,
+      "catches": 0
+    },
+    {
+      "t": 8.5,
+      "x": 5958.01,
+      "y": 59.63,
+      "dx": 16.5,
+      "state": "slide",
+      "checkpoint": 3919,
+      "chiefX": 4313.6,
+      "catches": 0
+    },
+    {
+      "t": 8.566,
+      "x": 5974.49,
+      "y": 68.57,
+      "dx": 16.47,
+      "state": "slide",
+      "checkpoint": 3919,
+      "chiefX": 4336.32,
+      "catches": 0
+    },
+    {
+      "t": 8.7,
+      "x": 6007.48,
+      "y": 86.47,
+      "dx": 33,
+      "state": "slide",
+      "checkpoint": 3919,
+      "chiefX": 4381.68,
+      "catches": 0
+    },
+    {
+      "t": 8.75,
+      "x": 6019.85,
+      "y": 93.19,
+      "dx": 12.37,
+      "state": "slide",
+      "checkpoint": 3919,
+      "chiefX": 4398.63,
+      "catches": 0
+    },
+    {
+      "t": 8.816,
+      "x": 6036.32,
+      "y": 102.12,
+      "dx": 16.47,
+      "state": "slide",
+      "checkpoint": 3919,
+      "chiefX": 4421.36,
+      "catches": 0
+    },
+    {
+      "t": 8.883,
+      "x": 6052.8,
+      "y": 111.06,
+      "dx": 16.47,
+      "state": "slide",
+      "checkpoint": 3919,
+      "chiefX": 4443.92,
+      "catches": 0
+    },
+    {
+      "t": 8.933,
+      "x": 6065.19,
+      "y": 117.79,
+      "dx": 12.39,
+      "state": "slide",
+      "checkpoint": 3919,
+      "chiefX": 4461.01,
+      "catches": 0
+    },
+    {
+      "t": 9.05,
+      "x": 6094.03,
+      "y": 133.44,
+      "dx": 28.84,
+      "state": "slide",
+      "checkpoint": 3919,
+      "chiefX": 4500.64,
+      "catches": 0
+    },
+    {
+      "t": 9.116,
+      "x": 6110.53,
+      "y": 142.39,
+      "dx": 16.5,
+      "state": "slide",
+      "checkpoint": 3919,
+      "chiefX": 4523.31,
+      "catches": 0
+    },
+    {
+      "t": 9.183,
+      "x": 6127.03,
+      "y": 151.34,
+      "dx": 16.5,
+      "state": "slide",
+      "checkpoint": 3919,
+      "chiefX": 4545.98,
+      "catches": 0
+    },
+    {
+      "t": 9.233,
+      "x": 6139.39,
+      "y": 158.06,
+      "dx": 12.37,
+      "state": "slide",
+      "checkpoint": 3919,
+      "chiefX": 4562.86,
+      "catches": 0
+    },
+    {
+      "t": 9.3,
+      "x": 6155.87,
+      "y": 167,
+      "dx": 16.47,
+      "state": "slide",
+      "checkpoint": 3919,
+      "chiefX": 4584.39,
+      "catches": 0
+    },
+    {
+      "t": 9.416,
+      "x": 6184.73,
+      "y": 182.66,
+      "dx": 28.87,
+      "state": "slide",
+      "checkpoint": 3919,
+      "chiefX": 4585.6,
+      "catches": 0
+    },
+    {
+      "t": 9.483,
+      "x": 6201.21,
+      "y": 191.6,
+      "dx": 16.47,
+      "state": "slide",
+      "checkpoint": 3919,
+      "chiefX": 4620.9,
+      "catches": 0
+    },
+    {
+      "t": 9.55,
+      "x": 6217.73,
+      "y": 200.56,
+      "dx": 16.52,
+      "state": "slide",
+      "checkpoint": 3919,
+      "chiefX": 4650.02,
+      "catches": 0
+    },
+    {
+      "t": 9.616,
+      "x": 6234.18,
+      "y": 209.49,
+      "dx": 16.45,
+      "state": "slide",
+      "checkpoint": 3919,
+      "chiefX": 4672.68,
+      "catches": 0
+    },
+    {
+      "t": 9.666,
+      "x": 6246.57,
+      "y": 216.22,
+      "dx": 12.39,
+      "state": "slide",
+      "checkpoint": 3919,
+      "chiefX": 4689.77,
+      "catches": 0
+    },
+    {
+      "t": 9.8,
+      "x": 6279.54,
+      "y": 222.2,
+      "dx": 32.97,
+      "state": "roll",
+      "checkpoint": 3919,
+      "chiefX": 4735,
+      "catches": 0
+    },
+    {
+      "t": 9.85,
+      "x": 6291.91,
+      "y": 222.2,
+      "dx": 12.37,
+      "state": "roll",
+      "checkpoint": 3919,
+      "chiefX": 4751.99,
+      "catches": 0
+    },
+    {
+      "t": 9.916,
+      "x": 6308.41,
+      "y": 222.2,
+      "dx": 16.5,
+      "state": "roll",
+      "checkpoint": 3919,
+      "chiefX": 4774.68,
+      "catches": 0
+    }
+  ],
+  "writes": [
+    {
+      "source": "engine.physics/collision",
+      "routeId": "D04",
+      "gameClock": 1.8666000000000014,
+      "beforeX": 4326.4,
+      "afterX": 4278.4,
+      "state": "normal"
+    },
+    {
+      "source": "engine.physics/collision",
+      "routeId": "D04",
+      "gameClock": 4.166399999999999,
+      "beforeX": 4854.861572045495,
+      "afterX": 4850.8,
+      "state": "normal"
+    },
+    {
+      "source": "engine.physics/collision",
+      "routeId": "D04",
+      "gameClock": 4.183199999999999,
+      "beforeX": 4863.493572045495,
+      "afterX": 4850.8,
+      "state": "normal"
+    },
+    {
+      "source": "engine.physics/collision",
+      "routeId": "D04",
+      "gameClock": 4.1998999999999995,
+      "beforeX": 4872.229572045495,
+      "afterX": 4850.8,
+      "state": "normal"
+    },
+    {
+      "source": "engine.physics/collision",
+      "routeId": "D04",
+      "gameClock": 4.2165,
+      "beforeX": 4880.913572045495,
+      "afterX": 4850.8,
+      "state": "normal"
+    },
+    {
+      "source": "engine.physics/collision",
+      "routeId": "D04",
+      "gameClock": 4.2332,
+      "beforeX": 4889.545572045495,
+      "afterX": 4850.8,
+      "state": "normal"
+    },
+    {
+      "source": "engine.physics/collision",
+      "routeId": "D04",
+      "gameClock": 4.2498000000000005,
+      "beforeX": 4898.229572045495,
+      "afterX": 4850.8,
+      "state": "normal"
+    }
+  ],
+  "end": {
+    "x": 6312.51478500005,
+    "y": 222.2,
+    "checkpoint": 3919,
+    "deaths": 0,
+    "catches": 0
+  }
+}

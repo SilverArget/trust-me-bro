@@ -1,0 +1,87 @@
+{
+  "viewport": {
+    "w": 390,
+    "h": 844
+  },
+  "layout": {
+    "W": 540,
+    "H": 1168.6153846153845,
+    "worldY": 761.8,
+    "safeTop": 0,
+    "safeRight": 0,
+    "safeBottom": 0,
+    "safeLeft": 0,
+    "isPortrait": true,
+    "viewScale": 0.7222222222222222,
+    "viewOffsetX": 0,
+    "viewOffsetY": 5.684341886080802e-14,
+    "viewportW": 390,
+    "viewportH": 844,
+    "cameraPadLeft": 0,
+    "gameRect": {
+      "x": 0,
+      "y": 5.684341886080802e-14,
+      "w": 390,
+      "h": 843.9999999999999
+    },
+    "hud": {
+      "x": 8,
+      "y": 8,
+      "w": 246,
+      "h": 32
+    },
+    "timer": {
+      "x": 480,
+      "y": 8,
+      "w": 52,
+      "h": 36
+    },
+    "toast": {
+      "x": 12,
+      "y": 1038.6153846153845,
+      "w": 516,
+      "h": 32
+    },
+    "runner": {
+      "x": 7981,
+      "y": -516.6,
+      "w": 72,
+      "h": 68
+    },
+    "groundY": 1216.8
+  },
+  "wallet": {
+    "x": 127.11111111111111,
+    "y": 28.166666666666725,
+    "w": 93.88888888888889,
+    "h": 17.333333333333332
+  },
+  "fullscreen": {
+    "x": 281,
+    "y": 84,
+    "w": 44,
+    "h": 44
+  },
+  "fullscreenWalletOverlap": false,
+  "title": {
+    "x": 66.44444444444444,
+    "y": 95.33333333333339,
+    "w": 257.1111111111111,
+    "h": 37.55555555555556
+  },
+  "pause": {
+    "x": 280,
+    "y": 32,
+    "w": 45,
+    "h": 45
+  },
+  "titlePauseOverlap": false,
+  "chief": {
+    "entryPhase": "result",
+    "resultAngry": true,
+    "x": 7925,
+    "y": 385.4
+  },
+  "result": true,
+  "language": "tr"
+}

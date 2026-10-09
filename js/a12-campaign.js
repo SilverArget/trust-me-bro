@@ -140,7 +140,7 @@
       saveFailed: "SAVE FAILED — RETRY",
       noCharge: "LIVE PREVIEW · NO CHARGE",
       worlds: "WORLDS", buyWorld: "BUY — {price}", select: "SELECT", selected: "SELECTED", planned: "PLANNED", insufficient: "INSUFFICIENT COINS",
-      idle: "IDLE", motionRun: "RUN", flip: "FLIP", language: "LANGUAGE", samePhysics: "Same physics. Shared wallet. Your runner.", ghostOn: "GHOST ON", ghostOff: "GHOST OFF", effectsFull: "EFFECTS FULL", effectsReduced: "EFFECTS REDUCED", flow: "FLOW", localBest: "LOCAL BEST", newRecord: "NEW", clean: "CLEAN", mastery: "MASTERY", style: "STYLE", pausedTap: "PAUSED - TAP TO RESUME", parcelForYou: "DELIVERY FOR: YOU", close: "CLOSE",
+      idle: "IDLE", motionRun: "RUN", flip: "FLIP", language: "LANGUAGE", samePhysics: "Same physics. Shared wallet. Your runner.", ghostOn: "GHOST ON", ghostOff: "GHOST OFF", effectsFull: "EFFECTS FULL", effectsReduced: "EFFECTS REDUCED", flow: "FLOW", localBest: "LOCAL BEST", newRecord: "NEW", clean: "CLEAN", mastery: "MASTERY", style: "STYLE", pausedTap: "PAUSED - TAP TO RESUME", parcelForYou: "DELIVERY FOR: YOU", close: "CLOSE", back: "BACK", touchMove: "DRAG = MOVE", touchJump: "TAP = JUMP", exit: "EXIT", closed: "CLOSED", worldDock31: "DOCK 31", worldFrozen: "FROZEN", worldMagma: "MAGMA", worldAftermath: "AFTERMATH",
     },
     tr: {
       M01: "DÖKÜMHANE YOLU", M02: "DÖKÜM VİNCİ", M03: "FIRIN KORİDORU", M04: "MAGMA ASANSÖRÜ", M05: "CÜRUF KÖPRÜSÜ", M06: "ÇEKİRDEK ERİMESİ",
@@ -178,7 +178,7 @@
       safe: "GÜVENLİ HAT",
       skill: "BECERİ HATTI",
       checkpoint: "KONTROL NOKTASI",
-      help: "A/D veya ←/→ • SPACE/W/↑ • R yeniden başlat",
+      help: "A/D veya ←/→ • BOŞLUK/W/↑ • R yeniden başlat",
       complete: "TAMAMLANDI",
       defaultOutfit: "VARSAYILAN KURYE",
       dockCrew: "LİMAN EKİBİ · BARET + YELEK",
@@ -192,7 +192,7 @@
       saveFailed: "KAYIT BAŞARISIZ — YENİDEN DENE",
       noCharge: "CANLI ÖNİZLEME · ÜCRETSİZ",
       worlds: "DÜNYALAR", buyWorld: "SATIN AL — {price}", select: "SEÇ", selected: "SEÇİLİ", planned: "PLANLANDI", insufficient: "Yetersiz jeton",
-      idle: "BEKLE", motionRun: "KOŞ", flip: "TAKLA", language: "DİL", samePhysics: "Aynı fizik. Ortak cüzdan. Senin koşucun.", ghostOn: "HAYALET AÇIK", ghostOff: "HAYALET KAPALI", effectsFull: "EFEKTLER TAM", effectsReduced: "EFEKTLER AZALTILDI", flow: "AKIŞ", localBest: "YEREL EN İYİ", newRecord: "YENİ", clean: "TEMİZ", mastery: "USTALIK", style: "STİL", pausedTap: "DURAKLATILDI - DEVAM ETMEK İÇİN DOKUN", parcelForYou: "TESLİMAT: SEN", close: "KAPAT",
+      idle: "BEKLE", motionRun: "KOŞ", flip: "TAKLA", language: "DİL", samePhysics: "Aynı fizik. Ortak cüzdan. Senin koşucun.", ghostOn: "HAYALET AÇIK", ghostOff: "HAYALET KAPALI", effectsFull: "EFEKTLER TAM", effectsReduced: "EFEKTLER AZALTILDI", flow: "AKIŞ", localBest: "YEREL EN İYİ", newRecord: "YENİ", clean: "TEMİZ", mastery: "USTALIK", style: "STİL", pausedTap: "DURAKLATILDI - DEVAM ETMEK İÇİN DOKUN", parcelForYou: "TESLİMAT: SEN", close: "KAPAT", back: "GERİ", touchMove: "SÜRÜKLE = HAREKET", touchJump: "DOKUN = ZIPLA", exit: "ÇIKIŞ", closed: "KAPANDI", worldDock31: "RIHTIM 31", worldFrozen: "DONMUŞ", worldMagma: "MAGMA DİYARI", worldAftermath: "SONRASI",
     },
     ru: {
       M01: "ЛИТЕЙНЫЙ ПУТЬ", M02: "ЛИТЕЙНЫЙ КРАН", M03: "ПЕЧНОЙ ПРОХОД", M04: "МАГМОВЫЙ ЛИФТ", M05: "ШЛАКОВЫЙ МОСТ", M06: "РАСПЛАВ ЯДРА",
@@ -230,7 +230,7 @@
       safe: "БЕЗОПАСНЫЙ ПУТЬ",
       skill: "ЛИНИЯ МАСТЕРСТВА",
       checkpoint: "КОНТРОЛЬНАЯ ТОЧКА",
-      help: "A/D или ←/→ • SPACE/W/↑ • R заново",
+      help: "A/D или ←/→ • ПРОБЕЛ/W/↑ • R заново",
       complete: "ЗАВЕРШЁН",
       defaultOutfit: "ОБЫЧНЫЙ КУРЬЕР",
       dockCrew: "ПОРТОВАЯ БРИГАДА · КАСКА + ЖИЛЕТ",
@@ -244,7 +244,7 @@
       saveFailed: "ОШИБКА СОХРАНЕНИЯ — ПОВТОРИТЬ",
       noCharge: "ЖИВОЙ ПРОСМОТР · БЕСПЛАТНО",
       worlds: "МИРЫ", buyWorld: "КУПИТЬ — {price}", select: "ВЫБРАТЬ", selected: "ВЫБРАНО", planned: "ЗАПЛАНИРОВАНО", insufficient: "НЕДОСТАТОЧНО МОНЕТ",
-      idle: "ОЖИДАНИЕ", motionRun: "БЕГ", flip: "САЛЬТО", language: "ЯЗЫК", samePhysics: "Та же физика. Общий кошелёк. Твой бегун.", ghostOn: "ПРИЗРАК ВКЛ", ghostOff: "ПРИЗРАК ВЫКЛ", effectsFull: "ЭФФЕКТЫ ПОЛНЫЕ", effectsReduced: "ЭФФЕКТЫ СНИЖЕНЫ", flow: "ПОТОК", localBest: "ЛУЧШИЙ РЕЗУЛЬТАТ", newRecord: "НОВЫЙ", clean: "ЧИСТО", mastery: "МАСТЕРСТВО", style: "СТИЛЬ", pausedTap: "ПАУЗА - КОСНИСЬ, ЧТОБЫ ПРОДОЛЖИТЬ", parcelForYou: "ДОСТАВКА: ТЕБЕ", close: "ЗАКРЫТЬ",
+      idle: "ОЖИДАНИЕ", motionRun: "БЕГ", flip: "САЛЬТО", language: "ЯЗЫК", samePhysics: "Та же физика. Общий кошелёк. Твой бегун.", ghostOn: "ПРИЗРАК ВКЛ", ghostOff: "ПРИЗРАК ВЫКЛ", effectsFull: "ЭФФЕКТЫ ПОЛНЫЕ", effectsReduced: "ЭФФЕКТЫ СНИЖЕНЫ", flow: "ПОТОК", localBest: "ЛУЧШИЙ РЕЗУЛЬТАТ", newRecord: "НОВЫЙ", clean: "ЧИСТО", mastery: "МАСТЕРСТВО", style: "СТИЛЬ", pausedTap: "ПАУЗА - КОСНИСЬ, ЧТОБЫ ПРОДОЛЖИТЬ", parcelForYou: "ДОСТАВКА: ТЕБЕ", close: "ЗАКРЫТЬ", back: "НАЗАД", touchMove: "ТЯНИ = ХОД", touchJump: "КАСАНИЕ = ПРЫЖОК", exit: "ВЫХОД", closed: "ЗАКРЫТО", worldDock31: "ДОК 31", worldFrozen: "МОРОЗ", worldMagma: "МАГМА", worldAftermath: "ПОСЛЕДСТВИЯ",
     },
   });
   for (const lang of ["tr", "ru"]) for (const key of Object.keys(I18N.en)) if (!Object.hasOwn(I18N[lang], key)) I18N[lang][key] = I18N.en[key];
@@ -337,6 +337,12 @@
     A06: {"routeId":"A06","worldId":"aftermath","version":2,"name":"FINAL ESCAPE","movementProfile":"vector-v1","highJumpZones":[],"groundSegments":[{"id":"a06-p1-d10-v-01","x":70,"y":-91,"w":720,"h":240,"kind":"ground"},{"id":"a06-p1-d10-v-02","x":406,"y":-112.625,"w":72,"h":21.6,"kind":"ground"},{"id":"a06-p1-d10-v-04","x":941.68,"y":-91,"w":136.75,"h":309.6,"kind":"ground"},{"id":"a06-p1-d10-v-05","x":947.44,"y":-26.25,"w":1053.6,"h":244.8,"kind":"ground"},{"id":"a06-p1-d10-v-06","x":1077.04,"y":-91,"w":136.8,"h":64.8,"kind":"ground"},{"id":"a06-p1-d10-v-07","x":1308.64,"y":-91,"w":48,"h":64.8,"kind":"ground"},{"id":"a06-p1-d10-v-08","x":1433.44,"y":-91,"w":48,"h":64.8,"kind":"ground"},{"id":"a06-p1-d10-v-09","x":1481.44,"y":-69.37,"w":108,"h":43.2,"kind":"ground"},{"id":"a06-p1-d10-v-10","x":1623.04,"y":-91,"w":106.8,"h":64.8,"kind":"ground"},{"id":"a06-p1-d10-v-11","x":1729.84,"y":-69.37,"w":42,"h":43.2,"kind":"ground"},{"id":"a06-p1-d10-v-12","x":2132.08,"y":24.25,"w":249.6,"h":307.2,"kind":"ground"},{"id":"a06-p1-d10-v-13","x":2256.88,"y":-40.625,"w":124.8,"h":64.8,"kind":"ground"},{"id":"a06-p1-d10-v-14","x":2438.32,"y":93.75,"w":976.8,"h":240,"kind":"ground","role":"airport-fill"},{"id":"a06-p1-d10-v-15","x":2451.28,"y":25.375,"w":138,"h":67.92,"kind":"ground"},{"id":"a06-p1-d10-v-16","x":2755.6,"y":72.25,"w":72,"h":21.6,"kind":"ground"},{"id":"a06-p1-d10-v-17","x":2937.28,"y":72.25,"w":241.2,"h":21.6,"kind":"ground"},{"id":"a06-p1-d10-v-18","x":3058.72,"y":50.625,"w":120.9,"h":21.6,"kind":"ground"},{"id":"a06-p1-d10-v-19","x":3178.48,"y":29,"w":248.58,"h":64.8,"kind":"ground"},{"id":"a06-p1-d10-v-20","x":3276.88,"y":-29.75,"w":138,"h":363.5,"kind":"ground","role":"airport-solid"},{"id":"a06-p1-d10-v-21","x":3550.48,"y":93.38,"w":960,"h":48,"kind":"ground"},{"id":"a06-p1-d10-v-22","x":3747.28,"y":71.75,"w":72,"h":21.6,"kind":"ground"},{"id":"a06-p2-d12-v-01","x":4518.48,"y":93.375,"w":718.8,"h":232.8,"kind":"ground"},{"id":"a06-p2-d12-v-03","x":4974.48,"y":23.75,"w":262.8,"h":69.6,"kind":"ground"},{"id":"a06-p2-d12-v-04","x":5099.28,"y":-33.75,"w":138,"h":57.6,"kind":"ground"},{"id":"a06-p2-d12-v-05","x":5353.68,"y":-35,"w":620.4,"h":301.2,"kind":"ground"},{"id":"a06-p2-d12-v-06","x":5528.88,"y":-56.625,"w":208.8,"h":21.6,"kind":"ground"},{"id":"a06-p2-d12-v-07","x":5650.08,"y":-78.25,"w":79.44,"h":21.6,"kind":"ground"},{"id":"a06-p2-d12-v-08","x":5782.08,"y":-150.25,"w":192,"h":115.2,"kind":"ground"},{"id":"a06-p2-d12-v-10","x":6306.48,"y":28.63,"w":769.2,"h":301.2,"kind":"ground"},{"id":"a06-p2-d12-v-12","x":6599.28,"y":7,"w":88.8,"h":21.6,"kind":"ground"},{"id":"a06-p2-d12-slope-1","x":5974.08,"y":-131.74,"w":66.48,"h":40.08,"kind":"ground"},{"id":"a06-p2-d12-slope-2","x":6040.56,"y":-91.62,"w":66.48,"h":40.08,"kind":"ground"},{"id":"a06-p2-d12-slope-3","x":6107.04,"y":-51.49,"w":66.48,"h":40.08,"kind":"ground"},{"id":"a06-p2-d12-slope-4","x":6173.52,"y":-11.5,"w":66.48,"h":40.08,"kind":"ground"},{"id":"a06-p2-d12-slope-5","x":6240,"y":28.63,"w":66.48,"h":40.08,"kind":"ground"},{"id":"a06-p3-d13-v-01","x":7083.68,"y":28.625,"w":375.6,"h":120,"kind":"ground"},{"id":"a06-p3-d13-v-03","x":7683.68,"y":-90.24,"w":120,"h":116.4,"kind":"ground"},{"id":"a06-p3-d13-v-04","x":7920.08,"y":-90.24,"w":120,"h":237.6,"kind":"ground"},{"id":"a06-p3-d13-slope1-1","x":7459.28,"y":-11,"w":74.8,"h":39.63,"kind":"ground"},{"id":"a06-p3-d13-slope1-2","x":7534.08,"y":-50.625,"w":74.8,"h":39.63,"kind":"ground"},{"id":"a06-p3-d13-slope1-3","x":7608.88,"y":-90.25,"w":74.8,"h":39.63,"kind":"ground"}],"catchableSurfaces":[{"id":"a06-p1-d10-v-07"},{"id":"a06-p1-d10-v-08"},{"id":"a06-p1-d10-v-10"},{"id":"a06-p1-d10-v-13"},{"id":"a06-p1-d10-v-15"},{"id":"a06-p1-d10-v-16"},{"id":"a06-p1-d10-v-17"},{"id":"a06-p1-d10-v-18"},{"id":"a06-p1-d10-v-19"},{"id":"a06-p1-d10-v-20"},{"id":"a06-p1-d10-v-22"},{"id":"a06-p2-d12-v-03"},{"id":"a06-p2-d12-v-04"},{"id":"a06-p2-d12-v-06"},{"id":"a06-p2-d12-v-07"},{"id":"a06-p2-d12-v-08"},{"id":"a06-p2-d12-v-12"},{"id":"a06-p3-d13-slope1-2"},{"id":"a06-p3-d13-slope1-3"},{"id":"a06-p3-d13-slope1-1"},{"id":"a06-p1-d10-v-02"},{"id":"a06-p2-d12-v-01"},{"id":"a06-p3-d13-v-01"}],"diveZones":[{"id":"a06-p1-d10-dz-01","x1":213.22,"x2":253.22,"landX":446,"landY":-112.62},{"id":"a06-p1-d10-dz-02","x1":672.4,"x2":712.4,"landX":981.68,"landY":-91},{"id":"a06-p1-d10-dz-03","x1":1847.31,"x2":1887.31,"landX":2172.08,"landY":24.25},{"id":"a06-p1-d10-dz-04","x1":3387.06,"x2":3427.06,"landX":3590.48,"landY":93.38},{"id":"a06-p2-d12-dz-01","x1":4762.32,"x2":4802.32,"landX":5014.48,"landY":23.75},{"id":"a06-p2-d12-dz-02","x1":5099.28,"x2":5139.28,"landX":5393.68,"landY":-35},{"id":"a06-p2-d12-dz-03","x1":5474.11,"x2":5514.11,"landX":5822.08,"landY":-150.25},{"id":"a06-p2-d12-dz-04","x1":6406.5,"x2":6446.5,"landX":6639.28,"landY":7},{"id":"a06-p3-d13-dz-01","x1":7258.85,"x2":7298.85,"landX":7499.28,"landY":-11},{"id":"a06-p3-d13-dz-02","x1":7657.5,"x2":7697.5,"landX":7960.08,"landY":-90.24}],"obstacles":[{"id":"a06-p1-d10-vault-04","type":"vault","x":253.22,"w":24,"h":48,"baseY":-91},{"id":"a06-p2-d12-vault-03","type":"vault","x":4804.48,"w":24,"h":48,"baseY":93.38},{"id":"a06-hard-1","type":"vault","x":3922.48,"w":72,"h":48,"baseY":93.38},{"id":"a06-hard-2","type":"slide","x":4222.48,"w":72,"h":48,"baseY":93.38},{"id":"a06-hard-3","type":"vault","x":6494.48,"w":72,"h":48,"baseY":28.63},{"id":"a06-hard-4","type":"slide","x":6786.48,"w":72,"h":48,"baseY":28.63}],"length":8180.08,"finishX":8040.08,"checkpoints":[70,2010.02,4020.04,6030.06],"mode":"hard","coins":makeCoins("A06", COINS.A06)}
   });
 const D09_OPENING_FIX=ROUTES.D09;
+const F05_DESCENT_FIX=ROUTES.F05?.groundSegments?.find(s=>s.id==="f05-p2-d01-v-21");
+if(F05_DESCENT_FIX){
+  const right=F05_DESCENT_FIX.x+F05_DESCENT_FIX.w;
+  F05_DESCENT_FIX.x=4650;
+  F05_DESCENT_FIX.w=Number((right-F05_DESCENT_FIX.x).toFixed(2));
+}
 const HERMES_ROUTE_IDS=new Set(["D01","D02","D03","D04","D05","D06","D07","D08","D09","D10","D11","D12","D13","D14","D15","D16","D17","D18","F01","F02","F03","F04","F05","F06","M01","M02","M03","M04","M05","M06","A01","A02","A03","A04","A05","A06"]);
 let jumpHintZoneSets=new Map();
 if(D09_OPENING_FIX){
@@ -374,6 +380,10 @@ function applyD09LogicRulesToRoutes(){
       if(o.type==="slide")out.push({id:o.id,x:o.x,y:baseY-o.h-32,w:o.w,h:o.h,parkour:"slide"});
       if(o.type==="platform")out.push({id:o.id,x:o.x,y:o.y,w:o.w,h:o.h,kind:"platform"});
       if(o.type==="overpass")out.push({id:o.id,x:o.x,y:o.y,w:o.w,h:o.h,kind:"movingPlatform"});
+      if(o.type==="wallRun")out.push({id:o.id,x:o.x,y:baseY-130,w:o.w,h:130,parkour:"wallRun"});
+      if(o.type==="collapse")out.push({id:o.id,x:o.x,y:o.y,w:o.w,h:o.h,kind:"collapse"});
+      if(o.type==="containerDoor")out.push({id:o.id,x:o.x,y:o.y,w:o.w,h:o.h,kind:"containerDoor"});
+      if(o.type==="crane"||o.type==="pallet")out.push({id:o.id,x:o.x,y:o.y,w:o.w,h:o.h,kind:"movingPlatform"});
     }
     return out;
   };
@@ -469,10 +479,45 @@ function applyD09LogicRulesToRoutes(){
     }
     return gaps;
   };
+  const coinRectOverlap=(coin,s,radius=COIN_CONTACT_RADIUS)=>{
+    if(!s||s.solid===false||!Number.isFinite(s.x)||!Number.isFinite(s.y)||!Number.isFinite(s.w)||!Number.isFinite(s.h)||s.w<=0||s.h<=0)return false;
+    const x=Math.max(s.x,Math.min(coin.x,s.x+s.w)),y=Math.max(s.y,Math.min(coin.y,s.y+s.h));
+    return (x-coin.x)**2+(y-coin.y)**2<=(radius+1)**2;
+  };
+  const coinSolidRects=(r)=>surfaces(r).filter(s=>s.solid!==false&&(s.kind==="ground"||s.kind==="platform"||s.kind==="movingPlatform"||s.kind==="collapse"||s.kind==="containerDoor"||s.parkour));
+  const coinNaturalSupport=(coin,solids)=>solids.filter(s=>!s.parkour&&(s.kind==="ground"||s.kind==="platform"||s.kind==="movingPlatform"||s.kind==="collapse")&&coin.x>=s.x+12&&coin.x<=s.x+s.w-12).sort((a,b)=>Math.abs((a.y-COIN_CONTACT_RADIUS-7)-coin.y)-Math.abs((b.y-COIN_CONTACT_RADIUS-7)-coin.y))[0]||null;
   const coinIssue=(coin,r,solids)=>{
-    if(solids.some(s=>coin.x>=s.x&&coin.x<=s.x+s.w&&coin.y>=s.y&&coin.y<=s.y+s.h))return true;
+    if(coin.x<24||coin.x>(r.finishX??r.length)-60)return true;
+    if(solids.some(s=>coinRectOverlap(coin,s)))return true;
+    const support=coinNaturalSupport(coin,solids);
+    if(support&&Math.abs(coin.y-(support.y-COIN_CONTACT_RADIUS-7))>120)return true;
     if(narrowGaps(solids).some(g=>coin.x>g.left.x+g.left.w&&coin.x<g.right.x))return true;
     return false;
+  };
+  const repairCoinSolids=(r)=>{
+    let moved=0;
+    for(let guard=0;guard<72&&r.coins?.length;guard++){
+      const solids=coinSolidRects(r),coin=r.coins.find(c=>coinIssue(c,r,solids));
+      if(!coin)break;
+      const outside=coin.x<24||coin.x>(r.finishX??r.length)-60;
+      const candidates=solids.filter(s=>!s.parkour&&(s.kind==="ground"||s.kind==="platform"||s.kind==="movingPlatform"||s.kind==="collapse")&&s.w>=44)
+        .sort((a,b)=>{const ax=Math.abs(Math.max(a.x+24,Math.min(coin.x,a.x+a.w-24))-coin.x),bx=Math.abs(Math.max(b.x+24,Math.min(coin.x,b.x+b.w-24))-coin.x),ay=Math.abs(a.y-coin.y),by=Math.abs(b.y-coin.y);return outside?ay-by||ax-bx:ax-bx||ay-by});
+      const original={x:coin.x,y:coin.y};let placed=false;
+      for(const s of candidates){
+        const left=Math.max(24,s.x+24),right=Math.min((r.finishX??r.length)-60,s.x+s.w-24);
+        if(right<left)continue;
+        const center=Math.max(left,Math.min(original.x,right)),slots=[0,-56,56,-112,112,-168,168,-224,224];
+        for(const offset of slots){
+          const x=Math.max(left,Math.min(right,center+offset));
+          if(r.coins.some(c=>c!==coin&&Math.abs(c.x-x)<40&&Math.abs(c.y-(s.y-COIN_CONTACT_RADIUS-7))<40))continue;
+          coin.x=Number(x.toFixed(2));coin.y=Number((s.y-COIN_CONTACT_RADIUS-7).toFixed(2));
+          if(!coinIssue(coin,r,coinSolidRects(r))){placed=true;moved++;break}
+        }
+        if(placed)break;
+      }
+      if(!placed){coin.x=original.x;coin.y=original.y;break}
+    }
+    return moved;
   };
   const closeNarrowGaps=(r)=>{
     let closed=0;
@@ -522,18 +567,7 @@ function applyD09LogicRulesToRoutes(){
     for(const o of r.obstacles||[])if(o.type==="slide"&&!r.visualAttachments.some(a=>a.targetId===o.id&&a.type==="suspend"))r.visualAttachments.push({targetId:o.id,type:"suspend"});
     const coinFix=coinPathFixes[id];
     if(coinFix&&r.coins)for(const c of r.coins){const xy=coinFix[c.id];if(xy){c.x=xy[0];c.y=xy[1]}}
-    for(let i=0;i<24&&r.coins?.length;i++){
-      const solids=surfaces(r).filter(s=>s.kind==="ground"||s.kind==="platform"||s.kind==="movingPlatform"||s.parkour);
-      const coin=r.coins.find(c=>coinIssue(c,r,solids));if(!coin)break;
-      const targets=solids.filter(s=>!s.parkour&&s.w>=72&&surfaceTouched(s,r)).sort((a,b)=>Math.abs((a.x+a.w/2)-coin.x)-Math.abs((b.x+b.w/2)-coin.x));
-      const original={x:coin.x,y:coin.y};let placed=false;
-      for(const t of targets){
-        coin.x=Number(Math.min(Math.max(original.x,t.x+24),t.x+t.w-24).toFixed(2));coin.y=Number((t.y-36).toFixed(2));
-        if(!coinIssue(coin,r,solids)){placed=true;break}
-      }
-      if(!placed){coin.x=original.x;coin.y=original.y;break}
-    }
-    if(coinFix&&r.coins)for(const c of r.coins){const xy=coinFix[c.id];if(xy){c.x=xy[0];c.y=xy[1]}}
+    r.logicRuleStats.coinSolidRepaired=repairCoinSolids(r);
     let workersGrounded=0;
     for(const o of r.obstacles||[]){
       if(o.type!=="worker")continue;
@@ -546,12 +580,6 @@ function applyD09LogicRulesToRoutes(){
       o.offscreenWait=false;
     }
     r.logicRuleStats.workerGrounded=workersGrounded;
-    let visibleGroundSolidified=0;
-    for(const s of r.groundSegments||[]){
-      if(s.solid!==false||s.visible===false||!(s.kind==="ground"||s.kind==="platform"||s.kind==="movingPlatform"))continue;
-      if(surfaceTouched(s,r)||s.role==="zemin"){s.solid=true;visibleGroundSolidified++}
-    }
-    r.logicRuleStats.visibleGroundSolidified=visibleGroundSolidified;
     r.visualSupports=r.visualSupports||[];
     const solids=surfaces(r).filter(s=>s.kind==="ground"||s.kind==="platform"||s.kind==="movingPlatform");
     const catchableIds=new Set((r.catchableSurfaces||[]).map(c=>typeof c==="string"?c:c.id));
@@ -581,6 +609,9 @@ function applyD09LogicRulesToRoutes(){
       r.visualSupports.push({id:s.id,type:"stack-to-ground"});
     }
     r.logicRuleStats.visualSupportSkipped=skipped;
+  }
+  if(ROUTES.D09){
+    ROUTES.D09.logicRuleStats={...(ROUTES.D09.logicRuleStats||{}),coinSolidRepaired:repairCoinSolids(ROUTES.D09)};
   }
   for(const [rid,ids] of Object.entries({
     D09:["d09-ir-08","d09-ir-46"],
@@ -677,18 +708,16 @@ applyD09LogicRulesToRoutes();
     }));
   }
   function drawCoin(c, coin) {
-    const s=typeof route!=="undefined"?routeSurfaces(route).filter(v=>(v.kind==="ground"||v.kind==="platform"||v.kind==="movingPlatform")&&coin.x>=v.x&&coin.x<=v.x+v.w).sort((a,b)=>Math.abs(a.y-coin.y)-Math.abs(b.y-coin.y))[0]:null;
-    const y=s&&coin.y>s.y-24?s.y-36:coin.y;
     c.fillStyle = coin.skill ? "#75e5ff" : "#ffd33d";
     c.beginPath();
-    c.arc(coin.x, y, COIN_FILL_RADIUS, 0, Math.PI * 2);
+    c.arc(coin.x, coin.y, COIN_FILL_RADIUS, 0, Math.PI * 2);
     c.fill();
     c.strokeStyle = "#fff2a4";
     c.lineWidth = COIN_STROKE_WIDTH;
     c.stroke();
     c.fillStyle = "#8b6414";
     c.font = "950 9px system-ui";
-    c.fillText("T", coin.x - 3, y + 3);
+    c.fillText("T", coin.x - 3, coin.y + 3);
   }
   function clone(v) {
     return JSON.parse(JSON.stringify(v));
@@ -1428,6 +1457,7 @@ applyD09LogicRulesToRoutes();
       run.checkpointX = 70;
     }
     const resetX=full ? 70 : run.checkpointX;
+    if(window.__tmbXWriteLog)window.__tmbXWriteLog.push({source:"engine.reset/retry",routeId,gameClock,beforeX:player.x,afterX:resetX,full});
     engine.reset(resetX, routeGroundYAt(resetX) - player.h);
     if(full)gameClock=0;
     resetChiefTrace();
@@ -1621,6 +1651,7 @@ applyD09LogicRulesToRoutes();
       return;
     }
     edgeCatchCooldown=Math.max(0,edgeCatchCooldown-dt);
+    if(window.__tmbXWriteLog&&Number.isFinite(lastPrePhysicsX)&&player.x<lastPrePhysicsX-1)window.__tmbXWriteLog.push({source:"engine.physics/collision",routeId,gameClock,beforeX:lastPrePhysicsX,afterX:player.x,state:engine.parkour.state});
     if(route.movementProfile==="vector-v1"&&input.bufferedJump&&!vectorJumpPending&&!wallJumpRun){
       const center=player.x+player.w/2,diveZone=(route.diveZones||[]).find(z=>center>=z.x1&&center<=z.x2);
       const highZone=(route.highJumpZones||[]).find(z=>center>=z.x1&&center<=z.x2);
@@ -1649,8 +1680,10 @@ applyD09LogicRulesToRoutes();
     }else if(vectorJumpPending&&!(vectorJumpPending.waitForSlide&&engine.parkour.state==="slide")&&++vectorJumpPending.frames>1){
       vectorJumpPending=null;
     }
-    if(route.movementProfile==="vector-v1"&&keys.right&&!keys.left&&lastPrePhysicsX>500&&player.x<lastPrePhysicsX-40&&(engine.parkour.state==="slide"||engine.parkour.state==="normal"||engine.parkour.state==="catch")){
+    if(routeId==="D04"&&route.movementProfile==="vector-v1"&&keys.right&&!keys.left&&lastPrePhysicsX>=5520&&lastPrePhysicsX<=5650&&player.x<lastPrePhysicsX-120&&(engine.parkour.state==="slide"||engine.parkour.state==="normal"||engine.parkour.state==="catch")){
+      const beforeX=player.x;
       player.x=lastPrePhysicsX+8;player.vx=Math.max(255,Math.abs(player.vx));player.facing=1;edgeClimb=null;edgeCatchCooldown=.12;
+      if(window.__tmbXWriteLog)window.__tmbXWriteLog.push({source:"vector-snapback-guard",routeId,gameClock,beforeX,afterX:player.x,state:engine.parkour.state});
       engine.parkour.state="slide";engine.parkour.timer=Math.max(engine.parkour.timer,.08);engine.parkour.dir=1;
     }
     if(route.movementProfile==="vector-v1"){
@@ -1669,6 +1702,7 @@ applyD09LogicRulesToRoutes();
       if(!d||!Number.isFinite(arcX)||!Number.isFinite(player.x))return arcX;
       const backwards=(d.dir>=0&&arcX<player.x)||(d.dir<0&&arcX>player.x);
       if(!backwards)return arcX;
+      if(window.__tmbXWriteLog)window.__tmbXWriteLog.push({source:"arc-forward-guard",routeId,gameClock,beforeX:arcX,afterX:player.x,kind:diveRun===d?"dive":"jump"});
       const shift=player.x-arcX;
       d.startX+=shift;
       d.endX+=shift;
@@ -1782,6 +1816,11 @@ applyD09LogicRulesToRoutes();
       const foot=cameraWorldY+player.y+player.h;
       if(foot<H*.251){cameraWorldY+=H*.251-foot;cameraWorldVelocity=Math.max(0,cameraWorldVelocity)}
       else if(!fallingToDeath&&foot>H*.799){cameraWorldY-=foot-H*.799;cameraWorldVelocity=Math.min(0,cameraWorldVelocity)}
+      if(campaignChief?.active&&campaignChief.entryPhase==="running"){
+        const chiefFoot=cameraWorldY+campaignChief.y+campaignChief.h;
+        if(chiefFoot<H*.18){cameraWorldY+=H*.18-chiefFoot;cameraWorldVelocity=Math.max(0,cameraWorldVelocity)}
+        else if(chiefFoot>H*.82){cameraWorldY-=chiefFoot-H*.82;cameraWorldVelocity=Math.min(0,cameraWorldVelocity)}
+      }
       engine.setWorldY(cameraWorldY);
     } else {
       const footY=player.y+player.h;
@@ -1826,11 +1865,18 @@ applyD09LogicRulesToRoutes();
           campaignDeaths++;
           campaignChief.caughtT=.35;if(campaignChief.path)campaignChief.regrabT=campaignChief.delay;
           campaignChief.lastReturnX=run.checkpointX;
+          if(window.__tmbXWriteLog)window.__tmbXWriteLog.push({source:"chief-catch-reset",routeId,gameClock,beforeX:player.x,afterX:run.checkpointX,chiefX:campaignChief.x,checkpointX:run.checkpointX});
           engine.reset(run.checkpointX,routeGroundYAt(run.checkpointX)-player.h);
           if(campaignChief.path){resetRecordedChief(run.checkpointX);resetChiefTrace();}else{campaignChief.x=run.checkpointX-380;campaignChief.y=routeGroundYAt(run.checkpointX)-campaignChief.h}
           emitGame("chief_catch",{routeId,checkpointX:run.checkpointX});
         }
       }
+    }
+    if(campaignChief?.active&&campaignChief.entryPhase==="running"){
+      const chiefFoot=cameraWorldY+campaignChief.y+campaignChief.h,minFoot=86,maxFoot=H-12;
+      if(chiefFoot<minFoot){cameraWorldY+=minFoot-chiefFoot;cameraWorldVelocity=Math.max(0,cameraWorldVelocity)}
+      else if(chiefFoot>maxFoot){cameraWorldY-=chiefFoot-maxFoot;cameraWorldVelocity=Math.min(0,cameraWorldVelocity)}
+      engine.setWorldY(cameraWorldY);
     }
     for (const p of movingPlatforms) {
       const ridingOverlap = player.x + player.w > p.x + 3 && player.x < p.x + p.w - 3;
@@ -2102,7 +2148,7 @@ applyD09LogicRulesToRoutes();
     c.fillStyle = closeK >= 1 ? "#ff5148" : "#80ffc0";
     c.font = closeK >= 1 ? "900 8px system-ui" : "900 10px system-ui";
     c.textAlign = "center";
-    c.fillText(closeK >= 1 ? "KAPANDI" : "EXIT", left + 56, top - 8);
+    c.fillText(closeK >= 1 ? t("closed") : t("exit"), left + 56, top - 8);
     c.textAlign = "left";
     c.fillStyle = "#111820";
     c.fillRect(left - 7, y - 8, w + 14, 8);
@@ -2338,6 +2384,10 @@ applyD09LogicRulesToRoutes();
     const pauseOverlay=document.getElementById("pauseOverlay"),finalParcel=document.getElementById("finalParcel");
     if(pauseOverlay) pauseOverlay.textContent=t("pausedTap");
     if(finalParcel) finalParcel.dataset.label=t("parcelForYou");
+    const touchMove=document.querySelector("#controlHint .move"),touchJump=document.querySelector("#controlHint .jump"),joystickLabel=document.getElementById("joystick");
+    if(touchMove) touchMove.textContent=t("touchMove");
+    if(touchJump) touchJump.textContent=t("touchJump");
+    if(joystickLabel) joystickLabel.setAttribute("aria-label",t("touchMove"));
     document.getElementById("hint").textContent = t("help");
     const card = document.getElementById("characterCard");
     if (card) {
@@ -2406,12 +2456,13 @@ applyD09LogicRulesToRoutes();
   function drawFinishAdvanceBanner() {
     if(!finishAdvance||!result)return;
     ctx.save();
+    const bannerY=innerHeight>=innerWidth?132:30,textY=innerHeight>=innerWidth?164:62;
     ctx.fillStyle="#06111bb8";
-    rr(W/2-178,30,356,52,10);
+    rr(W/2-178,bannerY,356,52,10);
     ctx.fillStyle="#7cecc0";
     ctx.textAlign="center";
     ctx.font="950 19px system-ui";
-    ctx.fillText(`${finishAdvance.routeId} ${t("complete")} +${finishAdvance.amount}`,W/2,62);
+    ctx.fillText(`${finishAdvance.routeId} ${t("complete")} +${finishAdvance.amount}`,W/2,textY);
     ctx.restore();
   }
   function installUI() {
@@ -2653,9 +2704,9 @@ applyD09LogicRulesToRoutes();
       b.disabled=selected||purchaseBusy||short;
     }
     const worlds=s.querySelector('[data-list="worlds"]');
-    worlds.innerHTML=Object.values(WORLD_REGISTRY).map(w=>`<article data-item="${w.id}"><h3>${w.id.toUpperCase()}</h3><button data-action></button></article>`).join("");
+    worlds.innerHTML=Object.values(WORLD_REGISTRY).map(w=>`<article data-item="${w.id}"><h3>${t(`world${w.id[0].toUpperCase()}${w.id.slice(1)}`)}</h3><button data-action></button></article>`).join("");
     for(const a of worlds.querySelectorAll("article")){const w=WORLD_REGISTRY[a.dataset.item],owned=profile.ownedWorldIds.includes(w.id),selected=profile.selectedWorldId===w.id,b=a.querySelector("button"),short=!owned&&profile.walletBalance<w.price;a.dataset.owned=String(owned);a.dataset.price=String(w.price);a.style.outline=previewWorldId===w.id?"2px solid #79e9ba":"none";b.textContent=!w.enabled?t("planned"):selected?t("selected"):owned?t("select"):`${short?"🔒 ":""}◉ ${w.price}`;b.disabled=!w.enabled||selected||purchaseBusy||short;}
-    const activeList=shopTab==="worlds"?"worlds":shopTab==="characters"?"characters":shopTab==="chiefs"?"chiefs":"outfits",activeId=shopTab==="worlds"?previewWorldId:shopTab==="characters"?previewRunnerId:shopTab==="chiefs"?previewChiefId:previewOutfitId,back=s.querySelector('[data-shop-back]'),buy=s.querySelector('[data-shop-buy]'),selected=s.querySelector(`[data-list="${activeList}"] [data-item="${activeId}"] [data-action]`),previewWorld=WORLD_REGISTRY[previewWorldId],worldOwned=!!previewWorld&&profile.ownedWorldIds.includes(previewWorldId),worldSelected=profile.selectedWorldId===previewWorldId,worldShort=!!previewWorld&&!worldOwned&&profile.walletBalance<previewWorld.price,warning=s.querySelector('[data-world-insufficient]');back.textContent=profile.settings.language==='tr'?'GERI':profile.settings.language==='ru'?'\u041d\u0410\u0417\u0410\u0414':'BACK';if(shopTab==="worlds"&&previewWorld){buy.textContent=!previewWorld.enabled?t("planned"):worldSelected?t("selected"):worldOwned?t("select"):t("buyWorld").replace("{price}",previewWorld.price);buy.disabled=!previewWorld.enabled||worldSelected||purchaseBusy||worldShort}else{buy.textContent=selected?.textContent||t('selected');buy.disabled=!!selected?.disabled}warning.hidden=!(shopTab==="worlds"&&previewWorld?.enabled&&worldShort);warning.textContent=warning.hidden?"":t("insufficient");
+    const activeList=shopTab==="worlds"?"worlds":shopTab==="characters"?"characters":shopTab==="chiefs"?"chiefs":"outfits",activeId=shopTab==="worlds"?previewWorldId:shopTab==="characters"?previewRunnerId:shopTab==="chiefs"?previewChiefId:previewOutfitId,back=s.querySelector('[data-shop-back]'),buy=s.querySelector('[data-shop-buy]'),selected=s.querySelector(`[data-list="${activeList}"] [data-item="${activeId}"] [data-action]`),previewWorld=WORLD_REGISTRY[previewWorldId],worldOwned=!!previewWorld&&profile.ownedWorldIds.includes(previewWorldId),worldSelected=profile.selectedWorldId===previewWorldId,worldShort=!!previewWorld&&!worldOwned&&profile.walletBalance<previewWorld.price,warning=s.querySelector('[data-world-insufficient]');back.textContent=t("back");if(shopTab==="worlds"&&previewWorld){buy.textContent=!previewWorld.enabled?t("planned"):worldSelected?t("selected"):worldOwned?t("select"):t("buyWorld").replace("{price}",previewWorld.price);buy.disabled=!previewWorld.enabled||worldSelected||purchaseBusy||worldShort}else{buy.textContent=selected?.textContent||t('selected');buy.disabled=!!selected?.disabled}warning.hidden=!(shopTab==="worlds"&&previewWorld?.enabled&&worldShort);warning.textContent=warning.hidden?"":t("insufficient");
     s.querySelector("[data-save]").textContent = saveFailure ? t("saveFailed") : t("noCharge");
     drawShopCardThumbs();
     drawShopPreview();
@@ -3672,8 +3723,9 @@ applyD09LogicRulesToRoutes();
   function drawRunnerLayerIntegrated(c) { ctx=c; }
   function drawResultChiefOverlay(c){
     if(!result||!campaignChief?.resultAngry)return;
-    const snap=campaignChief.resultSnapshot||campaignChief,camX=typeof engine?.cameraX==="function"?engine.cameraX():Math.max(0,Math.min((route.length||route.finishX)-W,snap.x-W*.3));
-    const screenX=Math.max(82,Math.min(W-82,snap.x-camX+16)),feet=Math.max(132,Math.min(H-154,(snap.y??campaignChief.y)+48+cameraWorldY));
+    const snap=campaignChief.resultSnapshot||campaignChief,camX=typeof engine?.cameraX==="function"?engine.cameraX():Math.max(0,Math.min((route.length||route.finishX)-W,snap.x-W*.3)),portrait=innerHeight>=innerWidth;
+    const screenX=portrait?W*.5:Math.max(82,Math.min(W-82,snap.x-camX+16));
+    const rawFeet=(snap.y??campaignChief.y)+48+cameraWorldY,feet=portrait?Math.max(H*.28,Math.min(H*.55,rawFeet)):Math.max(132,Math.min(H-154,rawFeet));
     drawChiefAtlas(c,profile.equippedChief||"securityTall",{motion:"idle",frame:0},screenX,feet,campaignChief.facing||1);
     drawChiefAngerIcon(c,screenX,feet-78);
   }
@@ -3683,8 +3735,8 @@ applyD09LogicRulesToRoutes();
     const pad=Math.max(0,info.cameraPadLeft||0),playerTarget=player.x-W*.3-pad;
     let target=playerTarget;
     if(campaignChief?.active&&campaignChief.entryPhase==="running"){
-      const chiefLeft=campaignChief.x-118-pad;
-      target=Math.min(target,chiefLeft);
+      const chiefMinCam=campaignChief.x+16-(W-180),chiefMaxCam=campaignChief.x+16-(174+pad);
+      target=Math.max(chiefMinCam,Math.min(target,chiefMaxCam));
     }
     return Math.max(0,Math.min(route.length-W,target));
   }
@@ -3700,12 +3752,13 @@ applyD09LogicRulesToRoutes();
     c.fillStyle = "#7cecc0";
     c.fillText(`${t("wallet")} ◉ ${profile.walletBalance}`, 180, 57);
     if (finishAdvance&&result) {
+      const portrait=innerHeight>=innerWidth,bannerY=portrait?132:30,textY=portrait?164:62;
       c.fillStyle = "#06111bb8";
-      c.fillRect(w/2-178, h*.16, 356, 52);
+      c.fillRect(w/2-178, bannerY, 356, 52);
       c.fillStyle = "#7cecc0";
       c.textAlign = "center";
       c.font = "950 19px system-ui";
-      c.fillText(`${finishAdvance.routeId} ${t("complete")} +${finishAdvance.amount}`, w / 2, 62);
+      c.fillText(`${finishAdvance.routeId} ${t("complete")} +${finishAdvance.amount}`, w / 2, textY);
       c.textAlign = "left";
     } else if (result) {
       c.fillStyle = "#06111bb8";
@@ -3714,7 +3767,7 @@ applyD09LogicRulesToRoutes();
       c.fillStyle = "#7cecc0";
       c.textAlign = "center";
       c.font = "950 30px system-ui";
-      c.fillText(`${routeId} ${t("complete")} +${result.amount}`, w / 2, 62);
+      c.fillText(`${routeId} ${t("complete")} +${result.amount}`, w / 2, innerHeight>=innerWidth?164:62);
       c.textAlign = "left";
     }
     syncActionVisibility();

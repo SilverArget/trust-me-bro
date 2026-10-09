@@ -100,9 +100,14 @@ async function drive(page, id, {touch=false, stopAfter, omitDives=[]} = {}) {
   const chiefSamples = [], movementSamples = [];
   const d05d06 = /^(?:[FMA]0[1-6])$/.test(id)||/^D(0[5-9]|1\d)$/.test(id);
   const targetCaptures = new Set();
-  let diveSeen = false, catchSeen = false, deaths = 0, retries = 0, end, stuckSince = null, c07Y = null, previousSample = null, lastGroundAt = -Infinity, chainClimbSeconds = 0, chiefMinGap = Infinity, chiefCatches = 0, manualInputs = 0;
+  let diveSeen = false, catchSeen = false, deaths = 0, retries = 0, end, stuckSince = null, c07Y = null, previousSample = null, lastGroundAt = -Infinity, chainClimbSeconds = 0, chiefMinGap = Infinity, chiefCatches = 0, manualInputs = 0, evidenceCaptured = false;
   while (Date.now() - started < 115000) {
     const s = await page.evaluate(() => __TMB_A12__.getState());
+    if (!evidenceCaptured && id === 'D01' && process.env.TMB_D01_EVIDENCE_DIR && s.economy.collectedCoinIds.length) {
+      evidenceCaptured = true; fs.mkdirSync(process.env.TMB_D01_EVIDENCE_DIR,{recursive:true});
+      const size=process.env.TMB_EVIDENCE_VIEWPORT||`${s.viewport.w}x${s.viewport.h}`;
+      await page.screenshot({path:path.join(process.env.TMB_D01_EVIDENCE_DIR,`D01-keyboard-${size}-coin-${s.economy.collectedCoinIds.length}.png`)});
+    }
     if (process.env.TMB_RECORD_CHIEF && (!chiefSamples.length || s.gameClock-chiefSamples.at(-1)[0] >= .05)) {
       chiefSamples.push([+s.gameClock.toFixed(3),+s.player.x.toFixed(2),+s.player.y.toFixed(2),s.parkour.state,s.player.vx < 0 ? -1 : 1]);
     }
@@ -261,6 +266,12 @@ async function drive(page, id, {touch=false, stopAfter, omitDives=[]} = {}) {
       if (id === 'D05' && p.onGround && p.x >= 5100 && p.x < 5299 && !pending.has(key)) target = [key, {mech:'normal'}];
     }
     if (!target) {
+      const key = 'normal-f05-v20-descent';
+      // v20 -> v21 is a 158 px descending gap: the ideal line must jump instead
+      // of depending on frame timing to fall onto the lower platform's first edge.
+      if (id === 'F05' && !fired.has(key) && !pending.has(key) && p.onGround && p.x >= 4380 && p.x < 4480) target = [key, {mech:'normal'}];
+    }
+    if (!target) {
       const longStep = Math.floor((p.x - 5530) / 82.65);
       const key = `normal-d04-long-${longStep}-${Math.floor(s.gameClock * 2)}`;
       if (id === 'D04' && p.onGround && p.x >= 5530 && p.x < 6190 && !pending.has(key)) {
@@ -305,7 +316,7 @@ async function drive(page, id, {touch=false, stopAfter, omitDives=[]} = {}) {
 }
 
 for (const id of routeIds) test(`O-1 B-5 ${id} ideal keyboard route`, async ({page}) => {
-  test.setTimeout(120000); await boot(page,id);
+  test.setTimeout(120000); const evidenceViewport=process.env.TMB_EVIDENCE_VIEWPORT?.split('x').map(Number); await boot(page,id,evidenceViewport?.length===2&&evidenceViewport.every(Number.isFinite)?{width:evidenceViewport[0],height:evidenceViewport[1]}:undefined);
   if (process.env.TMB_INPUT_TRACE) await page.evaluate(() => { window.__tmbInputTrace = []; });
   const r=await drive(page,id);
   if (process.env.TMB_INPUT_TRACE) {
@@ -315,7 +326,10 @@ for (const id of routeIds) test(`O-1 B-5 ${id} ideal keyboard route`, async ({pa
     fs.writeFileSync(target, JSON.stringify({ route:id, trace }, null, 2) + '\n');
   }
   const collected=r.end.economy.collectedCoinIds.length, expected=r.end.route.coins.length;
-  const coinBaseline=(process.env.TMB_MEASURE_HARD_TRACE||process.env.TMB_RECORD_CHIEF)?0:id==='D18'?0:id==='D09'?0:id==='D03'?12:expected;
+  // These routes intentionally split physical coins across the safe line and optional
+  // skill arcs. Baselines measure the deterministic safe-line yield, not total route stock.
+  const safeLineCoinBaseline={D01:10,D02:6,D03:12,D09:0,D18:0,F05:7};
+  const coinBaseline=(process.env.TMB_MEASURE_HARD_TRACE||process.env.TMB_RECORD_CHIEF)?0:(safeLineCoinBaseline[id]??expected);
   const pass=!!r.end.result || r.end.player.x+r.end.hitbox.w>=r.end.route.finishX;
   if (!(pass && r.deaths === 0 && r.retries === 0 && collected >= coinBaseline)) {
     const got = new Set(r.end.economy.collectedCoinIds);
