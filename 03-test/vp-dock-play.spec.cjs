@@ -108,6 +108,9 @@ async function drive(page, id, {touch=false, stopAfter, omitDives=[], omitTransi
   let finishCaptureStarted=false,finishCaptureAt=0,finishCaptureCount=0,resultWallAt=null,midrunCaptured=false;
   const d05d06 = /^(?:[FMA]0[1-6])$/.test(id)||/^D(0[5-9]|1\d)$/.test(id);
   const targetCaptures = new Set();
+  const tur11EvidenceDir=process.env.TMB_TUR11_EVIDENCE_DIR||null;
+  const tur11Route=tur11EvidenceDir?await page.evaluate(id=>__TMB_A12__.routeDefinition(id),id):null;
+  let tur11CaptureAt=-Infinity;
   let diveSeen = false, catchSeen = false, deaths = 0, retries = 0, end, stuckSince = null, c07Y = null, previousSample = null, lastGroundAt = -Infinity, chainClimbSeconds = 0, chiefMinGap = Infinity, chiefCatches = 0, manualInputs = 0, evidenceCaptured = false;
   let d11CaptureAt = -Infinity, d11Recovery = null;
   while (Date.now() - started < 115000) {
@@ -145,6 +148,19 @@ async function drive(page, id, {touch=false, stopAfter, omitDives=[], omitTransi
     }
     const p = s.player, right = p.x + s.hitbox.w, center = p.x + s.hitbox.w / 2;
     const centerY = p.y + s.hitbox.h / 2;
+    if(tur11EvidenceDir&&s.gameClock-tur11CaptureAt>=.125){
+      const prefixes={D02:['d02-roof1-','d02-roof2-'],D04:['d04-long-'],F05:['f05-p1-d02-roof1-','f05-p1-d02-roof2-'],F06:['f06-p3-d02-roof1-','f06-p3-d02-roof2-']}[id]||[];
+      const feet=p.y+s.hitbox.h,steps=(tur11Route?.groundSegments||[]).filter(v=>prefixes.some(prefix=>v.id.startsWith(prefix))&&center>=v.x&&center<=v.x+v.w),step=steps.sort((a,b)=>Math.abs(feet-a.y)-Math.abs(feet-b.y))[0];
+      if(step&&p.onGround&&Math.abs(feet-step.y)<=4){
+        tur11CaptureAt=s.gameClock;fs.mkdirSync(tur11EvidenceDir,{recursive:true});
+        const stem=`${id.toLowerCase()}-steps-`,existing=fs.readdirSync(tur11EvidenceDir).filter(name=>name.startsWith(stem)&&name.endsWith('.png')).length,frame=String(existing+1).padStart(2,'0');
+        const player={left:p.x,right:p.x+s.hitbox.w,top:p.y,bottom:feet},box={left:step.x,right:step.x+step.w,top:step.y,bottom:step.y+step.h};
+        const bodyInside=player.left<box.right&&player.right>box.left&&player.top<box.bottom&&player.bottom-0.01>box.top;
+        const row={route:id,viewport:process.env.TMB_EVIDENCE_VIEWPORT||`${s.viewport.w}x${s.viewport.h}`,frame:Number(frame),t:+s.gameClock.toFixed(3),segment:step.id,feet:+feet.toFixed(3),stepTop:step.y,diff:+Math.abs(feet-step.y).toFixed(3),bodyInside,state:s.parkour.state};
+        fs.appendFileSync(path.join(tur11EvidenceDir,'step-contact.jsonl'),JSON.stringify(row)+'\n');
+        await page.screenshot({path:path.join(tur11EvidenceDir,`${stem}${frame}.png`)});
+      }
+    }
     if (d11Recovery && !d11Recovery.escaped && p.x > d11Recovery.x + 20) {
       Object.assign(d11Recovery, {escaped:true,escapeSeconds:+(s.gameClock-d11Recovery.pressedAt).toFixed(3),afterX:+p.x.toFixed(2),afterY:+p.y.toFixed(2),afterState:s.parkour.state});
     }
