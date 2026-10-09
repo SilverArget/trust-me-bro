@@ -3482,26 +3482,32 @@ applyD09LogicRulesToRoutes();
       } else if (o.type === "worker" && o.offscreenWait) {
         continue;
       } else if (o.type === "worker" && magma) {
-        const wx=patrolXOnSurface(presentationSurface(o.x,96),1.7,36) ?? o.x;
+        const s=presentationSurface(o.x,96),patrol=patrolMotionOnSurface(s,1.7,36);
+        if(!patrol)continue;
+        const wx=patrol.x,baseY=s.y;
         if(bounds&&!visibleX(bounds,wx-32,64,120))continue;
         // Aluminized heat suit: hood, dark visor, separated gauntlets and boots.
-        if(!drawNpcWorkerSprite(c,wx,GROUND)){
-          c.fillStyle="#bdc5cc";c.beginPath();c.moveTo(wx-17,GROUND-65);c.lineTo(wx-23,GROUND-25);c.lineTo(wx+23,GROUND-25);c.lineTo(wx+17,GROUND-65);c.closePath();c.fill();
-          c.fillStyle="#8f9ba7";c.fillRect(wx-13,GROUND-27,10,27);c.fillRect(wx+3,GROUND-27,10,27);
-          c.fillStyle="#e2e6e8";c.beginPath();c.arc(wx,GROUND-72,17,0,Math.PI*2);c.fill();
-          c.fillStyle="#252d3b";c.fillRect(wx-12,GROUND-81,24,14);c.fillStyle="#a4c0cf";c.fillRect(wx-10,GROUND-79,8,3);
-          c.fillStyle="#535d6b";c.fillRect(wx-23,GROUND-48,8,19);c.fillRect(wx+15,GROUND-48,8,19);
+        if(!drawNpcWorkerSprite(c,wx,baseY,patrol.direction)){
+          c.save();c.translate(wx,baseY);c.scale(patrol.direction>0?-1:1,1);
+          c.fillStyle="#bdc5cc";c.beginPath();c.moveTo(-17,-65);c.lineTo(-23,-25);c.lineTo(23,-25);c.lineTo(17,-65);c.closePath();c.fill();
+          c.fillStyle="#8f9ba7";c.fillRect(-13,-27,10,27);c.fillRect(3,-27,10,27);
+          c.fillStyle="#e2e6e8";c.beginPath();c.arc(0,-72,17,0,Math.PI*2);c.fill();
+          c.fillStyle="#252d3b";c.fillRect(-12,-81,24,14);c.fillStyle="#a4c0cf";c.fillRect(-10,-79,8,3);
+          c.fillStyle="#535d6b";c.fillRect(-23,-48,8,19);c.fillRect(15,-48,8,19);c.restore();
         }
-        if(!workerDisabled&&workerClock>1.65){c.fillStyle="#ff4f45";c.font="950 22px system-ui";c.fillText("!",wx-3,GROUND-98);}
+        if(!workerDisabled&&workerClock>1.65){c.fillStyle="#ff4f45";c.font="950 22px system-ui";c.fillText("!",wx-3,baseY-98);}
       } else if (o.type === "worker") {
-        const s=presentationSurface(o.x,96),wx=patrolXOnSurface(s,.8,36) ?? o.x,baseY=s?.y ?? o.baseY ?? GROUND;
+        const s=presentationSurface(o.x,96),patrol=patrolMotionOnSurface(s,.8,36);
+        if(!patrol)continue;
+        const wx=patrol.x,baseY=s.y;
         if(bounds&&!visibleX(bounds,wx-32,64,120))continue;
-        if(!drawNpcWorkerSprite(c,wx,baseY)){
-          c.fillStyle = frozen?"#17384b":magma?"#b8b9b5":"#243c49"; c.fillRect(wx - (frozen?18:15), baseY - 60, frozen?36:30, 60);
-          c.fillStyle = frozen?"#397ba0":magma?"#d4d1c7":"#ff8d28"; c.fillRect(wx - 15, baseY - 48, 30, 20);
-          c.fillStyle = "#fff27d"; c.fillRect(wx - 15, baseY - 39, 30, 4);
-          c.fillStyle = "#e8b486"; c.beginPath(); c.arc(wx, baseY - 69, 11, 0, Math.PI * 2); c.fill();
-          c.fillStyle = frozen?"#224e68":"#f1bb2c";c.beginPath();c.arc(wx,baseY-76,15,Math.PI,0);c.fill();c.fillRect(wx-15,baseY-77,30,7);
+        if(!drawNpcWorkerSprite(c,wx,baseY,patrol.direction)){
+          c.save();c.translate(wx,baseY);c.scale(patrol.direction>0?-1:1,1);
+          c.fillStyle = frozen?"#17384b":magma?"#b8b9b5":"#243c49"; c.fillRect(-(frozen?18:15), -60, frozen?36:30, 60);
+          c.fillStyle = frozen?"#397ba0":magma?"#d4d1c7":"#ff8d28"; c.fillRect(-15,-48,30,20);
+          c.fillStyle = "#fff27d"; c.fillRect(-15,-39,30,4);
+          c.fillStyle = "#e8b486"; c.beginPath(); c.arc(0,-69,11,0,Math.PI*2); c.fill();
+          c.fillStyle = frozen?"#224e68":"#f1bb2c";c.beginPath();c.arc(0,-76,15,Math.PI,0);c.fill();c.fillRect(-15,-77,30,7);c.restore();
         }
         if (!workerDisabled && workerClock > 1.65) { c.fillStyle = "#ff4f45"; c.font = "950 22px system-ui"; c.fillText("!", wx - 3, baseY - 92); }
       }
@@ -3566,7 +3572,7 @@ applyD09LogicRulesToRoutes();
       c.lineWidth=4;c.strokeStyle=frozen?"#d7f6ff":"#c0915b";for(let y=top+18;y<bottom-6;y+=22){c.beginPath();c.moveTo(x-22,y);c.lineTo(x+22,y);c.stroke()}
       c.fillStyle=frozen?"#6faaba":"#5c3b24";c.fillRect(x-32,top-7,64,9);c.fillStyle=frozen?"#bcefff":"#a06c3c";c.fillRect(x-26,top-11,52,5);c.restore();
     }
-    if (campaignChief?.active) {
+    if (campaignChief?.active && campaignChief.entryPhase!=="result") {
       c.save();
       if(magma){c.fillStyle="#8e969f";c.fillRect(campaignChief.x-4,campaignChief.y-5,34,48);c.fillStyle="#d6dadd";c.fillRect(campaignChief.x-6,campaignChief.y-14,38,22);c.fillStyle="#202a36";c.fillRect(campaignChief.x,campaignChief.y-10,26,12);c.fillStyle="#404954";c.fillRect(campaignChief.x-2,campaignChief.y+35,12,18);c.fillRect(campaignChief.x+17,campaignChief.y+35,12,18);} else if (chiefAtlasContract) {
         const state=campaignChief.resultAngry?"idle":campaignChief.pose||"run";
@@ -3589,7 +3595,7 @@ applyD09LogicRulesToRoutes();
     };
     const roles=[carrierSurface()].filter(Boolean);
     for(const o of route.obstacles){
-      if(o.type==="worker"&&!o.offscreenWait){const s=presentationSurface(o.x,96),x=patrolXOnSurface(s,1.1,38);if(s&&Number.isFinite(x))roles.push({role:"worker",x,y:s.y-6,added:false,grounded:true,surfaceId:s.id});}
+      if(o.type==="worker"&&!o.offscreenWait){const s=presentationSurface(o.x,96),patrol=patrolMotionOnSurface(s,1.1,38);if(s&&patrol)roles.push({role:"worker",x:patrol.x,y:s.y,direction:patrol.direction,added:false,grounded:true,surfaceId:s.id});}
       if(o.type==="crane"){const s=presentationSurface(o.x-90,96),x=patrolXOnSurface(s,2.2,34);roles.push(s&&Number.isFinite(x)?{role:"operator",x,y:s.y-6,added:false,grounded:true,surfaceId:s.id}:{role:"operator",x:o.x-90,y:GROUND-145,added:true});}
     }
     if(!result&&campaignChief?.active)roles.push({role:"chief",x:campaignChief.x+14,y:campaignChief.y-25,added:false});
@@ -3601,19 +3607,22 @@ applyD09LogicRulesToRoutes();
     await Promise.all(contract.assets.map(asset=>new Promise((resolve,reject)=>{const image=new Image();image.onload=()=>{if(image.naturalWidth!==asset.size[0]||image.naturalHeight!==asset.size[1])return reject(new Error("npc dimensions"));npcAtlasImages.set(asset.kind,image);resolve();};image.onerror=()=>reject(new Error("npc unavailable"));image.src=asset.path+"?v="+asset.cacheVersion;})));
     npcAtlasContract=contract;return true;
   }).catch(()=>false);
-  function drawNpcWorkerSprite(c,x,feet){
+  function drawNpcWorkerSprite(c,x,feet,direction=-1){
     const image=npcAtlasImages.get("worker");
     if(workerDisabled){c.save();c.translate(x,feet-14);c.rotate(-Math.PI/2);if(npcAtlasContract&&image)c.drawImage(image,0,0,128,128,-51,-90,103,103);else{c.fillStyle="#243c49";c.fillRect(-15,-60,30,60);c.fillStyle="#ff8d28";c.fillRect(-15,-48,30,20);}c.restore();return true;}
     if(!npcAtlasContract||!image)return false;
     const thrown=workerClock<=.35&&barrels.length>0,frame=thrown?2:workerClock>1.65?1:0;
-    c.drawImage(image,frame*128,0,128,128,x-51,feet-90,103,103);return true;
+    c.save();c.translate(x,feet);c.scale(direction>0?-1:1,1);c.drawImage(image,frame*128,0,128,128,-51,-103,103,103);c.restore();return true;
   }
-  function patrolXOnSurface(surface, seed=0, speed=42) {
+  function patrolMotionOnSurface(surface, seed=0, speed=42) {
     if(!surface)return null;
     const left=surface.x+34,right=surface.x+surface.w-34;
-    if(right<=left)return (surface.x+surface.w/2);
-    const span=right-left,period=Math.max(1,span/speed*2),phase=(gameClock+seed)%period,u=phase<period/2?phase/(period/2):1-(phase-period/2)/(period/2);
-    return left+span*u;
+    if(right<=left)return {x:surface.x+surface.w/2,direction:1};
+    const span=right-left,period=Math.max(1,span/speed*2),phase=(gameClock+seed)%period,forward=phase<period/2,u=forward?phase/(period/2):1-(phase-period/2)/(period/2);
+    return {x:left+span*u,direction:forward?1:-1};
+  }
+  function patrolXOnSurface(surface, seed=0, speed=42) {
+    return patrolMotionOnSurface(surface,seed,speed)?.x??null;
   }
   function presentationSurface(targetX=520,minW=96) {
     const solids=routeSurfaces(route).filter(s=>(s.kind==="ground"||s.kind==="platform"||s.kind==="movingPlatform")&&s.w>=minW);
@@ -3646,7 +3655,7 @@ applyD09LogicRulesToRoutes();
           c.fillStyle="#a49a80";c.fillRect(6,-28,21,21);c.strokeStyle=trim;c.strokeRect(6,-28,21,21);
         }
       } else if(n.role==="worker"){
-        if(!drawNpcWorkerSprite(c,0,0)){
+        if(!drawNpcWorkerSprite(c,0,0,n.direction)){
           const stride=Math.sin(gameClock*10)*4;
           c.fillStyle=suit;c.fillRect(-10,-48,20,38);c.fillRect(-10+stride,-10,7,10);c.fillRect(3-stride,-10,7,10);
           c.fillStyle=trim;c.fillRect(-12,-56,24,9);c.fillRect(-8,-40,16,8);
