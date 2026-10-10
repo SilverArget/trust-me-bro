@@ -1,15 +1,15 @@
 {
-  "version": 1,
+  "version": 2,
   "cell": [
     80,
     80
   ],
   "atlas": [
     640,
-    640
+    720
   ],
   "columns": 8,
-  "rows": 8,
+  "rows": 9,
   "anchor": [
     40,
     74
@@ -46,51 +46,55 @@
     "frontFlip": {
       "row": 7,
       "fps": 10
+    },
+    "grab": {
+      "row": 8,
+      "fps": 8
     }
   },
   "assets": [
     {
       "id": "securityTall",
       "path": "sprites/chiefs/securityTall-full.png",
-      "bytes": 434790,
-      "sha256": "8b27a12a46421c63509912306a3cd25c6385c64f330c63fea9097644a21c846e",
-      "cacheVersion": "8b27a12a46421c63",
+      "bytes": 479947,
+      "sha256": "fbad7dda1cf0491ade9f111da9dfaf34c39e58428d94d254df13a646ccfe5ff9",
+      "cacheVersion": "fbad7dda1cf0491a",
       "size": [
         640,
-        640
+        720
       ]
     },
     {
       "id": "classicChief",
       "path": "sprites/chiefs/classicChief-full.png",
-      "bytes": 404524,
-      "sha256": "f32457fa038f1b248afae47a0a5af525af4ecbcfd334eec8f7a1969468c0ff73",
-      "cacheVersion": "f32457fa038f1b24",
+      "bytes": 442923,
+      "sha256": "82a2ed82a979ee0401808bf373942a134617768e81f9176a4b499071599e0fe2",
+      "cacheVersion": "82a2ed82a979ee04",
       "size": [
         640,
-        640
+        720
       ]
     },
     {
       "id": "robotGuard",
       "path": "sprites/chiefs/robotGuard-full.png",
-      "bytes": 437635,
-      "sha256": "2783e42bc33948502e8d164e199723cfd55d209b6c1bcb820f546921c04b1996",
-      "cacheVersion": "2783e42bc3394850",
+      "bytes": 485495,
+      "sha256": "200f4500e9d85eeedaddd761b14408e77fde19fc664605c5643e99927043972d",
+      "cacheVersion": "200f4500e9d85eee",
       "size": [
         640,
-        640
+        720
       ]
     },
     {
       "id": "bouncer",
       "path": "sprites/chiefs/bouncer-full.png",
-      "bytes": 450672,
-      "sha256": "88b42675bc0d06e7d4da9e4a53c283aeb6a9b330314871e97f4e10ad7041ec40",
-      "cacheVersion": "88b42675bc0d06e7",
+      "bytes": 499617,
+      "sha256": "3673763d7b12e851242118b1f48cd8855cc7e1ea7804c699320ad3a6ce9e01c3",
+      "cacheVersion": "3673763d7b12e851",
       "size": [
         640,
-        640
+        720
       ]
     }
   ]

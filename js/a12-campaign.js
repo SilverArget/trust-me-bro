@@ -1143,7 +1143,7 @@ applyD09LogicRulesToRoutes();
     if(c.matchMode==="x"){best=start;bestD=Infinity;for(let i=start;i<=end;i++){const d=Math.abs(a[i][1]-player.x);if(d<bestD){bestD=d;best=i}}}
     c.playerIndex=Math.max(start,best);c.playerT=Math.max(c.playerT,a[c.playerIndex][0]);
   }
-  const CHIEF_ENTRY_X=-64,CHIEF_LADDER_FRACTION=.15,CHIEF_LADDER_HEIGHT=132,CHIEF_LADDER_CLIMB_T=.85,CHIEF_FAST_SCALE=40/30,CHIEF_CLOSE_GAP_PX=160,CHIEF_EASE_GAP_PX=180,CHIEF_STOP_CLOSE_PX=520,CHIEF_STOP_SPEED_PX=54;
+  const CHIEF_ENTRY_X=-64,CHIEF_LADDER_FRACTION=.15,CHIEF_LADDER_HEIGHT=132,CHIEF_LADDER_CLIMB_T=.85,CHIEF_FAST_SCALE=40/30,CHIEF_CLOSE_GAP_PX=160,CHIEF_EASE_GAP_PX=180,CHIEF_STOP_CLOSE_PX=520,CHIEF_STOP_SPEED_PX=54,CHIEF_GRAB_START_GAP_PX=28,CHIEF_CATCH_HOLD_S=.35;
   function chiefDelayFor(path,id){
     if(!path)return undefined;
     const d=path.delay||0;
@@ -1975,11 +1975,12 @@ applyD09LogicRulesToRoutes();
         if(campaignChief.path&&campaignChief.entryPhase==="running"&&!playerCatchable&&campaignChief.x>player.x-CHIEF_CLOSE_GAP_PX){const trailing=chiefTraceSampleAtX(player.x-CHIEF_CLOSE_GAP_PX);campaignChief.x=player.x-CHIEF_CLOSE_GAP_PX;if(trailing){campaignChief.y=trailing.feet-campaignChief.h;campaignChief.pose=trailing.pose;campaignChief.facing=trailing.facing||1}else campaignChief.y=routeGroundYAt(campaignChief.x+campaignChief.w/2)-campaignChief.h}
         if(campaignChief.path&&campaignChief.entryPhase==="running"&&playerCatchable){campaignChief.x=Math.min(player.x-campaignChief.w+4,chiefFrameStartX+CHIEF_STOP_SPEED_PX*dt);const closing=chiefTraceSampleAtX(campaignChief.x);if(closing){campaignChief.y=closing.feet-campaignChief.h;campaignChief.pose=closing.pose;campaignChief.facing=closing.facing||1}else campaignChief.y=routeGroundYAt(campaignChief.x+campaignChief.w/2)-campaignChief.h}
         campaignChief.catchExposureT=playerCatchable?(campaignChief.catchExposureT||0)+dt:0;
+        campaignChief.grabFrame=chiefGrabPose(playerCatchable)?.frame??null;
         const liveChiefCatch=campaignChief.path&&campaignChief.entryPhase==="running"&&playerCatchable&&campaignChief.chiefT>=0&&campaignChief.x+campaignChief.w>=player.x-4&&campaignChief.x<=player.x+player.w+4&&campaignChief.y+campaignChief.h>=player.y-4&&campaignChief.y<=player.y+player.h+4;
         if (campaignChief.caughtT<=0 && (!campaignChief.path ? campaignChief.x+campaignChief.w>=player.x+4 && campaignChief.x<=player.x+player.w-4 : liveChiefCatch)) {
           campaignChief.catches++;
           campaignDeaths++;
-          campaignChief.caughtT=.35;if(campaignChief.path)campaignChief.regrabT=campaignChief.delay;
+          campaignChief.caughtT=CHIEF_CATCH_HOLD_S;campaignChief.grabFrame=3;if(campaignChief.path)campaignChief.regrabT=campaignChief.delay;
           campaignChief.lastReturnX=run.checkpointX;
           if(window.__tmbXWriteLog)window.__tmbXWriteLog.push({source:"chief-catch-reset",routeId,gameClock,beforeX:player.x,afterX:run.checkpointX,chiefX:campaignChief.x,checkpointX:run.checkpointX});
           engine.reset(run.checkpointX,routeGroundYAt(run.checkpointX)-player.h);
@@ -3841,7 +3842,7 @@ applyD09LogicRulesToRoutes();
     .then(async contract=>{
       await Promise.all(contract.assets.map(asset=>new Promise((resolve,reject)=>{
         const image=new Image();
-        image.onload=()=>{if(image.naturalWidth!==640||image.naturalHeight!==640)return reject(new Error("chief dimensions"));chiefAtlasImages.set(asset.id,image);resolve();};
+        image.onload=()=>{if(image.naturalWidth!==640||image.naturalHeight!==720)return reject(new Error("chief dimensions"));chiefAtlasImages.set(asset.id,image);resolve();};
         image.onerror=()=>reject(new Error("chief unavailable"));
         image.src=asset.path+"?v="+asset.cacheVersion;
       })));
@@ -3891,8 +3892,22 @@ applyD09LogicRulesToRoutes();
     c.save();c.textAlign="center";c.textBaseline="middle";c.font="32px 'Apple Color Emoji','Segoe UI Emoji','Noto Color Emoji',system-ui";c.shadowColor="#000";c.shadowBlur=4;c.fillText("😠",x,y);c.restore();
   }
   function chiefPoseFromState(state) {
+    const grab=chiefGrabPose();
+    if(grab)return grab;
     const motion=state==="catch"||state==="climb"?"wallRun":state==="roll"?"roll":state==="jump"||state==="dive"?"jump":state==="normal"||state==="run"?"run":"idle";
     return {motion,frame:Math.floor(gameClock*((motion==="run")?16:8))%8};
+  }
+  function chiefGrabPose(playerCatchable=null) {
+    const chief=campaignChief;
+    if(!chief?.active||chief.entryPhase==="result")return null;
+    if(chief.caughtT>0){
+      const elapsed=Math.max(0,CHIEF_CATCH_HOLD_S-chief.caughtT);
+      return {motion:"grab",frame:elapsed<1e-6?3:Math.min(7,4+Math.floor(elapsed/(CHIEF_CATCH_HOLD_S/4)))};
+    }
+    const catchable=playerCatchable??(player.onGround&&engine.parkour.state==="normal"&&!diveRun&&!wallJumpRun&&Math.abs(player.vx)<70);
+    const gap=player.x-(chief.x+chief.w),vertical=Math.abs(chief.y-player.y)<=player.h+4;
+    if(!catchable||chief.entryPhase!=="running"||!vertical||gap>CHIEF_GRAB_START_GAP_PX||gap<4)return null;
+    return {motion:"grab",frame:Math.min(3,Math.max(0,Math.floor((CHIEF_GRAB_START_GAP_PX-gap)/6)))};
   }
   function drawChiefAtlas(c, id, pose, x, feet, facing=1) {
     c.save();c.translate(x,feet);c.scale(facing,1);c.imageSmoothingEnabled=false;
