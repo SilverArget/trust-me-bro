@@ -1,7 +1,0 @@
-{
-  "root": "video-bulgu-1007",
-  "passed": 26,
-  "failed": 2,
-  "failSet": ["D07", "M02"],
-  "newOnlyFailures": []
-}
