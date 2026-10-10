@@ -24,7 +24,7 @@ Atlas boyutları sırasıyla securityTall `479947`, classicChief `442923`, robot
 
 - `CHIEF_GRAB_START_GAP_PX=28`: şefin sağ kenarı ile oyuncunun solu arasındaki mesafe 28 px'e indiğinde grab kareleri 1–3 mesafeye bağlı başlar. Oyuncu hızlanıp yakalanabilir durumdan çıkarsa `chiefGrabPose()` `null` döndürür ve ortak atlas yolu tekrar koşu hareketini seçer.
 - Tur 15'in temas koşulu aynen korunur: kenar boşluğu `≤4 px` ve dikey temas oluştuğu güncellemede catch gerçekleşir ve `grab` karesi 4 (`frame=3`) atanır. Böylece kavrama karesi ile `chief-catch-reset` aynı simülasyon karesidir.
-- Mevcut `caughtT=.35 s` süresi değiştirilmedi; bu süre beş eşit görsel dilime bölünerek temas karesi 4 ve tutuş kareleri 5–8 gösterilir. Hızlar, gecikmeler, 1 saniyelik duraksama güvenliği ve retry gecikmesi değişmedi.
+- Mevcut `caughtT=.35 s` süresi değiştirilmedi; bu süre beş eşit görsel dilime bölünerek temas karesi 4 ve tutuş kareleri 5–8 gösterilir. Fiziksel şef retry için hemen tam gecikme konumuna dönerken `chiefDrawPlacement()` yalnız çizimi checkpoint'teki oyuncu temasına sabitler; böylece tutuş görünür kalır. Hızlar, gecikmeler, 1 saniyelik duraksama güvenliği ve retry gecikmesi değişmedi.
 - Dock, Frost, Magma ve After sahnelerinin tümü aynı `chiefPoseFromState()` → `drawChiefAtlas()` yolunu kullandığı için kural dört şef/dört dünyaya ortaktır. Sonuç ekranındaki idle şef ve öfke simgesi değiştirilmedi.
 
 ## Değişen dosyalar ve semboller
@@ -32,7 +32,7 @@ Atlas boyutları sırasıyla securityTall `479947`, classicChief `442923`, robot
 - `sprites/chiefs/{securityTall,classicChief,robotGuard,bouncer}-full.png`: 9. `grab` satırı.
 - `sprites/chiefs/chief-contract.json`: `version`, atlas/row ölçüsü, `motions.grab`, varlık byte/SHA/cache alanları.
 - `tools/a5/import_chief_grab.py`: `key_green()`, `split_sheet()`, görünür boy/ayak/yeşil/boş doğrulaması ve kontak sayfası üretimi.
-- `js/a12-campaign.js`: `updateIntegrated()`, `chiefPoseFromState()`, yeni `chiefGrabPose()` ve 640×720 atlas yükleme kontrolü.
+- `js/a12-campaign.js`: `updateIntegrated()`, `chiefPoseFromState()`, yeni `chiefGrabPose()`, `chiefDrawPlacement()` ve 640×720 atlas yükleme kontrolü.
 - `03-test/tur16-chief-grab.spec.cjs`: atlas sözleşmesi, D04 adım simülasyonu ve kaçış regresyonu.
 - `03-test/tur16-chief-grab-proof.spec.cjs`: tek kısa gerçek zamanlı kanıt koşusu.
 
@@ -42,6 +42,7 @@ Atlas boyutları sırasıyla securityTall `479947`, classicChief `442923`, robot
 - `node --check js/a12-campaign.js`: geçti.
 - `03-test/tur16-chief-grab.spec.cjs`: `3/3` geçti (`4.4 s`); temas öncesi 1–3, temas karesinde 4, `caughtT` içinde 4–8 ve kaçışta run dönüşü doğrulandı.
 - `03-test/tur15-stairs-chief.spec.cjs`: `5/5` geçti (`23.5 s`); temas `≤4 px`, 1 sn güvenli tampon ve D04/A02 retry gecikmeleri korundu.
+- İzin verilen tek kısa gerçek zamanlı D04 kanıtı: `1/1` geçti (`5.2 s`); 10 karelik dizi yazıldı.
 - Tam 36 rota × 2 görünüm gerçek zamanlı regresyon, brief uyarısına uygun olarak çalıştırılmadı.
 
 `ASSERT CHANGE`: Var olan assertion'lar değiştirilmedi; TUR16 için yeni atlas/oynatma/kaçış assertion'ları eklendi.
@@ -51,4 +52,5 @@ Atlas boyutları sırasıyla securityTall `479947`, classicChief `442923`, robot
 - Kontak sayfası: `03-test/manager-preview/tur16/chief-grab-contact.png`.
 - İçe aktarma ayrıntıları: `03-test/manager-preview/tur16/import.json`.
 - Kısa gerçek zamanlı D04 dizisi: `03-test/manager-preview/tur16/realtime-d04/`.
+- Yakalama anı çizim kontrolü: `03-test/manager-preview/tur16/step-contact.png` (tutuş checkpoint'te görünür).
 - `03-test/manager-preview/` `.gitignore` kapsamındadır ve kanıt dosyaları commit'e girmez.

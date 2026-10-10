@@ -3000,7 +3000,8 @@ applyD09LogicRulesToRoutes();
     for(const b of barrels){c.fillStyle='#343c32';c.strokeStyle='#c6bd94';c.lineWidth=3;c.beginPath();c.moveTo(b.x+5,b.y);c.lineTo(b.x+27,b.y+4);c.lineTo(b.x+24,b.y+27);c.lineTo(b.x,b.y+22);c.closePath();c.fill();c.stroke();c.beginPath();c.moveTo(b.x+3,b.y+9);c.lineTo(b.x+23,b.y+17);c.stroke();}
     if(campaignChief?.active&&campaignChief.entryPhase!=='result'){
       const state=campaignChief.resultAngry?"idle":campaignChief.pose||"run";
-      drawChiefAtlas(c,profile.equippedChief||"securityTall",chiefPoseFromState(state),campaignChief.x+16,campaignChief.y+48,campaignChief.facing||1);
+      const placement=chiefDrawPlacement();
+      drawChiefAtlas(c,profile.equippedChief||"securityTall",chiefPoseFromState(state),placement.x,placement.feet,placement.facing);
     }
     { const finishDoor=finishDoorPlacement(); drawFinishDoor(c, finishDoor.x, finishDoor.y); }
     aftermathLights(c,time,light,gain);
@@ -3727,7 +3728,8 @@ applyD09LogicRulesToRoutes();
       c.save();
       if (chiefAtlasContract) {
         const state=campaignChief.resultAngry?"idle":campaignChief.pose||"run";
-        drawChiefAtlas(c,profile.equippedChief||"securityTall",chiefPoseFromState(state),campaignChief.x+16,campaignChief.y+48,campaignChief.facing||1);
+        const placement=chiefDrawPlacement();
+        drawChiefAtlas(c,profile.equippedChief||"securityTall",chiefPoseFromState(state),placement.x,placement.feet,placement.facing);
       } else if (CHIEF_SPRITE.complete && CHIEF_SPRITE.naturalWidth) {
         const fw=CHIEF_SPRITE.naturalWidth/4,fh=CHIEF_SPRITE.naturalHeight,frame=campaignChief.path&&campaignChief.pose!=="run"?0:Math.floor(gameClock*8)%4;
         c.imageSmoothingEnabled=false;c.drawImage(CHIEF_SPRITE,frame*fw,0,fw,fh,campaignChief.x-8,campaignChief.y-16,48,64);
@@ -3896,6 +3898,10 @@ applyD09LogicRulesToRoutes();
     if(grab)return grab;
     const motion=state==="catch"||state==="climb"?"wallRun":state==="roll"?"roll":state==="jump"||state==="dive"?"jump":state==="normal"||state==="run"?"run":"idle";
     return {motion,frame:Math.floor(gameClock*((motion==="run")?16:8))%8};
+  }
+  function chiefDrawPlacement() {
+    if(campaignChief?.caughtT>0)return {x:player.x-campaignChief.w-4+16,feet:player.y+player.h,facing:campaignChief.facing||1};
+    return {x:campaignChief.x+16,feet:campaignChief.y+48,facing:campaignChief.facing||1};
   }
   function chiefGrabPose(playerCatchable=null) {
     const chief=campaignChief;
