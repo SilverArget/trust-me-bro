@@ -4,6 +4,7 @@ sprites/raw/
 # 28.09: playwright cikti klasorleri
 test-results*/
 03-test/*-evidence/
+03-test/manager-preview/
 
 # A5c2b muzik test PCM kaniti (406 MB) ve python cache
 03-test/.a5c-music-pcm/

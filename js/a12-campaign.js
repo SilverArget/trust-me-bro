@@ -336,6 +336,23 @@
     A05: {"routeId":"A05","worldId":"aftermath","version":2,"name":"COLLAPSED PIER","movementProfile":"vector-v1","highJumpZones":[],"groundSegments":[{"id":"a05-p1-d10-v-01","x":70,"y":-91,"w":720,"h":240,"kind":"ground"},{"id":"a05-p1-d10-v-02","x":406,"y":-112.625,"w":72,"h":21.6,"kind":"ground"},{"id":"a05-p1-d10-v-04","x":941.68,"y":-91,"w":136.75,"h":309.6,"kind":"ground"},{"id":"a05-p1-d10-v-05","x":947.44,"y":-26.25,"w":1053.6,"h":244.8,"kind":"ground"},{"id":"a05-p1-d10-v-06","x":1077.04,"y":-91,"w":136.8,"h":64.8,"kind":"ground"},{"id":"a05-p1-d10-v-07","x":1308.64,"y":-91,"w":48,"h":64.8,"kind":"ground"},{"id":"a05-p1-d10-v-08","x":1433.44,"y":-91,"w":48,"h":64.8,"kind":"ground"},{"id":"a05-p1-d10-v-09","x":1481.44,"y":-69.37,"w":108,"h":43.2,"kind":"ground"},{"id":"a05-p1-d10-v-10","x":1623.04,"y":-91,"w":106.8,"h":64.8,"kind":"ground"},{"id":"a05-p1-d10-v-11","x":1729.84,"y":-69.37,"w":42,"h":43.2,"kind":"ground"},{"id":"a05-p1-d10-v-12","x":2132.08,"y":24.25,"w":249.6,"h":307.2,"kind":"ground"},{"id":"a05-p1-d10-v-13","x":2256.88,"y":-40.625,"w":124.8,"h":64.8,"kind":"ground"},{"id":"a05-p1-d10-v-14","x":2438.32,"y":93.75,"w":976.8,"h":240,"kind":"ground","role":"airport-fill"},{"id":"a05-p1-d10-v-15","x":2451.28,"y":25.375,"w":138,"h":67.92,"kind":"ground"},{"id":"a05-p1-d10-v-16","x":2755.6,"y":72.25,"w":72,"h":21.6,"kind":"ground"},{"id":"a05-p1-d10-v-17","x":2937.28,"y":72.25,"w":241.2,"h":21.6,"kind":"ground"},{"id":"a05-p1-d10-v-18","x":3058.72,"y":50.625,"w":120.9,"h":21.6,"kind":"ground"},{"id":"a05-p1-d10-v-19","x":3178.48,"y":29,"w":248.58,"h":64.8,"kind":"ground"},{"id":"a05-p1-d10-v-20","x":3276.88,"y":-29.75,"w":138,"h":363.5,"kind":"ground","role":"airport-solid"},{"id":"a05-p1-d10-v-21","x":3550.48,"y":93.38,"w":960,"h":48,"kind":"ground"},{"id":"a05-p1-d10-v-22","x":3747.28,"y":71.75,"w":72,"h":21.6,"kind":"ground"},{"id":"a05-p2-d05-v-01","x":4518.48,"y":93.375,"w":1154.13,"h":165.6,"kind":"ground"},{"id":"a05-p2-d05-v-02","x":4954.08,"y":-24.25,"w":300,"h":117.6,"kind":"ground"},{"id":"a05-p2-d05-v-03","x":5118.48,"y":-45.875,"w":88.8,"h":21.6,"kind":"ground"},{"id":"a05-p2-d05-v-04","x":5332.08,"y":30.875,"w":66,"h":62.4,"kind":"ground"},{"id":"a05-p2-d05-up-1","x":4714.08,"w":80,"y":54.125,"h":39.2,"kind":"ground","role":"zemin"},{"id":"a05-p2-d05-up-2","x":4794.08,"w":80,"y":14.875,"h":39.2,"kind":"ground","role":"zemin"},{"id":"a05-p2-d05-up-3","x":4874.08,"w":80,"y":-24.25,"h":39.2,"kind":"ground","role":"zemin"},{"id":"a05-p3-d12-v-01","x":5680.61,"y":93.375,"w":718.8,"h":232.8,"kind":"ground"},{"id":"a05-p3-d12-v-03","x":6136.61,"y":23.75,"w":262.8,"h":69.6,"kind":"ground"},{"id":"a05-p3-d12-v-04","x":6261.41,"y":-33.75,"w":138,"h":57.6,"kind":"ground"},{"id":"a05-p3-d12-v-05","x":6515.81,"y":-35,"w":620.4,"h":301.2,"kind":"ground"},{"id":"a05-p3-d12-v-06","x":6691.01,"y":-56.625,"w":208.8,"h":21.6,"kind":"ground"},{"id":"a05-p3-d12-v-07","x":6812.21,"y":-78.25,"w":79.44,"h":21.6,"kind":"ground"},{"id":"a05-p3-d12-v-08","x":6944.21,"y":-150.25,"w":192,"h":115.2,"kind":"ground"},{"id":"a05-p3-d12-v-10","x":7468.61,"y":28.63,"w":769.2,"h":301.2,"kind":"ground"},{"id":"a05-p3-d12-v-12","x":7761.41,"y":7,"w":88.8,"h":21.6,"kind":"ground"},{"id":"a05-p3-d12-slope-1","x":7136.21,"y":-131.74,"w":66.48,"h":40.08,"kind":"ground"},{"id":"a05-p3-d12-slope-2","x":7202.69,"y":-91.62,"w":66.48,"h":40.08,"kind":"ground"},{"id":"a05-p3-d12-slope-3","x":7269.17,"y":-51.49,"w":66.48,"h":40.08,"kind":"ground"},{"id":"a05-p3-d12-slope-4","x":7335.65,"y":-11.5,"w":66.48,"h":40.08,"kind":"ground"},{"id":"a05-p3-d12-slope-5","x":7402.13,"y":28.63,"w":66.48,"h":40.08,"kind":"ground"}],"catchableSurfaces":[{"id":"a05-p1-d10-v-07"},{"id":"a05-p1-d10-v-08"},{"id":"a05-p1-d10-v-10"},{"id":"a05-p1-d10-v-13"},{"id":"a05-p1-d10-v-15"},{"id":"a05-p1-d10-v-16"},{"id":"a05-p1-d10-v-17"},{"id":"a05-p1-d10-v-18"},{"id":"a05-p1-d10-v-19"},{"id":"a05-p1-d10-v-20"},{"id":"a05-p1-d10-v-22"},{"id":"a05-p2-d05-up-1"},{"id":"a05-p2-d05-up-2"},{"id":"a05-p2-d05-up-3"},{"id":"a05-p2-d05-v-03"},{"id":"a05-p2-d05-v-04"},{"id":"a05-p3-d12-v-03"},{"id":"a05-p3-d12-v-04"},{"id":"a05-p3-d12-v-06"},{"id":"a05-p3-d12-v-07"},{"id":"a05-p3-d12-v-08"},{"id":"a05-p3-d12-v-12"},{"id":"a05-p1-d10-v-02"},{"id":"a05-p2-d05-v-01"},{"id":"a05-p3-d12-v-01"}],"diveZones":[{"id":"a05-p1-d10-dz-01","x1":213.22,"x2":253.22,"landX":446,"landY":-112.62},{"id":"a05-p1-d10-dz-02","x1":672.4,"x2":712.4,"landX":981.68,"landY":-91},{"id":"a05-p1-d10-dz-03","x1":1847.31,"x2":1887.31,"landX":2172.08,"landY":24.25},{"id":"a05-p1-d10-dz-04","x1":3387.06,"x2":3427.06,"landX":3590.48,"landY":93.38},{"id":"a05-p3-d12-dz-01","x1":5924.45,"x2":5964.45,"landX":6176.61,"landY":23.75},{"id":"a05-p3-d12-dz-02","x1":6261.41,"x2":6301.41,"landX":6555.81,"landY":-35},{"id":"a05-p3-d12-dz-03","x1":6636.24,"x2":6676.24,"landX":6984.21,"landY":-150.25},{"id":"a05-p3-d12-dz-04","x1":7568.63,"x2":7608.63,"landX":7801.41,"landY":7}],"obstacles":[{"id":"a05-p1-d10-vault-04","type":"vault","x":253.22,"w":24,"h":48,"baseY":-91},{"id":"a05-p3-d12-vault-03","type":"vault","x":5966.61,"w":24,"h":48,"baseY":93.38},{"id":"a05-hard-1","type":"vault","x":3922.48,"w":72,"h":48,"baseY":93.38},{"id":"a05-hard-2","type":"slide","x":4222.48,"w":72,"h":48,"baseY":93.38},{"id":"a05-hard-3","type":"vault","x":7656.61,"w":72,"h":48,"baseY":28.63},{"id":"a05-hard-4","type":"slide","x":7948.61,"w":72,"h":48,"baseY":28.63}],"length":8377.81,"finishX":8237.81,"checkpoints":[70,2059.45,4118.91,6178.36],"mode":"hard","coins":makeCoins("A05", COINS.A05)},
     A06: {"routeId":"A06","worldId":"aftermath","version":2,"name":"FINAL ESCAPE","movementProfile":"vector-v1","highJumpZones":[],"groundSegments":[{"id":"a06-p1-d10-v-01","x":70,"y":-91,"w":720,"h":240,"kind":"ground"},{"id":"a06-p1-d10-v-02","x":406,"y":-112.625,"w":72,"h":21.6,"kind":"ground"},{"id":"a06-p1-d10-v-04","x":941.68,"y":-91,"w":136.75,"h":309.6,"kind":"ground"},{"id":"a06-p1-d10-v-05","x":947.44,"y":-26.25,"w":1053.6,"h":244.8,"kind":"ground"},{"id":"a06-p1-d10-v-06","x":1077.04,"y":-91,"w":136.8,"h":64.8,"kind":"ground"},{"id":"a06-p1-d10-v-07","x":1308.64,"y":-91,"w":48,"h":64.8,"kind":"ground"},{"id":"a06-p1-d10-v-08","x":1433.44,"y":-91,"w":48,"h":64.8,"kind":"ground"},{"id":"a06-p1-d10-v-09","x":1481.44,"y":-69.37,"w":108,"h":43.2,"kind":"ground"},{"id":"a06-p1-d10-v-10","x":1623.04,"y":-91,"w":106.8,"h":64.8,"kind":"ground"},{"id":"a06-p1-d10-v-11","x":1729.84,"y":-69.37,"w":42,"h":43.2,"kind":"ground"},{"id":"a06-p1-d10-v-12","x":2132.08,"y":24.25,"w":249.6,"h":307.2,"kind":"ground"},{"id":"a06-p1-d10-v-13","x":2256.88,"y":-40.625,"w":124.8,"h":64.8,"kind":"ground"},{"id":"a06-p1-d10-v-14","x":2438.32,"y":93.75,"w":976.8,"h":240,"kind":"ground","role":"airport-fill"},{"id":"a06-p1-d10-v-15","x":2451.28,"y":25.375,"w":138,"h":67.92,"kind":"ground"},{"id":"a06-p1-d10-v-16","x":2755.6,"y":72.25,"w":72,"h":21.6,"kind":"ground"},{"id":"a06-p1-d10-v-17","x":2937.28,"y":72.25,"w":241.2,"h":21.6,"kind":"ground"},{"id":"a06-p1-d10-v-18","x":3058.72,"y":50.625,"w":120.9,"h":21.6,"kind":"ground"},{"id":"a06-p1-d10-v-19","x":3178.48,"y":29,"w":248.58,"h":64.8,"kind":"ground"},{"id":"a06-p1-d10-v-20","x":3276.88,"y":-29.75,"w":138,"h":363.5,"kind":"ground","role":"airport-solid"},{"id":"a06-p1-d10-v-21","x":3550.48,"y":93.38,"w":960,"h":48,"kind":"ground"},{"id":"a06-p1-d10-v-22","x":3747.28,"y":71.75,"w":72,"h":21.6,"kind":"ground"},{"id":"a06-p2-d12-v-01","x":4518.48,"y":93.375,"w":718.8,"h":232.8,"kind":"ground"},{"id":"a06-p2-d12-v-03","x":4974.48,"y":23.75,"w":262.8,"h":69.6,"kind":"ground"},{"id":"a06-p2-d12-v-04","x":5099.28,"y":-33.75,"w":138,"h":57.6,"kind":"ground"},{"id":"a06-p2-d12-v-05","x":5353.68,"y":-35,"w":620.4,"h":301.2,"kind":"ground"},{"id":"a06-p2-d12-v-06","x":5528.88,"y":-56.625,"w":208.8,"h":21.6,"kind":"ground"},{"id":"a06-p2-d12-v-07","x":5650.08,"y":-78.25,"w":79.44,"h":21.6,"kind":"ground"},{"id":"a06-p2-d12-v-08","x":5782.08,"y":-150.25,"w":192,"h":115.2,"kind":"ground"},{"id":"a06-p2-d12-v-10","x":6306.48,"y":28.63,"w":769.2,"h":301.2,"kind":"ground"},{"id":"a06-p2-d12-v-12","x":6599.28,"y":7,"w":88.8,"h":21.6,"kind":"ground"},{"id":"a06-p2-d12-slope-1","x":5974.08,"y":-131.74,"w":66.48,"h":40.08,"kind":"ground"},{"id":"a06-p2-d12-slope-2","x":6040.56,"y":-91.62,"w":66.48,"h":40.08,"kind":"ground"},{"id":"a06-p2-d12-slope-3","x":6107.04,"y":-51.49,"w":66.48,"h":40.08,"kind":"ground"},{"id":"a06-p2-d12-slope-4","x":6173.52,"y":-11.5,"w":66.48,"h":40.08,"kind":"ground"},{"id":"a06-p2-d12-slope-5","x":6240,"y":28.63,"w":66.48,"h":40.08,"kind":"ground"},{"id":"a06-p3-d13-v-01","x":7083.68,"y":28.625,"w":375.6,"h":120,"kind":"ground"},{"id":"a06-p3-d13-v-03","x":7683.68,"y":-90.24,"w":120,"h":116.4,"kind":"ground"},{"id":"a06-p3-d13-v-04","x":7920.08,"y":-90.24,"w":120,"h":237.6,"kind":"ground"},{"id":"a06-p3-d13-slope1-1","x":7459.28,"y":-11,"w":74.8,"h":39.63,"kind":"ground"},{"id":"a06-p3-d13-slope1-2","x":7534.08,"y":-50.625,"w":74.8,"h":39.63,"kind":"ground"},{"id":"a06-p3-d13-slope1-3","x":7608.88,"y":-90.25,"w":74.8,"h":39.63,"kind":"ground"}],"catchableSurfaces":[{"id":"a06-p1-d10-v-07"},{"id":"a06-p1-d10-v-08"},{"id":"a06-p1-d10-v-10"},{"id":"a06-p1-d10-v-13"},{"id":"a06-p1-d10-v-15"},{"id":"a06-p1-d10-v-16"},{"id":"a06-p1-d10-v-17"},{"id":"a06-p1-d10-v-18"},{"id":"a06-p1-d10-v-19"},{"id":"a06-p1-d10-v-20"},{"id":"a06-p1-d10-v-22"},{"id":"a06-p2-d12-v-03"},{"id":"a06-p2-d12-v-04"},{"id":"a06-p2-d12-v-06"},{"id":"a06-p2-d12-v-07"},{"id":"a06-p2-d12-v-08"},{"id":"a06-p2-d12-v-12"},{"id":"a06-p3-d13-slope1-2"},{"id":"a06-p3-d13-slope1-3"},{"id":"a06-p3-d13-slope1-1"},{"id":"a06-p1-d10-v-02"},{"id":"a06-p2-d12-v-01"},{"id":"a06-p3-d13-v-01"}],"diveZones":[{"id":"a06-p1-d10-dz-01","x1":213.22,"x2":253.22,"landX":446,"landY":-112.62},{"id":"a06-p1-d10-dz-02","x1":672.4,"x2":712.4,"landX":981.68,"landY":-91},{"id":"a06-p1-d10-dz-03","x1":1847.31,"x2":1887.31,"landX":2172.08,"landY":24.25},{"id":"a06-p1-d10-dz-04","x1":3387.06,"x2":3427.06,"landX":3590.48,"landY":93.38},{"id":"a06-p2-d12-dz-01","x1":4762.32,"x2":4802.32,"landX":5014.48,"landY":23.75},{"id":"a06-p2-d12-dz-02","x1":5099.28,"x2":5139.28,"landX":5393.68,"landY":-35},{"id":"a06-p2-d12-dz-03","x1":5474.11,"x2":5514.11,"landX":5822.08,"landY":-150.25},{"id":"a06-p2-d12-dz-04","x1":6406.5,"x2":6446.5,"landX":6639.28,"landY":7},{"id":"a06-p3-d13-dz-01","x1":7258.85,"x2":7298.85,"landX":7499.28,"landY":-11},{"id":"a06-p3-d13-dz-02","x1":7657.5,"x2":7697.5,"landX":7960.08,"landY":-90.24}],"obstacles":[{"id":"a06-p1-d10-vault-04","type":"vault","x":253.22,"w":24,"h":48,"baseY":-91},{"id":"a06-p2-d12-vault-03","type":"vault","x":4804.48,"w":24,"h":48,"baseY":93.38},{"id":"a06-hard-1","type":"vault","x":3922.48,"w":72,"h":48,"baseY":93.38},{"id":"a06-hard-2","type":"slide","x":4222.48,"w":72,"h":48,"baseY":93.38},{"id":"a06-hard-3","type":"vault","x":6494.48,"w":72,"h":48,"baseY":28.63},{"id":"a06-hard-4","type":"slide","x":6786.48,"w":72,"h":48,"baseY":28.63}],"length":8180.08,"finishX":8040.08,"checkpoints":[70,2010.02,4020.04,6030.06],"mode":"hard","coins":makeCoins("A06", COINS.A06)}
   });
+  // Tur 13: checkpoints that were sampled over gaps now sit on the last
+  // playable, drawn surface before the required traversal.
+  const LEGACY_GAP_CHECKPOINTS = Object.freeze({
+    A02:[70,3149.04,4585.44,6433.68], A03:[70,2010.02,4020.04,6030.06], A04:[70,2404.94,4809.88,7214.82],
+    A05:[70,2059.45,4118.91,6178.36], A06:[70,2010.02,4020.04,6030.06],
+    D16:[70,3149.04,4585.44,6433.68], F04:[70,2068.59,4137.19,6205.79],
+    F06:[70,2320.11,4640.23,6960.34], M05:[70,2059.45,4118.91,6178.36],
+    M06:[70,2092.52,4185.04,6277.56],
+  });
+  const SAFE_CHECKPOINTS = Object.freeze({
+    A02:[70,3149.04,4585.44,5601.6], A03:[70,1847.31,4020.04,6030.06], A04:[70,2256.88,4809.88,7214.82],
+    A05:[70,1847.31,4118.91,6178.36], A06:[70,1847.31,4020.04,6030.06],
+    D16:[70,3149.04,4585.44,5601.6], F04:[70,1755.8,4137.19,6205.79],
+    F06:[70,2136,4640.23,6960.34], M05:[70,1847.31,4118.91,6178.36],
+    M06:[70,1847.31,4185.04,6277.56],
+  });
+  for (const [id, checkpoints] of Object.entries(SAFE_CHECKPOINTS)) ROUTES[id].checkpoints = checkpoints;
 const D09_OPENING_FIX=ROUTES.D09;
 const F05_DESCENT_FIX=ROUTES.F05?.groundSegments?.find(s=>s.id==="f05-p2-d01-v-21");
 if(F05_DESCENT_FIX){
@@ -1001,6 +1018,7 @@ applyD09LogicRulesToRoutes();
     containerDoors = [],
     campaignChief = null,
     chiefPlayerTrace = [],
+    lastSafeGround = null,
     lastPrePhysicsX = null,
     campaignDeaths = 0,
     debugHidePlayer = false,
@@ -1035,9 +1053,15 @@ applyD09LogicRulesToRoutes();
     if(!chiefRouteHashCache.has(r))chiefRouteHashCache.set(r,sha256(canonical({groundSegments:r.groundSegments||null,slopes:r.slopes||null,obstacles:r.obstacles||[],diveZones:r.diveZones||[],catchableSurfaces:r.catchableSurfaces||[],highJumpZones:r.highJumpZones||[],...(r.wallJumpZones?.length?{wallJumpZones:r.wallJumpZones}:{}),checkpoints:r.checkpoints||[],finishX:r.finishX})));
     return chiefRouteHashCache.get(r);
   }
+  function chiefPathMatchesRoute(path,r=route) {
+    if(!path)return false;
+    if(path.routeHash===chiefRouteHash(r))return true;
+    const legacy=LEGACY_GAP_CHECKPOINTS[r.routeId];
+    return !!legacy&&path.routeHash===chiefRouteHash({...r,checkpoints:legacy});
+  }
   function chiefPathFor(r=route) {
     const path=window.TMB_CHIEF_PATHS?.[r.routeId];
-    return path&&path.routeHash===chiefRouteHash(r)&&Array.isArray(path.samples)&&path.samples.length>1?path:null;
+    return chiefPathMatchesRoute(path,r)&&Array.isArray(path.samples)&&path.samples.length>1?path:null;
   }
   function chiefSample(path,t) {
     const a=path.samples;if(t<=a[0][0])return {x:a[0][1],y:a[0][2],pose:a[0][3],facing:a[0][4]};
@@ -1200,6 +1224,22 @@ applyD09LogicRulesToRoutes();
     const grounds=routeSurfaces(route).filter(s=>s.kind==="ground"&&x>=s.x&&x<=s.x+s.w);
     return grounds.length?Math.min(...grounds.map(s=>s.y)):GROUND;
   }
+  function solidGroundAt(x,r=route) {
+    const grounds=r.groundSegments
+      ? r.groundSegments.filter(s=>s.kind==="ground"&&s.solid!==false&&x>=s.x&&x<=s.x+s.w)
+      : (x>=0&&x<=r.length?[{x:0,y:GROUND,w:r.length,h:100,kind:"ground"}]:[]);
+    return grounds.sort((a,b)=>a.y-b.y)[0]||null;
+  }
+  function safeGroundUnderPlayer() {
+    if(!player.onGround)return null;
+    const center=player.x+player.w/2,feet=player.y+player.h;
+    const support=(route.groundSegments||[])
+      .filter(s=>s.kind==="ground"&&s.solid!==false&&center>=s.x&&center<=s.x+s.w&&Math.abs(feet-s.y)<=2)
+      .sort((a,b)=>a.y-b.y)[0];
+    if(!support)return null;
+    const runwayX=Math.max(support.x, support.x+support.w-player.w-120);
+    return {x:Math.min(player.x,runwayX),y:support.y,surfaceId:support.id||null};
+  }
   function deepestGroundYAt(x) {
     const grounds=routeSurfaces(route).filter(s=>s.kind==="ground");
     const covering=grounds.filter(s=>s.x<=x&&x<=s.x+s.w);
@@ -1343,6 +1383,9 @@ applyD09LogicRulesToRoutes();
     platformOrder = { colliderFrame: 0, landingFrame: 0, carryFrame: 0 };
     engine.setDynamicSurfaces(movingPlatforms);
     engine.reset(70, routeGroundYAt(70) - player.h);
+    const startGround=solidGroundAt(70);
+    lastSafeGround={x:70,y:startGround?.y??routeGroundYAt(70),surfaceId:startGround?.id||null};
+    run.checkpointRespawn={...lastSafeGround,checkpointX:70};
     resetChiefTrace();
     cameraGroundFootY=player.y+player.h;cameraWorldY=H*(innerWidth>innerHeight?.62:.58)-cameraGroundFootY;backgroundCameraWorldY=cameraWorldY;cameraWorldVelocity=0;engine.setWorldY(cameraWorldY);
     routeStartedAt = performance.now();
@@ -1480,9 +1523,15 @@ applyD09LogicRulesToRoutes();
       run.attemptId = uid("try");
       run.checkpointX = 70;
     }
-    const resetX=full ? 70 : run.checkpointX;
-    if(window.__tmbXWriteLog)window.__tmbXWriteLog.push({source:"engine.reset/retry",routeId,gameClock,beforeX:player.x,afterX:resetX,full});
-    engine.reset(resetX, routeGroundYAt(resetX) - player.h);
+    const checkpointX=full ? 70 : run.checkpointX;
+    const direct=solidGroundAt(checkpointX);
+    const saved=!full&&run.checkpointRespawn?.checkpointX===checkpointX?run.checkpointRespawn:null;
+    const respawn=direct?{x:checkpointX,y:direct.y,surfaceId:direct.id||null}:saved||lastSafeGround;
+    if(route.movementProfile==="vector-v1"&&!respawn)throw new Error(`No safe checkpoint respawn for ${routeId}@${checkpointX}`);
+    const resetX=respawn?.x??checkpointX,resetY=respawn?.y??routeGroundYAt(checkpointX);
+    if(window.__tmbXWriteLog)window.__tmbXWriteLog.push({source:"engine.reset/retry",routeId,gameClock,beforeX:player.x,afterX:resetX,checkpointX,full});
+    engine.reset(resetX, resetY - player.h);
+    player.facing=1;engine.parkour.dir=1;
     if(full)gameClock=0;
     resetChiefTrace();
     resetRecordedChief(resetX);
@@ -2028,9 +2077,15 @@ applyD09LogicRulesToRoutes();
     const overpass = route.obstacles.find((o)=>o.type==="overpass");
     if (overpass && player.x+player.w>overpass.x && player.x<overpass.x+overpass.w && Math.abs(player.y+player.h-overpass.y)<8)
       addFlow(overpass.id,"overpassRide",8);
+    const safeGround=safeGroundUnderPlayer();
+    if(safeGround)lastSafeGround=safeGround;
     for (const cp of route.checkpoints)
       if (player.x >= cp && run.checkpointX < cp) {
         run.checkpointX = cp;
+        const checkpointGround=solidGroundAt(cp);
+        run.checkpointRespawn=checkpointGround
+          ? {x:cp,y:checkpointGround.y,surfaceId:checkpointGround.id||null,checkpointX:cp}
+          : {...lastSafeGround,checkpointX:cp};
         sfx("checkpoint");
         emitGame("checkpoint_reached", { routeId, x: cp });
         saveRun();
@@ -3133,6 +3188,8 @@ applyD09LogicRulesToRoutes();
       barrels: clone(barrels),
       worker: { disabled:workerDisabled, clock:workerClock },
       checkpointX: run?.checkpointX,
+      checkpointRespawn: run?.checkpointRespawn ? {...run.checkpointRespawn} : null,
+      lastSafeGround: lastSafeGround ? {...lastSafeGround} : null,
       result: result ? clone(result) : null,
       finishAdvance: finishAdvance ? { ...finishAdvance } : null,
       finishGate: { ...finishGate },
