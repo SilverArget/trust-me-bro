@@ -1089,6 +1089,10 @@ applyD09LogicRulesToRoutes();
   }
   function chiefTraceSampleAtX(x){
     const a=chiefPlayerTrace;if(!a.length)return null;
+    // A retry starts a new live trace at the checkpoint.  Do not project every
+    // older chief position onto that first sample: doing so spawns the chief on
+    // top of the player until enough post-retry trace has been recorded.
+    if(x<a[0].x-2)return null;
     if(x<=a[0].x)return a[0];
     for(let i=1;i<a.length;i++){
       const q=a[i-1],n=a[i];
@@ -1097,8 +1101,7 @@ applyD09LogicRulesToRoutes();
         return {t:q.t+(n.t-q.t)*u,x:q.x+(n.x-q.x)*u,y:q.y+(n.y-q.y)*u,feet:q.feet+(n.feet-q.feet)*u,pose:u<.5?q.pose:n.pose,facing:u<.5?q.facing:n.facing,checkpointX:n.checkpointX};
       }
     }
-    const last=a[a.length-1];
-    return last&&last.x<=player.x+8?last:null;
+    return null;
   }
   function matchPlayerToChiefPath(c){
     const a=c.path.samples,start=c.playerIndex??0,limitT=c.playerT+1;let end=start;
@@ -1109,7 +1112,7 @@ applyD09LogicRulesToRoutes();
     if(c.matchMode==="x"){best=start;bestD=Infinity;for(let i=start;i<=end;i++){const d=Math.abs(a[i][1]-player.x);if(d<bestD){bestD=d;best=i}}}
     c.playerIndex=Math.max(start,best);c.playerT=Math.max(c.playerT,a[c.playerIndex][0]);
   }
-  const CHIEF_ENTRY_X=-64,CHIEF_LADDER_FRACTION=.15,CHIEF_LADDER_HEIGHT=132,CHIEF_LADDER_CLIMB_T=.85,CHIEF_FAST_SCALE=40/30,CHIEF_CLOSE_GAP_PX=160,CHIEF_EASE_GAP_PX=180,CHIEF_STOP_CLOSE_PX=520;
+  const CHIEF_ENTRY_X=-64,CHIEF_LADDER_FRACTION=.15,CHIEF_LADDER_HEIGHT=132,CHIEF_LADDER_CLIMB_T=.85,CHIEF_FAST_SCALE=40/30,CHIEF_CLOSE_GAP_PX=160,CHIEF_EASE_GAP_PX=180,CHIEF_STOP_CLOSE_PX=520,CHIEF_STOP_SPEED_PX=54;
   function chiefDelayFor(path,id){
     if(!path)return undefined;
     const d=path.delay||0;
@@ -1175,7 +1178,7 @@ applyD09LogicRulesToRoutes();
     const q=chiefSample(c.path,c.chiefT);c.x=q.x;c.y=q.y;c.pose=q.pose;c.facing=q.facing;
     emitGame("chief_chase_started",{routeId,entry:"ladder"});
   }
-  function resetRecordedChief(x){if(!campaignChief?.path)return;const entry=primeChiefLadder(campaignChief),t=chiefTimeAtX(campaignChief.path,x);if(entry&&t<entry.readyTime){parkChiefAtLadder(campaignChief);setChiefPlayerTime(campaignChief,t);return}campaignChief.active=true;campaignChief.entryPhase="running";campaignChief.climbElapsed=entry?.duration||0;campaignChief.playerT=t;campaignChief.chaseScale=1;campaignChief.chiefT=Math.max(entry?.time??0,t-campaignChief.delay);campaignChief.playerIndex=Math.max(0,campaignChief.path.samples.findIndex(v=>v[0]>=t));campaignChief.matchMode="xy";const q=chiefSample(campaignChief.path,campaignChief.chiefT);campaignChief.x=q.x;campaignChief.y=q.y;campaignChief.pose=q.pose;campaignChief.facing=q.facing}
+  function resetRecordedChief(x){if(!campaignChief?.path)return;const entry=primeChiefLadder(campaignChief),t=chiefTimeAtX(campaignChief.path,x);if(entry&&t<entry.readyTime){parkChiefAtLadder(campaignChief);setChiefPlayerTime(campaignChief,t);return}campaignChief.active=true;campaignChief.entryPhase="running";campaignChief.climbElapsed=entry?.duration||0;campaignChief.playerT=t;campaignChief.chaseScale=1;campaignChief.chiefT=Math.max(campaignChief.path.samples[0][0],t-campaignChief.delay);campaignChief.playerIndex=Math.max(0,campaignChief.path.samples.findIndex(v=>v[0]>=t));campaignChief.matchMode="xy";const q=chiefSample(campaignChief.path,campaignChief.chiefT);campaignChief.x=q.x;campaignChief.y=q.y;campaignChief.pose=q.pose;campaignChief.facing=q.facing}
   function obstacleSeed(r=route) {
     const key=`${r.routeId}@${r.version}`;
     if(!obstacleSeedCache.has(key))obstacleSeedCache.set(key,sha256(canonical({length:r.length,finishX:r.finishX,checkpoints:r.checkpoints,obstacles:r.obstacles,groundSegments:r.groundSegments||null,voidEdges:r.voidEdges||null})));
@@ -1931,13 +1934,16 @@ applyD09LogicRulesToRoutes();
         }
       }
       if (campaignChief.active) {
+        const chiefFrameStartX=campaignChief.x;
         campaignChief.stunCatchGrace=engine.parkour.state==="stun"?1.05:Math.max(0,(campaignChief.stunCatchGrace||0)-dt);
         if(campaignChief.path&&campaignChief.entryPhase==="climbing"){campaignChief.climbElapsed=Math.min(campaignChief.entry.duration,campaignChief.climbElapsed+dt);const u=campaignChief.climbElapsed/campaignChief.entry.duration;campaignChief.x=campaignChief.entry.x-campaignChief.w*.5;campaignChief.y=campaignChief.entry.bottomY-campaignChief.h-(campaignChief.entry.height-campaignChief.h*.2)*u;campaignChief.pose="climb";if(u>=1)finishChiefLadder(campaignChief)}
         else if(campaignChief.path){const entry=primeChiefLadder(campaignChief),scale=chiefChaseScale(campaignChief,dt);campaignChief.chiefT=Math.max(entry.time,campaignChief.chiefT+dt*scale);if((player.vx>180||campaignChief.stunCatchGrace>0)&&campaignChief.playerT>0)campaignChief.chiefT=Math.min(campaignChief.chiefT,campaignChief.playerT-.22);matchPlayerToChiefPath(campaignChief);const ideal=chiefSample(campaignChief.path,campaignChief.chiefT),live=chiefTraceSampleAtX(ideal.x);if(live){campaignChief.x=live.x;campaignChief.y=live.feet-campaignChief.h;campaignChief.pose=live.pose;campaignChief.facing=live.facing||1}else{campaignChief.x=ideal.x;campaignChief.y=ideal.y;campaignChief.pose=ideal.pose;campaignChief.facing=ideal.facing}}else campaignChief.x+=campaignChief.speed*dt;
         if(innerHeight>=innerWidth&&campaignChief.path&&campaignChief.x<player.x-(engine.W||W)*.18){const portraitLive=chiefTraceSampleAtX(player.x-(engine.W||W)*.18);if(portraitLive){campaignChief.x=portraitLive.x;campaignChief.y=portraitLive.feet-campaignChief.h;campaignChief.pose=portraitLive.pose;campaignChief.facing=portraitLive.facing||1}}
         const playerCatchable=player.onGround&&engine.parkour.state==="normal"&&!diveRun&&!wallJumpRun&&Math.abs(player.vx)<70;
+        if(campaignChief.path&&campaignChief.entryPhase==="running"&&!playerCatchable&&campaignChief.x>player.x-CHIEF_CLOSE_GAP_PX){const trailing=chiefTraceSampleAtX(player.x-CHIEF_CLOSE_GAP_PX);campaignChief.x=player.x-CHIEF_CLOSE_GAP_PX;if(trailing){campaignChief.y=trailing.feet-campaignChief.h;campaignChief.pose=trailing.pose;campaignChief.facing=trailing.facing||1}else campaignChief.y=routeGroundYAt(campaignChief.x+campaignChief.w/2)-campaignChief.h}
+        if(campaignChief.path&&campaignChief.entryPhase==="running"&&playerCatchable){campaignChief.x=Math.min(player.x-campaignChief.w+4,chiefFrameStartX+CHIEF_STOP_SPEED_PX*dt);const closing=chiefTraceSampleAtX(campaignChief.x);if(closing){campaignChief.y=closing.feet-campaignChief.h;campaignChief.pose=closing.pose;campaignChief.facing=closing.facing||1}else campaignChief.y=routeGroundYAt(campaignChief.x+campaignChief.w/2)-campaignChief.h}
         campaignChief.catchExposureT=playerCatchable?(campaignChief.catchExposureT||0)+dt:0;
-        const liveChiefCatch=campaignChief.path&&campaignChief.entryPhase==="running"&&campaignChief.regrabT<=0&&campaignChief.stunCatchGrace<=0&&campaignChief.catchExposureT>=2.15&&playerCatchable&&campaignChief.chiefT>=0&&campaignChief.chiefT>=campaignChief.playerT-.05&&campaignChief.x+campaignChief.w>=player.x-80;
+        const liveChiefCatch=campaignChief.path&&campaignChief.entryPhase==="running"&&playerCatchable&&campaignChief.chiefT>=0&&campaignChief.x+campaignChief.w>=player.x-4&&campaignChief.x<=player.x+player.w+4&&campaignChief.y+campaignChief.h>=player.y-4&&campaignChief.y<=player.y+player.h+4;
         if (campaignChief.caughtT<=0 && (!campaignChief.path ? campaignChief.x+campaignChief.w>=player.x+4 && campaignChief.x<=player.x+player.w-4 : liveChiefCatch)) {
           campaignChief.catches++;
           campaignDeaths++;
