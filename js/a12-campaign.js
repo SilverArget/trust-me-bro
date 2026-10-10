@@ -6,6 +6,23 @@
     PROFILE_KEY = "trust_me_bro_campaign_profile_v1",
     LEGACY_KEY = "trust_me_bro_last_delivery_v2_save";
   const DEBUG = location.hash.toLowerCase().includes("debug");
+  const TEST_MODE_LOCAL_HOSTS = new Set(["localhost", "127.0.0.1"]),
+    TEST_MODE_FIRST_PARTY_HASH = 0xef25b67c;
+  function testModeHostAllowed(host) {
+    host = String(host || "").trim().toLowerCase().replace(/\.$/, "");
+    if (TEST_MODE_LOCAL_HOSTS.has(host)) return true;
+    let hash = 0x811c9dc5;
+    for (const ch of host) { hash ^= ch.charCodeAt(0); hash = Math.imul(hash, 0x01000193) >>> 0; }
+    return hash === TEST_MODE_FIRST_PARTY_HASH;
+  }
+  function isNativeRuntime() {
+    try { return !!window.Capacitor?.isNativePlatform?.(); }
+    catch (_) { return true; }
+  }
+  const TEST_MODE =
+    new URLSearchParams(location.search).get("test") === "hepsi" &&
+    testModeHostAllowed(location.hostname) &&
+    !isNativeRuntime();
   const telemetry = [];
   function emitGame(event, data = {}) {
     const detail = { event, params:{...data,gameTime:typeof gameClock==="number"?gameClock:0,frame:typeof renderFrameCount==="number"?renderFrameCount:0}, context:{ routeId, runId:run?.runId }, result:null };
@@ -788,6 +805,14 @@ applyD09LogicRulesToRoutes();
       rewardedRunIds: [],
     };
   }
+  function fullTestProfile(raw) {
+    const n = normalizeProfile(raw);
+    n.ownedRunnerIds = Object.keys(RUNNERS);
+    n.ownedOutfitSetIds = Object.keys(OUTFITS);
+    n.ownedChiefIds = Object.keys(CHIEFS);
+    n.ownedWorldIds = Object.keys(WORLD_REGISTRY);
+    return n;
+  }
   function languageFrom(v) {
     v = String(v || "en").toLowerCase();
     return v.startsWith("tr") ? "tr" : v.startsWith("ru") ? "ru" : "en";
@@ -924,6 +949,11 @@ applyD09LogicRulesToRoutes();
   const campaignStorage = window.__tmbStorage || fallbackStorage();
   let persistQueue = Promise.resolve();
   function persist() {
+    if (TEST_MODE) {
+      saveStatus = "memory";
+      saveFailure = false;
+      return Promise.resolve(true);
+    }
     profile.profileRevision++;
     const raw = JSON.stringify(profile);
     const write = async () => {
@@ -951,8 +981,9 @@ applyD09LogicRulesToRoutes();
       legacy = await campaignStorage.get(LEGACY_KEY);
     } catch (_) {}
     profile = migrateV36(legacy, raw);
+    if (TEST_MODE) profile = fullTestProfile(profile);
     if (!raw) profile.settings.reducedEffects = !!window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
-    if (profile.migrationFlags.v36 && !raw) await persist();
+    if (!TEST_MODE && profile.migrationFlags.v36 && !raw) await persist();
     document
       .querySelectorAll(".characterChoice")
       .forEach((el) => el.replaceWith(el.cloneNode(true)));
@@ -1279,6 +1310,7 @@ applyD09LogicRulesToRoutes();
     void persist();
   }
   function routeUnlocked(id) {
+    if (TEST_MODE) return !!ROUTES[id];
     if (/^D\d{2}$/.test(id)) return !!ROUTES[id];
     if (/^A0/.test(id)) return !!ROUTES[id] && (id === "A01" || !!profile.progressByRoute[`A0${Number(id.slice(1))-1}`]?.completed);
     if (/^M0/.test(id)) return !!ROUTES[id] && (id === "M01" || !!profile.progressByRoute[`M0${Number(id.slice(1))-1}`]?.completed);
@@ -2568,12 +2600,21 @@ applyD09LogicRulesToRoutes();
     style.textContent += `#a12DockRoutes{position:fixed;z-index:30;left:50%;bottom:var(--dock-actions-clearance,148px);transform:translateX(-50%);width:min(94vw,760px);display:grid;grid-template-columns:repeat(6,1fr);gap:5px;padding:8px;box-sizing:border-box;background:#06121be8;border:1px solid #ffffff33;border-radius:6px}#a12DockRoutes[hidden]{display:none!important}#a12DockRoutes button{min-width:0;padding:6px 2px;border:1px solid #ffffff33;border-radius:4px;background:#153246;color:#fff;font:800 10px/1.05 system-ui}#a12DockRoutes small{display:block;color:#ffd45c;font-size:9px}@media(max-width:540px) and (orientation:portrait){#a12DockRoutes{grid-template-columns:repeat(6,1fr);gap:3px;padding:5px}#a12DockRoutes button{padding:5px 1px;font-size:9px}}`;
     style.textContent += `@media(orientation:landscape){#a12DockRoutes{left:auto;right:max(12px,var(--safe-right));transform:none;width:min(calc(100vw - 440px),760px)}}`;
     style.textContent += `body[data-campaign-phase="result"] #joystick,body[data-campaign-phase="result"] #jumpWrap,body[data-campaign-phase="result"] #controlHint,body[data-campaign-phase="result"] #hint{display:none!important}`;
+    style.textContent += `#a12TestModeLabel{position:fixed;z-index:75;left:max(10px,calc(var(--safe-left) + 10px));top:max(10px,calc(var(--safe-top) + 10px));padding:5px 8px;border:1px solid #ffe07a;border-radius:6px;background:#2b210be8;color:#ffe998;font:950 10px/1 system-ui;letter-spacing:.09em;pointer-events:none;box-shadow:0 3px 10px #0008}#a12TestRoutes{grid-column:1/-1;display:grid;grid-template-columns:repeat(6,minmax(42px,1fr));gap:6px;padding:8px;border:1px solid #79e9ba55;border-radius:10px;background:#071b24}#a12TestRoutes button{min-height:34px;padding:5px 3px;font-size:10px}@media(max-width:540px) and (orientation:portrait){#a12TestRoutes{grid-template-columns:repeat(4,minmax(42px,1fr))}}`;
     document.head.appendChild(style);
     style.textContent += `#a12Actions{flex-wrap:wrap;justify-content:center;max-width:min(96vw,720px)}body[data-campaign-phase="result"] #a12Actions{bottom:max(12px,var(--safe-bottom))}#a12Actions [data-act="rewarded"]{background:#286650;border-color:#8ff1c8}`;
     const actions = document.createElement("div");
     actions.id = "a12Actions";
     actions.innerHTML = `<button data-act="next">${t("next")}</button><button data-act="shop">${t("shop")}</button><button data-act="rewarded" hidden></button><button data-act="retry">${t("retry")}</button>`;
     document.body.appendChild(actions);
+    if (TEST_MODE) {
+      document.body.dataset.testMode = "hepsi";
+      const label = document.createElement("div");
+      label.id = "a12TestModeLabel";
+      label.setAttribute("role", "status");
+      label.textContent = "TEST MODU";
+      document.body.appendChild(label);
+    }
     const dockRoutes=document.createElement("nav");dockRoutes.id="a12DockRoutes";dockRoutes.hidden=true;document.body.appendChild(dockRoutes);const placeDockRoutes=()=>{if(dockRoutes.hidden||actions.hidden)return;const top=actions.getBoundingClientRect().top;dockRoutes.style.setProperty("--dock-actions-clearance",`${Math.max(8,innerHeight-top+8)}px`)};const renderDockRoutes=()=>{const show=document.body.dataset.campaignPhase==="result"&&profile.selectedWorldId==="dock31";dockRoutes.hidden=!show;if(!show)return;dockRoutes.innerHTML=WORLD_REGISTRY.dock31.routes.map(id=>`<button data-route="${id}">${id}<small>${"★".repeat(profile.progressByRoute[id]?.stars||0)}${"☆".repeat(3-(profile.progressByRoute[id]?.stars||0))}</small></button>`).join("");requestAnimationFrame(placeDockRoutes)};new MutationObserver(renderDockRoutes).observe(document.body,{attributes:true,attributeFilter:["data-campaign-phase"]});addEventListener("resize",placeDockRoutes);dockRoutes.addEventListener("click",e=>{const id=e.target.closest("[data-route]")?.dataset.route;if(id)startRoute(id)});
     if(!document.getElementById("a12Language")){const card=document.getElementById("characterCard");if(card){const wrap=document.createElement("label");wrap.id="a12LanguageWrap";wrap.innerHTML=`<span></span><select id="a12Language" aria-label="Language"><option value="en">EN</option><option value="tr">TR</option><option value="ru">RU</option></select>`;card.appendChild(wrap);}}
     const languageSelect=document.getElementById("a12Language");if(languageSelect){languageSelect.value=profile.settings.language;languageSelect.addEventListener("change",async()=>{const previous=profile.settings.language;profile.settings.language=languageFrom(languageSelect.value);applyLanguage();emitGame("language_change",{from:previous,to:profile.settings.language});await persist();});}
@@ -2604,45 +2645,59 @@ applyD09LogicRulesToRoutes();
       if (e.target.closest("[data-close]")) return closeShop();
       if (e.target.closest("[data-shop-back]")) return closeShop();
       if (e.target.closest("[data-shop-buy]")) return shopTab==="worlds"?purchaseOrSelectWorld(previewWorldId):shopTab==="characters"?purchaseOrSelectRunner(previewRunnerId):shopTab==="chiefs"?purchaseOrSelectChief(previewChiefId):purchaseOrWear(previewOutfitId,previewRunnerId);
+      const testRoute = e.target.closest("[data-test-route]");
+      if (TEST_MODE && testRoute) {
+        const id = testRoute.dataset.testRoute, target = ROUTES[id];
+        if (!target) return;
+        profile.selectedWorldId = target.worldId;
+        pendingWorldId = null;
+        sceneCache.clear();
+        closeShop();
+        startRoute(id, true, id === "D06");
+        return;
+      }
       const runnerButton=e.target.closest("[data-preview-runner]");
       if(runnerButton){previewRunnerId=runnerButton.dataset.previewRunner;return renderShop();}
       const motionButton=e.target.closest("[data-preview-motion]");
       if(motionButton){previewMotion=motionButton.dataset.previewMotion;previewStartedAt=performance.now();return renderShop();}
       const tab = e.target.closest("[data-tab]");
       if (tab) { shopTab = tab.dataset.tab; return renderShop(); }
+      const itemAction = !!e.target.closest("[data-action]");
       const article = e.target.closest("[data-item]");
       if (!article) return;
       if (shopTab === "worlds") {
         previewWorldId = article.dataset.item;
         renderShop();
-        if (e.target.matches("[data-action]")) await purchaseOrSelectWorld(previewWorldId);
+        if (itemAction) await purchaseOrSelectWorld(previewWorldId);
         return;
       }
       if (shopTab === "characters") {
         previewRunnerId = article.dataset.item;
         renderShop();
-        if (e.target.matches("[data-action]")) await purchaseOrSelectRunner(previewRunnerId);
+        if (itemAction) await purchaseOrSelectRunner(previewRunnerId);
         return;
       }
       if (shopTab === "chiefs") {
         previewChiefId = article.dataset.item;
         renderShop();
-        if (e.target.matches("[data-action]")) await purchaseOrSelectChief(previewChiefId);
+        if (itemAction) await purchaseOrSelectChief(previewChiefId);
         return;
       }
       previewOutfitId = article.dataset.item;
       renderShop();
-      if (e.target.matches("[data-action]"))
+      if (itemAction)
         await purchaseOrWear(previewOutfitId, previewRunnerId);
     });
     shop.addEventListener("pointerover", (e) => {
       const article = e.target.closest("[data-item]");
       if (!article || !shop.contains(article)) return;
-      if (shopTab === "characters") previewRunnerId = article.dataset.item;
-      else if (shopTab === "chiefs") previewChiefId = article.dataset.item;
-      else if (shopTab === "outfits") previewOutfitId = article.dataset.item;
-      else if (shopTab === "worlds") previewWorldId = article.dataset.item;
-      renderShop();
+      const id = article.dataset.item;
+      let changed = false;
+      if (shopTab === "characters" && previewRunnerId !== id) { previewRunnerId = id; changed = true; }
+      else if (shopTab === "chiefs" && previewChiefId !== id) { previewChiefId = id; changed = true; }
+      else if (shopTab === "outfits" && previewOutfitId !== id) { previewOutfitId = id; changed = true; }
+      else if (shopTab === "worlds" && previewWorldId !== id) { previewWorldId = id; changed = true; }
+      if (changed) renderShop();
     });
     addEventListener("keydown", (e) => {
       if (e.key !== "Escape") return;
@@ -2777,9 +2832,9 @@ applyD09LogicRulesToRoutes();
       a.style.outline = previewOutfitId === id ? "2px solid #79e9ba" : "none";
       a.dataset.owned=String(owned);a.dataset.price=String(OUTFITS[id].price);
       a.querySelector("button").textContent = worn
-        ? t("worn")
+        ? t(TEST_MODE ? "selected" : "worn")
         : owned
-          ? t("wear")
+          ? t(TEST_MODE ? "select" : "wear")
           : `${short?"🔒 ":""}◉ ${OUTFITS[id].price}`;
       a.querySelector("button").disabled = worn || purchaseBusy || short;
       a.querySelector('.priceBadge')?.remove();
@@ -2798,6 +2853,7 @@ applyD09LogicRulesToRoutes();
     }
     const worlds=s.querySelector('[data-list="worlds"]');
     worlds.innerHTML=Object.values(WORLD_REGISTRY).map(w=>`<article data-item="${w.id}"><h3>${t(`world${w.id[0].toUpperCase()}${w.id.slice(1)}`)}</h3><button data-action></button></article>`).join("");
+    if (TEST_MODE && WORLD_REGISTRY[previewWorldId]) worlds.insertAdjacentHTML("beforeend", `<nav id="a12TestRoutes" aria-label="${t("route")}">${WORLD_REGISTRY[previewWorldId].routes.map(id=>`<button data-test-route="${id}">${id}</button>`).join("")}</nav>`);
     for(const a of worlds.querySelectorAll("article")){const w=WORLD_REGISTRY[a.dataset.item],owned=profile.ownedWorldIds.includes(w.id),selected=profile.selectedWorldId===w.id,b=a.querySelector("button"),short=!owned&&profile.walletBalance<w.price;a.dataset.owned=String(owned);a.dataset.price=String(w.price);a.style.outline=previewWorldId===w.id?"2px solid #79e9ba":"none";b.textContent=!w.enabled?t("planned"):selected?t("selected"):owned?t("select"):`${short?"🔒 ":""}◉ ${w.price}`;b.disabled=!w.enabled||selected||purchaseBusy||short;}
     const activeList=shopTab==="worlds"?"worlds":shopTab==="characters"?"characters":shopTab==="chiefs"?"chiefs":"outfits",activeId=shopTab==="worlds"?previewWorldId:shopTab==="characters"?previewRunnerId:shopTab==="chiefs"?previewChiefId:previewOutfitId,back=s.querySelector('[data-shop-back]'),buy=s.querySelector('[data-shop-buy]'),selected=s.querySelector(`[data-list="${activeList}"] [data-item="${activeId}"] [data-action]`),previewWorld=WORLD_REGISTRY[previewWorldId],worldOwned=!!previewWorld&&profile.ownedWorldIds.includes(previewWorldId),worldSelected=profile.selectedWorldId===previewWorldId,worldShort=!!previewWorld&&!worldOwned&&profile.walletBalance<previewWorld.price,warning=s.querySelector('[data-world-insufficient]');back.textContent=t("back");if(shopTab==="worlds"&&previewWorld){buy.textContent=!previewWorld.enabled?t("planned"):worldSelected?t("selected"):worldOwned?t("select"):t("buyWorld").replace("{price}",previewWorld.price);buy.disabled=!previewWorld.enabled||worldSelected||purchaseBusy||worldShort}else{buy.textContent=selected?.textContent||t('selected');buy.disabled=!!selected?.disabled}warning.hidden=!(shopTab==="worlds"&&previewWorld?.enabled&&worldShort);warning.textContent=warning.hidden?"":t("insufficient");
     s.querySelector("[data-save]").textContent = saveFailure ? t("saveFailed") : t("noCharge");
@@ -2845,7 +2901,11 @@ applyD09LogicRulesToRoutes();
     const item = WORLD_REGISTRY[id];
     if (!item?.enabled) return false;
     if (profile.ownedWorldIds.includes(id)) {
-      pendingWorldId = item.routes.length ? id : null;
+      if (TEST_MODE) {
+        profile.selectedWorldId = id;
+        pendingWorldId = null;
+        sceneCache.clear();
+      } else pendingWorldId = item.routes.length ? id : null;
       renderShop(); return true;
     }
     if (profile.walletBalance < item.price) return false;
@@ -3140,6 +3200,7 @@ applyD09LogicRulesToRoutes();
   function debugState() {
     return {
       schemaVersion: profile.schemaVersion,
+      testMode: TEST_MODE,
       profile: clone(profile),
       routeId,
       routeVersion: route?.version,
