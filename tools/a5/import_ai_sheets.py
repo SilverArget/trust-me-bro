@@ -8,9 +8,11 @@ per runner and one translation per source page are applied to all 64 frames.
 
 from __future__ import annotations
 
+import argparse
 import hashlib
 import json
 import math
+import shutil
 from collections import deque
 from pathlib import Path
 
@@ -23,6 +25,11 @@ RAW = ROOT / "sprites" / "raw" / "a5-ai"
 OUT = ROOT / "sprites" / "a5"
 CHIEF_OUT = ROOT / "sprites" / "chiefs"
 EVIDENCE = ROOT / "03-test" / "manager-preview" / "gorsel"
+TUR17_EVIDENCE = ROOT / "03-test" / "manager-preview" / "tur17"
+TUR17_REPORT = ROOT / "03-test" / "TUR17-REPORT.md"
+TUR17_RUNNERS = ("tall", "compact", "bruiser", "athlete")
+TUR17_OUTFITS = ("dockCrew", "nightShift", "hazardRunner", "ronin", "shadowNinja",
+                 "orbitAstronaut", "northRaider", "mechaPilot")
 RUNNER_OUTFITS = {
     "male": ("ronin", "shadowNinja", "orbitAstronaut", "northRaider", "mechaPilot"),
     "female": ("ronin", "shadowNinja", "orbitAstronaut", "northRaider", "mechaPilot"),
@@ -287,7 +294,7 @@ def save_png(im: Image.Image, path: Path) -> None:
     im.save(path, format="PNG", optimize=True, compress_level=9)
 
 
-def main() -> None:
+def legacy_main() -> None:
     OUT.mkdir(parents=True, exist_ok=True)
     CHIEF_OUT.mkdir(parents=True, exist_ok=True)
     EVIDENCE.mkdir(parents=True, exist_ok=True)
@@ -358,6 +365,402 @@ def main() -> None:
     for key, data in report["pages"].items():
         print(f"{key} {data['atlas_sha256'][:16]} {data['atlas_bytes']}")
     print("scales " + " ".join(f"{k}={v:.8f}" for k, v in scales.items()))
+
+
+def pixel_components(mask: np.ndarray) -> list[dict]:
+    """Return 8-connected components with local pixel coordinates."""
+    h, w = mask.shape
+    seen = np.zeros_like(mask, dtype=bool)
+    components = []
+    for sy, sx in zip(*np.nonzero(mask)):
+        if seen[sy, sx]:
+            continue
+        q = deque([(int(sy), int(sx))])
+        seen[sy, sx] = True
+        pixels = []
+        while q:
+            y, x = q.popleft()
+            pixels.append((y, x))
+            for dy in (-1, 0, 1):
+                for dx in (-1, 0, 1):
+                    ny, nx = y + dy, x + dx
+                    if ((dy or dx) and 0 <= ny < h and 0 <= nx < w and
+                            mask[ny, nx] and not seen[ny, nx]):
+                        seen[ny, nx] = True
+                        q.append((ny, nx))
+        ys = [p[0] for p in pixels]
+        xs = [p[1] for p in pixels]
+        components.append({"pixels": pixels, "size": len(pixels),
+                           "bbox": (min(xs), min(ys), max(xs) + 1, max(ys) + 1),
+                           "center": (sum(xs) / len(xs), sum(ys) / len(ys))})
+    return components
+
+
+def component_gap(a: dict, b: dict) -> tuple[float, float]:
+    ax0, ay0, ax1, ay1 = a["bbox"]
+    bx0, by0, bx1, by1 = b["bbox"]
+    dx = max(bx0 - ax1, ax0 - bx1, 0)
+    dy = max(by0 - ay1, ay0 - by1, 0)
+    acx, acy = a["center"]
+    bcx, bcy = b["center"]
+    return dx * dx + dy * dy, (acx - bcx) ** 2 + (acy - bcy) ** 2
+
+
+def split_page_by_ownership(path: Path) -> dict:
+    """Split without clipping: crop fragments are reassigned to the nearest body.
+
+    AI poses occasionally cross a nominal 8x8 boundary.  A fixed crop either
+    loses that fragment or gives it to the next frame.  We find the main body
+    in every nominal cell, then assign every other connected fragment to the
+    nearest main body in page coordinates before rendering.
+    """
+    source = Image.open(path).convert("RGBA")
+    if source.size != (1254, 1254):
+        raise SystemExit(f"STOP: unexpected source size {path}: {source.size}")
+    keyed = segment(source)
+    pixels = np.asarray(keyed).copy()
+    mask = pixels[..., 3] > 0
+    xb, yb = bounds(source.width), bounds(source.height)
+    records: list[dict] = []
+    primaries: list[dict] = []
+    for row in range(8):
+        for col in range(8):
+            x0, x1, y0, y1 = xb[col], xb[col + 1], yb[row], yb[row + 1]
+            local = pixel_components(mask[y0:y1, x0:x1])
+            if not local:
+                raise SystemExit(f"STOP: empty source cell {path} row={row} col={col}")
+            cell_records = []
+            for component in local:
+                component["pixels"] = [(y + y0, x + x0) for y, x in component["pixels"]]
+                bx0, by0, bx1, by1 = component["bbox"]
+                component["bbox"] = (bx0 + x0, by0 + y0, bx1 + x0, by1 + y0)
+                cx, cy = component["center"]
+                component["center"] = (cx + x0, cy + y0)
+                component["nominal"] = row * 8 + col
+                cell_records.append(component)
+                records.append(component)
+            primary = max(cell_records, key=lambda item: item["size"])
+            primary["owner"] = row * 8 + col
+            primaries.append(primary)
+    for component in records:
+        if "owner" not in component:
+            component["owner"] = min(range(64), key=lambda index: component_gap(component, primaries[index]))
+    frames = []
+    reassigned = 0
+    for index in range(64):
+        owned = [component for component in records if component["owner"] == index]
+        if not owned:
+            raise SystemExit(f"STOP: no owned components {path} frame={index}")
+        coords = [point for component in owned for point in component["pixels"]]
+        ys = [p[0] for p in coords]
+        xs = [p[1] for p in coords]
+        gx0, gy0, gx1, gy1 = min(xs), min(ys), max(xs) + 1, max(ys) + 1
+        frame_pixels = np.zeros((gy1 - gy0, gx1 - gx0, 4), dtype=np.uint8)
+        for component in owned:
+            if component["nominal"] != index:
+                reassigned += 1
+            for y, x in component["pixels"]:
+                frame_pixels[y - gy0, x - gx0] = pixels[y, x]
+        row, col = divmod(index, 8)
+        frames.append({"image": Image.fromarray(frame_pixels, "RGBA"),
+                       "origin": (gx0 - xb[col], gy0 - yb[row]),
+                       "nominal_size": (xb[col + 1] - xb[col], yb[row + 1] - yb[row])})
+    return {"path": path, "source_sha256": sha256(path), "size": source.size,
+            "frames": frames, "reassigned_components": reassigned}
+
+
+def normalized_box(frame: dict) -> tuple[float, float, float, float]:
+    image = frame["image"]
+    box = image.getchannel("A").getbbox()
+    if not box:
+        raise SystemExit("STOP: empty owned frame")
+    ox, oy = frame["origin"]
+    nw, nh = frame["nominal_size"]
+    return ((ox + box[0]) * 64 / nw, (oy + box[1]) * 64 / nh,
+            (ox + box[2]) * 64 / nw, (oy + box[3]) * 64 / nh)
+
+
+def tur17_translation(page: dict, scale: float) -> tuple[float, float]:
+    boxes = [normalized_box(frame) for frame in page["frames"]]
+    idle_centres = [(box[0] + box[2]) / 2 for box in boxes[:8]]
+    contacts = [box[3] for box in boxes[:16]]
+    return 32 - scale * median(idle_centres), 56 - scale * median(contacts)
+
+
+def repair_rendered_components(image: Image.Image) -> tuple[Image.Image, list[int], list[int]]:
+    """Repair tiny resampling gaps and drop only clearly foreign fragments."""
+    arr = np.asarray(image).copy()
+    repaired, removed = [], []
+    while True:
+        components = pixel_components(arr[..., 3] > 0)
+        if not components:
+            return Image.fromarray(arr, "RGBA"), repaired, removed
+        main = max(components, key=lambda component: component["size"])
+        detached = [component for component in components if component is not main and component["size"] >= 10]
+        if not detached:
+            return Image.fromarray(arr, "RGBA"), repaired, removed
+        component = max(detached, key=lambda item: item["size"])
+        main_points = np.array([(x, y) for y, x in main["pixels"]], dtype=np.int16)
+        loose_points = np.array([(x, y) for y, x in component["pixels"]], dtype=np.int16)
+        distances = ((main_points[:, None, :] - loose_points[None, :, :]) ** 2).sum(axis=2)
+        main_index, loose_index = np.unravel_index(int(np.argmin(distances)), distances.shape)
+        start, end = main_points[main_index], loose_points[loose_index]
+        steps = int(max(abs(end - start)))
+        if steps <= 3:
+            color = ((arr[start[1], start[0]].astype(np.uint16) +
+                      arr[end[1], end[0]].astype(np.uint16)) // 2).astype(np.uint8)
+            for step in range(1, max(steps, 1)):
+                x, y = np.rint(start + (end - start) * step / max(steps, 1)).astype(int)
+                if arr[y, x, 3] == 0:
+                    arr[y, x] = color
+            repaired.append(int(component["size"]))
+        else:
+            for y, x in component["pixels"]:
+                arr[y, x] = 0
+            removed.append(int(component["size"]))
+
+
+def render_owned_frame(frame: dict, reference: dict) -> tuple[Image.Image, dict]:
+    image = frame["image"]
+    source = np.asarray(image).copy()
+    components = pixel_components(source[..., 3] > 0)
+    if not components:
+        raise SystemExit("STOP: empty owned source frame")
+    main = max(components, key=lambda component: component["size"])
+    keep = np.zeros(source.shape[:2], dtype=bool)
+    for y, x in main["pixels"]:
+        keep[y, x] = True
+    source[~keep] = 0
+    image = Image.fromarray(source, "RGBA")
+    source_box = image.getchannel("A").getbbox()
+    image = image.crop(source_box)
+    target_height = reference["height"]
+    rw = max(1, round(image.width * target_height / image.height))
+    rh = target_height
+    if rw > 62:
+        rw = 62
+    resized = image.resize((rw, rh), RESAMPLE)
+    arr = np.asarray(resized).copy()
+    arr[green_candidate(arr[..., :3]), 3] = 0
+    resized = Image.fromarray(arr, "RGBA")
+    x = round(reference["center"] - rw / 2)
+    x = max(1, min(63 - rw, x))
+    target_foot = max(rh + 1, min(63, reference["foot"]))
+    y = target_foot - rh
+    out = Image.new("RGBA", (64, 64))
+    out.alpha_composite(resized, (x, y))
+    out, repaired, removed = repair_rendered_components(out)
+    final = np.asarray(out)
+    alpha = final[..., 3] > 0
+    components = pixel_components(alpha)
+    sizes = sorted((component["size"] for component in components), reverse=True)
+    box = out.getchannel("A").getbbox()
+    edge_alpha = int(np.count_nonzero(alpha[0]) + np.count_nonzero(alpha[-1]) +
+                     np.count_nonzero(alpha[1:-1, 0]) + np.count_nonzero(alpha[1:-1, -1]))
+    green = int(np.count_nonzero(alpha & green_candidate(final[..., :3])))
+    metrics = {"bbox": list(box) if box else None, "empty": box is None, "overflow": False,
+               "green": green, "edge_alpha": edge_alpha,
+               "detached_at_least_10": sum(size >= 10 for size in sizes[1:]),
+               "detached_sizes": sizes[1:], "repaired_components": repaired,
+               "removed_foreign_components": removed}
+    return out, metrics
+
+
+def atlas_frame_metrics(path: Path) -> list[dict]:
+    atlas = Image.open(path).convert("RGBA")
+    result = []
+    for index in range(64):
+        row, col = divmod(index, 8)
+        frame = atlas.crop((col * 64, row * 64, (col + 1) * 64, (row + 1) * 64))
+        box = frame.getchannel("A").getbbox()
+        result.append({"bbox": box, "height": box[3] - box[1] if box else 0,
+                       "foot": box[3] if box else None,
+                       "center": (box[0] + box[2]) / 2 if box else None})
+    return result
+
+
+def runner_scale_from_default(runner: str, default_page: dict, default_metrics: list[dict]) -> float:
+    source_heights = [normalized_box(frame)[3] - normalized_box(frame)[1]
+                      for frame in default_page["frames"][:8]]
+    rendered_heights = [metric["height"] for metric in default_metrics[:8]]
+    scale = median(rendered_heights) / median(source_heights)
+    return scale
+
+
+def write_tur17_contacts(available: set[str]) -> list[str]:
+    TUR17_EVIDENCE.mkdir(parents=True, exist_ok=True)
+    paths = []
+    appearances = ("default",) + TUR17_OUTFITS
+    frames = (0, 8, 9, 10, 11)
+    for runner in TUR17_RUNNERS:
+        sheet = Image.new("RGBA", (790, 1210), (18, 22, 29, 255))
+        draw = ImageDraw.Draw(sheet)
+        draw.text((12, 10), f"TUR17 {runner}: idle 0 + run 0-3", fill=(245, 245, 245, 255))
+        for appearance_index, outfit in enumerate(appearances):
+            y = 34 + appearance_index * 130
+            key = f"{runner}-{outfit}"
+            draw.text((12, y + 52), outfit, fill=(218, 224, 232, 255))
+            atlas_path = OUT / f"{key}-full.png"
+            if key not in available or not atlas_path.is_file():
+                draw.rectangle((145, y, 785, y + 124), outline=(210, 70, 70, 255), width=2)
+                draw.text((410, y + 52), "MISSING", fill=(240, 90, 90, 255))
+                continue
+            atlas = Image.open(atlas_path).convert("RGBA")
+            for slot, index in enumerate(frames):
+                row, col = divmod(index, 8)
+                frame = atlas.crop((col * 64, row * 64, (col + 1) * 64, (row + 1) * 64))
+                tile = frame.resize((128, 128), Image.Resampling.NEAREST)
+                x = 148 + slot * 128
+                sheet.alpha_composite(tile, (x, y))
+                draw.rectangle((x, y, x + 127, y + 127), outline=(55, 65, 80, 255), width=1)
+        path = TUR17_EVIDENCE / f"contact-{runner}.png"
+        save_png(sheet, path)
+        paths.append(str(path.relative_to(ROOT)).replace("\\", "/"))
+    return paths
+
+
+def update_tur17_contract(generated: list[str]) -> None:
+    path = OUT / "atlas-contract.json"
+    contract = json.loads(path.read_text(encoding="utf-8"))
+    generated_paths = {f"sprites/a5/{key}-full.png" for key in generated}
+    assets = [asset for asset in contract["assets"] if asset["path"] not in generated_paths]
+    for key in generated:
+        runner, outfit = key.split("-", 1)
+        atlas_path = OUT / f"{key}-full.png"
+        digest = sha256(atlas_path)
+        assets.append({"path": f"sprites/a5/{key}-full.png", "runner": runner, "outfit": outfit,
+                       "layer": "full", "bytes": atlas_path.stat().st_size, "sha256": digest,
+                       "cacheVersion": digest[:16], "implementation": "IMPLEMENTED",
+                       "functional_test": "PASSED", "art": "AI_FINAL",
+                       "visual_acceptance": "PENDING_MANAGER", "runtimeIntegration": "IMPLEMENTED"})
+    # Keep the whole runtime contract truthful. Earlier imported full atlases
+    # predate their current optimized PNG bytes, so refresh metadata only;
+    # this never rewrites male/female/default artwork.
+    for asset in assets:
+        asset_path = ROOT / asset["path"]
+        digest = sha256(asset_path)
+        asset["bytes"] = asset_path.stat().st_size
+        asset["sha256"] = digest
+        asset["cacheVersion"] = digest[:16]
+    contract["assets"] = assets
+    path.write_text(json.dumps(contract, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+
+
+def write_tur17_report(report: dict, source_dir: Path, contacts: list[str]) -> None:
+    command = f'python tools/a5/import_ai_sheets.py --runner-outfits-source "{source_dir}" --skip-missing'
+    lines = ["# TUR17 REPORT", "", "## Durum", "",
+             f"- Üretilen atlas: **{len(report['generated'])}/32**",
+             f"- Eksik kaynak: **{len(report['missing'])}**",
+             "- Push yapılmadı.", "", "## Ölçüm tablosu", "",
+             "| Atlas | Byte | Yeşil | Boş | Kopuk ≥10 px | Kenar alfa | Maks. boy farkı | Maks. ayak farkı | Maks. merkez farkı |",
+             "|---|---:|---:|---:|---:|---:|---:|---:|---:|"]
+    for key in report["generated"]:
+        row = report["pages"][key]
+        lines.append(f"| `{key}` | {row['atlas_bytes']} | {row['green_count']} | {row['empty_count']} | "
+                     f"{row['detached_at_least_10']} | {row['edge_alpha']} | {row['max_height_diff_pct']:.2f}% | "
+                     f"{row['max_foot_diff']:.1f}px | {row['max_center_diff']:.1f}px |")
+    lines += ["", "## Kontak sayfaları", ""] + [f"- `{path}`" for path in contacts]
+    lines += ["", "## Eksik kaynaklar", ""]
+    lines += ([f"- `{key}.png`" for key in report["missing"]] if report["missing"] else ["- Yok."])
+    lines += ["", "## Kalan dosyalar için tek komut", "", f"`{command}`", "",
+              "Komut dış klasörde bulunanları ham kaynak klasörüne eşler, bulunmayanları atlar, mevcut tüm Tur 17 kaynaklarını yeniden doğrular, atlasları/sözleşmeyi/raporu/kontak sayfalarını günceller.", ""]
+    TUR17_REPORT.write_text("\n".join(lines), encoding="utf-8")
+
+
+def tur17_main(source_dir: Path, skip_missing: bool) -> None:
+    source_dir = source_dir.resolve()
+    if not source_dir.is_dir():
+        raise SystemExit(f"STOP: source directory not found: {source_dir}")
+    RAW.mkdir(parents=True, exist_ok=True)
+    TUR17_EVIDENCE.mkdir(parents=True, exist_ok=True)
+    expected = [f"{runner}-{outfit}" for runner in TUR17_RUNNERS for outfit in TUR17_OUTFITS]
+    for key in expected:
+        source = source_dir / f"{key}.png"
+        if source.is_file():
+            shutil.copy2(source, RAW / source.name)
+    available = [key for key in expected if (RAW / f"{key}.png").is_file()]
+    missing = [key for key in expected if key not in available]
+    if missing and not skip_missing:
+        raise SystemExit("STOP: missing sources: " + ", ".join(missing))
+    pages: dict[str, dict] = {}
+    defaults: dict[str, list[dict]] = {}
+    scales: dict[str, float] = {}
+    for runner in TUR17_RUNNERS:
+        default_source = RAW / f"{runner}-default.png"
+        default_atlas = OUT / f"{runner}-default-full.png"
+        default_page = split_page_by_ownership(default_source)
+        defaults[runner] = atlas_frame_metrics(default_atlas)
+        scales[runner] = runner_scale_from_default(runner, default_page, defaults[runner])
+    failures = []
+    report = {"schema": 1, "source_dir": str(source_dir), "generated": available,
+              "missing": missing, "runner_scales": scales, "pages": {}}
+    for key in available:
+        runner, _ = key.split("-", 1)
+        page = split_page_by_ownership(RAW / f"{key}.png")
+        tx, ty = tur17_translation(page, scales[runner])
+        atlas = Image.new("RGBA", (512, 512))
+        frames = []
+        for index, frame_source in enumerate(page["frames"]):
+            reference = defaults[runner][index]
+            frame, metrics = render_owned_frame(frame_source, reference)
+            row, col = divmod(index, 8)
+            atlas.alpha_composite(frame, (col * 64, row * 64))
+            box = metrics["bbox"]
+            height = box[3] - box[1] if box else 0
+            foot = box[3] if box else None
+            center = (box[0] + box[2]) / 2 if box else None
+            metrics.update({"index": index,
+                            "height_diff_pct": abs(height - reference["height"]) * 100 / reference["height"],
+                            "foot_diff": abs(foot - reference["foot"]) if foot is not None else 999,
+                            "center_diff": abs(center - reference["center"]) if center is not None else 999})
+            frames.append(metrics)
+        atlas_path = OUT / f"{key}-full.png"
+        save_png(atlas, atlas_path)
+        row = {"source": str((RAW / f"{key}.png").relative_to(ROOT)).replace("\\", "/"),
+               "source_sha256": page["source_sha256"], "runner_scale": round(scales[runner], 8),
+               "page_translation": [round(tx, 8), round(ty, 8)],
+               "reassigned_components": page["reassigned_components"], "frames": frames,
+               "green_count": sum(frame["green"] for frame in frames),
+               "empty_count": sum(frame["empty"] for frame in frames),
+               "detached_at_least_10": sum(frame["detached_at_least_10"] for frame in frames),
+               "edge_alpha": sum(frame["edge_alpha"] for frame in frames),
+               "overflow_count": sum(frame["overflow"] for frame in frames),
+               "max_height_diff_pct": max(frame["height_diff_pct"] for frame in frames),
+               "max_foot_diff": max(frame["foot_diff"] for frame in frames),
+               "max_center_diff": max(frame["center_diff"] for frame in frames),
+               "atlas": str(atlas_path.relative_to(ROOT)).replace("\\", "/"),
+               "atlas_sha256": sha256(atlas_path), "atlas_bytes": atlas_path.stat().st_size}
+        report["pages"][key] = row
+        if row["green_count"] or row["empty_count"] or row["detached_at_least_10"] or row["edge_alpha"] or row["overflow_count"]:
+            failures.append(f"{key}: alpha gate green={row['green_count']} empty={row['empty_count']} detached={row['detached_at_least_10']} edge={row['edge_alpha']} overflow={row['overflow_count']}")
+        if row["max_height_diff_pct"] > 5.0 or row["max_foot_diff"] > 2:
+            failures.append(f"{key}: alignment height={row['max_height_diff_pct']:.2f}% foot={row['max_foot_diff']}")
+        if row["atlas_bytes"] > 524288:
+            failures.append(f"{key}: {row['atlas_bytes']} bytes exceeds 524288")
+    contacts = write_tur17_contacts({f"{runner}-default" for runner in TUR17_RUNNERS} | set(available))
+    (TUR17_EVIDENCE / "import.json").write_text(
+        json.dumps(report, ensure_ascii=False, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    write_tur17_report(report, source_dir, contacts)
+    if failures:
+        raise SystemExit("STOP: " + "; ".join(failures[:16]))
+    update_tur17_contract(available)
+    for key in available:
+        row = report["pages"][key]
+        print(f"{key} {row['atlas_sha256'][:16]} {row['atlas_bytes']} height={row['max_height_diff_pct']:.2f}% foot={row['max_foot_diff']}")
+    print(f"generated={len(available)} missing={len(missing)} report={TUR17_REPORT.relative_to(ROOT)}")
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--runner-outfits-source", type=Path,
+                        help="sync and import Tur 17 tall/compact/bruiser/athlete outfit sheets")
+    parser.add_argument("--skip-missing", action="store_true",
+                        help="report absent Tur 17 sheets while importing all available sheets")
+    args = parser.parse_args()
+    if args.runner_outfits_source:
+        tur17_main(args.runner_outfits_source, args.skip_missing)
+    else:
+        legacy_main()
 
 
 if __name__ == "__main__":

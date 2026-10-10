@@ -73,10 +73,10 @@
   const RUNNERS = Object.freeze({
     male: { id: "male", legacy: 0, price: 0, outfitLocked: false, labelKey: "male" },
     female: { id: "female", legacy: 2, price: 0, outfitLocked: false, labelKey: "female" },
-    tall: { id: "tall", legacy: 0, price: 300, outfitLocked: true, labelKey: "tall" },
-    compact: { id: "compact", legacy: 2, price: 300, outfitLocked: true, labelKey: "compact" },
-    bruiser: { id: "bruiser", legacy: 0, price: 500, outfitLocked: true, labelKey: "bruiser" },
-    athlete: { id: "athlete", legacy: 2, price: 500, outfitLocked: true, labelKey: "athlete" },
+    tall: { id: "tall", legacy: 0, price: 300, outfitLocked: false, labelKey: "tall" },
+    compact: { id: "compact", legacy: 2, price: 300, outfitLocked: false, labelKey: "compact" },
+    bruiser: { id: "bruiser", legacy: 0, price: 500, outfitLocked: false, labelKey: "bruiser" },
+    athlete: { id: "athlete", legacy: 2, price: 500, outfitLocked: false, labelKey: "athlete" },
   });
   const OUTFITS = Object.freeze({
     default: { id: "default", price: 0 },
