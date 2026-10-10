@@ -13,6 +13,9 @@ for(const id of ['F01','F02','F03','F04','F05','F06','M01','M02','M03','M04','M0
 const transitions = Object.fromEntries(Object.keys(dataRoots).map(id => [id, JSON.parse(fs.readFileSync(`${dataRoots[id]}/transitions-${id}.json`, 'utf8'))]));
 const allRouteIds = ['D01','D02','D03','D04','D05','D06','D07','D08','D09','D10','D11','D12','D13','D14','D15','D16','D17','D18','F01','F02','F03','F04','F05','F06','M01','M02','M03','M04','M05','M06','A01','A02','A03','A04','A05','A06'];
 const routeIds = process.env.TMB_ROUTE_IDS ? process.env.TMB_ROUTE_IDS.split(',').map(s => s.trim()).filter(Boolean) : allRouteIds;
+const chiefIds = ['securityTall','classicChief','robotGuard','bouncer'];
+const selectedChiefId = process.env.TMB_CHIEF || null;
+if (selectedChiefId && !chiefIds.includes(selectedChiefId)) throw new Error(`Invalid TMB_CHIEF "${selectedChiefId}"; expected one of: ${chiefIds.join(', ')}`);
 const driveFrameMs = process.env.TMB_RAF_HZ ? 1000 / 60 : 16;
 let server, base;
 
@@ -65,6 +68,14 @@ async function boot(page, id, viewport = {width:1280,height:720}) {
   }
   await page.waitForFunction(() => window.__TMB_A12__);
   await page.locator('.characterChoice:visible').first().click();
+  if (selectedChiefId) {
+    const equippedChief = await page.evaluate(async chiefId => {
+      await __TMB_A12__.setWallet(1000);
+      await __TMB_A12__.purchaseChief(chiefId);
+      return __TMB_A12__.getState().profile.equippedChief;
+    }, selectedChiefId);
+    expect(equippedChief).toBe(selectedChiefId);
+  }
   await page.evaluate(async id => {
     if(id[0]==='F'){
       await __TMB_A12__.setWallet(500); await __TMB_A12__.purchaseWorld('frozen');

@@ -18,12 +18,13 @@ driver._compile(source, sourceFile);
 const { boot, drive } = driver.exports;
 
 const view = process.env.TUR15RT_VIEW || 'desktop';
+const chief = process.env.TMB_CHIEF || 'securityTall';
 const evidenceRoot = path.resolve(__dirname, 'manager-preview', 'tur15rt');
 
 test.describe.configure({ mode: 'serial' });
 
 function scenarioDir(name) {
-  const dir = path.resolve(evidenceRoot, name, view);
+  const dir = path.resolve(evidenceRoot, ...(process.env.TMB_CHIEF ? [chief] : []), name, view);
   if (!dir.startsWith(evidenceRoot + path.sep)) throw new Error(`Unsafe evidence path: ${dir}`);
   fs.rmSync(dir, { recursive: true, force: true });
   fs.mkdirSync(dir, { recursive: true });
@@ -170,6 +171,7 @@ function fullStopSummary(scenario, stoppedOn, record, capture) {
   return {
     scenario,
     view,
+    chief,
     stopSurface:stoppedOn.id,
     stopX:+record.frames[0].playerX.toFixed(2),
     frameCount:record.frames.length,
@@ -225,6 +227,7 @@ test(`D04 one second pause [TUR15RT_VIEW=${view}]`, async ({ page }) => {
   const summary = {
     scenario:'d04-one-second-pause',
     view,
+    chief,
     stopSurface:stoppedOn.id,
     pauseSeconds:+(pauseRecord.frames.at(-1).gameClock - startClock).toFixed(3),
     pauseFrames:pauseRecord.frames.length,
