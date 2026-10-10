@@ -56,9 +56,9 @@
     {
       "id": "securityTall",
       "path": "sprites/chiefs/securityTall-full.png",
-      "bytes": 479947,
-      "sha256": "fbad7dda1cf0491ade9f111da9dfaf34c39e58428d94d254df13a646ccfe5ff9",
-      "cacheVersion": "fbad7dda1cf0491a",
+      "bytes": 480628,
+      "sha256": "30d9bc294d183ea65449178790f8ffac0364208829132f3f02d261b6e94bbcea",
+      "cacheVersion": "30d9bc294d183ea6",
       "size": [
         640,
         720
@@ -67,9 +67,9 @@
     {
       "id": "classicChief",
       "path": "sprites/chiefs/classicChief-full.png",
-      "bytes": 442923,
-      "sha256": "82a2ed82a979ee0401808bf373942a134617768e81f9176a4b499071599e0fe2",
-      "cacheVersion": "82a2ed82a979ee04",
+      "bytes": 445639,
+      "sha256": "164495cf27bce71eb8b6574f4af70c56c72bfe41610c47dcc964f20bd58dbd1a",
+      "cacheVersion": "164495cf27bce71e",
       "size": [
         640,
         720
@@ -78,9 +78,9 @@
     {
       "id": "robotGuard",
       "path": "sprites/chiefs/robotGuard-full.png",
-      "bytes": 485495,
-      "sha256": "200f4500e9d85eeedaddd761b14408e77fde19fc664605c5643e99927043972d",
-      "cacheVersion": "200f4500e9d85eee",
+      "bytes": 487628,
+      "sha256": "bf9925ae9cacdcc811481d764b0d31dc72c5f35a4a3ab0a5f61a0348cea495b1",
+      "cacheVersion": "bf9925ae9cacdcc8",
       "size": [
         640,
         720
@@ -89,9 +89,9 @@
     {
       "id": "bouncer",
       "path": "sprites/chiefs/bouncer-full.png",
-      "bytes": 499617,
-      "sha256": "3673763d7b12e851242118b1f48cd8855cc7e1ea7804c699320ad3a6ce9e01c3",
-      "cacheVersion": "3673763d7b12e851",
+      "bytes": 501241,
+      "sha256": "663fa52bb75731e333fba5c8d01177be647afb45b76a6a405cf0b54eff0a35ff",
+      "cacheVersion": "663fa52bb75731e3",
       "size": [
         640,
         720

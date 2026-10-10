@@ -54,3 +54,21 @@ Atlas boyutları sırasıyla securityTall `479947`, classicChief `442923`, robot
 - Kısa gerçek zamanlı D04 dizisi: `03-test/manager-preview/tur16/realtime-d04/`.
 - Yakalama anı çizim kontrolü: `03-test/manager-preview/tur16/step-contact.png` (tutuş checkpoint'te görünür).
 - `03-test/manager-preview/` `.gitignore` kapsamındadır ve kanıt dosyaları commit'e girmez.
+
+## 16c — grab karesi taşma düzeltmesi
+
+`tools/a5/import_chief_grab.py`, ham 4×2 sayfayı sabit sütunlardan kesmek yerine tüm sayfadaki 8-bağlantılı alfa bileşenlerini bulup soldan sağa dört gövdeye atıyor. Böylece komşu hücreye taşan ayak kendi pozunda kalıyor. Ortak satır ölçeği tutuş karelerinin idle boyundan en fazla %5 sapmasını koruyamadığında yalnız taşan kare orantılı küçültülüyor: securityTall 2–5, classicChief 3, robotGuard 3, bouncer 2–4. Bouncer 6'da LANCZOS'un oluşturduğu bir piksellik aralık, kaynak bileşen sahipliği değişmeden kapatıldı.
+
+| Şef | Kopuk bileşen ≥10 px | Kenar alfa | Boy idle / grab 7–8 | Boy farkı | Ayak farkı |
+|---|---:|---:|---:|---:|---:|
+| securityTall | 0 | 0 | 73 / 73.0 px | %0.00 | 0 px |
+| classicChief | 0 | 0 | 67 / 67.0 px | %0.00 | 0 px |
+| robotGuard | 0 | 0 | 74 / 73.0 px | %1.35 | 0 px |
+| bouncer | 0 | 0 | 73 / 73.0 px | %0.00 | 0 px |
+
+Meşru küçük kopuk alfa parçaları (<10 px), kare:sayılar biçiminde: securityTall `1:4; 4:2; 5:2; 7:9,3; 8:2`; classicChief `2:3,2; 6:2; 7:1; 8:2`; robotGuard `1:2; 4:4; 6:2; 7:3,3; 8:3`; bouncer `1:9,3; 3:4; 4:2,2; 5:5,2; 7:6,4,2; 8:4,3,2`. Dört atlasın 32 grab hücresinde yeşil piksel `0`, boş kare `0`; satır 0–7, `aafff7d` atlaslarıyla piksel eşitidir.
+
+- Kontak sayfası: `03-test/manager-preview/tur16c/contact.png`; eski (`aafff7d`) ve yeni idle + 8 grab dizileri yan yana `view_image` ile incelendi. Yeni tarafta havada bot/ayak parçası, kesik arka ayak veya yeşil sızıntı görülmedi.
+- `python tools/a5/import_chief_grab.py`: geçti.
+- `03-test/tur16-chief-grab.spec.cjs`: `3/3` geçti (`4.1 s`); atlas sözleşmesi ve adım simülasyonu yeşil.
+- Gerçek zamanlı Playwright koşusu yapılmadı.
