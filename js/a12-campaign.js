@@ -3902,12 +3902,12 @@ applyD09LogicRulesToRoutes();
     if(!chief?.active||chief.entryPhase==="result")return null;
     if(chief.caughtT>0){
       const elapsed=Math.max(0,CHIEF_CATCH_HOLD_S-chief.caughtT);
-      return {motion:"grab",frame:elapsed<1e-6?3:Math.min(7,4+Math.floor(elapsed/(CHIEF_CATCH_HOLD_S/4)))};
+      return {motion:"grab",frame:Math.min(7,3+Math.floor(elapsed/(CHIEF_CATCH_HOLD_S/5)))};
     }
     const catchable=playerCatchable??(player.onGround&&engine.parkour.state==="normal"&&!diveRun&&!wallJumpRun&&Math.abs(player.vx)<70);
     const gap=player.x-(chief.x+chief.w),vertical=Math.abs(chief.y-player.y)<=player.h+4;
     if(!catchable||chief.entryPhase!=="running"||!vertical||gap>CHIEF_GRAB_START_GAP_PX||gap<4)return null;
-    return {motion:"grab",frame:Math.min(3,Math.max(0,Math.floor((CHIEF_GRAB_START_GAP_PX-gap)/6)))};
+    return {motion:"grab",frame:Math.min(2,Math.max(0,Math.floor((CHIEF_GRAB_START_GAP_PX-gap)/8)))};
   }
   function drawChiefAtlas(c, id, pose, x, feet, facing=1) {
     c.save();c.translate(x,feet);c.scale(facing,1);c.imageSmoothingEnabled=false;

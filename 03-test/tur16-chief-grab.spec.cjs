@@ -65,7 +65,7 @@ test('D04 step simulation maps lunge 1-4 to contact and hold 5-8', async ({ page
   const catchRow = rows.find(row => row.catches > 0);
   const before = rows.filter(row => !row.catches && row.frame !== null).map(row => row.frame);
   const hold = rows.filter(row => row.caughtT > 0).map(row => row.frame);
-  expect(new Set(before)).toEqual(new Set([0, 1, 2, 3]));
+  expect(new Set(before)).toEqual(new Set([0, 1, 2]));
   expect(result.catchLog.beforeX-(result.catchLog.chiefX+32)).toBeLessThanOrEqual(4);
   expect(catchRow.frame).toBe(3);
   expect(new Set(hold)).toEqual(new Set([3, 4, 5, 6, 7]));
