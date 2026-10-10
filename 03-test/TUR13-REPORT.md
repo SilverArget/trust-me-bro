@@ -40,7 +40,7 @@ Eski `2350410` sürümünde çıkarım oyun içinde ayrıca sayısal olarak öl�
 | Rota | 915×412 masaüstü | Android taklidi 915×412 |
 |---|---|---|
 | A02 | PASS (1/1, 20 kare) | PASS* (1/1, 14 kare) |
-| A04 | PASS (i24, 1/1) | PASS (i24, 1/1, 35 kare) |
+| A04 | ÇALIŞTIRILMADI (final i24); önceki i30 1/1 ama ikinci checkpoint | PASS (i24, 1/1, 35 kare) |
 | A05 | PASS (1/1, 22 kare) | PASS* (1/1, 14 kare) |
 | A06 | PASS (1/1, 21 kare) | PASS* (1/1, 15 kare) |
 | D16 | FAIL: seçilen hareket atlama ölüm üretmedi | ÇALIŞTIRILMADI |
