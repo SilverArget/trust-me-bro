@@ -8,11 +8,12 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 RUNNERS = ("tall", "compact", "bruiser", "athlete")
+BASELINE = "76e9aa1d573bdebb5a55219066918e430b76a9cd"
 
 
 def git_bytes(path: str) -> bytes:
     return subprocess.run(
-        ["git", "show", f"HEAD:{path}"], cwd=ROOT, check=True, capture_output=True
+        ["git", "show", f"{BASELINE}:{path}"], cwd=ROOT, check=True, capture_output=True
     ).stdout
 
 

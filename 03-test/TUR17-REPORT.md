@@ -65,4 +65,4 @@ Komut dış klasörde bulunanları ham kaynak klasörüne eşler, bulunmayanlar�
 - `python 03-test/tur17-integrity.py`: PASS — 32 atlas, 88 sözleşme girdisi; fizik/şef/rota/ekonomi ve male/female koruma kapıları.
 - `npx playwright test 03-test/tur17-outfits.spec.cjs 03-test/tur14-test-mode.spec.cjs 03-test/a5-live.spec.cjs --workers=1`: PASS — 12/12.
 - Gerçek girdi kanıtı: `03-test/manager-preview/tur17/bruiser-shadowNinja-d01-keyboard.png` (390×844, mağazada satın alma + kuşanma + D01 sağ ok).
-- Özellik commit'i: commit sonrasında bu rapora kaydedilecek.
+- Özellik commit'i: `714e4208b8704c06c9601778d68532b7ba67855c` (`Add outfits for tall, compact, bruiser and athlete`).
