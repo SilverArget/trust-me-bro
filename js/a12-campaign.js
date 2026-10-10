@@ -62,11 +62,13 @@
     const e = document.getElementById("characterSelect");
     e?.classList.remove("show");
     e?.setAttribute("aria-hidden", "true");
+    document.dispatchEvent(new CustomEvent("tmb:character-select-state", { detail:{ open:false } }));
   }
   function openCharacterSelect() {
     const e = document.getElementById("characterSelect");
     e?.classList.add("show");
     e?.setAttribute("aria-hidden", "false");
+    document.dispatchEvent(new CustomEvent("tmb:character-select-state", { detail:{ open:true } }));
     document.body.dataset.campaignPhase = "choose-runner";
     delete document.body.dataset.routeId;
   }
@@ -143,6 +145,7 @@
       safe: "SAFE LINE",
       skill: "SKILL LINE",
       checkpoint: "CHECKPOINT",
+      caughtCheckpoint: "Caught! Back to checkpoint",
       help: "A/D or ←/→ • SPACE/W/↑ • R restart",
       complete: "COMPLETE",
       defaultOutfit: "DEFAULT COURIER",
@@ -195,6 +198,7 @@
       safe: "GÜVENLİ HAT",
       skill: "BECERİ HATTI",
       checkpoint: "KONTROL NOKTASI",
+      caughtCheckpoint: "Yakalandın! Kontrol noktasına dönüş",
       help: "A/D veya ←/→ • BOŞLUK/W/↑ • R yeniden başlat",
       complete: "TAMAMLANDI",
       defaultOutfit: "VARSAYILAN KURYE",
@@ -247,6 +251,7 @@
       safe: "БЕЗОПАСНЫЙ ПУТЬ",
       skill: "ЛИНИЯ МАСТЕРСТВА",
       checkpoint: "КОНТРОЛЬНАЯ ТОЧКА",
+      caughtCheckpoint: "Пойман! Назад к контрольной точке",
       help: "A/D или ←/→ • ПРОБЕЛ/W/↑ • R заново",
       complete: "ЗАВЕРШЁН",
       defaultOutfit: "ОБЫЧНЫЙ КУРЬЕР",
@@ -779,6 +784,21 @@ applyD09LogicRulesToRoutes();
     c.font = "950 9px system-ui";
     c.fillText("T", coin.x - 3, coin.y + 3);
   }
+  const COIN_FEEDBACK_S = .55;
+  function showCoinFeedback(coin) {
+    coinFeedbacks.push({ x:coin.x, y:coin.y, t:COIN_FEEDBACK_S, duration:COIN_FEEDBACK_S, skill:!!coin.skill });
+  }
+  function showStatusBand(key, duration) {
+    statusBand = { key, t:duration, duration };
+  }
+  function updateTransientFeedback(dt) {
+    for (const feedback of coinFeedbacks) feedback.t = Math.max(0, feedback.t - dt);
+    coinFeedbacks = coinFeedbacks.filter(feedback => feedback.t > 0);
+    if (statusBand) {
+      statusBand.t = Math.max(0, statusBand.t - dt);
+      if (statusBand.t <= 0) statusBand = null;
+    }
+  }
   function clone(v) {
     return JSON.parse(JSON.stringify(v));
   }
@@ -787,7 +807,7 @@ applyD09LogicRulesToRoutes();
       schemaVersion: SCHEMA,
       profileRevision: 0,
       walletBalance: 0,
-      runnerId: null,
+      runnerId: "male",
       ownedRunnerIds: ["male", "female"],
       equippedOutfitByRunner: { male: "default", female: "default", tall: "default", compact: "default", bruiser: "default", athlete: "default" },
       ownedOutfitSetIds: ["default"],
@@ -836,7 +856,7 @@ applyD09LogicRulesToRoutes();
     ];
     n.profileRevision = Math.max(0, Number(raw.profileRevision) || 0);
     n.walletBalance = Math.max(0, Math.floor(Number(raw.walletBalance) || 0));
-    n.runnerId = RUNNERS[raw.runnerId] ? raw.runnerId : null;
+    n.runnerId = RUNNERS[raw.runnerId] ? raw.runnerId : "male";
     n.equippedOutfitByRunner = {
       ...p.equippedOutfitByRunner,
       ...(raw.equippedOutfitByRunner || {}),
@@ -1021,6 +1041,10 @@ applyD09LogicRulesToRoutes();
     staggerT = 0,
     invulnerableT = 0,
     respawnT = 0,
+    coinFeedbacks = [],
+    statusBand = null,
+    chiefCatchBandPending = false,
+    d01ChiefTolerance = { active:false, surfaceId:null, completedOnSurfaceId:null, checkpointX:null },
     finishGate = { phase: "open", t: 0, closeS: .52, holdS: .28, playerAlpha: 1 },
     frontFlip = { active: false, angle: 0 },
     barrels = [],
@@ -1144,6 +1168,7 @@ applyD09LogicRulesToRoutes();
     c.playerIndex=Math.max(start,best);c.playerT=Math.max(c.playerT,a[c.playerIndex][0]);
   }
   const CHIEF_ENTRY_X=-64,CHIEF_LADDER_FRACTION=.15,CHIEF_LADDER_HEIGHT=132,CHIEF_LADDER_CLIMB_T=.85,CHIEF_FAST_SCALE=40/30,CHIEF_CLOSE_GAP_PX=160,CHIEF_EASE_GAP_PX=180,CHIEF_STOP_CLOSE_PX=520,CHIEF_STOP_SPEED_PX=54,CHIEF_GRAB_START_GAP_PX=28,CHIEF_CATCH_HOLD_S=.35;
+  const D01_FIRST_RISE_ID="d01-v-07";
   function chiefDelayFor(path,id){
     if(!path)return undefined;
     const d=path.delay||0;
@@ -1263,6 +1288,22 @@ applyD09LogicRulesToRoutes();
       ? r.groundSegments.filter(s=>s.kind==="ground"&&s.solid!==false&&x>=s.x&&x<=s.x+s.w)
       : (x>=0&&x<=r.length?[{x:0,y:GROUND,w:r.length,h:100,kind:"ground"}]:[]);
     return grounds.sort((a,b)=>a.y-b.y)[0]||null;
+  }
+  function resetD01ChiefTolerance(checkpointX=run?.checkpointX??70) {
+    const surface=routeId==="D01"?(route.groundSegments||[]).find(s=>s.id===D01_FIRST_RISE_ID):null;
+    const active=!!surface&&checkpointX<surface.x;
+    d01ChiefTolerance={active,surfaceId:surface?.id||null,completedOnSurfaceId:!active&&surface&&checkpointX>=surface.x?surface.id:null,checkpointX};
+  }
+  function updateD01ChiefTolerance() {
+    if(!d01ChiefTolerance.active||routeId!=="D01")return false;
+    const surface=(route.groundSegments||[]).find(s=>s.id===d01ChiefTolerance.surfaceId);
+    if(!surface){d01ChiefTolerance.active=false;return false}
+    const center=player.x+player.w/2,feet=player.y+player.h;
+    if(player.onGround&&center>=surface.x&&center<=surface.x+surface.w&&Math.abs(feet-surface.y)<=2){
+      d01ChiefTolerance.active=false;
+      d01ChiefTolerance.completedOnSurfaceId=surface.id;
+    }
+    return d01ChiefTolerance.active;
   }
   function safeGroundUnderPlayer() {
     if(!player.onGround)return null;
@@ -1390,6 +1431,9 @@ applyD09LogicRulesToRoutes();
     flowFlash = 0;
     staggerT = 0;
     respawnT = 0;
+    coinFeedbacks = [];
+    statusBand = null;
+    chiefCatchBandPending = false;
     invulnerableT = 2;
     frontFlip = {
       active: false,
@@ -1418,6 +1462,7 @@ applyD09LogicRulesToRoutes();
     platformOrder = { colliderFrame: 0, landingFrame: 0, carryFrame: 0 };
     engine.setDynamicSurfaces(movingPlatforms);
     engine.reset(70, routeGroundYAt(70) - player.h);
+    resetD01ChiefTolerance(run.checkpointX);
     const startGround=solidGroundAt(70);
     lastSafeGround={x:70,y:startGround?.y??routeGroundYAt(70),surfaceId:startGround?.id||null};
     run.checkpointRespawn={...lastSafeGround,checkpointX:70};
@@ -1494,6 +1539,7 @@ applyD09LogicRulesToRoutes();
         run.runCoins++;
         if (coin.skill) run.usedSkill = true;
         emitGame("coin_collected", { routeId, coinId: coin.id });
+        showCoinFeedback(coin);
         sCoin();
         saveRun();
       }
@@ -1566,6 +1612,7 @@ applyD09LogicRulesToRoutes();
     const resetX=respawn?.x??checkpointX,resetY=respawn?.y??routeGroundYAt(checkpointX);
     if(window.__tmbXWriteLog)window.__tmbXWriteLog.push({source:"engine.reset/retry",routeId,gameClock,beforeX:player.x,afterX:resetX,checkpointX,full});
     engine.reset(resetX, resetY - player.h);
+    resetD01ChiefTolerance(checkpointX);
     player.facing=1;engine.parkour.dir=1;
     if(full)gameClock=0;
     resetChiefTrace();
@@ -1762,6 +1809,7 @@ applyD09LogicRulesToRoutes();
       return;
     }
     edgeCatchCooldown=Math.max(0,edgeCatchCooldown-dt);
+    updateTransientFeedback(dt);
     if(window.__tmbXWriteLog&&Number.isFinite(lastPrePhysicsX)&&player.x<lastPrePhysicsX-1)window.__tmbXWriteLog.push({source:"engine.physics/collision",routeId,gameClock,beforeX:lastPrePhysicsX,afterX:player.x,state:engine.parkour.state});
     if(route.movementProfile==="vector-v1"&&input.bufferedJump&&!vectorJumpPending&&!wallJumpRun){
       const center=player.x+player.w/2,diveZone=(route.diveZones||[]).find(z=>center>=z.x1&&center<=z.x2);
@@ -1953,8 +2001,11 @@ applyD09LogicRulesToRoutes();
     staggerT = Math.max(0, staggerT - dt);
     flowFlash = Math.max(0, flowFlash - dt);
     recordChiefTrace();
+    const d01ToleranceActive=updateD01ChiefTolerance();
     if (campaignChief) {
+      const caughtBefore=campaignChief.caughtT;
       campaignChief.caughtT=Math.max(0,campaignChief.caughtT-dt);campaignChief.regrabT=Math.max(0,(campaignChief.regrabT||0)-dt);
+      if(caughtBefore>0&&campaignChief.caughtT<=0&&chiefCatchBandPending){chiefCatchBandPending=false;showStatusBand("caughtCheckpoint",1.5)}
       if (campaignChief.path && campaignChief.entryPhase==="waiting") {
         const entry=primeChiefLadder(campaignChief);syncChiefPlayerX(campaignChief,player.x);
         if(player.x>=entry.x&&campaignChief.playerT>=entry.climbStartTime){campaignChief.active=true;campaignChief.entryPhase="climbing";campaignChief.climbElapsed=0;campaignChief.x=entry.x-campaignChief.w*.5;campaignChief.y=entry.bottomY-campaignChief.h;campaignChief.pose="climb";campaignChief.facing=1}
@@ -1971,7 +2022,7 @@ applyD09LogicRulesToRoutes();
         if(campaignChief.path&&campaignChief.entryPhase==="climbing"){campaignChief.climbElapsed=Math.min(campaignChief.entry.duration,campaignChief.climbElapsed+dt);const u=campaignChief.climbElapsed/campaignChief.entry.duration;campaignChief.x=campaignChief.entry.x-campaignChief.w*.5;campaignChief.y=campaignChief.entry.bottomY-campaignChief.h-(campaignChief.entry.height-campaignChief.h*.2)*u;campaignChief.pose="climb";if(u>=1)finishChiefLadder(campaignChief)}
         else if(campaignChief.path){const entry=primeChiefLadder(campaignChief),scale=chiefChaseScale(campaignChief,dt);campaignChief.chiefT=Math.max(entry.time,campaignChief.chiefT+dt*scale);if((player.vx>180||campaignChief.stunCatchGrace>0)&&campaignChief.playerT>0)campaignChief.chiefT=Math.min(campaignChief.chiefT,campaignChief.playerT-.22);matchPlayerToChiefPath(campaignChief);const ideal=chiefSample(campaignChief.path,campaignChief.chiefT),live=chiefTraceSampleAtX(ideal.x);if(live){campaignChief.x=live.x;campaignChief.y=live.feet-campaignChief.h;campaignChief.pose=live.pose;campaignChief.facing=live.facing||1}else{campaignChief.x=ideal.x;campaignChief.y=ideal.y;campaignChief.pose=ideal.pose;campaignChief.facing=ideal.facing}}else campaignChief.x+=campaignChief.speed*dt;
         if(innerHeight>=innerWidth&&campaignChief.path&&campaignChief.x<player.x-(engine.W||W)*.18){const portraitLive=chiefTraceSampleAtX(player.x-(engine.W||W)*.18);if(portraitLive){campaignChief.x=portraitLive.x;campaignChief.y=portraitLive.feet-campaignChief.h;campaignChief.pose=portraitLive.pose;campaignChief.facing=portraitLive.facing||1}}
-        const playerCatchable=player.onGround&&engine.parkour.state==="normal"&&!diveRun&&!wallJumpRun&&Math.abs(player.vx)<70;
+        const playerCatchable=!d01ToleranceActive&&player.onGround&&engine.parkour.state==="normal"&&!diveRun&&!wallJumpRun&&Math.abs(player.vx)<70;
         if(campaignChief.path&&campaignChief.entryPhase==="running"&&!playerCatchable&&campaignChief.x>player.x-CHIEF_CLOSE_GAP_PX){const trailing=chiefTraceSampleAtX(player.x-CHIEF_CLOSE_GAP_PX);campaignChief.x=player.x-CHIEF_CLOSE_GAP_PX;if(trailing){campaignChief.y=trailing.feet-campaignChief.h;campaignChief.pose=trailing.pose;campaignChief.facing=trailing.facing||1}else campaignChief.y=routeGroundYAt(campaignChief.x+campaignChief.w/2)-campaignChief.h}
         if(campaignChief.path&&campaignChief.entryPhase==="running"&&playerCatchable){campaignChief.x=Math.min(player.x-campaignChief.w+4,chiefFrameStartX+CHIEF_STOP_SPEED_PX*dt);const closing=chiefTraceSampleAtX(campaignChief.x);if(closing){campaignChief.y=closing.feet-campaignChief.h;campaignChief.pose=closing.pose;campaignChief.facing=closing.facing||1}else campaignChief.y=routeGroundYAt(campaignChief.x+campaignChief.w/2)-campaignChief.h}
         campaignChief.catchExposureT=playerCatchable?(campaignChief.catchExposureT||0)+dt:0;
@@ -1981,9 +2032,11 @@ applyD09LogicRulesToRoutes();
           campaignChief.catches++;
           campaignDeaths++;
           campaignChief.caughtT=CHIEF_CATCH_HOLD_S;campaignChief.grabFrame=3;if(campaignChief.path)campaignChief.regrabT=campaignChief.delay;
+          chiefCatchBandPending=true;
           campaignChief.lastReturnX=run.checkpointX;
           if(window.__tmbXWriteLog)window.__tmbXWriteLog.push({source:"chief-catch-reset",routeId,gameClock,beforeX:player.x,afterX:run.checkpointX,chiefX:campaignChief.x,checkpointX:run.checkpointX});
           engine.reset(run.checkpointX,routeGroundYAt(run.checkpointX)-player.h);
+          resetD01ChiefTolerance(run.checkpointX);
           if(campaignChief.path){resetRecordedChief(run.checkpointX);resetChiefTrace();}else{campaignChief.x=run.checkpointX-380;campaignChief.y=routeGroundYAt(run.checkpointX)-campaignChief.h}
           emitGame("chief_catch",{routeId,checkpointX:run.checkpointX});
         }
@@ -2126,6 +2179,7 @@ applyD09LogicRulesToRoutes();
           ? {x:cp,y:checkpointGround.y,surfaceId:checkpointGround.id||null,checkpointX:cp}
           : {...lastSafeGround,checkpointX:cp};
         sfx("checkpoint");
+        showStatusBand("checkpoint",1.2);
         emitGame("checkpoint_reached", { routeId, x: cp });
         saveRun();
       }
@@ -2447,6 +2501,7 @@ applyD09LogicRulesToRoutes();
     drawFinishDoor(ctx, finishDoor.x, finishDoor.y, { shutterOnly: true });
     ctx.restore();
     drawHud();
+    drawTransientFeedback(ctx,W,H);
     if (respawnT > 0) {
       ctx.fillStyle = "#06111bd9";
       ctx.fillRect(0, 0, W, H);
@@ -2551,6 +2606,26 @@ applyD09LogicRulesToRoutes();
     ctx.fillText(`${t("flow")} ${flow}`, 300, 57);
     if(flowFlash>0){ctx.fillStyle=`rgba(255,222,80,${Math.min(1,flowFlash*2)})`;ctx.font="950 18px system-ui";ctx.fillText(`+ ${t("flow")}`,390,42)}
   }
+  function drawTransientFeedback(c, w=W, h=H) {
+    const cameraX=typeof engine?.cameraX==="function"?engine.cameraX():cam;
+    for(const feedback of coinFeedbacks){
+      const progress=1-feedback.t/feedback.duration,alpha=Math.min(1,feedback.t/.16),x=feedback.x-cameraX,y=feedback.y+cameraWorldY;
+      if(x<-48||x>w+48||y<-72||y>h+72)continue;
+      c.save();c.globalAlpha=alpha;c.translate(x,y);
+      c.strokeStyle=feedback.skill?"#9ff3ff":"#fff0a2";c.lineWidth=3;
+      c.beginPath();c.arc(0,0,10+progress*18,0,Math.PI*2);c.stroke();
+      c.rotate(progress*.45);
+      for(let i=0;i<8;i++){c.rotate(Math.PI/4);c.beginPath();c.moveTo(15+progress*5,0);c.lineTo(24+progress*12,0);c.stroke()}
+      c.rotate(-progress*.45);c.textAlign="center";c.textBaseline="middle";c.font="950 20px system-ui";c.lineWidth=4;c.strokeStyle="#142b39";c.strokeText("+1",0,-18-progress*28);c.fillStyle=feedback.skill?"#9ff3ff":"#ffe36b";c.fillText("+1",0,-18-progress*28);c.restore();
+    }
+    if(!statusBand)return;
+    const elapsed=statusBand.duration-statusBand.t,alpha=Math.min(1,elapsed/.12,statusBand.t/.2),label=t(statusBand.key),maxWidth=Math.max(180,Math.min(w-24,540));
+    c.save();c.globalAlpha=alpha;c.textAlign="center";c.textBaseline="middle";c.font="950 20px system-ui";
+    if(c.measureText(label).width>maxWidth-44)c.font="950 16px system-ui";
+    const bandW=Math.min(maxWidth,Math.max(210,c.measureText(label).width+44)),bandH=44,bandX=(w-bandW)/2,bandY=innerHeight>=innerWidth?136:76;
+    c.fillStyle="#0d202ddd";c.strokeStyle="#ffd75b";c.lineWidth=2;c.beginPath();c.roundRect(bandX,bandY,bandW,bandH,10);c.fill();c.stroke();
+    c.fillStyle=statusBand.key==="caughtCheckpoint"?"#fff2cf":"#fff";c.fillText(label,w/2,bandY+bandH/2+1);c.restore();
+  }
   function drawResult() {
     ctx.fillStyle = "#06111bb8";
     ctx.fillRect(0, 0, W, H);
@@ -2617,7 +2692,7 @@ applyD09LogicRulesToRoutes();
       document.body.appendChild(label);
     }
     const dockRoutes=document.createElement("nav");dockRoutes.id="a12DockRoutes";dockRoutes.hidden=true;document.body.appendChild(dockRoutes);const placeDockRoutes=()=>{if(dockRoutes.hidden||actions.hidden)return;const top=actions.getBoundingClientRect().top;dockRoutes.style.setProperty("--dock-actions-clearance",`${Math.max(8,innerHeight-top+8)}px`)};const renderDockRoutes=()=>{const show=document.body.dataset.campaignPhase==="result"&&profile.selectedWorldId==="dock31";dockRoutes.hidden=!show;if(!show)return;dockRoutes.innerHTML=WORLD_REGISTRY.dock31.routes.map(id=>`<button data-route="${id}">${id}<small>${"★".repeat(profile.progressByRoute[id]?.stars||0)}${"☆".repeat(3-(profile.progressByRoute[id]?.stars||0))}</small></button>`).join("");requestAnimationFrame(placeDockRoutes)};new MutationObserver(renderDockRoutes).observe(document.body,{attributes:true,attributeFilter:["data-campaign-phase"]});addEventListener("resize",placeDockRoutes);dockRoutes.addEventListener("click",e=>{const id=e.target.closest("[data-route]")?.dataset.route;if(id)startRoute(id)});
-    if(!document.getElementById("a12Language")){const card=document.getElementById("characterCard");if(card){const wrap=document.createElement("label");wrap.id="a12LanguageWrap";wrap.innerHTML=`<span></span><select id="a12Language" aria-label="Language"><option value="en">EN</option><option value="tr">TR</option><option value="ru">RU</option></select>`;card.appendChild(wrap);}}
+    if(!document.getElementById("a12Language")){const card=document.getElementById("characterCard");if(card){const wrap=document.createElement("label");wrap.id="a12LanguageWrap";wrap.innerHTML=`<span></span><select id="a12Language" aria-label="Language"><option value="en">English</option><option value="tr">Türkçe</option><option value="ru">Русский</option></select>`;card.appendChild(wrap);}}
     const languageSelect=document.getElementById("a12Language");if(languageSelect){languageSelect.value=profile.settings.language;languageSelect.addEventListener("change",async()=>{const previous=profile.settings.language;profile.settings.language=languageFrom(languageSelect.value);applyLanguage();emitGame("language_change",{from:previous,to:profile.settings.language});await persist();});}
     actions.hidden = true;
     actions.addEventListener("click", async (e) => {
@@ -3262,6 +3337,7 @@ applyD09LogicRulesToRoutes();
       result: result ? clone(result) : null,
       finishAdvance: finishAdvance ? { ...finishAdvance } : null,
       finishGate: { ...finishGate },
+      feedback: { coins:coinFeedbacks.map(v=>({...v})), band:statusBand?{...statusBand,label:t(statusBand.key)}:null, chiefCatchBandPending },
       engine: {
         singleLoop: !document.getElementById("a12Canvas"),
         renderFrameCount,
@@ -3293,6 +3369,7 @@ applyD09LogicRulesToRoutes();
       collapsing: collapsing.map(c=>({id:c.id,state:c.state,timer:c.timer,fallY:c.fallY,warning:c.warning,warningStartedAt:c.warningStartedAt,warningElapsed:c.warningElapsed})),
       containerDoors: containerDoors.map(d=>({id:d.id,state:d.state,timer:d.timer,x:d.x,y:d.currentY,w:d.w,h:d.h,preparingElapsed:d.preparingElapsed,pushes:d.pushes})),
       chief: campaignChief ? {...campaignChief,playerT:Number.isFinite(campaignChief.playerT)?campaignChief.playerT:gameClock,chiefT:Number.isFinite(campaignChief.chiefT)?campaignChief.chiefT:Math.max(0,gameClock-Math.max(.1,(player.x-campaignChief.x)/300)),path:undefined,distance:player.x-campaignChief.x} : null,
+      chiefTolerance: {...d01ChiefTolerance},
       deaths: campaignDeaths,
       dead: engine.isDead() || !!campaignChief?.caughtT,
       shop: { open: shopOpen, tab:shopTab, previewOutfitId, previewWorldId, purchaseBusy, saveStatus },
@@ -3957,6 +4034,7 @@ applyD09LogicRulesToRoutes();
     c.fillText(`${t("run")} ◉ ${run?.runCoins || 0}/${route.coins.length}`, 29, 57);
     c.fillStyle = "#7cecc0";
     c.fillText(`${t("wallet")} ◉ ${profile.walletBalance}`, 180, 57);
+    drawTransientFeedback(c,w,h);
     if (finishAdvance&&result) {
       const portrait=innerHeight>=innerWidth,bannerY=portrait?132:30,textY=portrait?164:62;
       c.fillStyle = "#06111bb8";
@@ -4041,6 +4119,7 @@ applyD09LogicRulesToRoutes();
           if (coin && !run.collectedCoinIds.includes(id)) {
             run.collectedCoinIds.push(id);
             run.runCoins++;
+            showCoinFeedback(coin);
           }
           return debugState();
         },
@@ -4117,14 +4196,12 @@ applyD09LogicRulesToRoutes();
         return originalPersist();
       };
     }
-    if (profile.runnerId) {
-      engine.setCharacter(RUNNERS[profile.runnerId].legacy);
-      const available=["aftermath","magma","frozen"].includes(profile.selectedWorldId)?[...WORLD_REGISTRY[profile.selectedWorldId].routes].reverse():[...WORLD_REGISTRY.dock31.routes].reverse();
-      const resumeRoute = available.find(id => profile.pendingRunsByRoute[id]&&routeUnlocked(id)) || firstRouteForWorld();
-      startRoute(resumeRoute, false, resumeRoute === "D06");
-    }
-    openCharacterSelect();
+    profile.runnerId = RUNNERS[profile.runnerId] ? profile.runnerId : "male";
+    engine.setCharacter(RUNNERS[profile.runnerId].legacy);
+    const available=["aftermath","magma","frozen"].includes(profile.selectedWorldId)?[...WORLD_REGISTRY[profile.selectedWorldId].routes].reverse():[...WORLD_REGISTRY.dock31.routes].reverse();
+    const resumeRoute = available.find(id => profile.pendingRunsByRoute[id]&&routeUnlocked(id)) || firstRouteForWorld();
+    startRoute(resumeRoute, false, resumeRoute === "D06");
   }
-  if (document.body.dataset.engineReady === "true") init();
-  else addEventListener("tmb-engine-ready", init, { once: true });
+  if (document.body.dataset.engineReady === "true") void init();
+  else addEventListener("tmb-engine-ready", event => { const ready=init();if(event.detail)event.detail.ready=ready; }, { once: true });
 })();

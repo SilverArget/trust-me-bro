@@ -9,10 +9,9 @@ const webRoot = path.join(evidenceDir, "playgama-extracted");
 const mime = {".html":"text/html; charset=utf-8",".js":"text/javascript; charset=utf-8",".json":"application/json",".png":"image/png",".mp3":"audio/mpeg",".mp4":"video/mp4",".webmanifest":"application/manifest+json"};
 const server = http.createServer((req,res)=>{
   if(req.url.startsWith("/parent")){
-    const bad=req.headers.host.startsWith("bad.");
     const src=`http://localhost:${server.address().port}/index.html#debug`;
     res.writeHead(200,{"content-type":"text/html; charset=utf-8"});
-    res.end(`<!doctype html><iframe id="game" referrerpolicy="no-referrer" src="${src}"></iframe><script>window.bad=${bad}</script>`);
+    res.end(`<!doctype html><iframe id="game" referrerpolicy="no-referrer" src="${src}"></iframe>`);
     return;
   }
   const clean=decodeURIComponent(req.url.split("?")[0].split("#")[0]),rel=clean==="/"?"index.html":clean.slice(1);
@@ -34,8 +33,6 @@ const server = http.createServer((req,res)=>{
   };
   const snapshot=page=>page.evaluate(()=>({
     readyState:document.readyState,
-    hostAllowed:window.__TMB_HOST_ALLOWED??null,
-    context:window.__TMB_HOST_CONTEXT??null,
     hasBridge:!!window.bridge,
     bridgeVersion:window.bridge?.version||null,
     platform:window.__tmb?.platform||null
@@ -46,21 +43,27 @@ const server = http.createServer((req,res)=>{
     await direct.goto(`http://localhost:${port}/index.html#debug`);
     try{await direct.waitForFunction(()=>window.__tmb?.platform?.initialized===true,null,{timeout:60000})}
     catch(error){result.directFailure={error:String(error),state:await snapshot(direct),diagnostics};throw error}
-    result.direct=await direct.evaluate(()=>({host:location.host,context:window.__TMB_HOST_CONTEXT,platform:window.__tmb.platform,bridgeVersion:window.bridge?.version||null}));
+    result.direct=await direct.evaluate(()=>({host:location.host,platform:window.__tmb.platform,bridgeVersion:window.bridge?.version||null}));
 
     const empty=await browser.newPage();
     watch(empty);
     await empty.setContent(`<!doctype html><iframe id="game" referrerpolicy="no-referrer" src="http://localhost:${port}/index.html#debug"></iframe>`);
     const frame=empty.frames().find(f=>f.url().includes("/index.html"));
     await frame.waitForFunction(()=>window.__tmb?.platform?.initialized===true);
-    result.emptyAncestor=await frame.evaluate(()=>({referrer:document.referrer,ancestors:Array.from(location.ancestorOrigins||[]),context:window.__TMB_HOST_CONTEXT,platform:window.__tmb.platform,bridgeVersion:window.bridge?.version||null}));
+    result.emptyAncestor=await frame.evaluate(()=>({referrer:document.referrer,ancestors:Array.from(location.ancestorOrigins||[]),platform:window.__tmb.platform,bridgeVersion:window.bridge?.version||null}));
 
     const hostile=await browser.newPage();
     watch(hostile);
     await hostile.goto(`http://bad.localhost:${port}/parent`);
     const hostileFrame=hostile.frames().find(f=>f.url().includes("/index.html"));
-    await hostileFrame.waitForFunction(()=>window.__TMB_HOST_ALLOWED===false);
-    result.knownDisallowedAncestor=await hostileFrame.evaluate(()=>({blocked:window.__TMB_HOST_ALLOWED===false,referrer:document.referrer,ancestors:Array.from(location.ancestorOrigins||[]),context:window.__TMB_HOST_CONTEXT}));
+    await hostileFrame.waitForFunction(()=>window.__tmb?.platform?.initialized===true);
+    result.foreignAncestor=await hostileFrame.evaluate(()=>({
+      referrer:document.referrer,
+      ancestors:Array.from(location.ancestorOrigins||[]),
+      platform:window.__tmb.platform,
+      bridgeVersion:window.bridge?.version||null,
+      gameVisible:!!document.querySelector("#game")?.getBoundingClientRect().width
+    }));
   } catch(error) {
     result.pass=false;
     result.error=String(error);
@@ -71,7 +74,7 @@ const server = http.createServer((req,res)=>{
     await browser.close();
     await new Promise(resolve=>server.close(resolve));
   }
-  const ok=result.direct.platform.bridge&&result.direct.platform.initialized&&result.emptyAncestor.platform.bridge&&result.emptyAncestor.platform.initialized&&result.knownDisallowedAncestor.blocked;
+  const ok=result.direct.platform.bridge&&result.direct.platform.initialized&&result.emptyAncestor.platform.bridge&&result.emptyAncestor.platform.initialized&&result.foreignAncestor.platform.bridge&&result.foreignAncestor.platform.initialized&&result.foreignAncestor.gameVisible;
   result.pass=!!ok;
   fs.writeFileSync(path.join(evidenceDir,"playgama-bridge-init.json"),JSON.stringify(result,null,2)+"\n","utf8");
   console.log(JSON.stringify(result,null,2));

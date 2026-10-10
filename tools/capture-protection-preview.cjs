@@ -20,6 +20,12 @@ function contentType(file) {
 
 function serverFor(baseDir) {
   const server = http.createServer((req, res) => {
+    if (req.url.startsWith("/parent")) {
+      const src = `http://localhost:${server.address().port}/index.html#debug`;
+      res.setHeader("Content-Type", "text/html");
+      res.end(`<!doctype html><iframe id="gameFrame" src="${src}" style="width:100%;height:100%;border:0"></iframe>`);
+      return;
+    }
     const rel = decodeURIComponent(new URL(req.url, "http://x").pathname).replace(/^\/+/, "") || "index.html";
     const file = path.join(baseDir, rel);
     fs.readFile(file, (err, body) => {
@@ -50,12 +56,12 @@ function snippet(text, needle, radius = 520) {
     const page = await browser.newPage({ viewport: { width: 1280, height: 720 } });
     await page.goto(`http://localhost:${port}/index.html#debug`);
     await page.waitForSelector("#game", { timeout: 10000 });
-    await page.screenshot({ path: path.join(outDir, "izinli-host.png"), fullPage: true });
+    await page.screenshot({ path: path.join(outDir, "ust-pencere.png"), fullPage: true });
 
-    const blocked = await browser.newPage({ viewport: { width: 1280, height: 720 } });
-    await blocked.goto(`http://bad.localhost:${port}/index.html`, { waitUntil: "commit", timeout: 10000 }).catch(() => {});
-    await blocked.getByText(/resmi sitelerde oynanabilir\./).waitFor({ timeout: 10000 });
-    await blocked.screenshot({ path: path.join(outDir, "izinsiz-host.png"), fullPage: true });
+    const framed = await browser.newPage({ viewport: { width: 1280, height: 720 } });
+    await framed.goto(`http://bad.localhost:${port}/parent`);
+    await framed.frameLocator("#gameFrame").locator("#game").waitFor({ state: "visible", timeout: 10000 });
+    await framed.screenshot({ path: path.join(outDir, "yabanci-ata-cercevesi.png"), fullPage: true });
 
     const src = fs.readFileSync(path.join(root, "index.html"), "utf8");
     const min = fs.readFileSync(path.join(dist, "index.html"), "utf8");
@@ -65,15 +71,15 @@ function snippet(text, needle, radius = 520) {
       .grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;padding:18px}
       h1{font:700 18px system-ui;margin:0 0 10px}
       pre{height:650px;overflow:hidden;white-space:pre-wrap;background:#071018;border:1px solid #2d4458;border-radius:8px;padding:14px}
-    </style><div class="grid"><section><h1>Kaynak index.html</h1><pre>${snippet(src, "TMB_ALLOWED_HOSTS")}</pre></section><section><h1>dist/index.html minify+mangle</h1><pre>${snippet(min, "TMB_ALLOWED_HOSTS")}</pre></section></div>`);
-    await compare.screenshot({ path: path.join(outDir, "karistirilmis-kod.png"), fullPage: true });
+    </style><div class="grid"><section><h1>Kaynak index.html</h1><pre>${snippet(src, "fullscreenSurfaceAllowed")}</pre></section><section><h1>dist/index.html minify+mangle</h1><pre>${snippet(min, "fullscreenSurfaceAllowed")}</pre></section></div>`);
+    await compare.screenshot({ path: path.join(outDir, "kilitsiz-kod.png"), fullPage: true });
   } finally {
     await browser.close();
     await new Promise(resolve => server.close(resolve));
   }
   if (path.resolve(outDir).toLowerCase() !== path.resolve(publicOutDir).toLowerCase()) {
     fs.mkdirSync(publicOutDir, { recursive: true });
-    for (const name of ["izinli-host.png", "izinsiz-host.png", "karistirilmis-kod.png"]) {
+    for (const name of ["ust-pencere.png", "yabanci-ata-cercevesi.png", "kilitsiz-kod.png"]) {
       fs.copyFileSync(path.join(outDir, name), path.join(publicOutDir, name));
     }
   }

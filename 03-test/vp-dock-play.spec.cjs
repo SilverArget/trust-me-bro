@@ -67,7 +67,13 @@ async function boot(page, id, viewport = {width:1280,height:720}) {
     await cdp.send('Emulation.setPageScaleFactor',{pageScaleFactor:pageScale});
   }
   await page.waitForFunction(() => window.__TMB_A12__);
-  await page.locator('.characterChoice:visible').first().click();
+  const characterChoice = page.locator('.characterChoice:visible').first();
+  try {
+    await characterChoice.waitFor({state:'visible',timeout:1500});
+    await characterChoice.click();
+  } catch (error) {
+    if (error.name !== 'TimeoutError') throw error;
+  }
   if (selectedChiefId) {
     const equippedChief = await page.evaluate(async chiefId => {
       await __TMB_A12__.setWallet(1000);

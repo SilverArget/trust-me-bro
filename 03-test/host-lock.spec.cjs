@@ -3,12 +3,6 @@ const fs = require("fs");
 const path = require("path");
 
 const root = process.env.TMB_ROOT || path.join(__dirname, "..");
-const blockText = /resmi sitelerde oynanabilir\./;
-const pagesHost = String.fromCharCode(
-  115, 105, 108, 118, 101, 114, 97, 114, 103, 101, 116, 46,
-  103, 105, 116, 104, 117, 98, 46, 105, 111
-);
-
 function typeFor(file) {
   if (file.endsWith(".html")) return "text/html";
   if (file.endsWith(".js")) return "text/javascript";
@@ -45,40 +39,36 @@ async function framed(page, target) {
   return page.frameLocator("#gameFrame");
 }
 
-test("platform host can run inside an external partner iframe", async ({ page }) => {
+test("platform host runs inside an external partner iframe", async ({ page }) => {
   const frame = await framed(page, "http://app-1001.games.s3.yandex.net/index.html#debug");
   await expect(frame.locator("#game")).toBeVisible({ timeout: 10000 });
-  await expect(frame.getByText(blockText)).toHaveCount(0);
 });
 
-test("CrazyGames app host is classified as a platform host", async ({ page }) => {
+test("known platform host runs without host-lock metadata", async ({ page }) => {
   await installRoutes(page);
   await page.goto("http://app.crazygames.com/index.html#debug");
   await expect(page.locator("#game")).toBeVisible({ timeout: 10000 });
-  await expect(page.getByText(blockText)).toHaveCount(0);
-  await expect.poll(async () => page.evaluate(() =>
-    window.TMB_ALLOWED_HOSTS.some(e => e.rule === "app.crazygames.com" && e.scope === "platform")
-  )).toBe(true);
+  await expect.poll(async () => page.evaluate(() => typeof window.TMB_ALLOWED_HOSTS)).toBe("undefined");
 });
 
-test("first-party Pages host is blocked inside an external iframe", async ({ page }) => {
-  const frame = await framed(page, `http://${pagesHost}/index.html#debug`);
-  await expect(frame.getByText(blockText)).toBeVisible({ timeout: 10000 });
+test("any host runs inside an external partner iframe", async ({ page }) => {
+  const frame = await framed(page, "http://copy.example/index.html#debug");
+  await expect(frame.locator("#game")).toBeVisible({ timeout: 10000 });
 });
 
-test("unlisted copied host is always blocked", async ({ page }) => {
+test("unlisted copied host runs directly", async ({ page }) => {
   await installRoutes(page);
-  await page.goto("http://copy.example/index.html#debug", { waitUntil: "commit" }).catch(() => {});
-  await expect(page.getByText(blockText)).toBeVisible({ timeout: 10000 });
+  await page.goto("http://copy.example/index.html#debug");
+  await expect(page.locator("#game")).toBeVisible({ timeout: 10000 });
 });
 
 test("browser translation is disabled without changing language menu options", async ({ page }) => {
   await installRoutes(page);
   await page.goto("http://localhost/index.html#debug");
-  await expect(page.locator("#characterCard")).toBeVisible({ timeout: 10000 });
+  await expect(page.locator("#characterCard")).toBeAttached({ timeout: 10000 });
   await expect(page.locator("html")).toHaveAttribute("translate", "no");
   await expect(page.locator("html")).toHaveClass(/notranslate/);
   await expect(page.locator('meta[name="google"]')).toHaveAttribute("content", "notranslate");
-  await expect(page.locator("#a12Language option")).toHaveText(["EN", "TR", "RU"]);
+  await expect(page.locator("#a12Language option")).toHaveText(["English", "Türkçe", "Русский"]);
   await expect.poll(() => page.locator("#a12Language option").evaluateAll(list => list.map(option => option.value))).toEqual(["en", "tr", "ru"]);
 });
