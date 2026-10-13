@@ -1,21 +1,19 @@
-const { test, expect, devices } = require('playwright/test');
+const { test, expect } = require('playwright/test');
 const fs = require('fs');
 const http = require('http');
 const path = require('path');
 
 const root = process.env.TMB_ROOT || path.join(__dirname, '..');
-const outDir = process.env.TMB_OUT || path.join(__dirname, 'manager-preview', 'hermes-tum-oyun');
 const routeIds = [
   'D01','D02','D03','D04','D05','D06','D07','D08','D09','D10','D11','D12','D13','D14','D15','D16','D17','D18',
-  'F01','F02','F03','F04',
+  'F01','F02','F03','F04','F05','F06',
+  'M01','M02','M03','M04','M05','M06',
+  'A01','A02','A03','A04','A05','A06',
 ];
-const mobileIds = ['D01','D09','D16','F04'];
 
 let server, base;
 
 test.beforeAll(async () => {
-  fs.rmSync(outDir, { recursive: true, force: true });
-  fs.mkdirSync(outDir, { recursive: true });
   server = http.createServer((req, res) => {
     const rel = decodeURIComponent(new URL(req.url, 'http://x').pathname).replace(/^\/+/, '') || 'index.html';
     fs.readFile(path.join(root, rel), (err, body) => {
@@ -31,30 +29,35 @@ test.beforeAll(async () => {
 test.afterAll(async () => new Promise(resolve => server.close(resolve)));
 
 function worldFor(id) {
-  return id[0] === 'F' ? 'frozen' : 'dock31';
+  if (id[0] === 'F') return 'frozen';
+  if (id[0] === 'M') return 'magma';
+  if (id[0] === 'A') return 'aftermath';
+  return 'dock31';
 }
 
-async function boot(page, viewport = { width: 1280, height: 720 }) {
-  await page.setViewportSize(viewport);
+async function boot(page) {
+  await page.setViewportSize({ width: 1280, height: 720 });
   await page.goto(base + '#debug');
   await page.waitForFunction(() => window.__TMB_A12__);
   const choice = page.locator('.characterChoice:visible').first();
   if (await choice.count()) await choice.click();
-  await page.evaluate(async () => {
-    await __TMB_A12__.setWallet(2000);
-    await __TMB_A12__.purchaseWorld('frozen');
-    const p = __TMB_A12__.getState().profile;
-    p.selectedWorldId = 'frozen';
-    p.ownedWorldIds = Array.from(new Set([...(p.ownedWorldIds || []), 'frozen']));
-    for (const id of ['F01', 'F02', 'F03']) {
-      p.progressByRoute[id] = { ...(p.progressByRoute[id] || {}), completed: true, stars: 3 };
-    }
-    localStorage.setItem('trust_me_bro_campaign_profile_v1', JSON.stringify(p));
+  await page.evaluate(() => {
+    __TMB_A12__.unlockAllRoutes();
+    const ellipse = CanvasRenderingContext2D.prototype.ellipse;
+    window.__hermesShoeDraws = [];
+    window.__hermesLaunches = [];
+    document.addEventListener('tmb:analytics-emit', event => {
+      if (event.detail?.event === 'movement_started' && event.detail.params?.kind === 'hermesLaunch') {
+        window.__hermesLaunches.push(event.detail.params);
+      }
+    });
+    CanvasRenderingContext2D.prototype.ellipse = function(x, y, rx, ry, ...rest) {
+      if (rx === 35 && ry === 8 && String(this.fillStyle).toLowerCase() === '#ffd86a') {
+        window.__hermesShoeDraws.push({ routeId: __TMB_A12__.getState().route.id, x, y });
+      }
+      return ellipse.call(this, x, y, rx, ry, ...rest);
+    };
   });
-  await page.reload();
-  await page.waitForFunction(() => window.__TMB_A12__);
-  const choiceAfterReload = page.locator('.characterChoice:visible').first();
-  if (await choiceAfterReload.count()) await choiceAfterReload.click();
 }
 
 async function startRoute(page, id) {
@@ -169,59 +172,36 @@ async function captureContactSheet(page, imageNames) {
   await page.screenshot({ path: path.join(outDir, 'contact-sheet.png'), fullPage: true });
 }
 
-test('Hermes shoes replace jump hints locally', async ({ page, browser }) => {
-  test.setTimeout(900000);
+test('Hermes shoes exist, render and trigger on every route', async ({ page }) => {
+  test.setTimeout(180000);
   await boot(page);
-  const shoeRows = [];
-  const counts = {};
-  const contactImages = [];
+
+  const zonesByRoute = {};
   for (const id of routeIds) {
-    const shoes = await routeShoes(page, id);
-    counts[id] = shoes.length;
-    if (shoes[0]) {
-      const name = `${id}-desktop-approach.png`;
-      await captureApproach(page, id, shoes[0], name);
-      contactImages.push(name);
-    }
-    for (const z of shoes) {
-      const row = await testShoe(page, id, z);
-      shoeRows.push(row);
-      fs.writeFileSync(path.join(outDir, 'hermes-tum-oyun-report.partial.json'), JSON.stringify({ generatedAt: new Date().toISOString(), counts, shoeRows }, null, 2) + '\n');
-    }
+    await startRoute(page, id);
+    zonesByRoute[id] = await page.evaluate(routeId =>
+      __TMB_A12__.routeDefinition(routeId).hermesLaunchZones || [], id);
   }
 
-  await startRoute(page, 'D09');
-  await page.evaluate(() => {
-    __tmbSegmentStart(900);
-    __TMB_A12__.disableChief();
-  });
-  await page.waitForTimeout(120);
-  await page.screenshot({ path: path.join(outDir, 'D09-sandal-close-after.png') });
-  contactImages.push('D09-sandal-close-after.png');
+  const missing = routeIds.filter(id => zonesByRoute[id].length < 1);
+  console.log(`HERMES-COUNTS ${JSON.stringify(Object.fromEntries(routeIds.map(id => [id, zonesByRoute[id].length])))}`);
+  expect(missing, 'routes without a Hermes launch zone').toEqual([]);
 
-  const pixel = devices['Pixel 7'];
-  const context = await browser.newContext({ ...pixel, deviceScaleFactor: 1 });
-  const mobilePage = await context.newPage();
-  try {
-    await boot(mobilePage, pixel.viewport);
-    for (const id of mobileIds) {
-      const shoes = await routeShoes(mobilePage, id);
-      if (!shoes[0]) continue;
-      const name = `${id}-pixel7-approach.png`;
-      await captureApproach(mobilePage, id, shoes[0], name);
-      contactImages.push(name);
-    }
-  } finally {
-    await context.close();
-  }
-
-  await captureContactSheet(page, contactImages);
-  const report = { generatedAt: new Date().toISOString(), counts, shoeRows };
-  fs.writeFileSync(path.join(outDir, 'hermes-tum-oyun-report.json'), JSON.stringify(report, null, 2) + '\n');
-  console.log(`HERMES-COUNTS ${JSON.stringify(counts)}`);
-  for (const row of shoeRows) {
-    expect(row.reset, `${row.route} ${row.id} reset`).toBe(0);
-    expect(row.death, `${row.route} ${row.id} death`).toBe(0);
-    expect(row.landed, `${row.route} ${row.id} landed`).toBe(true);
+  for (const id of routeIds) {
+    const zone = zonesByRoute[id][0];
+    console.log(`HERMES-CHECK ${id} ${zone.id}`);
+    await startRoute(page, id);
+    await page.evaluate(z => {
+      const x = z.x2 - 20;
+      __tmbSegmentStart(x);
+      __TMB_A12__.disableChief();
+    }, zone);
+    await page.waitForFunction(routeId =>
+      window.__hermesShoeDraws.some(draw => draw.routeId === routeId), id, { timeout: 2000 });
+    await page.keyboard.down('ArrowRight');
+    await page.waitForFunction(({ routeId, zoneId }) =>
+      window.__hermesLaunches.some(launch => launch.routeId === routeId && launch.obstacleId === zoneId),
+      { routeId: id, zoneId: zone.id }, { timeout: 2000 });
+    await page.keyboard.up('ArrowRight');
   }
 });

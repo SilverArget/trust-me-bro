@@ -5,6 +5,21 @@
   const SCHEMA = 1,
     PROFILE_KEY = "trust_me_bro_campaign_profile_v1",
     LEGACY_KEY = "trust_me_bro_last_delivery_v2_save";
+  const IN_APP_REVIEW_COOLDOWN_MS = 30 * 24 * 60 * 60 * 1000;
+  function inAppReviewEligibility(capacitor, completedResult, currentProfile, now = Date.now()) {
+    try {
+      if (!capacitor?.isNativePlatform?.() || capacitor.getPlatform?.() !== "android") return null;
+      const plugin = capacitor.Plugins?.InAppReview;
+      if (typeof plugin?.requestReview !== "function" || completedResult?.stars !== 3) return null;
+      const completionCount = Object.values(currentProfile?.progressByRoute || {})
+        .reduce((total, progress) => total + Math.max(0, Number(progress?.completions) || 0), 0);
+      const lastAttemptAt = Math.max(0, Number(currentProfile?.inAppReview?.lastAttemptAt) || 0);
+      if (completionCount < 3 || (lastAttemptAt && now - lastAttemptAt < IN_APP_REVIEW_COOLDOWN_MS)) return null;
+      return { plugin, now };
+    } catch (_) {
+      return null;
+    }
+  }
   const DEBUG = location.hash.toLowerCase().includes("debug");
   const TEST_MODE_LOCAL_HOSTS = new Set(["localhost", "127.0.0.1"]),
     TEST_MODE_FIRST_PARTY_HASH = 0xef25b67c;
@@ -724,14 +739,32 @@ applyD09LogicRulesToRoutes();
     if(!Number.isFinite(z.x1)||!Number.isFinite(z.x2)||!Number.isFinite(landX)||!Number.isFinite(landY))return null;
     return {id:`hermes-${z.id}`,sourceId:z.id,kind,x1:z.x1,x2:z.x2,landX,landY,peakY:hermesPeakForZone({...z,landY},kind)};
   }
+  function buildGeometryHermesZones(routeId,route){
+    const surfaces=(route.groundSegments||[]).filter(s=>Number.isFinite(s.x)&&Number.isFinite(s.y)&&Number.isFinite(s.w)&&s.w>0).sort((a,b)=>a.x-b.x||a.y-b.y);
+    if(surfaces.length<2)return [];
+    const zones=[];
+    let edge=surfaces[0],right=edge.x+edge.w;
+    for(const landing of surfaces.slice(1)){
+      const gap=landing.x-right,rise=edge.y-landing.y;
+      if(gap>=96||(gap>=24&&rise>=80)){
+        const x2=right-18,x1=Math.max(edge.x,x2-44),landX=landing.x+Math.min(40,landing.w*.35),landY=landing.y;
+        zones.push({id:`${routeId.toLowerCase()}-hermes-gap-${zones.length+1}`,sourceId:`${edge.id}->${landing.id}`,kind:"gap",x1,x2,landX,landY,peakY:Math.min(edge.y,landY)-122});
+      }
+      const landingRight=landing.x+landing.w;
+      if(landingRight>right){edge=landing;right=landingRight;}
+    }
+    return zones;
+  }
   function buildHermesLaunchZones(routeId,route){
     if(!HERMES_ROUTE_IDS.has(routeId))return [];
-    const ids=new Set(JUMP_HINT_ZONE_IDS[routeId]||[]);
+    const configuredIds=JUMP_HINT_ZONE_IDS[routeId];
+    const ids=new Set(configuredIds||[]),selected=z=>configuredIds?ids.has(z.id):true;
     const zones=[
-      ...(route.diveZones||[]).filter(z=>ids.has(z.id)).map(z=>toHermesZone(z,"dive")),
-      ...(route.highJumpZones||[]).filter(z=>ids.has(z.id)).map(z=>toHermesZone(z,"high")),
+      ...(route.diveZones||[]).filter(selected).map(z=>toHermesZone(z,"dive")),
+      ...(route.highJumpZones||[]).filter(selected).map(z=>toHermesZone(z,"high")),
     ].filter(Boolean);
     if(routeId==="D09")zones.unshift({id:"d09-hermes-opening-gap",sourceId:"d09-opening-gap",kind:"gap",x1:280,x2:324,landX:403.44,landY:151.875,peakY:58});
+    if(!zones.length)zones.push(...buildGeometryHermesZones(routeId,route));
     const seen=new Set();
     return zones.filter(z=>{if(seen.has(z.id))return false;seen.add(z.id);return true}).sort((a,b)=>a.x1-b.x1);
   }
@@ -823,6 +856,7 @@ applyD09LogicRulesToRoutes();
       legacyProgress: null,
       bankedRunIds: [],
       rewardedRunIds: [],
+      inAppReview: { lastAttemptAt: 0 },
     };
   }
   function fullTestProfile(raw) {
@@ -908,6 +942,9 @@ applyD09LogicRulesToRoutes();
     n.rewardedRunIds = [
       ...new Set(Array.isArray(raw.rewardedRunIds) ? raw.rewardedRunIds.slice(-100) : []),
     ];
+    n.inAppReview = {
+      lastAttemptAt: Math.max(0, Number(raw.inAppReview?.lastAttemptAt) || 0),
+    };
     return n;
   }
   function validV36(s) {
@@ -992,6 +1029,14 @@ applyD09LogicRulesToRoutes();
     const result = persistQueue.then(write, write);
     persistQueue = result.then(() => undefined, () => undefined);
     return result;
+  }
+  async function maybeRequestInAppReview(completedResult) {
+    const eligible = inAppReviewEligibility(window.Capacitor, completedResult, profile);
+    if (!eligible || result !== completedResult || document.body.dataset.campaignPhase !== "result") return false;
+    profile.inAppReview = { lastAttemptAt: eligible.now };
+    if (!await persist()) return false;
+    try { await eligible.plugin.requestReview(); } catch (_) {}
+    return true;
   }
   async function loadProfile() {
     let raw = null,
@@ -1289,6 +1334,33 @@ applyD09LogicRulesToRoutes();
       : (x>=0&&x<=r.length?[{x:0,y:GROUND,w:r.length,h:100,kind:"ground"}]:[]);
     return grounds.sort((a,b)=>a.y-b.y)[0]||null;
   }
+  function resolveCheckpointRespawn(r,respawn,w=player.w,h=player.h) {
+    let x=respawn.x,y=respawn.y;
+    const surfaces=routeSurfaces(r),movedPast=[],seen=new Set();
+    for(let i=0;i<=surfaces.length;i++){
+      const blocker=surfaces.find(s=>x+w>s.x&&x<s.x+s.w&&y>s.y&&y-h<s.y+s.h);
+      if(!blocker)return {x,y,surfaceId:solidGroundAt(x,r)?.id||respawn.surfaceId||null,movedPast};
+      if(seen.has(blocker))break;
+      seen.add(blocker);
+      movedPast.push(blocker.id||blocker);
+      x=blocker.x+blocker.w+8;
+      const ground=solidGroundAt(x,r)||(r.groundSegments||[]).filter(s=>s.kind==="ground"&&s.solid!==false&&s.x>=x&&s.w>=w).sort((a,b)=>a.x-b.x)[0];
+      if(ground){x=Math.max(x,ground.x);y=ground.y}
+    }
+    return {x,y,surfaceId:solidGroundAt(x,r)?.id||respawn.surfaceId||null,movedPast};
+  }
+  function checkpointRespawnAudit() {
+    const rows=[];
+    for(const r of Object.values(ROUTES))for(const checkpointX of r.checkpoints){
+      const ground=solidGroundAt(checkpointX,r);
+      if(!ground){rows.push({routeId:r.routeId,checkpointX,missingGround:true});continue}
+      const resolved=resolveCheckpointRespawn(r,{x:checkpointX,y:ground.y,surfaceId:ground.id||null});
+      const resolvedGround=solidGroundAt(resolved.x,r);
+      const blocker=routeSurfaces(r).find(s=>resolved.x+player.w>s.x&&resolved.x<s.x+s.w&&resolved.y>s.y&&resolved.y-player.h<s.y+s.h);
+      rows.push({routeId:r.routeId,checkpointX,x:resolved.x,y:resolved.y,movedPast:resolved.movedPast,blockerId:blocker?.id||null,missingGround:!resolvedGround});
+    }
+    return rows;
+  }
   function resetD01ChiefTolerance(checkpointX=run?.checkpointX??70) {
     const surface=routeId==="D01"?(route.groundSegments||[]).find(s=>s.id===D01_FIRST_RISE_ID):null;
     const active=!!surface&&checkpointX<surface.x;
@@ -1403,6 +1475,7 @@ applyD09LogicRulesToRoutes();
     if (!routeUnlocked(id)) return false;
     routeId = ROUTES[id] ? id : firstRouteForWorld();
     route = ROUTES[routeId];
+    void ensureRouteNpcAtlases(route);
     run = newEconomy ? freshRun(routeId) : restoreRun(routeId);
     result = null;
     finishAdvance = null;
@@ -1609,7 +1682,8 @@ applyD09LogicRulesToRoutes();
     const saved=!full&&run.checkpointRespawn?.checkpointX===checkpointX?run.checkpointRespawn:null;
     const respawn=direct?{x:checkpointX,y:direct.y,surfaceId:direct.id||null}:saved||lastSafeGround;
     if(route.movementProfile==="vector-v1"&&!respawn)throw new Error(`No safe checkpoint respawn for ${routeId}@${checkpointX}`);
-    const resetX=respawn?.x??checkpointX,resetY=respawn?.y??routeGroundYAt(checkpointX);
+    const safeRespawn=resolveCheckpointRespawn(route,respawn||{x:checkpointX,y:routeGroundYAt(checkpointX),surfaceId:null});
+    const resetX=safeRespawn.x,resetY=safeRespawn.y;
     if(window.__tmbXWriteLog)window.__tmbXWriteLog.push({source:"engine.reset/retry",routeId,gameClock,beforeX:player.x,afterX:resetX,checkpointX,full});
     engine.reset(resetX, resetY - player.h);
     resetD01ChiefTolerance(checkpointX);
@@ -2243,6 +2317,8 @@ applyD09LogicRulesToRoutes();
     engine.setWon(true);
     emitGame("run_complete", { routeId, elapsed_s: result.elapsed });
     emitGame("finish_gate_closed", { routeId, x: route.finishX });
+    const completedResult = result;
+    requestAnimationFrame(() => setTimeout(() => { void maybeRequestInAppReview(completedResult); }, 400));
   }
   function beginFinishAdvance() {
     const nextId=nextRouteAfterCurrent();
@@ -2535,7 +2611,7 @@ applyD09LogicRulesToRoutes();
   function rewardedText(amount, claimed=false) {
     const language=profile.settings.language;
     if(claimed)return language==="tr"?"ALINDI":language==="ru"?"ПОЛУЧЕНО":"CLAIMED";
-    return language==="tr"?"REKLAM İZLE ×2":language==="ru"?"РЕКЛАМА ×2":"WATCH AD ×2";
+    return language==="tr"?`REKLAM İZLE · +${amount} JETON`:language==="ru"?`РЕКЛАМА · +${amount} МОНЕТ`:`WATCH AD · +${amount} COINS`;
   }
   function rewardedAvailable() { const detail={available:false};document.dispatchEvent(new CustomEvent("tmb:rewarded-capability",{detail}));return detail.available===true; }
   function interstitialAvailable() { const detail={available:false};document.dispatchEvent(new CustomEvent("tmb:interstitial-capability",{detail}));return detail.available===true; }
@@ -2792,7 +2868,7 @@ applyD09LogicRulesToRoutes();
       el.dataset.runnerId = id;
       el.textContent = id === "female" ? "\u2640" : "\u2642";
       el.setAttribute("aria-label", t(id));
-      el.addEventListener("click", () => selectRunner(id));
+      el.addEventListener("click", () => { void selectRunner(id); });
     });
     syncRunnerChoiceCards();
     const syncRunnerChoice=()=>syncRunnerChoiceCards();
@@ -2812,7 +2888,7 @@ applyD09LogicRulesToRoutes();
       if (["ArrowRight", "d", "D"].includes(e.key)) keys.right = false;
     });
   }
-  function selectRunner(id) {
+  async function selectRunner(id) {
     if (!profile.ownedRunnerIds.includes(id)) {
       sfx("deny");
       openShop();
@@ -2823,6 +2899,8 @@ applyD09LogicRulesToRoutes();
     }
     const firstSelection = !profile.runnerId || !run;
     profile.runnerId = id;
+    const outfit=RUNNERS[id].outfitLocked?"default":profile.equippedOutfitByRunner[id]||"default";
+    await ensureRunnerAtlas(id,outfit);
     syncRunnerChoiceCards();
     engine.setCharacter(RUNNERS[id].legacy);
     void persist();
@@ -2935,6 +3013,7 @@ applyD09LogicRulesToRoutes();
     s.querySelector("[data-save]").textContent = saveFailure ? t("saveFailed") : t("noCharge");
     drawShopCardThumbs();
     drawShopPreview();
+    void ensureShopPreviewAtlas();
   }
   function drawShopCardThumbs() {
     const root = document.getElementById("a12Shop");
@@ -3208,6 +3287,7 @@ applyD09LogicRulesToRoutes();
       purchaseBusy = true;
       const before = clone(profile);
       profile.equippedOutfitByRunner[runnerId] = id;
+      await ensureRunnerAtlas(runnerId,id);
       const ok = await persist();
       if (!ok) profile = before;
       purchaseBusy = false;
@@ -3223,6 +3303,7 @@ applyD09LogicRulesToRoutes();
     profile.walletBalance -= item.price;
     profile.ownedOutfitSetIds.push(id);
     profile.equippedOutfitByRunner[runnerId] = id;
+    await ensureRunnerAtlas(runnerId,id);
     const ok = await persist();
     if (!ok) profile = before;
     purchaseBusy = false;
@@ -3238,7 +3319,7 @@ applyD09LogicRulesToRoutes();
   }
   async function purchaseOrSelectRunner(id) {
     if (purchaseBusy || !RUNNERS[id]) return false;
-    if (profile.ownedRunnerIds.includes(id)) { selectRunner(id); renderShop(); return true; }
+    if (profile.ownedRunnerIds.includes(id)) { await selectRunner(id); renderShop(); return true; }
     const item=RUNNERS[id];
     if (profile.walletBalance < item.price) return false;
     purchaseBusy = true;
@@ -3247,6 +3328,7 @@ applyD09LogicRulesToRoutes();
     profile.ownedRunnerIds.push(id);
     profile.runnerId = id;
     profile.equippedOutfitByRunner[id] = "default";
+    await ensureRunnerAtlas(id,"default");
     const ok = await persist();
     if (!ok) profile = before; else { engine.setCharacter(RUNNERS[id].legacy); sfx("purchase"); }
     purchaseBusy = false;
@@ -3257,6 +3339,7 @@ applyD09LogicRulesToRoutes();
     if (purchaseBusy || !CHIEFS[id]) return false;
     if (profile.ownedChiefIds.includes(id)) {
       profile.equippedChief = id;
+      await ensureChiefAtlas(id);
       const ok = await persist();
       renderShop();
       return ok;
@@ -3268,6 +3351,7 @@ applyD09LogicRulesToRoutes();
     profile.walletBalance -= item.price;
     profile.ownedChiefIds.push(id);
     profile.equippedChief = id;
+    await ensureChiefAtlas(id);
     const ok = await persist();
     if (!ok) profile = before; else sfx("purchase");
     purchaseBusy = false;
@@ -3833,10 +3917,28 @@ applyD09LogicRulesToRoutes();
   }
   let npcAtlasContract=null;
   const npcAtlasImages=new Map();
-  const npcAtlasReady=fetch("sprites/a5/npc-contract.json",{cache:"no-cache"}).then(r=>{if(!r.ok)throw new Error("npc contract");return r.json();}).then(async contract=>{
-    await Promise.all(contract.assets.map(asset=>new Promise((resolve,reject)=>{const image=new Image();image.onload=()=>{if(image.naturalWidth!==asset.size[0]||image.naturalHeight!==asset.size[1])return reject(new Error("npc dimensions"));npcAtlasImages.set(asset.kind,image);resolve();};image.onerror=()=>reject(new Error("npc unavailable"));image.src=asset.path+"?v="+asset.cacheVersion;})));
-    npcAtlasContract=contract;return true;
-  }).catch(()=>false);
+  const atlasImageLoads=new Map();
+  let npcAtlasContractReady=null;
+  function loadAtlasImage(asset,map,key,width,height){
+    if(map.has(key))return Promise.resolve(true);
+    if(atlasImageLoads.has(asset.path))return atlasImageLoads.get(asset.path);
+    const pending=new Promise((resolve,reject)=>{const image=new Image();image.onload=()=>{if(image.naturalWidth!==width||image.naturalHeight!==height)return reject(new Error("atlas dimensions"));map.set(key,image);resolve(true);};image.onerror=()=>reject(new Error("atlas unavailable"));image.src=asset.path+"?v="+asset.cacheVersion;}).catch(()=>false);
+    atlasImageLoads.set(asset.path,pending);return pending;
+  }
+  function loadNpcContract(){
+    if(!npcAtlasContractReady)npcAtlasContractReady=fetch("sprites/a5/npc-contract.json",{cache:"no-cache"}).then(r=>{if(!r.ok)throw new Error("npc contract");return r.json();}).then(contract=>(npcAtlasContract=contract)).catch(()=>null);
+    return npcAtlasContractReady;
+  }
+  async function ensureNpcAtlases(kinds){
+    const contract=await loadNpcContract();if(!contract)return false;
+    const wanted=new Set(kinds),assets=contract.assets.filter(asset=>wanted.has(asset.kind));
+    await Promise.all(assets.map(asset=>loadAtlasImage(asset,npcAtlasImages,asset.kind,asset.size[0],asset.size[1])));return assets.length>0;
+  }
+  function ensureRouteNpcAtlases(activeRoute){
+    const kinds=["decor"];
+    if(activeRoute?.obstacles?.some(o=>o.type==="worker"&&!o.offscreenWait))kinds.push("worker");
+    return ensureNpcAtlases(kinds);
+  }
   function drawNpcWorkerSprite(c,x,feet,direction=-1){
     const image=npcAtlasImages.get("worker");
     if(workerDisabled){c.save();c.translate(x,feet-14);c.rotate(-Math.PI/2);if(npcAtlasContract&&image)c.drawImage(image,0,0,128,128,-51,-90,103,103);else{c.fillStyle="#243c49";c.fillRect(-15,-60,30,60);c.fillStyle="#ff8d28";c.fillRect(-15,-48,30,20);}c.restore();return true;}
@@ -3905,28 +4007,39 @@ applyD09LogicRulesToRoutes();
   const runnerAtlasImages = new Map();
   let chiefAtlasContract = null;
   const chiefAtlasImages = new Map();
-  const runnerAtlasReady = fetch("sprites/a5/atlas-contract.json", {cache:"no-cache"})
-    .then(r=>{if(!r.ok)throw new Error("atlas contract");return r.json();})
-    .then(async contract=>{
-      await Promise.all(contract.assets.map(asset=>new Promise((resolve,reject)=>{
-        const image=new Image();
-        image.onload=()=>{if(image.naturalWidth!==512||image.naturalHeight!==512)return reject(new Error("atlas dimensions"));runnerAtlasImages.set(asset.path,image);resolve();};
-        image.onerror=()=>reject(new Error("atlas unavailable"));
-        image.src=asset.path+"?v="+asset.cacheVersion;
-      })));
-      runnerAtlasContract=contract;return true;
-    }).catch(()=>false);
-  const chiefAtlasReady = fetch("sprites/chiefs/chief-contract.json", {cache:"no-cache"})
-    .then(r=>{if(!r.ok)throw new Error("chief contract");return r.json();})
-    .then(async contract=>{
-      await Promise.all(contract.assets.map(asset=>new Promise((resolve,reject)=>{
-        const image=new Image();
-        image.onload=()=>{if(image.naturalWidth!==640||image.naturalHeight!==720)return reject(new Error("chief dimensions"));chiefAtlasImages.set(asset.id,image);resolve();};
-        image.onerror=()=>reject(new Error("chief unavailable"));
-        image.src=asset.path+"?v="+asset.cacheVersion;
-      })));
-      chiefAtlasContract=contract;return true;
-    }).catch(()=>false);
+  let runnerAtlasContractReady=null,chiefAtlasContractReady=null;
+  function loadRunnerContract(){
+    if(!runnerAtlasContractReady)runnerAtlasContractReady=fetch("sprites/a5/atlas-contract.json",{cache:"no-cache"}).then(r=>{if(!r.ok)throw new Error("atlas contract");return r.json();}).then(contract=>(runnerAtlasContract=contract)).catch(()=>null);
+    return runnerAtlasContractReady;
+  }
+  function loadChiefContract(){
+    if(!chiefAtlasContractReady)chiefAtlasContractReady=fetch("sprites/chiefs/chief-contract.json",{cache:"no-cache"}).then(r=>{if(!r.ok)throw new Error("chief contract");return r.json();}).then(contract=>(chiefAtlasContract=contract)).catch(()=>null);
+    return chiefAtlasContractReady;
+  }
+  async function ensureRunnerAtlas(runner,outfit){
+    const contract=await loadRunnerContract();if(!contract)return false;
+    const fullPath=`sprites/a5/${runner}-${outfit}-full.png`,full=contract.assets.find(asset=>asset.path===fullPath);
+    const assets=full?[full]:contract.assets.filter(asset=>asset.runner===runner&&(asset.layer==="body"||asset.outfit===outfit));
+    await Promise.all(assets.map(asset=>loadAtlasImage(asset,runnerAtlasImages,asset.path,512,512)));return assets.length>0;
+  }
+  async function ensureChiefAtlas(id){
+    const contract=await loadChiefContract(),asset=contract?.assets.find(value=>value.id===id);if(!asset)return false;
+    return loadAtlasImage(asset,chiefAtlasImages,asset.id,640,720);
+  }
+  function ensureShopPreviewAtlas(){
+    if(!shopOpen)return Promise.resolve(false);
+    let pending;
+    if(shopTab==="chiefs"){
+      if(chiefAtlasImages.has(previewChiefId))return Promise.resolve(true);
+      pending=ensureChiefAtlas(previewChiefId);
+    }else{
+      const runner=previewRunnerId||profile.runnerId||"male",outfit=RUNNERS[runner]?.outfitLocked?"default":shopTab==="characters"?profile.equippedOutfitByRunner[runner]||"default":previewOutfitId;
+      const fullPath=`sprites/a5/${runner}-${outfit}-full.png`;
+      if(runnerAtlasImages.has(fullPath))return Promise.resolve(true);
+      pending=ensureRunnerAtlas(runner,outfit);
+    }
+    return pending.then(ok=>{if(ok&&shopOpen){drawShopCardThumbs();drawShopPreview();}return ok;});
+  }
   function runnerAtlasPose(state) {
     const pk=state.state;
     if(frontFlip.active){const e=frontFlip.elapsed;return {motion:"frontFlip",frame:e<.16?Math.min(1,Math.floor(e/.08)):e<.62?2+Math.min(3,Math.floor((e-.16)/.115)):6+Math.min(1,Math.floor((e-.62)/.09))};}
@@ -4060,6 +4173,8 @@ applyD09LogicRulesToRoutes();
     if (document.body.dataset.gameMode === "campaign") return;
     document.body.dataset.gameMode = "campaign";
     await loadProfile();
+    const openingRunner=RUNNERS[profile.runnerId]?.outfitLocked?"default":profile.equippedOutfitByRunner[profile.runnerId]||"default";
+    await Promise.all([ensureRunnerAtlas(profile.runnerId||"male",openingRunner),ensureChiefAtlas(profile.equippedChief||"securityTall")]);
     emitGame("session_start", { language: profile.settings.language });
     engine = window.__installCampaignEngine({
       attach(api) {
@@ -4105,6 +4220,7 @@ applyD09LogicRulesToRoutes();
         routeDefinition: (id)=>clone(ROUTES[id]),
         finishDoorPlacement: (id)=>{const old=route;if(id&&ROUTES[id])route=ROUTES[id];const p=finishDoorPlacement(route);route=old;return p;},
         auditSuspendCounts,
+        checkpointRespawnAudit,
         chiefRouteHash: (id)=>chiefRouteHash(ROUTES[id]),
         chiefPathStatus: (id, deltaX=0)=>{const r=clone(ROUTES[id]);if(deltaX&&r.groundSegments?.length)r.groundSegments[0].x+=deltaX;return {stored:window.TMB_CHIEF_PATHS?.[id]?.routeHash||null,current:chiefRouteHash(r),valid:window.TMB_CHIEF_PATHS?.[id]?.routeHash===chiefRouteHash(r)}},
         migrateV36: (v, p) => migrateV36(v, p),
