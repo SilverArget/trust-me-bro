@@ -174,7 +174,7 @@
       mechaPilot: "Mecha Pilot",
       saveFailed: "SAVE FAILED — RETRY",
       noCharge: "LIVE PREVIEW · NO CHARGE",
-      worlds: "WORLDS", buyWorld: "BUY — {price}", select: "SELECT", selected: "SELECTED", planned: "PLANNED", insufficient: "INSUFFICIENT COINS",
+      worlds: "WORLDS", buyWorld: "BUY — {price}", select: "SELECT", selected: "SELECTED", planned: "PLANNED", insufficient: "INSUFFICIENT COINS", worldSelection: "CHOOSE A WORLD", progress: "PROGRESS", finished: "YOU FINISHED",
       idle: "IDLE", motionRun: "RUN", flip: "FLIP", language: "LANGUAGE", samePhysics: "Same physics. Shared wallet. Your runner.", ghostOn: "GHOST ON", ghostOff: "GHOST OFF", effectsFull: "EFFECTS FULL", effectsReduced: "EFFECTS REDUCED", flow: "FLOW", localBest: "LOCAL BEST", newRecord: "NEW", clean: "CLEAN", mastery: "MASTERY", style: "STYLE", pausedTap: "PAUSED - TAP TO RESUME", parcelForYou: "DELIVERY FOR: YOU", close: "CLOSE", back: "BACK", touchMove: "DRAG = MOVE", touchJump: "TAP = JUMP", exit: "EXIT", closed: "CLOSED", worldDock31: "DOCK 31", worldFrozen: "FROZEN", worldMagma: "MAGMA", worldAftermath: "AFTERMATH",
     },
     tr: {
@@ -227,7 +227,7 @@
       mechaPilot: "MECHA PİLOT",
       saveFailed: "KAYIT BAŞARISIZ — YENİDEN DENE",
       noCharge: "CANLI ÖNİZLEME · ÜCRETSİZ",
-      worlds: "DÜNYALAR", buyWorld: "SATIN AL — {price}", select: "SEÇ", selected: "SEÇİLİ", planned: "PLANLANDI", insufficient: "Yetersiz jeton",
+      worlds: "DÜNYALAR", buyWorld: "SATIN AL — {price}", select: "SEÇ", selected: "SEÇİLİ", planned: "PLANLANDI", insufficient: "Yetersiz jeton", worldSelection: "DÜNYA SEÇ", progress: "İLERLEME", finished: "BİTİRDİN",
       idle: "BEKLE", motionRun: "KOŞ", flip: "TAKLA", language: "DİL", samePhysics: "Aynı fizik. Ortak cüzdan. Senin koşucun.", ghostOn: "HAYALET AÇIK", ghostOff: "HAYALET KAPALI", effectsFull: "EFEKTLER TAM", effectsReduced: "EFEKTLER AZALTILDI", flow: "AKIŞ", localBest: "YEREL EN İYİ", newRecord: "YENİ", clean: "TEMİZ", mastery: "USTALIK", style: "STİL", pausedTap: "DURAKLATILDI - DEVAM ETMEK İÇİN DOKUN", parcelForYou: "TESLİMAT: SEN", close: "KAPAT", back: "GERİ", touchMove: "SÜRÜKLE = HAREKET", touchJump: "DOKUN = ZIPLA", exit: "ÇIKIŞ", closed: "KAPANDI", worldDock31: "RIHTIM 31", worldFrozen: "DONMUŞ", worldMagma: "MAGMA DİYARI", worldAftermath: "SONRASI",
     },
     ru: {
@@ -280,7 +280,7 @@
       mechaPilot: "ПИЛОТ МЕХА",
       saveFailed: "ОШИБКА СОХРАНЕНИЯ — ПОВТОРИТЬ",
       noCharge: "ЖИВОЙ ПРОСМОТР · БЕСПЛАТНО",
-      worlds: "МИРЫ", buyWorld: "КУПИТЬ — {price}", select: "ВЫБРАТЬ", selected: "ВЫБРАНО", planned: "ЗАПЛАНИРОВАНО", insufficient: "НЕДОСТАТОЧНО МОНЕТ",
+      worlds: "МИРЫ", buyWorld: "КУПИТЬ — {price}", select: "ВЫБРАТЬ", selected: "ВЫБРАНО", planned: "ЗАПЛАНИРОВАНО", insufficient: "НЕДОСТАТОЧНО МОНЕТ", worldSelection: "ВЫБЕРИ МИР", progress: "ПРОГРЕСС", finished: "ТЫ ПРОШЁЛ",
       idle: "ОЖИДАНИЕ", motionRun: "БЕГ", flip: "САЛЬТО", language: "ЯЗЫК", samePhysics: "Та же физика. Общий кошелёк. Твой бегун.", ghostOn: "ПРИЗРАК ВКЛ", ghostOff: "ПРИЗРАК ВЫКЛ", effectsFull: "ЭФФЕКТЫ ПОЛНЫЕ", effectsReduced: "ЭФФЕКТЫ СНИЖЕНЫ", flow: "ПОТОК", localBest: "ЛУЧШИЙ РЕЗУЛЬТАТ", newRecord: "НОВЫЙ", clean: "ЧИСТО", mastery: "МАСТЕРСТВО", style: "СТИЛЬ", pausedTap: "ПАУЗА - КОСНИСЬ, ЧТОБЫ ПРОДОЛЖИТЬ", parcelForYou: "ДОСТАВКА: ТЕБЕ", close: "ЗАКРЫТЬ", back: "НАЗАД", touchMove: "ТЯНИ = ХОД", touchJump: "КАСАНИЕ = ПРЫЖОК", exit: "ВЫХОД", closed: "ЗАКРЫТО", worldDock31: "ДОК 31", worldFrozen: "МОРОЗ", worldMagma: "МАГМА", worldAftermath: "ПОСЛЕДСТВИЯ",
     },
   });
@@ -1070,6 +1070,8 @@ applyD09LogicRulesToRoutes();
     route = ROUTES.D01,
     run = null,
     result = null,
+    finishedWorldId = null,
+    worldSelectOpen = false,
     shopOpen = false,
     shopTab = "outfits",
     previewOutfitId = "default",
@@ -1444,6 +1446,10 @@ applyD09LogicRulesToRoutes();
     if (worldId==="frozen") return WORLD_REGISTRY.frozen.routes;
     return WORLD_REGISTRY.dock31.routes;
   }
+  function resumeRouteForWorld(worldId=profile.selectedWorldId) {
+    const routes=routeOrderForWorld(worldId).filter(id=>ROUTES[id]&&routeUnlocked(id));
+    return routes.find(id=>profile.pendingRunsByRoute[id]) || routes.find(id=>!profile.progressByRoute[id]?.completed) || routes.at(-1) || "D01";
+  }
   function nextRouteAfterCurrent() {
     const order=routeOrderForWorld(),i=order.indexOf(routeId);
     if(i<0||i>=order.length-1)return null;
@@ -1451,11 +1457,16 @@ applyD09LogicRulesToRoutes();
     return ROUTES[id]&&routeUnlocked(id)?id:null;
   }
   function startNextRoute() {
-    const order=routeOrderForWorld(),start=Math.max(0,order.indexOf(routeId)),candidates=[];
-    for(let i=1;i<=order.length;i++)candidates.push(order[(start+i)%order.length]);
-    for(const id of candidates)if(ROUTES[id]&&routeUnlocked(id)&&startRoute(id,true,id==="D06"))return id;
-    openShop();
+    const id=nextRouteAfterCurrent();
+    if(id&&startRoute(id,true,id==="D06"))return id;
+    showFinishedWorld();
     return null;
+  }
+  function showFinishedWorld() {
+    finishedWorldId=route.worldId;
+    document.body.dataset.campaignPhase="result";
+    syncActionVisibility();
+    if(result)drawResult();
   }
   function startRoute(id, newEconomy = true, fullD06 = false) {
     if (pendingWorldId && profile.ownedWorldIds.includes(pendingWorldId)) {
@@ -1478,6 +1489,7 @@ applyD09LogicRulesToRoutes();
     void ensureRouteNpcAtlases(route);
     run = newEconomy ? freshRun(routeId) : restoreRun(routeId);
     result = null;
+    finishedWorldId = null;
     finishAdvance = null;
     finishGate = { phase: "open", t: 0, closeS: .52, holdS: .28, playerAlpha: 1 };
     syncActionVisibility();
@@ -1658,7 +1670,8 @@ applyD09LogicRulesToRoutes();
       },
     };
     document.body.dataset.campaignPhase = "result";
-    syncActionVisibility();
+    if(nextRouteAfterCurrent())syncActionVisibility();
+    else showFinishedWorld();
     emitGame("run_reward_banked", {
       routeId,
       economyRunId: run.economyRunId,
@@ -2601,9 +2614,14 @@ applyD09LogicRulesToRoutes();
   function syncActionVisibility() {
     const a = document.getElementById("a12Actions");
     if (!a) return;
-    const show = !!result && !shopOpen;
+    const show = !!result && !shopOpen && !worldSelectOpen;
     a.hidden = !show;
     a.setAttribute("aria-hidden", String(!show));
+    for(const button of a.querySelectorAll("button")){
+      if(button.dataset.act==="next")button.hidden=!!finishedWorldId;
+      if(button.dataset.act==="retry")button.hidden=false;
+      if(button.dataset.act==="worlds")button.hidden=!finishedWorldId;
+    }
     syncRewardedButton();
   }
   let rewardedInFlight = null;
@@ -2661,6 +2679,7 @@ applyD09LogicRulesToRoutes();
     const characterShop=document.getElementById("characterShop");if(characterShop) characterShop.textContent=t("shop");
     const shopClose=document.querySelector("#a12Shop [data-close]");if(shopClose) shopClose.textContent=t("close");
     renderShop();
+    renderWorldSelect();
   }
   function drawHud() {
     ctx.setTransform(
@@ -2710,7 +2729,8 @@ applyD09LogicRulesToRoutes();
     ctx.textAlign = "center";
     ctx.fillStyle = "#7cecc0";
     ctx.font = "950 30px system-ui";
-    ctx.fillText(`${routeId} ${t("complete")}`, W / 2, H / 2 - 112);
+    const title=finishedWorldId?t("finished"):`${routeId} ${t("complete")}`;
+    ctx.fillText(title, W / 2, H / 2 - 112);
     ctx.fillStyle = "#fff";
     ctx.font = "800 18px system-ui";
     ctx.fillText(`${t("earned")} +${result.amount}`, W / 2, H / 2 - 70);
@@ -2753,11 +2773,12 @@ applyD09LogicRulesToRoutes();
     style.textContent += `@media(orientation:landscape){#a12DockRoutes{left:auto;right:max(12px,var(--safe-right));transform:none;width:min(calc(100vw - 440px),760px)}}`;
     style.textContent += `body[data-campaign-phase="result"] #joystick,body[data-campaign-phase="result"] #jumpWrap,body[data-campaign-phase="result"] #controlHint,body[data-campaign-phase="result"] #hint{display:none!important}`;
     style.textContent += `#a12TestModeLabel{position:fixed;z-index:75;left:max(10px,calc(var(--safe-left) + 10px));top:max(10px,calc(var(--safe-top) + 10px));padding:5px 8px;border:1px solid #ffe07a;border-radius:6px;background:#2b210be8;color:#ffe998;font:950 10px/1 system-ui;letter-spacing:.09em;pointer-events:none;box-shadow:0 3px 10px #0008}#a12TestRoutes{grid-column:1/-1;display:grid;grid-template-columns:repeat(6,minmax(42px,1fr));gap:6px;padding:8px;border:1px solid #79e9ba55;border-radius:10px;background:#071b24}#a12TestRoutes button{min-height:34px;padding:5px 3px;font-size:10px}@media(max-width:540px) and (orientation:portrait){#a12TestRoutes{grid-template-columns:repeat(4,minmax(42px,1fr))}}`;
+    style.textContent += `#a12WorldSelect{position:fixed;inset:0;z-index:44;display:grid;place-items:center;padding:max(14px,var(--safe-top)) max(14px,var(--safe-right)) max(14px,var(--safe-bottom)) max(14px,var(--safe-left));box-sizing:border-box;background:#06121bf5;color:#fff}#a12WorldSelect[hidden]{display:none!important}#a12WorldPanel{width:min(920px,96vw);max-height:94vh;overflow:auto}#a12WorldPanel h2{text-align:center;margin:0 0 16px;font:950 clamp(22px,4vw,38px)/1 system-ui}#a12WorldCards{display:grid;grid-template-columns:repeat(4,minmax(130px,1fr));gap:10px}#a12WorldCards button{min-height:132px;padding:14px;border:2px solid #ffffff38;border-radius:16px;background:#153246;color:#fff;font:900 15px/1.25 system-ui}#a12WorldCards button[data-owned="true"]{border-color:#79e9ba}#a12WorldCards button[aria-current="true"]{background:#286650}#a12WorldCards small,#a12WorldCards span{display:block;margin-top:9px}#a12WorldCards small{color:#a9c5d4}#a12WorldCards span{color:#ffd45c}@media(max-width:700px){#a12WorldCards{grid-template-columns:repeat(2,minmax(130px,1fr))}#a12WorldCards button{min-height:96px;padding:10px}}`;
     document.head.appendChild(style);
     style.textContent += `#a12Actions{flex-wrap:wrap;justify-content:center;max-width:min(96vw,720px)}body[data-campaign-phase="result"] #a12Actions{bottom:max(12px,var(--safe-bottom))}#a12Actions [data-act="rewarded"]{background:#286650;border-color:#8ff1c8}`;
     const actions = document.createElement("div");
     actions.id = "a12Actions";
-    actions.innerHTML = `<button data-act="next">${t("next")}</button><button data-act="shop">${t("shop")}</button><button data-act="rewarded" hidden></button><button data-act="retry">${t("retry")}</button>`;
+    actions.innerHTML = `<button data-act="next">${t("next")}</button><button data-act="worlds">${t("worlds")}</button><button data-act="shop">${t("shop")}</button><button data-act="rewarded" hidden></button><button data-act="retry">${t("retry")}</button>`;
     document.body.appendChild(actions);
     if (TEST_MODE) {
       document.body.dataset.testMode = "hepsi";
@@ -2777,13 +2798,18 @@ applyD09LogicRulesToRoutes();
       if (a === "rewarded") { void claimRewardedResult(); return; }
       if (a === "next") {
         if (nextRouteInFlight) return;
+        if(!nextRouteAfterCurrent()){showFinishedWorld();return;}
         nextRouteInFlight = true;
         try { await requestRouteInterstitial();startNextRoute(); }
         finally { nextRouteInFlight = false; }
       }
       if (a === "retry") startRoute(routeId, true, routeId === "D06");
+      if (a === "worlds") openWorldSelect();
       if (a === "shop") openShop();
     });
+    const worldSelect=document.createElement("section");
+    worldSelect.id="a12WorldSelect";worldSelect.hidden=true;worldSelect.setAttribute("role","dialog");worldSelect.setAttribute("aria-modal","true");worldSelect.innerHTML=`<div id="a12WorldPanel"><h2></h2><div id="a12WorldCards"></div></div>`;document.body.appendChild(worldSelect);
+    worldSelect.addEventListener("click",e=>{const id=e.target.closest("[data-world]")?.dataset.world;if(id)void chooseWorld(id);});
     const shop = document.createElement("section");
     shop.id = "a12Shop";
     shop.setAttribute("aria-hidden", "true");
@@ -2924,7 +2950,38 @@ applyD09LogicRulesToRoutes();
       el.setAttribute("aria-pressed",String(selected));
     });
   }
+  function renderWorldSelect() {
+    const modal=document.getElementById("a12WorldSelect"),cards=document.getElementById("a12WorldCards");
+    if(!modal||!cards)return;
+    modal.querySelector("h2").textContent=t("worldSelection");
+    cards.innerHTML=Object.values(WORLD_REGISTRY).map(w=>{
+      const owned=profile.ownedWorldIds.includes(w.id),done=w.routes.filter(id=>profile.progressByRoute[id]?.completed).length,name=t(`world${w.id[0].toUpperCase()}${w.id.slice(1)}`);
+      return `<button data-world="${w.id}" data-owned="${owned}" aria-current="${profile.selectedWorldId===w.id}"><strong>${owned?"":"🔒 "}${name}</strong><small>${t("progress")} ${done}/${w.routes.length}</small><span>${owned?t("select"):`◉ ${w.price}`}</span></button>`;
+    }).join("");
+  }
+  function openWorldSelect() {
+    worldSelectOpen=true;
+    const modal=document.getElementById("a12WorldSelect");
+    if(!modal)return;
+    modal.hidden=false;modal.setAttribute("aria-hidden","false");renderWorldSelect();syncActionVisibility();
+    requestAnimationFrame(()=>modal.querySelector(`[data-world="${profile.selectedWorldId}"]`)?.focus());
+  }
+  function closeWorldSelect() {
+    worldSelectOpen=false;
+    const modal=document.getElementById("a12WorldSelect");if(modal){modal.hidden=true;modal.setAttribute("aria-hidden","true");}
+    syncActionVisibility();
+  }
+  async function chooseWorld(id) {
+    const world=WORLD_REGISTRY[id];if(!world?.enabled)return false;
+    if(!profile.ownedWorldIds.includes(id)){
+      closeWorldSelect();shopTab="worlds";previewWorldId=id;openShop();return false;
+    }
+    profile.selectedWorldId=id;pendingWorldId=null;sceneCache.clear();
+    const idToStart=resumeRouteForWorld(id),restore=!!profile.pendingRunsByRoute[idToStart];
+    await persist();closeWorldSelect();return startRoute(idToStart,!restore,idToStart==="D06");
+  }
   function openShop() {
+    if(worldSelectOpen)closeWorldSelect();
     shopOpen = true;
     previewRunnerId=profile.runnerId||"male";previewMotion="idle";previewStartedAt=performance.now();
     previewOutfitId =
@@ -3056,12 +3113,9 @@ applyD09LogicRulesToRoutes();
     const item = WORLD_REGISTRY[id];
     if (!item?.enabled) return false;
     if (profile.ownedWorldIds.includes(id)) {
-      if (TEST_MODE) {
-        profile.selectedWorldId = id;
-        pendingWorldId = null;
-        sceneCache.clear();
-      } else pendingWorldId = item.routes.length ? id : null;
-      renderShop(); return true;
+      profile.selectedWorldId=id;pendingWorldId=null;sceneCache.clear();
+      const idToStart=resumeRouteForWorld(id),restore=!!profile.pendingRunsByRoute[idToStart];
+      await persist();closeShop();startRoute(idToStart,!restore,idToStart==="D06");return true;
     }
     if (profile.walletBalance < item.price) return false;
     purchaseBusy = true;
@@ -4163,7 +4217,8 @@ applyD09LogicRulesToRoutes();
       c.fillStyle = "#7cecc0";
       c.textAlign = "center";
       c.font = "950 30px system-ui";
-      c.fillText(`${routeId} ${t("complete")} +${result.amount}`, w / 2, innerHeight>=innerWidth?164:62);
+      const title=finishedWorldId?t("finished"):`${routeId} ${t("complete")}`;
+      c.fillText(`${title} +${result.amount}`, w / 2, innerHeight>=innerWidth?164:62);
       c.textAlign = "left";
     }
     drawResultChief(c);
@@ -4185,6 +4240,7 @@ applyD09LogicRulesToRoutes();
       },
       blocked: () =>
         shopOpen ||
+        worldSelectOpen ||
         campaignFrozen() ||
         !!result ||
         document.getElementById("characterSelect")?.classList.contains("show"),
@@ -4314,9 +4370,9 @@ applyD09LogicRulesToRoutes();
     }
     profile.runnerId = RUNNERS[profile.runnerId] ? profile.runnerId : "male";
     engine.setCharacter(RUNNERS[profile.runnerId].legacy);
-    const available=["aftermath","magma","frozen"].includes(profile.selectedWorldId)?[...WORLD_REGISTRY[profile.selectedWorldId].routes].reverse():[...WORLD_REGISTRY.dock31.routes].reverse();
-    const resumeRoute = available.find(id => profile.pendingRunsByRoute[id]&&routeUnlocked(id)) || firstRouteForWorld();
+    const resumeRoute = resumeRouteForWorld();
     startRoute(resumeRoute, false, resumeRoute === "D06");
+    openWorldSelect();
   }
   if (document.body.dataset.engineReady === "true") void init();
   else addEventListener("tmb-engine-ready", event => { const ready=init();if(event.detail)event.detail.ready=ready; }, { once: true });
